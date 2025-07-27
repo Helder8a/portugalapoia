@@ -337,8 +337,12 @@ section {
 
 .main-footer {
     background-color: var(--color-primary);
-    color: #adb5bd;
+    color: #ffffff;
     padding: 60px 0 20px 0;
+}
+
+.main-footer a {
+    color: #ffffff;
 }
 
 .footer-grid {
