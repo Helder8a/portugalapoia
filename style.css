@@ -342,7 +342,11 @@ section {
     margin-bottom: 40px;
 }
 
-/* === MEDIA QUERIES (RESPONSIVE) === */
+/* ================================================================= */
+/* =================== MEDIA QUERIES (RESPONSIVE) ================== */
+/* ================================================================= */
+
+/* Tablet y dispositivos móviles grandes */
 @media (max-width: 992px) {
     .main-nav {
         display: none;
@@ -390,6 +394,7 @@ section {
     }
 }
 
+/* Teléfonos móviles */
 @media (max-width: 768px) {
     .hero-title {
         font-size: 2.8rem;
@@ -405,10 +410,18 @@ section {
         align-items: center;
     }
 
+    /* =====> MODIFICACIÓN PARA BOTONES MÁS PEQUEÑOS <===== */
     .hero-buttons .button {
-        width: 80%;
-        max-width: 300px;
+        width: 70%;
+        /* Un poco más angosto */
+        max-width: 280px;
+        padding: 10px 20px;
+        /* Menos espaciado interno */
+        font-size: 0.9rem;
+        /* Letra más pequeña */
     }
+
+    /* ========================================================= */
 
     .section-title {
         font-size: 2.2rem;
