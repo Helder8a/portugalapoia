@@ -41,6 +41,28 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // --- LÓGICA PARA EL FILTRO DE BÚSQUEDA ---
+    const filtroInput = document.getElementById('filtro-input');
+    if (filtroInput) {
+        filtroInput.addEventListener('keyup', () => {
+            const filtroTexto = filtroInput.value.toLowerCase();
+            const cards = document.querySelectorAll('.causas-grid .card-causa');
+
+            cards.forEach(card => {
+                const titulo = card.querySelector('.card-title').textContent.toLowerCase();
+                const descripcion = card.querySelector('.card-description').textContent.toLowerCase();
+                const tagElement = card.querySelector('.card-tag');
+                const tag = tagElement ? tagElement.textContent.toLowerCase() : '';
+
+                if (titulo.includes(filtroTexto) || descripcion.includes(filtroTexto) || tag.includes(filtroTexto)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    }
 });
 
 // --- LÓGICA PARA O PRELOADER ---
