@@ -297,11 +297,17 @@ section {
 .card-title {
     margin: 0 0 10px 0;
     font-size: 1.25rem;
+    /* Adicionado para garantir que o texto não transborde */
+    overflow-wrap: break-word;
+    word-wrap: break-word; 
 }
 
 .card-description {
     margin: 0 0 16px 0;
     flex-grow: 1;
+    /* Adicionado para garantir que o texto não transborde */
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
 .form-container {
