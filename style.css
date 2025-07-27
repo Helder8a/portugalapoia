@@ -434,6 +434,20 @@ section {
     .section-title {
         font-size: 2.2rem;
     }
+    
+    /* =====> MODIFICACIÓN PARA CENTRAR IMÁGENES DE TARJETAS <===== */
+    .card-causa {
+        text-align: center;
+    }
+    
+    .card-image {
+        display: inline-block; /* Permite que text-align funcione */
+    }
+
+    .card-content {
+        text-align: left; /* Restablece la alineación para el texto */
+    }
+    /* ========================================================== */
 
     .footer-grid {
         text-align: center;
@@ -457,11 +471,4 @@ section {
     .footer-bottom {
         text-align: center;
     }
-
-    /* =====> MODIFICACIÓN PARA CENTRAR IMÁGENES DE TARJETAS <===== */
-    .card-image {
-        margin-left: auto;
-        margin-right: auto;
-    }
-    /* ========================================================== */
 }
