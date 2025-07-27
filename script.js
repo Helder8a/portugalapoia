@@ -118,3 +118,11 @@ ${formData.get('descricao')}
         });
     }
 });
+
+// --- LÓGICA PARA O PRELOADER ---
+window.addEventListener('load', () => {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        preloader.classList.add('hidden');
+    }
+});

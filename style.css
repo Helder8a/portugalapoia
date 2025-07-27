@@ -386,6 +386,7 @@ section {
     z-index: 2000;
     opacity: 1;
     transition: opacity 0.3s ease;
+    padding: 20px;
 }
 
 .modal-overlay.hidden {
@@ -395,14 +396,34 @@ section {
 
 .modal-content {
     background-color: var(--color-background);
-    padding: 40px;
+    padding: 30px;
     border-radius: var(--border-radius);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     max-width: 500px;
-    width: 90%;
+    width: 100%;
     text-align: center;
     position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
 }
+
+.donativo-info {
+    text-align: left;
+    margin-bottom: 20px;
+    word-wrap: break-word;
+}
+
+.donativo-info p {
+    margin: 5px 0;
+}
+
+.selectable-text {
+    user-select: text;
+    -webkit-user-select: text; /* Safari */
+    -moz-user-select: text; /* Firefox */
+    -ms-user-select: text; /* IE10+ */
+}
+
 
 .main-footer {
     background-color: var(--color-primary);
@@ -584,4 +605,55 @@ section {
     .footer-bottom {
         text-align: center;
     }
+
+    .modal-content {
+        padding: 20px;
+    }
+}
+
+/* --- ESTILOS PARA O PRELOADER --- */
+
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+    opacity: 1;
+    visibility: visible;
+}
+
+#preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+#preloader .spinner {
+    width: 80px;
+    height: 80px;
+    animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.card-tag-emprego {
+    background-color: #3498db;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
 }
