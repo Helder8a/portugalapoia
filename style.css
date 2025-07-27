@@ -173,19 +173,25 @@ img {
     z-index: 1001;
 }
 
+/* =====> MODIFICACIÓN PRINCIPAL AQUÍ <===== */
 #hero {
     position: relative;
-    height: 80vh;
+    min-height: 80vh;
+    /* ANTES: height. AHORA: min-height */
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     color: var(--color-text-light);
     background-image: url('images/img_portada.webp');
+    /* */
     background-size: cover;
     background-position: center;
-    padding: 0 24px;
+    padding: 60px 24px;
+    /* AÑADIDO: Espaciado interno para dar más aire */
 }
+
+/* ========================================= */
 
 .hero-overlay {
     position: absolute;
@@ -346,7 +352,6 @@ section {
 /* =================== MEDIA QUERIES (RESPONSIVE) ================== */
 /* ================================================================= */
 
-/* Tablet y dispositivos móviles grandes */
 @media (max-width: 992px) {
     .main-nav {
         display: none;
@@ -394,7 +399,6 @@ section {
     }
 }
 
-/* Teléfonos móviles */
 @media (max-width: 768px) {
     .hero-title {
         font-size: 2.8rem;
@@ -410,18 +414,12 @@ section {
         align-items: center;
     }
 
-    /* =====> MODIFICACIÓN PARA BOTONES MÁS PEQUEÑOS <===== */
     .hero-buttons .button {
         width: 70%;
-        /* Un poco más angosto */
         max-width: 280px;
         padding: 10px 20px;
-        /* Menos espaciado interno */
         font-size: 0.9rem;
-        /* Letra más pequeña */
     }
-
-    /* ========================================================= */
 
     .section-title {
         font-size: 2.2rem;
