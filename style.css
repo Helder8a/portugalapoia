@@ -79,6 +79,18 @@ img {
     color: var(--color-primary);
 }
 
+#apoia-projeto-btn {
+    background-color: var(--color-donation);
+    color: var(--color-primary);
+    border: 2px solid var(--color-donation);
+}
+
+#apoia-projeto-btn:hover {
+    background-color: #e6b00f;
+    color: var(--color-primary);
+    border: 2px solid #e6b00f;
+}
+
 .button-fullwidth {
     width: 100%;
     margin-top: auto;
