@@ -2,7 +2,8 @@
 :root {
     --color-primary: #0A3D62;
     --color-accent: #00834B;
-    --color-donation: #FFC312;
+    /* --- COLOR CAMBIADO AQUÍ --- */
+    --color-donation: #FFD700; /* Tono dorado más vibrante */
     --color-text: #333333;
     --color-text-light: #ffffff;
     --color-background: #ffffff;
@@ -30,7 +31,6 @@ html {
     line-height: 1.7;
     font-size: 16px;
     scroll-behavior: smooth;
-    /* Evita el desbordamiento horizontal en todo el documento */
     overflow-x: hidden;
 }
 
@@ -81,16 +81,17 @@ img {
     color: var(--color-primary);
 }
 
-#apoia-projeto-btn {
+.apoia-projeto-btn {
     background-color: var(--color-donation);
     color: var(--color-primary);
     border: 2px solid var(--color-donation);
 }
 
-#apoia-projeto-btn:hover {
-    background-color: #e6b00f;
+.apoia-projeto-btn:hover {
+    /* --- COLOR HOVER CAMBIADO AQUÍ --- */
+    background-color: #E6C300; /* Tono dorado más oscuro para el hover */
     color: var(--color-primary);
-    border: 2px solid #e6b00f;
+    border: 2px solid #E6C300;
 }
 
 .button-fullwidth {
@@ -240,10 +241,8 @@ section {
     padding: 80px 0;
 }
 
-/* === MEJORA PARA MÓVILES: Cuadrícula de anuncios más flexible === */
 .causas-grid {
     display: grid;
-    /* Ajustado para ser más flexible en pantallas muy estrechas */
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 35px;
 }
@@ -296,12 +295,11 @@ section {
     flex-direction: column;
 }
 
-/* === MEJORA PARA MÓVILES: Evita que el texto se desborde === */
 .card-title,
 .card-description {
     overflow-wrap: break-word;
     word-wrap: break-word;
-    word-break: break-word; /* Asegura el corte de palabras largas */
+    word-break: break-word;
 }
 
 .card-title {
@@ -397,6 +395,17 @@ section {
     pointer-events: none;
 }
 
+.modal-content {
+    background-color: var(--color-background);
+    padding: 40px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+}
+
 .main-footer {
     background-color: var(--color-primary);
     color: #ffffff;
@@ -425,9 +434,6 @@ section {
     align-items: center;
     gap: 8px;
 }
-
-
-/* === MEJORAS GENERALES PARA DISPOSITIVOS MÓVILES === */
 
 @media (max-width: 992px) {
     .main-nav {
@@ -478,7 +484,6 @@ section {
 
 @media (max-width: 768px) {
     .hero-title {
-        /* Tamaño de fuente más adecuado para móviles */
         font-size: 2.4rem;
         line-height: 1.2;
     }
@@ -493,7 +498,6 @@ section {
     }
 
     .hero-buttons .button {
-        /* Ancho más consistente para los botones */
         width: 80%;
         max-width: 320px;
         padding: 12px 20px;
@@ -501,7 +505,6 @@ section {
     }
 
     .section-title {
-        /* Título de sección más pequeño para móviles */
         font-size: 2rem;
     }
     
@@ -527,4 +530,13 @@ section {
     .footer-bottom {
         text-align: center;
     }
+}
+
+.card-tag-servico {
+    background-color: #3498db;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
 }

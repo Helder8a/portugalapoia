@@ -76,7 +76,6 @@ ${descricao}
                     formMessage.className = 'success visible';
                     form.reset();
                 } else {
-                    // Se o Telegram retornar um erro, ele será exibido aqui.
                     throw new Error(result.description || 'Ocorreu um erro desconhecido.');
                 }
             } catch (error) {
@@ -92,18 +91,26 @@ ${descricao}
         });
     }
 
-    // --- LÓGICA PARA O MODAL DE DONATIVO ---
+    // --- LÓGICA PARA O MODAL DE DONATIVO (CORREÇÃO DEFINITIVA) ---
     const modal = document.getElementById('donativo-modal');
-    const openModalBtn = document.getElementById('apoia-projeto-btn');
+    // Usamos uma CLASS (.apoia-projeto-btn) para selecionar os botões, que é a forma correta.
+    const openModalBtns = document.querySelectorAll('.apoia-projeto-btn');
     const closeModalBtn = modal ? modal.querySelector('.modal-close-btn') : null;
 
-    if (modal && openModalBtn && closeModalBtn) {
-        openModalBtn.addEventListener('click', () => {
-            modal.classList.remove('hidden');
+    if (modal && openModalBtns.length > 0 && closeModalBtn) {
+        // Adicionamos o evento a todos os botões encontrados
+        openModalBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                modal.classList.remove('hidden');
+            });
         });
+
+        // Evento para fechar o modal com o botão 'X'
         closeModalBtn.addEventListener('click', () => {
             modal.classList.add('hidden');
         });
+
+        // Evento para fechar o modal clicando fora dele
         modal.addEventListener('click', (event) => {
             if (event.target === modal) {
                 modal.classList.add('hidden');

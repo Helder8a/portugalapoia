@@ -6,27 +6,27 @@
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
 <url>
-  <loc>https://www.portugalapoia.com/index.html</loc>
+  <loc>https://www.portugalapoia.pt/index.html</loc>
   <lastmod>2025-07-28T10:00:00+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
-  <loc>https://www.portugalapoia.com/doacoes.html</loc>
+  <loc>https://www.portugalapoia.pt/doacoes.html</loc>
   <lastmod>2025-07-28T10:00:00+00:00</lastmod>
   <priority>0.90</priority>
 </url>
 <url>
-  <loc>https://www.portugalapoia.com/empregos.html</loc>
+  <loc>https://www.portugalapoia.pt/empregos.html</loc>
   <lastmod>2025-07-28T10:00:00+00:00</lastmod>
   <priority>0.90</priority>
 </url>
 <url>
-  <loc>https://www.portugalapoia.com/servicos.html</loc>
+  <loc>https://www.portugalapoia.pt/servicos.html</loc>
   <lastmod>2025-07-28T10:00:00+00:00</lastmod>
   <priority>0.90</priority>
 </url>
 <url>
-  <loc>https://www.portugalapoia.com/publicar.html</loc>
+  <loc>https://www.portugalapoia.pt/publicar.html</loc>
   <lastmod>2025-07-28T10:00:00+00:00</lastmod>
   <priority>0.80</priority>
 </url>
