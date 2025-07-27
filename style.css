@@ -30,6 +30,8 @@ html {
     line-height: 1.7;
     font-size: 16px;
     scroll-behavior: smooth;
+    /* Evita el desbordamiento horizontal en todo el documento */
+    overflow-x: hidden;
 }
 
 .container {
@@ -238,9 +240,11 @@ section {
     padding: 80px 0;
 }
 
+/* === MEJORA PARA MÓVILES: Cuadrícula de anuncios más flexible === */
 .causas-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    /* Ajustado para ser más flexible en pantallas muy estrechas */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 35px;
 }
 
@@ -266,20 +270,15 @@ section {
     background-color: #f0f0f0;
 }
 
-/* =====> SOLUCIÓN PARA ICONOS PNG <===== */
 .card-image {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    /* Garante que o ícone inteiro seja visível sem ser cortado */
-    object-fit: contain; 
-    /* Adiciona um espaço interno para que o ícone pareça menor */
-    padding: 1.5rem; 
+    object-fit: contain;
+    padding: 1.5rem;
 }
-/* ================================== */
-
 
 .card-header {
     padding: 16px;
@@ -297,18 +296,22 @@ section {
     flex-direction: column;
 }
 
+/* === MEJORA PARA MÓVILES: Evita que el texto se desborde === */
+.card-title,
+.card-description {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word; /* Asegura el corte de palabras largas */
+}
+
 .card-title {
     margin: 0 0 10px 0;
     font-size: 1.25rem;
-    overflow-wrap: break-word;
-    word-wrap: break-word; 
 }
 
 .card-description {
     margin: 0 0 16px 0;
     flex-grow: 1;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
 }
 
 .form-container {
@@ -423,6 +426,9 @@ section {
     gap: 8px;
 }
 
+
+/* === MEJORAS GENERALES PARA DISPOSITIVOS MÓVILES === */
+
 @media (max-width: 992px) {
     .main-nav {
         display: none;
@@ -472,7 +478,8 @@ section {
 
 @media (max-width: 768px) {
     .hero-title {
-        font-size: 2.8rem;
+        /* Tamaño de fuente más adecuado para móviles */
+        font-size: 2.4rem;
         line-height: 1.2;
     }
 
@@ -486,14 +493,16 @@ section {
     }
 
     .hero-buttons .button {
-        width: 70%;
-        max-width: 280px;
-        padding: 10px 20px;
-        font-size: 0.9rem;
+        /* Ancho más consistente para los botones */
+        width: 80%;
+        max-width: 320px;
+        padding: 12px 20px;
+        font-size: 1rem;
     }
 
     .section-title {
-        font-size: 2.2rem;
+        /* Título de sección más pequeño para móviles */
+        font-size: 2rem;
     }
     
     .footer-grid {
