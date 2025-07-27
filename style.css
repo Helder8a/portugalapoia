@@ -657,3 +657,32 @@ section {
     font-size: 0.8rem;
     font-weight: 700;
 }
+
+/* --- ESTILOS PARA ESTADOS VACÍOS --- */
+
+.card-causa.empty-state {
+    grid-column: 1 / -1; /* Ocupa todo o largo da grelha */
+    background: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    text-align: center;
+    padding: 40px;
+    box-shadow: none;
+}
+
+.card-causa.empty-state:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: var(--color-accent);
+}
+
+.empty-state h3 {
+    font-size: 1.5rem;
+    color: var(--color-primary);
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.empty-state p {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+}
