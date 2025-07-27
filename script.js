@@ -1,52 +1,48 @@
-// PortugalApoya.pt/script.js
+// PortugalApoia.pt/script.js
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- LÓGICA PARA EL MENÚ MÓVIL (HAMBURGUESA) ---
+    // --- LÓGICA PARA O MENU MÓVIL (HAMBURGUER) ---
     const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
-    // SELECCIÓN POR ID PARA MAYOR PRECISIÓN
     const mainNav = document.querySelector('#main-nav');
 
     if (mobileNavToggle && mainNav) {
         mobileNavToggle.addEventListener('click', () => {
-            // Alterna la clase para mostrar/ocultar el menú
             mainNav.classList.toggle('nav-visible');
-
-            // Actualiza el atributo ARIA para accesibilidad
             const isVisible = mainNav.classList.contains('nav-visible');
             mobileNavToggle.setAttribute('aria-expanded', isVisible);
-            
-            // Cambia el ícono de hamburguesa a una 'X' al abrir
             mobileNavToggle.textContent = isVisible ? '✕' : '☰';
         });
     }
 
-    // --- LÓGICA DEL FORMULARIO DE ANUNCIOS ---
+    // --- LÓGICA DO FORMULÁRIO DE ANÚNCIOS ---
     const form = document.getElementById('form-anuncio');
     const formMessage = document.getElementById('form-message');
 
     if (form && formMessage) {
-        // --- ¡IMPORTANTE! Pega tus claves de Telegram aquí ---
-        const BOT_TOKEN = '8194765669:AAHDUXxUC1PCFQIY1BnPsEGdabyYHhWNCOE'; //
-        const CHAT_ID = '958614887'; //
-        // ----------------------------------------------------
+        // --- ATENÇÃO! ---
+        // As chaves abaixo são apenas exemplos.
+        // Para que o formulário funcione, você DEVE substituí-las pelas suas próprias chaves do bot do Telegram.
+        // Manter chaves reais diretamente no código é um risco de segurança. Considere usar variáveis de ambiente ou um serviço de backend para maior segurança.
+        const BOT_TOKEN = 'SEU_BOT_TOKEN_AQUI'; // <--- SUBSTITUA PELA SUA CHAVE
+        const CHAT_ID = 'SEU_CHAT_ID_AQUI';     // <--- SUBSTITUA PELO SEU ID
 
         form.addEventListener('submit', async (event) => {
             event.preventDefault();
             const submitButton = form.querySelector('button[type="submit"]');
             submitButton.disabled = true;
-            formMessage.textContent = 'A enviar o seu pedido para o bot...'; //
+
+            formMessage.textContent = 'A enviar o seu pedido para o bot...';
             formMessage.className = 'info visible';
 
-            // Recopilar datos del formulario
-            const tipoAnuncio = form.querySelector('input[name="tipo_anuncio"]:checked').value; //
-            const tituloAnuncio = form.titulo_anuncio.value; //
-            const emailContacto = form.email_contacto.value; //
-            const descricao = form.descricao.value; //
-            const imagemFile = form.imagem_anuncio.files[0]; //
+            const tipoAnuncio = form.querySelector('input[name="tipo_anuncio"]:checked').value;
+            const tituloAnuncio = form.titulo_anuncio.value;
+            const emailContacto = form.email_contacto.value;
+            const descricao = form.descricao.value;
+            const imagemFile = form.imagem_anuncio.files[0];
 
             if (!imagemFile) {
-                formMessage.textContent = 'Por favor, selecione uma imagem.'; //
+                formMessage.textContent = 'Por favor, selecione uma imagem.';
                 formMessage.className = 'error visible';
                 submitButton.disabled = false;
                 return;
@@ -61,41 +57,42 @@ document.addEventListener('DOMContentLoaded', () => {
 -----------------------------------
 <b>Descrição:</b>
 ${descricao}
-            `; //
+            `;
 
             const formData = new FormData();
-            formData.append('chat_id', CHAT_ID); //
-            formData.append('photo', imagemFile); //
-            formData.append('caption', caption); //
-            formData.append('parse_mode', 'HTML'); //
+            formData.append('chat_id', CHAT_ID);
+            formData.append('photo', imagemFile);
+            formData.append('caption', caption);
+            formData.append('parse_mode', 'HTML');
 
             try {
-                const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, { //
-                    method: 'POST', //
-                    body: formData, //
+                const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+                    method: 'POST',
+                    body: formData,
                 });
-                const result = await response.json(); //
+                const result = await response.json();
                 if (result.ok) {
-                    formMessage.textContent = 'Obrigado! O seu anúncio foi enviado e será revisto.'; //
+                    formMessage.textContent = 'Obrigado! O seu anúncio foi enviado e será revisto.';
                     formMessage.className = 'success visible';
                     form.reset();
                 } else {
-                    throw new Error(result.description);
+                    // Se o Telegram retornar um erro, ele será exibido aqui.
+                    throw new Error(result.description || 'Ocorreu um erro desconhecido.');
                 }
             } catch (error) {
-                formMessage.textContent = 'Erro ao enviar. Verifique as suas chaves de Telegram.'; //
+                formMessage.textContent = `Erro ao enviar: ${error.message}. Verifique as suas chaves de Telegram e a conexão.`;
                 formMessage.className = 'error visible';
                 console.error('Erro no envio para o Telegram:', error);
             } finally {
                 submitButton.disabled = false;
                 setTimeout(() => {
-                    formMessage.className = ''; // Oculta el mensaje
-                }, 7000);
+                    formMessage.className = 'hidden';
+                }, 7000); // A mensagem desaparece após 7 segundos
             }
         });
     }
 
-    // --- LÓGICA PARA EL MODAL DE DONATIVO ---
+    // --- LÓGICA PARA O MODAL DE DONATIVO ---
     const modal = document.getElementById('donativo-modal');
     const openModalBtn = document.getElementById('apoia-projeto-btn');
     const closeModalBtn = modal ? modal.querySelector('.modal-close-btn') : null;
@@ -107,7 +104,6 @@ ${descricao}
         closeModalBtn.addEventListener('click', () => {
             modal.classList.add('hidden');
         });
-        // Cerrar al hacer clic fuera del contenido del modal
         modal.addEventListener('click', (event) => {
             if (event.target === modal) {
                 modal.classList.add('hidden');
