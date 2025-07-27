@@ -259,21 +259,24 @@ section {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* =====> SOLUCIÓN PARA IMÁGENES <===== */
 .card-image-container {
     width: 100%;
-    padding-top: 65%; /* Proporción de la imagen (ajustar si es necesario) */
+    padding-top: 65%;
     position: relative;
     background-color: #f0f0f0;
 }
 
+/* =====> SOLUCIÓN PARA ICONOS PNG <===== */
 .card-image {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover; /* La magia para que la imagen cubra el espacio sin deformarse */
+    /* Garante que o ícone inteiro seja visível sem ser cortado */
+    object-fit: contain; 
+    /* Adiciona um espaço interno para que o ícone pareça menor */
+    padding: 1.5rem; 
 }
 /* ================================== */
 
@@ -297,7 +300,6 @@ section {
 .card-title {
     margin: 0 0 10px 0;
     font-size: 1.25rem;
-    /* Adicionado para garantir que o texto não transborde */
     overflow-wrap: break-word;
     word-wrap: break-word; 
 }
@@ -305,7 +307,6 @@ section {
 .card-description {
     margin: 0 0 16px 0;
     flex-grow: 1;
-    /* Adicionado para garantir que o texto não transborde */
     overflow-wrap: break-word;
     word-wrap: break-word;
 }
