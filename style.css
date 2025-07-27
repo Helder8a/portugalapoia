@@ -450,13 +450,18 @@ section {
         width: 100%;
     }
 
-    /* =====> MODIFICACIÓN PARA CENTRAR INSTAGRAM <===== */
     .social-link {
         justify-content: center;
     }
-    /* ================================================= */
     
     .footer-bottom {
         text-align: center;
     }
+
+    /* =====> MODIFICACIÓN PARA CENTRAR IMÁGENES DE TARJETAS <===== */
+    .card-image {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    /* ========================================================== */
 }
