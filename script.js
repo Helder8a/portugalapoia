@@ -24,8 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // As chaves abaixo são apenas exemplos.
         // Para que o formulário funcione, você DEVE substituí-las pelas suas próprias chaves do bot do Telegram.
         // Manter chaves reais diretamente no código é um risco de segurança. Considere usar variáveis de ambiente ou um serviço de backend para maior segurança.
-        const BOT_TOKEN = 'SEU_BOT_TOKEN_AQUI'; // <--- SUBSTITUA PELA SUA CHAVE
-        const CHAT_ID = 'SEU_CHAT_ID_AQUI';     // <--- SUBSTITUA PELO SEU ID
+        const BOT_TOKEN = '8194765669:AAHDUXxUC1PCFQIY1BnPsEGdabyYHhWNCOE';
+        const CHAT_ID = '958614887';
 
         form.addEventListener('submit', async (event) => {
             event.preventDefault();
