@@ -1,0 +1,308 @@
+/* ======== CONFIGURACIÓN GLOBAL Y VARIABLES ======== */
+:root {
+    --color-primary: #0A3D62; /* Azul Naval (Confianza) */
+    --color-accent: #00834B;  /* Verde de Éxito (Acción) */
+    --color-donation: #FFC312; /* NUEVO: Dorado para donaciones */
+    --color-text: #333333;
+    --color-text-light: #ffffff;
+    --color-background: #ffffff;
+    --color-background-light: #F8F9FA;
+    --color-border: #dee2e6;
+    --font-headings: 'Montserrat', sans-serif;
+    --font-body: 'Lato', sans-serif;
+    --border-radius: 8px;
+    --shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-body);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    line-height: 1.7;
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ======== COMPONENTES REUTILIZABLES ======== */
+.button {
+    padding: 12px 28px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    text-align: center;
+    font-family: var(--font-headings);
+}
+.button-primary {
+    background-color: var(--color-accent);
+    color: var(--color-text-light);
+}
+.button-primary:hover {
+    background-color: #00663a;
+    transform: translateY(-2px);
+}
+.button-secondary {
+    background-color: transparent;
+    color: var(--color-text-light);
+    border: 2px solid var(--color-text-light);
+}
+.button-secondary:hover {
+    background-color: var(--color-text-light);
+    color: var(--color-primary);
+}
+.button-fullwidth {
+    width: 100%;
+    margin-top: auto;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.8rem;
+    margin-bottom: 40px;
+    color: var(--color-primary);
+    font-family: var(--font-headings);
+}
+.section-light { background-color: var(--color-background-light); }
+
+/* ======== HEADER ======== */
+.main-header {
+    background-color: var(--color-background);
+    padding: 1.2rem 0;
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+.main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-decoration: none;
+    font-family: var(--font-headings);
+}
+.main-nav ul { list-style: none; margin: 0; padding: 0; display: flex; }
+.main-nav li { margin-left: 35px; }
+.main-nav a {
+    text-decoration: none;
+    color: var(--color-text);
+    font-weight: 700;
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    position: relative;
+    padding-bottom: 8px;
+    transition: color 0.3s ease;
+}
+.main-nav a.active {
+    color: var(--color-primary);
+}
+.main-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background-color: var(--color-primary);
+    transition: width 0.3s ease;
+}
+.main-nav a:hover::after, .main-nav a.active::after {
+    width: 100%;
+}
+
+/* ======== HERO SECTION ======== */
+#hero {
+    position: relative;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--color-text-light);
+    background-image: url('images/img_portada.webp');
+    background-size: cover;
+    background-position: center;
+}
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(10, 61, 98, 0.8), rgba(10, 61, 98, 0.4));
+}
+.hero-content { position: relative; z-index: 2; }
+.hero-title {
+    font-size: 3.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    font-family: var(--font-headings);
+}
+.hero-subtitle {
+    font-size: 1.4rem;
+    max-width: 650px;
+    margin: 0 auto 2.5rem auto;
+}
+.hero-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* ======== SECCIONES GENERALES Y TARJETAS ======== */
+section { padding: 80px 0; }
+
+.causas-grid {
+    display: grid;
+    /* Por defecto, 1 columna para móviles */
+    grid-template-columns: 1fr;
+    gap: 35px;
+}
+
+/* Media Query: En pantallas de más de 768px, usamos 2 columnas */
+@media (min-width: 768px) {
+    .causas-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.card-causa {
+    background-color: var(--color-background);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+/* ... (el resto del archivo CSS sigue igual) ... */
+
+/* ======== FORMULARIO ======== */
+.form-container { max-width: 800px; margin: 0 auto; text-align: center; }
+.donation-form { text-align: left; margin-top: 40px; }
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; margin-bottom: 8px; font-weight: 600; }
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-family: var(--font-body);
+    box-sizing: border-box;
+}
+.form-group input:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(10, 61, 98, 0.2);
+}
+.tipo-anuncio-selector label { font-weight: normal; margin-left: 8px; cursor: pointer; }
+.tipo-anuncio-selector input { width: auto; margin-right: 5px; }
+#form-message {
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: var(--border-radius);
+    color: #fff;
+    text-align: center;
+}
+#form-message.success { background-color: var(--color-accent); }
+#form-message.error { background-color: #c0392b; }
+#form-message.info { background-color: #2980b9; }
+
+/* ======== ESTILOS PARA O MODAL DE DONATIVO ======== */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 2000; opacity: 1; transition: opacity 0.3s ease;
+}
+.modal-content {
+    background-color: #fff; padding: 40px; border-radius: 12px;
+    max-width: 500px; width: 90%; text-align: center; position: relative;
+    transform: translateY(0); transition: transform 0.3s ease;
+}
+.modal-close-btn {
+    position: absolute; top: 15px; right: 15px; background: none;
+    border: none; font-size: 2rem; cursor: pointer; color: #888;
+}
+.donativo-info {
+    background-color: var(--color-background-light); border: 1px solid var(--color-border); border-radius: 8px;
+    padding: 20px; margin-top: 20px; text-align: left;
+}
+.donativo-info p { margin: 5px 0; }
+.hidden { opacity: 0; pointer-events: none; }
+.hidden .modal-content { transform: translateY(-50px); }
+
+/* ======== FOOTER ======== */
+.main-footer { background-color: var(--color-primary); color: #adb5bd; padding: 60px 0 20px 0; }
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+}
+.footer-column h4 { color: var(--color-text-light); font-size: 1.2rem; margin-bottom: 1rem; font-family: var(--font-headings); }
+.footer-column ul { list-style: none; padding: 0; }
+.footer-column li { margin-bottom: 10px; }
+.footer-column a { color: #adb5bd; text-decoration: none; transition: color 0.3s ease; }
+.footer-column a:hover { color: var(--color-text-light); }
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #adb5bd;
+    text-decoration: none;
+    font-weight: 700;
+}
+.social-link:hover {
+    color: var(--color-text-light);
+}
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; text-align: center; }
+
+/* ======== RESPONSIVE ======== */
+@media (max-width: 992px) {
+    .main-nav { display: none; }
+}
+@media (max-width: 768px) {
+    .hero-title { font-size: 2.8rem; }
+    .hero-buttons { flex-direction: column; align-items: center; }
+    .hero-buttons .button { width: 80%; }
+    .section-title { font-size: 2.2rem; }
+    .main-header .container { flex-direction: row; }
+}
+
+/* ================================================================= */
+/* NUEVO ESTILO PARA EL BOTÓN DE DONACIÓN DEL PROYECTO          */
+/* ================================================================= */
+#apoia-projeto-btn {
+    background-color: var(--color-donation);
+    color: var(--color-text);
+    border: 2px solid var(--color-donation);
+    font-weight: 700;
+}
+
+#apoia-projeto-btn:hover {
+    background-color: #ffd13b;
+    color: var(--color-primary);
+    border-color: #ffd13b;
+    transform: scale(1.05); /* Efecto de crecimiento para llamar más la atención */
+}

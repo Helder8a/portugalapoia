@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <title>Emprego e Serviços - PortugalApoia.com</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Encontre vagas de emprego, part-time, full-time e serviços na sua comunidade em Portugal. Publique a sua oferta gratuitamente.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <a href="index.html" class="logo">PortugalApoia</a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="doacoes.html" class="active">Doação de Artigos</a></li>
+                    <li><a href="empregos.html">Emprego e Serviços</a></li>
+                    <li><a href="publicar.html">Publicar Anúncio</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="vagas">
+            <div class="container">
+                <h2 class="section-title">Oportunidades de Emprego e Serviços</h2>
+                <div class="causas-grid">
+                    
+                    <div class="card-causa" itemscope itemtype="http://schema.org/JobPosting">
+                        <div class="card-header">
+                            <span class="card-tag card-tag-emprego">Vaga de Emprego</span>
+                            <span class="card-date" itemprop="datePosted" content="2025-07-26">26 de Julho de 2025</span>
+                        </div>
+                        <img src="images/img_portada.webp" alt="Jardim bem cuidado, representando a vaga de jardineiro" class="card-image" loading="lazy">
+                        <div class="card-content">
+                            <h3 class="card-title" itemprop="title">Precisa-se de Jardineiro em Part-time (Lisboa)</h3>
+                            <p class="card-description" itemprop="description">Particular procura pessoa com experiência em jardinagem para manutenção de pequeno jardim uma vez por semana. Pagamento a combinar.</p>
+                            <div class="lista-artigos">
+                                <h4>Detalhes da Vaga:</h4>
+                                <ul>
+                                    <li itemprop="employmentType">Part-time</li>
+                                    <li itemprop="jobLocation" itemscope itemtype="http://schema.org/Place">
+                                        <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+                                            <span itemprop="addressLocality">Benfica, Lisboa</span>
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <a href="mailto:exemplo.emprego@email.com?subject=Vaga de Jardineiro" class="button button-fullwidth">Candidatar-me / Pedir Info</a>
+                            <div itemprop="hiringOrganization" itemscope itemtype="http://schema.org/Organization">
+                                <meta itemprop="name" content="Particular">
+                            </div>
+                        </div>
+                        </div>
+
+                    <div class="card-causa" itemscope itemtype="http://schema.org/JobPosting">
+                        <div class="card-header">
+                            <span class="card-tag card-tag-emprego">Vaga de Emprego</span>
+                            <span class="card-date" itemprop="datePosted" content="2025-07-26">26 de Julho de 2025</span>
+                        </div>
+                        <img src="images/img_portada.webp" alt="Jardim bem cuidado, representando a vaga de jardineiro" class="card-image" loading="lazy">
+                        <div class="card-content">
+                            <h3 class="card-title" itemprop="title">Precisa-se de Jardineiro em Part-time (Lisboa)</h3>
+                            <p class="card-description" itemprop="description">Particular procura pessoa com experiência em jardinagem para manutenção de pequeno jardim uma vez por semana. Pagamento a combinar.</p>
+                            <div class="lista-artigos">
+                                <h4>Detalhes da Vaga:</h4>
+                                <ul>
+                                    <li itemprop="employmentType">Part-time</li>
+                                    <li itemprop="jobLocation" itemscope itemtype="http://schema.org/Place">
+                                        <span itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+                                            <span itemprop="addressLocality">Benfica, Lisboa</span>
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <a href="mailto:exemplo.emprego@email.com?subject=Vaga de Jardineiro" class="button button-fullwidth">Candidatar-me / Pedir Info</a>
+                            <div itemprop="hiringOrganization" itemscope itemtype="http://schema.org/Organization">
+                                <meta itemprop="name" content="Particular">
+                            </div>
+                        </div>
+                        </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <div id="donativo-modal" class="modal-overlay hidden">
+        </div>
+    <footer class="main-footer">
+        </footer>
+    <script src="script.js"></script>
+</body>
+</html>
