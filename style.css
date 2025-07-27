@@ -125,6 +125,7 @@ img {
     margin: 0;
     padding: 0;
     display: flex;
+    align-items: center;
 }
 
 .main-nav li {
@@ -246,9 +247,49 @@ section {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-.card-image {
+/* =====> SOLUCIÓN PARA IMÁGENES <===== */
+.card-image-container {
     width: 100%;
-    object-fit: cover;
+    padding-top: 65%; /* Proporción de la imagen (ajustar si es necesario) */
+    position: relative;
+    background-color: #f0f0f0;
+}
+
+.card-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* La magia para que la imagen cubra el espacio sin deformarse */
+}
+/* ================================== */
+
+
+.card-header {
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.card-content {
+    padding: 0 16px 16px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-title {
+    margin: 0 0 10px 0;
+    font-size: 1.25rem;
+}
+
+.card-description {
+    margin: 0 0 16px 0;
+    flex-grow: 1;
 }
 
 .form-container {
@@ -361,12 +402,7 @@ section {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    /* Espacio entre el icono y el texto */
 }
-
-/* ================================================================= */
-/* =================== MEDIA QUERIES (RESPONSIVE) ================== */
-/* ================================================================= */
 
 @media (max-width: 992px) {
     .main-nav {
@@ -440,7 +476,7 @@ section {
     .section-title {
         font-size: 2.2rem;
     }
-
+    
     .footer-grid {
         text-align: center;
     }
@@ -450,7 +486,7 @@ section {
         flex-direction: column;
         align-items: center;
     }
-
+    
     .footer-column ul {
         margin: 0;
         width: 100%;
@@ -459,7 +495,7 @@ section {
     .social-link {
         justify-content: center;
     }
-
+    
     .footer-bottom {
         text-align: center;
     }

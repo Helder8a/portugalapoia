@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <title>Diretório de Serviços - PortugalApoia.com</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Encontre serviços de eletricistas, canalizadores, reparação de computadores e outros profissionais na sua comunidade.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <a href="index.html" class="logo">PortugalApoia</a>
+            <nav class="main-nav" id="main-nav">
+                <ul>
+                    <li><a href="doacoes.html">Doação de Artigos</a></li>
+                    <li><a href="empregos.html">Emprego</a></li>
+                    <li><a href="servicos.html">Serviços Técnicos</a></li>
+                    <li><a href="publicar.html">Publicar Anúncio</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-nav-toggle" aria-controls="main-nav" aria-expanded="false">
+                <span class="sr-only"></span>
+                ☰
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section id="servicos">
+            <div class="container">
+                <h2 class="section-title">Diretório de Serviços Técnicos</h2>
+                <div class="causas-grid">
+                    
+                    <div class="card-causa">
+                        <div class="card-image-container">
+                            <img src="images/img_portada.webp" alt="Técnico a reparar um computador" class="card-image" loading="lazy">
+                        </div>
+                        <div class="card-header">
+                            <span class="card-tag card-tag-servico">Serviço Técnico</span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Reparação de Computadores</h3>
+                            <p class="card-description">Serviços de diagnóstico e reparação de computadores (desktop e portáteis), remoção de vírus e otimização de sistema. Atendimento na zona do Porto.</p>
+                            <a href="mailto:exemplo.tecnico@email.com?subject=Serviço de Reparação de Computadores" class="button button-fullwidth">Pedir Orçamento</a>
+                        </div>
+                    </div>
+
+                    <div class="card-causa">
+                        <div class="card-image-container">
+                            <img src="images/img_portada.webp" alt="Eletricista a trabalhar num quadro elétrico" class="card-image" loading="lazy">
+                        </div>
+                        <div class="card-header">
+                            <span class="card-tag card-tag-servico">Serviço Técnico</span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Eletricista Certificado</h3>
+                            <p class="card-description">Instalações elétricas, reparação de avarias, quadros elétricos e certificações energéticas. Disponível 24/7 para emergências em Lisboa e arredores.</p>
+                            <a href="mailto:exemplo.eletricista@email.com?subject=Serviço de Eletricista" class="button button-fullwidth">Contactar Eletricista</a>
+                        </div>
+                    </div>
+                    
+                    <div class="card-causa">
+                        <div class="card-image-container">
+                             <img src="images/img_portada.webp" alt="Canalizador a reparar um cano" class="card-image" loading="lazy">
+                        </div>
+                        <div class="card-header">
+                            <span class="card-tag card-tag-servico">Serviço Técnico</span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Canalizador Profissional</h3>
+                            <p class="card-description">Resolução de fugas de água, desentupimentos, instalação de torneiras e sanitários. Serviço rápido e eficaz na região de Coimbra.</p>
+                            <a href="mailto:exemplo.canalizador@email.com?subject=Serviço de Canalizador" class="button button-fullwidth">Chamar Canalizador</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <div id="donativo-modal" class="modal-overlay hidden">
+    </div>
+    <footer class="main-footer">
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
