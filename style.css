@@ -540,3 +540,602 @@ section {
     font-size: 0.8rem;
     font-weight: 700;
 }
+
+/* PortugalApoya.pt/style.css */
+:root {
+    --color-primary: #0A3D62;
+    --color-accent: #00834B;
+    /* --- COLOR CAMBIADO AQUÍ --- */
+    --color-donation: #FFD700; /* Tono dorado más vibrante */
+    --color-text: #333333;
+    --color-text-light: #ffffff;
+    --color-background: #ffffff;
+    --color-background-light: #F8F9FA;
+    --color-border: #dee2e6;
+    --font-headings: 'Inter', sans-serif;
+    --font-body: 'Roboto', sans-serif;
+    --border-radius: 8px;
+    --shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-body);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    line-height: 1.7;
+    font-size: 16px;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.button {
+    padding: 12px 28px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 700;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease, color 0.3s ease;
+    text-align: center;
+    font-family: var(--font-headings);
+}
+
+.button-primary {
+    background-color: var(--color-accent);
+    color: var(--color-text-light);
+}
+
+.button-primary:hover {
+    background-color: #00663a;
+    transform: translateY(-2px);
+}
+
+.button-secondary {
+    background-color: transparent;
+    color: var(--color-text-light);
+    border: 2px solid var(--color-text-light);
+}
+
+.button-secondary:hover {
+    background-color: var(--color-text-light);
+    color: var(--color-primary);
+}
+
+.apoia-projeto-btn {
+    background-color: var(--color-donation);
+    color: var(--color-primary);
+    border: 2px solid var(--color-donation);
+}
+
+.apoia-projeto-btn:hover {
+    /* --- COLOR HOVER CAMBIADO AQUÍ --- */
+    background-color: #E6C300; /* Tono dorado más oscuro para el hover */
+    color: var(--color-primary);
+    border: 2px solid #E6C300;
+}
+
+.button-fullwidth {
+    width: 100%;
+    margin-top: auto;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: var(--color-primary);
+    font-family: var(--font-headings);
+}
+
+.section-light {
+    background-color: var(--color-background-light);
+}
+
+.main-header {
+    background-color: var(--color-background);
+    padding: 1.2rem 0;
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-decoration: none;
+    font-family: var(--font-headings);
+}
+
+.main-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+
+.main-nav li {
+    margin-left: 35px;
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: var(--color-text);
+    font-weight: 700;
+    font-family: var(--font-headings);
+    font-size: 1rem;
+    position: relative;
+    padding-bottom: 8px;
+    transition: color 0.3s ease;
+}
+
+.main-nav a.active {
+    color: var(--color-primary);
+}
+
+.main-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background-color: var(--color-primary);
+    transition: width 0.3s ease;
+}
+
+.main-nav a:hover::after,
+.main-nav a.active::after {
+    width: 100%;
+}
+
+.mobile-nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: var(--color-primary);
+    cursor: pointer;
+    z-index: 1001;
+}
+
+#hero {
+    position: relative;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--color-text-light);
+    background-image: url('images/img_portada.webp');
+    background-size: cover;
+    background-position: center;
+    padding: 60px 24px;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(10, 61, 98, 0.8), rgba(10, 61, 98, 0.4));
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.hero-title {
+    font-size: 3.2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+    font-family: var(--font-headings);
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    max-width: 650px;
+    margin: 0 auto 2.5rem auto;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+section {
+    padding: 80px 0;
+}
+
+.causas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 35px;
+}
+
+.card-causa {
+    background-color: var(--color-background);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-causa:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card-image-container {
+    width: 100%;
+    padding-top: 65%;
+    position: relative;
+    background-color: #f0f0f0;
+}
+
+.card-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 1.5rem;
+}
+
+.card-header {
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.card-content {
+    padding: 0 16px 16px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-title,
+.card-description {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.card-title {
+    margin: 0 0 10px 0;
+    font-size: 1.25rem;
+}
+
+.card-description {
+    margin: 0 0 16px 0;
+    flex-grow: 1;
+}
+
+.form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.donation-form {
+    text-align: left;
+    margin-top: 40px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-family: var(--font-body);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(10, 61, 98, 0.2);
+}
+
+#form-message {
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: var(--border-radius);
+    color: #fff;
+    text-align: center;
+    display: none;
+}
+
+#form-message.visible {
+    display: block;
+}
+
+#form-message.success {
+    background-color: var(--color-accent);
+}
+
+#form-message.error {
+    background-color: #c0392b;
+}
+
+#form-message.info {
+    background-color: #2980b9;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal-content {
+    background-color: var(--color-background);
+    padding: 40px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+}
+
+.main-footer {
+    background-color: var(--color-primary);
+    color: #ffffff;
+    padding: 60px 0 20px 0;
+}
+
+.main-footer a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-column ul {
+    padding: 0;
+    list-style: none;
+}
+
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+@media (max-width: 992px) {
+    .main-nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        border-top: 1px solid var(--color-border);
+        flex-direction: column;
+    }
+
+    .main-nav.nav-visible {
+        display: flex;
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .main-nav li {
+        margin: 0;
+        width: 100%;
+    }
+
+    .main-nav a {
+        display: block;
+        padding: 15px;
+        text-align: center;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .main-nav li:last-child a {
+        border-bottom: none;
+    }
+
+    .main-nav a::after {
+        display: none;
+    }
+
+    .mobile-nav-toggle {
+        display: block;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.4rem;
+        line-height: 1.2;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-buttons .button {
+        width: 80%;
+        max-width: 320px;
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .footer-grid {
+        text-align: center;
+    }
+
+    .footer-column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .footer-column ul {
+        margin: 0;
+        width: 100%;
+    }
+
+    .social-link {
+        justify-content: center;
+    }
+    
+    .footer-bottom {
+        text-align: center;
+    }
+}
+
+.card-tag-servico {
+    background-color: #3498db;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+/* --- ESTILO PARA ANÚNCIOS APENAS DE TEXTO --- */
+
+.card-causa.text-only {
+    /* Altera a direção para focar no conteúdo de texto */
+    flex-direction: column;
+    justify-content: center; /* Centra o conteúdo verticalmente */
+    align-items: center;   /* Centra o conteúdo horizontalmente */
+    text-align: center;
+    padding: 2rem; /* Adiciona mais espaço interior */
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef); /* Fundo suave */
+}
+
+.card-causa.text-only .card-image-container {
+    /* Oculta o contentor da imagem */
+    display: none;
+}
+
+.card-causa.text-only .card-content {
+    /* Ocupa todo o espaço e remove o padding original */
+    padding: 0;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card-causa.text-only .card-header {
+    /* Remove a separação do cabeçalho */
+    padding-bottom: 0;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.card-causa.text-only .card-title {
+    /* Título com letras grandes */
+    font-size: 2.5rem; /* Aumenta drasticamente o tamanho do título */
+    color: var(--color-primary);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+}
+
+.card-causa.text-only .card-description {
+    /* Descrição também maior, mas secundária ao título */
+    font-size: 1.2rem;
+    color: var(--color-text);
+    margin-bottom: 2rem;
+}
+
+.card-causa.text-only .button-fullwidth {
+    /* Garante que o botão não ocupe toda a largura */
+    width: auto;
+    max-width: 250px;
+    margin: 0 auto; /* Centra o botão */
+}
