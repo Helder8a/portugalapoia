@@ -337,6 +337,7 @@ section {
 
 .main-footer a {
     color: #ffffff;
+    text-decoration: none;
 }
 
 .footer-grid {
@@ -349,6 +350,12 @@ section {
 .footer-column ul {
     padding: 0;
     list-style: none;
+}
+
+.social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px; /* Espacio entre el icono y el texto */
 }
 
 /* ================================================================= */
@@ -432,7 +439,6 @@ section {
         text-align: center;
     }
 
-    /* =====> MODIFICACIÓN PARA ORGANIZAR EL FOOTER <===== */
     .footer-column {
         display: flex;
         flex-direction: column;
@@ -443,9 +449,14 @@ section {
         margin: 0;
         width: 100%;
     }
+
+    /* =====> MODIFICACIÓN PARA CENTRAR INSTAGRAM <===== */
+    .social-link {
+        justify-content: center;
+    }
+    /* ================================================= */
     
     .footer-bottom {
         text-align: center;
     }
-    /* ====================================================== */
 }
