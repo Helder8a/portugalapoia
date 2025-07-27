@@ -1,6 +1,4 @@
-# Permitir a todos los user-agents rastrear todo el sitio
 User-agent: *
 Disallow:
 
-# Ubicación del Sitemap
 Sitemap: https://www.portugalapoia.com/sitemap.xml
