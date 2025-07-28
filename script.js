@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- LÓGICA DO FORMULÁRIO DE ANÚNCIOS ---
     // Eliminada porque Netlify Forms se encarga ahora de la captura.
-    // El formulario funcionará como un formulario HTML estándar.
 
     // --- LÓGICA PARA O MODAL DE DONATIVO ---
     const modal = document.getElementById('donativo-modal');
@@ -39,6 +38,33 @@ document.addEventListener('DOMContentLoaded', () => {
             if (event.target === modal) {
                 modal.classList.add('hidden');
             }
+        });
+    }
+
+    // --- LÓGICA PARA O BOTÃO SCROLL-TO-TOP (AHORA FUNCIONAL) ---
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+    if (scrollTopBtn) {
+        // Mostrar o botão quando o utilizador desce 300px na página
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                if (!scrollTopBtn.classList.contains('visible')) {
+                    scrollTopBtn.classList.add('visible');
+                }
+            } else {
+                if (scrollTopBtn.classList.contains('visible')) {
+                    scrollTopBtn.classList.remove('visible');
+                }
+            }
+        });
+
+        // Scroll suave para o topo quando o botão é clicado
+        scrollTopBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         });
     }
 });
