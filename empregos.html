@@ -50,8 +50,12 @@
         <section id="vagas">
             <div class="container">
                 <h2 class="section-title">Oportunidades de Emprego</h2>
-                <div class="causas-grid">
 
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Procurar por vaga, ex: 'limpeza', 'lisboa'...">
+                </div>
+
+                <div class="causas-grid">
                     <div class="card-causa">
                         <div class="card-image-container">
                             <img src="img_servicos/limpeza.png" alt="Serviços de Limpeza" class="card-image"
@@ -119,6 +123,10 @@
                             <p class="card-description">Tel. <a href="tel:+351912345681">912 345 681</a></p>
                         </div>
                     </div>
+                </div>
+                
+                <div id="no-results-message">
+                    <p>Não foram encontrados resultados para a sua pesquisa.</p>
                 </div>
             </div>
         </section>

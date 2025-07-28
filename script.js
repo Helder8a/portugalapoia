@@ -15,9 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- LÓGICA DO FORMULÁRIO DE ANÚNCIOS ---
-    // Eliminada porque Netlify Forms se encarga ahora de la captura.
-
     // --- LÓGICA PARA O MODAL DE DONATIVO ---
     const modal = document.getElementById('donativo-modal');
     const openModalBtns = document.querySelectorAll('.apoia-projeto-btn');
@@ -41,11 +38,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- LÓGICA PARA O BOTÃO SCROLL-TO-TOP (AHORA FUNCIONAL) ---
+    // --- LÓGICA PARA O BOTÃO SCROLL-TO-TOP ---
     const scrollTopBtn = document.getElementById('scrollTopBtn');
 
     if (scrollTopBtn) {
-        // Mostrar o botão quando o utilizador desce 300px na página
         window.addEventListener('scroll', () => {
             if (window.scrollY > 300) {
                 if (!scrollTopBtn.classList.contains('visible')) {
@@ -58,7 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Scroll suave para o topo quando o botão é clicado
         scrollTopBtn.addEventListener('click', (e) => {
             e.preventDefault();
             window.scrollTo({
@@ -67,6 +62,35 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    // --- LÓGICA DO BUSCADOR ---
+    const searchInput = document.getElementById('search-input');
+    const noResultsMessage = document.getElementById('no-results-message');
+
+    if (searchInput) {
+        searchInput.addEventListener('keyup', () => {
+            const filter = searchInput.value.toLowerCase();
+            const cards = document.querySelectorAll('.causas-grid .card-causa');
+            let found = false;
+
+            cards.forEach(card => {
+                const title = card.querySelector('.card-title').textContent.toLowerCase();
+                const description = card.querySelector('.card-description').textContent.toLowerCase();
+
+                if (title.includes(filter) || description.includes(filter)) {
+                    card.style.display = 'flex';
+                    found = true;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            if (noResultsMessage) {
+                noResultsMessage.style.display = found ? 'none' : 'block';
+            }
+        });
+    }
+
 });
 
 // --- LÓGICA PARA O PRELOADER ---
