@@ -112,6 +112,41 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- LÓGICA DE CONFIRMAÇÃO DE ENVIO DE ANÚNCIO ---
+    const formAnuncio = document.getElementById('form-anuncio');
+    if (formAnuncio) {
+        formAnuncio.addEventListener('submit', e => {
+            e.preventDefault();
+
+            const formData = new FormData(formAnuncio);
+            const formSuccessMessage = document.getElementById('form-success-message');
+
+            // Usar 'fetch' para submeter para Netlify de forma assíncrona
+            fetch('/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams(formData).toString()
+            })
+            .then(() => {
+                if (formSuccessMessage) {
+                    formSuccessMessage.style.display = 'block';
+                }
+                formAnuncio.reset(); // Limpa os campos do formulário
+                window.scrollTo({ top: formAnuncio.offsetTop, behavior: 'smooth' }); // Rola a página para a mensagem
+
+                // Esconde a mensagem após 6 segundos
+                setTimeout(() => {
+                    if (formSuccessMessage) {
+                        formSuccessMessage.style.display = 'none';
+                    }
+                }, 6000);
+            })
+            .catch(error => {
+                alert("Ocorreu um erro ao submeter o formulário. Por favor, tente novamente.");
+                console.error(error);
+            });
+        });
+    }
 });
 
 // --- LÓGICA PARA O PRELOADER ---
