@@ -1,4 +1,10 @@
-User-agent: *
-Disallow:
+# --------------------------------------------------------
+# robots.txt para https://www.portugalapoia.com/
+# --------------------------------------------------------
 
+# Permitir que todos os bots rastreiem todo o site
+User-agent: *
+Allow: /
+
+# Localização do Sitemap
 Sitemap: https://www.portugalapoia.com/sitemap.xml
