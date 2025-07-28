@@ -735,3 +735,25 @@ section {
         padding: 12px;
     }
 }
+
+/* --- ESTILOS PARA A SECÇÃO INSTAGRAM --- */
+#instagram-cta {
+    background-color: #f8f9fa;
+    text-align: center;
+}
+
+.instagram-cta-content {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.instagram-cta-content h2 {
+    font-size: 2rem;
+    color: var(--color-primary);
+    margin-bottom: 15px;
+}
+
+.instagram-cta-content p {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+}
