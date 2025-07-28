@@ -63,87 +63,175 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- LÓGICA DO BUSCADOR COM FILTROS ---
+    // --- LÓGICA DO BUSCADOR COM FILTROS E CARREGAR MAIS ---
     const searchInput = document.getElementById('search-input');
     const locationFilter = document.getElementById('location-filter');
-    const typeFilter = document.getElementById('type-filter');
-    const cityFilter = document.getElementById('city-filter');
-    const serviceFilter = document.getElementById('service-filter');
+    const typeFilter = document.getElementById('type-filter'); // Para Habitação
+    const cityFilter = document.getElementById('city-filter'); // Para Serviços y Empregos (en empregos es location-filter)
+    const serviceFilter = document.getElementById('service-filter'); // Para Serviços
+    const itemTypeFilter = document.getElementById('item-type-filter'); // Para Doações
     const noResultsMessage = document.getElementById('no-results-message');
+    const loadMoreBtn = document.getElementById('load-more-btn');
 
-    function filterCards() {
+    let cardsToShowInitially = 3; // **AJUSTE AQUI: Número de tarjetas a mostrar al inicio**
+    let cardsToLoadPerClick = 3;  // Número de tarjetas a cargar con cada clic
+
+    let currentVisibleCards = cardsToShowInitially;
+
+
+    function filterAndDisplayCards() {
         const filterText = searchInput ? searchInput.value.toLowerCase() : '';
-        const locationValue = locationFilter ? locationFilter.value : '';
-        const typeValue = typeFilter ? typeFilter.value : '';
-        const cityValue = cityFilter ? cityFilter.value : '';
-        const serviceValue = serviceFilter ? serviceFilter.value : '';
+        const locationValue = locationFilter ? locationFilter.value.toLowerCase() : ''; // Para Empregos y Doações
+        const typeValue = typeFilter ? typeFilter.value.toLowerCase() : ''; // Para Habitação
+        const cityValue = cityFilter ? cityFilter.value.toLowerCase() : ''; // Para Serviços y Habitação
+        const serviceValue = serviceFilter ? serviceFilter.value.toLowerCase() : ''; // Para Serviços
+        const itemTypeValue = itemTypeFilter ? itemTypeFilter.value.toLowerCase() : ''; // Para Doações
 
-        const cards = document.querySelectorAll('.causas-grid .card-causa');
-        let found = false;
+        const allCards = document.querySelectorAll('.causas-grid .card-causa');
+        let matchingCards = [];
 
-        cards.forEach(card => {
+        allCards.forEach(card => {
             const title = card.querySelector('.card-title').textContent.toLowerCase();
             const description = card.querySelector('.card-description').textContent.toLowerCase();
-            const cardLocation = card.dataset.location || '';
-            const cardType = card.dataset.type || '';
-            const cardCity = card.dataset.city || '';
-            const cardService = card.dataset.service || '';
+            const cardLocation = card.dataset.location ? card.dataset.location.toLowerCase() : '';
+            const cardType = card.dataset.type ? card.dataset.type.toLowerCase() : '';
+            const cardCity = card.dataset.city ? card.dataset.city.toLowerCase() : '';
+            const cardService = card.dataset.service ? card.dataset.service.toLowerCase() : '';
+            const cardItemType = card.dataset.itemType ? card.dataset.itemType.toLowerCase() : '';
 
             const textMatch = title.includes(filterText) || description.includes(filterText);
-            const locationMatch = locationValue === '' || cardLocation === locationValue;
-            const typeMatch = typeValue === '' || cardType === typeValue;
-            const cityMatch = cityValue === '' || cardCity === cityValue;
-            const serviceMatch = serviceValue === '' || cardService === serviceValue;
 
-            if (textMatch && locationMatch && typeMatch && cityMatch && serviceMatch) {
-                card.style.display = 'flex';
-                found = true;
-            } else {
-                card.style.display = 'none';
+            let filterMatch = true;
+
+            // Lógica de filtrado específica para cada página
+            if (window.location.pathname.includes('doacoes.html')) {
+                filterMatch = (locationValue === '' || cardLocation === locationValue) &&
+                              (itemTypeValue === '' || cardItemType === itemTypeValue);
+            } else if (window.location.pathname.includes('empregos.html')) {
+                filterMatch = (locationValue === '' || cardLocation === locationValue);
+            } else if (window.location.pathname.includes('servicos.html')) {
+                filterMatch = (serviceValue === '' || cardService === serviceValue) &&
+                              (cityValue === '' || cardCity === cityValue);
+            } else if (window.location.pathname.includes('habitacao.html')) {
+                filterMatch = (typeValue === '' || cardType === typeValue) &&
+                              (cityValue === '' || cardCity === cityValue);
+            }
+
+            if (textMatch && filterMatch) {
+                matchingCards.push(card);
             }
         });
 
+        // Ocultar todas las tarjetas primero
+        allCards.forEach(card => card.style.display = 'none');
+
+        // Mostrar solo las tarjetas que coinciden y hasta el límite actual
+        let visibleCount = 0;
+        matchingCards.forEach((card, index) => {
+            if (index < currentVisibleCards) {
+                card.style.display = 'flex';
+                visibleCount++;
+            }
+        });
+
+        // Mostrar u ocultar el mensaje de "no resultados"
         if (noResultsMessage) {
-            noResultsMessage.style.display = found ? 'none' : 'block';
+            noResultsMessage.style.display = matchingCards.length === 0 ? 'block' : 'none';
+        }
+
+        // Mostrar u ocultar el botón "cargar más"
+        if (loadMoreBtn) {
+            if (currentVisibleCards < matchingCards.length) {
+                loadMoreBtn.style.display = 'block';
+            } else {
+                loadMoreBtn.style.display = 'none';
+            }
         }
     }
 
-    if (searchInput) {
-        searchInput.addEventListener('keyup', filterCards);
-    }
-    if(locationFilter){
-        locationFilter.addEventListener('change', filterCards);
-    }
-    if(typeFilter){
-        typeFilter.addEventListener('change', filterCards);
-    }
-    if(cityFilter){
-        cityFilter.addEventListener('change', filterCards);
-    }
-    if(serviceFilter){
-        serviceFilter.addEventListener('change', filterCards);
-    }
+    // Inicializar la visualización de tarjetas al cargar la página
+    filterAndDisplayCards();
 
+    // Event listeners para filtros
+    // Al cambiar un filtro, reiniciar la cuenta de tarjetas visibles
+    if (searchInput) searchInput.addEventListener('keyup', () => { currentVisibleCards = cardsToShowInitially; filterAndDisplayCards(); });
+    if (locationFilter) locationFilter.addEventListener('change', () => { currentVisibleCards = cardsToShowInitially; filterAndDisplayCards(); });
+    if (typeFilter) typeFilter.addEventListener('change', () => { currentVisibleCards = cardsToShowInitially; filterAndDisplayCards(); });
+    if (cityFilter) cityFilter.addEventListener('change', () => { currentVisibleCards = cardsToShowInitially; filterAndDisplayCards(); });
+    if (serviceFilter) serviceFilter.addEventListener('change', () => { currentVisibleCards = cardsToShowInitially; filterAndDisplayCards(); });
+    if (itemTypeFilter) itemTypeFilter.addEventListener('change', () => { currentVisibleCards = cardsToShowInitially; filterAndDisplayCards(); });
+
+    // Event listener para el botón "cargar más"
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', () => {
+            currentVisibleCards += cardsToLoadPerClick;
+            filterAndDisplayCards();
+        });
+    }
 
     // --- LÓGICA PARA O FORMULÁRIO INTELIGENTE ---
     const tipoAnuncioSelector = document.getElementById('tipo-anuncio-selector');
     const camposHabitacao = document.getElementById('campos-habitacao');
-    const precoInput = document.getElementById('preco_habitacao');
-    const cidadeInput = document.getElementById('cidade_habitacao');
+    const camposEmprego = document.getElementById('campos-emprego'); // Nuevo
+    const camposServico = document.getElementById('campos-servico'); // Nuevo
+
+    // Campos de habitacao
+    const precoHabitacaoInput = document.getElementById('preco_habitacao');
+    const cidadeHabitacaoInput = document.getElementById('cidade_habitacao');
+
+    // Campos de emprego
+    const tipoContratoInput = document.getElementById('tipo_contrato');
+    const experienciaEmpregoInput = document.getElementById('experiencia_emprego');
+    const localEmpregoInput = document.getElementById('local_emprego');
+
+    // Campos de serviço
+    const categoriaServicoInput = document.getElementById('categoria_servico');
+    const areaAtuacaoServicoInput = document.getElementById('area_atuacao_servico');
+
+    const formSuccessMessage = document.getElementById('form-success-message'); // Definido globalmente
+    const formErrorMessage = document.getElementById('form-error-message'); // Definido globalmente
+
+    const resetFormFields = () => {
+        // Ocultar todos los campos específicos y eliminar el atributo 'required'
+        camposHabitacao.style.display = 'none';
+        precoHabitacaoInput.required = false;
+        cidadeHabitacaoInput.required = false;
+
+        camposEmprego.style.display = 'none';
+        tipoContratoInput.required = false;
+        experienciaEmpregoInput.required = false;
+        localEmpregoInput.required = false;
+
+        camposServico.style.display = 'none';
+        categoriaServicoInput.required = false;
+        areaAtuacaoServicoInput.required = false;
+    };
 
 
     if (tipoAnuncioSelector) {
         tipoAnuncioSelector.addEventListener('change', (event) => {
-            if (event.target.value === 'habitacao') {
-                camposHabitacao.style.display = 'block';
-                precoInput.required = true;
-                cidadeInput.required = true;
-            } else {
-                camposHabitacao.style.display = 'none';
-                precoInput.required = false;
-                cidadeInput.required = false;
+            resetFormFields(); // Resetear todos antes de mostrar los correctos
+
+            switch (event.target.value) {
+                case 'habitacao':
+                    camposHabitacao.style.display = 'block';
+                    precoHabitacaoInput.required = true;
+                    cidadeHabitacaoInput.required = true;
+                    break;
+                case 'emprego':
+                    camposEmprego.style.display = 'block';
+                    tipoContratoInput.required = true;
+                    localEmpregoInput.required = true;
+                    break;
+                case 'servico':
+                    camposServico.style.display = 'block';
+                    categoriaServicoInput.required = true;
+                    areaAtuacaoServicoInput.required = true;
+                    break;
+                // 'artigos' no necesita campos específicos adicionales requeridos
             }
         });
+        resetFormFields(); // Ejecutar al cargar la página para asegurar el estado inicial
     }
 
     // --- LÓGICA DE CONFIRMAÇÃO DE ENVIO DE ANÚNCIO ---
@@ -152,33 +240,53 @@ document.addEventListener('DOMContentLoaded', () => {
         formAnuncio.addEventListener('submit', e => {
             e.preventDefault();
 
-            const formData = new FormData(formAnuncio);
-            const formSuccessMessage = document.getElementById('form-success-message');
+            // Ocultar mensajes anteriores
+            formSuccessMessage.style.display = 'none';
+            formErrorMessage.style.display = 'none';
 
+            const formData = new FormData(formAnuncio);
+            
             fetch('/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: new URLSearchParams(formData).toString()
             })
             .then(() => {
-                if (formSuccessMessage) {
-                    formSuccessMessage.style.display = 'block';
-                }
+                formSuccessMessage.style.display = 'block';
                 formAnuncio.reset(); 
+                resetFormFields(); // Resetear también la visibilidad de los campos dinámicos
                 window.scrollTo({ top: formAnuncio.offsetTop, behavior: 'smooth' });
 
                 setTimeout(() => {
-                    if (formSuccessMessage) {
-                        formSuccessMessage.style.display = 'none';
-                    }
+                    formSuccessMessage.style.display = 'none';
                 }, 6000);
             })
             .catch(error => {
-                alert("Ocorreu um erro ao submeter o formulário. Por favor, tente novamente.");
+                formErrorMessage.style.display = 'block';
                 console.error(error);
+                setTimeout(() => {
+                    formErrorMessage.style.display = 'none';
+                }, 6000);
             });
         });
     }
+
+    // --- Lógica para previsualización de imagen (básica) ---
+    const imagemAnuncioInput = document.getElementById('imagem_anuncio');
+    const imagePreviewMessage = document.getElementById('image-preview-message');
+
+    if (imagemAnuncioInput && imagePreviewMessage) {
+        imagemAnuncioInput.addEventListener('change', () => {
+            if (imagemAnuncioInput.files && imagemAnuncioInput.files[0]) {
+                imagePreviewMessage.textContent = `Arquivo selecionado: ${imagemAnuncioInput.files[0].name}`;
+                imagePreviewMessage.style.display = 'block';
+            } else {
+                imagePreviewMessage.textContent = ''; // Limpiar mensaje si no hay archivo
+                imagePreviewMessage.style.display = 'none';
+            }
+        });
+    }
+
 
     // --- LÓGICA PARA A ETIQUETA "NOVO" ---
     const checkNewTags = () => {

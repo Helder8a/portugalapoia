@@ -81,6 +81,54 @@
                             </div>
                         </div>
 
+                        <div id="campos-emprego" style="display: none;">
+                            <div class="form-group">
+                                <label for="tipo_contrato">Tipo de Contrato</label>
+                                <select id="tipo_contrato" name="tipo_contrato">
+                                    <option value="">Selecione o tipo de contrato</option>
+                                    <option value="Full-time">Full-time</option>
+                                    <option value="Part-time">Part-time</option>
+                                    <option value="Estágio">Estágio</option>
+                                    <option value="Temporário">Temporário</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="experiencia_emprego">Experiência Requerida (opcional)</label>
+                                <input type="text" id="experiencia_emprego" name="experiencia_emprego" placeholder="Ex: 2 anos em Vendas">
+                            </div>
+                            <div class="form-group">
+                                <label for="local_emprego">Local de Trabalho (Cidade)</label>
+                                <input type="text" id="local_emprego" name="local_emprego" placeholder="Ex: Lisboa" >
+                            </div>
+                        </div>
+
+                        <div id="campos-servico" style="display: none;">
+                            <div class="form-group">
+                                <label for="categoria_servico">Categoria do Serviço</label>
+                                <select id="categoria_servico" name="categoria_servico">
+                                    <option value="">Selecione a categoria</option>
+                                    <option value="Administração">Administração de Empresas</option>
+                                    <option value="Arquitetura">Arquitetura</option>
+                                    <option value="Advocacia">Advocacia</option>
+                                    <option value="Carpintaria">Carpintaria</option>
+                                    <option value="Cozinha">Cozinha</option>
+                                    <option value="Design">Design</option>
+                                    <option value="Engenharia">Engenharia</option>
+                                    <option value="Instalações">Instalações</option>
+                                    <option value="Obras">Obras e Construção</option>
+                                    <option value="Saúde">Saúde</option>
+                                    <option value="Tecnologia">Tecnologia</option>
+                                    <option value="Transporte">Transporte</option>
+                                    <option value="Outros">Outros</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="area_atuacao_servico">Área de Atuação (Cidade/Região)</label>
+                                <input type="text" id="area_atuacao_servico" name="area_atuacao_servico" placeholder="Ex: Porto e arredores">
+                            </div>
+                        </div>
+
+
                         <div class="form-group">
                             <label for="descricao">3. Descrição Detalhada</label>
                             <textarea id="descricao" name="descricao" rows="6"
@@ -95,6 +143,7 @@
                         <div class="form-group">
                             <label for="imagem_anuncio">5. Imagem Principal (Opcional)</label>
                             <input type="file" id="imagem_anuncio" name="imagem_anuncio" accept="image/png, image/jpeg">
+                            <p id="image-preview-message" style="display:none; margin-top: 10px; font-size: 0.9em; color: #555;"></p>
                         </div>
                     </div>
 
@@ -104,6 +153,9 @@
 
                 <div id="form-success-message" style="display: none; padding: 15px; margin-top: 20px; border-radius: var(--border-radius); color: white; background-color: var(--color-accent); text-align: center;">
                     Obrigado, o seu anuncio foi enviado para revisão.
+                </div>
+                <div id="form-error-message" style="display: none; padding: 15px; margin-top: 20px; border-radius: var(--border-radius); color: white; background-color: #c0392b; text-align: center;">
+                    Ocorreu um erro ao submeter o formulário. Por favor, tente novamente.
                 </div>
             </div>
         </section>

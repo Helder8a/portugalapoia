@@ -821,3 +821,64 @@ section {
     font-size: 1.1rem;
     margin-bottom: 25px;
 }
+
+/* --- NOVOS ESTILOS PARA CATEGORIAS DE ACESSO RÁPIDO --- */
+#quick-access-categories {
+    padding: 80px 0; /* Asegura un padding consistente */
+}
+
+.category-links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.category-link-card {
+    background-color: var(--color-background);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 30px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--color-text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-height: 220px; /* Altura mínima para uniformidad */
+}
+
+.category-link-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+}
+
+.category-icon {
+    width: 70px; /* Tamaño del icono */
+    height: 70px; /* Asegura que el icono sea cuadrado */
+    margin-bottom: 15px;
+    object-fit: contain; /* Asegura que la imagen se ajuste sin recortarse */
+}
+
+.category-link-card h3 {
+    font-size: 1.4rem;
+    color: var(--color-primary);
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-family: var(--font-headings);
+}
+
+.category-link-card p {
+    font-size: 0.95rem;
+    color: var(--color-text);
+    line-height: 1.5;
+    flex-grow: 1; /* Permite que el párrafo ocupe el espacio restante */
+}
+
+/* Media queries para la nueva sección */
+@media (max-width: 768px) {
+    .category-links-grid {
+        grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+    }
+}

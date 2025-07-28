@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="Explore os pedidos de artigos de várias causas em Portugal. Encontre a quem ajudar com roupas, alimentos, material escolar e muito mais.">
+        content="Explore os pedidos de artigos de várias causas em Portugal. Encontre a quem ajudar com roupas, alimentos, material escolar y mucho más.">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500&display=swap"
         rel="stylesheet">
@@ -43,12 +43,38 @@
                 <h2 class="section-title">Pedidos de Doação de Artigos</h2>
 
                 <div class="search-container">
-                    <input type="text" id="search-input"
-                        placeholder="Procurar por artigo, ex: 'roupa', 'material escolar'...">
+                    <div class="search-box">
+                        <div class="search-input-group">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="search-input" placeholder="Procurar por artigo, ex: 'roupa', 'material escolar'...">
+                        </div>
+                        <div class="filter-group">
+                            <select id="item-type-filter">
+                                <option value="">Todos os Tipos</option>
+                                <option value="Roupa">Roupa</option>
+                                <option value="Alimentos">Alimentos</option>
+                                <option value="Material Escolar">Material Escolar</option>
+                                <option value="Móveis">Móveis</option>
+                                <option value="Eletrónica">Eletrónica</option>
+                                <option value="Brinquedos">Brinquedos</option>
+                                <option value="Outros">Outros</option>
+                            </select>
+                            <select id="location-filter">
+                                <option value="">Todas as Cidades</option>
+                                <option value="Lisboa">Lisboa</option>
+                                <option value="Porto">Porto</option>
+                                <option value="Coimbra">Coimbra</option>
+                                <option value="Faro">Faro</option>
+                                <option value="Braga">Braga</option>
+                                <option value="Setúbal">Setúbal</option>
+                                <option value="Aveiro">Aveiro</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="causas-grid">
-                    <div class="card-causa text-only">
+                <div id="listing-container" class="causas-grid">
+                    <div class="card-causa text-only" data-item-type="Roupa" data-location="Porto">
                         <div class="card-header">
                             <span class="card-tag card-tag-artigos">Pedido de Artigos</span>
                             <span class="card-id">#DOA-001</span>
@@ -63,7 +89,7 @@
                         </div>
                     </div>
 
-                    <div class="card-causa">
+                    <div class="card-causa" data-item-type="Material Escolar" data-location="Lisboa">
                         <div class="card-image-container">
                             <img src="images/img_portada.webp" alt="Material escolar como cadernos e lápis"
                                 class="card-image" loading="lazy">
@@ -81,11 +107,27 @@
                                 class="button button-primary button-fullwidth">Quero Doar Material</a>
                         </div>
                     </div>
+                    <div class="card-causa" data-item-type="Alimentos" data-location="Braga">
+                        <div class="card-image-container">
+                            <img src="img_servicos/ayudante_cocina.png" alt="Cesto de Alimentos" class="card-image" loading="lazy">
+                        </div>
+                        <div class="card-header">
+                            <span class="card-tag card-tag-artigos">Pedido de Artigos</span>
+                            <span class="card-id">#DOA-003</span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Cesto de Alimentos para Famílias</h3>
+                            <p class="card-description">Associação em Braga precisa de alimentos não perecíveis para cestos de Natal e doações regulares.</p>
+                            <a href="mailto:alimentosbraga@email.com?subject=Resposta ao anúncio: Cesto de Alimentos (#DOA-003)"
+                                class="button button-primary button-fullwidth">Quero Doar Alimentos</a>
+                        </div>
+                    </div>
                 </div>
 
                 <div id="no-results-message">
                     <p>Não foram encontrados resultados para a sua pesquisa.</p>
                 </div>
+                 <button id="load-more-btn" class="button button-primary" style="display: block; margin: 30px auto;">Ver Mais</button>
             </div>
         </section>
     </main>
