@@ -44,7 +44,7 @@
                 <h2 class="section-title">Publique o seu Anúncio Gratuito</h2>
                 <p>A sua publicação será revista e adicionada à secção correspondente. Preencha todos os campos.</p>
 
-                <form name="anuncio" id="form-anuncio" class="donation-form" data-netlify="true"
+                <form name="anuncio-inteligente" id="form-anuncio" class="donation-form" data-netlify="true"
                     netlify-honeypot="bot-field">
                     <p style="display: none;">
                         <label>
@@ -52,46 +52,52 @@
                         </label>
                     </p>
                     <div class="form-group">
-                        <label>Qual o tipo de anúncio que quer publicar?</label>
-                        <div class="tipo-anuncio-selector">
-                            <input type="radio" id="tipo-causa" name="tipo_anuncio" value="Pedido de Artigos" checked>
-                            <label for="tipo-causa">Pedido de Artigos</label>
-                            <br>
-                            <input type="radio" id="tipo-vaga" name="tipo_anuncio" value="Vaga de Emprego">
-                            <label for="tipo-vaga">Vaga de Emprego</label>
-                            <br>
-                            <input type="radio" id="tipo-servico" name="tipo_anuncio" value="Oferta de Serviço">
-                            <label for="tipo-servico">Oferta de Serviço Técnico</label>
-                            <br>
-                            <input type="radio" id="tipo-habitacao" name="tipo_anuncio" value="Arrendamento de Imóvel">
-                            <label for="tipo-habitacao">Arrendamento de Imóvel</label>
+                        <label>1. Qual o tipo de anúncio que quer publicar?</label>
+                        <select name="tipo_anuncio" id="tipo-anuncio-selector" class="form-group" style="width: 100%; padding: 14px; border: 1px solid var(--color-border); border-radius: var(--border-radius); font-size: 1rem;">
+                            <option value="artigos">Pedido de Artigos</option>
+                            <option value="emprego">Vaga de Emprego</option>
+                            <option value="servico">Oferta de Serviço Técnico</option>
+                            <option value="habitacao">Arrendamento de Imóvel</option>
+                        </select>
+                    </div>
+
+                    <div id="campos-comuns">
+                        <div class="form-group">
+                            <label for="titulo_anuncio">2. Título do Anúncio</label>
+                            <input type="text" id="titulo_anuncio" name="titulo_anuncio"
+                                placeholder="Ex: Apartamento T2 em Lisboa ou Precisa-se de Pintor" required>
+                        </div>
+
+                        <div id="campos-habitacao" style="display: none;">
+                             <div class="form-group">
+                                <label for="preco_habitacao">Preço do Arrendamento (€/mês)</label>
+                                <input type="number" id="preco_habitacao" name="preco_habitacao" placeholder="Ex: 850">
+                            </div>
+                             <div class="form-group">
+                                <label for="cidade_habitacao">Cidade</label>
+                                <input type="text" id="cidade_habitacao" name="cidade_habitacao" placeholder="Ex: Lisboa">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="descricao">3. Descrição Detalhada</label>
+                            <textarea id="descricao" name="descricao" rows="6"
+                                placeholder="Descreva o seu anúncio com o máximo de detalhe possível."
+                                required></textarea>
+                        </div>
+                         <div class="form-group">
+                            <label for="contacto">4. O seu Contacto (Email ou Telefone)</label>
+                            <input type="text" id="contacto" name="contacto"
+                                placeholder="O seu melhor email ou telefone para o contactarem" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="imagem_anuncio">5. Imagem Principal (Opcional)</label>
+                            <input type="file" id="imagem_anuncio" name="imagem_anuncio" accept="image/png, image/jpeg">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="titulo_anuncio">Título do Anúncio</label>
-                        <input type="text" id="titulo_anuncio" name="titulo_anuncio"
-                            placeholder="Ex: Apartamento T2 em Lisboa ou Precisa-se de Pintor" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="contacto">O seu Contacto (Email ou Telefone)</label>
-                        <input type="text" id="contacto" name="contacto"
-                            placeholder="O seu melhor email ou telefone para o contactarem" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="descricao">Descrição Detalhada</label>
-                        <textarea id="descricao" name="descricao" rows="6"
-                            placeholder="Se for um imóvel, inclua o valor do arrendamento. Para outros anúncios, detalhe o seu pedido ou a vaga."
-                            required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="imagem_anuncio">Imagem do Anúncio (Opcional)</label>
-                        <input type="file" id="imagem_anuncio" name="imagem_anuncio" accept="image/png, image/jpeg">
-                        <small>Pode enviar uma imagem que represente o seu anúncio.</small>
-                    </div>
-                    <button type="submit" class="button button-primary button-fullwidth">Enviar Pedido de
-                        Publicação</button>
+                    
+                    <button type="submit" class="button button-primary button-fullwidth">Enviar Pedido de Publicação</button>
                 </form>
-                <div id="form-message" class="hidden"></div>
             </div>
         </section>
     </main>

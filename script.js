@@ -91,6 +91,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- LÓGICA PARA O FORMULÁRIO INTELIGENTE ---
+    const tipoAnuncioSelector = document.getElementById('tipo-anuncio-selector');
+    const camposHabitacao = document.getElementById('campos-habitacao');
+    const precoInput = document.getElementById('preco_habitacao');
+    const cidadeInput = document.getElementById('cidade_habitacao');
+
+
+    if (tipoAnuncioSelector) {
+        tipoAnuncioSelector.addEventListener('change', (event) => {
+            if (event.target.value === 'habitacao') {
+                camposHabitacao.style.display = 'block';
+                precoInput.required = true;
+                cidadeInput.required = true;
+            } else {
+                camposHabitacao.style.display = 'none';
+                precoInput.required = false;
+                cidadeInput.required = false;
+            }
+        });
+    }
+
 });
 
 // --- LÓGICA PARA O PRELOADER ---
