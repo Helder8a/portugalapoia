@@ -63,33 +63,67 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- LÓGICA DO BUSCADOR ---
+    // --- LÓGICA DO BUSCADOR COM FILTROS ---
     const searchInput = document.getElementById('search-input');
+    const locationFilter = document.getElementById('location-filter');
+    const typeFilter = document.getElementById('type-filter');
+    const cityFilter = document.getElementById('city-filter');
+    const serviceFilter = document.getElementById('service-filter');
     const noResultsMessage = document.getElementById('no-results-message');
 
-    if (searchInput) {
-        searchInput.addEventListener('keyup', () => {
-            const filter = searchInput.value.toLowerCase();
-            const cards = document.querySelectorAll('.causas-grid .card-causa');
-            let found = false;
+    function filterCards() {
+        const filterText = searchInput ? searchInput.value.toLowerCase() : '';
+        const locationValue = locationFilter ? locationFilter.value : '';
+        const typeValue = typeFilter ? typeFilter.value : '';
+        const cityValue = cityFilter ? cityFilter.value : '';
+        const serviceValue = serviceFilter ? serviceFilter.value : '';
 
-            cards.forEach(card => {
-                const title = card.querySelector('.card-title').textContent.toLowerCase();
-                const description = card.querySelector('.card-description').textContent.toLowerCase();
+        const cards = document.querySelectorAll('.causas-grid .card-causa');
+        let found = false;
 
-                if (title.includes(filter) || description.includes(filter)) {
-                    card.style.display = 'flex';
-                    found = true;
-                } else {
-                    card.style.display = 'none';
-                }
-            });
+        cards.forEach(card => {
+            const title = card.querySelector('.card-title').textContent.toLowerCase();
+            const description = card.querySelector('.card-description').textContent.toLowerCase();
+            const cardLocation = card.dataset.location || '';
+            const cardType = card.dataset.type || '';
+            const cardCity = card.dataset.city || '';
+            const cardService = card.dataset.service || '';
 
-            if (noResultsMessage) {
-                noResultsMessage.style.display = found ? 'none' : 'block';
+            const textMatch = title.includes(filterText) || description.includes(filterText);
+            const locationMatch = locationValue === '' || cardLocation === locationValue;
+            const typeMatch = typeValue === '' || cardType === typeValue;
+            const cityMatch = cityValue === '' || cardCity === cityValue;
+            const serviceMatch = serviceValue === '' || cardService === serviceValue;
+
+            if (textMatch && locationMatch && typeMatch && cityMatch && serviceMatch) {
+                card.style.display = 'flex';
+                found = true;
+            } else {
+                card.style.display = 'none';
             }
         });
+
+        if (noResultsMessage) {
+            noResultsMessage.style.display = found ? 'none' : 'block';
+        }
     }
+
+    if (searchInput) {
+        searchInput.addEventListener('keyup', filterCards);
+    }
+    if(locationFilter){
+        locationFilter.addEventListener('change', filterCards);
+    }
+    if(typeFilter){
+        typeFilter.addEventListener('change', filterCards);
+    }
+    if(cityFilter){
+        cityFilter.addEventListener('change', filterCards);
+    }
+    if(serviceFilter){
+        serviceFilter.addEventListener('change', filterCards);
+    }
+
 
     // --- LÓGICA PARA O FORMULÁRIO INTELIGENTE ---
     const tipoAnuncioSelector = document.getElementById('tipo-anuncio-selector');
@@ -121,7 +155,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData(formAnuncio);
             const formSuccessMessage = document.getElementById('form-success-message');
 
-            // Usar 'fetch' para submeter para Netlify de forma assíncrona
             fetch('/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -131,10 +164,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (formSuccessMessage) {
                     formSuccessMessage.style.display = 'block';
                 }
-                formAnuncio.reset(); // Limpa os campos do formulário
-                window.scrollTo({ top: formAnuncio.offsetTop, behavior: 'smooth' }); // Rola a página para a mensagem
+                formAnuncio.reset(); 
+                window.scrollTo({ top: formAnuncio.offsetTop, behavior: 'smooth' });
 
-                // Esconde a mensagem após 6 segundos
                 setTimeout(() => {
                     if (formSuccessMessage) {
                         formSuccessMessage.style.display = 'none';
@@ -147,6 +179,31 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    // --- LÓGICA PARA A ETIQUETA "NOVO" ---
+    const checkNewTags = () => {
+        const cards = document.querySelectorAll('.card-causa');
+        const now = new Date();
+        const fortyEightHours = 48 * 60 * 60 * 1000; // 48 horas em milissegundos
+
+        cards.forEach(card => {
+            const pubDateString = card.dataset.publicationDate;
+            if (pubDateString) {
+                const pubDate = new Date(pubDateString);
+                const timeDiff = now.getTime() - pubDate.getTime();
+
+                if (timeDiff <= fortyEightHours) {
+                    const newTag = card.querySelector('.new-tag');
+                    if (newTag) {
+                        newTag.style.display = 'block';
+                    }
+                }
+            }
+        });
+    };
+
+    checkNewTags(); // Executa a função ao carregar a página
+
 });
 
 // --- LÓGICA PARA O PRELOADER ---

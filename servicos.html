@@ -2,12 +2,13 @@
 <html lang="pt">
 
 <head>
-    <title>Diretório de Serviços - PortugalApoia.com</title>
+    <title>Serviços Técnicos e Profissionais em Portugal | PortugalApoia</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="Encontre serviços de eletricistas, canalizadores, reparação de computadores e outros profissionais na sua comunidade.">
+        content="Encontre arquitetos, engenheiros, advogados, designers, programadores, eletricistas, e mais serviços profissionais em Portugal. Anuncie gratuitamente.">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500&display=swap"
         rel="stylesheet">
     <link rel="icon" href="images/favicon.ico.png" type="image/png">
@@ -25,7 +26,7 @@
                 <ul>
                     <li><a href="doacoes.html">Doação de Artigos</a></li>
                     <li><a href="empregos.html">Emprego</a></li>
-                    <li><a href="servicos.html" class="active">Serviços Técnicos</a></li>
+                    <li><a href="servicos.html" class="active">Serviços</a></li>
                     <li><a href="habitacao.html">Habitação</a></li>
                     <li><a href="publicar.html">Publicar Anúncio</a></li>
                 </ul>
@@ -40,51 +41,178 @@
     <main>
         <section id="servicos">
             <div class="container">
-                <h2 class="section-title">Diretório de Serviços Técnicos</h2>
+                <h2 class="section-title">Serviços Técnicos e Profissionais</h2>
 
                 <div class="search-container">
-                    <input type="text" id="search-input" placeholder="Procurar por serviço, ex: 'pintor', 'obras'...">
+                    <div class="search-box">
+                        <div class="search-input-group">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="search-input" placeholder="Procurar por serviço, ex: 'arquiteto'...">
+                        </div>
+                        <div class="filter-group">
+                            <select id="service-filter">
+                                <option value="">Todas as Categorias</option>
+                                <option value="Administração">Administração de Empresas</option>
+                                <option value="Arquitetura">Arquitetura</option>
+                                <option value="Advocacia">Advocacia</option>
+                                <option value="Carpintaria">Carpintaria</option>
+                                <option value="Cozinha">Cozinha</option>
+                                <option value="Design">Design</option>
+                                <option value="Engenharia">Engenharia</option>
+                                <option value="Instalações">Instalações</option>
+                                <option value="Obras">Obras e Construção</option>
+                                <option value="Saúde">Saúde</option>
+                                <option value="Tecnologia">Tecnologia</option>
+                                <option value="Transporte">Transporte</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="causas-grid">
-                    <div class="card-causa">
-                        <div class="card-image-container">
-                            <img src="img_banner/Grafic_Desing_Yiseth.jpg" alt="Serviços de Design Gráfico"
-                                class="card-image" loading="lazy">
-                        </div>
-                        <div class="card-header">
-                            <span class="card-tag card-tag-servico">Design Gráfico</span>
-                            <span class="card-id">#SER-007</span>
-                        </div>
+                    <div class="card-causa" data-service="Arquitetura">
+                        <div class="card-image-container"><img src="img_servicos/architect.png" alt="Arquiteto" class="card-image"></div>
+                        <div class="card-header"><span class="card-tag card-tag-servico">Arquitetura</span><span class="card-id">#SER-011</span></div>
                         <div class="card-content">
-                            <h3 class="card-title">Designer Gráfico Profissional</h3>
-                            <p class="card-description">Criação de logos, flyers, cartões de visita, posts para redes
-                                sociais e muito mais. Orçamentos grátis.</p>
-                            <p class="card-description">Email: <a
-                                    href="mailto:yisethb2@gmail.com">yisethb2@gmail.com</a><br>Tel: <a
-                                    href="tel:+15873417019">+1 587 341 7019</a><br>Instagram: @brushedbyyiseth</p>
+                            <h3 class="card-title">Arquiteto</h3>
+                            <p class="card-description">Desenvolvimento de projetos de arquitetura e licenciamento. Orçamentos gratuitos.</p>
+                            <p class="card-description">Tel. <a href="tel:+351912345601">912 345 601</a></p>
+                        </div>
+                    </div>
+                    <div class="card-causa" data-service="Design">
+                        <div class="card-image-container"><img src="img_servicos/disenador_grafico.png" alt="Designer de Interiores" class="card-image"></div>
+                        <div class="card-header"><span class="card-tag card-tag-servico">Design</span><span class="card-id">#SER-012</span></div>
+                        <div class="card-content">
+                            <h3 class="card-title">Designer de Interiores</h3>
+                            <p class="card-description">Criação de espaços harmoniosos e funcionais para residências e escritórios.</p>
+                             <p class="card-description">Email: <a href="mailto:interiores@email.com">interiores@email.com</a></p>
+                        </div>
+                    </div>
+                     <div class="card-causa" data-service="Design">
+                        <div class="card-image-container"><img src="img_banner/Grafic_Desing_Yiseth.jpg" alt="Serviços de Design Gráfico" class="card-image"></div>
+                        <div class="card-header"><span class="card-tag card-tag-servico">Design</span><span class="card-id">#SER-007</span></div>
+                        <div class="card-content">
+                            <h3 class="card-title">Designer Gráfico</h3>
+                            <p class="card-description">Criação de logos, flyers, cartões de visita e posts para redes sociais. Orçamentos grátis.</p>
+                            <p class="card-description">Email: <a href="mailto:yisethb2@gmail.com">yisethb2@gmail.com</a></p>
                         </div>
                     </div>
 
-                    <div class="card-causa">
-                        <div class="card-image-container">
-                            <img src="img_servicos/encarregado_obra.png" alt="Encarregado de Obra" class="card-image"
-                                loading="lazy">
-                        </div>
-                        <div class="card-header">
-                            <span class="card-tag card-tag-servico">Obras</span>
-                            <span class="card-id">#SER-003</span>
-                        </div>
+                    <div class="card-causa" data-service="Engenharia">
+                        <div class="card-image-container"><img src="img_servicos/engineer_mechanic.png" alt="Engenheiro Civil" class="card-image"></div>
+                        <div class="card-header"><span class="card-tag card-tag-servico">Engenharia</span><span class="card-id">#SER-013</span></div>
                         <div class="card-content">
-                            <h3 class="card-title">Encargado de Obra</h3>
-                            <p class="card-description">Profissional com experiência em gestão e fiscalização de obras.
-                            </p>
+                            <h3 class="card-title">Engenheiro Civil</h3>
+                            <p class="card-description">Fiscalização de obras, projetos de estabilidade e consultoria técnica.</p>
+                            <p class="card-description">Tel. <a href="tel:+351912345602">912 345 602</a></p>
+                        </div>
+                    </div>
+                    <div class="card-causa" data-service="Engenharia">
+                        <div class="card-image-container"><img src="img_servicos/engineer_mechanic.png" alt="Engenheiro Mecânico" class="card-image"></div>
+                        <div class="card-header"><span class="card-tag card-tag-servico">Engenharia</span><span class="card-id">#SER-014</span></div>
+                        <div class="card-content">
+                            <h3 class="card-title">Engenheiro Mecânico</h3>
+                            <p class="card-description">Projetos de climatização (AVAC) e sistemas mecânicos industriais.</p>
+                            <p class="card-description">Tel. <a href="tel:+351912345603">912 345 603</a></p>
+                        </div>
+                    </div>
+                     <div class="card-causa" data-service="Engenharia">
+                        <div class="card-image-container"><img src="img_servicos/electrician.png" alt="Engenheiro Eletrotécnico" class="card-image"></div>
+                        <div class="card-header"><span class="card-tag card-tag-servico">Engenharia</span><span class="card-id">#SER-015</span></div>
+                        <div class="card-content">
+                            <h3 class="card-title">Engenheiro Eletrotécnico</h3>
+                            <p class="card-description">Projetos elétricos de baixa e média tensão para edifícios e indústria.</p>
+                            <p class="card-description">Tel. <a href="tel:+351912345604">912 345 604</a></p>
+                        </div>
+                    </div>
+
+                    <div class="card-causa" data-service="Tecnologia">
+                        <div class="card-image-container"><img src="img_servicos/programmer.png" alt="Engenheiro de Sistemas" class="card-image"></div>
+                        <div class="card-header"><span class="card-tag card-tag-servico">Tecnologia</span><span class="card-id">#SER-016</span></div>
+                        <div class="card-content">
+                            <h3 class="card-title">Engenheiro de Sistemas</h3>
+                            <p class="card-description">Administração de redes e servidores, segurança informática e consultoria TI.</p>
+                            <p class="card-description">Email: <a href="mailto:sistemas@email.com">sistemas@email.com</a></p>
+                        </div>
+                    </div>
+                     <div class="card-causa" data-service="Tecnologia">
+                        <div class="card-image-container"><img src="img_servicos/programmer.png" alt="Programador Web" class="card-image"></div>
+                        <div class="card-header"><span class="card-tag card-tag-servico">Tecnologia</span><span class="card-id">#SER-009</span></div>
+                        <div class="card-content">
+                            <h3 class="card-title">Programador Web</h3>
+                            <p class="card-description">Desenvolvimento de sites e lojas online (HTML, CSS, JavaScript, WordPress).</p>
+                            <p class="card-description">Email: <a href="mailto:dev.web@email.com">dev.web@email.com</a></p>
+                        </div>
+                    </div>
+
+                    <div class="card-causa" data-service="Obras">
+                        <div class="card-image-container"><img src="img_servicos/encarregado_obra.png" alt="Encarregado de Obra" class="card-image"></div>
+                        <div class="card-header"><span class="card-tag card-tag-servico">Obras</span><span class="card-id">#SER-003</span></div>
+                        <div class="card-content">
+                            <h3 class="card-title">Encarregado de Obra</h3>
+                            <p class="card-description">Profissional com experiência em gestão e fiscalização de obras.</p>
                             <p class="card-description">Tel. <a href="tel:+351915426582">915 426 582</a></p>
+                        </div>
+                    </div>
+                    <div class="card-causa" data-service="Carpintaria">
+                        <div class="card-image-container"><img src="img_servicos/carpintero.png" alt="Carpinteiro" class="card-image"></div>
+                        <div class="card-header"><span class="card-tag card-tag-servico">Carpintaria</span><span class="card-id">#SER-008</span></div>
+                        <div class="card-content">
+                            <h3 class="card-title">Carpinteiro</h3>
+                            <p class="card-description">Montagem de cozinhas, roupeiros, portas e outros trabalhos de carpintaria.</p>
+                            <p class="card-description">Tel. <a href="tel:+351912345690">912 345 690</a></p>
+                        </div>
+                    </div>
+                     <div class="card-causa" data-service="Instalações">
+                        <div class="card-image-container"><img src="img_servicos/plomero.png" alt="Canalizador" class="card-image"></div>
+                        <div class="card-header"><span class="card-tag card-tag-servico">Instalações</span><span class="card-id">#SER-017</span></div>
+                        <div class="card-content">
+                            <h3 class="card-title">Canalizador (Picheleiro)</h3>
+                            <p class="card-description">Reparações de fugas, desentupimentos e instalação de redes de água e esgotos.</p>
+                            <p class="card-description">Tel. <a href="tel:+351912345605">912 345 605</a></p>
+                        </div>
+                    </div>
+                     <div class="card-causa" data-service="Instalações">
+                        <div class="card-image-container"><img src="img_servicos/electrician.png" alt="Eletricista" class="card-image"></div>
+                        <div class="card-header"><span class="card-tag card-tag-servico">Instalações</span><span class="card-id">#SER-018</span></div>
+                        <div class="card-content">
+                            <h3 class="card-title">Eletricista</h3>
+                            <p class="card-description">Instalações elétricas, reparação de avarias e montagem de quadros.</p>
+                            <p class="card-description">Tel. <a href="tel:+351912345606">912 345 606</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="card-causa" data-service="Saúde">
+                        <div class="card-image-container"><img src="img_servicos/ninera.png" alt="Enfermeira" class="card-image"></div>
+                        <div class="card-header"><span class="card-tag card-tag-servico">Saúde</span><span class="card-id">#SER-019</span></div>
+                        <div class="card-content">
+                            <h3 class="card-title">Enfermagem ao Domicílio</h3>
+                            <p class="card-description">Cuidados de enfermagem personalizados em casa. Tratamentos, medicação e apoio.</p>
+                            <p class="card-description">Tel. <a href="tel:+351912345607">912 345 607</a></p>
+                        </div>
+                    </div>
+
+                     <div class="card-causa" data-service="Cozinha">
+                        <div class="card-image-container"><img src="img_servicos/chef.png" alt="Chef de Cozinha" class="card-image"></div>
+                        <div class="card-header"><span class="card-tag card-tag-servico">Cozinha</span><span class="card-id">#SER-020</span></div>
+                        <div class="card-content">
+                            <h3 class="card-title">Chef de Cozinha</h3>
+                            <p class="card-description">Chef com experiência em cozinha mediterrânea para eventos privados e consultoria.</p>
+                            <p class="card-description">Email: <a href="mailto:chef@email.com">chef@email.com</a></p>
+                        </div>
+                    </div>
+                     <div class="card-causa" data-service="Cozinha">
+                        <div class="card-image-container"><img src="img_servicos/ayudante_cocina.png" alt="Ajudante de Cozinha" class="card-image"></div>
+                        <div class="card-header"><span class="card-tag card-tag-servico">Cozinha</span><span class="card-id">#SER-021</span></div>
+                        <div class="card-content">
+                            <h3 class="card-title">Ajudante de Cozinha</h3>
+                            <p class="card-description">Pessoa responsável e trabalhadora para auxiliar em todas as tarefas da cozinha.</p>
+                            <p class="card-description">Tel. <a href="tel:+351912345608">912 345 608</a></p>
                         </div>
                     </div>
                 </div>
 
-                <div id="no-results-message">
+                <div id="no-results-message" style="display: none;">
                     <p>Não foram encontrados resultados para a sua pesquisa.</p>
                 </div>
             </div>
@@ -111,7 +239,7 @@
         </div>
     </div>
     <button id="scrollTopBtn" title="Voltar ao topo">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none"
             stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 19V5M5 12l7-7 7 7" />
         </svg>
@@ -130,7 +258,7 @@
                     <ul>
                         <li><a href="doacoes.html">Doação de Artigos</a></li>
                         <li><a href="empregos.html">Emprego</a></li>
-                        <li><a href="servicos.html">Serviços Técnicos</a></li>
+                        <li><a href="servicos.html">Serviços</a></li>
                         <li><a href="habitacao.html">Habitação</a></li>
                         <li><a href="publicar.html">Publicar Anúncio</a></li>
                     </ul>
@@ -138,7 +266,7 @@
                 <div class="footer-column">
                     <h4>Siga-nos</h4>
                     <a href="https://www.instagram.com/portugalapoia" target="_blank" class="social-link">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        <svg width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>

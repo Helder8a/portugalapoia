@@ -253,6 +253,7 @@ section {
     display: flex;
     flex-direction: column;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative; /* Necessário para a etiqueta "Novo" */
 }
 
 .card-causa:hover {
@@ -595,29 +596,67 @@ section {
     font-weight: 700;
 }
 
-/* --- ESTILOS PARA O BUSCADOR --- */
+/* --- ESTILOS PARA O BUSCADOR (NOVO) --- */
 .search-container {
-    margin-bottom: 40px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+    max-width: 800px;
+    margin: 0 auto 40px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border: 1px solid var(--color-border);
+}
+
+.search-box {
+    display: flex;
+    gap: 15px;
+    align-items: stretch;
+}
+
+.search-input-group {
+    flex-grow: 1;
+    position: relative;
+}
+
+.search-input-group i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
 }
 
 #search-input {
     width: 100%;
-    padding: 15px 20px;
-    font-size: 1.1rem;
-    border: 2px solid var(--color-border);
-    border-radius: 50px;
+    padding: 12px 12px 12px 40px; /* Espaço para o ícone */
+    font-size: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
     font-family: var(--font-body);
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-#search-input:focus {
-    outline: none;
-    border-color: var(--color-accent); /* Cambia al color de acento */
-    box-shadow: 0 0 0 4px rgba(0, 131, 75, 0.2); /* Sombra con el color de acento */
+.filter-group {
+    display: flex;
+    gap: 15px;
+    align-items: center;
 }
+
+.filter-group select {
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    background-color: #f8f9fa;
+    cursor: pointer;
+}
+
+#search-input:focus, .filter-group select:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(0, 131, 75, 0.2);
+}
+
 
 #no-results-message {
     text-align: center;
@@ -626,6 +665,22 @@ section {
     margin-top: 40px;
     display: none; /* Escondido por defeito */
 }
+
+/* --- ESTILOS PARA A ETIQUETA "NOVO" --- */
+.new-tag {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: var(--color-accent);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    z-index: 10;
+    display: none; /* Escondido por defeito */
+}
+
 
 @media (max-width: 992px) {
     .main-nav {
@@ -671,6 +726,15 @@ section {
 
     .mobile-nav-toggle {
         display: block;
+    }
+
+    .search-box {
+        flex-direction: column;
+    }
+
+    .filter-group {
+        flex-direction: column;
+        align-items: stretch;
     }
 }
 
