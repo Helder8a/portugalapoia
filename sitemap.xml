@@ -8,32 +8,38 @@
 <url>
   <loc>https://portugalapoia.com/</loc>
   <lastmod>2025-07-28T10:00:00+00:00</lastmod>
+  <changefreq>daily</changefreq>
   <priority>1.00</priority>
 </url>
 <url>
   <loc>https://portugalapoia.com/doacoes.html</loc>
   <lastmod>2025-07-28T10:00:00+00:00</lastmod>
+  <changefreq>weekly</changefreq>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://portugalapoia.com/empregos.html</loc>
   <lastmod>2025-07-28T10:00:00+00:00</lastmod>
+  <changefreq>weekly</changefreq>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://portugalapoia.com/servicos.html</loc>
   <lastmod>2025-07-28T10:00:00+00:00</lastmod>
+  <changefreq>weekly</changefreq>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://portugalapoia.com/habitacao.html</loc>
   <lastmod>2025-07-28T10:00:00+00:00</lastmod>
+  <changefreq>weekly</changefreq>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://portugalapoia.com/publicar.html</loc>
   <lastmod>2025-07-28T10:00:00+00:00</lastmod>
-  <priority>0.80</priority>
+  <changefreq>monthly</changefreq>
+  <priority>0.70</priority>
 </url>
 
 </urlset>
