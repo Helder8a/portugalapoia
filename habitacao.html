@@ -28,7 +28,7 @@
                     <li><a href="doacoes.html">Doação de Artigos</a></li>
                         <li><a href="empregos.html">Emprego</a></li>
                         <li><a href="servicos.html">Serviços</a></li>
-                        <li><a href="habitacao.html">Habitação</a></li>
+                        <li><a href="habitacao.html" class="active">Habitação</a></li>
                         <li><a href="publicar.html">Publicar Anúncio</a></li>
                 </ul>
             </nav>
@@ -56,15 +56,14 @@
                                 <option value="">Todos os Tipos</option>
                                 <option value="Apartamento">Apartamento</option>
                                 <option value="Casa">Casa</option>
-                                <option value="Quinta">Quinta</option>
+                                <option value="Quarto">Quarto</option>
                                 <option value="Loja Comercial">Loja Comercial</option>
                             </select>
                             <select id="city-filter">
                                 <option value="">Todas as Cidades</option>
+                                <option value="Lisboa">Lisboa</option>
+                                <option value="Porto">Porto</option>
                                 <option value="Amadora">Amadora</option>
-                                <option value="Aveiro">Aveiro</option>
-                                <option value="Benfica">Benfica</option>
-                                <option value="Braga">Braga</option>
                                 <option value="Cascais">Cascais</option>
                                 <option value="Coimbra">Coimbra</option>
                                 <option value="Santarém">Santarém</option>
@@ -76,83 +75,27 @@
 
                 <div id="listing-container" class="causas-grid">
 
-                    <div class="card-causa" data-type="Apartamento" data-city="Benfica">
+                    <div class="card-causa" data-type="Quarto" data-city="Lisboa">
                         <div class="card-image-container">
-                            <img src="img_servicos/habitacao.png" alt="Apartamento T2 para arrendar" class="card-image"
+                            <img src="img_servicos/habitacao.png" alt="Quarto para arrendar" class="card-image"
                                 loading="lazy">
                         </div>
                         <div class="card-header">
-                            <span class="card-tag card-tag-servico">Apartamento</span>
+                            <span class="card-tag card-tag-servico">Quarto</span>
                             <span class="card-id">#HAB-001</span>
                         </div>
                         <div class="card-content">
-                            <h3 class="card-title">Apartamento T2 em Benfica</h3>
-                            <p class="card-description">Alugo apartamento T2 remodelado, com cozinha equipada. Perto de
-                                transportes e comércio.
-                                <br><strong>Valor:</strong> 850€/mês
+                            <h3 class="card-title">Quarto Individual na Portela</h3>
+                            <p class="card-description">Alugo quarto individual remodelado, com serventia de cozinha. Perto de transportes e comércio.<br><strong>Valor:</strong> 520€/mês
                             </p>
-                            <p class="card-description">Tel. <a href="tel:+351912345684">912 345 684</a></p>
+                            <p class="card-description">Tel. <a href="tel:+351911972787">911 972 787</a></p>
                         </div>
                     </div>
-
-                    <div class="card-causa" data-type="Casa" data-city="Amadora">
-                        <div class="card-image-container">
-                            <img src="img_servicos/habitacao.png" alt="Casa para arrendar" class="card-image"
-                                loading="lazy">
-                        </div>
-                        <div class="card-header">
-                            <span class="card-tag card-tag-servico">Casa</span>
-                            <span class="card-id">#HAB-002</span>
-                        </div>
-                        <div class="card-content">
-                            <h3 class="card-title">Moradia T3 com Jardim na Amadora</h3>
-                            <p class="card-description">Moradia espaçosa com 3 quartos, jardim privativo e garagem. Ideal para famílias.
-                                <br><strong>Valor:</strong> 1200€/mês
-                            </p>
-                            <p class="card-description">Tel. <a href="tel:+351912345685">912 345 685</a></p>
-                        </div>
-                    </div>
-
-                    <div class="card-causa" data-type="Quinta" data-city="Santarém">
-                        <div class="card-image-container">
-                            <img src="img_servicos/habitacao.png" alt="Quinta para arrendar" class="card-image"
-                                loading="lazy">
-                        </div>
-                        <div class="card-header">
-                            <span class="card-tag card-tag-servico">Quinta</span>
-                            <span class="card-id">#HAB-003</span>
-                        </div>
-                        <div class="card-content">
-                            <h3 class="card-title">Quinta para Eventos em Santarém</h3>
-                            <p class="card-description">Espaço rústico para arrendamento, ideal para casamentos e eventos. Com piscina e grande área verde.
-                                <br><strong>Valor:</strong> A combinar
-                            </p>
-                            <p class="card-description">Tel. <a href="tel:+351912345688">912 345 688</a></p>
-                        </div>
-                    </div>
-
-                    <div class="card-causa" data-type="Loja Comercial" data-city="Coimbra">
-                        <div class="card-image-container">
-                            <img src="img_servicos/habitacao.png" alt="Loja para arrendar" class="card-image"
-                                loading="lazy">
-                        </div>
-                        <div class="card-header">
-                            <span class="card-tag card-tag-servico">Loja Comercial</span>
-                            <span class="card-id">#HAB-004</span>
-                        </div>
-                        <div class="card-content">
-                            <h3 class="card-title">Loja Comercial no Centro de Coimbra</h3>
-                            <p class="card-description">Loja com 80m², excelente localização em rua movimentada. Pronta a utilizar.
-                                <br><strong>Valor:</strong> 650€/mês
-                            </p>
-                            <p class="card-description">Tel. <a href="tel:+351912345689">912 345 689</a></p>
-                        </div>
-                    </div>
-
-
+                    
+                    
                 </div>
 
-                <div id="no-results-message">
+                <div id="no-results-message" style="display: none;">
                     <p>Não foram encontrados resultados para a sua pesquisa.</p>
                 </div>
                  <button id="load-more-btn" class="button button-primary" style="display: block; margin: 30px auto;">Ver Mais</button>

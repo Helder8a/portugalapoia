@@ -26,7 +26,7 @@
             <nav class="main-nav" id="main-nav">
                 <ul>
                     <li><a href="doacoes.html">Doação de Artigos</a></li>
-                        <li><a href="empregos.html">Emprego</a></li>
+                        <li><a href="empregos.html" class="active">Emprego</a></li>
                         <li><a href="servicos.html">Serviços</a></li>
                         <li><a href="habitacao.html">Habitação</a></li>
                         <li><a href="publicar.html">Publicar Anúncio</a></li>
@@ -51,7 +51,7 @@
                             <input type="text" id="search-input" placeholder="Procurar por vaga, ex: 'limpeza'...">
                         </div>
                         <div class="filter-group">
-                            <select id="location-filter">
+                            <select id="city-filter">
                                 <option value="">Todas as Cidades</option>
                                 <option value="Aveiro">Aveiro</option>
                                 <option value="Braga">Braga</option>
@@ -69,7 +69,7 @@
                 </div>
 
                 <div id="listing-container" class="causas-grid">
-                    <div class="card-causa" data-publication-date="2025-07-28" data-location="Lisboa">
+                    <div class="card-causa" data-publication-date="2025-07-28" data-city="Lisboa">
                         <span class="new-tag">Novo</span>
                         <div class="card-image-container">
                             <img src="img_servicos/mechanic.png" alt="Mecânico de Automóveis" class="card-image"
@@ -87,7 +87,7 @@
                         </div>
                     </div>
 
-                    <div class="card-causa" data-publication-date="2025-07-27" data-location="Porto">
+                    <div class="card-causa" data-publication-date="2025-07-27" data-city="Porto">
                          <span class="new-tag">Novo</span>
                         <div class="card-image-container">
                             <img src="img_servicos/modista.png" alt="Costureira" class="card-image" loading="lazy">
@@ -104,7 +104,7 @@
                         </div>
                     </div>
 
-                    <div class="card-causa" data-publication-date="2025-07-20" data-location="Sintra">
+                    <div class="card-causa" data-publication-date="2025-07-20" data-city="Sintra">
                          <span class="new-tag">Novo</span>
                         <div class="card-image-container">
                             <img src="img_servicos/limpeza.png" alt="Serviços de Limpeza" class="card-image"
@@ -122,7 +122,7 @@
                         </div>
                     </div>
 
-                    <div class="card-causa" data-publication-date="2025-07-15" data-location="Funchal">
+                    <div class="card-causa" data-publication-date="2025-07-15" data-city="Funchal">
                          <span class="new-tag">Novo</span>
                         <div class="card-image-container">
                             <img src="img_servicos/mesero_camarero.png" alt="Empregado de Mesa" class="card-image"
@@ -140,7 +140,7 @@
                         </div>
                     </div>
 
-                    <div class="card-causa" data-publication-date="2025-07-10" data-location="Lisboa">
+                    <div class="card-causa" data-publication-date="2025-07-10" data-city="Lisboa">
                          <span class="new-tag">Novo</span>
                         <div class="card-image-container">
                             <img src="img_servicos/conductor.png" alt="Motorista Particular" class="card-image"
@@ -158,7 +158,7 @@
                         </div>
                     </div>
 
-                    <div class="card-causa" data-publication-date="2025-07-05" data-location="Faro">
+                    <div class="card-causa" data-publication-date="2025-07-05" data-city="Faro">
                          <span class="new-tag">Novo</span>
                         <div class="card-image-container">
                             <img src="img_servicos/empleado_construccion.png" alt="Ajudante de Construção"
@@ -177,10 +177,10 @@
                     </div>
                 </div>
 
-                <div id="no-results-message">
+                <div id="no-results-message" style="display: none;">
                     <p>Não foram encontrados resultados para a sua pesquisa.</p>
                 </div>
-                <button id="load-more-btn" class="button button-primary" style="display: block; margin: 30px auto;">Ver Mais</button>
+                <button id="load-more-btn" class="button button-primary" style="display: none; margin: 30px auto;">Ver Mais</button>
             </div>
         </section>
     </main>

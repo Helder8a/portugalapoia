@@ -63,111 +63,96 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- LÓGICA DO BUSCADOR COM FILTROS E CARREGAR MAIS ---
-    const searchInput = document.getElementById('search-input');
-    const locationFilter = document.getElementById('location-filter');
-    const typeFilter = document.getElementById('type-filter'); // Para Habitação
-    const cityFilter = document.getElementById('city-filter'); // Para Serviços y Empregos (en empregos es location-filter)
-    const serviceFilter = document.getElementById('service-filter'); // Para Serviços
-    const itemTypeFilter = document.getElementById('item-type-filter'); // Para Doações
-    const noResultsMessage = document.getElementById('no-results-message');
-    const loadMoreBtn = document.getElementById('load-more-btn');
-
-    let cardsToShowInitially = 3; // **AJUSTE AQUI: Número de tarjetas a mostrar al inicio**
-    let cardsToLoadPerClick = 3;  // Número de tarjetas a cargar con cada clic
-
-    let currentVisibleCards = cardsToShowInitially;
-
-
-    function filterAndDisplayCards() {
-        const filterText = searchInput ? searchInput.value.toLowerCase() : '';
-        const locationValue = locationFilter ? locationFilter.value.toLowerCase() : ''; // Para Empregos y Doações
-        const typeValue = typeFilter ? typeFilter.value.toLowerCase() : ''; // Para Habitação
-        const cityValue = cityFilter ? cityFilter.value.toLowerCase() : ''; // Para Serviços y Habitação
-        const serviceValue = serviceFilter ? serviceFilter.value.toLowerCase() : ''; // Para Serviços
-        const itemTypeValue = itemTypeFilter ? itemTypeFilter.value.toLowerCase() : ''; // Para Doações
-
+    // --- NOVA LÓGICA DO BUSCADOR (CORRIGIDA E MELHORADA) ---
+    const searchContainer = document.querySelector('.search-container');
+    if (searchContainer) {
+        const searchInput = searchContainer.querySelector('#search-input');
+        const filters = searchContainer.querySelectorAll('.filter-group select');
         const allCards = document.querySelectorAll('.causas-grid .card-causa');
-        let matchingCards = [];
+        const noResultsMessage = document.getElementById('no-results-message');
+        const loadMoreBtn = document.getElementById('load-more-btn');
 
-        allCards.forEach(card => {
-            const title = card.querySelector('.card-title').textContent.toLowerCase();
-            const description = card.querySelector('.card-description').textContent.toLowerCase();
-            const cardLocation = card.dataset.location ? card.dataset.location.toLowerCase() : '';
-            const cardType = card.dataset.type ? card.dataset.type.toLowerCase() : '';
-            const cardCity = card.dataset.city ? card.dataset.city.toLowerCase() : '';
-            const cardService = card.dataset.service ? card.dataset.service.toLowerCase() : '';
-            const cardItemType = card.dataset.itemType ? card.dataset.itemType.toLowerCase() : '';
+        let cardsToShowInitially = 6;
+        let cardsToLoadPerClick = 6;
+        let currentVisibleCards = cardsToShowInitially;
 
-            const textMatch = title.includes(filterText) || description.includes(filterText);
+        const filterAndDisplayCards = () => {
+            const searchText = searchInput ? searchInput.value.toLowerCase().trim() : '';
+            
+            const activeFilters = {};
+            filters.forEach(filter => {
+                if (filter.value) {
+                    const filterName = filter.id.replace('-filter', ''); // ex: 'city-filter' -> 'city'
+                    activeFilters[filterName] = filter.value.toLowerCase();
+                }
+            });
 
-            let filterMatch = true;
+            const matchingCards = Array.from(allCards).filter(card => {
+                // 1. Filtro de texto
+                const title = (card.querySelector('.card-title')?.textContent || '').toLowerCase();
+                const description = (card.querySelector('.card-description')?.textContent || '').toLowerCase();
+                const textMatch = title.includes(searchText) || description.includes(searchText);
 
-            // Lógica de filtrado específica para cada página
-            if (window.location.pathname.includes('doacoes.html')) {
-                filterMatch = (locationValue === '' || cardLocation === locationValue) &&
-                              (itemTypeValue === '' || cardItemType === itemTypeValue);
-            } else if (window.location.pathname.includes('empregos.html')) {
-                filterMatch = (locationValue === '' || cardLocation === locationValue);
-            } else if (window.location.pathname.includes('servicos.html')) {
-                filterMatch = (serviceValue === '' || cardService === serviceValue) &&
-                              (cityValue === '' || cardCity === cityValue);
-            } else if (window.location.pathname.includes('habitacao.html')) {
-                filterMatch = (typeValue === '' || cardType === typeValue) &&
-                              (cityValue === '' || cardCity === cityValue);
-            }
+                if (!textMatch) {
+                    return false;
+                }
 
-            if (textMatch && filterMatch) {
-                matchingCards.push(card);
-            }
-        });
+                // 2. Filtros de seleção (dropdowns)
+                for (const filterName in activeFilters) {
+                    const filterValue = activeFilters[filterName];
+                    const cardDataValue = (card.dataset[filterName] || '').toLowerCase();
+                    
+                    if (cardDataValue !== filterValue) {
+                        return false;
+                    }
+                }
+                
+                return true;
+            });
 
-        // Ocultar todas las tarjetas primero
-        allCards.forEach(card => card.style.display = 'none');
+            // Ocultar todos os cartões primeiro
+            allCards.forEach(card => card.style.display = 'none');
 
-        // Mostrar solo las tarjetas que coinciden y hasta el límite actual
-        let visibleCount = 0;
-        matchingCards.forEach((card, index) => {
-            if (index < currentVisibleCards) {
+            // Mostrar apenas os cartões que correspondem e até o limite atual
+            matchingCards.slice(0, currentVisibleCards).forEach(card => {
                 card.style.display = 'flex';
-                visibleCount++;
+            });
+
+            // Mostrar ou ocultar a mensagem de "sem resultados"
+            if (noResultsMessage) {
+                noResultsMessage.style.display = matchingCards.length === 0 ? 'block' : 'none';
             }
-        });
 
-        // Mostrar u ocultar el mensaje de "no resultados"
-        if (noResultsMessage) {
-            noResultsMessage.style.display = matchingCards.length === 0 ? 'block' : 'none';
-        }
-
-        // Mostrar u ocultar el botón "cargar más"
-        if (loadMoreBtn) {
-            if (currentVisibleCards < matchingCards.length) {
-                loadMoreBtn.style.display = 'block';
-            } else {
-                loadMoreBtn.style.display = 'none';
+            // Mostrar ou ocultar o botão "Ver Mais"
+            if (loadMoreBtn) {
+                loadMoreBtn.style.display = currentVisibleCards < matchingCards.length ? 'block' : 'none';
             }
-        }
-    }
+        };
 
-    // Inicializar la visualización de tarjetas al cargar la página
-    filterAndDisplayCards();
-
-    // Event listeners para filtros
-    // Al cambiar un filtro, reiniciar la cuenta de tarjetas visibles
-    if (searchInput) searchInput.addEventListener('keyup', () => { currentVisibleCards = cardsToShowInitially; filterAndDisplayCards(); });
-    if (locationFilter) locationFilter.addEventListener('change', () => { currentVisibleCards = cardsToShowInitially; filterAndDisplayCards(); });
-    if (typeFilter) typeFilter.addEventListener('change', () => { currentVisibleCards = cardsToShowInitially; filterAndDisplayCards(); });
-    if (cityFilter) cityFilter.addEventListener('change', () => { currentVisibleCards = cardsToShowInitially; filterAndDisplayCards(); });
-    if (serviceFilter) serviceFilter.addEventListener('change', () => { currentVisibleCards = cardsToShowInitially; filterAndDisplayCards(); });
-    if (itemTypeFilter) itemTypeFilter.addEventListener('change', () => { currentVisibleCards = cardsToShowInitially; filterAndDisplayCards(); });
-
-    // Event listener para el botón "cargar más"
-    if (loadMoreBtn) {
-        loadMoreBtn.addEventListener('click', () => {
-            currentVisibleCards += cardsToLoadPerClick;
+        // Adicionar listeners de eventos
+        searchInput?.addEventListener('keyup', () => {
+            currentVisibleCards = cardsToShowInitially;
             filterAndDisplayCards();
         });
+
+        filters.forEach(filter => {
+            filter.addEventListener('change', () => {
+                currentVisibleCards = cardsToShowInitially;
+                filterAndDisplayCards();
+            });
+        });
+
+        if (loadMoreBtn) {
+            loadMoreBtn.addEventListener('click', () => {
+                currentVisibleCards += cardsToLoadPerClick;
+                filterAndDisplayCards();
+            });
+        }
+        
+        // Exibição inicial dos cartões
+        filterAndDisplayCards();
     }
+
 
     // --- LÓGICA PARA O FORMULÁRIO INTELIGENTE ---
     const tipoAnuncioSelector = document.getElementById('tipo-anuncio-selector');
@@ -193,18 +178,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const resetFormFields = () => {
         // Ocultar todos los campos específicos y eliminar el atributo 'required'
-        camposHabitacao.style.display = 'none';
-        precoHabitacaoInput.required = false;
-        cidadeHabitacaoInput.required = false;
-
-        camposEmprego.style.display = 'none';
-        tipoContratoInput.required = false;
-        experienciaEmpregoInput.required = false;
-        localEmpregoInput.required = false;
-
-        camposServico.style.display = 'none';
-        categoriaServicoInput.required = false;
-        areaAtuacaoServicoInput.required = false;
+        if (camposHabitacao) {
+            camposHabitacao.style.display = 'none';
+            precoHabitacaoInput.required = false;
+            cidadeHabitacaoInput.required = false;
+        }
+        if (camposEmprego) {
+            camposEmprego.style.display = 'none';
+            tipoContratoInput.required = false;
+            experienciaEmpregoInput.required = false;
+            localEmpregoInput.required = false;
+        }
+        if (camposServico) {
+            camposServico.style.display = 'none';
+            categoriaServicoInput.required = false;
+            areaAtuacaoServicoInput.required = false;
+        }
     };
 
 
@@ -241,8 +230,8 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
 
             // Ocultar mensajes anteriores
-            formSuccessMessage.style.display = 'none';
-            formErrorMessage.style.display = 'none';
+            if(formSuccessMessage) formSuccessMessage.style.display = 'none';
+            if(formErrorMessage) formErrorMessage.style.display = 'none';
 
             const formData = new FormData(formAnuncio);
             
