@@ -2,22 +2,12 @@
 <html lang="pt">
 
 <head>
+    <title>Arrendamento de Imóveis - PortugalApoia.com</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PortugalApoia.com - Solidariedade, Emprego e Doações em Portugal</title>
     <meta name="description"
-        content="A sua plataforma comunitária para encontrar e publicar pedidos de artigos, doações e vagas de emprego em todo o país. Junte-se e ajude!">
-    <meta name="keywords" content="doação, emprego, solidariedade, portugal, ajuda, voluntariado, causas sociais">
-    <meta name="author" content="Fundación Fides">
-    <meta property="og:title" content="PortugalApoia - A Comunidade que nos Une">
-    <meta property="og:description"
-        content="Encontre e publique pedidos de artigos, doações e vagas de emprego em Portugal.">
-    <meta property="og:image" content="https://www.portugalapoia.com/images/og-image.jpg">
-    <meta property="og:url" content="https://www.portugalapoia.com">
-    <meta property="og:type" content="website">
+        content="Encontre casas, apartamentos, quartos e locais comerciais para arrendar em Portugal.">
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500&display=swap"
         rel="stylesheet">
     <link rel="icon" href="images/favicon.ico.png" type="image/png">
@@ -37,7 +27,7 @@
                     <li><a href="doacoes.html">Doação de Artigos</a></li>
                     <li><a href="empregos.html">Emprego</a></li>
                     <li><a href="servicos.html">Serviços Técnicos</a></li>
-                    <li><a href="habitacao.html">Habitação</a></li>
+                    <li><a href="habitacao.html" class="active">Habitação</a></li>
                     <li><a href="publicar.html">Publicar Anúncio</a></li>
                 </ul>
             </nav>
@@ -47,26 +37,55 @@
             </button>
         </div>
     </header>
+
     <main>
-        <section id="hero">
-            <div class="hero-overlay"></div>
-            <div class="container hero-content">
-                <h1 class="hero-title">A comunidade que nos une.</h1>
-                <p class="hero-subtitle">A sua plataforma para encontrar e oferecer ajuda em Portugal. O que procura
-                    hoje?</p>
-                <div class="hero-buttons">
-                    <a href="doacoes.html" class="button button-primary">Ver Pedidos de Artigos</a>
-                    <a href="empregos.html" class="button button-secondary">Ver Vagas de Emprego</a>
+        <section id="habitacao">
+            <div class="container">
+                <h2 class="section-title">Arrendamento de Imóveis</h2>
+
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Procurar por tipo, ex: 'apartamento', 'quarto', 'lisboa'...">
                 </div>
-            </div>
-        </section>
-        <section class="section-light">
-            <div class="container" style="text-align: center; padding: 60px 24px;">
-                <h2 class="section-title" style="margin-bottom: 20px;">Como Funciona</h2>
-                <p style="max-width: 700px; margin: 0 auto 40px; font-size: 1.1rem;">É simples: explore os anúncios,
-                    encontre uma causa ou vaga que lhe interesse e contacte diretamente a pessoa. Sem intermediários. Se
-                    precisar de ajuda, publique o seu próprio anúncio gratuitamente.</p>
-                <a href="publicar.html" class="button button-primary">Publicar o seu Anúncio Grátis</a>
+
+                <div class="causas-grid">
+                    <div class="card-causa">
+                        <div class="card-image-container">
+                            <img src="img_servicos/habitacao.png" alt="Apartamento T2 para arrendar" class="card-image" loading="lazy">
+                        </div>
+                        <div class="card-header">
+                            <span class="card-tag card-tag-servico">Apartamento</span>
+                            <span class="card-id">#HAB-001</span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Apartamento T2 em Benfica</h3>
+                            <p class="card-description">Alugo apartamento T2 remodelado, com cozinha equipada. Perto de transportes e comércio.
+                                <br><strong>Valor:</strong> 850€/mês
+                            </p>
+                            <p class="card-description">Tel. <a href="tel:+351912345684">912 345 684</a></p>
+                        </div>
+                    </div>
+
+                    <div class="card-causa">
+                        <div class="card-image-container">
+                            <img src="images/img_portada.webp" alt="Quarto para arrendar" class="card-image" loading="lazy">
+                        </div>
+                        <div class="card-header">
+                            <span class="card-tag card-tag-servico">Quarto</span>
+                            <span class="card-id">#HAB-002</span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Quarto Individual no Porto</h3>
+                            <p class="card-description">Arrendo quarto individual a estudante ou trabalhador. Despesas incluídas. Perto do metro.
+                                <br><strong>Valor:</strong> 350€/mês
+                            </p>
+                            <p class="card-description">Tel. <a href="tel:+351912345685">912 345 685</a></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="no-results-message">
+                    <p>Não foram encontrados resultados para a sua pesquisa.</p>
+                </div>
             </div>
         </section>
     </main>
@@ -75,8 +94,7 @@
         <div class="modal-content">
             <button class="modal-close-btn">&times;</button>
             <h3>Doe para a manutenção deste Web site</h3>
-            <p>A sua generosidade ajuda-nos a manter esta plataforma online, gratuita e acessível a todos. Muito
-                obrigado!</p>
+            <p>A sua generosidade ajuda-nos a manter esta plataforma online, gratuita e acessível a todos. Muito obrigado!</p>
             <div class="donativo-info">
                 <h4>Transferência por Multibanco</h4>
                 <p><strong>Entidade:</strong> XXXX</p>
@@ -97,15 +115,14 @@
             <path d="M12 19V5M5 12l7-7 7 7" />
         </svg>
     </button>
-    
+
     <footer class="main-footer">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-column">
                     <h4>PortugalApoia</h4>
                     <p>A conectar a generosidade à necessidade.</p>
-                    <button class="apoia-projeto-btn button button-secondary" style="margin-top: 15px;">Doe para Manter
-                        o Site</button>
+                    <button class="apoia-projeto-btn button button-secondary" style="margin-top: 15px;">Doe para a manutenção deste Web site</button>
                 </div>
                 <div class="footer-column">
                     <h4>Navegação</h4>
