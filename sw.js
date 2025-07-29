@@ -1,5 +1,5 @@
 // Define un nombre y versión para el caché
-const CACHE_NAME = 'portugalapoia-cache-v2';
+const CACHE_NAME = 'portugalapoia-cache-v3'; // Incrementamos la versión
 const OFFLINE_URL = 'offline.html';
 
 // Lista de URLs y recursos que se deben cachear en la instalación
@@ -31,9 +31,6 @@ self.addEventListener('install', event => {
 
 // Evento 'activate': se dispara cuando el Service Worker se activa.
 self.addEventListener('activate', event => {
-    // Permiso para la Sincronización en Segundo Plano (Background Sync)
-    event.waitUntil(self.registration.sync.register('sync-example'));
-
     // Limpieza de cachés antiguos
     event.waitUntil(
         caches.keys().then(cacheNames => {
@@ -51,36 +48,48 @@ self.addEventListener('activate', event => {
 
 // Evento 'fetch': se dispara cada vez que la app solicita un recurso.
 self.addEventListener('fetch', event => {
-    // Solo manejamos peticiones GET (no POST, etc.)
-    if (event.request.method !== 'GET') {
-        return;
+    if (event.request.mode === 'navigate') {
+        event.respondWith(
+            fetch(event.request)
+            .catch(() => {
+                return caches.open(CACHE_NAME)
+                    .then(cache => {
+                        return cache.match(OFFLINE_URL);
+                    });
+            })
+        );
+    } else {
+        event.respondWith(
+            caches.open(CACHE_NAME)
+            .then(cache => {
+                return cache.match(event.request)
+                    .then(response => {
+                        return response || fetch(event.request);
+                    });
+            })
+        );
     }
+});
 
-    event.respondWith(
-        caches.open(CACHE_NAME)
-        .then(cache => {
-            return fetch(event.request)
-                .then(networkResponse => {
-                    // Si la petición a la red tiene éxito, la cacheamos y la devolvemos
-                    cache.put(event.request, networkResponse.clone());
-                    return networkResponse;
-                })
-                .catch(() => {
-                    // Si la red falla, intentamos servir desde el caché
-                    return cache.match(event.request)
-                        .then(cachedResponse => {
-                            // Si está en caché, la devolvemos. Si no, mostramos la página offline.
-                            return cachedResponse || cache.match(OFFLINE_URL);
-                        });
-                });
-        })
+// --- BASE PARA NOTIFICACIONES PUSH Y SINCRONIZACIÓN ---
+
+// Evento 'push': se dispara cuando se recibe una notificación push desde un servidor.
+self.addEventListener('push', event => {
+    const data = event.data.json();
+    const options = {
+        body: data.body,
+        icon: 'images/favicon.ico.png',
+        badge: 'images/favicon.ico.png'
+    };
+    event.waitUntil(
+        self.registration.showNotification(data.title, options)
     );
 });
 
 // Evento 'sync': para la Sincronización en Segundo Plano.
-// Por ahora es un ejemplo, pero satisface el requisito de PWA Builder.
 self.addEventListener('sync', event => {
     if (event.tag === 'sync-example') {
         console.log('Sincronización en segundo plano ejecutada!');
+        // Aquí iría la lógica para sincronizar datos
     }
 });

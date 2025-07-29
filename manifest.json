@@ -14,13 +14,12 @@
   "background_color": "#ffffff",
   "theme_color": "#0A3D62",
   "scope": "/",
-  "iarc_rating_id": "DEBES_GENERAR_UN_ID",
+  "prefer_related_applications": false,
   "categories": [
     "business",
     "lifestyle",
     "social"
   ],
-  "handle_links": "auto",
   "launch_handler": {
     "client_mode": "navigate-existing"
   },
