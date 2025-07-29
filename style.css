@@ -518,36 +518,54 @@ section {
 
 .card-causa.text-only .button-fullwidth {
     width: auto;
-    max-width: 250px;
-    margin: 0 auto;
+    /* ================================================= */
+/* === CORRECCIÓN DE ESPACIADO PARA TODO EL SITIO === */
+/* ================================================= */
+
+/*
+  1. Contenedor de Anuncios:
+  Se establece un margen vertical de 30px.
+*/
+.ad-container {
+    text-align: center;
+    margin: 30px 0;
 }
 
-#scrollTopBtn {
-    display: none;
-    position: fixed;
-    bottom: 20px;
-    right: 30px;
-    z-index: 99;
-    border: none;
-    outline: none;
-    background-color: var(--color-primary);
-    color: white;
-    cursor: pointer;
-    padding: 15px;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: opacity 0.3s, visibility 0.3s, background-color 0.3s;
-    opacity: 0;
-    visibility: hidden;
+/*
+  2. Contenedor del Buscador:
+  Se corrige el error de tipeo (era '..search-container').
+  Se elimina el margen superior para que no se sume al del título o anuncio.
+*/
+.search-container {
+    max-width: 800px;
+    margin: 0 auto 40px; /* Margen: 0 arriba, auto a los lados, 40px abajo */
+    background: #fff;
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    border: 1px solid var(--color-border);
 }
 
-#scrollTopBtn.visible {
-    display: block;
-    opacity: 1;
-    visibility: visible;
+/*
+  3. Ajustes para Móviles (dentro de @media (max-width: 768px))
+  Se reduce el espaciado en pantallas pequeñas.
+*/
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 20px; /* Espacio reducido debajo del título */
+    }
+
+    .ad-container,
+    .search-container {
+        margin-top: 0;
+        margin-bottom: 25px; /* Espacio uniforme debajo de anuncios y buscador */
+    }
 }
+
+/* ================================================= */
+/* ============= FIN DE LA CORRECCIÓN ============== */
+/* ================================================= */
 
 #scrollTopBtn:hover {
     background-color: var(--color-accent);
