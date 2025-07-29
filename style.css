@@ -236,7 +236,7 @@ img {
 }
 
 section {
-    padding: 80px 0;
+    padding: 40px 0;
 }
 
 .causas-grid {
@@ -255,7 +255,6 @@ section {
     flex-direction: column;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
-    /* Necessário para a etiqueta "Novo" */
 }
 
 .card-causa:hover {
@@ -335,7 +334,8 @@ section {
 }
 
 .form-group input,
-.form-group textarea {
+.form-group textarea,
+.form-group select {
     width: 100%;
     padding: 14px;
     border: 1px solid var(--color-border);
@@ -345,35 +345,11 @@ section {
 }
 
 .form-group input:focus,
-.form-group textarea:focus {
+.form-group textarea:focus,
+.form-group select:focus {
     outline: none;
     border-color: var(--color-primary);
     box-shadow: 0 0 0 3px rgba(10, 61, 98, 0.2);
-}
-
-#form-message {
-    padding: 15px;
-    margin-top: 20px;
-    border-radius: var(--border-radius);
-    color: #fff;
-    text-align: center;
-    display: none;
-}
-
-#form-message.visible {
-    display: block;
-}
-
-#form-message.success {
-    background-color: var(--color-accent);
-}
-
-#form-message.error {
-    background-color: #c0392b;
-}
-
-#form-message.info {
-    background-color: #2980b9;
 }
 
 .modal-overlay {
@@ -427,34 +403,67 @@ section {
     -ms-user-select: text;
 }
 
-
+/* --- FOOTER STYLES (MODIFICADO Y COMENTADO) --- */
 .main-footer {
-    background-color: var(--color-primary);
-    color: #ffffff;
-    padding: 60px 0 20px 0;
+    background-color: var(--color-primary); /* Define a cor de fundo do footer */
+    color: #ffffff; /* Define a cor do texto */
+    padding: 20px 0 10px 0; /* Espaçamento interno (20px em cima, 10px em baixo) para reduzir a altura */
+    font-family: var(--font-body); /* Garante uma fonte legível */
 }
 
 .main-footer a {
-    color: #ffffff;
-    text-decoration: none;
+    color: #ffffff; /* Cor dos links */
+    text-decoration: none; /* Remove o sublinhado dos links */
+    transition: color 0.3s ease; /* Adiciona uma transição suave para a mudança de cor */
+}
+
+.main-footer a:hover {
+    color: var(--color-donation); /* Muda a cor do link ao passar o mouse para dar feedback */
 }
 
 .footer-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 40px;
-    margin-bottom: 40px;
+    display: grid; /* Usa o sistema de grade para alinhar as colunas */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Cria colunas que se ajustam automaticamente ao tamanho da tela */
+    gap: 20px; /* Espaço entre as colunas, reduzido para compactar */
+    margin-bottom: 20px; /* Margem inferior, reduzida para compactar */
+}
+
+.footer-column h4 {
+    font-family: var(--font-headings); /* Fonte para os títulos das colunas */
+    margin-bottom: 10px; /* Espaço abaixo dos títulos */
+    font-size: 1.1em; /* Tamanho da fonte dos títulos */
+}
+
+.footer-column p,
+.footer-column ul {
+    font-size: 0.95em; /* Tamanho da fonte do texto e da lista para um visual mais fino */
 }
 
 .footer-column ul {
-    padding: 0;
-    list-style: none;
+    padding: 0; /* Remove o preenchimento padrão da lista */
+    list-style: none; /* Remove os marcadores da lista (pontos) */
+    margin: 0; /* Remove a margem padrão da lista */
+}
+
+.footer-column ul li {
+    margin-bottom: 5px; /* Espaço entre os itens da lista, reduzido */
 }
 
 .social-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+    display: inline-flex; /* Permite alinhar o ícone e o texto */
+    align-items: center; /* Alinha verticalmente o ícone e o texto */
+    gap: 8px; /* Espaço entre o ícone e o texto */
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Linha divisória fina na parte inferior */
+    padding-top: 10px; /* Espaço acima do texto inferior */
+    font-size: 0.85em; /* Texto de direitos autorais menor */
+    text-align: center; /* Centraliza o texto */
+}
+
+.footer-bottom p {
+    margin: 5px 0; /* Espaçamento vertical entre os parágrafos de direitos autorais */
 }
 
 .card-tag-servico {
@@ -473,53 +482,6 @@ section {
     background-color: #e9ecef;
     padding: 3px 8px;
     border-radius: 15px;
-}
-
-.card-causa.text-only {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 2rem;
-    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-}
-
-.card-causa.text-only .card-image-container {
-    display: none;
-}
-
-.card-causa.text-only .card-content {
-    padding: 0;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.card-causa.text-only .card-header {
-    padding-bottom: 0;
-    justify-content: center;
-    margin-bottom: 1rem;
-}
-
-.card-causa.text-only .card-title {
-    font-size: 2.5rem;
-    color: var(--color-primary);
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 1rem;
-}
-
-.card-causa.text-only .card-description {
-    font-size: 1.2rem;
-    color: var(--color-text);
-    margin-bottom: 2rem;
-}
-
-.card-causa.text-only .button-fullwidth {
-    width: auto;
-    max-width: 250px;
-    margin: 0 auto;
 }
 
 #scrollTopBtn {
@@ -599,7 +561,6 @@ section {
     font-weight: 700;
 }
 
-/* --- ESTILOS PARA O BUSCADOR (NOVO) --- */
 .search-container {
     max-width: 800px;
     margin: 0 auto 40px auto;
@@ -632,7 +593,6 @@ section {
 #search-input {
     width: 100%;
     padding: 12px 12px 12px 40px;
-    /* Espaço para o ícone */
     font-size: 1rem;
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius);
@@ -662,17 +622,14 @@ section {
     box-shadow: 0 0 0 3px rgba(0, 131, 75, 0.2);
 }
 
-
 #no-results-message {
     text-align: center;
     font-size: 1.2rem;
     color: var(--color-text);
     margin-top: 40px;
     display: none;
-    /* Escondido por defeito */
 }
 
-/* --- ESTILOS PARA A ETIQUETA "NOVO" --- */
 .new-tag {
     position: absolute;
     top: 10px;
@@ -685,9 +642,7 @@ section {
     font-weight: 700;
     z-index: 10;
     display: none;
-    /* Escondido por defeito */
 }
-
 
 @media (max-width: 992px) {
     .main-nav {
@@ -763,8 +718,6 @@ section {
     .hero-buttons .button {
         width: 80%;
         max-width: 320px;
-        padding: 12px 20px;
-        font-size: 1rem;
     }
 
     .section-title {
@@ -773,29 +726,11 @@ section {
 
     .footer-grid {
         text-align: center;
+        grid-template-columns: 1fr;
     }
 
     .footer-column {
-        display: flex;
-        flex-direction: column;
         align-items: center;
-    }
-
-    .footer-column ul {
-        margin: 0;
-        width: 100%;
-    }
-
-    .social-link {
-        justify-content: center;
-    }
-
-    .footer-bottom {
-        text-align: center;
-    }
-
-    .modal-content {
-        padding: 20px;
     }
 
     #scrollTopBtn {
@@ -807,32 +742,8 @@ section {
     }
 }
 
-/* --- ESTILOS PARA A SECÇÃO INSTAGRAM --- */
-#instagram-cta {
-    background-color: #f8f9fa;
-    text-align: center;
-}
-
-.instagram-cta-content {
-    max-width: 700px;
-    margin: 0 auto;
-}
-
-.instagram-cta-content h2 {
-    font-size: 2rem;
-    color: var(--color-primary);
-    margin-bottom: 15px;
-}
-
-.instagram-cta-content p {
-    font-size: 1.1rem;
-    margin-bottom: 25px;
-}
-
-/* --- NOVOS ESTILOS PARA CATEGORIAS DE ACESSO RÁPIDO --- */
 #quick-access-categories {
-    padding: 80px 0;
-    /* Asegura un padding consistente */
+    padding: 40px 0;
 }
 
 .category-links-grid {
@@ -855,7 +766,6 @@ section {
     align-items: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     min-height: 220px;
-    /* Altura mínima para uniformidad */
 }
 
 .category-link-card:hover {
@@ -865,12 +775,9 @@ section {
 
 .category-icon {
     width: 70px;
-    /* Tamaño del icono */
     height: 70px;
-    /* Asegura que el icono sea cuadrado */
     margin-bottom: 15px;
     object-fit: contain;
-    /* Asegura que la imagen se ajuste sin recortarse */
 }
 
 .category-link-card h3 {
@@ -883,28 +790,14 @@ section {
 
 .category-link-card p {
     font-size: 0.95rem;
-    color: var(--color-text);
-    line-height: 1.5;
     flex-grow: 1;
-    /* Permite que el párrafo ocupe el espacio restante */
 }
 
-/* Media queries para la nueva sección */
-@media (max-width: 768px) {
-    .category-links-grid {
-        grid-template-columns: 1fr;
-        /* Una columna en pantallas pequeñas */
-    }
-}
-
-/* --- ESTILOS PARA LA VALIDACIÓN DE FORMULARIOS --- */
 .error-message {
     color: #c0392b;
-    /* Rojo para el texto del error */
     font-size: 0.9em;
     margin-top: 5px;
     display: none;
-    /* Oculto por defecto */
 }
 
 .form-group input.invalid-field,
