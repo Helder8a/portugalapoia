@@ -310,3 +310,22 @@ window.addEventListener('load', () => {
         preloader.classList.add('hidden');
     }
 });
+
+// --- LÓGICA PARA O BANNER DE COOKIES ---
+document.addEventListener('DOMContentLoaded', () => {
+    if (!localStorage.getItem('cookieConsent')) {
+        const consentBanner = document.createElement('div');
+        consentBanner.innerHTML = `
+            <div style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: #0A3D62; color: white; padding: 15px; text-align: center; z-index: 9999;">
+                Este site utiliza cookies para melhorar a sua experiência e para fins de publicidade. Ao continuar a navegar, você concorda com o uso de cookies. 
+                <button id="accept-cookie-btn" style="padding: 8px 15px; background-color: #FFD700; color: #0A3D62; border: none; border-radius: 5px; cursor: pointer; margin-left: 15px;">Aceitar</button>
+            </div>
+        `;
+        document.body.appendChild(consentBanner);
+
+        document.getElementById('accept-cookie-btn').addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'true');
+            consentBanner.style.display = 'none';
+        });
+    }
+});
