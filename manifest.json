@@ -3,8 +3,13 @@
   "short_name": "PortugalApoia",
   "description": "A sua plataforma comunitária para encontrar e publicar pedidos de artigos, doações e vagas de emprego em todo o país.",
   "lang": "pt-PT",
-  "start_url": "/index.html?source=pwa",
+  "start_url": "/index.html",
+  "id": "/index.html",
   "display": "standalone",
+  "display_override": [
+    "window-controls-overlay"
+  ],
+  "orientation": "any",
   "background_color": "#ffffff",
   "theme_color": "#0A3D62",
   "scope": "/",
@@ -13,35 +18,25 @@
     "lifestyle",
     "social"
   ],
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "edge_side_panel": {
+    "preferred_width": 480
+  },
   "shortcuts": [
     {
       "name": "Ver Vagas de Emprego",
-      "short_name": "Empregos",
-      "description": "Encontrar a sua próxima oportunidade de trabalho.",
       "url": "/empregos.html",
       "icons": [{ "src": "images/favicon.ico.png", "sizes": "192x192" }]
     },
     {
       "name": "Ver Doações",
-      "short_name": "Doações",
-      "description": "Ajude quem precisa ou peça apoio para artigos.",
       "url": "/doacoes.html",
       "icons": [{ "src": "images/favicon.ico.png", "sizes": "192x192" }]
     }
   ],
   "icons": [
-    {
-      "src": "images/favicon.ico.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "images/favicon.ico.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
     {
       "src": "images/favicon.ico.png",
       "sizes": "512x512",
