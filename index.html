@@ -26,7 +26,7 @@
     <meta name="theme-color" content="#0A3D62">
 
     <link rel="apple-touch-icon" href="images/favicon.ico.png">
-    
+
 </head>
 
 <body>
@@ -165,40 +165,37 @@
                     </a>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 PortugalApoia.com - Todos os direitos reservados.</p>
-                <p>Um projeto da <a href="mailto:fidessuc@gmail.com">Fundación Fides</a>. Design by <a
-                        href="mailto:fidessuc@gmail.com">HBO Consulting</a>.</p>
-            </div>
         </div>
 
         <div class="footer-bottom">
-    <p>&copy; 2025 PortugalApoia.com - Todos os direitos reservados. | <a href="politica-privacidade.html" style="color: white;">Política de Privacidade</a></p>
-    <p>Um projeto da <a href="mailto:fidessuc@gmail.com">Fundación Fides</a>. Design by <a href="mailto:fidessuc@gmail.com">HBO Consulting</a>.</p>
-</div>
+            <p>&copy; 2025 PortugalApoia.com - Todos os direitos reservados. | <a href="politica-privacidade.html"
+                    style="color: white;">Política de Privacidade</a></p>
+            <p>Um projeto da <a href="mailto:fidessuc@gmail.com">Fundación Fides</a>. Design by <a
+                    href="mailto:fidessuc@gmail.com">HBO Consulting</a>.</p>
+        </div>
 
     </footer>
     <script src="script.js"></script>
     <script>
-  if (typeof navigator.serviceWorker !== 'undefined') {
-    navigator.serviceWorker.register('sw.js')
-  }
-</script>
+        if (typeof navigator.serviceWorker !== 'undefined') {
+            navigator.serviceWorker.register('sw.js')
+        }
+    </script>
     <script>
-  // Comprobar si el navegador soporta Service Workers
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      // Registrar nuestro archivo sw.js
-      navigator.serviceWorker.register('/sw.js')
-        .then(registration => {
-          console.log('ServiceWorker registrado con éxito con el scope:', registration.scope);
-        })
-        .catch(error => {
-          console.log('Fallo en el registro del ServiceWorker:', error);
-        });
-    });
-  }
-</script>
+        // Comprobar si el navegador soporta Service Workers
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                // Registrar nuestro archivo sw.js
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registrado con éxito con el scope:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('Fallo en el registro del ServiceWorker:', error);
+                    });
+            });
+        }
+    </script>
 </body>
 
 </html>
