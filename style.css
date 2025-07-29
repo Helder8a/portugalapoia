@@ -254,7 +254,8 @@ section {
     display: flex;
     flex-direction: column;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative; /* Necessário para a etiqueta "Novo" */
+    position: relative;
+    /* Necessário para a etiqueta "Novo" */
 }
 
 .card-causa:hover {
@@ -264,7 +265,7 @@ section {
 
 .card-image-container {
     width: 100%;
-    padding-top: 100%; 
+    padding-top: 100%;
     position: relative;
     background-color: #f0f0f0;
     overflow: hidden;
@@ -536,7 +537,7 @@ section {
     border-radius: 50%;
     width: 50px;
     height: 50px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: opacity 0.3s, visibility 0.3s, background-color 0.3s;
     opacity: 0;
     visibility: hidden;
@@ -583,6 +584,7 @@ section {
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(360deg);
     }
@@ -604,7 +606,7 @@ section {
     background: #fff;
     padding: 20px;
     border-radius: var(--border-radius);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     border: 1px solid var(--color-border);
 }
 
@@ -629,7 +631,8 @@ section {
 
 #search-input {
     width: 100%;
-    padding: 12px 12px 12px 40px; /* Espaço para o ícone */
+    padding: 12px 12px 12px 40px;
+    /* Espaço para o ícone */
     font-size: 1rem;
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius);
@@ -652,7 +655,8 @@ section {
     cursor: pointer;
 }
 
-#search-input:focus, .filter-group select:focus {
+#search-input:focus,
+.filter-group select:focus {
     outline: none;
     border-color: var(--color-accent);
     box-shadow: 0 0 0 3px rgba(0, 131, 75, 0.2);
@@ -664,7 +668,8 @@ section {
     font-size: 1.2rem;
     color: var(--color-text);
     margin-top: 40px;
-    display: none; /* Escondido por defeito */
+    display: none;
+    /* Escondido por defeito */
 }
 
 /* --- ESTILOS PARA A ETIQUETA "NOVO" --- */
@@ -679,7 +684,8 @@ section {
     font-size: 0.8rem;
     font-weight: 700;
     z-index: 10;
-    display: none; /* Escondido por defeito */
+    display: none;
+    /* Escondido por defeito */
 }
 
 
@@ -740,7 +746,7 @@ section {
 }
 
 @media (max-width: 768px) {
-    /* --- INICIO DE CAMBIOS --- */
+    /* --- INICIO DE CAMBIOS CORREGIDOS --- */
 
     section {
         padding: 40px 24px;
@@ -752,19 +758,19 @@ section {
 
     .section-title {
         font-size: 2rem;
-        margin-bottom: 25px; 
+        margin-bottom: 20px; /* Reducido de 25px */
     }
 
     /*
-     * ESTA ES LA NUEVA REGLA CLAVE:
+     * ESTA ES LA REGLA CORREGIDA:
      * Apunta al contenedor del anuncio que sigue al título y ajusta su margen en móviles.
     */
     .section-title + div[style*="text-align:center"] {
         margin-top: 0 !important;
-        margin-bottom: 30px !important;
+        margin-bottom: 25px !important; /* Reducido de 30px */
     }
 
-    /* --- FIN DE CAMBIOS --- */
+    /* --- FIN DE CAMBIOS CORREGIDOS --- */
 
     .hero-title {
         font-size: 2.4rem;
@@ -813,7 +819,7 @@ section {
     .modal-content {
         padding: 20px;
     }
-    
+
     #scrollTopBtn {
         bottom: 15px;
         right: 15px;
@@ -847,7 +853,8 @@ section {
 
 /* --- NOVOS ESTILOS PARA CATEGORIAS DE ACESSO RÁPIDO --- */
 #quick-access-categories {
-    padding: 80px 0; /* Asegura un padding consistente */
+    padding: 80px 0;
+    /* Asegura un padding consistente */
 }
 
 .category-links-grid {
@@ -869,7 +876,8 @@ section {
     flex-direction: column;
     align-items: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    min-height: 220px; /* Altura mínima para uniformidad */
+    min-height: 220px;
+    /* Altura mínima para uniformidad */
 }
 
 .category-link-card:hover {
@@ -878,10 +886,13 @@ section {
 }
 
 .category-icon {
-    width: 70px; /* Tamaño del icono */
-    height: 70px; /* Asegura que el icono sea cuadrado */
+    width: 70px;
+    /* Tamaño del icono */
+    height: 70px;
+    /* Asegura que el icono sea cuadrado */
     margin-bottom: 15px;
-    object-fit: contain; /* Asegura que la imagen se ajuste sin recortarse */
+    object-fit: contain;
+    /* Asegura que la imagen se ajuste sin recortarse */
 }
 
 .category-link-card h3 {
@@ -896,12 +907,14 @@ section {
     font-size: 0.95rem;
     color: var(--color-text);
     line-height: 1.5;
-    flex-grow: 1; /* Permite que el párrafo ocupe el espacio restante */
+    flex-grow: 1;
+    /* Permite que el párrafo ocupe el espacio restante */
 }
 
 /* Media queries para la nueva sección */
 @media (max-width: 768px) {
     .category-links-grid {
-        grid-template-columns: 1fr; /* Una columna en pantallas pequeñas */
+        grid-template-columns: 1fr;
+        /* Una columna en pantallas pequeñas */
     }
 }
