@@ -758,16 +758,15 @@ section {
 
     .section-title {
         font-size: 2rem;
-        margin-bottom: 20px; /* Reducido de 25px */
+        margin-bottom: 20px;
     }
 
     /*
-     * ESTA ES LA REGLA CORREGIDA:
-     * Apunta al contenedor del anuncio que sigue al título y ajusta su margen en móviles.
+     * ESTA ES LA REGLA CORREGIDA Y DEFINITIVA:
+     * Apunta al contenedor del anuncio y fuerza la anulación de sus márgenes en línea.
     */
-    .section-title + div[style*="text-align:center"] {
-        margin-top: 0 !important;
-        margin-bottom: 25px !important; /* Reducido de 30px */
+    main section .container .section-title + div[style*="text-align:center"] {
+        margin: 0 auto 25px auto !important;
     }
 
     /* --- FIN DE CAMBIOS CORREGIDOS --- */
