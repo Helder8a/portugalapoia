@@ -1,4 +1,4 @@
-/* PortugalApoya.pt/style.css */
+/* PortugalApoya.pt/style.css - VERSIÓN CORREGIDA */
 :root {
     --color-primary: #0A3D62;
     --color-accent: #00834B;
@@ -100,7 +100,7 @@ img {
 .section-title {
     text-align: center;
     font-size: 2.5rem;
-    margin-bottom: 25px;
+    margin-bottom: 25px; /* Reducido para un espacio más ajustado */
     color: var(--color-primary);
     font-family: var(--font-headings);
 }
@@ -255,7 +255,6 @@ section {
     flex-direction: column;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
-    /* Necessário para a etiqueta "Novo" */
 }
 
 .card-causa:hover {
@@ -518,54 +517,36 @@ section {
 
 .card-causa.text-only .button-fullwidth {
     width: auto;
-    /* ================================================= */
-/* === CORRECCIÓN DE ESPACIADO PARA TODO EL SITIO === */
-/* ================================================= */
-
-/*
-  1. Contenedor de Anuncios:
-  Se establece un margen vertical de 30px.
-*/
-.ad-container {
-    text-align: center;
-    margin: 30px 0;
+    max-width: 250px;
+    margin: 0 auto;
 }
 
-/*
-  2. Contenedor del Buscador:
-  Se corrige el error de tipeo (era '..search-container').
-  Se elimina el margen superior para que no se sume al del título o anuncio.
-*/
-.search-container {
-    max-width: 800px;
-    margin: 0 auto 40px; /* Margen: 0 arriba, auto a los lados, 40px abajo */
-    background: #fff;
-    padding: 20px;
-    border-radius: var(--border-radius);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    border: 1px solid var(--color-border);
+#scrollTopBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    z-index: 99;
+    border: none;
+    outline: none;
+    background-color: var(--color-primary);
+    color: white;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: opacity 0.3s, visibility 0.3s, background-color 0.3s;
+    opacity: 0;
+    visibility: hidden;
 }
 
-/*
-  3. Ajustes para Móviles (dentro de @media (max-width: 768px))
-  Se reduce el espaciado en pantallas pequeñas.
-*/
-@media (max-width: 768px) {
-    .section-title {
-        font-size: 2rem;
-        margin-bottom: 20px; /* Espacio reducido debajo del título */
-    }
-
-    .ad-container,
-    .search-container {
-        margin-top: 0;
-        margin-bottom: 25px; /* Espacio uniforme debajo de anuncios y buscador */
-    }
+#scrollTopBtn.visible {
+    display: block;
+    opacity: 1;
+    visibility: visible;
 }
-
-/* ================================================= */
-/* ============= FIN DE LA CORRECCIÓN ============== */
-/* ================================================= */
 
 #scrollTopBtn:hover {
     background-color: var(--color-accent);
@@ -617,21 +598,22 @@ section {
     font-weight: 700;
 }
 
-/* Estilo para el contenedor de anuncios */
+/* --- INICIO DE LA SECCIÓN CORREGIDA --- */
 .ad-container {
     text-align: center;
-    margin: 20px 0;
+    margin: 30px 0; /* Espaciado consistente para anuncios */
 }
 
-..search-container {
+.search-container {
     max-width: 800px;
-    margin: 0 auto 40px; /* Clave: se elimina el margen superior */
+    margin: 0 auto 40px; /* Clave: 0 margen superior, 40px margen inferior */
     background: #fff;
     padding: 20px;
     border-radius: var(--border-radius);
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     border: 1px solid var(--color-border);
 }
+/* --- FIN DE LA SECCIÓN CORREGIDA --- */
 
 .search-box {
     display: flex;
@@ -655,7 +637,6 @@ section {
 #search-input {
     width: 100%;
     padding: 12px 12px 12px 40px;
-    /* Espaço para o ícone */
     font-size: 1rem;
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius);
@@ -692,10 +673,8 @@ section {
     color: var(--color-text);
     margin-top: 40px;
     display: none;
-    /* Escondido por defeito */
 }
 
-/* --- ESTILOS PARA A ETIQUETA "NOVO" --- */
 .new-tag {
     position: absolute;
     top: 10px;
@@ -708,10 +687,85 @@ section {
     font-weight: 700;
     z-index: 10;
     display: none;
-    /* Escondido por defeito */
 }
 
+/* --- ESTILOS PARA INSTAGRAM --- */
+#instagram-cta {
+    background-color: #f8f9fa;
+    text-align: center;
+}
 
+.instagram-cta-content {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.instagram-cta-content h2 {
+    font-size: 2rem;
+    color: var(--color-primary);
+    margin-bottom: 15px;
+}
+
+.instagram-cta-content p {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+}
+
+/* --- ESTILOS PARA CATEGORÍAS DE ACCESO RÁPIDO --- */
+#quick-access-categories {
+    padding: 80px 0;
+}
+
+.category-links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.category-link-card {
+    background-color: var(--color-background);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 30px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--color-text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-height: 220px;
+}
+
+.category-link-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+}
+
+.category-icon {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 15px;
+    object-fit: contain;
+}
+
+.category-link-card h3 {
+    font-size: 1.4rem;
+    color: var(--color-primary);
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-family: var(--font-headings);
+}
+
+.category-link-card p {
+    font-size: 0.95rem;
+    color: var(--color-text);
+    line-height: 1.5;
+    flex-grow: 1;
+}
+
+/* --- MEDIA QUERIES --- */
 @media (max-width: 992px) {
     .main-nav {
         display: none;
@@ -769,8 +823,6 @@ section {
 }
 
 @media (max-width: 768px) {
-    /* --- INICIO DE CAMBIOS CORREGIDOS --- */
-
     section {
         padding: 40px 24px;
     }
@@ -779,22 +831,17 @@ section {
         padding: 40px 24px 20px;
     }
 
-    /* --- CORRECCIÓN DEFINITIVA PARA EL ESPACIO MÓVIL --- */
     .section-title {
         font-size: 2rem;
-        margin-bottom: 20px; /* Reducir el espacio inferior del título */
+        margin-bottom: 20px; /* Espacio reducido debajo del título */
     }
 
-    .ad-container {
-        margin-top: 0; /* Eliminar margen superior del anuncio */
-        margin-bottom: 25px; /* Dejar espacio antes del buscador */
-    }
-
+    /* Reducción de espacio para móviles */
+    .ad-container,
     .search-container {
-        margin-top: 0; /* Eliminar margen superior del buscador */
-        margin-bottom: 30px;
+        margin-top: 0;
+        margin-bottom: 25px; /* Espacio uniforme debajo de anuncios y buscador */
     }
-    /* --- FIN DE LA CORRECCIÓN --- */
 
     .hero-title {
         font-size: 2.4rem;
@@ -851,121 +898,8 @@ section {
         height: 45px;
         padding: 12px;
     }
-}
 
-/* --- ESTILOS PARA A SECÇÃO INSTAGRAM --- */
-#instagram-cta {
-    background-color: #f8f9fa;
-    text-align: center;
-}
-
-.instagram-cta-content {
-    max-width: 700px;
-    margin: 0 auto;
-}
-
-.instagram-cta-content h2 {
-    font-size: 2rem;
-    color: var(--color-primary);
-    margin-bottom: 15px;
-}
-
-.instagram-cta-content p {
-    font-size: 1.1rem;
-    margin-bottom: 25px;
-}
-
-/* --- NOVOS ESTILOS PARA CATEGORIAS DE ACESSO RÁPIDO --- */
-#quick-access-categories {
-    padding: 80px 0;
-    /* Asegura un padding consistente */
-}
-
-.category-links-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    margin-top: 50px;
-}
-
-.category-link-card {
-    background-color: var(--color-background);
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    padding: 30px;
-    text-align: center;
-    text-decoration: none;
-    color: var(--color-text);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    min-height: 220px;
-    /* Altura mínima para uniformidad */
-}
-
-.category-link-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
-}
-
-.category-icon {
-    width: 70px;
-    /* Tamaño del icono */
-    height: 70px;
-    /* Asegura que el icono sea cuadrado */
-    margin-bottom: 15px;
-    object-fit: contain;
-    /* Asegura que la imagen se ajuste sin recortarse */
-}
-
-.category-link-card h3 {
-    font-size: 1.4rem;
-    color: var(--color-primary);
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-family: var(--font-headings);
-}
-
-.category-link-card p {
-    font-size: 0.95rem;
-    color: var(--color-text);
-    line-height: 1.5;
-    flex-grow: 1;
-    /* Permite que el párrafo ocupe el espacio restante */
-}
-
-/* Media queries para la nueva sección */
-@media (max-width: 768px) {
     .category-links-grid {
         grid-template-columns: 1fr;
-        /* Una columna en pantallas pequeñas */
     }
-}
-
-/* portugalapoia-main/style.css */
-
-@media (max-width: 768px) {
-    /* ... otros estilos para móviles ... */
-
-    section {
-        padding: 40px 24px;
-    }
-
-    .section-title {
-        font-size: 2rem;
-        margin-bottom: 20px; /* Reduce el espacio debajo del título */
-    }
-
-    .ad-container {
-        margin-top: 0; /* Elimina el margen superior del anuncio */
-        margin-bottom: 25px; /* Ajusta el espacio debajo del anuncio */
-    }
-
-    .search-container {
-        margin-top: 0; /* Elimina el margen superior del buscador */
-        margin-bottom: 30px;
-    }
-
-    /* ... otros estilos para móviles ... */
 }
