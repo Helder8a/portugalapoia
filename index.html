@@ -173,6 +173,11 @@
     </footer>
     <script src="script.js"></script>
     <script>
+  if (typeof navigator.serviceWorker !== 'undefined') {
+    navigator.serviceWorker.register('sw.js')
+  }
+</script>
+    <script>
   // Comprobar si el navegador soporta Service Workers
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
