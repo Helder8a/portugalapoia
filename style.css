@@ -2,11 +2,16 @@
     /* --- INICIO DE CAMBIOS --- */
 
     section {
-        padding: 40px 24px; /* Reduce el padding vertical para todas las secciones en móviles */
+        padding: 40px 24px; /* Reduce el padding de las secciones */
     }
 
     .main-footer {
-        padding: 40px 24px 20px; /* Reduce el padding superior del footer en móviles */
+        padding: 40px 24px 20px; /* Reduce el padding del footer */
+    }
+
+    .section-title {
+        font-size: 2rem;      /* Ajusta el tamaño del título */
+        margin-bottom: 25px;  /* Reduce el espacio debajo del título */
     }
 
     /* --- FIN DE CAMBIOS --- */
@@ -30,10 +35,6 @@
         max-width: 320px;
         padding: 12px 20px;
         font-size: 1rem;
-    }
-
-    .section-title {
-        font-size: 2rem;
     }
 
     .footer-grid {
@@ -63,6 +64,15 @@
         padding: 20px;
     }
     
+    #scrollTopBtn {
+        bottom: 15px;
+        right: 15px;
+        width: 45px;
+        height: 45px;
+        padding: 12px;
+    }
+}
+   
     #scrollTopBtn {
         bottom: 15px;
         right: 15px;
