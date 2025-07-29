@@ -21,6 +21,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500&display=swap"
         rel="stylesheet">
     <link rel="icon" href="images/favicon.ico.png" type="image/png">
+    <link rel="manifest" href="manifest.json">
+
+    <meta name="theme-color" content="#0A3D62">
+
+    <link rel="apple-touch-icon" href="images/favicon.ico.png">
 </head>
 
 <body>
@@ -84,7 +89,8 @@
                         <p>Encontre a sua próxima oportunidade de trabalho.</p>
                     </a>
                     <a href="servicos.html" class="category-link-card">
-                        <img src="img_servicos/disenador_grafico.png" alt="Ícone Serviços Técnicos" class="category-icon">
+                        <img src="img_servicos/disenador_grafico.png" alt="Ícone Serviços Técnicos"
+                            class="category-icon">
                         <h3>Serviços Técnicos</h3>
                         <p>Ofereça ou procure serviços profissionais e técnicos.</p>
                     </a>
@@ -124,7 +130,7 @@
             <path d="M12 19V5M5 12l7-7 7 7" />
         </svg>
     </button>
-    
+
 
     <footer class="main-footer">
         <div class="container">
@@ -166,6 +172,21 @@
         </div>
     </footer>
     <script src="script.js"></script>
+    <script>
+  // Comprobar si el navegador soporta Service Workers
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      // Registrar nuestro archivo sw.js
+      navigator.serviceWorker.register('/sw.js')
+        .then(registration => {
+          console.log('ServiceWorker registrado con éxito con el scope:', registration.scope);
+        })
+        .catch(error => {
+          console.log('Fallo en el registro del ServiceWorker:', error);
+        });
+    });
+  }
+</script>
 </body>
 
 </html>

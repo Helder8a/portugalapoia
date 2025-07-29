@@ -11,6 +11,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500&display=swap"
         rel="stylesheet">
     <link rel="icon" href="images/favicon.ico.png" type="image/png">
+    <link rel="manifest" href="manifest.json">
+
+    <meta name="theme-color" content="#0A3D62">
+
+    <link rel="apple-touch-icon" href="images/favicon.ico.png">
 </head>
 
 <body>
@@ -25,10 +30,10 @@
             <nav class="main-nav" id="main-nav">
                 <ul>
                     <li><a href="doacoes.html">Doação de Artigos</a></li>
-                        <li><a href="empregos.html">Emprego</a></li>
-                        <li><a href="servicos.html">Serviços</a></li>
-                        <li><a href="habitacao.html">Habitação</a></li>
-                        <li><a href="publicar.html">Publicar Anúncio</a></li>
+                    <li><a href="empregos.html">Emprego</a></li>
+                    <li><a href="servicos.html">Serviços</a></li>
+                    <li><a href="habitacao.html">Habitação</a></li>
+                    <li><a href="publicar.html">Publicar Anúncio</a></li>
                 </ul>
             </nav>
             <button class="mobile-nav-toggle" aria-controls="main-nav" aria-expanded="false">
@@ -94,11 +99,12 @@
                             </div>
                             <div class="form-group">
                                 <label for="experiencia_emprego">Experiência Requerida (opcional)</label>
-                                <input type="text" id="experiencia_emprego" name="experiencia_emprego" placeholder="Ex: 2 anos em Vendas">
+                                <input type="text" id="experiencia_emprego" name="experiencia_emprego"
+                                    placeholder="Ex: 2 anos em Vendas">
                             </div>
                             <div class="form-group">
                                 <label for="local_emprego">Local de Trabalho (Cidade)</label>
-                                <input type="text" id="local_emprego" name="local_emprego" placeholder="Ex: Lisboa" >
+                                <input type="text" id="local_emprego" name="local_emprego" placeholder="Ex: Lisboa">
                             </div>
                         </div>
 
@@ -124,7 +130,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="area_atuacao_servico">Área de Atuação (Cidade/Região)</label>
-                                <input type="text" id="area_atuacao_servico" name="area_atuacao_servico" placeholder="Ex: Porto e arredores">
+                                <input type="text" id="area_atuacao_servico" name="area_atuacao_servico"
+                                    placeholder="Ex: Porto e arredores">
                             </div>
                         </div>
 
@@ -143,7 +150,8 @@
                         <div class="form-group">
                             <label for="imagem_anuncio">5. Imagem Principal (Opcional)</label>
                             <input type="file" id="imagem_anuncio" name="imagem_anuncio" accept="image/png, image/jpeg">
-                            <p id="image-preview-message" style="display:none; margin-top: 10px; font-size: 0.9em; color: #555;"></p>
+                            <p id="image-preview-message"
+                                style="display:none; margin-top: 10px; font-size: 0.9em; color: #555;"></p>
                         </div>
                     </div>
 
@@ -151,10 +159,12 @@
                         Publicação</button>
                 </form>
 
-                <div id="form-success-message" style="display: none; padding: 15px; margin-top: 20px; border-radius: var(--border-radius); color: white; background-color: var(--color-accent); text-align: center;">
+                <div id="form-success-message"
+                    style="display: none; padding: 15px; margin-top: 20px; border-radius: var(--border-radius); color: white; background-color: var(--color-accent); text-align: center;">
                     Obrigado, o seu anuncio foi enviado para revisão.
                 </div>
-                <div id="form-error-message" style="display: none; padding: 15px; margin-top: 20px; border-radius: var(--border-radius); color: white; background-color: #c0392b; text-align: center;">
+                <div id="form-error-message"
+                    style="display: none; padding: 15px; margin-top: 20px; border-radius: var(--border-radius); color: white; background-color: #c0392b; text-align: center;">
                     Ocorreu um erro ao submeter o formulário. Por favor, tente novamente.
                 </div>
             </div>
@@ -228,6 +238,21 @@
         </div>
     </footer>
     <script src="script.js"></script>
+    <script>
+  // Comprobar si el navegador soporta Service Workers
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      // Registrar nuestro archivo sw.js
+      navigator.serviceWorker.register('/sw.js')
+        .then(registration => {
+          console.log('ServiceWorker registrado con éxito con el scope:', registration.scope);
+        })
+        .catch(error => {
+          console.log('Fallo en el registro del ServiceWorker:', error);
+        });
+    });
+  }
+</script>
 </body>
 
 </html>
