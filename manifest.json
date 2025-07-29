@@ -3,44 +3,23 @@
   "short_name": "PortugalApoia",
   "description": "A sua plataforma comunitária para encontrar e publicar pedidos de artigos, doações e vagas de emprego em todo o país.",
   "lang": "pt-PT",
-  "dir": "auto",
-  "start_url": "/index.html",
-  "id": "/index.html",
+  "start_url": "/index.html?source=pwa",
   "display": "standalone",
-  "orientation": "any",
-  "background_color": "#ffffff",
+  "background_color": "#F8F9FA",
   "theme_color": "#0A3D62",
-  "scope": "/",
-  "prefer_related_applications": false,
-  "handle_links": "auto",
-  "categories": [
-    "business",
-    "lifestyle",
-    "social"
-  ],
-  "launch_handler": {
-    "client_mode": "navigate-existing"
-  },
-  "widgets": [
-    {
-      "name": "Vagas de Emprego Recentes",
-      "description": "Veja as últimas vagas de emprego.",
-      "tag": "empregos",
-      "template": "empregos_widget",
-      "ms_ac_template": "empregos_widget",
-      "data": { "url": "/empregos.html" },
-      "icons": [
-        { "src": "images/favicon.ico.png", "sizes": "192x192" }
-      ]
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "Ver Vagas de Emprego",
-      "url": "/empregos.html"
-    }
-  ],
   "icons": [
+    {
+      "src": "images/favicon.ico.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "images/favicon.ico.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
     {
       "src": "images/favicon.ico.png",
       "sizes": "512x512",
@@ -53,13 +32,4 @@
       "type": "image/png",
       "purpose": "maskable"
     }
-  ],
-  "screenshots": [
-    {
-      "src": "images/img_portada.webp",
-      "type": "image/webp",
-      "sizes": "1280x853",
-      "form_factor": "wide"
-    }
   ]
-}
