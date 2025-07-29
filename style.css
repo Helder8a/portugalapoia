@@ -924,3 +924,30 @@ section {
         /* Una columna en pantallas pequeñas */
     }
 }
+
+/* portugalapoia-main/style.css */
+
+@media (max-width: 768px) {
+    /* ... otros estilos para móviles ... */
+
+    section {
+        padding: 40px 24px;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 20px; /* Reduce el espacio debajo del título */
+    }
+
+    .ad-container {
+        margin-top: 0; /* Elimina el margen superior del anuncio */
+        margin-bottom: 25px; /* Ajusta el espacio debajo del anuncio */
+    }
+
+    .search-container {
+        margin-top: 0; /* Elimina el margen superior del buscador */
+        margin-bottom: 30px;
+    }
+
+    /* ... otros estilos para móviles ... */
+}
