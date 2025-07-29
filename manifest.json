@@ -18,12 +18,51 @@
     "lifestyle",
     "social"
   ],
+  "handle_links": "auto",
   "launch_handler": {
     "client_mode": "navigate-existing"
   },
   "edge_side_panel": {
     "preferred_width": 480
   },
+  "share_target": {
+    "action": "/publicar.html",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  },
+  "file_handlers": [
+    {
+      "action": "/publicar.html",
+      "accept": {
+        "text/*": [".txt"]
+      }
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+portugalapoia",
+      "url": "/index.html?protocol=%s"
+    }
+  ],
+  "widgets": [
+    {
+      "name": "Vagas de Emprego Recentes",
+      "description": "Veja as últimas vagas de emprego.",
+      "tag": "empregos",
+      "template": "empregos_widget",
+      "ms_ac_template": "empregos_widget",
+      "data": {
+        "url": "/empregos.html"
+      },
+      "icons": [
+        { "src": "images/favicon.ico.png", "sizes": "192x192" }
+      ]
+    }
+  ],
   "shortcuts": [
     {
       "name": "Ver Vagas de Emprego",
