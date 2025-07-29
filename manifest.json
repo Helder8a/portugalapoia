@@ -3,6 +3,7 @@
   "short_name": "PortugalApoia",
   "description": "A sua plataforma comunitária para encontrar e publicar pedidos de artigos, doações e vagas de emprego em todo o país.",
   "lang": "pt-PT",
+  "dir": "auto",
   "start_url": "/index.html",
   "id": "/index.html",
   "display": "standalone",
@@ -13,6 +14,7 @@
   "background_color": "#ffffff",
   "theme_color": "#0A3D62",
   "scope": "/",
+  "iarc_rating_id": "DEBES_GENERAR_UN_ID",
   "categories": [
     "business",
     "lifestyle",
