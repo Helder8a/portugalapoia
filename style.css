@@ -100,7 +100,7 @@ img {
 .section-title {
     text-align: center;
     font-size: 2.5rem;
-    margin-bottom: 40px;
+    margin-bottom: 25px;
     color: var(--color-primary);
     font-family: var(--font-headings);
 }
@@ -605,9 +605,9 @@ section {
     margin: 20px 0;
 }
 
-.search-container {
+..search-container {
     max-width: 800px;
-    margin: 40px auto;
+    margin: 0 auto 40px; /* Clave: se elimina el margen superior */
     background: #fff;
     padding: 20px;
     border-radius: var(--border-radius);
