@@ -7,35 +7,30 @@ exports.handler = async (event) => {
 
   // 2. Configurar la autenticación con la API de GitHub
   const octokit = new Octokit({
-    auth: process.env.GITHUB_TOKEN, // Variable de entorno segura de Netlify
+    auth: process.env.GITHUB_TOKEN, // Usaremos una variable de entorno segura
   });
 
-  // 3. Definir las variables a partir de los datos del formulario
-  const titulo = data.titulo_anuncio; // Usamos la variable correcta del formulario
-  const slug = new Date().toISOString().split('T')[0] + '-' + titulo.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
-  const message = `Nuevo anuncio: ${titulo}`; // Creamos el mensaje para el commit
-
-  // 4. Formatear el contenido del anuncio en formato Markdown
+  // 3. Formatear el contenido del anuncio en formato Markdown (como lo espera el CMS)
+  // Usamos una "fecha-slug" para asegurar que cada nombre de archivo sea único.
+  const slug = new Date().toISOString().split('T')[0] + '-' + data.titulo.toLowerCase().replace(/\s+/g, '-');
   const fileContent = `---
-titulo: "${titulo}"
-tipo_anuncio: "${data.tipo_anuncio || ''}"
-preco: "${data.preco_habitacao || ''}"
-cidade: "${data.cidade_habitacao || data.local_emprego || data.area_atuacao_servico || ''}"
-tipo_contrato: "${data.tipo_contrato || ''}"
-experiencia: "${data.experiencia_emprego || ''}"
-categoria_servico: "${data.categoria_servico || ''}"
-descricao: "${data.descricao || ''}"
-contacto: "${data.contacto || ''}"
+titulo: "${data.titulo}"
+tipo_anuncio: "${data['tipo-anuncio']}"
+ciudad: "${data.ciudad}"
+categoria: "${data.categoria}"
+descripcion: "${data.descripcion}"
+contacto: "${data.contacto}"
 ---
 `;
 
-  // 5. Preparar la información para subir el archivo a GitHub
-  const owner = "Helder8a"; // Tu usuario de GitHub
-  const repo = "portugalapoia"; // Tu repositorio
+  // 4. Preparar la información para subir el archivo a GitHub
+  const owner = "tu-usuario-de-github"; // REEMPLAZA con tu usuario
+  const repo = "nombre-de-tu-repositorio"; // REEMPLAZA con el nombre de tu repo
   const path = `_anuncios/${slug}.md`; // Ruta donde se guardará el nuevo anuncio
+  const message = `Nuevo anuncio: ${data.titulo}`;
 
   try {
-    // 6. Enviar el archivo a GitHub
+    // 5. Enviar el archivo a GitHub
     await octokit.repos.createOrUpdateFileContents({
       owner,
       repo,
@@ -44,7 +39,7 @@ contacto: "${data.contacto || ''}"
       content: Buffer.from(fileContent).toString("base64"), // El contenido debe estar en base64
     });
 
-    // 7. Devolver una respuesta de éxito
+    // 6. Devolver una respuesta de éxito
     return {
       statusCode: 200,
       body: JSON.stringify({ message: "Anuncio publicado exitosamente." }),
