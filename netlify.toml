@@ -1,13 +1,22 @@
 # netlify.toml
+# Configuración de construcción para Netlify.
+# Asegúrate de que este archivo esté en la carpeta raíz de tu proyecto
+# o en la "Base directory" configurada en Netlify.
+
 [build]
-  # Indica que los archivos a desplegar están en la "Base directory"
-  # que se configura en el panel de Netlify.
+  # 'publish = "." ' significa que Netlify desplegará los archivos
+  # que se encuentren en la "Base directory" que configures en el panel de Netlify.
+  # Por ejemplo, si tu Base directory es 'portugalapoia/', entonces '.' se refiere a esa carpeta.
   publish = "." 
   
-  # Deja el comando vacío si no hay un proceso de construcción.
+  # 'command = ""' indica que no hay un comando de construcción específico
+  # que Netlify deba ejecutar (por ejemplo, 'npm run build' o 'hugo').
+  # Esto es común para sitios estáticos donde los archivos ya están listos.
   command = "" 
 
-# Configuración del directorio de tus funciones de Netlify.
-# La ruta es relativa a la "Base directory".
+# Configuración del directorio para las funciones de Netlify.
+# La ruta es relativa a la "Base directory" de Netlify.
+# Por ejemplo, si tu Base directory es 'portugalapoia/', entonces
+# 'netlify/functions' se buscará dentro de 'portugalapoia/netlify/functions'.
 [functions]
   directory = "netlify/functions"
