@@ -1,7 +1,7 @@
 /*
   JavaScript para la interactividad de PortugalApoia.com
   ---------------------------------------------------------
-  Versión: 2.0 (Revisada y comentada)
+  Versión: 3.0 (Final y Corregida)
   
   Este archivo gestiona:
   1. Menú de navegación móvil (hamburguesa).
@@ -9,7 +9,7 @@
   3. Botón de "Volver Arriba" (Scroll-to-top).
   4. Lógica del buscador y filtros de tarjetas.
   5. Formulario inteligente para publicar anuncios.
-  6. Simulación de envío de formulario.
+  6. Lógica de envío de formulario para Netlify.
   7. Previsualización de imagen en el formulario.
   8. Etiqueta "Novo" para anuncios recientes.
   9. Preloader (pantalla de carga).
@@ -20,43 +20,34 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- 1. LÓGICA PARA EL MENÚ MÓVIL (HAMBURGUER) ---
-    // Selecciona los elementos necesarios para el menú móvil.
     const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
     const mainNav = document.querySelector('#main-nav');
 
     if (mobileNavToggle && mainNav) {
-        // Añade un evento de clic al botón de la hamburguesa.
         mobileNavToggle.addEventListener('click', () => {
-            // Alterna la clase 'nav-visible' para mostrar u ocultar el menú.
             mainNav.classList.toggle('nav-visible');
             const isVisible = mainNav.classList.contains('nav-visible');
-            // Actualiza el atributo ARIA para accesibilidad.
             mobileNavToggle.setAttribute('aria-expanded', isVisible);
-            // Cambia el icono del botón (hamburguesa o 'X').
             mobileNavToggle.textContent = isVisible ? '✕' : '☰';
         });
     }
 
     // --- 2. LÓGICA PARA EL MODAL DE DONATIVO ---
-    // Selecciona los elementos del modal.
     const modal = document.getElementById('donativo-modal');
     const openModalBtns = document.querySelectorAll('.apoia-projeto-btn');
     const closeModalBtn = modal ? modal.querySelector('.modal-close-btn') : null;
 
     if (modal && openModalBtns.length > 0 && closeModalBtn) {
-        // Abre el modal al hacer clic en cualquier botón de "Apoia".
         openModalBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 modal.classList.remove('hidden');
             });
         });
 
-        // Cierra el modal al hacer clic en el botón de cerrar.
         closeModalBtn.addEventListener('click', () => {
             modal.classList.add('hidden');
         });
 
-        // Cierra el modal si se hace clic fuera del contenido del modal.
         modal.addEventListener('click', (event) => {
             if (event.target === modal) {
                 modal.classList.add('hidden');
@@ -68,7 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const scrollTopBtn = document.getElementById('scrollTopBtn');
 
     if (scrollTopBtn) {
-        // Muestra u oculta el botón basado en la posición del scroll.
         window.addEventListener('scroll', () => {
             if (window.scrollY > 300) {
                 if (!scrollTopBtn.classList.contains('visible')) {
@@ -81,7 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Realiza el scroll suave hacia arriba al hacer clic.
         scrollTopBtn.addEventListener('click', (e) => {
             e.preventDefault();
             window.scrollTo({
@@ -94,84 +83,69 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 4. LÓGICA DEL BUSCADOR Y FILTROS ---
     const searchContainer = document.querySelector('.search-container');
     if (searchContainer) {
-        // Selecciona los elementos del buscador.
         const searchInput = searchContainer.querySelector('#search-input');
         const filters = searchContainer.querySelectorAll('.filter-group select');
         const allCards = document.querySelectorAll('.causas-grid .card-causa');
         const noResultsMessage = document.getElementById('no-results-message');
         const loadMoreBtn = document.getElementById('load-more-btn');
 
-        // Configuración para la carga progresiva de tarjetas.
         let cardsToShowInitially = 6;
         let cardsToLoadPerClick = 6;
         let currentVisibleCards = cardsToShowInitially;
 
-        // Función principal para filtrar y mostrar las tarjetas.
         const filterAndDisplayCards = () => {
             const searchText = searchInput ? searchInput.value.toLowerCase().trim() : '';
-            
-            // Obtiene los filtros activos de los menús desplegables.
             const activeFilters = {};
             filters.forEach(filter => {
                 if (filter.value) {
-                    const filterName = filter.id.replace('-filter', ''); // ej: 'city-filter' -> 'city'
+                    // Extrae el nombre del filtro del ID (ej. 'city-filter' -> 'city')
+                    // O del atributo data-filter si existe, para mayor flexibilidad.
+                    const filterName = filter.dataset.filter || filter.id.replace('-filter', '');
                     activeFilters[filterName] = filter.value.toLowerCase();
                 }
             });
 
-            // Filtra las tarjetas basadas en el texto y los filtros de selección.
             const matchingCards = Array.from(allCards).filter(card => {
-                // 1. Filtro de texto (título y descripción).
                 const title = (card.querySelector('.card-title')?.textContent || '').toLowerCase();
                 const description = (card.querySelector('.card-description')?.textContent || '').toLowerCase();
                 const textMatch = title.includes(searchText) || description.includes(searchText);
 
                 if (!textMatch) return false;
 
-                // 2. Filtros de selección (basados en atributos data-*).
                 for (const filterName in activeFilters) {
                     const filterValue = activeFilters[filterName];
                     const cardDataValue = (card.dataset[filterName] || '').toLowerCase();
-                    
                     if (cardDataValue !== filterValue) return false;
                 }
-                
                 return true;
             });
 
-            // Oculta todas las tarjetas primero.
             allCards.forEach(card => card.style.display = 'none');
-
-            // Muestra solo las tarjetas que coinciden, hasta el límite actual.
             matchingCards.slice(0, currentVisibleCards).forEach(card => {
                 card.style.display = 'flex';
             });
 
-            // Muestra u oculta el mensaje de "sin resultados".
             if (noResultsMessage) {
                 noResultsMessage.style.display = matchingCards.length === 0 ? 'block' : 'none';
             }
 
-            // Muestra u oculta el botón "Ver Mais".
             if (loadMoreBtn) {
                 loadMoreBtn.style.display = currentVisibleCards < matchingCards.length ? 'block' : 'none';
             }
         };
 
-        // Añade listeners para activar el filtro en tiempo real.
         searchInput?.addEventListener('keyup', () => {
-            currentVisibleCards = cardsToShowInitially; // Resetea la vista al buscar
+            currentVisibleCards = cardsToShowInitially;
             filterAndDisplayCards();
         });
 
         filters.forEach(filter => {
             filter.addEventListener('change', () => {
-                currentVisibleCards = cardsToShowInitially; // Resetea la vista al cambiar filtros
+                currentVisibleCards = cardsToShowInitially;
                 filterAndDisplayCards();
             });
         });
 
-        // Lógica para el botón "Ver Mais".
         if (loadMoreBtn) {
             loadMoreBtn.addEventListener('click', () => {
                 currentVisibleCards += cardsToLoadPerClick;
@@ -179,163 +153,81 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
         
-        // Ejecución inicial para mostrar las tarjetas al cargar la página.
         filterAndDisplayCards();
     }
 
-
     // --- 5. LÓGICA PARA EL FORMULARIO INTELIGENTE ---
-    // Este formulario muestra campos específicos según la opción seleccionada.
     const tipoAnuncioSelector = document.getElementById('tipo-anuncio-selector');
     const camposHabitacao = document.getElementById('campos-habitacao');
     const camposEmprego = document.getElementById('campos-emprego');
     const camposServico = document.getElementById('campos-servico');
 
-    // Campos específicos para cada tipo de anuncio.
-    const precoHabitacaoInput = document.getElementById('preco_habitacao');
-    const cidadeHabitacaoInput = document.getElementById('cidade_habitacao');
-    const tipoContratoInput = document.getElementById('tipo_contrato');
-    const experienciaEmpregoInput = document.getElementById('experiencia_emprego');
-    const localEmpregoInput = document.getElementById('local_emprego');
-    const categoriaServicoInput = document.getElementById('categoria_servico');
-    const areaAtuacaoServicoInput = document.getElementById('area_atuacao_servico');
-
-    // Mensajes de éxito y error del formulario.
-    const formSuccessMessage = document.getElementById('form-success-message');
-    const formErrorMessage = document.getElementById('form-error-message');
-
-    // Función para resetear (ocultar) todos los campos específicos.
     const resetFormFields = () => {
-        if (camposHabitacao) {
-            camposHabitacao.style.display = 'none';
-            if (precoHabitacaoInput) precoHabitacaoInput.required = false;
-            if (cidadeHabitacaoInput) cidadeHabitacaoInput.required = false;
-        }
-        if (camposEmprego) {
-            camposEmprego.style.display = 'none';
-            if (tipoContratoInput) tipoContratoInput.required = false;
-            if (localEmpregoInput) localEmpregoInput.required = false;
-        }
-        if (camposServico) {
-            camposServico.style.display = 'none';
-            if (categoriaServicoInput) categoriaServicoInput.required = false;
-            if (areaAtuacaoServicoInput) areaAtuacaoServicoInput.required = false;
-        }
+        if (camposHabitacao) camposHabitacao.style.display = 'none';
+        if (camposEmprego) camposEmprego.style.display = 'none';
+        if (camposServico) camposServico.style.display = 'none';
+
+        // Opcional: Desactivar 'required' para evitar problemas de validación en campos ocultos
+        document.querySelectorAll('#campos-habitacao input, #campos-emprego input, #campos-servico input, #campos-emprego select, #campos-servico select').forEach(input => {
+            input.required = false;
+        });
     };
 
-    // Muestra los campos correctos cuando el usuario cambia el tipo de anuncio.
     if (tipoAnuncioSelector) {
         tipoAnuncioSelector.addEventListener('change', (event) => {
             resetFormFields();
+            const selectedValue = event.target.value;
 
-            switch (event.target.value) {
-                case 'habitacao':
-                    if(camposHabitacao) camposHabitacao.style.display = 'block';
-                    if(precoHabitacaoInput) precoHabitacaoInput.required = true;
-                    if(cidadeHabitacaoInput) cidadeHabitacaoInput.required = true;
-                    break;
-                case 'emprego':
-                    if(camposEmprego) camposEmprego.style.display = 'block';
-                    if(tipoContratoInput) tipoContratoInput.required = true;
-                    if(localEmpregoInput) localEmpregoInput.required = true;
-                    break;
-                case 'servico':
-                    if(camposServico) camposServico.style.display = 'block';
-                    if(categoriaServicoInput) categoriaServicoInput.required = true;
-                    if(areaAtuacaoServicoInput) areaAtuacaoServicoInput.required = true;
-                    break;
+            if (selectedValue === 'habitacao' && camposHabitacao) {
+                camposHabitacao.style.display = 'block';
+                document.getElementById('preco_habitacao').required = true;
+                document.getElementById('cidade_habitacao').required = true;
+            } else if (selectedValue === 'emprego' && camposEmprego) {
+                camposEmprego.style.display = 'block';
+                document.getElementById('tipo_contrato').required = true;
+                document.getElementById('local_emprego').required = true;
+            } else if (selectedValue === 'servico' && camposServico) {
+                camposServico.style.display = 'block';
+                document.getElementById('categoria_servico').required = true;
+                document.getElementById('area_atuacao_servico').required = true;
             }
         });
-        // Resetea los campos al cargar la página para asegurar el estado inicial correcto.
         resetFormFields();
     }
 
     // --- 6. LÓGICA DE ENVÍO DE ANUNCIO (PARA NETLIFY) ---
-const formAnuncio = document.getElementById('form-anuncio');
-if (formAnuncio) {
-    formAnuncio.addEventListener('submit', () => {
-        // Este listener es para dar feedback al usuario después de que Netlify procese el envío.
-        // No usamos e.preventDefault() para dejar que el formulario se envíe normalmente a Netlify.
-        
-        const formSuccessMessage = document.getElementById('form-success-message');
-
-        // Pequeña demora para que el usuario vea el mensaje y el formulario se limpie.
-        setTimeout(() => {
-            formAnuncio.reset(); // Limpia los campos del formulario.
+    const formAnuncio = document.getElementById('form-anuncio');
+    if (formAnuncio) {
+        formAnuncio.addEventListener('submit', () => {
+            // Este listener es para dar feedback al usuario después de que Netlify procese el envío.
+            // No usamos e.preventDefault() para dejar que el formulario se envíe normalmente a Netlify.
             
-            // Revisa si el selector de tipo de anuncio existe.
-            const tipoAnuncioSelector = document.getElementById('tipo-anuncio-selector');
-            if(tipoAnuncioSelector) {
+            const formSuccessMessage = document.getElementById('form-success-message');
+
+            // Pequeña demora para que el usuario vea el mensaje y el formulario se limpie.
+            setTimeout(() => {
+                formAnuncio.reset(); // Limpia los campos del formulario.
+                
                 // Dispara un evento 'change' para que la función resetFormFields se active
                 // y oculte todos los campos dinámicos, dejando el formulario limpio.
-                tipoAnuncioSelector.dispatchEvent(new Event('change'));
-            }
+                if(tipoAnuncioSelector) {
+                    tipoAnuncioSelector.dispatchEvent(new Event('change'));
+                }
 
-            // Muestra el mensaje de éxito y desplaza la vista hacia él.
-            if(formSuccessMessage) {
-                formSuccessMessage.style.display = 'block';
-                window.scrollTo({ top: formAnuncio.offsetTop, behavior: 'smooth' });
-            }
-        }, 1000); // 1 segundo de espera.
-    });
-}
-const formAnuncio = document.getElementById('form-anuncio');
-if (formAnuncio) {
-    formAnuncio.addEventListener('submit', () => {
-        // Este listener es solo para dar feedback al usuario después de que Netlify procese el envío.
-        // No usamos e.preventDefault() para dejar que el formulario se envíe normalmente.
-
-        const formSuccessMessage = document.getElementById('form-success-message');
-
-        // Pequeña demora para que el usuario vea el resultado y el formulario se limpie.
-        setTimeout(() => {
-            formAnuncio.reset();
-            if(document.getElementById('tipo-anuncio-selector')) {
-                // Disparamos un evento 'change' para que los campos dinámicos se oculten.
-                document.getElementById('tipo-anuncio-selector').dispatchEvent(new Event('change'));
-            }
-            if(formSuccessMessage) {
-                formSuccessMessage.style.display = 'block';
-                window.scrollTo({ top: formAnuncio.offsetTop, behavior: 'smooth' });
-            }
-        }, 1000); 
-    });
-}
-
-        // fetch() ahora apunta a nuestra función inteligente
-        fetch('/.netlify/functions/crear-anuncio', { // Cambiado a 'crear-anuncio'
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data) // Enviamos los datos como JSON
-        })
-        .then(response => {
-            if (!response.ok) {
-                // Si la función devuelve un error, lo capturamos
-                throw new Error('La creación del borrador falló.');
-            }
-            return response.json();
-        })
-        .then(() => {
-            // Si la función tiene éxito (código 200):
-            if(formSuccessMessage) formSuccessMessage.style.display = 'block';
-            formAnuncio.reset(); 
-            resetFormFields(); // Resetea la visibilidad de los campos dinámicos.
-            window.scrollTo({ top: formAnuncio.offsetTop, behavior: 'smooth' });
-        })
-        .catch(error => {
-            // Si la petición falla:
-            if(formErrorMessage) formErrorMessage.style.display = 'block';
-            console.error('Error al enviar al a función:', error);
+                // Muestra el mensaje de éxito y desplaza la vista hacia él.
+                if(formSuccessMessage) {
+                    formSuccessMessage.style.display = 'block';
+                    window.scrollTo({ top: formAnuncio.offsetTop, behavior: 'smooth' });
+                }
+            }, 1000); // 1 segundo de espera.
         });
-    });
-}
+    }
 
-    // --- 7. Lógica para previsualización de imagen (básica) ---
+    // --- 7. Lógica para previsualización de imagen ---
     const imagemAnuncioInput = document.getElementById('imagem_anuncio');
     const imagePreviewMessage = document.getElementById('image-preview-message');
 
     if (imagemAnuncioInput && imagePreviewMessage) {
-        // Muestra el nombre del archivo seleccionado.
         imagemAnuncioInput.addEventListener('change', () => {
             if (imagemAnuncioInput.files && imagemAnuncioInput.files[0]) {
                 imagePreviewMessage.textContent = `Arquivo selecionado: ${imagemAnuncioInput.files[0].name}`;
@@ -348,35 +240,31 @@ if (formAnuncio) {
     }
 
     // --- 8. LÓGICA PARA LA ETIQUETA "NOVO" ---
-    // Muestra una etiqueta en las tarjetas publicadas en las últimas 48 horas.
     const checkNewTags = () => {
         const cards = document.querySelectorAll('.card-causa');
         const now = new Date();
-        const fortyEightHours = 48 * 60 * 60 * 1000; // 48 horas en milisegundos.
+        const fortyEightHours = 48 * 60 * 60 * 1000;
 
         cards.forEach(card => {
             const pubDateString = card.dataset.publicationDate;
             if (pubDateString) {
                 const pubDate = new Date(pubDateString);
-                const timeDiff = now.getTime() - pubDate.getTime();
-
-                // Si la diferencia es menor o igual a 48h, muestra la etiqueta.
-                if (timeDiff <= fortyEightHours) {
-                    const newTag = card.querySelector('.new-tag');
-                    if (newTag) {
-                        newTag.style.display = 'block';
+                if (!isNaN(pubDate.getTime())) { // Verifica que la fecha sea válida
+                    const timeDiff = now.getTime() - pubDate.getTime();
+                    if (timeDiff >= 0 && timeDiff <= fortyEightHours) {
+                        const newTag = card.querySelector('.new-tag');
+                        if (newTag) {
+                            newTag.style.display = 'block';
+                        }
                     }
                 }
             }
         });
     };
-
-    checkNewTags(); // Ejecuta la función al cargar la página.
+    checkNewTags();
 
     // --- 10. LÓGICA PARA EL BANNER DE COOKIES ---
-    // Comprueba si el usuario ya ha aceptado las cookies.
     if (!localStorage.getItem('cookieConsent')) {
-        // Si no, crea y muestra el banner.
         const consentBanner = document.createElement('div');
         consentBanner.className = 'cookie-banner';
         consentBanner.innerHTML = `
@@ -385,7 +273,6 @@ if (formAnuncio) {
         `;
         document.body.appendChild(consentBanner);
 
-        // Al hacer clic en "Aceitar", guarda la preferencia y oculta el banner.
         document.getElementById('accept-cookie-btn').addEventListener('click', () => {
             localStorage.setItem('cookieConsent', 'true');
             consentBanner.style.display = 'none';
@@ -394,7 +281,6 @@ if (formAnuncio) {
 });
 
 // --- 9. LÓGICA PARA EL PRELOADER ---
-// Oculta la pantalla de carga cuando la página y todos sus recursos han cargado.
 window.addEventListener('load', () => {
     const preloader = document.getElementById('preloader');
     if (preloader) {
