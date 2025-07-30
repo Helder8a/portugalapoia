@@ -2,9 +2,9 @@
 # robots.txt para https://www.portugalapoia.com/
 # --------------------------------------------------------
 
-# Permitir que todos os bots rastreiem todo o site
+# Permitir que todos los bots rastreen todo el sitio.
 User-agent: *
 Allow: /
 
-# Localização do Sitemap
+# Localización del Sitemap para que los bots lo encuentren fácilmente.
 Sitemap: https://www.portugalapoia.com/sitemap.xml

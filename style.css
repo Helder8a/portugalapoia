@@ -1,23 +1,33 @@
-/* PortugalApoya.pt/style.css */
+/*
+  Hoja de Estilos Principal para PortugalApoia.com
+  ----------------------------------------------------
+  Autor: HBO Consulting
+  Versión: 2.0 (Revisada con mejoras de UX y comentarios)
+*/
+
+/* --- VARIABLES GLOBALES (CSS CUSTOM PROPERTIES) --- */
+/* El uso de variables facilita el mantenimiento y la consistencia del diseño. */
 :root {
-    --color-primary: #0A3D62;
-    --color-accent: #00834B;
-    --color-donation: #FFD700;
-    --color-text: #333333;
-    --color-text-light: #ffffff;
-    --color-background: #ffffff;
-    --color-background-light: #F8F9FA;
-    --color-border: #dee2e6;
-    --font-headings: 'Inter', sans-serif;
-    --font-body: 'Roboto', sans-serif;
-    --border-radius: 8px;
-    --shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+    --color-primary: #0A3D62;          /* Azul oscuro principal */
+    --color-accent: #00834B;           /* Verde para botones de acción */
+    --color-donation: #FFD700;         /* Amarillo para botones de donación */
+    --color-text: #333333;             /* Color de texto principal */
+    --color-text-light: #ffffff;       /* Color de texto claro (para fondos oscuros) */
+    --color-background: #ffffff;       /* Fondo principal */
+    --color-background-light: #F8F9FA; /* Fondo secundario claro */
+    --color-border: #dee2e6;           /* Color para bordes sutiles */
+    --font-headings: 'Inter', sans-serif; /* Fuente para encabezados */
+    --font-body: 'Roboto', sans-serif;   /* Fuente para el cuerpo del texto */
+    --border-radius: 8px;              /* Radio de borde estándar */
+    --shadow: 0 5px 15px rgba(0, 0, 0, 0.07); /* Sombra estándar para elementos */
 }
 
+/* --- RESETEO Y ESTILOS BASE --- */
+/* Normaliza los estilos en todos los navegadores para un punto de partida consistente. */
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
+    box-sizing: border-box; /* Asegura que el padding y borde no afecten el tamaño final del elemento. */
 }
 
 body,
@@ -27,27 +37,32 @@ html {
     font-family: var(--font-body);
     background-color: var(--color-background);
     color: var(--color-text);
-    line-height: 1.7;
+    line-height: 1.7; /* Altura de línea para mejorar la legibilidad */
     font-size: 16px;
-    scroll-behavior: smooth;
-    overflow-x: hidden;
+    scroll-behavior: smooth; /* Desplazamiento suave al hacer clic en anclas */
+    overflow-x: hidden;      /* Previene el desbordamiento horizontal */
 }
 
+/* --- CONTENEDOR PRINCIPAL --- */
+/* Define el ancho máximo del contenido para mantener la legibilidad en pantallas grandes. */
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 24px;
 }
 
+/* --- ESTILOS DE IMÁGENES --- */
 img {
     max-width: 100%;
     height: auto;
     display: block;
 }
 
+/* --- ESTILOS DE BOTONES (UX Mejorada) --- */
+/* Botones diseñados para ser claros, accesibles y con feedback visual. */
 .button {
     padding: 12px 28px;
-    border-radius: 50px;
+    border-radius: 50px; /* Bordes redondeados para un look moderno */
     text-decoration: none;
     font-weight: 700;
     display: inline-block;
@@ -65,8 +80,8 @@ img {
 }
 
 .button-primary:hover {
-    background-color: #00663a;
-    transform: translateY(-2px);
+    background-color: #00663a; /* Tono más oscuro para el estado hover */
+    transform: translateY(-2px); /* Efecto sutil de elevación */
 }
 
 .button-secondary {
@@ -80,6 +95,7 @@ img {
     color: var(--color-primary);
 }
 
+/* Botón específico para donaciones, con un color que llama la atención. */
 .apoia-projeto-btn {
     background-color: var(--color-donation);
     color: var(--color-primary);
@@ -97,10 +113,11 @@ img {
     margin-top: auto;
 }
 
+/* --- TÍTULOS DE SECCIÓN --- */
 .section-title {
     text-align: center;
     font-size: 2.5rem;
-    margin-bottom: 20px; /* Reduzido de 40px para 20px */
+    margin-bottom: 20px;
     color: var(--color-primary);
     font-family: var(--font-headings);
 }
@@ -109,11 +126,12 @@ img {
     background-color: var(--color-background-light);
 }
 
+/* --- CABECERA Y NAVEGACIÓN PRINCIPAL --- */
 .main-header {
     background-color: var(--color-background);
     padding: 1.2rem 0;
     border-bottom: 1px solid var(--color-border);
-    position: sticky;
+    position: sticky; /* La cabecera se mantiene visible al hacer scroll */
     top: 0;
     z-index: 1000;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
@@ -156,10 +174,12 @@ img {
     transition: color 0.3s ease;
 }
 
+/* Estilo para el enlace de la página activa */
 .main-nav a.active {
     color: var(--color-primary);
 }
 
+/* Línea animada debajo de los enlaces de navegación para feedback visual */
 .main-nav a::after {
     content: '';
     position: absolute;
@@ -177,6 +197,7 @@ img {
     width: 100%;
 }
 
+/* Botón de navegación para móviles (hamburguesa) */
 .mobile-nav-toggle {
     display: none;
     background: none;
@@ -187,6 +208,7 @@ img {
     z-index: 1001;
 }
 
+/* --- SECCIÓN HERO (PORTADA) --- */
 #hero {
     position: relative;
     min-height: 80vh;
@@ -201,6 +223,7 @@ img {
     padding: 60px 24px;
 }
 
+/* Superposición oscura para mejorar la legibilidad del texto sobre la imagen. */
 .hero-overlay {
     position: absolute;
     top: 0;
@@ -235,8 +258,9 @@ img {
     justify-content: center;
 }
 
+/* --- DISEÑO DE TARJETAS (GRID) --- */
 section {
-    padding: 20px 0; /* Reduzido de 40px para 20px */
+    padding: 40px 0;
 }
 
 .causas-grid {
@@ -262,9 +286,10 @@ section {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
+/* Contenedor de la imagen para mantener la proporción */
 .card-image-container {
     width: 100%;
-    padding-top: 100%;
+    padding-top: 100%; /* Proporción cuadrada */
     position: relative;
     background-color: #f0f0f0;
     overflow: hidden;
@@ -276,7 +301,7 @@ section {
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover; /* Asegura que la imagen cubra el espacio sin deformarse */
 }
 
 .card-header {
@@ -312,6 +337,7 @@ section {
     flex-grow: 1;
 }
 
+/* --- FORMULARIOS --- */
 .form-container {
     max-width: 800px;
     margin: 0 auto;
@@ -344,6 +370,7 @@ section {
     font-family: var(--font-body);
 }
 
+/* Estilos de foco para mejorar la accesibilidad y UX */
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
@@ -352,6 +379,7 @@ section {
     box-shadow: 0 0 0 3px rgba(10, 61, 98, 0.2);
 }
 
+/* --- MODAL DE DONACIÓN --- */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -396,6 +424,7 @@ section {
     margin: 5px 0;
 }
 
+/* Permite seleccionar texto, útil para copiar el IBAN. */
 .selectable-text {
     user-select: text;
     -webkit-user-select: text;
@@ -403,10 +432,11 @@ section {
     -ms-user-select: text;
 }
 
+/* --- PIE DE PÁGINA --- */
 .main-footer {
     background-color: var(--color-primary);
     color: #ffffff;
-    padding: 20px 0 10px 0;
+    padding: 40px 0 20px 0;
     font-family: var(--font-body);
 }
 
@@ -423,13 +453,13 @@ section {
 .footer-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    margin-bottom: 20px;
+    gap: 30px;
+    margin-bottom: 30px;
 }
 
 .footer-column h4 {
     font-family: var(--font-headings);
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     font-size: 1.1em;
 }
 
@@ -445,7 +475,7 @@ section {
 }
 
 .footer-column ul li {
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
 
 .social-link {
@@ -456,7 +486,7 @@ section {
 
 .footer-bottom {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding-top: 10px;
+    padding-top: 20px;
     font-size: 0.85em;
     text-align: center;
 }
@@ -465,14 +495,18 @@ section {
     margin: 5px 0;
 }
 
-.card-tag-servico {
-    background-color: #3498db;
+/* --- ETIQUETAS Y TAGS --- */
+.card-tag-servico, .card-tag-emprego, .card-tag-artigos {
     color: white;
     padding: 4px 10px;
     border-radius: 20px;
     font-size: 0.8rem;
     font-weight: 700;
 }
+
+.card-tag-servico { background-color: #3498db; } /* Azul para servicios */
+.card-tag-emprego { background-color: #e67e22; } /* Naranja para empleo */
+.card-tag-artigos { background-color: #9b59b6; } /* Morado para artículos */
 
 .card-id {
     font-size: 0.9rem;
@@ -483,6 +517,7 @@ section {
     border-radius: 15px;
 }
 
+/* --- BOTÓN DE SCROLL-TO-TOP --- */
 #scrollTopBtn {
     display: none;
     position: fixed;
@@ -514,6 +549,7 @@ section {
     background-color: var(--color-accent);
 }
 
+/* --- PRELOADER (PANTALLA DE CARGA) --- */
 #preloader {
     position: fixed;
     top: 0;
@@ -542,27 +578,14 @@ section {
 }
 
 @keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
-.card-tag-emprego {
-    background-color: #3498db;
-    color: white;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 700;
-}
-
+/* --- CONTENEDOR DE BÚSQUEDA Y FILTROS --- */
 .search-container {
     max-width: 800px;
-    margin: 0 auto 40px auto;
+    margin: 40px auto;
     background: #fff;
     padding: 20px;
     border-radius: var(--border-radius);
@@ -621,6 +644,7 @@ section {
     box-shadow: 0 0 0 3px rgba(0, 131, 75, 0.2);
 }
 
+/* Mensaje para cuando no hay resultados */
 #no-results-message {
     text-align: center;
     font-size: 1.2rem;
@@ -629,6 +653,7 @@ section {
     display: none;
 }
 
+/* Etiqueta "Novo" para anuncios recientes */
 .new-tag {
     position: absolute;
     top: 10px;
@@ -640,12 +665,15 @@ section {
     font-size: 0.8rem;
     font-weight: 700;
     z-index: 10;
-    display: none;
+    display: none; /* Se muestra con JS */
 }
 
+/* --- MEDIA QUERIES (DISEÑO RESPONSIVO) --- */
+
+/* Para tablets y pantallas medianas */
 @media (max-width: 992px) {
     .main-nav {
-        display: none;
+        display: none; /* Oculta la navegación de escritorio */
         position: absolute;
         top: 100%;
         left: 0;
@@ -657,7 +685,7 @@ section {
     }
 
     .main-nav.nav-visible {
-        display: flex;
+        display: flex; /* Muestra la navegación móvil al hacer clic */
     }
 
     .main-nav ul {
@@ -682,11 +710,11 @@ section {
     }
 
     .main-nav a::after {
-        display: none;
+        display: none; /* Oculta la línea animada en móvil */
     }
 
     .mobile-nav-toggle {
-        display: block;
+        display: block; /* Muestra el botón de hamburguesa */
     }
 
     .search-box {
@@ -699,6 +727,7 @@ section {
     }
 }
 
+/* Para móviles */
 @media (max-width: 768px) {
     .hero-title {
         font-size: 2.4rem;
@@ -741,8 +770,9 @@ section {
     }
 }
 
+/* --- CATEGORÍAS DE ACCESO RÁPIDO (PÁGINA DE INICIO) --- */
 #quick-access-categories {
-    padding: 20px 0; /* Reduzido de 40px para 20px */
+    padding: 60px 0;
 }
 
 .category-links-grid {
@@ -792,14 +822,42 @@ section {
     flex-grow: 1;
 }
 
+/* --- MENSAJES DE ERROR DEL FORMULARIO --- */
 .error-message {
-    color: #c0392b;
+    color: #c0392b; /* Rojo para errores */
     font-size: 0.9em;
     margin-top: 5px;
-    display: none;
+    display: none; /* Oculto por defecto */
 }
 
 .form-group input.invalid-field,
 .form-group textarea.invalid-field {
     border: 2px solid #c0392b;
+}
+
+/* --- BANNER DE COOKIES --- */
+.cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-primary);
+    color: white;
+    padding: 15px;
+    text-align: center;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.cookie-banner button {
+    padding: 8px 15px;
+    background-color: var(--color-donation);
+    color: var(--color-primary);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 15px;
 }
