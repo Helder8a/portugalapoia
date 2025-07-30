@@ -1,0 +1,27 @@
+# URL de tu sitio y nombre del repositorio en GitHub
+backend:
+  name: git-gateway
+  branch: main # O la rama principal que uses (ej: master)
+
+# Activa el flujo de aprobación (Borrador -> En Revisión -> Listo)
+publish_mode: simple
+
+# Dónde se guardan los archivos de imágenes que subas desde el panel
+media_folder: "img_anuncios"
+public_folder: "/img_anuncios"
+
+# Define el contenido que puedes gestionar. Lo llamaremos "Anúncios".
+collections:
+  - name: "anuncios" # Nombre de la colección
+    label: "Anúncios" # Cómo se verá en el panel
+    folder: "_anuncios" # Carpeta donde se guardarán los borradores
+    create: true # Permite crear nuevas entradas
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Cómo se llamará el archivo
+    fields: # Los campos del formulario de tu panel
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Tipo de Anúncio", name: "tipo_anuncio", widget: "select", options: ["artigos", "emprego", "servico", "habitacao"] }
+      - { label: "Ciudad", name: "ciudad", widget: "string", required: false }
+      - { label: "Contacto", name: "contacto", widget: "string", required: false }
+      - { label: "Imagen", name: "imagem", widget: "image", required: false, media_folder: "/img_anuncios", public_folder: "/img_anuncios" }
+      - { label: "Descripción (Contenido)", name: "body", widget: "markdown" }
+      - { label: "Publicado", name: "published", widget: "boolean", default: false } # <--- ¡Añade esta línea!
