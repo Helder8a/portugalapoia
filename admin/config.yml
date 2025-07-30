@@ -19,9 +19,9 @@ collections:
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Cómo se llamará el archivo
     fields: # Los campos del formulario de tu panel
       - { label: "Título", name: "title", widget: "string" }
-      - { label: "Tipo de Anúncio", name: "tipo_anuncio", widget: "select", options: ["emprego", "servico", "habitacao", "artigos"] }
-      - { label: "Publicado", name: "published", widget: "boolean", default: true }
+      - { label: "Tipo de Anúncio", name: "tipo_anuncio", widget: "select", options: ["artigos", "emprego", "servico", "habitacao"] }
       - { label: "Ciudad", name: "ciudad", widget: "string", required: false }
-      - { label: "Contacto", name: "contacto", widget: "string" }
-      - { label: "Imagen", name: "imagem", widget: "image", required: false }
-      - { label: "Descripción", name: "body", widget: "markdown" }
+      - { label: "Contacto", name: "contacto", widget: "string", required: false }
+      - { label: "Imagen", name: "imagem", widget: "image", required: false, media_folder: "/img_anuncios", public_folder: "/img_anuncios" }
+      - { label: "Descripción (Contenido)", name: "body", widget: "markdown" }
+      - { label: "Publicado", name: "published", widget: "boolean", default: false } # <--- ¡Añade esta línea!
