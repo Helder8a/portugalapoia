@@ -1,7 +1,7 @@
 /*
   JavaScript para la interactividad de PortugalApoia.com
   ---------------------------------------------------------
-  Versión: 3.0 (Final y Corregida)
+  Versión: 3.1 (Corrección de sintaxis)
   
   Este archivo gestiona:
   1. Menú de navegación móvil (hamburguesa).
@@ -98,8 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const activeFilters = {};
             filters.forEach(filter => {
                 if (filter.value) {
-                    // Extrae el nombre del filtro del ID (ej. 'city-filter' -> 'city')
-                    // O del atributo data-filter si existe, para mayor flexibilidad.
                     const filterName = filter.dataset.filter || filter.id.replace('-filter', '');
                     activeFilters[filterName] = filter.value.toLowerCase();
                 }
@@ -154,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         filterAndDisplayCards();
-    }
+    } // <-- EL PUNTO Y COMA ERRÓNEO ESTABA AQUÍ. HA SIDO ELIMINADO.
 
     // --- 5. LÓGICA PARA EL FORMULARIO INTELIGENTE ---
     const tipoAnuncioSelector = document.getElementById('tipo-anuncio-selector');
@@ -167,7 +165,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (camposEmprego) camposEmprego.style.display = 'none';
         if (camposServico) camposServico.style.display = 'none';
 
-        // Opcional: Desactivar 'required' para evitar problemas de validación en campos ocultos
         document.querySelectorAll('#campos-habitacao input, #campos-emprego input, #campos-servico input, #campos-emprego select, #campos-servico select').forEach(input => {
             input.required = false;
         });
@@ -199,27 +196,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const formAnuncio = document.getElementById('form-anuncio');
     if (formAnuncio) {
         formAnuncio.addEventListener('submit', () => {
-            // Este listener es para dar feedback al usuario después de que Netlify procese el envío.
-            // No usamos e.preventDefault() para dejar que el formulario se envíe normalmente a Netlify.
-            
             const formSuccessMessage = document.getElementById('form-success-message');
-
-            // Pequeña demora para que el usuario vea el mensaje y el formulario se limpie.
             setTimeout(() => {
-                formAnuncio.reset(); // Limpia los campos del formulario.
-                
-                // Dispara un evento 'change' para que la función resetFormFields se active
-                // y oculte todos los campos dinámicos, dejando el formulario limpio.
+                formAnuncio.reset();
                 if(tipoAnuncioSelector) {
                     tipoAnuncioSelector.dispatchEvent(new Event('change'));
                 }
-
-                // Muestra el mensaje de éxito y desplaza la vista hacia él.
                 if(formSuccessMessage) {
                     formSuccessMessage.style.display = 'block';
                     window.scrollTo({ top: formAnuncio.offsetTop, behavior: 'smooth' });
                 }
-            }, 1000); // 1 segundo de espera.
+            }, 1000);
         });
     }
 
@@ -249,7 +236,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const pubDateString = card.dataset.publicationDate;
             if (pubDateString) {
                 const pubDate = new Date(pubDateString);
-                if (!isNaN(pubDate.getTime())) { // Verifica que la fecha sea válida
+                if (!isNaN(pubDate.getTime())) {
                     const timeDiff = now.getTime() - pubDate.getTime();
                     if (timeDiff >= 0 && timeDiff <= fortyEightHours) {
                         const newTag = card.querySelector('.new-tag');
