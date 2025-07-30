@@ -1,12 +1,12 @@
 # netlify.toml
 [build]
-  # El directorio de publicación es la raíz de tu repositorio,
-  # donde están tus archivos HTML, CSS, JS directamente.
-  publish = "portugalapoia" 
-  # No hay un comando de construcción necesario para este tipo de proyecto estático.
+  # El punto '.' indica que los archivos a desplegar están en la raíz del repositorio.
+  publish = "." 
+  # Deja el comando vacío si no hay un proceso de construcción
+  # que compile tus archivos (como con React, Vue, etc.).
   command = "" 
 
-# Configuración para tus funciones de Netlify, si las tienes.
-# Según tus archivos, tienes la carpeta 'netlify/functions'.
+# Configuración para tus funciones de Netlify.
+# La ruta es relativa a la raíz del repositorio.
 [functions]
-  directory = "portugalapoia/netlify/functions"
+  directory = "netlify/functions"
