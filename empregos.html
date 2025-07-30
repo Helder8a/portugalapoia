@@ -348,6 +348,76 @@
 
     </footer>
     <script src="script.js"></script>
+
+    ---
+layout: "base.njk"
+permalink: "empregos.html"
+---
+
+{% block content %}
+<section id="vagas">
+    <div class="container">
+        <h2 class="section-title">Oportunidades de Emprego</h2>
+
+        <div class="search-container">
+            <div class="search-box">
+                <div class="search-input-group">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="search-input" placeholder="Procurar por vaga, ex: 'limpeza'...">
+                </div>
+                <div class="filter-group">
+                    <select id="city-filter" data-filter="ciudad">
+                        <option value="">Todas as Cidades</option>
+                        <option value="Aveiro">Aveiro</option>
+                        <option value="Braga">Braga</option>
+                        <option value="Cascais">Cascais</option>
+                        <option value="Coimbra">Coimbra</option>
+                        <option value="Faro">Faro</option>
+                        <option value="Funchal">Funchal</option>
+                        <option value="Lisboa">Lisboa</option>
+                        <option value="Porto">Porto</option>
+                        <option value="Setúbal">Setúbal</option>
+                        <option value="Sintra">Sintra</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div id="listing-container" class="causas-grid">
+            {# Loop para mostrar los anuncios de tipo 'emprego' que estén PUBLICADOS #}
+            {% for anuncio in collections.anuncios | reverse %}
+                {% if anuncio.data.tipo_anuncio == "emprego" and anuncio.data.published %} {# <--- ¡CAMBIO CLAVE AQUÍ! #}
+                <div class="card-causa" data-publication-date="{{ anuncio.date | dateToFormat('%Y-%m-%d') }}" data-city="{{ anuncio.data.ciudad }}">
+                    <span class="new-tag">Novo</span>
+                    {% if anuncio.data.imagem %}
+                        <div class="card-image-container">
+                            <img src="{{ anuncio.data.imagem }}" alt="{{ anuncio.data.title }}" class="card-image" loading="lazy">
+                        </div>
+                    {% endif %}
+                    <div class="card-header">
+                        <span class="card-tag card-tag-emprego">Vaga de Emprego</span>
+                        <span class="card-id">#EMP-{{ loop.index }}</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">{{ anuncio.data.title }}</h3>
+                        <p class="card-description">{{ anuncio.data.body | safe }}</p>
+                        {% if anuncio.data.contacto %}
+                            <p class="card-description">Contacto: {{ anuncio.data.contacto }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div id="no-results-message" style="display: none;">
+            <p>Não foram encontrados resultados para a sua pesquisa.</p>
+        </div>
+        <button id="load-more-btn" class="button button-primary" style="display: none; margin: 30px auto;">Ver
+            Mais</button>
+    </div>
+</section>
+{% endblock %}
     </body>
 
 </html>

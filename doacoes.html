@@ -5,12 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>PortugalApoia.com - Solidariedade, Anúncios, Aluguer de quarto, Serviços Técnicos e Domésticos, Emprego e Doações em Portugal</title>
+    <title>PortugalApoia.com - Solidariedade, Anúncios, Aluguer de quarto, Serviços Técnicos e Domésticos, Emprego e
+        Doações em Portugal</title>
 
     <meta name="description"
         content="A sua plataforma comunitária para encontrar e publicar pedidos de artigos, vagas de emprego, serviços e habitação em Portugal. Junte-se e ajude!">
 
-    <meta name="keywords" content="doação, emprego, solidariedade, portugal, ajuda, voluntariado, causas sociais, habitação, serviços">
+    <meta name="keywords"
+        content="doação, emprego, solidariedade, portugal, ajuda, voluntariado, causas sociais, habitação, serviços">
 
     <meta name="author" content="Fundación Fides & HBO Consulting">
 
@@ -38,7 +40,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500&display=swap"
         rel="stylesheet">
-    
+
     <link rel="icon" href="images/favicon.ico.png" type="image/png">
 
     <link rel="manifest" href="manifest.json">
@@ -58,7 +60,7 @@
     <header class="main-header">
         <div class="container">
             <a href="index.html" class="logo">PortugalApoia</a>
-            
+
             <nav class="main-nav" id="main-nav">
                 <ul>
                     <li><a href="doacoes.html">Doação de Artigos</a></li>
@@ -112,7 +114,7 @@
                 </div>
 
                 <div id="listing-container" class="causas-grid">
-                    
+
                     <div class="card-causa text-only" data-item-type="Roupa" data-location="Porto">
                         <div class="card-header">
                             <span class="card-tag card-tag-artigos">Pedido de Artigos</span>
@@ -209,6 +211,87 @@
 
     </footer>
     <script src="script.js"></script>
-    </body>
+
+    ---
+layout: "base.njk"
+permalink: "doacoes.html"
+---
+
+{% block content %}
+<section id="causas">
+    <div class="container">
+        <h2 class="section-title">Pedidos de Doação de Artigos</h2>
+
+        <div class="search-container">
+            <div class="search-box">
+                <div class="search-input-group">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="search-input"
+                        placeholder="Procurar por artigo, ex: 'roupa', 'material escolar'...">
+                </div>
+                <div class="filter-group">
+                    <select id="item-type-filter" data-filter="itemType">
+                        <option value="">Todos os Tipos</option>
+                        <option value="Roupa">Roupa</option>
+                        <option value="Alimentos">Alimentos</option>
+                        <option value="Material Escolar">Material Escolar</option>
+                        <option value="Móveis">Móveis</option>
+                        <option value="Eletrónica">Eletrónica</option>
+                        <option value="Brinquedos">Brinquedos</option>
+                        <option value="Outros">Outros</option>
+                    </select>
+                    <select id="location-filter" data-filter="ciudad">
+                        <option value="">Todas as Cidades</option>
+                        <option value="Lisboa">Lisboa</option>
+                        <option value="Porto">Porto</option>
+                        <option value="Coimbra">Coimbra</option>
+                        <option value="Faro">Faro</option>
+                        <option value="Braga">Braga</option>
+                        <option value="Setúbal">Setúbal</option>
+                        <option value="Aveiro">Aveiro</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div id="listing-container" class="causas-grid">
+            {# Loop para mostrar los anuncios de tipo 'artigos' que estén PUBLICADOS #}
+            {% for anuncio in collections.anuncios | reverse %}
+                {% if anuncio.data.tipo_anuncio == "artigos" and anuncio.data.published %} {# <--- ¡CAMBIO CLAVE AQUÍ! #}
+                <div class="card-causa text-only" data-item-type="{{ anuncio.data.itemType }}" data-location="{{ anuncio.data.ciudad }}" data-publication-date="{{ anuncio.date | dateToFormat('%Y-%m-%d') }}">
+                    <span class="new-tag">Novo</span>
+                    {% if anuncio.data.imagem %}
+                        <div class="card-image-container">
+                            <img src="{{ anuncio.data.imagem }}" alt="{{ anuncio.data.title }}" class="card-image" loading="lazy">
+                        </div>
+                    {% endif %}
+                    <div class="card-header">
+                        <span class="card-tag card-tag-artigos">Pedido de Artigos</span>
+                        <span class="card-id">#DOA-{{ loop.index }}</span> {# ID temporal, puedes usar uno más robusto si los anuncios no se borran #}
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">{{ anuncio.data.title }}</h3>
+                        <p class="card-description">{{ anuncio.data.body | safe }}</p> {# 'safe' permite HTML si lo hubiera en el markdown #}
+                        {% if anuncio.data.contacto %}
+                            <p class="card-description">Contacto: {{ anuncio.data.contacto }}</p>
+                        {% endif %}
+                        <a href="mailto:{{ anuncio.data.contacto }}?subject=Resposta ao anúncio: {{ anuncio.data.title }}"
+                            class="button button-primary button-fullwidth">Quero Ajudar! (Contactar)</a>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div id="no-results-message">
+            <p>Não foram encontrados resultados para a sua pesquisa.</p>
+        </div>
+        {# El botón de "Ver Mais" necesitará JavaScript para funcionar con el contenido dinámico #}
+        <button id="load-more-btn" class="button button-primary" style="display: block; margin: 30px auto;">Ver
+            Mais</button>
+    </div>
+</section>
+{% endblock %}
+</body>
 
 </html>

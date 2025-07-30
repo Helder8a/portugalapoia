@@ -264,6 +264,90 @@
 
     </footer>
     <script src="script.js"></script>
+
+    ---
+layout: "base.njk"
+permalink: "servicos.html"
+---
+
+{% block content %}
+<section id="servicos">
+    <div class="container">
+        <h2 class="section-title">Serviços Técnicos e Profissionais</h2>
+
+        <div class="search-container">
+            <div class="search-box">
+                <div class="search-input-group">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="search-input" placeholder="Procurar por serviço, ex: 'arquiteto'...">
+                </div>
+                <div class="filter-group">
+                    <select id="service-filter" data-filter="tipo_anuncio">
+                        <option value="">Todas as Categorias</option>
+                        <option value="Administração">Administração</option>
+                        <option value="Arquitetura">Arquitetura</option>
+                        <option value="Advocacia">Advocacia</option>
+                        <option value="Carpintaria">Carpintaria</option>
+                        <option value="Cozinha">Cozinha</option>
+                        <option value="Design">Design</option>
+                        <option value="Engenharia">Engenharia</option>
+                        <option value="Instalações">Instalações</option>
+                        <option value="Obras">Obras e Construção</option>
+                        <option value="Saúde">Saúde</option>
+                        <option value="Tecnologia">Tecnologia</option>
+                        <option value="Transporte">Transporte</option>
+                        <option value="Outros">Outros</option>
+                    </select>
+                    <select id="city-filter" data-filter="ciudad">
+                        <option value="">Todas as Cidades</option>
+                        <option value="Lisboa">Lisboa</option>
+                        <option value="Porto">Porto</option>
+                        <option value="Coimbra">Coimbra</option>
+                        <option value="Faro">Faro</option>
+                        <option value="Braga">Braga</option>
+                        <option value="Setúbal">Setúbal</option>
+                        <option value="Aveiro">Aveiro</option>
+                        <option value="Santarém">Santarém</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div id="listing-container" class="causas-grid">
+            {# Loop para mostrar los anuncios de tipo 'servico' que estén PUBLICADOS #}
+            {% for anuncio in collections.anuncios | reverse %}
+                {% if anuncio.data.tipo_anuncio == "servico" and anuncio.data.published %} {# <--- ¡CAMBIO CLAVE AQUÍ! #}
+                <div class="card-causa" data-service="{{ anuncio.data.tipo_anuncio }}" data-city="{{ anuncio.data.ciudad }}" data-publication-date="{{ anuncio.date | dateToFormat('%Y-%m-%d') }}">
+                    <span class="new-tag">Novo</span>
+                    {% if anuncio.data.imagem %}
+                        <div class="card-image-container">
+                            <img src="{{ anuncio.data.imagem }}" alt="{{ anuncio.data.title }}" class="card-image" loading="lazy">
+                        </div>
+                    {% endif %}
+                    <div class="card-header">
+                        <span class="card-tag card-tag-servico">Serviço</span>
+                        <span class="card-id">#SER-{{ loop.index }}</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">{{ anuncio.data.title }}</h3>
+                        <p class="card-description">{{ anuncio.data.body | safe }}</p>
+                        {% if anuncio.data.contacto %}
+                            <p class="card-description">Contacto: {{ anuncio.data.contacto }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div id="no-results-message" style="display: none;">
+            <p>Não foram encontrados resultados para a sua pesquisa.</p>
+        </div>
+        <button id="load-more-btn" class="button button-primary" style="display: none; margin: 30px auto;">Ver
+            Mais</button>
+    </div>
+</section>
+{% endblock %}
     </body>
 
 </html>

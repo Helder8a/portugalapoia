@@ -208,6 +208,83 @@
 
     </footer>
     <script src="script.js"></script>
+
+    ---
+layout: "base.njk"
+permalink: "habitacao.html"
+---
+
+{% block content %}
+<section id="habitacao">
+    <div class="container">
+        <h2 class="section-title">Arrendamento de Imóveis</h2>
+
+        <div class="search-container">
+            <div class="search-box">
+                <div class="search-input-group">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="search-input" placeholder="Procurar por tipo, ex: 'apartamento'...">
+                </div>
+                <div class="filter-group">
+                    <select id="type-filter" data-filter="tipo_anuncio">
+                        <option value="">Todos os Tipos</option>
+                        <option value="Apartamento">Apartamento</option>
+                        <option value="Casa">Casa</option>
+                        <option value="Quarto">Quarto</option>
+                        <option value="Loja Comercial">Loja Comercial</option>
+                    </select>
+                    <select id="city-filter" data-filter="ciudad">
+                        <option value="">Todas as Cidades</option>
+                        <option value="Lisboa">Lisboa</option>
+                        <option value="Porto">Porto</option>
+                        <option value="Amadora">Amadora</option>
+                        <option value="Cascais">Cascais</option>
+                        <option value="Coimbra">Coimbra</option>
+                        <option value="Santarém">Santarém</option>
+                        <option value="Setúbal">Setúbal</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div id="listing-container" class="causas-grid">
+            {# Loop para mostrar los anuncios de tipo 'habitacao' que estén PUBLICADOS #}
+            {% for anuncio in collections.anuncios | reverse %}
+                {% if anuncio.data.tipo_anuncio == "habitacao" and anuncio.data.published %} {# <--- ¡CAMBIO CLAVE AQUÍ! #}
+                <div class="card-causa" data-type="{{ anuncio.data.tipo_anuncio }}" data-city="{{ anuncio.data.ciudad }}" data-publication-date="{{ anuncio.date | dateToFormat('%Y-%m-%d') }}">
+                    <span class="new-tag">Novo</span>
+                    {% if anuncio.data.imagem %}
+                        <div class="card-image-container">
+                            <img src="{{ anuncio.data.imagem }}" alt="{{ anuncio.data.title }}" class="card-image" loading="lazy">
+                        </div>
+                    {% endif %}
+                    <div class="card-header">
+                        <span class="card-tag card-tag-servico">Habitação</span>
+                        <span class="card-id">#HAB-{{ loop.index }}</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">{{ anuncio.data.title }}</h3>
+                        <p class="card-description">
+                            {% if anuncio.data.preco %}<strong>Valor:</strong> {{ anuncio.data.preco }}€/mês<br>{% endif %}
+                            {{ anuncio.data.body | safe }}
+                        </p>
+                        {% if anuncio.data.contacto %}
+                            <p class="card-description">Contacto: {{ anuncio.data.contacto }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <div id="no-results-message" style="display: none;">
+            <p>Não foram encontrados resultados para a sua pesquisa.</p>
+        </div>
+        <button id="load-more-btn" class="button button-primary" style="display: block; margin: 30px auto;">Ver
+            Mais</button>
+    </div>
+</section>
+{% endblock %}
     </body>
 
 </html>
