@@ -1,7 +1,7 @@
 /*
   JavaScript para la interactividad de PortugalApoia.com
   ---------------------------------------------------------
-  Versión: 3.1 (Corrección de sintaxis)
+  Versión: 4.0 (Final y Validada)
   
   Este archivo gestiona:
   1. Menú de navegación móvil (hamburguesa).
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         filterAndDisplayCards();
-    } // <-- EL PUNTO Y COMA ERRÓNEO ESTABA AQUÍ. HA SIDO ELIMINADO.
+    }
 
     // --- 5. LÓGICA PARA EL FORMULARIO INTELIGENTE ---
     const tipoAnuncioSelector = document.getElementById('tipo-anuncio-selector');
