@@ -1,0 +1,9 @@
+[functions]
+  # Directorio donde Netlify encontrará tus funciones
+  directory = "netlify/functions/"
+
+# Disparador para cuando un envío de formulario sea exitoso
+[[functions.submission-created]]
+  # Nombre del formulario que activará la función
+  # (debe coincidir con el atributo 'name' en tu etiqueta <form>)
+  form = "anuncio-inteligente"

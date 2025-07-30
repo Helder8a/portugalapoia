@@ -250,15 +250,35 @@ document.addEventListener('DOMContentLoaded', () => {
         resetFormFields();
     }
 
-    // --- 6. LÓGICA DE ENVÍO DE ANUNCIO (SIMULACIÓN) ---
-    const formAnuncio = document.getElementById('form-anuncio');
+    // --- 6. LÓGICA DE ENVÍO DE ANUNCIO (PARA NETLIFY) ---
+const formAnuncio = document.getElementById('form-anuncio');
 if (formAnuncio) {
-    formAnuncio.addEventListener('submit', e => {
-        e.preventDefault(); // Previene el envío real del formulario
+    formAnuncio.addEventListener('submit', () => {
+        // Este listener es para dar feedback al usuario después de que Netlify procese el envío.
+        // No usamos e.preventDefault() para dejar que el formulario se envíe normalmente a Netlify.
+        
+        const formSuccessMessage = document.getElementById('form-success-message');
 
-        // Oculta mensajes anteriores
-        // CÓDIGO SIMPLIFICADO
-// --- 6. LÓGICA DE ENVÍO DE ANUNCIO (PARA NETLIFY) ---
+        // Pequeña demora para que el usuario vea el mensaje y el formulario se limpie.
+        setTimeout(() => {
+            formAnuncio.reset(); // Limpia los campos del formulario.
+            
+            // Revisa si el selector de tipo de anuncio existe.
+            const tipoAnuncioSelector = document.getElementById('tipo-anuncio-selector');
+            if(tipoAnuncioSelector) {
+                // Dispara un evento 'change' para que la función resetFormFields se active
+                // y oculte todos los campos dinámicos, dejando el formulario limpio.
+                tipoAnuncioSelector.dispatchEvent(new Event('change'));
+            }
+
+            // Muestra el mensaje de éxito y desplaza la vista hacia él.
+            if(formSuccessMessage) {
+                formSuccessMessage.style.display = 'block';
+                window.scrollTo({ top: formAnuncio.offsetTop, behavior: 'smooth' });
+            }
+        }, 1000); // 1 segundo de espera.
+    });
+}
 const formAnuncio = document.getElementById('form-anuncio');
 if (formAnuncio) {
     formAnuncio.addEventListener('submit', () => {
