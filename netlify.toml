@@ -3,9 +3,9 @@
 
 [build]
   # 'publish = "portugalapoia"' le dice a Netlify que los archivos de tu sitio
-  # listos para desplegar se encuentran dentro de la carpeta 'portugalapoia'.
+  # listos para desplegar se encuentran dentro de la carpeta 'portugalapoia' del repositorio.
   publish = "portugalapoia" 
-  
+
   # 'command = ""' indica que no hay un comando de construcción específico
   # que Netlify deba ejecutar, ya que tus archivos ya están listos.
   command = "" 
