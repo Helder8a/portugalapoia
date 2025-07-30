@@ -1,15 +1,13 @@
 # netlify.toml
 [build]
-  # El punto '.' indica que los archivos a desplegar están en
-  # la "base directory" especificada en Netlify UI (ver paso 2).
-  # Si la base directory es 'portugalapoia', entonces '.' se refiere a esa carpeta.
+  # El punto '.' significa que Netlify debe buscar los archivos
+  # a desplegar en el directorio especificado como "Base directory" en su panel.
   publish = "." 
   
-  # Deja el comando vacío si no hay un proceso de construcción
-  # (como con React, Vue, etc.) que compile tus archivos.
+  # Comando de construcción: vacío si no necesitas compilar nada.
   command = "" 
 
-# Configuración para tus funciones de Netlify.
-# La ruta es relativa a la "base directory".
+# Directorio de tus funciones de Netlify.
+# La ruta es relativa a la "Base directory" de Netlify.
 [functions]
   directory = "netlify/functions"
