@@ -201,38 +201,6 @@
     
     <script src="script.js"></script>
     
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(registration => {
-                        console.log('ServiceWorker registrado com sucesso:', registration.scope);
-                    })
-                    .catch(error => {
-                        console.log('Fallo no registro do ServiceWorker:', error);
-                    });
-            });
-        }
-    </script>
-        ```
-**Repite este cambio en todos tus archivos HTML.**
-
-#### **Paso 2: Elimina el Archivo `sw.js` de tu Proyecto**
-
-Para asegurarte de que el Service Worker no pueda ser activado, simplemente **elimina el archivo `sw.js`** de la carpeta de tu proyecto.
-
----
-### **Resumen de los Pasos**
-
-1.  **Modifica** todos tus archivos HTML para comentar el script que registra el Service Worker.
-2.  **Elimina** el archivo `sw.js`.
-3.  **Sube todos los cambios** a tu repositorio de GitHub.
-4.  **Haz un despliegue final en Netlify** (`Deploys > Trigger deploy > Deploy site`).
-5.  **Limpia la caché de tu navegador** una última vez antes de probar.
-
-Después de seguir estos pasos, tu sitio web cargará correctamente tanto en el ordenador como en el móvil, porque ya no habrá un Service Worker sirviendo archivos rotos.
-
-Más adelante, si quieres, podemos volver a implementar un Service Worker, pero con una estrategia de caché más segura. Por ahora, lo más importante es que tu web esté online y funcionando.
-</body>
+    </body>
 
 </html>
