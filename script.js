@@ -1,129 +1,367 @@
 /*
-  JavaScript para PortugalApoia.com
-  Versión 6.0 - Final y Estable (con Blog y Anuncios)
+  JavaScript para la interactividad de PortugalApoia.com
+  ---------------------------------------------------------
+  Versión: 2.0 (Revisada y comentada)
+  
+  Este archivo gestiona:
+  1. Menú de navegación móvil (hamburguesa).
+  2. Modal de donación.
+  3. Botón de "Volver Arriba" (Scroll-to-top).
+  4. Lógica del buscador y filtros de tarjetas.
+  5. Formulario inteligente para publicar anuncios.
+  6. Simulación de envío de formulario.
+  7. Previsualización de imagen en el formulario.
+  8. Etiqueta "Novo" para anuncios recientes.
+  9. Preloader (pantalla de carga).
+  10. Banner de consentimiento de cookies.
 */
-document.addEventListener('DOMContentLoaded', () => {
-    // --- LÓGICAS GENERALES ---
-    setupMobileMenu();
-    setupDonationModal();
-    setupScrollTopButton();
 
-    // --- LÓGICA DE CARGA DE CONTENIDO ---
-    const bodyId = document.body.id;
-    if (bodyId === 'pagina-blog') {
-        renderBlogList();
-    } else if (bodyId === 'pagina-post') {
-        renderSinglePost();
-    } else if (document.getElementById('listing-container')) {
-        renderAnuncios();
+// Se ejecuta cuando el contenido del DOM ha sido cargado.
+document.addEventListener('DOMContentLoaded', () => {
+
+    // --- 1. LÓGICA PARA EL MENÚ MÓVIL (HAMBURGUER) ---
+    // Selecciona los elementos necesarios para el menú móvil.
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const mainNav = document.querySelector('#main-nav');
+
+    if (mobileNavToggle && mainNav) {
+        // Añade un evento de clic al botón de la hamburguesa.
+        mobileNavToggle.addEventListener('click', () => {
+            // Alterna la clase 'nav-visible' para mostrar u ocultar el menú.
+            mainNav.classList.toggle('nav-visible');
+            const isVisible = mainNav.classList.contains('nav-visible');
+            // Actualiza el atributo ARIA para accesibilidad.
+            mobileNavToggle.setAttribute('aria-expanded', isVisible);
+            // Cambia el icono del botón (hamburguesa o 'X').
+            mobileNavToggle.textContent = isVisible ? '✕' : '☰';
+        });
+    }
+
+    // --- 2. LÓGICA PARA EL MODAL DE DONATIVO ---
+    // Selecciona los elementos del modal.
+    const modal = document.getElementById('donativo-modal');
+    const openModalBtns = document.querySelectorAll('.apoia-projeto-btn');
+    const closeModalBtn = modal ? modal.querySelector('.modal-close-btn') : null;
+
+    if (modal && openModalBtns.length > 0 && closeModalBtn) {
+        // Abre el modal al hacer clic en cualquier botón de "Apoia".
+        openModalBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                modal.classList.remove('hidden');
+            });
+        });
+
+        // Cierra el modal al hacer clic en el botón de cerrar.
+        closeModalBtn.addEventListener('click', () => {
+            modal.classList.add('hidden');
+        });
+
+        // Cierra el modal si se hace clic fuera del contenido del modal.
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.classList.add('hidden');
+            }
+        });
+    }
+
+    // --- 3. LÓGICA PARA EL BOTÓN SCROLL-TO-TOP ---
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+    if (scrollTopBtn) {
+        // Muestra u oculta el botón basado en la posición del scroll.
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                if (!scrollTopBtn.classList.contains('visible')) {
+                    scrollTopBtn.classList.add('visible');
+                }
+            } else {
+                if (scrollTopBtn.classList.contains('visible')) {
+                    scrollTopBtn.classList.remove('visible');
+                }
+            }
+        });
+
+        // Realiza el scroll suave hacia arriba al hacer clic.
+        scrollTopBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    // --- 4. LÓGICA DEL BUSCADOR Y FILTROS ---
+    const searchContainer = document.querySelector('.search-container');
+    if (searchContainer) {
+        // Selecciona los elementos del buscador.
+        const searchInput = searchContainer.querySelector('#search-input');
+        const filters = searchContainer.querySelectorAll('.filter-group select');
+        const allCards = document.querySelectorAll('.causas-grid .card-causa');
+        const noResultsMessage = document.getElementById('no-results-message');
+        const loadMoreBtn = document.getElementById('load-more-btn');
+
+        // Configuración para la carga progresiva de tarjetas.
+        let cardsToShowInitially = 6;
+        let cardsToLoadPerClick = 6;
+        let currentVisibleCards = cardsToShowInitially;
+
+        // Función principal para filtrar y mostrar las tarjetas.
+        const filterAndDisplayCards = () => {
+            const searchText = searchInput ? searchInput.value.toLowerCase().trim() : '';
+            
+            // Obtiene los filtros activos de los menús desplegables.
+            const activeFilters = {};
+            filters.forEach(filter => {
+                if (filter.value) {
+                    const filterName = filter.id.replace('-filter', ''); // ej: 'city-filter' -> 'city'
+                    activeFilters[filterName] = filter.value.toLowerCase();
+                }
+            });
+
+            // Filtra las tarjetas basadas en el texto y los filtros de selección.
+            const matchingCards = Array.from(allCards).filter(card => {
+                // 1. Filtro de texto (título y descripción).
+                const title = (card.querySelector('.card-title')?.textContent || '').toLowerCase();
+                const description = (card.querySelector('.card-description')?.textContent || '').toLowerCase();
+                const textMatch = title.includes(searchText) || description.includes(searchText);
+
+                if (!textMatch) return false;
+
+                // 2. Filtros de selección (basados en atributos data-*).
+                for (const filterName in activeFilters) {
+                    const filterValue = activeFilters[filterName];
+                    const cardDataValue = (card.dataset[filterName] || '').toLowerCase();
+                    
+                    if (cardDataValue !== filterValue) return false;
+                }
+                
+                return true;
+            });
+
+            // Oculta todas las tarjetas primero.
+            allCards.forEach(card => card.style.display = 'none');
+
+            // Muestra solo las tarjetas que coinciden, hasta el límite actual.
+            matchingCards.slice(0, currentVisibleCards).forEach(card => {
+                card.style.display = 'flex';
+            });
+
+            // Muestra u oculta el mensaje de "sin resultados".
+            if (noResultsMessage) {
+                noResultsMessage.style.display = matchingCards.length === 0 ? 'block' : 'none';
+            }
+
+            // Muestra u oculta el botón "Ver Mais".
+            if (loadMoreBtn) {
+                loadMoreBtn.style.display = currentVisibleCards < matchingCards.length ? 'block' : 'none';
+            }
+        };
+
+        // Añade listeners para activar el filtro en tiempo real.
+        searchInput?.addEventListener('keyup', () => {
+            currentVisibleCards = cardsToShowInitially; // Resetea la vista al buscar
+            filterAndDisplayCards();
+        });
+
+        filters.forEach(filter => {
+            filter.addEventListener('change', () => {
+                currentVisibleCards = cardsToShowInitially; // Resetea la vista al cambiar filtros
+                filterAndDisplayCards();
+            });
+        });
+
+        // Lógica para el botón "Ver Mais".
+        if (loadMoreBtn) {
+            loadMoreBtn.addEventListener('click', () => {
+                currentVisibleCards += cardsToLoadPerClick;
+                filterAndDisplayCards();
+            });
+        }
+        
+        // Ejecución inicial para mostrar las tarjetas al cargar la página.
+        filterAndDisplayCards();
+    }
+
+
+    // --- 5. LÓGICA PARA EL FORMULARIO INTELIGENTE ---
+    // Este formulario muestra campos específicos según la opción seleccionada.
+    const tipoAnuncioSelector = document.getElementById('tipo-anuncio-selector');
+    const camposHabitacao = document.getElementById('campos-habitacao');
+    const camposEmprego = document.getElementById('campos-emprego');
+    const camposServico = document.getElementById('campos-servico');
+
+    // Campos específicos para cada tipo de anuncio.
+    const precoHabitacaoInput = document.getElementById('preco_habitacao');
+    const cidadeHabitacaoInput = document.getElementById('cidade_habitacao');
+    const tipoContratoInput = document.getElementById('tipo_contrato');
+    const experienciaEmpregoInput = document.getElementById('experiencia_emprego');
+    const localEmpregoInput = document.getElementById('local_emprego');
+    const categoriaServicoInput = document.getElementById('categoria_servico');
+    const areaAtuacaoServicoInput = document.getElementById('area_atuacao_servico');
+
+    // Mensajes de éxito y error del formulario.
+    const formSuccessMessage = document.getElementById('form-success-message');
+    const formErrorMessage = document.getElementById('form-error-message');
+
+    // Función para resetear (ocultar) todos los campos específicos.
+    const resetFormFields = () => {
+        if (camposHabitacao) {
+            camposHabitacao.style.display = 'none';
+            if (precoHabitacaoInput) precoHabitacaoInput.required = false;
+            if (cidadeHabitacaoInput) cidadeHabitacaoInput.required = false;
+        }
+        if (camposEmprego) {
+            camposEmprego.style.display = 'none';
+            if (tipoContratoInput) tipoContratoInput.required = false;
+            if (localEmpregoInput) localEmpregoInput.required = false;
+        }
+        if (camposServico) {
+            camposServico.style.display = 'none';
+            if (categoriaServicoInput) categoriaServicoInput.required = false;
+            if (areaAtuacaoServicoInput) areaAtuacaoServicoInput.required = false;
+        }
+    };
+
+    // Muestra los campos correctos cuando el usuario cambia el tipo de anuncio.
+    if (tipoAnuncioSelector) {
+        tipoAnuncioSelector.addEventListener('change', (event) => {
+            resetFormFields();
+
+            switch (event.target.value) {
+                case 'habitacao':
+                    if(camposHabitacao) camposHabitacao.style.display = 'block';
+                    if(precoHabitacaoInput) precoHabitacaoInput.required = true;
+                    if(cidadeHabitacaoInput) cidadeHabitacaoInput.required = true;
+                    break;
+                case 'emprego':
+                    if(camposEmprego) camposEmprego.style.display = 'block';
+                    if(tipoContratoInput) tipoContratoInput.required = true;
+                    if(localEmpregoInput) localEmpregoInput.required = true;
+                    break;
+                case 'servico':
+                    if(camposServico) camposServico.style.display = 'block';
+                    if(categoriaServicoInput) categoriaServicoInput.required = true;
+                    if(areaAtuacaoServicoInput) areaAtuacaoServicoInput.required = true;
+                    break;
+            }
+        });
+        // Resetea los campos al cargar la página para asegurar el estado inicial correcto.
+        resetFormFields();
+    }
+
+    // --- 6. LÓGICA DE ENVÍO DE ANUNCIO (SIMULACIÓN) ---
+    const formAnuncio = document.getElementById('form-anuncio');
+    if (formAnuncio) {
+        formAnuncio.addEventListener('submit', e => {
+            e.preventDefault(); // Previene el envío real del formulario.
+
+            // Oculta mensajes anteriores.
+            if(formSuccessMessage) formSuccessMessage.style.display = 'none';
+            if(formErrorMessage) formErrorMessage.style.display = 'none';
+
+            // Simulación de envío a un backend.
+            const formData = new FormData(formAnuncio);
+            
+            // fetch() simula una petición POST.
+            fetch('/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams(formData).toString()
+            })
+            .then(() => {
+                // Si la "petición" tiene éxito:
+                if(formSuccessMessage) formSuccessMessage.style.display = 'block';
+                formAnuncio.reset(); 
+                resetFormFields(); // Resetea la visibilidad de los campos dinámicos.
+                window.scrollTo({ top: formAnuncio.offsetTop, behavior: 'smooth' });
+
+                // Oculta el mensaje de éxito después de 6 segundos.
+                setTimeout(() => {
+                    if(formSuccessMessage) formSuccessMessage.style.display = 'none';
+                }, 6000);
+            })
+            .catch(error => {
+                // Si la "petición" falla:
+                if(formErrorMessage) formErrorMessage.style.display = 'block';
+                console.error('Error simulado en el envío del formulario:', error);
+                
+                // Oculta el mensaje de error después de 6 segundos.
+                setTimeout(() => {
+                    if(formErrorMessage) formErrorMessage.style.display = 'none';
+                }, 6000);
+            });
+        });
+    }
+
+    // --- 7. Lógica para previsualización de imagen (básica) ---
+    const imagemAnuncioInput = document.getElementById('imagem_anuncio');
+    const imagePreviewMessage = document.getElementById('image-preview-message');
+
+    if (imagemAnuncioInput && imagePreviewMessage) {
+        // Muestra el nombre del archivo seleccionado.
+        imagemAnuncioInput.addEventListener('change', () => {
+            if (imagemAnuncioInput.files && imagemAnuncioInput.files[0]) {
+                imagePreviewMessage.textContent = `Arquivo selecionado: ${imagemAnuncioInput.files[0].name}`;
+                imagePreviewMessage.style.display = 'block';
+            } else {
+                imagePreviewMessage.textContent = '';
+                imagePreviewMessage.style.display = 'none';
+            }
+        });
+    }
+
+    // --- 8. LÓGICA PARA LA ETIQUETA "NOVO" ---
+    // Muestra una etiqueta en las tarjetas publicadas en las últimas 48 horas.
+    const checkNewTags = () => {
+        const cards = document.querySelectorAll('.card-causa');
+        const now = new Date();
+        const fortyEightHours = 48 * 60 * 60 * 1000; // 48 horas en milisegundos.
+
+        cards.forEach(card => {
+            const pubDateString = card.dataset.publicationDate;
+            if (pubDateString) {
+                const pubDate = new Date(pubDateString);
+                const timeDiff = now.getTime() - pubDate.getTime();
+
+                // Si la diferencia es menor o igual a 48h, muestra la etiqueta.
+                if (timeDiff <= fortyEightHours) {
+                    const newTag = card.querySelector('.new-tag');
+                    if (newTag) {
+                        newTag.style.display = 'block';
+                    }
+                }
+            }
+        });
+    };
+
+    checkNewTags(); // Ejecuta la función al cargar la página.
+
+    // --- 10. LÓGICA PARA EL BANNER DE COOKIES ---
+    // Comprueba si el usuario ya ha aceptado las cookies.
+    if (!localStorage.getItem('cookieConsent')) {
+        // Si no, crea y muestra el banner.
+        const consentBanner = document.createElement('div');
+        consentBanner.className = 'cookie-banner';
+        consentBanner.innerHTML = `
+            <span>Este site utiliza cookies para melhorar a sua experiência. Ao continuar a navegar, você concorda com o uso de cookies.</span>
+            <button id="accept-cookie-btn">Aceitar</button>
+        `;
+        document.body.appendChild(consentBanner);
+
+        // Al hacer clic en "Aceitar", guarda la preferencia y oculta el banner.
+        document.getElementById('accept-cookie-btn').addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'true');
+            consentBanner.style.display = 'none';
+        });
     }
 });
 
-function renderAnuncios() {
-    const container = document.getElementById('listing-container');
-    if (!container || typeof todosOsAnuncios === 'undefined') return;
-
-    let tipoDePagina = '', paginaActual = '';
-    const bodyId = document.body.id;
-
-    if (bodyId === 'pagina-empregos') { tipoDePagina = 'emprego'; paginaActual = 'empregos.html'; }
-    else if (bodyId === 'pagina-servicos') { tipoDePagina = 'servico'; paginaActual = 'servicos.html'; }
-    else if (bodyId === 'pagina-habitacao') { tipoDePagina = 'habitacao'; paginaActual = 'habitacao.html'; }
-    else if (bodyId === 'pagina-doacoes') { tipoDePagina = 'doacao'; paginaActual = 'doacoes.html'; }
-    if (!tipoDePagina) return;
-
-    const anuncios = todosOsAnuncios.filter(item => item.tipo === tipoDePagina);
-    container.innerHTML = '';
-
-    if (anuncios.length === 0) {
-        container.innerHTML = '<p style="text-align: center; width: 100%;">De momento não há anúncios nesta categoria.</p>';
-        return;
+// --- 9. LÓGICA PARA EL PRELOADER ---
+// Oculta la pantalla de carga cuando la página y todos sus recursos han cargado.
+window.addEventListener('load', () => {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        preloader.classList.add('hidden');
     }
-    anuncios.forEach(anuncio => {
-        let contactoHTML = '';
-        if (anuncio.tipo === 'doacao') {
-             contactoHTML = `<a href="${anuncio.contacto}" class="button button-primary button-fullwidth">Quero Ajudar! (Contactar)</a>`;
-        } else {
-            if (anuncio.contacto) contactoHTML += `<p class="card-description"><strong>Contacto:</strong> <a href="${anuncio.contacto}">${anuncio.contacto.replace(/mailto:|tel:/, '').split('?')[0]}</a></p>`;
-            if (anuncio.contacto2) contactoHTML += `<p class="card-description"><strong>Tel:</strong> <a href="${anuncio.contacto2}">${anuncio.contacto2.replace('tel:', '')}</a></p>`;
-        }
-        const shareURL = `https://www.portugalapoia.com/${paginaActual}#${anuncio.id}`;
-        const shareText = encodeURIComponent(`Vi este anúncio em PortugalApoia: "${anuncio.titulo}". Ajude a partilhar!`);
-        const shareButtonsHTML = `<div class="share-buttons"><a href="https://api.whatsapp.com/send?text=${shareText}%20${shareURL}" target="_blank" class="share-btn whatsapp">Partilhar</a></div>`;
-        const imagemSrc = anuncio.imagem || 'images/favicon.ico.png';
-        const tagClass = anuncio.tipo === 'doacao' ? 'artigos' : (anuncio.tipo === 'servico' ? 'servico' : 'emprego');
-        const cardHTML = `<div class="card-causa" id="${anuncio.id}"><div class="card-image-container"><img src="${imagemSrc}" alt="${anuncio.titulo}" class="card-image" loading="lazy"></div><div class="card-header"><span class="card-tag card-tag-${tagClass}">${anuncio.categoria || anuncio.tipo}</span><span class="card-id">#${anuncio.id}</span></div><div class="card-content"><h3 class="card-title">${anuncio.titulo}</h3><p class="card-description">${anuncio.descricao}</p>${contactoHTML}${shareButtonsHTML}</div></div>`;
-        container.innerHTML += cardHTML;
-    });
-}
-
-function renderBlogList() {
-    const container = document.getElementById('listing-container');
-    if (!container || typeof todosOsAnuncios === 'undefined') return;
-    const blogPosts = todosOsAnuncios.filter(item => item.tipo === 'blog').sort((a, b) => new Date(b.dataPublicacao) - new Date(a.dataPublicacao));
-    container.innerHTML = '';
-    blogPosts.forEach(post => {
-        const postLink = `post.html?id=${post.id}`;
-        const excerpt = post.descricao ? post.descricao.substring(0, 150) + '...' : '';
-        container.innerHTML += `<a href="${postLink}" class="blog-card"><div class="blog-card-image-container"><img src="${post.imagem || 'images/favicon.ico.png'}" alt="${post.titulo}" class="blog-card-image"></div><div class="blog-card-content"><h3 class="blog-card-title">${post.titulo}</h3><p class="blog-card-excerpt">${excerpt}</p><span class="blog-card-readmore">Ler Mais →</span></div></a>`;
-    });
-}
-
-function renderSinglePost() {
-    const container = document.querySelector('.post-container');
-    if (!container || typeof todosOsAnuncios === 'undefined') return;
-    const postId = new URLSearchParams(window.location.search).get('id');
-    const post = todosOsAnuncios.find(p => p.id === postId && p.tipo === 'blog');
-    if (post) {
-        document.title = post.titulo + " - PortugalApoia";
-        let mediaHTML = '';
-        if (post.videoUrl && post.videoUrl.includes('youtu')) {
-            const videoId = post.videoUrl.includes('youtu.be') ? post.videoUrl.split('/').pop() : post.videoUrl.split('v=')[1].split('&')[0];
-            mediaHTML = `<div class="video-container"><iframe src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe></div>`;
-        } else if (post.imagem) {
-            mediaHTML = `<img src="${post.imagem}" alt="${post.titulo}" class="post-image-full">`;
-        }
-        container.innerHTML = `<h1>${post.titulo}</h1><p class="post-meta">Publicado em ${new Date(post.dataPublicacao).toLocaleDateString()}</p>${mediaHTML}<div class="post-body">${post.descricao.replace(/\n/g, '<br>')}</div>`;
-    } else {
-        container.innerHTML = '<h1>Artigo não encontrado.</h1>';
-    }
-}
-
-function setupMobileMenu() {
-    const toggle = document.querySelector('.mobile-nav-toggle');
-    const nav = document.querySelector('#main-nav');
-    if (toggle && nav) {
-        toggle.addEventListener('click', () => {
-            nav.classList.toggle('nav-visible');
-            const isVisible = nav.classList.contains('nav-visible');
-            toggle.setAttribute('aria-expanded', isVisible);
-            toggle.textContent = isVisible ? '✕' : '☰';
-        });
-    }
-}
-
-function setupDonationModal() {
-    const modal = document.getElementById('donativo-modal');
-    const openBtns = document.querySelectorAll('.apoia-projeto-btn');
-    const closeBtn = modal ? modal.querySelector('.modal-close-btn') : null;
-    if (modal && openBtns.length && closeBtn) {
-        openBtns.forEach(btn => btn.addEventListener('click', () => modal.classList.remove('hidden')));
-        closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
-        modal.addEventListener('click', e => { if (e.target === modal) modal.classList.add('hidden'); });
-    }
-}
-
-function setupScrollTopButton() {
-    const btn = document.getElementById('scrollTopBtn');
-    if (btn) {
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                btn.style.display = "block";
-                btn.classList.add('visible');
-            } else {
-                btn.classList.remove('visible');
-            }
-        });
-        btn.addEventListener('click', e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
-    }
-}
+});
