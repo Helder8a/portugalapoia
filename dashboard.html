@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard de Anúncios - PortugalApoia</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f0f2f5; margin: 0; padding: 25px; }
+        .container { max-width: 1200px; margin: auto; }
+        h1, h2 { color: #0A3D62; }
+        .dashboard { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .form-section, .output-section { background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        label { display: block; margin-bottom: 8px; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { background-color: #00834B; color: white; border: none; padding: 12px 20px; border-radius: 5px; cursor: pointer; font-size: 16px; width: 100%; }
+        button:hover { background-color: #00663a; }
+        #output-code { background: #e9ecef; border: 1px solid #ccc; padding: 15px; border-radius: 4px; white-space: pre-wrap; word-wrap: break-word; font-family: monospace; min-height: 100px; }
+        #copy-button { background: #0A3D62; margin-top: 10px; }
+        .image-selector { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 10px; border: 1px solid #ccc; padding: 10px; border-radius: 4px; max-height: 200px; overflow-y: auto; }
+        .image-selector img { width: 100%; height: 60px; object-fit: contain; cursor: pointer; border: 2px solid transparent; border-radius: 4px; }
+        .image-selector img.selected { border-color: #00834B; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Dashboard de Anúncios PortugalApoia</h1>
+    <div class="dashboard">
+        <div class="form-section">
+            <h2>Criar Novo Anúncio</h2>
+            <label for="id">ID (Ex: EMP-035)</label>
+            <input type="text" id="id" placeholder="ID único">
+            <label for="tipo">Tipo</label>
+            <select id="tipo">
+                <option value="emprego">Emprego</option>
+                <option value="servico">Serviço</option>
+                <option value="habitacao">Habitação</option>
+                <option value="doacao">Doação</option>
+            </select>
+            <label for="titulo">Título</label>
+            <input type="text" id="titulo" placeholder="Título do anúncio">
+            <label for="cidade">Cidade</label>
+            <input type="text" id="cidade" placeholder="Cidade">
+            <label for="descricao">Descrição</label>
+            <textarea id="descricao" rows="4" placeholder="Descrição detalhada"></textarea>
+            <label for="contacto">Contacto Principal</label>
+            <input type="text" id="contacto" placeholder="tel:+351... ou mailto:...">
+            <label for="imagem">Selecionar Imagem</label>
+            <div id="image-selector" class="image-selector"></div>
+            <input type="hidden" id="imagem">
+            <button id="generate-button">Gerar Código</button>
+        </div>
+        <div class="output-section">
+            <h2>1. Copie este código:</h2>
+            <pre id="output-code"></pre>
+            <button id="copy-button" style="display:none;">Copiar Código</button>
+            <h2>2. Cole-o no final do seu arquivo `dados.js`</h2>
+        </div>
+    </div>
+</div>
+
+<script>
+    const imageFiles = ['aluguel_habitacao_quarto.png', 'arquiteto.png', 'arquiteto_preparador.png', 'conductor.png', 'conductor_camion.png', 'conductor_minicargador.png', 'conductor_retroexcavadora.png', 'conductor_volqueta.png', 'cozinha_ajudante.png', 'cozinha_chef.png', 'desing_grafic.png', 'desing_publicidad-digital.png', 'eletricista.png', 'engineer_mechanic.png', 'enfermeria.png', 'hotel_camarera.png', 'hotel_recepcionista.png', 'instalador_drywall_.png', 'lavanderia.png', 'Limpeza_casas.png', 'limpeza_geral.png', 'mecânico_automóveis.png', 'mesero_camarero.png', 'modista.png', 'ninera.png', 'obra_carpinteiro_cofragem.png', 'obra_carpinteiro_cozinha_puertas.png', 'obra_encarregado.png', 'obra_pedreiro.png', 'obra_pintor.png', 'obra_plomero.png', 'padeiro.png', 'pizzero.png', 'programmer.png'];
+    const selector = document.getElementById('image-selector');
+    imageFiles.sort();
+    imageFiles.forEach(file => {
+        const img = document.createElement('img');
+        img.src = `img_servicos/${file}`;
+        img.title = file;
+        img.dataset.path = `img_servicos/${file}`;
+        selector.appendChild(img);
+        img.addEventListener('click', () => {
+            document.querySelectorAll('#image-selector img').forEach(i => i.classList.remove('selected'));
+            img.classList.add('selected');
+            document.getElementById('imagem').value = img.dataset.path;
+        });
+    });
+
+    document.getElementById('generate-button').addEventListener('click', () => {
+        const data = {
+            id: document.getElementById('id').value,
+            tipo: document.getElementById('tipo').value,
+            titulo: document.getElementById('titulo').value,
+            cidade: document.getElementById('cidade').value,
+            descricao: document.getElementById('descricao').value.replace(/\n/g, '<br>'),
+            contacto: document.getElementById('contacto').value,
+            imagem: document.getElementById('imagem').value,
+            dataPublicacao: new Date().toISOString().split('T')[0]
+        };
+        const code = `  {\n    id: '${data.id}',\n    tipo: '${data.tipo}',\n    titulo: '${data.titulo}',\n    cidade: '${data.cidade}',\n    descricao: '${data.descricao}',\n    contacto: '${data.contacto}',\n    imagem: '${data.imagem}',\n    dataPublicacao: '${data.dataPublicacao}'\n  },`;
+        document.getElementById('output-code').textContent = code;
+        document.getElementById('copy-button').style.display = 'block';
+    });
+    document.getElementById('copy-button').addEventListener('click', () => {
+        navigator.clipboard.writeText(document.getElementById('output-code').textContent);
+        alert('Código copiado para a área de transferência!');
+    });
+</script>
+</body>
+</html>
