@@ -16,9 +16,9 @@
     <!-- Meta Etiquetas SEO start -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PortugalApoia.com - habitação em Portugal</title>
+    <title>Arrendamento de Quartos e Casas em Portugal - PortugalApoia</title>
     <meta name="description"
-        content="A sua plataforma comunitária para encontrar e publicar pedidos de artigos, vagas de emprego, serviços e habitação em Portugal. Junte-se e ajude!">
+        content="Procure e anuncie quartos, apartamentos e casas para arrendar em toda a Portugal. Encontre o seu próximo lar na comunidade PortugalApoia.">
     <meta name="keywords"
         content="doação, emprego, solidariedade, portugal, ajuda, voluntariado, causas sociais, habitação, serviços">
     <meta name="author" content="Fundación Fides & HBO Consulting">
@@ -69,7 +69,7 @@
     <header class="main-header">
         <div class="container">
             <a href="index.html" class="logo">PortugalApoia</a>
-            
+
             <nav class="main-nav" id="main-nav">
                 <ul>
                     <li><a href="doacoes.html">Doação de Artigos</a></li>
@@ -213,27 +213,29 @@
         </div>
 
         <div class="footer-bottom">
-    <p>&copy; 2025 PortugalApoia.com - Todos os direitos reservados. | <a href="politica-privacidade.html" style="color: white;">Política de Privacidade</a></p>
-    <p>Um projeto da <a href="mailto:fidessuc@gmail.com">Fundación Fides</a>. Design by <a href="mailto:fidessuc@gmail.com">HBO Consulting</a>.</p>
-</div>
+            <p>&copy; 2025 PortugalApoia.com - Todos os direitos reservados. | <a href="politica-privacidade.html"
+                    style="color: white;">Política de Privacidade</a></p>
+            <p>Um projeto da <a href="mailto:fidessuc@gmail.com">Fundación Fides</a>. Design by <a
+                    href="mailto:fidessuc@gmail.com">HBO Consulting</a>.</p>
+        </div>
 
     </footer>
     <script src="script.js"></script>
     <script>
-  // Comprobar si el navegador soporta Service Workers
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      // Registrar nuestro archivo sw.js
-      navigator.serviceWorker.register('/sw.js')
-        .then(registration => {
-          console.log('ServiceWorker registrado con éxito con el scope:', registration.scope);
-        })
-        .catch(error => {
-          console.log('Fallo en el registro del ServiceWorker:', error);
-        });
-    });
-  }
-</script>
+        // Comprobar si el navegador soporta Service Workers
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                // Registrar nuestro archivo sw.js
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registrado con éxito con el scope:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('Fallo en el registro del ServiceWorker:', error);
+                    });
+            });
+        }
+    </script>
 </body>
 
 </html>
