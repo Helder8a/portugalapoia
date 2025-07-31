@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor Visual de Contenido - PortugalApoia</title>
+    <style>
+        :root { --color-primary: #0A3D62; --color-accent: #00834B; --color-danger: #c0392b; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #f8f9fa; color: #333; margin: 0; }
+        .container { max-width: 1200px; margin: 20px auto; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.07); }
+        h1, h2, h3 { color: var(--color-primary); border-bottom: 2px solid #dee2e6; padding-bottom: 10px; }
+        .section { margin-bottom: 40px; }
+        .item-card { border: 1px solid #dee2e6; padding: 15px; margin-bottom: 15px; border-radius: 5px; background: #fff; }
+        label { display: block; font-weight: 600; margin-top: 10px; margin-bottom: 5px; }
+        input[type="text"], textarea { width: 98%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 1em; }
+        textarea { min-height: 80px; resize: vertical; }
+        .btn { padding: 10px 20px; border: none; border-radius: 50px; cursor: pointer; font-weight: 700; text-transform: uppercase; font-size: 0.9em; transition: all 0.3s ease; }
+        .btn-add { background-color: var(--color-accent); color: white; }
+        .btn-add:hover { background-color: #00663a; }
+        .btn-delete { background-color: var(--color-danger); color: white; }
+        .btn-delete:hover { background-color: #a03224; }
+        .btn-generate { background-color: var(--color-primary); color: white; width: 100%; font-size: 1.2em; padding: 15px; }
+        .btn-generate:hover { background-color: #082f4e; }
+        #output { width: 98%; min-height: 200px; margin-top: 15px; font-family: monospace; background: #e9ecef; border: 1px solid #ccc; }
+        .output-container { margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 5px; border: 1px dashed var(--color-primary); }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Editor Visual de Contenido</h1>
+        <p>Edita el contenido de tu web aquí. Cuando termines, haz clic en el botón grande al final para generar el código, cópialo y pégalo en tu archivo <strong>contenido.js</strong>.</p>
+
+        <div class="section">
+            <h2>Anuncios de Emprego</h2>
+            <div id="lista-emprego"></div>
+            <button class="btn btn-add" onclick="agregarItem('emprego')">+ Agregar Anuncio de Empleo</button>
+        </div>
+
+        <div class="section">
+            <h2>Ofertas de Serviços</h2>
+            <div id="lista-servicios"></div>
+            <button class="btn btn-add" onclick="agregarItem('servicios')">+ Agregar Oferta de Servicio</button>
+        </div>
+        
+        <div class="output-container">
+            <h2>Generar Código para `contenido.js`</h2>
+            <p>1. Haz clic en el botón de abajo. <br>2. El cuadro de texto se llenará con el código actualizado. <br>3. Haz clic derecho en el cuadro -> Seleccionar todo -> Copiar. <br>4. Pega el código en tu archivo <b>contenido.js</b>, reemplazando todo el contenido antiguo.</p>
+            <button class="btn btn-generate" onclick="generarContenido()">Generar Nuevo Contenido</button>
+            <textarea id="output" readonly></textarea>
+        </div>
+    </div>
+
+    <script src="contenido.js"></script>
+    <script>
+        // Clonar el contenido para editarlo de forma segura
+        let contenidoEditable = JSON.parse(JSON.stringify(TODO_EL_CONTENIDO));
+
+        function renderizarSeccion(tipo, containerId) {
+            const container = document.getElementById(containerId);
+            const items = contenidoEditable.anuncios[tipo];
+            if (!container || !items) return;
+            
+            container.innerHTML = '';
+            items.forEach((item, index) => {
+                let camposHTML = '';
+                // Crear campos de input para cada propiedad del objeto
+                for (const key in item) {
+                    camposHTML += `
+                        <label for="${tipo}-${index}-${key}">${key}:</label>
+                        <input type="text" id="${tipo}-${index}-${key}" value="${item[key]}" oninput="actualizarCampo('${tipo}', ${index}, '${key}', this.value)">
+                    `;
+                }
+                
+                container.innerHTML += `
+                    <div class="item-card" id="${tipo}-card-${index}">
+                        <h3>${item.titulo || `Item ID: ${item.id}`}</h3>
+                        ${camposHTML}
+                        <br><br>
+                        <button class="btn btn-delete" onclick="eliminarItem('${tipo}', ${index})">Eliminar</button>
+                    </div>`;
+            });
+        }
+
+        function actualizarCampo(tipo, index, campo, valor) {
+            contenidoEditable.anuncios[tipo][index][campo] = valor;
+        }
+
+        function eliminarItem(tipo, index) {
+            if (confirm(`¿Estás seguro de que quieres eliminar este item de ${tipo}?`)) {
+                contenidoEditable.anuncios[tipo].splice(index, 1);
+                renderizarSeccion(tipo, `lista-${tipo}`);
+            }
+        }
+
+        function agregarItem(tipo) {
+            const items = contenidoEditable.anuncios[tipo];
+            const nuevoId = Math.max(0, ...items.map(i => i.id)) + 1;
+            
+            // Crear un objeto nuevo con las mismas propiedades que el primero de la lista
+            let nuevoItem = { id: nuevoId };
+            if (items.length > 0) {
+                Object.keys(items[0]).forEach(key => {
+                    if (key !== 'id') nuevoItem[key] = ''; // Iniciar campos vacíos
+                });
+                nuevoItem.titulo = "Novo Anúncio - Edite aqui";
+            }
+            
+            items.push(nuevoItem);
+            renderizarSeccion(tipo, `lista-${tipo}`);
+            // Hacer scroll hasta el nuevo elemento
+            document.getElementById(`${tipo}-card-${items.length - 1}`).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function generarContenido() {
+            // Renumerar los IDs para que sean consecutivos y únicos por categoría
+            let lastId = 0;
+            for (const categoria in contenidoEditable.anuncios) {
+                contenidoEditable.anuncios[categoria].forEach(item => {
+                    item.id = ++lastId;
+                });
+            }
+             for (const categoria in contenidoEditable.blog) {
+                contenidoEditable.blog.forEach(item => {
+                    item.id = ++lastId;
+                });
+            }
+            
+            const outputString = 'const TODO_EL_CONTENIDO = ' + JSON.stringify(contenidoEditable, null, 2) + ';';
+            document.getElementById('output').value = outputString;
+            alert("¡Contenido generado! Ahora copia el texto del cuadro de abajo y pégalo en 'contenido.js'.");
+        }
+
+        // Renderizar las secciones al cargar la página
+        window.onload = () => {
+            renderizarSeccion('emprego', 'lista-emprego');
+            renderizarSeccion('servicios', 'lista-servicios');
+            // Llama aquí a renderizarSeccion para las otras categorías
+        };
+    </script>
+</body>
+</html>
