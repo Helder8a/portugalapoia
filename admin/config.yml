@@ -1,0 +1,23 @@
+backend:
+  name: git-gateway
+  branch: main # O master, dependiendo de tu repositorio
+
+media_folder: "img/uploads" # Carpeta para nuevas imágenes subidas
+public_folder: "/img/uploads"
+
+collections:
+  - name: "anuncios"
+    label: "Anúncios"
+    folder: "_anuncios"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Título", name: "title", widget: "string" }
+      - { label: "Tipo de Anúncio", name: "tipo", widget: "select", options: ["emprego", "servico", "habitacao", "doacao"] }
+      - { label: "Data de Publicação", name: "date", widget: "datetime" }
+      - { label: "Cidade", name: "cidade", widget: "string" }
+      - { label: "Categoria (para serviço, habitação, etc.)", name: "categoria", widget: "string", required: false }
+      - { label: "Descrição", name: "body", widget: "markdown" }
+      - { label: "Imagem Principal", name: "imagem", widget: "image" }
+      - { label: "Contacto Principal (email ou telefone)", name: "contacto", widget: "string" }
+      - { label: "Contacto Secundário (opcional)", name: "contacto2", widget: "string", required: false }
