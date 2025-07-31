@@ -1,29 +1,40 @@
 /*
   JavaScript para PortugalApoia.com
-  Versión 5.1 - Completa y Funcional
+  Versión 6.0 - Final y Estable (con Blog y Anuncios)
 */
 document.addEventListener('DOMContentLoaded', () => {
+    // --- LÓGICAS GENERALES ---
     setupMobileMenu();
     setupDonationModal();
     setupScrollTopButton();
+
+    // --- LÓGICA DE CARGA DE CONTENIDO ---
     const bodyId = document.body.id;
-    if (bodyId === 'pagina-blog') renderBlogList();
-    else if (bodyId === 'pagina-post') renderSinglePost();
-    else if (document.getElementById('listing-container')) renderAnuncios();
+    if (bodyId === 'pagina-blog') {
+        renderBlogList();
+    } else if (bodyId === 'pagina-post') {
+        renderSinglePost();
+    } else if (document.getElementById('listing-container')) {
+        renderAnuncios();
+    }
 });
 
 function renderAnuncios() {
     const container = document.getElementById('listing-container');
     if (!container || typeof todosOsAnuncios === 'undefined') return;
+
     let tipoDePagina = '', paginaActual = '';
     const bodyId = document.body.id;
+
     if (bodyId === 'pagina-empregos') { tipoDePagina = 'emprego'; paginaActual = 'empregos.html'; }
     else if (bodyId === 'pagina-servicos') { tipoDePagina = 'servico'; paginaActual = 'servicos.html'; }
     else if (bodyId === 'pagina-habitacao') { tipoDePagina = 'habitacao'; paginaActual = 'habitacao.html'; }
     else if (bodyId === 'pagina-doacoes') { tipoDePagina = 'doacao'; paginaActual = 'doacoes.html'; }
     if (!tipoDePagina) return;
+
     const anuncios = todosOsAnuncios.filter(item => item.tipo === tipoDePagina);
     container.innerHTML = '';
+
     if (anuncios.length === 0) {
         container.innerHTML = '<p style="text-align: center; width: 100%;">De momento não há anúncios nesta categoria.</p>';
         return;
@@ -40,11 +51,12 @@ function renderAnuncios() {
         const shareText = encodeURIComponent(`Vi este anúncio em PortugalApoia: "${anuncio.titulo}". Ajude a partilhar!`);
         const shareButtonsHTML = `<div class="share-buttons"><a href="https://api.whatsapp.com/send?text=${shareText}%20${shareURL}" target="_blank" class="share-btn whatsapp">Partilhar</a></div>`;
         const imagemSrc = anuncio.imagem || 'images/favicon.ico.png';
-        const tagClass = anuncio.tipo === 'doacao' ? 'artigos' : anuncio.tipo;
-        const cardHTML = `<div class="card-causa" id="${anuncio.id}"><div class="card-image-container"><img src="${imagemSrc}" alt="${anuncio.titulo}" class="card-image" loading="lazy"></div><div class="card-header"><span class="card-tag card-tag-${tagClass}">${anuncio.tipo.charAt(0).toUpperCase() + anuncio.tipo.slice(1)}</span><span class="card-id">#${anuncio.id}</span></div><div class="card-content"><h3 class="card-title">${anuncio.titulo}</h3><p class="card-description">${anuncio.descricao}</p>${contactoHTML}${shareButtonsHTML}</div></div>`;
+        const tagClass = anuncio.tipo === 'doacao' ? 'artigos' : (anuncio.tipo === 'servico' ? 'servico' : 'emprego');
+        const cardHTML = `<div class="card-causa" id="${anuncio.id}"><div class="card-image-container"><img src="${imagemSrc}" alt="${anuncio.titulo}" class="card-image" loading="lazy"></div><div class="card-header"><span class="card-tag card-tag-${tagClass}">${anuncio.categoria || anuncio.tipo}</span><span class="card-id">#${anuncio.id}</span></div><div class="card-content"><h3 class="card-title">${anuncio.titulo}</h3><p class="card-description">${anuncio.descricao}</p>${contactoHTML}${shareButtonsHTML}</div></div>`;
         container.innerHTML += cardHTML;
     });
 }
+
 function renderBlogList() {
     const container = document.getElementById('listing-container');
     if (!container || typeof todosOsAnuncios === 'undefined') return;
@@ -52,10 +64,11 @@ function renderBlogList() {
     container.innerHTML = '';
     blogPosts.forEach(post => {
         const postLink = `post.html?id=${post.id}`;
-        const excerpt = post.descricao.substring(0, 150) + '...';
+        const excerpt = post.descricao ? post.descricao.substring(0, 150) + '...' : '';
         container.innerHTML += `<a href="${postLink}" class="blog-card"><div class="blog-card-image-container"><img src="${post.imagem || 'images/favicon.ico.png'}" alt="${post.titulo}" class="blog-card-image"></div><div class="blog-card-content"><h3 class="blog-card-title">${post.titulo}</h3><p class="blog-card-excerpt">${excerpt}</p><span class="blog-card-readmore">Ler Mais →</span></div></a>`;
     });
 }
+
 function renderSinglePost() {
     const container = document.querySelector('.post-container');
     if (!container || typeof todosOsAnuncios === 'undefined') return;
@@ -75,11 +88,20 @@ function renderSinglePost() {
         container.innerHTML = '<h1>Artigo não encontrado.</h1>';
     }
 }
+
 function setupMobileMenu() {
     const toggle = document.querySelector('.mobile-nav-toggle');
     const nav = document.querySelector('#main-nav');
-    if (toggle && nav) toggle.addEventListener('click', () => nav.classList.toggle('nav-visible'));
+    if (toggle && nav) {
+        toggle.addEventListener('click', () => {
+            nav.classList.toggle('nav-visible');
+            const isVisible = nav.classList.contains('nav-visible');
+            toggle.setAttribute('aria-expanded', isVisible);
+            toggle.textContent = isVisible ? '✕' : '☰';
+        });
+    }
 }
+
 function setupDonationModal() {
     const modal = document.getElementById('donativo-modal');
     const openBtns = document.querySelectorAll('.apoia-projeto-btn');
@@ -90,10 +112,18 @@ function setupDonationModal() {
         modal.addEventListener('click', e => { if (e.target === modal) modal.classList.add('hidden'); });
     }
 }
+
 function setupScrollTopButton() {
     const btn = document.getElementById('scrollTopBtn');
     if (btn) {
-        window.addEventListener('scroll', () => btn.classList.toggle('visible', window.scrollY > 300));
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                btn.style.display = "block";
+                btn.classList.add('visible');
+            } else {
+                btn.classList.remove('visible');
+            }
+        });
         btn.addEventListener('click', e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
     }
 }
