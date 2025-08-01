@@ -13,19 +13,24 @@
         })(window, document, 'script', 'dataLayer', 'GTM-PQ2Q63GR');</script>
     <!-- End Google Tag Manager -->
 
-    <!-- Meta Etiquetas SEO start -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arrendamento de Quartos e Casas em Portugal - PortugalApoia</title>
+
+    <title>PortugalApoia.com - Solidariedade, Anúncios, Aluguer de quarto, Serviços Técnicos e Domésticos, Emprego e
+        Doações em Portugal</title>
+
     <meta name="description"
-        content="Procure e anuncie quartos, apartamentos e casas para arrendar em toda a Portugal. Encontre o seu próximo lar na comunidade PortugalApoia.">
+        content="A sua plataforma comunitária para encontrar e publicar pedidos de artigos, vagas de emprego, serviços e habitação em Portugal. Junte-se e ajude!">
+
     <meta name="keywords"
         content="doação, emprego, solidariedade, portugal, ajuda, voluntariado, causas sociais, habitação, serviços">
-    <meta name="author" content="Fundación Fides & HBO Consulting">
-    <meta name="robots" content="index, follow">
-    <!-- Meta Etiquetas SEO End -->
 
-    <!-- Meta Etiquetas Social start -->
+    <meta name="author" content="Fundación Fides & HBO Consulting">
+
+    <meta name="robots" content="index, follow">
+
+    <link rel="canonical" href="https://www.portugalapoia.com/index.html">
+
     <meta property="og:title" content="PortugalApoia - A Comunidade que nos Une">
     <meta property="og:description"
         content="Encontre e publique pedidos de artigos, vagas de emprego, serviços e habitação em Portugal.">
@@ -33,25 +38,26 @@
     <meta property="og:url" content="https://www.portugalapoia.com">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="pt_PT">
+
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="PortugalApoia - A Comunidade que nos Une">
     <meta name="twitter:description"
         content="Encontre e publique pedidos de artigos, vagas de emprego, serviços e habitação em Portugal.">
     <meta name="twitter:image" content="https://www.portugalapoia.com/images/og-image.jpg">
-    <!-- Meta Etiquetas Social end -->
 
-    <!-- Meta Etiqueta canonical start -->
-    <link rel="canonical" href="https://www.portugalapoia.com/habitacao.html">
-    <!-- Meta Etiqueta canonical end -->
 
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500&display=swap"
         rel="stylesheet">
+
     <link rel="icon" href="images/favicon.ico.png" type="image/png">
+
     <link rel="manifest" href="manifest.json">
+
     <meta name="theme-color" content="#0A3D62">
+
     <link rel="apple-touch-icon" href="images/favicon.ico.png">
 
 </head>
@@ -69,7 +75,7 @@
     <header class="main-header">
         <div class="container">
             <a href="index.html" class="logo">PortugalApoia</a>
-
+            
             <nav class="main-nav" id="main-nav">
                 <ul>
                     <li><a href="doacoes.html">Doação de Artigos</a></li>
@@ -79,7 +85,8 @@
                     <li><a href="publicar.html">Publicar Anúncio</a></li>
                 </ul>
             </nav>
-            <button class="mobile-nav-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Menu">
+            <button class="mobile-nav-toggle" aria-controls="main-nav" aria-expanded="false">
+                <span class="sr-only"></span>
                 ☰
             </button>
         </div>
@@ -88,7 +95,7 @@
     <main>
         <section id="habitacao">
             <div class="container">
-                <h1 class="section-title">Arrendamento de Imóveis</h1>
+                <h2 class="section-title">Arrendamento de Imóveis</h2>
 
                 <div class="search-container">
                     <div class="search-box">
@@ -212,29 +219,27 @@
         </div>
 
         <div class="footer-bottom">
-            <p>&copy; 2025 PortugalApoia.com - Todos os direitos reservados. | <a href="politica-privacidade.html"
-                    style="color: white;">Política de Privacidade</a></p>
-            <p>Um projeto da <a href="mailto:fidessuc@gmail.com">Fundación Fides</a>. Design by <a
-                    href="mailto:fidessuc@gmail.com">HBO Consulting</a>.</p>
-        </div>
+    <p>&copy; 2025 PortugalApoia.com - Todos os direitos reservados. | <a href="politica-privacidade.html" style="color: white;">Política de Privacidade</a></p>
+    <p>Um projeto da <a href="mailto:fidessuc@gmail.com">Fundación Fides</a>. Design by <a href="mailto:fidessuc@gmail.com">HBO Consulting</a>.</p>
+</div>
 
     </footer>
     <script src="script.js"></script>
     <script>
-        // Comprobar si el navegador soporta Service Workers
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                // Registrar nuestro archivo sw.js
-                navigator.serviceWorker.register('/sw.js')
-                    .then(registration => {
-                        console.log('ServiceWorker registrado con éxito con el scope:', registration.scope);
-                    })
-                    .catch(error => {
-                        console.log('Fallo en el registro del ServiceWorker:', error);
-                    });
-            });
-        }
-    </script>
+  // Comprobar si el navegador soporta Service Workers
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      // Registrar nuestro archivo sw.js
+      navigator.serviceWorker.register('/sw.js')
+        .then(registration => {
+          console.log('ServiceWorker registrado con éxito con el scope:', registration.scope);
+        })
+        .catch(error => {
+          console.log('Fallo en el registro del ServiceWorker:', error);
+        });
+    });
+  }
+</script>
 </body>
 
 </html>
