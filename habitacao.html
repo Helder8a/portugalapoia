@@ -75,7 +75,7 @@
     <header class="main-header">
         <div class="container">
             <a href="index.html" class="logo">PortugalApoia</a>
-            
+
             <nav class="main-nav" id="main-nav">
                 <ul>
                     <li><a href="doacoes.html">Doação de Artigos</a></li>
@@ -126,25 +126,36 @@
                     </div>
                 </div>
 
+
+                <!-- Emprego inicio -->
                 <div id="listing-container" class="causas-grid">
 
-                    <div class="card-causa" data-type="Quarto" data-city="Lisboa">
-                        <div class="card-image-container">
-                            <img src="img_servicos/habitacao.png" alt="Quarto para arrendar" class="card-image"
-                                loading="lazy">
-                        </div>
-                        <div class="card-header">
-                            <span class="card-tag card-tag-servico">Quarto</span>
-                            <span class="card-id">#HAB-001</span>
-                        </div>
+
+                    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Apartment",
+  "name": "Quarto Individual, Lisboa, Arroios",
+  "description": "Disponível a partir de 4 de agosto\n✅ Apenas para 1 pessoa\n💶 Valor mensal: 400€\n🔒 Caução: 400€\n📃 Com contrato de arrendamento\n💡 Inclui: Água, luz, gás e internet\n\nAmbiente tranquilo e bem localizado, ideal para quem procura conforto e privacidade.\n",
+  "identifier": "HAB-001",
+  "datePosted": "2025-08-02"
+}
+</script>
+                    <div class="card-causa">
+                        <div class="card-header"><span class="card-tag card-tag-servico">Quarto</span><span
+                                class="card-id">#HAB-001</span></div>
                         <div class="card-content">
-                            <h3 class="card-title">Quarto Individual na Portela</h3>
-                            <p class="card-description">Alugo quarto individual remodelado, com serventia de cozinha.
-                                Perto de transportes e comércio.<br><strong>Valor:</strong> 520€/mês
-                            </p>
-                            <p class="card-description">Tel. <a href="tel:+351911972787">911 972 787</a></p>
+                            <h3 class="card-title">Quarto Individual, Lisboa, Arroios</h3>
+                            <p class="card-description">Disponível a partir de 4 de agosto<br>✅ Apenas para 1
+                                pessoa<br>💶 Valor mensal: 400€<br>🔒 Caução: 400€<br>📃 Com contrato de
+                                arrendamento<br>💡 Inclui: Água, luz, gás e internet<br><br>Ambiente tranquilo e bem
+                                localizado, ideal para quem procura conforto e privacidade.<br></p>
+                            <p class="card-description">Tel. <a href="tel:+351936851734">+351 936 851 734</a></p>
                         </div>
                     </div>
+
+                    <!-- Emprego Fin -->
+
 
 
                 </div>
@@ -220,27 +231,29 @@
         </div>
 
         <div class="footer-bottom">
-    <p>&copy; 2025 PortugalApoia.com - Todos os direitos reservados. | <a href="politica-privacidade.html" style="color: white;">Política de Privacidade</a></p>
-    <p>Um projeto da <a href="mailto:fidessuc@gmail.com">Fundación Fides</a>. Design by <a href="mailto:fidessuc@gmail.com">HBO Consulting</a>.</p>
-</div>
+            <p>&copy; 2025 PortugalApoia.com - Todos os direitos reservados. | <a href="politica-privacidade.html"
+                    style="color: white;">Política de Privacidade</a></p>
+            <p>Um projeto da <a href="mailto:fidessuc@gmail.com">Fundación Fides</a>. Design by <a
+                    href="mailto:fidessuc@gmail.com">HBO Consulting</a>.</p>
+        </div>
 
     </footer>
     <script src="script.js"></script>
     <script>
-  // Comprobar si el navegador soporta Service Workers
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      // Registrar nuestro archivo sw.js
-      navigator.serviceWorker.register('/sw.js')
-        .then(registration => {
-          console.log('ServiceWorker registrado con éxito con el scope:', registration.scope);
-        })
-        .catch(error => {
-          console.log('Fallo en el registro del ServiceWorker:', error);
-        });
-    });
-  }
-</script>
+        // Comprobar si el navegador soporta Service Workers
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                // Registrar nuestro archivo sw.js
+                navigator.serviceWorker.register('/sw.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registrado con éxito con el scope:', registration.scope);
+                    })
+                    .catch(error => {
+                        console.log('Fallo en el registro del ServiceWorker:', error);
+                    });
+            });
+        }
+    </script>
 </body>
 
 </html>
