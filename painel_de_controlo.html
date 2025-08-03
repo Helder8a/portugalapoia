@@ -1,74 +1,347 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel de Controlo Unificado - PortugalApoia</title>
     <style>
         :root {
-            --color-primary: #0A3D62; --color-accent: #00834B; --color-background: #F8F9FA;
-            --color-surface: #ffffff; --color-text: #333; --color-border: #dee2e6;
+            --color-primary: #0A3D62;
+            --color-accent: #00834B;
+            --color-background: #F8F9FA;
+            --color-surface: #ffffff;
+            --color-text: #333;
+            --color-border: #dee2e6;
             --shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
         }
+
         html[data-theme='dark'] {
-            --color-primary: #4e9ad1; --color-accent: #2ecc71; --color-background: #121212;
-            --color-surface: #1e1e1e; --color-text: #e0e0e0; --color-border: #444;
+            --color-primary: #4e9ad1;
+            --color-accent: #2ecc71;
+            --color-background: #121212;
+            --color-surface: #1e1e1e;
+            --color-text: #e0e0e0;
+            --color-border: #444;
         }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: var(--color-background); color: var(--color-text); line-height: 1.6; margin: 0; padding: 20px; }
-        .container { max-width: 1800px; margin: 0 auto; }
-        h1, h2, h3 { color: var(--color-primary); }
-        .tabs { display: flex; border-bottom: 1px solid var(--color-border); margin-bottom: 20px; }
-        .tab-button { padding: 10px 20px; cursor: pointer; background: none; border: none; font-size: 1.1em; color: var(--color-text); border-bottom: 3px solid transparent; }
-        .tab-button.active { border-bottom-color: var(--color-accent); font-weight: bold; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .main-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; align-items: start; }
-        .form-section, .preview-section, .social-section, .live-preview-section { background-color: var(--color-surface); padding: 25px; border-radius: 8px; box-shadow: var(--shadow); }
-        .form-group { margin-bottom: 15px; }
-        input, select, textarea { width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box; background-color: var(--color-background); color: var(--color-text); }
-        .button { background-color: var(--color-accent); color: #fff; padding: 12px 28px; border: none; border-radius: 50px; cursor: pointer; font-size: 1rem; font-weight: 700; }
-        #generated-code, #social-post-text, .output-box { width: 100%; min-height: 150px; white-space: pre-wrap; font-family: monospace; font-size: 0.9em; background-color: #2b3035; color: #f8f8f2; }
-        .hidden { display: none; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: var(--color-primary);
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--color-border);
+            margin-bottom: 20px;
+        }
+
+        .tab-button {
+            padding: 10px 20px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 1.1em;
+            color: var(--color-text);
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-button.active {
+            border-bottom-color: var(--color-accent);
+            font-weight: bold;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .form-section,
+        .preview-section,
+        .social-section,
+        .live-preview-section {
+            background-color: var(--color-surface);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            background-color: var(--color-background);
+            color: var(--color-text);
+        }
+
+        .button {
+            background-color: var(--color-accent);
+            color: #fff;
+            padding: 12px 28px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        #generated-code,
+        #social-post-text,
+        .output-box {
+            width: 100%;
+            min-height: 150px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 0.9em;
+            background-color: #2b3035;
+            color: #f8f8f2;
+        }
+
+        .hidden {
+            display: none;
+        }
+
         /* Live Preview Styles */
-        .live-preview-container { display: flex; justify-content: center; align-items: center; min-height: 400px; background-color: var(--color-background); padding: 20px; border-radius: var(--border-radius); transition: max-width 0.4s ease; }
-        .card-causa { background-color: var(--color-surface); border-radius: 8px; box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column; width: 100%; max-width: 300px; font-family: 'Roboto', sans-serif; color: var(--color-text); border: 1px solid var(--color-border); }
-        .card-image-container { width: 100%; padding-top: 75%; position: relative; background-color: #f0f0f0; }
-        .card-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
-        .card-header { padding: 16px; display: flex; justify-content: space-between; align-items: center; }
-        .card-content { padding: 0 16px 16px; flex-grow: 1; display: flex; flex-direction: column; }
-        .card-title { font-size: 1.25rem; margin: 0 0 10px 0; color: var(--color-primary); }
-        .card-description { margin: 0; font-size: 0.95rem; flex-grow: 1; }
-        .card-tag { color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
-        .card-tag-servico { background-color: #3498db; } .card-tag-emprego { background-color: #e67e22; } .card-tag-artigos { background-color: #9b59b6; }
-        .card-id { font-size: 0.9rem; color: var(--color-primary); background-color: var(--color-background); padding: 3px 8px; border-radius: 15px; }
+        .live-preview-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 400px;
+            background-color: var(--color-background);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            transition: max-width 0.4s ease;
+        }
+
+        .card-causa {
+            background-color: var(--color-surface);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 300px;
+            font-family: 'Roboto', sans-serif;
+            color: var(--color-text);
+            border: 1px solid var(--color-border);
+        }
+
+        .card-image-container {
+            width: 100%;
+            padding-top: 75%;
+            position: relative;
+            background-color: #f0f0f0;
+        }
+
+        .card-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-header {
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-content {
+            padding: 0 16px 16px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            margin: 0 0 10px 0;
+            color: var(--color-primary);
+        }
+
+        .card-description {
+            margin: 0;
+            font-size: 0.95rem;
+            flex-grow: 1;
+        }
+
+        .card-tag {
+            color: white;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .card-tag-servico {
+            background-color: #3498db;
+        }
+
+        .card-tag-emprego {
+            background-color: #e67e22;
+        }
+
+        .card-tag-artigos {
+            background-color: #9b59b6;
+        }
+
+        .card-id {
+            font-size: 0.9rem;
+            color: var(--color-primary);
+            background-color: var(--color-background);
+            padding: 3px 8px;
+            border-radius: 15px;
+        }
+
         /* Blog Preview Styles */
-        .blog-preview-content { font-family: 'Georgia', serif; font-size: 1.1em; line-height: 1.8; }
-        .blog-preview-content p { margin-bottom: 1.5em; }
-        .blog-preview-content strong { font-weight: bold; }
-        .blog-preview-content .media-container { margin: 2em 0; }
-        .blog-preview-content img { max-width: 100%; height: auto; border-radius: 8px; }
-        .video-responsive { overflow: hidden; padding-bottom: 56.25%; position: relative; height: 0; }
-        .video-responsive iframe { left: 0; top: 0; height: 100%; width: 100%; position: absolute; }
+        .blog-preview-content {
+            font-family: 'Georgia', serif;
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        .blog-preview-content p {
+            margin-bottom: 1.5em;
+        }
+
+        .blog-preview-content strong {
+            font-weight: bold;
+        }
+
+        .blog-preview-content .media-container {
+            margin: 2em 0;
+        }
+
+        .blog-preview-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .video-responsive {
+            overflow: hidden;
+            padding-bottom: 56.25%;
+            position: relative;
+            height: 0;
+        }
+
+        .video-responsive iframe {
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+        }
+
         /* Dark Mode Toggle */
-        .theme-switch-wrapper { display: flex; align-items: center; position: absolute; top: 20px; right: 20px; }
-        .theme-switch { display: inline-block; height: 34px; position: relative; width: 60px; }
-        .theme-switch input { display:none; }
-        .slider { background-color: #ccc; bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s; }
-        .slider:before { background-color: #fff; bottom: 4px; content: ""; height: 26px; left: 4px; position: absolute; transition: .4s; width: 26px; }
-        input:checked + .slider { background-color: var(--color-accent); }
-        input:checked + .slider:before { transform: translateX(26px); }
-        .slider.round { border-radius: 34px; } .slider.round:before { border-radius: 50%; }
+        .theme-switch-wrapper {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        .theme-switch {
+            display: inline-block;
+            height: 34px;
+            position: relative;
+            width: 60px;
+        }
+
+        .theme-switch input {
+            display: none;
+        }
+
+        .slider {
+            background-color: #ccc;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+        }
+
+        .slider:before {
+            background-color: #fff;
+            bottom: 4px;
+            content: "";
+            height: 26px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+            width: 26px;
+        }
+
+        input:checked+.slider {
+            background-color: var(--color-accent);
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(26px);
+        }
+
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
     </style>
 </head>
+
 <body>
     <div class="theme-switch-wrapper">
-        <label class="theme-switch" for="checkbox"><input type="checkbox" id="checkbox" /><div class="slider round"></div></label>
+        <label class="theme-switch" for="checkbox"><input type="checkbox" id="checkbox" />
+            <div class="slider round"></div>
+        </label>
         <em style="margin-left: 10px;">Modo Oscuro</em>
     </div>
 
     <div class="container">
         <h1>Painel de Controlo Unificado</h1>
-        
+
         <div class="tabs">
             <button class="tab-button active" data-tab="anuncios">Anúncios</button>
             <button class="tab-button" data-tab="blog">Blog</button>
@@ -77,24 +350,47 @@
         <div id="tab-anuncios" class="tab-content active">
             <div class="main-grid">
                 <div class="form-column">
-                     <div class="form-section">
+                    <div class="form-section">
                         <h2>Criar Novo Anúncio</h2>
                         <form id="anuncios-form" autocomplete="off" novalidate>
-                            <div class="form-group"> <label for="post-type">Tipo de Anúncio</label> <select id="post-type"> <option value="emprego">Vaga de Emprego</option> <option value="servico">Serviço Técnico</option> <option value="habitacao">Habitação</option> <option value="doacao">Pedido de Doação</option> </select> </div>
-                            <div class="form-group"> <label for="ad-id-number">Introduza o último ID para gerar o seguinte</label> <input type="number" id="ad-id-number" required placeholder="Ex: se o último foi 24, introduza 24"> </div>
-                            <div class="form-group"> <label for="title">Título do Anúncio</label> <input type="text" id="title" required></div>
-                            <div class="form-group"> <label for="description">Descrição</label> <textarea id="description" rows="3" required></textarea></div>
-                            <div class="form-group"> <label for="contact">Contacto</label> <input type="text" id="contact" required></div>
-                            <div class="form-group"> <label for="publication-date">Data</label> <input type="date" id="publication-date" required></div>
-                            <div class="form-group"> <label for="city">Cidade</label> <input type="text" id="city" required></div>
-                            <div id="servico-fields" class="hidden"><div class="form-group"><label for="service-category">Categoria</label><input type="text" id="service-category"></div></div>
-                            <div id="doacao-fields" class="hidden"><div class="form-group"><label for="item-type">Artigo</label><input type="text" id="item-type"></div></div>
+                            <div class="form-group"> <label for="post-type">Tipo de Anúncio</label> <select
+                                    id="post-type">
+                                    <option value="emprego">Vaga de Emprego</option>
+                                    <option value="servico">Serviço Técnico</option>
+                                    <option value="habitacao">Habitação</option>
+                                    <option value="doacao">Pedido de Doação</option>
+                                </select> </div>
+                            <div class="form-group"> <label for="ad-id-number">Introduza o último ID para gerar o
+                                    seguinte</label> <input type="number" id="ad-id-number" required
+                                    placeholder="Ex: se o último foi 24, introduza 24"> </div>
+                            <div class="form-group"> <label for="title">Título do Anúncio</label> <input type="text"
+                                    id="title" required></div>
+                            <div class="form-group"> <label for="description">Descrição</label> <textarea
+                                    id="description" rows="3" required></textarea></div>
+                            <div class="form-group"> <label for="contact">Contacto</label> <input type="text"
+                                    id="contact" required></div>
+                            <div class="form-group"> <label for="publication-date">Data</label> <input type="date"
+                                    id="publication-date" required></div>
+                            <div class="form-group"> <label for="city">Cidade</label> <input type="text" id="city"
+                                    required></div>
+                            <div id="servico-fields" class="hidden">
+                                <div class="form-group"><label for="service-category">Categoria</label><input
+                                        type="text" id="service-category"></div>
+                            </div>
+                            <div id="doacao-fields" class="hidden">
+                                <div class="form-group"><label for="item-type">Artigo</label><input type="text"
+                                        id="item-type"></div>
+                            </div>
                             <div id="habitacao-fields" class="hidden">
-                                <div class="form-group"><label for="property-type">Imóvel</label><input type="text" id="property-type"></div>
-                                <div class="form-group"><label for="image-file-input">Carregar Imagem</label><input type="file" id="image-file-input" accept="image/png, image/jpeg, image/webp"></div>
+                                <div class="form-group"><label for="property-type">Imóvel</label><input type="text"
+                                        id="property-type"></div>
+                                <div class="form-group"><label for="image-file-input">Carregar Imagem</label><input
+                                        type="file" id="image-file-input" accept="image/png, image/jpeg, image/webp">
+                                </div>
                             </div>
                             <button type="button" id="generate-ad-btn" class="button">Gerar Código do Anúncio</button>
-                            <button type="button" id="clear-ad-btn" class="button secondary" style="margin-left: 15px;">Limpar</button>
+                            <button type="button" id="clear-ad-btn" class="button secondary"
+                                style="margin-left: 15px;">Limpar</button>
                         </form>
                     </div>
                     <div class="social-section" style="margin-top:30px;">
@@ -125,13 +421,23 @@
                     <div class="form-section">
                         <h2>Escrever Novo Artigo</h2>
                         <form id="blog-form" autocomplete="off">
-                            <div class="form-group"><label for="blog-title">Título do Artigo</label><input type="text" id="blog-title"></div>
-                            <div class="form-group"><label for="blog-author">Autor</label><input type="text" id="blog-author" value="PortugalApoia"></div>
-                            <div class="form-group"><label for="blog-date">Data</label><input type="date" id="blog-date"></div>
-                            <div class="form-group"><label for="blog-image">Carregar Imagem Principal</label><input type="file" id="blog-image" accept="image/png, image/jpeg, image/webp"></div>
-                            <div class="form-group"><label for="blog-video">URL do Vídeo (YouTube/Vimeo, Opcional)</label><input type="text" id="blog-video" placeholder="Cole aqui o link completo do vídeo..."></div>
-                            <div class="form-group"><label for="blog-excerpt">Resumo (para a lista do blog)</label><textarea id="blog-excerpt" rows="3"></textarea></div>
-                            <div class="form-group"><label for="blog-content">Conteúdo do Artigo</label><textarea id="blog-content" rows="10" placeholder="Escreva aqui. Use **texto** para negrito e *texto* para itálico."></textarea></div>
+                            <div class="form-group"><label for="blog-title">Título do Artigo</label><input type="text"
+                                    id="blog-title"></div>
+                            <div class="form-group"><label for="blog-author">Autor</label><input type="text"
+                                    id="blog-author" value="PortugalApoia"></div>
+                            <div class="form-group"><label for="blog-date">Data</label><input type="date"
+                                    id="blog-date"></div>
+                            <div class="form-group"><label for="blog-image">Carregar Imagem Principal</label><input
+                                    type="file" id="blog-image" accept="image/png, image/jpeg, image/webp"></div>
+                            <div class="form-group"><label for="blog-video">URL do Vídeo (YouTube/Vimeo,
+                                    Opcional)</label><input type="text" id="blog-video"
+                                    placeholder="Cole aqui o link completo do vídeo..."></div>
+                            <div class="form-group"><label for="blog-excerpt">Resumo (para a lista do
+                                    blog)</label><textarea id="blog-excerpt" rows="3"></textarea></div>
+                            <div class="form-group"><label for="blog-content">Conteúdo do Artigo</label><textarea
+                                    id="blog-content" rows="10"
+                                    placeholder="Escreva aqui. Use **texto** para negrito e *texto* para itálico."></textarea>
+                            </div>
                             <button type="button" id="generate-blog-btn" class="button">Gerar Códigos do Blog</button>
                         </form>
                     </div>
@@ -141,20 +447,23 @@
                         <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                             <h3>Pré-visualização do Artigo</h3>
                             <div>
-                                <button id="desktop-view-btn" style="padding: 5px 10px; font-size: 0.8em;">Desktop</button>
+                                <button id="desktop-view-btn"
+                                    style="padding: 5px 10px; font-size: 0.8em;">Desktop</button>
                                 <button id="mobile-view-btn" style="padding: 5px 10px; font-size: 0.8em;">Móvel</button>
                             </div>
                         </div>
                         <div id="live-preview-container-blog" class="live-preview-container">
-                            <div id="live-preview-card-blog" style="width:100%; max-width: 800px; text-align: left; padding: 20px;">
-                                </div>
+                            <div id="live-preview-card-blog"
+                                style="width:100%; max-width: 800px; text-align: left; padding: 20px;">
+                            </div>
                         </div>
                     </div>
-                     <div class="preview-section" style="margin-top:30px;">
+                    <div class="preview-section" style="margin-top:30px;">
                         <h3>Códigos Gerados (Blog)</h3>
                         <p><strong>1. Código para `blog.html` (Lista de Artigos)</strong></p>
                         <textarea id="output-list-blog" class="output-box" rows="8" readonly></textarea>
-                        <p style="margin-top: 15px;"><strong>2. Código para o ficheiro do artigo (Ex: `artigos/nome.html`)</strong></p>
+                        <p style="margin-top: 15px;"><strong>2. Código para o ficheiro do artigo (Ex:
+                                `artigos/nome.html`)</strong></p>
                         <textarea id="output-full-blog" class="output-box" rows="8" readonly></textarea>
                     </div>
                 </div>
@@ -162,202 +471,202 @@
         </div>
     </div>
 
-<script>
-// Todo el JavaScript necesario para ambas pestañas
-document.addEventListener('DOMContentLoaded', () => {
-    // --- LÓGICA GENERAL DE LA INTERFAZ (PESTAÑAS, MODO OSCURO) ---
-    const tabButtons = document.querySelectorAll('.tab-button');
-    const tabContents = document.querySelectorAll('.tab-content');
-    tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-            tabContents.forEach(content => content.classList.remove('active'));
-            document.getElementById(`tab-${button.dataset.tab}`).classList.add('active');
-        });
-    });
-
-    const themeSwitch = document.getElementById('checkbox');
-    themeSwitch.addEventListener('change', () => {
-        const theme = themeSwitch.checked ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('theme', theme);
-    });
-    const currentTheme = localStorage.getItem('theme');
-    if (currentTheme) {
-        document.documentElement.setAttribute('data-theme', currentTheme);
-        if (currentTheme === 'dark') themeSwitch.checked = true;
-    }
-
-    // --- LÓGICA PARA LA PESTAÑA DE ANÚNCIOS ---
-    const adElements = { postType: document.getElementById('post-type'), adIdNumber: document.getElementById('ad-id-number'), title: document.getElementById('title'), description: document.getElementById('description'), contact: document.getElementById('contact'), city: document.getElementById('city'), publicationDate: document.getElementById('publication-date'), imageFileInput: document.getElementById('image-file-input'), livePreviewCard: document.getElementById('live-preview-card-anuncio'), generatedCode: document.getElementById('generated-code-anuncio'), socialPostText: document.getElementById('social-post-text-anuncio'), copyHtmlBtn: document.getElementById('copy-html-ad-button'), copySocialBtn: document.getElementById('copy-social-ad-button'), generateBtn: document.getElementById('generate-ad-btn'), clearBtn: document.getElementById('clear-ad-btn'), form: document.getElementById('anuncios-form') };
-    let adUploadedFile = { name: '', dataUrl: '' };
-
-    function setupAnuncios() {
-        // Todas las funciones de la pestaña de anuncios (getFormData, generateHtmlAndSeo, etc.)
-        // adaptadas para usar adElements y adUploadedFile
-        const toTitleCase = str => str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
-        const toCapitalizeCase = str => str ? str.charAt(0).toUpperCase() + str.slice(1).toLowerCase() : '';
-
-        const updateIdField = () => {
-            const type = adElements.postType.value;
-            const lastId = parseInt(localStorage.getItem(`lastId_${type}`) || '0');
-            adElements.adIdNumber.placeholder = `Último ID para '${type}' foi ${lastId}. Introduce ${lastId} para gerar o ${lastId + 1}.`;
-        };
-        
-        const toggleFields = () => {
-            document.querySelectorAll('#servico-fields, #habitacao-fields, #doacao-fields').forEach(f => f.classList.add('hidden'));
-            const fieldsToShow = document.getElementById(`${adElements.postType.value}-fields`);
-            if(fieldsToShow) fieldsToShow.classList.remove('hidden');
-            updateIdField();
-            updateAllAdOutputs();
-        };
-
-        const clearForm = () => {
-            const currentType = adElements.postType.value;
-            adElements.form.reset();
-            adElements.postType.value = currentType;
-            adUploadedFile = { name: '', dataUrl: '' };
-            toggleFields();
-        };
-        
-        function updateAllAdOutputs() {
-            const formData = getAdFormData();
-            const { cardHTML, jsonLdScript } = generateAdHtmlAndSeo(formData);
-            adElements.generatedCode.value = `\n${jsonLdScript}\n${cardHTML}\n`;
-            adElements.livePreviewCard.innerHTML = cardHTML;
-            adElements.socialPostText.value = generateAdSocialText(formData);
-        }
-        
-        function getAdFormData() {
-            const lastId = parseInt(adElements.adIdNumber.value || '0');
-            const nextId = lastId + 1;
-            return { type: adElements.postType.value, id: nextId.toString(), title: toTitleCase(adElements.title.value), description: adElements.description.value, contact: adElements.contact.value, city: toTitleCase(adElements.city.value), pubDate: adElements.publicationDate.value || new Date().toISOString().split('T')[0], image: adUploadedFile, serviceCategory: toCapitalizeCase(document.getElementById('service-category')?.value), propertyType: toCapitalizeCase(document.getElementById('property-type')?.value), itemType: toCapitalizeCase(document.getElementById('item-type')?.value) };
-        }
-        
-        function generateAdHtmlAndSeo(data) {
-            let cardIdPrefix = 'EMP', schemaType = 'JobPosting', cardTagText = 'Vaga de Emprego', cardTagClass = 'card-tag-emprego', dataAttributes = `data-publication-date="${data.pubDate}" data-city="${data.city}"`;
-            let imagePathForCode = (data.type === 'habitacao' && data.image.name) ? `img_servicos/${data.image.name}` : '';
-            
-            switch(data.type) {
-                case 'servico': cardIdPrefix = 'SER'; schemaType = 'Service'; cardTagText = data.serviceCategory || 'Serviço'; cardTagClass = 'card-tag-servico'; dataAttributes += ` data-service="${data.serviceCategory}"`; break;
-                case 'habitacao': cardIdPrefix = 'HAB'; schemaType = 'Apartment'; cardTagText = data.propertyType || 'Habitação'; cardTagClass = 'card-tag-servico'; dataAttributes += ` data-type="${data.propertyType}"`; break;
-                case 'doacao': cardIdPrefix = 'DOA'; schemaType = 'Demand'; cardTagText = 'Pedido de Artigos'; cardTagClass = 'card-tag-artigos'; dataAttributes += ` data-item-type="${data.itemType}"`; break;
-            }
-
-            const cardId = data.id ? `${cardIdPrefix}-${data.id.padStart(3, '0')}` : '';
-            const contactHTML = data.contact.includes('@') ? `<p class="card-description">Email: <a href="mailto:${data.contact}">${data.contact}</a></p>` : (data.contact ? `<p class="card-description">Tel. <a href="tel:${data.contact.replace(/\s/g, '')}">${data.contact}</a></p>` : '');
-            const imageHTMLForPreview = data.image.dataUrl ? `<div class="card-image-container"><img src="${data.image.dataUrl}" alt="${data.title}" class="card-image"></div>` : '';
-            
-            const cardHTML = `<div class="card-causa">${imageHTMLForPreview.replace(data.image.dataUrl, imagePathForCode)}<div class="card-header"><span class="card-tag ${cardTagClass}">${cardTagText}</span><span class="card-id">${cardId ? '#' + cardId : ''}</span></div><div class="card-content"><h3 class="card-title">${data.title}</h3><p class="card-description">${data.description.replace(/\n/g, '<br>')}</p>${contactHTML}</div></div>`;
-
-            const schema = { "@context": "https://schema.org", "@type": schemaType, "name": data.title, "description": data.description, "identifier": cardId, "datePosted": data.pubDate };
-            if(imagePathForCode) schema.image = `https://www.portugalapoia.com/${imagePathForCode}`;
-            const jsonLdScript = `<script type="application/ld+json">\n${JSON.stringify(schema, null, 2)}\n<\/script>`;
-            
-            return { cardHTML: cardHTML.replace(data.image.dataUrl, imagePathForCode), jsonLdScript };
-        }
-
-        function generateAdSocialText(data) {
-            let intro = '', hashtags = '#PortugalApoia';
-            const cleanCity = data.city.replace(/\s/g, '');
-            switch(data.type) {
-                case 'emprego': intro = '📢 Nova Vaga de Emprego'; hashtags += ` #Emprego #${cleanCity} #Trabalho`; break;
-                case 'servico': intro = '🔧 Novo Serviço Disponível'; hashtags += ` #Serviços #${cleanCity}`; break;
-                case 'habitacao': intro = '🏠 Nova Habitação Disponível'; hashtags += ` #Habitação #${cleanCity} #Arrendar`; break;
-                case 'doacao': intro = '❤️ Novo Pedido de Doação'; hashtags += ` #Doação #${cleanCity} #Solidariedade`; break;
-            }
-            const smartHashtags = data.title.toLowerCase().split(' ').filter(word => word.length > 3).map(word => `#${word}`).join(' ');
-            return `${intro} em PortugalApoia!\n\n✨ ${data.title} em ${data.city}.\n\nEncontre mais detalhes na nossa página web!\n\n${hashtags} ${smartHashtags}`;
-        }
-        
-        function validateAdForm() {
-            let isValid = true;
-            document.querySelectorAll('#anuncios-form [required]').forEach(input => {
-                if (!input.value.trim()) { input.classList.add('invalid'); isValid = false; } 
-                else { input.classList.remove('invalid'); }
+    <script>
+        // Todo el JavaScript necesario para ambas pestañas
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- LÓGICA GENERAL DE LA INTERFAZ (PESTAÑAS, MODO OSCURO) ---
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    document.getElementById(`tab-${button.dataset.tab}`).classList.add('active');
+                });
             });
-            return isValid;
-        }
 
-        adElements.generateBtn.addEventListener('click', () => {
-            if (!validateAdForm()) { alert("Por favor, preencha todos os campos obrigatórios."); return; }
-            const type = adElements.postType.value;
-            const lastId = adElements.adIdNumber.value;
-            const nextId = parseInt(lastId || '0') + 1;
-            localStorage.setItem(`lastId_${type}`, nextId);
-            updateAllAdOutputs();
-            let alertMessage = `ID ${nextId} gerado e guardado para a categoria '${type}'!`;
-            if (type === 'habitacao' && adUploadedFile.name) {
-                alertMessage += `\n\nIMPORTANTE: Não se esqueça de carregar o ficheiro "${adUploadedFile.name}" para a pasta /img_servicos/ do seu servidor.`;
+            const themeSwitch = document.getElementById('checkbox');
+            themeSwitch.addEventListener('change', () => {
+                const theme = themeSwitch.checked ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+            });
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme) {
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                if (currentTheme === 'dark') themeSwitch.checked = true;
             }
-            alert(alertMessage);
-            adElements.adIdNumber.value = '';
-            updateIdField();
-        });
-        
-        adElements.postType.addEventListener('change', toggleFields);
-        adElements.imageFileInput.addEventListener('change', e => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = e => { adUploadedFile = { name: file.name, dataUrl: e.target.result }; updateAllAdOutputs(); };
-                reader.readAsDataURL(file);
-            }
-        });
-        document.querySelectorAll('#anuncios-form input, #anuncios-form textarea').forEach(input => input.addEventListener('input', updateAllAdOutputs));
-        adElements.copyHtmlBtn.addEventListener('click', () => navigator.clipboard.writeText(adElements.generatedCode.value).then(() => alert('Código HTML do anúncio copiado!')));
-        adElements.copySocialBtn.addEventListener('click', () => navigator.clipboard.writeText(adElements.socialPostText.value).then(() => alert('Texto para redes sociais copiado!')));
-        adElements.clearBtn.addEventListener('click', clearForm);
-        toggleFields();
-    }
-    
-    // --- LÓGICA PARA LA PESTAÑA DE BLOG ---
-    const blogElements = { title: document.getElementById('blog-title'), author: document.getElementById('blog-author'), date: document.getElementById('blog-date'), image: document.getElementById('blog-image'), video: document.getElementById('blog-video'), excerpt: document.getElementById('blog-excerpt'), content: document.getElementById('blog-content'), preview: document.getElementById('live-preview-card-blog'), outputList: document.getElementById('output-list-blog'), outputFull: document.getElementById('output-full-blog'), generateBtn: document.getElementById('generate-blog-btn'), desktopViewBtn: document.getElementById('desktop-view-btn'), mobileViewBtn: document.getElementById('mobile-view-btn'), livePreviewContainer: document.getElementById('live-preview-container-blog') };
-    let blogImageFile = { name: '', dataUrl: '' };
 
-    function setupBlog() {
-        const simpleMarkdown = (text) => {
-            return text
-                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Negrita
-                .replace(/\*(.*?)\*/g, '<em>$1</em>')     // Itálico
-                .split('\n').map(p => `<p>${p}</p>`).join('');
-        };
+            // --- LÓGICA PARA LA PESTAÑA DE ANÚNCIOS ---
+            const adElements = { postType: document.getElementById('post-type'), adIdNumber: document.getElementById('ad-id-number'), title: document.getElementById('title'), description: document.getElementById('description'), contact: document.getElementById('contact'), city: document.getElementById('city'), publicationDate: document.getElementById('publication-date'), imageFileInput: document.getElementById('image-file-input'), livePreviewCard: document.getElementById('live-preview-card-anuncio'), generatedCode: document.getElementById('generated-code-anuncio'), socialPostText: document.getElementById('social-post-text-anuncio'), copyHtmlBtn: document.getElementById('copy-html-ad-button'), copySocialBtn: document.getElementById('copy-social-ad-button'), generateBtn: document.getElementById('generate-ad-btn'), clearBtn: document.getElementById('clear-ad-btn'), form: document.getElementById('anuncios-form') };
+            let adUploadedFile = { name: '', dataUrl: '' };
 
-        const getYoutubeEmbedUrl = (url) => {
-            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-            const match = url.match(regExp);
-            return (match && match[2].length === 11) ? `https://www.youtube.com/embed/${match[2]}` : null;
-        }
+            function setupAnuncios() {
+                // Todas las funciones de la pestaña de anuncios (getFormData, generateHtmlAndSeo, etc.)
+                // adaptadas para usar adElements y adUploadedFile
+                const toTitleCase = str => str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+                const toCapitalizeCase = str => str ? str.charAt(0).toUpperCase() + str.slice(1).toLowerCase() : '';
 
-        const getVimeoEmbedUrl = (url) => {
-            const regExp = /https?:\/\/(?:www\.|player\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|video\/|)(\d+)(?:$|\/|\?)/;
-            const match = url.match(regExp);
-            return match ? `https://player.vimeo.com/video/${match[3]}` : null;
-        }
+                const updateIdField = () => {
+                    const type = adElements.postType.value;
+                    const lastId = parseInt(localStorage.getItem(`lastId_${type}`) || '0');
+                    adElements.adIdNumber.placeholder = `Último ID para '${type}' foi ${lastId}. Introduce ${lastId} para gerar o ${lastId + 1}.`;
+                };
 
-        function updateBlogPreview() {
-            const title = blogElements.title.value;
-            const author = blogElements.author.value;
-            const date = new Date(blogElements.date.value || new Date()).toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' });
-            const videoUrl = blogElements.video.value;
-            let mediaHTML = '';
-            
-            if (videoUrl) {
-                const youtubeUrl = getYoutubeEmbedUrl(videoUrl);
-                const vimeoUrl = getVimeoEmbedUrl(videoUrl);
-                if (youtubeUrl) {
-                    mediaHTML = `<div class="media-container video-responsive"><iframe src="${youtubeUrl}" frameborder="0" allowfullscreen></iframe></div>`;
-                } else if (vimeoUrl) {
-                    mediaHTML = `<div class="media-container video-responsive"><iframe src="${vimeoUrl}" frameborder="0" allowfullscreen></iframe></div>`;
+                const toggleFields = () => {
+                    document.querySelectorAll('#servico-fields, #habitacao-fields, #doacao-fields').forEach(f => f.classList.add('hidden'));
+                    const fieldsToShow = document.getElementById(`${adElements.postType.value}-fields`);
+                    if (fieldsToShow) fieldsToShow.classList.remove('hidden');
+                    updateIdField();
+                    updateAllAdOutputs();
+                };
+
+                const clearForm = () => {
+                    const currentType = adElements.postType.value;
+                    adElements.form.reset();
+                    adElements.postType.value = currentType;
+                    adUploadedFile = { name: '', dataUrl: '' };
+                    toggleFields();
+                };
+
+                function updateAllAdOutputs() {
+                    const formData = getAdFormData();
+                    const { cardHTML, jsonLdScript } = generateAdHtmlAndSeo(formData);
+                    adElements.generatedCode.value = `\n${jsonLdScript}\n${cardHTML}\n`;
+                    adElements.livePreviewCard.innerHTML = cardHTML;
+                    adElements.socialPostText.value = generateAdSocialText(formData);
                 }
-            } else if (blogImageFile.dataUrl) {
-                mediaHTML = `<div class="media-container"><img src="${blogImageFile.dataUrl}" alt="${title}"></div>`;
+
+                function getAdFormData() {
+                    const lastId = parseInt(adElements.adIdNumber.value || '0');
+                    const nextId = lastId + 1;
+                    return { type: adElements.postType.value, id: nextId.toString(), title: toTitleCase(adElements.title.value), description: adElements.description.value, contact: adElements.contact.value, city: toTitleCase(adElements.city.value), pubDate: adElements.publicationDate.value || new Date().toISOString().split('T')[0], image: adUploadedFile, serviceCategory: toCapitalizeCase(document.getElementById('service-category')?.value), propertyType: toCapitalizeCase(document.getElementById('property-type')?.value), itemType: toCapitalizeCase(document.getElementById('item-type')?.value) };
+                }
+
+                function generateAdHtmlAndSeo(data) {
+                    let cardIdPrefix = 'EMP', schemaType = 'JobPosting', cardTagText = 'Vaga de Emprego', cardTagClass = 'card-tag-emprego', dataAttributes = `data-publication-date="${data.pubDate}" data-city="${data.city}"`;
+                    let imagePathForCode = (data.type === 'habitacao' && data.image.name) ? `img_servicos/${data.image.name}` : '';
+
+                    switch (data.type) {
+                        case 'servico': cardIdPrefix = 'SER'; schemaType = 'Service'; cardTagText = data.serviceCategory || 'Serviço'; cardTagClass = 'card-tag-servico'; dataAttributes += ` data-service="${data.serviceCategory}"`; break;
+                        case 'habitacao': cardIdPrefix = 'HAB'; schemaType = 'Apartment'; cardTagText = data.propertyType || 'Habitação'; cardTagClass = 'card-tag-servico'; dataAttributes += ` data-type="${data.propertyType}"`; break;
+                        case 'doacao': cardIdPrefix = 'DOA'; schemaType = 'Demand'; cardTagText = 'Pedido de Artigos'; cardTagClass = 'card-tag-artigos'; dataAttributes += ` data-item-type="${data.itemType}"`; break;
+                    }
+
+                    const cardId = data.id ? `${cardIdPrefix}-${data.id.padStart(3, '0')}` : '';
+                    const contactHTML = data.contact.includes('@') ? `<p class="card-description">Email: <a href="mailto:${data.contact}">${data.contact}</a></p>` : (data.contact ? `<p class="card-description">Tel. <a href="tel:${data.contact.replace(/\s/g, '')}">${data.contact}</a></p>` : '');
+                    const imageHTMLForPreview = data.image.dataUrl ? `<div class="card-image-container"><img src="${data.image.dataUrl}" alt="${data.title}" class="card-image"></div>` : '';
+
+                    const cardHTML = `<div class="card-causa">${imageHTMLForPreview.replace(data.image.dataUrl, imagePathForCode)}<div class="card-header"><span class="card-tag ${cardTagClass}">${cardTagText}</span><span class="card-id">${cardId ? '#' + cardId : ''}</span></div><div class="card-content"><h3 class="card-title">${data.title}</h3><p class="card-description">${data.description.replace(/\n/g, '<br>')}</p>${contactHTML}</div></div>`;
+
+                    const schema = { "@context": "https://schema.org", "@type": schemaType, "name": data.title, "description": data.description, "identifier": cardId, "datePosted": data.pubDate };
+                    if (imagePathForCode) schema.image = `https://www.portugalapoia.com/${imagePathForCode}`;
+                    const jsonLdScript = `<script type="application/ld+json">\n${JSON.stringify(schema, null, 2)}\n<\/script>`;
+
+                    return { cardHTML: cardHTML.replace(data.image.dataUrl, imagePathForCode), jsonLdScript };
+                }
+
+                function generateAdSocialText(data) {
+                    let intro = '', hashtags = '#PortugalApoia';
+                    const cleanCity = data.city.replace(/\s/g, '');
+                    switch (data.type) {
+                        case 'emprego': intro = '📢 Nova Vaga de Emprego'; hashtags += ` #Emprego #${cleanCity} #Trabalho`; break;
+                        case 'servico': intro = '🔧 Novo Serviço Disponível'; hashtags += ` #Serviços #${cleanCity}`; break;
+                        case 'habitacao': intro = '🏠 Nova Habitação Disponível'; hashtags += ` #Habitação #${cleanCity} #Arrendar`; break;
+                        case 'doacao': intro = '❤️ Novo Pedido de Doação'; hashtags += ` #Doação #${cleanCity} #Solidariedade`; break;
+                    }
+                    const smartHashtags = data.title.toLowerCase().split(' ').filter(word => word.length > 3).map(word => `#${word}`).join(' ');
+                    return `${intro} em PortugalApoia!\n\n✨ ${data.title} em ${data.city}.\n\nEncontre mais detalhes na nossa página web!\n\n${hashtags} ${smartHashtags}`;
+                }
+
+                function validateAdForm() {
+                    let isValid = true;
+                    document.querySelectorAll('#anuncios-form [required]').forEach(input => {
+                        if (!input.value.trim()) { input.classList.add('invalid'); isValid = false; }
+                        else { input.classList.remove('invalid'); }
+                    });
+                    return isValid;
+                }
+
+                adElements.generateBtn.addEventListener('click', () => {
+                    if (!validateAdForm()) { alert("Por favor, preencha todos os campos obrigatórios."); return; }
+                    const type = adElements.postType.value;
+                    const lastId = adElements.adIdNumber.value;
+                    const nextId = parseInt(lastId || '0') + 1;
+                    localStorage.setItem(`lastId_${type}`, nextId);
+                    updateAllAdOutputs();
+                    let alertMessage = `ID ${nextId} gerado e guardado para a categoria '${type}'!`;
+                    if (type === 'habitacao' && adUploadedFile.name) {
+                        alertMessage += `\n\nIMPORTANTE: Não se esqueça de carregar o ficheiro "${adUploadedFile.name}" para a pasta /img_servicos/ do seu servidor.`;
+                    }
+                    alert(alertMessage);
+                    adElements.adIdNumber.value = '';
+                    updateIdField();
+                });
+
+                adElements.postType.addEventListener('change', toggleFields);
+                adElements.imageFileInput.addEventListener('change', e => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = e => { adUploadedFile = { name: file.name, dataUrl: e.target.result }; updateAllAdOutputs(); };
+                        reader.readAsDataURL(file);
+                    }
+                });
+                document.querySelectorAll('#anuncios-form input, #anuncios-form textarea').forEach(input => input.addEventListener('input', updateAllAdOutputs));
+                adElements.copyHtmlBtn.addEventListener('click', () => navigator.clipboard.writeText(adElements.generatedCode.value).then(() => alert('Código HTML do anúncio copiado!')));
+                adElements.copySocialBtn.addEventListener('click', () => navigator.clipboard.writeText(adElements.socialPostText.value).then(() => alert('Texto para redes sociais copiado!')));
+                adElements.clearBtn.addEventListener('click', clearForm);
+                toggleFields();
             }
 
-            const content = simpleMarkdown(blogElements.content.value);
+            // --- LÓGICA PARA LA PESTAÑA DE BLOG ---
+            const blogElements = { title: document.getElementById('blog-title'), author: document.getElementById('blog-author'), date: document.getElementById('blog-date'), image: document.getElementById('blog-image'), video: document.getElementById('blog-video'), excerpt: document.getElementById('blog-excerpt'), content: document.getElementById('blog-content'), preview: document.getElementById('live-preview-card-blog'), outputList: document.getElementById('output-list-blog'), outputFull: document.getElementById('output-full-blog'), generateBtn: document.getElementById('generate-blog-btn'), desktopViewBtn: document.getElementById('desktop-view-btn'), mobileViewBtn: document.getElementById('mobile-view-btn'), livePreviewContainer: document.getElementById('live-preview-container-blog') };
+            let blogImageFile = { name: '', dataUrl: '' };
 
-            blogElements.preview.innerHTML = `
+            function setupBlog() {
+                const simpleMarkdown = (text) => {
+                    return text
+                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Negrita
+                        .replace(/\*(.*?)\*/g, '<em>$1</em>')     // Itálico
+                        .split('\n').map(p => `<p>${p}</p>`).join('');
+                };
+
+                const getYoutubeEmbedUrl = (url) => {
+                    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+                    const match = url.match(regExp);
+                    return (match && match[2].length === 11) ? `https://www.youtube.com/embed/${match[2]}` : null;
+                }
+
+                const getVimeoEmbedUrl = (url) => {
+                    const regExp = /https?:\/\/(?:www\.|player\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|video\/|)(\d+)(?:$|\/|\?)/;
+                    const match = url.match(regExp);
+                    return match ? `https://player.vimeo.com/video/${match[3]}` : null;
+                }
+
+                function updateBlogPreview() {
+                    const title = blogElements.title.value;
+                    const author = blogElements.author.value;
+                    const date = new Date(blogElements.date.value || new Date()).toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' });
+                    const videoUrl = blogElements.video.value;
+                    let mediaHTML = '';
+
+                    if (videoUrl) {
+                        const youtubeUrl = getYoutubeEmbedUrl(videoUrl);
+                        const vimeoUrl = getVimeoEmbedUrl(videoUrl);
+                        if (youtubeUrl) {
+                            mediaHTML = `<div class="media-container video-responsive"><iframe src="${youtubeUrl}" frameborder="0" allowfullscreen></iframe></div>`;
+                        } else if (vimeoUrl) {
+                            mediaHTML = `<div class="media-container video-responsive"><iframe src="${vimeoUrl}" frameborder="0" allowfullscreen></iframe></div>`;
+                        }
+                    } else if (blogImageFile.dataUrl) {
+                        mediaHTML = `<div class="media-container"><img src="${blogImageFile.dataUrl}" alt="${title}"></div>`;
+                    }
+
+                    const content = simpleMarkdown(blogElements.content.value);
+
+                    blogElements.preview.innerHTML = `
                 <h1 class="article-title">${title}</h1>
                 <p class="post-meta">Por ${author} | ${date}</p>
                 <div class="blog-preview-content">
@@ -365,66 +674,67 @@ document.addEventListener('DOMContentLoaded', () => {
                     ${content}
                 </div>
             `;
-        }
-        
-        blogElements.image.addEventListener('change', e => {
-            const file = e.target.files[0];
-            if(file) {
-                const reader = new FileReader();
-                reader.onload = e => { 
-                    blogImageFile = { name: file.name, dataUrl: e.target.result };
-                    blogElements.video.value = ''; // Limpiar video si se sube imagen
-                    updateBlogPreview();
-                };
-                reader.readAsDataURL(file);
+                }
+
+                blogElements.image.addEventListener('change', e => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = e => {
+                            blogImageFile = { name: file.name, dataUrl: e.target.result };
+                            blogElements.video.value = ''; // Limpiar video si se sube imagen
+                            updateBlogPreview();
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+
+                document.querySelectorAll('#blog-form input, #blog-form textarea').forEach(el => el.addEventListener('input', updateBlogPreview));
+
+                blogElements.generateBtn.addEventListener('click', () => {
+                    const title = blogElements.title.value;
+                    const author = blogElements.author.value;
+                    const date = new Date(blogElements.date.value || new Date());
+                    const imagePath = blogImageFile.name ? `images/blog/${blogImageFile.name}` : '';
+                    const excerpt = blogElements.excerpt.value;
+                    const content = blogElements.content.value;
+                    const videoUrl = blogElements.video.value;
+                    const slug = title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
+                    const filename = `${slug}.html`;
+
+                    // Código para blog.html
+                    const listOutput = `<article class="blog-post-summary"><a href="artigos/${filename}" class="post-image-link"><img src="${imagePath}" alt="${title}" class="post-image"></a><div class="post-content"><p class="post-meta">Por <span class="post-author">${author}</span> | <span class="post-date">${date.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' })}</span></p><h2 class="post-title"><a href="artigos/${filename}">${title}</a></h2><p class="post-excerpt">${excerpt}</p><a href="artigos/${filename}" class="button button-primary" style="padding: 8px 20px;">Ler Mais</a></div></article>`;
+                    blogElements.outputList.value = listOutput;
+
+                    // Código para el archivo del artículo
+                    let mediaHTML = '';
+                    if (videoUrl) {
+                        const embedUrl = getYoutubeEmbedUrl(videoUrl) || getVimeoEmbedUrl(videoUrl);
+                        if (embedUrl) mediaHTML = `<div class="video-responsive"><iframe src="${embedUrl}" frameborder="0" allowfullscreen></iframe></div>`;
+                    } else if (imagePath) {
+                        mediaHTML = `<img src="../${imagePath}" alt="${title}" class="post-image">`;
+                    }
+
+                    const fullOutput = `<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${title} - PortugalApoia Blog</title><meta name="description" content="${excerpt}"><link rel="stylesheet" href="../style.css"><script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@type": "BlogPosting", "headline": title, "image": imagePath ? `https://www.portugalapoia.com/${imagePath}` : '', "author": { "@type": "Person", "name": author }, "publisher": { "@type": "Organization", "name": "PortugalApoia", "logo": { "@type": "ImageObject", "url": "https://www.portugalapoia.com/images/favicon.ico.png" } }, "datePublished": date.toISOString() }, null, 2)}<\/script></head><body><main><article class="container"><header class="article-header"><h1 class="article-title">${title}</h1><p class="post-meta">Por ${author} | ${date.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' })}</p></header><div class="article-content">${mediaHTML}${simpleMarkdown(content)}</div></article></main></body></html>`;
+                    blogElements.outputFull.value = fullOutput;
+
+                    if (blogImageFile.name) {
+                        alert(`Códigos gerados!\n\nIMPORTANTE: Não se esqueça de carregar o ficheiro "${blogImageFile.name}" para a pasta /images/blog/ do seu servidor.`);
+                    } else {
+                        alert('Códigos gerados!');
+                    }
+                });
+
+                blogElements.desktopViewBtn.addEventListener('click', () => { blogElements.livePreviewContainer.style.maxWidth = '100%'; });
+                blogElements.mobileViewBtn.addEventListener('click', () => { blogElements.livePreviewContainer.style.maxWidth = '414px'; });
             }
+
+            // INICIALIZACIÓN
+            setupAnuncios();
+            setupBlog();
         });
-
-        document.querySelectorAll('#blog-form input, #blog-form textarea').forEach(el => el.addEventListener('input', updateBlogPreview));
-
-        blogElements.generateBtn.addEventListener('click', () => {
-            const title = blogElements.title.value;
-            const author = blogElements.author.value;
-            const date = new Date(blogElements.date.value || new Date());
-            const imagePath = blogImageFile.name ? `images/blog/${blogImageFile.name}` : '';
-            const excerpt = blogElements.excerpt.value;
-            const content = blogElements.content.value;
-            const videoUrl = blogElements.video.value;
-            const slug = title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
-            const filename = `${slug}.html`;
-
-            // Código para blog.html
-            const listOutput = `<article class="blog-post-summary"><a href="artigos/${filename}" class="post-image-link"><img src="${imagePath}" alt="${title}" class="post-image"></a><div class="post-content"><p class="post-meta">Por <span class="post-author">${author}</span> | <span class="post-date">${date.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' })}</span></p><h2 class="post-title"><a href="artigos/${filename}">${title}</a></h2><p class="post-excerpt">${excerpt}</p><a href="artigos/${filename}" class="button button-primary" style="padding: 8px 20px;">Ler Mais</a></div></article>`;
-            blogElements.outputList.value = listOutput;
-
-            // Código para el archivo del artículo
-            let mediaHTML = '';
-            if(videoUrl) {
-                const embedUrl = getYoutubeEmbedUrl(videoUrl) || getVimeoEmbedUrl(videoUrl);
-                if(embedUrl) mediaHTML = `<div class="video-responsive"><iframe src="${embedUrl}" frameborder="0" allowfullscreen></iframe></div>`;
-            } else if(imagePath) {
-                mediaHTML = `<img src="../${imagePath}" alt="${title}" class="post-image">`;
-            }
-
-            const fullOutput = `<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${title} - PortugalApoia Blog</title><meta name="description" content="${excerpt}"><link rel="stylesheet" href="../style.css"><script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@type": "BlogPosting", "headline": title, "image": imagePath ? `https://www.portugalapoia.com/${imagePath}` : '', "author": { "@type": "Person", "name": author }, "publisher": { "@type": "Organization", "name": "PortugalApoia", "logo": { "@type": "ImageObject", "url": "https://www.portugalapoia.com/images/favicon.ico.png" } }, "datePublished": date.toISOString() }, null, 2)}<\/script></head><body><main><article class="container"><header class="article-header"><h1 class="article-title">${title}</h1><p class="post-meta">Por ${author} | ${date.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' })}</p></header><div class="article-content">${mediaHTML}${simpleMarkdown(content)}</div></article></main></body></html>`;
-            blogElements.outputFull.value = fullOutput;
-            
-            if (blogImageFile.name) {
-                alert(`Códigos gerados!\n\nIMPORTANTE: Não se esqueça de carregar o ficheiro "${blogImageFile.name}" para a pasta /images/blog/ do seu servidor.`);
-            } else {
-                alert('Códigos gerados!');
-            }
-        });
-
-        blogElements.desktopViewBtn.addEventListener('click', () => { blogElements.livePreviewContainer.style.maxWidth = '100%'; });
-        blogElements.mobileViewBtn.addEventListener('click', () => { blogElements.livePreviewContainer.style.maxWidth = '414px'; });
-    }
-    
-    // INICIALIZACIÓN
-    setupAnuncios();
-    setupBlog();
-});
-</script>
+    </script>
 
 </body>
+
 </html>
