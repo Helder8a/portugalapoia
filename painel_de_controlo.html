@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel de Controlo Unificado - PortugalApoia</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
             --color-primary: #0A3D62;
@@ -41,7 +43,8 @@
 
         h1,
         h2,
-        h3 {
+        h3,
+        h4 {
             color: var(--color-primary);
         }
 
@@ -83,7 +86,6 @@
 
         .form-section,
         .preview-section,
-        .social-section,
         .live-preview-section {
             background-color: var(--color-surface);
             padding: 25px;
@@ -93,6 +95,16 @@
 
         .form-group {
             margin-bottom: 15px;
+        }
+        
+        .form-group-inline {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        .form-group-inline > div {
+            flex: 1;
         }
 
         input,
@@ -119,9 +131,11 @@
             font-weight: 700;
         }
 
-        #generated-code,
-        #social-post-text,
-        .output-box {
+        .button.secondary {
+            background-color: #6c757d;
+        }
+
+        #generated-code {
             width: 100%;
             min-height: 150px;
             white-space: pre-wrap;
@@ -135,7 +149,6 @@
             display: none;
         }
 
-        /* Live Preview Styles */
         .live-preview-container {
             display: flex;
             justify-content: center;
@@ -143,12 +156,17 @@
             min-height: 400px;
             background-color: var(--color-background);
             padding: 20px;
-            border-radius: var(--border-radius);
-            transition: max-width 0.4s ease;
+            border-radius: 8px;
+        }
+
+        #capture-area {
+            padding: 20px;
+            background-color: #FFFFFF;
+            border-radius: 8px;
         }
 
         .card-causa {
-            background-color: var(--color-surface);
+            background-color: #fff;
             border-radius: 8px;
             box-shadow: var(--shadow);
             overflow: hidden;
@@ -222,7 +240,13 @@
         .card-tag-artigos {
             background-color: #9b59b6;
         }
-
+        .card-tag-habitacao {
+            background-color: #27ae60;
+        }
+        .card-tag-blog {
+            background-color: #f1c40f;
+        }
+        
         .card-id {
             font-size: 0.9rem;
             color: var(--color-primary);
@@ -230,47 +254,61 @@
             padding: 3px 8px;
             border-radius: 15px;
         }
-
-        /* Blog Preview Styles */
-        .blog-preview-content {
-            font-family: 'Georgia', serif;
-            font-size: 1.1em;
-            line-height: 1.8;
+        .card-date {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        .card-share {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--color-border);
+            text-align: center;
         }
 
-        .blog-preview-content p {
-            margin-bottom: 1.5em;
+        .card-share-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .blog-preview-content strong {
-            font-weight: bold;
+        .card-share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
         }
 
-        .blog-preview-content .media-container {
-            margin: 2em 0;
+        .card-share-buttons a {
+            font-size: 1.6rem;
+            color: var(--color-primary);
+            transition: transform 0.2s ease, color 0.2s ease;
         }
 
-        .blog-preview-content img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 8px;
+        .card-share-buttons a:hover {
+            color: var(--color-accent);
+            transform: scale(1.1);
         }
 
-        .video-responsive {
-            overflow: hidden;
-            padding-bottom: 56.25%;
-            position: relative;
-            height: 0;
+        .card-footer-link {
+            padding: 12px 16px;
+            background-color: var(--color-background);
+            text-align: center;
+            border-top: 1px solid var(--color-border);
         }
 
-        .video-responsive iframe {
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 100%;
-            position: absolute;
+        .card-footer-link a {
+            text-decoration: none;
+            color: var(--color-primary);
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
         }
 
+        .card-footer-link a:hover {
+            color: var(--color-accent);
+        }
         /* Dark Mode Toggle */
         .theme-switch-wrapper {
             display: flex;
@@ -341,12 +379,10 @@
 
     <div class="container">
         <h1>Painel de Controlo Unificado</h1>
-
         <div class="tabs">
             <button class="tab-button active" data-tab="anuncios">Anúncios</button>
             <button class="tab-button" data-tab="blog">Blog</button>
         </div>
-
         <div id="tab-anuncios" class="tab-content active">
             <div class="main-grid">
                 <div class="form-column">
@@ -367,8 +403,19 @@
                                     id="title" required></div>
                             <div class="form-group"> <label for="description">Descrição</label> <textarea
                                     id="description" rows="3" required></textarea></div>
-                            <div class="form-group"> <label for="contact">Contacto</label> <input type="text"
-                                    id="contact" required></div>
+                            <div class="form-group form-group-inline">
+                                <div style="flex: 0 0 150px;">
+                                    <label for="contact-type">Tipo de Contacto</label>
+                                    <select id="contact-type">
+                                        <option value="telefone">Telefone</option>
+                                        <option value="email">Email</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="contact-value">Contacto</label>
+                                    <input type="text" id="contact-value" required>
+                                </div>
+                            </div>
                             <div class="form-group"> <label for="publication-date">Data</label> <input type="date"
                                     id="publication-date" required></div>
                             <div class="form-group"> <label for="city">Cidade</label> <input type="text" id="city"
@@ -393,78 +440,58 @@
                                 style="margin-left: 15px;">Limpar</button>
                         </form>
                     </div>
-                    <div class="social-section" style="margin-top:30px;">
-                        <h3>Sugerencia para Redes Sociais (Anuncio)</h3>
-                        <textarea id="social-post-text-anuncio" readonly rows="7"></textarea>
-                        <button id="copy-social-ad-button" class="button" style="margin-top:10px;">Copiar Texto</button>
-                    </div>
                 </div>
                 <div class="right-column">
                     <div class="live-preview-section">
                         <h3>Pré-visualização do Anúncio</h3>
                         <div id="live-preview-container-anuncio" class="live-preview-container">
-                            <div id="live-preview-card-anuncio"></div>
+                            <div id="capture-area"></div>
                         </div>
+                        <button type="button" id="download-image-btn" class="button"
+                            style="width: 100%; margin-top: 20px;">
+                            Guardar pré-visualização para Instagram (JPG)
+                        </button>
                     </div>
                     <div class="preview-section" style="margin-top:30px;">
-                        <h3>Código HTML e SEO (Anuncio)</h3>
+                        <h3>Código HTML e SEO</h3>
                         <textarea id="generated-code-anuncio" readonly></textarea>
-                        <button id="copy-html-ad-button" class="button" style="margin-top:10px;">Copiar Código</button>
                     </div>
                 </div>
             </div>
         </div>
-
         <div id="tab-blog" class="tab-content">
-            <div class="main-grid">
+             <div class="main-grid">
                 <div class="form-column">
                     <div class="form-section">
-                        <h2>Escrever Novo Artigo</h2>
-                        <form id="blog-form" autocomplete="off">
-                            <div class="form-group"><label for="blog-title">Título do Artigo</label><input type="text"
-                                    id="blog-title"></div>
-                            <div class="form-group"><label for="blog-author">Autor</label><input type="text"
-                                    id="blog-author" value="PortugalApoia"></div>
-                            <div class="form-group"><label for="blog-date">Data</label><input type="date"
-                                    id="blog-date"></div>
-                            <div class="form-group"><label for="blog-image">Carregar Imagem Principal</label><input
-                                    type="file" id="blog-image" accept="image/png, image/jpeg, image/webp"></div>
-                            <div class="form-group"><label for="blog-video">URL do Vídeo (YouTube/Vimeo,
-                                    Opcional)</label><input type="text" id="blog-video"
-                                    placeholder="Cole aqui o link completo do vídeo..."></div>
-                            <div class="form-group"><label for="blog-excerpt">Resumo (para a lista do
-                                    blog)</label><textarea id="blog-excerpt" rows="3"></textarea></div>
-                            <div class="form-group"><label for="blog-content">Conteúdo do Artigo</label><textarea
-                                    id="blog-content" rows="10"
-                                    placeholder="Escreva aqui. Use **texto** para negrito e *texto* para itálico."></textarea>
-                            </div>
-                            <button type="button" id="generate-blog-btn" class="button">Gerar Códigos do Blog</button>
+                        <h2>Criar Nova Entrada de Blog</h2>
+                        <form id="blog-form" autocomplete="off" novalidate>
+                            <div class="form-group"> <label for="blog-title">Título da Entrada</label> <input type="text"
+                                    id="blog-title" required></div>
+                            <div class="form-group"> <label for="blog-description">Conteúdo</label> <textarea
+                                    id="blog-description" rows="5" required></textarea></div>
+                            <div class="form-group"> <label for="blog-publication-date">Data de Publicação</label> <input
+                                    type="date" id="blog-publication-date" required></div>
+                            <div class="form-group"><label for="blog-category">Categoria</label><input
+                                        type="text" id="blog-category" placeholder="Ex: Emprego, Habitação..."></div>
+                            <div class="form-group"><label for="blog-image-file-input">Carregar Imagem</label><input
+                                        type="file" id="blog-image-file-input" accept="image/png, image/jpeg, image/webp">
+                                </div>
+                            <button type="button" id="generate-blog-btn" class="button">Gerar Código do Blog</button>
+                            <button type="button" id="clear-blog-btn" class="button secondary"
+                                style="margin-left: 15px;">Limpar</button>
                         </form>
                     </div>
                 </div>
                 <div class="right-column">
                     <div class="live-preview-section">
-                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
-                            <h3>Pré-visualização do Artigo</h3>
-                            <div>
-                                <button id="desktop-view-btn"
-                                    style="padding: 5px 10px; font-size: 0.8em;">Desktop</button>
-                                <button id="mobile-view-btn" style="padding: 5px 10px; font-size: 0.8em;">Móvel</button>
-                            </div>
-                        </div>
+                        <h3>Pré-visualização da Entrada de Blog</h3>
                         <div id="live-preview-container-blog" class="live-preview-container">
-                            <div id="live-preview-card-blog"
-                                style="width:100%; max-width: 800px; text-align: left; padding: 20px;">
-                            </div>
+                            <div id="capture-area-blog"></div>
                         </div>
                     </div>
                     <div class="preview-section" style="margin-top:30px;">
-                        <h3>Códigos Gerados (Blog)</h3>
-                        <p><strong>1. Código para `blog.html` (Lista de Artigos)</strong></p>
-                        <textarea id="output-list-blog" class="output-box" rows="8" readonly></textarea>
-                        <p style="margin-top: 15px;"><strong>2. Código para o ficheiro do artigo (Ex:
-                                `artigos/nome.html`)</strong></p>
-                        <textarea id="output-full-blog" class="output-box" rows="8" readonly></textarea>
+                        <h3>Código HTML e SEO</h3>
+                        <textarea id="generated-code-blog" readonly></textarea>
                     </div>
                 </div>
             </div>
@@ -472,21 +499,23 @@
     </div>
 
     <script>
-        // Todo el JavaScript necesario para ambas pestañas
         document.addEventListener('DOMContentLoaded', () => {
-            // --- LÓGICA GENERAL DE LA INTERFAZ (PESTAÑAS, MODO OSCURO) ---
-            const tabButtons = document.querySelectorAll('.tab-button');
+            // Lógica para Tabs
+            const tabs = document.querySelectorAll('.tab-button');
             const tabContents = document.querySelectorAll('.tab-content');
-            tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    tabButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
+            const themeSwitch = document.getElementById('checkbox');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(item => item.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    const target = document.getElementById(`tab-${tab.dataset.tab}`);
                     tabContents.forEach(content => content.classList.remove('active'));
-                    document.getElementById(`tab-${button.dataset.tab}`).classList.add('active');
+                    target.classList.add('active');
                 });
             });
 
-            const themeSwitch = document.getElementById('checkbox');
             themeSwitch.addEventListener('change', () => {
                 const theme = themeSwitch.checked ? 'dark' : 'light';
                 document.documentElement.setAttribute('data-theme', theme);
@@ -498,243 +527,249 @@
                 if (currentTheme === 'dark') themeSwitch.checked = true;
             }
 
-            // --- LÓGICA PARA LA PESTAÑA DE ANÚNCIOS ---
-            const adElements = { postType: document.getElementById('post-type'), adIdNumber: document.getElementById('ad-id-number'), title: document.getElementById('title'), description: document.getElementById('description'), contact: document.getElementById('contact'), city: document.getElementById('city'), publicationDate: document.getElementById('publication-date'), imageFileInput: document.getElementById('image-file-input'), livePreviewCard: document.getElementById('live-preview-card-anuncio'), generatedCode: document.getElementById('generated-code-anuncio'), socialPostText: document.getElementById('social-post-text-anuncio'), copyHtmlBtn: document.getElementById('copy-html-ad-button'), copySocialBtn: document.getElementById('copy-social-ad-button'), generateBtn: document.getElementById('generate-ad-btn'), clearBtn: document.getElementById('clear-ad-btn'), form: document.getElementById('anuncios-form') };
+
+            const adElements = {
+                postType: document.getElementById('post-type'),
+                adIdNumber: document.getElementById('ad-id-number'),
+                title: document.getElementById('title'),
+                description: document.getElementById('description'),
+                contactType: document.getElementById('contact-type'),
+                contactValue: document.getElementById('contact-value'),
+                city: document.getElementById('city'),
+                publicationDate: document.getElementById('publication-date'),
+                imageFileInput: document.getElementById('image-file-input'),
+                captureArea: document.getElementById('capture-area'),
+                generatedCode: document.getElementById('generated-code-anuncio'),
+                generateBtn: document.getElementById('generate-ad-btn'),
+                clearBtn: document.getElementById('clear-ad-btn'),
+                form: document.getElementById('anuncios-form'),
+                downloadImageBtn: document.getElementById('download-image-btn')
+            };
             let adUploadedFile = { name: '', dataUrl: '' };
 
-            function setupAnuncios() {
-                // Todas las funciones de la pestaña de anuncios (getFormData, generateHtmlAndSeo, etc.)
-                // adaptadas para usar adElements y adUploadedFile
-                const toTitleCase = str => str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
-                const toCapitalizeCase = str => str ? str.charAt(0).toUpperCase() + str.slice(1).toLowerCase() : '';
+            const toTitleCase = str => str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+            const toCapitalizeCase = str => str ? str.charAt(0).toUpperCase() + str.slice(1).toLowerCase() : '';
 
-                const updateIdField = () => {
-                    const type = adElements.postType.value;
-                    const lastId = parseInt(localStorage.getItem(`lastId_${type}`) || '0');
-                    adElements.adIdNumber.placeholder = `Último ID para '${type}' foi ${lastId}. Introduce ${lastId} para gerar o ${lastId + 1}.`;
-                };
+            const toggleFields = () => {
+                document.querySelectorAll('#servico-fields, #habitacao-fields, #doacao-fields').forEach(f => f.classList.add('hidden'));
+                const fieldsToShow = document.getElementById(`${adElements.postType.value}-fields`);
+                if (fieldsToShow) fieldsToShow.classList.remove('hidden');
+                updateAllAdOutputs();
+            };
 
-                const toggleFields = () => {
-                    document.querySelectorAll('#servico-fields, #habitacao-fields, #doacao-fields').forEach(f => f.classList.add('hidden'));
-                    const fieldsToShow = document.getElementById(`${adElements.postType.value}-fields`);
-                    if (fieldsToShow) fieldsToShow.classList.remove('hidden');
-                    updateIdField();
-                    updateAllAdOutputs();
-                };
-
-                const clearForm = () => {
-                    const currentType = adElements.postType.value;
-                    adElements.form.reset();
-                    adElements.postType.value = currentType;
-                    adUploadedFile = { name: '', dataUrl: '' };
-                    toggleFields();
-                };
-
-                function updateAllAdOutputs() {
-                    const formData = getAdFormData();
-                    const { cardHTML, jsonLdScript } = generateAdHtmlAndSeo(formData);
-                    adElements.generatedCode.value = `\n${jsonLdScript}\n${cardHTML}\n`;
-                    adElements.livePreviewCard.innerHTML = cardHTML;
-                    adElements.socialPostText.value = generateAdSocialText(formData);
-                }
-
-                function getAdFormData() {
-                    const lastId = parseInt(adElements.adIdNumber.value || '0');
-                    const nextId = lastId + 1;
-                    return { type: adElements.postType.value, id: nextId.toString(), title: toTitleCase(adElements.title.value), description: adElements.description.value, contact: adElements.contact.value, city: toTitleCase(adElements.city.value), pubDate: adElements.publicationDate.value || new Date().toISOString().split('T')[0], image: adUploadedFile, serviceCategory: toCapitalizeCase(document.getElementById('service-category')?.value), propertyType: toCapitalizeCase(document.getElementById('property-type')?.value), itemType: toCapitalizeCase(document.getElementById('item-type')?.value) };
-                }
-
-                function generateAdHtmlAndSeo(data) {
-                    let cardIdPrefix = 'EMP', schemaType = 'JobPosting', cardTagText = 'Vaga de Emprego', cardTagClass = 'card-tag-emprego', dataAttributes = `data-publication-date="${data.pubDate}" data-city="${data.city}"`;
-                    let imagePathForCode = (data.type === 'habitacao' && data.image.name) ? `img_servicos/${data.image.name}` : '';
-
-                    switch (data.type) {
-                        case 'servico': cardIdPrefix = 'SER'; schemaType = 'Service'; cardTagText = data.serviceCategory || 'Serviço'; cardTagClass = 'card-tag-servico'; dataAttributes += ` data-service="${data.serviceCategory}"`; break;
-                        case 'habitacao': cardIdPrefix = 'HAB'; schemaType = 'Apartment'; cardTagText = data.propertyType || 'Habitação'; cardTagClass = 'card-tag-servico'; dataAttributes += ` data-type="${data.propertyType}"`; break;
-                        case 'doacao': cardIdPrefix = 'DOA'; schemaType = 'Demand'; cardTagText = 'Pedido de Artigos'; cardTagClass = 'card-tag-artigos'; dataAttributes += ` data-item-type="${data.itemType}"`; break;
-                    }
-
-                    const cardId = data.id ? `${cardIdPrefix}-${data.id.padStart(3, '0')}` : '';
-                    const contactHTML = data.contact.includes('@') ? `<p class="card-description">Email: <a href="mailto:${data.contact}">${data.contact}</a></p>` : (data.contact ? `<p class="card-description">Tel. <a href="tel:${data.contact.replace(/\s/g, '')}">${data.contact}</a></p>` : '');
-                    const imageHTMLForPreview = data.image.dataUrl ? `<div class="card-image-container"><img src="${data.image.dataUrl}" alt="${data.title}" class="card-image"></div>` : '';
-
-                    const cardHTML = `<div class="card-causa">${imageHTMLForPreview.replace(data.image.dataUrl, imagePathForCode)}<div class="card-header"><span class="card-tag ${cardTagClass}">${cardTagText}</span><span class="card-id">${cardId ? '#' + cardId : ''}</span></div><div class="card-content"><h3 class="card-title">${data.title}</h3><p class="card-description">${data.description.replace(/\n/g, '<br>')}</p>${contactHTML}</div></div>`;
-
-                    const schema = { "@context": "https://schema.org", "@type": schemaType, "name": data.title, "description": data.description, "identifier": cardId, "datePosted": data.pubDate };
-                    if (imagePathForCode) schema.image = `https://www.portugalapoia.com/${imagePathForCode}`;
-                    const jsonLdScript = `<script type="application/ld+json">\n${JSON.stringify(schema, null, 2)}\n<\/script>`;
-
-                    return { cardHTML: cardHTML.replace(data.image.dataUrl, imagePathForCode), jsonLdScript };
-                }
-
-                function generateAdSocialText(data) {
-                    let intro = '', hashtags = '#PortugalApoia';
-                    const cleanCity = data.city.replace(/\s/g, '');
-                    switch (data.type) {
-                        case 'emprego': intro = '📢 Nova Vaga de Emprego'; hashtags += ` #Emprego #${cleanCity} #Trabalho`; break;
-                        case 'servico': intro = '🔧 Novo Serviço Disponível'; hashtags += ` #Serviços #${cleanCity}`; break;
-                        case 'habitacao': intro = '🏠 Nova Habitação Disponível'; hashtags += ` #Habitação #${cleanCity} #Arrendar`; break;
-                        case 'doacao': intro = '❤️ Novo Pedido de Doação'; hashtags += ` #Doação #${cleanCity} #Solidariedade`; break;
-                    }
-                    const smartHashtags = data.title.toLowerCase().split(' ').filter(word => word.length > 3).map(word => `#${word}`).join(' ');
-                    return `${intro} em PortugalApoia!\n\n✨ ${data.title} em ${data.city}.\n\nEncontre mais detalhes na nossa página web!\n\n${hashtags} ${smartHashtags}`;
-                }
-
-                function validateAdForm() {
-                    let isValid = true;
-                    document.querySelectorAll('#anuncios-form [required]').forEach(input => {
-                        if (!input.value.trim()) { input.classList.add('invalid'); isValid = false; }
-                        else { input.classList.remove('invalid'); }
-                    });
-                    return isValid;
-                }
-
-                adElements.generateBtn.addEventListener('click', () => {
-                    if (!validateAdForm()) { alert("Por favor, preencha todos os campos obrigatórios."); return; }
-                    const type = adElements.postType.value;
-                    const lastId = adElements.adIdNumber.value;
-                    const nextId = parseInt(lastId || '0') + 1;
-                    localStorage.setItem(`lastId_${type}`, nextId);
-                    updateAllAdOutputs();
-                    let alertMessage = `ID ${nextId} gerado e guardado para a categoria '${type}'!`;
-                    if (type === 'habitacao' && adUploadedFile.name) {
-                        alertMessage += `\n\nIMPORTANTE: Não se esqueça de carregar o ficheiro "${adUploadedFile.name}" para a pasta /img_servicos/ do seu servidor.`;
-                    }
-                    alert(alertMessage);
-                    adElements.adIdNumber.value = '';
-                    updateIdField();
-                });
-
-                adElements.postType.addEventListener('change', toggleFields);
-                adElements.imageFileInput.addEventListener('change', e => {
-                    const file = e.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = e => { adUploadedFile = { name: file.name, dataUrl: e.target.result }; updateAllAdOutputs(); };
-                        reader.readAsDataURL(file);
-                    }
-                });
-                document.querySelectorAll('#anuncios-form input, #anuncios-form textarea').forEach(input => input.addEventListener('input', updateAllAdOutputs));
-                adElements.copyHtmlBtn.addEventListener('click', () => navigator.clipboard.writeText(adElements.generatedCode.value).then(() => alert('Código HTML do anúncio copiado!')));
-                adElements.copySocialBtn.addEventListener('click', () => navigator.clipboard.writeText(adElements.socialPostText.value).then(() => alert('Texto para redes sociais copiado!')));
-                adElements.clearBtn.addEventListener('click', clearForm);
+            const clearForm = () => {
+                adElements.form.reset();
+                adUploadedFile = { name: '', dataUrl: '' };
                 toggleFields();
+                adElements.captureArea.innerHTML = "";
+            };
+
+            function updateAllAdOutputs() {
+                const formData = getAdFormData();
+                if (!formData.title) {
+                    adElements.captureArea.innerHTML = "";
+                    adElements.generatedCode.value = "";
+                    return;
+                }
+                const { cardHTML, fullPreviewHTML, jsonLdScript } = generateAdHtmlAndSeo(formData);
+                adElements.generatedCode.value = `\n${jsonLdScript}\n${cardHTML}\n`;
+                adElements.captureArea.innerHTML = fullPreviewHTML;
             }
 
-            // --- LÓGICA PARA LA PESTAÑA DE BLOG ---
-            const blogElements = { title: document.getElementById('blog-title'), author: document.getElementById('blog-author'), date: document.getElementById('blog-date'), image: document.getElementById('blog-image'), video: document.getElementById('blog-video'), excerpt: document.getElementById('blog-excerpt'), content: document.getElementById('blog-content'), preview: document.getElementById('live-preview-card-blog'), outputList: document.getElementById('output-list-blog'), outputFull: document.getElementById('output-full-blog'), generateBtn: document.getElementById('generate-blog-btn'), desktopViewBtn: document.getElementById('desktop-view-btn'), mobileViewBtn: document.getElementById('mobile-view-btn'), livePreviewContainer: document.getElementById('live-preview-container-blog') };
-            let blogImageFile = { name: '', dataUrl: '' };
-
-            function setupBlog() {
-                const simpleMarkdown = (text) => {
-                    return text
-                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Negrita
-                        .replace(/\*(.*?)\*/g, '<em>$1</em>')     // Itálico
-                        .split('\n').map(p => `<p>${p}</p>`).join('');
+            function getAdFormData() {
+                const lastId = parseInt(adElements.adIdNumber.value || '0');
+                const nextId = lastId + 1;
+                return {
+                    type: adElements.postType.value,
+                    id: nextId.toString(),
+                    title: toTitleCase(adElements.title.value),
+                    description: adElements.description.value,
+                    contact: {
+                        type: adElements.contactType.value,
+                        value: adElements.contactValue.value
+                    },
+                    city: toTitleCase(adElements.city.value),
+                    pubDate: adElements.publicationDate.value || new Date().toISOString().split('T')[0],
+                    image: adUploadedFile,
+                    serviceCategory: toCapitalizeCase(document.getElementById('service-category')?.value),
+                    propertyType: toCapitalizeCase(document.getElementById('property-type')?.value),
+                    itemType: toCapitalizeCase(document.getElementById('item-type')?.value)
                 };
-
-                const getYoutubeEmbedUrl = (url) => {
-                    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-                    const match = url.match(regExp);
-                    return (match && match[2].length === 11) ? `https://www.youtube.com/embed/${match[2]}` : null;
-                }
-
-                const getVimeoEmbedUrl = (url) => {
-                    const regExp = /https?:\/\/(?:www\.|player\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|video\/|)(\d+)(?:$|\/|\?)/;
-                    const match = url.match(regExp);
-                    return match ? `https://player.vimeo.com/video/${match[3]}` : null;
-                }
-
-                function updateBlogPreview() {
-                    const title = blogElements.title.value;
-                    const author = blogElements.author.value;
-                    const date = new Date(blogElements.date.value || new Date()).toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' });
-                    const videoUrl = blogElements.video.value;
-                    let mediaHTML = '';
-
-                    if (videoUrl) {
-                        const youtubeUrl = getYoutubeEmbedUrl(videoUrl);
-                        const vimeoUrl = getVimeoEmbedUrl(videoUrl);
-                        if (youtubeUrl) {
-                            mediaHTML = `<div class="media-container video-responsive"><iframe src="${youtubeUrl}" frameborder="0" allowfullscreen></iframe></div>`;
-                        } else if (vimeoUrl) {
-                            mediaHTML = `<div class="media-container video-responsive"><iframe src="${vimeoUrl}" frameborder="0" allowfullscreen></iframe></div>`;
-                        }
-                    } else if (blogImageFile.dataUrl) {
-                        mediaHTML = `<div class="media-container"><img src="${blogImageFile.dataUrl}" alt="${title}"></div>`;
-                    }
-
-                    const content = simpleMarkdown(blogElements.content.value);
-
-                    blogElements.preview.innerHTML = `
-                <h1 class="article-title">${title}</h1>
-                <p class="post-meta">Por ${author} | ${date}</p>
-                <div class="blog-preview-content">
-                    ${mediaHTML}
-                    ${content}
-                </div>
-            `;
-                }
-
-                blogElements.image.addEventListener('change', e => {
-                    const file = e.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = e => {
-                            blogImageFile = { name: file.name, dataUrl: e.target.result };
-                            blogElements.video.value = ''; // Limpiar video si se sube imagen
-                            updateBlogPreview();
-                        };
-                        reader.readAsDataURL(file);
-                    }
-                });
-
-                document.querySelectorAll('#blog-form input, #blog-form textarea').forEach(el => el.addEventListener('input', updateBlogPreview));
-
-                blogElements.generateBtn.addEventListener('click', () => {
-                    const title = blogElements.title.value;
-                    const author = blogElements.author.value;
-                    const date = new Date(blogElements.date.value || new Date());
-                    const imagePath = blogImageFile.name ? `images/blog/${blogImageFile.name}` : '';
-                    const excerpt = blogElements.excerpt.value;
-                    const content = blogElements.content.value;
-                    const videoUrl = blogElements.video.value;
-                    const slug = title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
-                    const filename = `${slug}.html`;
-
-                    // Código para blog.html
-                    const listOutput = `<article class="blog-post-summary"><a href="artigos/${filename}" class="post-image-link"><img src="${imagePath}" alt="${title}" class="post-image"></a><div class="post-content"><p class="post-meta">Por <span class="post-author">${author}</span> | <span class="post-date">${date.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' })}</span></p><h2 class="post-title"><a href="artigos/${filename}">${title}</a></h2><p class="post-excerpt">${excerpt}</p><a href="artigos/${filename}" class="button button-primary" style="padding: 8px 20px;">Ler Mais</a></div></article>`;
-                    blogElements.outputList.value = listOutput;
-
-                    // Código para el archivo del artículo
-                    let mediaHTML = '';
-                    if (videoUrl) {
-                        const embedUrl = getYoutubeEmbedUrl(videoUrl) || getVimeoEmbedUrl(videoUrl);
-                        if (embedUrl) mediaHTML = `<div class="video-responsive"><iframe src="${embedUrl}" frameborder="0" allowfullscreen></iframe></div>`;
-                    } else if (imagePath) {
-                        mediaHTML = `<img src="../${imagePath}" alt="${title}" class="post-image">`;
-                    }
-
-                    const fullOutput = `<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${title} - PortugalApoia Blog</title><meta name="description" content="${excerpt}"><link rel="stylesheet" href="../style.css"><script type="application/ld+json">${JSON.stringify({ "@context": "https://schema.org", "@type": "BlogPosting", "headline": title, "image": imagePath ? `https://www.portugalapoia.com/${imagePath}` : '', "author": { "@type": "Person", "name": author }, "publisher": { "@type": "Organization", "name": "PortugalApoia", "logo": { "@type": "ImageObject", "url": "https://www.portugalapoia.com/images/favicon.ico.png" } }, "datePublished": date.toISOString() }, null, 2)}<\/script></head><body><main><article class="container"><header class="article-header"><h1 class="article-title">${title}</h1><p class="post-meta">Por ${author} | ${date.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' })}</p></header><div class="article-content">${mediaHTML}${simpleMarkdown(content)}</div></article></main></body></html>`;
-                    blogElements.outputFull.value = fullOutput;
-
-                    if (blogImageFile.name) {
-                        alert(`Códigos gerados!\n\nIMPORTANTE: Não se esqueça de carregar o ficheiro "${blogImageFile.name}" para a pasta /images/blog/ do seu servidor.`);
-                    } else {
-                        alert('Códigos gerados!');
-                    }
-                });
-
-                blogElements.desktopViewBtn.addEventListener('click', () => { blogElements.livePreviewContainer.style.maxWidth = '100%'; });
-                blogElements.mobileViewBtn.addEventListener('click', () => { blogElements.livePreviewContainer.style.maxWidth = '414px'; });
             }
 
-            // INICIALIZACIÓN
-            setupAnuncios();
-            setupBlog();
+            function generateAdHtmlAndSeo(data) {
+                let cardIdPrefix = '', schemaType = '', cardTagText = '', cardTagClass = '', dataAttributes = `data-publication-date="${data.pubDate}" data-city="${data.city}"`, websiteUrl = '', shareIntro = '';
+
+                switch (data.type) {
+                    case 'servico': cardIdPrefix = 'SER'; schemaType = 'Service'; cardTagText = data.serviceCategory || 'Serviço'; cardTagClass = 'card-tag-servico'; websiteUrl = 'https://www.portugalapoia.com/servicos.html'; shareIntro = 'Confira este serviço'; break;
+                    case 'habitacao': cardIdPrefix = 'HAB'; schemaType = 'Apartment'; cardTagText = data.propertyType || 'Habitação'; cardTagClass = 'card-tag-habitacao'; websiteUrl = 'https://www.portugalapoia.com/habitacao.html'; shareIntro = 'Confira esta habitação'; break;
+                    case 'doacao': cardIdPrefix = 'DOA'; schemaType = 'Demand'; cardTagText = 'Pedido de Artigos'; cardTagClass = 'card-tag-artigos'; websiteUrl = 'https://www.portugalapoia.com/doacoes.html'; shareIntro = 'Confira este pedido de doação'; break;
+                    default: cardIdPrefix = 'EMP'; schemaType = 'JobPosting'; cardTagText = 'Vaga de Emprego'; cardTagClass = 'card-tag-emprego'; websiteUrl = 'https://www.portugalapoia.com/empregos.html'; shareIntro = 'Confira esta vaga de emprego'; break;
+                }
+
+                const cardId = data.id ? `${cardIdPrefix}-${data.id.padStart(3, '0')}` : '';
+                let contactHTML = '';
+                if(data.contact.value){
+                    if(data.contact.type === 'email'){
+                        contactHTML = `<p class="card-description">Email: <a href="mailto:${data.contact.value}">${data.contact.value}</a></p>`;
+                    } else {
+                        contactHTML = `<p class="card-description">Tel. <a href="tel:${data.contact.value.replace(/\s/g, '')}">${data.contact.value}</a></p>`;
+                    }
+                }
+
+                const imageHTMLForPreview = data.image.dataUrl ? `<div class="card-image-container"><img src="${data.image.dataUrl}" alt="${data.title}" class="card-image"></div>` : '';
+                let imagePathForCode = (data.type === 'habitacao' && data.image.name) ? `img_servicos/${data.image.name}` : '';
+                const imageHTMLForCode = imagePathForCode ? `<div class="card-image-container"><img src="${imagePathForCode}" alt="${data.title}" class="card-image"></div>` : '';
+
+                const shareText = encodeURIComponent(`${shareIntro}: "${data.title}" em ${data.city}.`);
+                const encodedWebsiteUrl = encodeURIComponent(websiteUrl);
+                const instagramProfileUrl = 'https://www.instagram.com/portugalapoia';
+
+                const shareButtonsHTML = `
+                    <div class="card-share">
+                        <h4 class="card-share-title">Partilhar</h4>
+                        <div class="card-share-buttons">
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=${encodedWebsiteUrl}&quote=${shareText}" target="_blank" title="Partilhar no Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://api.whatsapp.com/send?text=${shareText}%20Veja%20mais%20em:%20${encodedWebsiteUrl}" target="_blank" title="Partilhar no WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                            <a href="${instagramProfileUrl}" target="_blank" title="Visitar Instagram"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>`;
+                
+                const visitWebsiteHTML = `
+                    <div class="card-footer-link">
+                        <a href="${websiteUrl}" target="_blank">Veja mais em PortugalApoia.com</a>
+                    </div>`;
+
+                const cardHTML = `<div class="card-causa" ${dataAttributes}>${imageHTMLForCode}<div class="card-header"><span class="card-tag ${cardTagClass}">${cardTagText}</span><span class="card-id">#${cardId}</span></div><div class="card-content"><h3 class="card-title">${data.title}</h3><p class="card-description">${data.description.replace(/\n/g, '<br>')}</p>${contactHTML}${shareButtonsHTML}</div>${visitWebsiteHTML}</div>`;
+                const fullPreviewHTML = `<div class="card-causa" ${dataAttributes}>${imageHTMLForPreview}<div class="card-header"><span class="card-tag ${cardTagClass}">${cardTagText}</span><span class="card-id">#${cardId}</span></div><div class="card-content"><h3 class="card-title">${data.title}</h3><p class="card-description">${data.description.replace(/\n/g, '<br>')}</p>${contactHTML}${shareButtonsHTML}</div>${visitWebsiteHTML}</div>`;
+
+                const schema = { "@context": "https://schema.org", "@type": schemaType, "name": data.title, "description": data.description, "identifier": cardId, "datePosted": data.pubDate };
+                if (imagePathForCode) schema.image = `https://www.portugalapoia.com/${imagePathForCode}`;
+                const jsonLdScript = `<script type="application/ld+json">\n${JSON.stringify(schema, null, 2)}\n<\/script>`;
+
+                return { cardHTML, fullPreviewHTML, jsonLdScript };
+            }
+
+            adElements.generateBtn.addEventListener('click', updateAllAdOutputs);
+            adElements.postType.addEventListener('change', toggleFields);
+            adElements.imageFileInput.addEventListener('change', e => {
+                const file = e.target.files[0]; if (file) { const reader = new FileReader(); reader.onload = e => { adUploadedFile = { name: file.name, dataUrl: e.target.result }; updateAllAdOutputs(); }; reader.readAsDataURL(file); }
+            });
+            document.querySelectorAll('#anuncios-form input, #anuncios-form textarea, #anuncios-form select').forEach(input => input.addEventListener('input', updateAllAdOutputs));
+            adElements.clearBtn.addEventListener('click', clearForm);
+
+            adElements.downloadImageBtn.addEventListener('click', function () {
+                const elementToCapture = adElements.captureArea;
+                if (!elementToCapture.querySelector('.card-causa')) { alert("Por favor, gere primeiro uma pré-visualização do anúncio."); return; }
+                html2canvas(elementToCapture, { useCORS: true, scale: 3, backgroundColor: '#FFFFFF' }).then(capturedCanvas => {
+                    const TARGET_WIDTH = 1080, TARGET_HEIGHT = 1080;
+                    const finalCanvas = document.createElement('canvas');
+                    finalCanvas.width = TARGET_WIDTH; finalCanvas.height = TARGET_HEIGHT;
+                    const ctx = finalCanvas.getContext('2d');
+                    ctx.fillStyle = 'white'; ctx.fillRect(0, 0, TARGET_WIDTH, TARGET_HEIGHT);
+                    const ratio = Math.min((TARGET_WIDTH * 0.9) / capturedCanvas.width, (TARGET_HEIGHT * 0.9) / capturedCanvas.height);
+                    const newWidth = capturedCanvas.width * ratio;
+                    const newHeight = capturedCanvas.height * ratio;
+                    const x = (TARGET_WIDTH - newWidth) / 2;
+                    const y = (TARGET_HEIGHT - newHeight) / 2;
+                    ctx.drawImage(capturedCanvas, x, y, newWidth, newHeight);
+                    const link = document.createElement('a');
+                    link.href = finalCanvas.toDataURL('image/jpeg', 0.9);
+                    link.download = 'anuncio-instagram.jpg';
+                    document.body.appendChild(link); link.click(); document.body.removeChild(link);
+                }).catch(error => console.error('Oops, algo correu mal!', error));
+            });
+            toggleFields();
+
+            // --- Lógica para o Blog ---
+            const blogElements = {
+                title: document.getElementById('blog-title'),
+                description: document.getElementById('blog-description'),
+                publicationDate: document.getElementById('blog-publication-date'),
+                category: document.getElementById('blog-category'),
+                imageFileInput: document.getElementById('blog-image-file-input'),
+                captureArea: document.getElementById('capture-area-blog'),
+                generatedCode: document.getElementById('generated-code-blog'),
+                generateBtn: document.getElementById('generate-blog-btn'),
+                clearBtn: document.getElementById('clear-blog-btn'),
+                form: document.getElementById('blog-form')
+            };
+
+            let blogUploadedFile = { name: '', dataUrl: '' };
+
+            const clearBlogForm = () => {
+                blogElements.form.reset();
+                blogUploadedFile = { name: '', dataUrl: '' };
+                blogElements.captureArea.innerHTML = "";
+                blogElements.generatedCode.value = "";
+            };
+
+            const formatDate = (dateString) => {
+                if (!dateString) return '';
+                const date = new Date(dateString);
+                // Adding timezone offset to prevent date from changing
+                const adjustedDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+                const day = adjustedDate.getDate().toString().padStart(2, '0');
+                const month = (adjustedDate.getMonth() + 1).toString().padStart(2, '0');
+                const year = adjustedDate.getFullYear();
+                return `${day}/${month}/${year}`;
+            };
+            
+            function updateAllBlogOutputs() {
+                const formData = getBlogFormData();
+                 if (!formData.title) {
+                    blogElements.captureArea.innerHTML = "";
+                    blogElements.generatedCode.value = "";
+                    return;
+                }
+                const { cardHTML, fullPreviewHTML, jsonLdScript } = generateBlogHtmlAndSeo(formData);
+                blogElements.generatedCode.value = `\n${jsonLdScript}\n${cardHTML}\n`;
+                blogElements.captureArea.innerHTML = fullPreviewHTML;
+            }
+
+            function getBlogFormData() {
+                 return {
+                    title: toTitleCase(blogElements.title.value),
+                    description: blogElements.description.value,
+                    pubDate: blogElements.publicationDate.value || new Date().toISOString().split('T')[0],
+                    image: blogUploadedFile,
+                    category: toCapitalizeCase(blogElements.category.value)
+                };
+            }
+
+            function generateBlogHtmlAndSeo(data) {
+                const cardTagText = data.category || 'Blog';
+                const cardTagClass = 'card-tag-blog';
+                const formattedDate = formatDate(data.pubDate);
+
+                const imageHTMLForPreview = data.image.dataUrl ? `<div class="card-image-container"><img src="${data.image.dataUrl}" alt="${data.title}" class="card-image"></div>` : '';
+                let imagePathForCode = data.image.name ? `img_servicos/${data.image.name}` : '';
+                const imageHTMLForCode = imagePathForCode ? `<div class="card-image-container"><img src="${imagePathForCode}" alt="${data.title}" class="card-image"></div>` : '';
+                 const cardHeaderHTML = `
+                    <div class="card-header">
+                        <span class="card-tag ${cardTagClass}">${cardTagText}</span>
+                        <span class="card-date">${formattedDate}</span>
+                    </div>`;
+
+                const cardHTML = `<div class="card-causa">${imageHTMLForCode}${cardHeaderHTML}<div class="card-content"><h3 class="card-title">${data.title}</h3><p class="card-description">${data.description.replace(/\n/g, '<br>')}</p></div></div>`;
+                const fullPreviewHTML = `<div class="card-causa">${imageHTMLForPreview}${cardHeaderHTML}<div class="card-content"><h3 class="card-title">${data.title}</h3><p class="card-description">${data.description.replace(/\n/g, '<br>')}</p></div></div>`;
+                
+                const schema = { "@context": "https://schema.org", "@type": "BlogPosting", "headline": data.title, "articleBody": data.description, "datePublished": data.pubDate, "author": { "@type": "Organization", "name": "PortugalApoia" }};
+                if(imagePathForCode) schema.image = `https://www.portugalapoia.com/${imagePathForCode}`;
+
+                const jsonLdScript = `<script type="application/ld+json">\n${JSON.stringify(schema, null, 2)}\n<\/script>`;
+
+                return { cardHTML, fullPreviewHTML, jsonLdScript };
+            }
+
+            blogElements.generateBtn.addEventListener('click', updateAllBlogOutputs);
+            blogElements.imageFileInput.addEventListener('change', e => {
+                const file = e.target.files[0]; if (file) { const reader = new FileReader(); reader.onload = e => { blogUploadedFile = { name: file.name, dataUrl: e.target.result }; updateAllBlogOutputs(); }; reader.readAsDataURL(file); }
+            });
+            document.querySelectorAll('#blog-form input, #blog-form textarea').forEach(input => input.addEventListener('input', updateAllBlogOutputs));
+            blogElements.clearBtn.addEventListener('click', clearBlogForm);
         });
     </script>
-
 </body>
 
 </html>
