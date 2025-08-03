@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,7 +16,6 @@
             --color-border: #dee2e6;
             --shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
         }
-
         html[data-theme='dark'] {
             --color-primary: #4e9ad1;
             --color-accent: #2ecc71;
@@ -26,7 +24,6 @@
             --color-text: #e0e0e0;
             --color-border: #444;
         }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--color-background);
@@ -35,348 +32,60 @@
             margin: 0;
             padding: 20px;
         }
-
-        .container {
-            max-width: 1800px;
-            margin: 0 auto;
-        }
-
-        h1,
-        h2,
-        h3,
-        h4 {
-            color: var(--color-primary);
-        }
-
-        .tabs {
-            display: flex;
-            border-bottom: 1px solid var(--color-border);
-            margin-bottom: 20px;
-        }
-
-        .tab-button {
-            padding: 10px 20px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            font-size: 1.1em;
-            color: var(--color-text);
-            border-bottom: 3px solid transparent;
-        }
-
-        .tab-button.active {
-            border-bottom-color: var(--color-accent);
-            font-weight: bold;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .main-grid {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 30px;
-            align-items: start;
-        }
-
-        .form-section,
-        .preview-section,
-        .live-preview-section {
-            background-color: var(--color-surface);
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: var(--shadow);
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        .form-group-inline {
-            display: flex;
-            gap: 10px;
-            align-items: flex-end;
-        }
-
-        .form-group-inline > div {
-            flex: 1;
-        }
-
-        input,
-        select,
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--color-border);
-            border-radius: 8px;
-            font-size: 1rem;
-            box-sizing: border-box;
-            background-color: var(--color-background);
-            color: var(--color-text);
-        }
-
-        .button {
-            background-color: var(--color-accent);
-            color: #fff;
-            padding: 12px 28px;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 700;
-        }
-
-        .button.secondary {
-            background-color: #6c757d;
-        }
-
-        #generated-code {
-            width: 100%;
-            min-height: 150px;
-            white-space: pre-wrap;
-            font-family: monospace;
-            font-size: 0.9em;
-            background-color: #2b3035;
-            color: #f8f8f2;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .live-preview-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 400px;
-            background-color: var(--color-background);
-            padding: 20px;
-            border-radius: 8px;
-        }
-
-        #capture-area {
-            padding: 20px;
-            background-color: #FFFFFF;
-            border-radius: 8px;
-        }
-
-        .card-causa {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: var(--shadow);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            max-width: 300px;
-            font-family: 'Roboto', sans-serif;
-            color: var(--color-text);
-            border: 1px solid var(--color-border);
-        }
-
-        .card-image-container {
-            width: 100%;
-            padding-top: 75%;
-            position: relative;
-            background-color: #f0f0f0;
-        }
-
-        .card-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .card-header {
-            padding: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .card-content {
-            padding: 0 16px 16px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card-title {
-            font-size: 1.25rem;
-            margin: 0 0 10px 0;
-            color: var(--color-primary);
-        }
-
-        .card-description {
-            margin: 0;
-            font-size: 0.95rem;
-            flex-grow: 1;
-        }
-
-        .card-tag {
-            color: white;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 700;
-        }
-
-        .card-tag-servico {
-            background-color: #3498db;
-        }
-
-        .card-tag-emprego {
-            background-color: #e67e22;
-        }
-
-        .card-tag-artigos {
-            background-color: #9b59b6;
-        }
-        .card-tag-habitacao {
-            background-color: #27ae60;
-        }
-        .card-tag-blog {
-            background-color: #f1c40f;
-        }
-        
-        .card-id {
-            font-size: 0.9rem;
-            color: var(--color-primary);
-            background-color: var(--color-background);
-            padding: 3px 8px;
-            border-radius: 15px;
-        }
-        .card-date {
-            font-size: 0.8rem;
-            color: #6c757d;
-        }
-        .card-share {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid var(--color-border);
-            text-align: center;
-        }
-
-        .card-share-title {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--color-primary);
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .card-share-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .card-share-buttons a {
-            font-size: 1.6rem;
-            color: var(--color-primary);
-            transition: transform 0.2s ease, color 0.2s ease;
-        }
-
-        .card-share-buttons a:hover {
-            color: var(--color-accent);
-            transform: scale(1.1);
-        }
-
-        .card-footer-link {
-            padding: 12px 16px;
-            background-color: var(--color-background);
-            text-align: center;
-            border-top: 1px solid var(--color-border);
-        }
-
-        .card-footer-link a {
-            text-decoration: none;
-            color: var(--color-primary);
-            font-weight: 700;
-            font-size: 0.9rem;
-            transition: color 0.3s ease;
-        }
-
-        .card-footer-link a:hover {
-            color: var(--color-accent);
-        }
-        /* Dark Mode Toggle */
-        .theme-switch-wrapper {
-            display: flex;
-            align-items: center;
-            position: absolute;
-            top: 20px;
-            right: 20px;
-        }
-
-        .theme-switch {
-            display: inline-block;
-            height: 34px;
-            position: relative;
-            width: 60px;
-        }
-
-        .theme-switch input {
-            display: none;
-        }
-
-        .slider {
-            background-color: #ccc;
-            bottom: 0;
-            cursor: pointer;
-            left: 0;
-            position: absolute;
-            right: 0;
-            top: 0;
-            transition: .4s;
-        }
-
-        .slider:before {
-            background-color: #fff;
-            bottom: 4px;
-            content: "";
-            height: 26px;
-            left: 4px;
-            position: absolute;
-            transition: .4s;
-            width: 26px;
-        }
-
-        input:checked+.slider {
-            background-color: var(--color-accent);
-        }
-
-        input:checked+.slider:before {
-            transform: translateX(26px);
-        }
-
-        .slider.round {
-            border-radius: 34px;
-        }
-
-        .slider.round:before {
-            border-radius: 50%;
-        }
+        .container { max-width: 1800px; margin: 0 auto; }
+        h1, h2, h3, h4 { color: var(--color-primary); }
+        .tabs { display: flex; border-bottom: 1px solid var(--color-border); margin-bottom: 20px; }
+        .tab-button { padding: 10px 20px; cursor: pointer; background: none; border: none; font-size: 1.1em; color: var(--color-text); border-bottom: 3px solid transparent; }
+        .tab-button.active { border-bottom-color: var(--color-accent); font-weight: bold; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .main-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; align-items: start; }
+        .form-section, .preview-section, .live-preview-section { background-color: var(--color-surface); padding: 25px; border-radius: 8px; box-shadow: var(--shadow); }
+        .form-group { margin-bottom: 15px; }
+        .form-group-inline { display: flex; gap: 10px; align-items: flex-end; }
+        .form-group-inline > div { flex: 1; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box; background-color: var(--color-background); color: var(--color-text); }
+        .button { background-color: var(--color-accent); color: #fff; padding: 12px 28px; border: none; border-radius: 50px; cursor: pointer; font-size: 1rem; font-weight: 700; }
+        .button.secondary { background-color: #6c757d; }
+        #generated-code, #generated-hashtags { width: 100%; min-height: 150px; white-space: pre-wrap; font-family: monospace; font-size: 0.9em; background-color: #2b3035; color: #f8f8f2; }
+        .hidden { display: none; }
+        .live-preview-container { display: flex; justify-content: center; align-items: center; min-height: 400px; background-color: var(--color-background); padding: 20px; border-radius: 8px; }
+        #capture-area { padding: 20px; background-color: #FFFFFF; border-radius: 8px; }
+        .card-causa { background-color: #fff; border-radius: 8px; box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column; width: 100%; max-width: 300px; font-family: 'Roboto', sans-serif; color: var(--color-text); border: 1px solid var(--color-border); }
+        .card-image-container { width: 100%; padding-top: 75%; position: relative; background-color: #f0f0f0; }
+        .card-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+        .card-header { padding: 16px; display: flex; justify-content: space-between; align-items: center; }
+        .card-content { padding: 0 16px 16px; flex-grow: 1; display: flex; flex-direction: column; }
+        .card-title { font-size: 1.25rem; margin: 0 0 10px 0; color: var(--color-primary); }
+        .card-description { margin: 0 0 16px 0; font-size: 0.95rem; flex-grow: 1; }
+        .card-tag { color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
+        .card-tag-servico { background-color: #3498db; }
+        .card-tag-emprego { background-color: #e67e22; }
+        .card-tag-artigos { background-color: #9b59b6; }
+        .card-tag-habitacao { background-color: #27ae60; }
+        .card-tag-blog { background-color: #f1c40f; }
+        .card-id { font-size: 0.9rem; color: var(--color-primary); background-color: var(--color-background); padding: 3px 8px; border-radius: 15px; }
+        .card-date { font-size: 0.8rem; color: #6c757d; }
+        .card-share { margin-top: auto; padding-top: 15px; border-top: 1px solid var(--color-border); text-align: center; }
+        .card-share-buttons { display: flex; justify-content: center; gap: 20px; }
+        .card-share-buttons a { font-size: 1.6rem; color: var(--color-primary); transition: transform 0.2s ease, color 0.2s ease; }
+        .card-share-buttons a:hover { color: var(--color-accent); transform: scale(1.1); }
+        .theme-switch-wrapper { display: flex; align-items: center; position: absolute; top: 20px; right: 20px; }
+        .theme-switch { display: inline-block; height: 34px; position: relative; width: 60px; }
+        .theme-switch input { display: none; }
+        .slider { background-color: #ccc; bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s; }
+        .slider:before { background-color: #fff; bottom: 4px; content: ""; height: 26px; left: 4px; position: absolute; transition: .4s; width: 26px; }
+        input:checked+.slider { background-color: var(--color-accent); }
+        input:checked+.slider:before { transform: translateX(26px); }
+        .slider.round { border-radius: 34px; }
+        .slider.round:before { border-radius: 50%; }
     </style>
 </head>
-
 <body>
     <div class="theme-switch-wrapper">
-        <label class="theme-switch" for="checkbox"><input type="checkbox" id="checkbox" />
-            <div class="slider round"></div>
-        </label>
+        <label class="theme-switch" for="checkbox"><input type="checkbox" id="checkbox" /><div class="slider round"></div></label>
         <em style="margin-left: 10px;">Modo Oscuro</em>
     </div>
-
     <div class="container">
         <h1>Painel de Controlo Unificado</h1>
         <div class="tabs">
@@ -389,72 +98,43 @@
                     <div class="form-section">
                         <h2>Criar Novo Anúncio</h2>
                         <form id="anuncios-form" autocomplete="off" novalidate>
-                            <div class="form-group"> <label for="post-type">Tipo de Anúncio</label> <select
-                                    id="post-type">
-                                    <option value="emprego">Vaga de Emprego</option>
-                                    <option value="servico">Serviço Técnico</option>
-                                    <option value="habitacao">Habitação</option>
-                                    <option value="doacao">Pedido de Doação</option>
-                                </select> </div>
-                            <div class="form-group"> <label for="ad-id-number">Introduza o último ID para gerar o
-                                    seguinte</label> <input type="number" id="ad-id-number" required
-                                    placeholder="Ex: se o último foi 24, introduza 24"> </div>
-                            <div class="form-group"> <label for="title">Título do Anúncio</label> <input type="text"
-                                    id="title" required></div>
-                            <div class="form-group"> <label for="description">Descrição</label> <textarea
-                                    id="description" rows="3" required></textarea></div>
+                            <div class="form-group"><label for="post-type">Tipo de Anúncio</label><select id="post-type"><option value="emprego">Vaga de Emprego</option><option value="servico">Serviço Técnico</option><option value="habitacao">Habitação</option><option value="doacao">Pedido de Doação</option></select></div>
+                            <div class="form-group"><label for="ad-id-number">Introduza o último ID para gerar o seguinte</label><input type="number" id="ad-id-number" required placeholder="Ex: se o último foi 24, introduza 24"></div>
+                            <div class="form-group"><label for="title">Título do Anúncio</label><input type="text" id="title" required></div>
+                            <div class="form-group"><label for="description">Descrição</label><textarea id="description" rows="3" required></textarea></div>
                             <div class="form-group form-group-inline">
-                                <div style="flex: 0 0 150px;">
-                                    <label for="contact-type">Tipo de Contacto</label>
-                                    <select id="contact-type">
-                                        <option value="telefone">Telefone</option>
-                                        <option value="email">Email</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label for="contact-value">Contacto</label>
-                                    <input type="text" id="contact-value" required>
-                                </div>
+                                <div style="flex: 0 0 150px;"><label for="contact-type">Tipo de Contacto</label><select id="contact-type"><option value="telefone">Telefone</option><option value="email">Email</option></select></div>
+                                <div><label for="contact-value">Contacto</label><input type="text" id="contact-value" required></div>
                             </div>
-                            <div class="form-group"> <label for="publication-date">Data</label> <input type="date"
-                                    id="publication-date" required></div>
-                            <div class="form-group"> <label for="city">Cidade</label> <input type="text" id="city"
-                                    required></div>
-                            <div id="servico-fields" class="hidden">
-                                <div class="form-group"><label for="service-category">Categoria</label><input
-                                        type="text" id="service-category"></div>
-                            </div>
-                            <div id="doacao-fields" class="hidden">
-                                <div class="form-group"><label for="item-type">Artigo</label><input type="text"
-                                        id="item-type"></div>
-                            </div>
-                            <div id="habitacao-fields" class="hidden">
-                                <div class="form-group"><label for="property-type">Imóvel</label><input type="text"
-                                        id="property-type"></div>
-                                <div class="form-group"><label for="image-file-input">Carregar Imagem</label><input
-                                        type="file" id="image-file-input" accept="image/png, image/jpeg, image/webp">
-                                </div>
-                            </div>
+                            <div class="form-group"><label for="publication-date">Data</label><input type="date" id="publication-date" required></div>
+                            <div class="form-group"><label for="city">Cidade</label><input type="text" id="city" required></div>
+                            <div id="servico-fields" class="hidden"><div class="form-group"><label for="service-category">Categoria</label><input type="text" id="service-category"></div></div>
+                            <div id="doacao-fields" class="hidden"><div class="form-group"><label for="item-type">Artigo</label><input type="text" id="item-type"></div></div>
+                            <div id="habitacao-fields" class="hidden"><div class="form-group"><label for="property-type">Imóvel</label><input type="text" id="property-type"></div><div class="form-group"><label for="image-file-input">Carregar Imagem</label><input type="file" id="image-file-input" accept="image/png, image/jpeg, image/webp"></div></div>
                             <button type="button" id="generate-ad-btn" class="button">Gerar Código do Anúncio</button>
-                            <button type="button" id="clear-ad-btn" class="button secondary"
-                                style="margin-left: 15px;">Limpar</button>
+                            <button type="button" id="clear-ad-btn" class="button secondary" style="margin-left: 15px;">Limpar</button>
                         </form>
                     </div>
                 </div>
                 <div class="right-column">
                     <div class="live-preview-section">
                         <h3>Pré-visualização do Anúncio</h3>
-                        <div id="live-preview-container-anuncio" class="live-preview-container">
-                            <div id="capture-area"></div>
-                        </div>
-                        <button type="button" id="download-image-btn" class="button"
-                            style="width: 100%; margin-top: 20px;">
-                            Guardar pré-visualização para Instagram (JPG)
-                        </button>
+                        <div id="live-preview-container-anuncio" class="live-preview-container"><div id="capture-area"></div></div>
+                        <button type="button" id="download-image-btn" class="button" style="width: 100%; margin-top: 20px;">Guardar pré-visualização para Instagram (JPG)</button>
                     </div>
                     <div class="preview-section" style="margin-top:30px;">
-                        <h3>Código HTML e SEO</h3>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3>Código HTML e SEO</h3>
+                            <button type="button" id="copy-code-btn" class="button secondary" style="padding: 5px 15px; font-size: 0.8em;">Copiar</button>
+                        </div>
                         <textarea id="generated-code-anuncio" readonly></textarea>
+                    </div>
+                    <div class="preview-section" style="margin-top:30px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <h3>Hashtags para Instagram</h3>
+                            <button type="button" id="copy-hashtags-btn" class="button secondary" style="padding: 5px 15px; font-size: 0.8em;">Copiar</button>
+                        </div>
+                        <textarea id="generated-hashtags" readonly></textarea>
                     </div>
                 </div>
             </div>
@@ -465,32 +145,26 @@
                     <div class="form-section">
                         <h2>Criar Nova Entrada de Blog</h2>
                         <form id="blog-form" autocomplete="off" novalidate>
-                            <div class="form-group"> <label for="blog-title">Título da Entrada</label> <input type="text"
-                                    id="blog-title" required></div>
-                            <div class="form-group"> <label for="blog-description">Conteúdo</label> <textarea
-                                    id="blog-description" rows="5" required></textarea></div>
-                            <div class="form-group"> <label for="blog-publication-date">Data de Publicação</label> <input
-                                    type="date" id="blog-publication-date" required></div>
-                            <div class="form-group"><label for="blog-category">Categoria</label><input
-                                        type="text" id="blog-category" placeholder="Ex: Emprego, Habitação..."></div>
-                            <div class="form-group"><label for="blog-image-file-input">Carregar Imagem</label><input
-                                        type="file" id="blog-image-file-input" accept="image/png, image/jpeg, image/webp">
-                                </div>
+                            <div class="form-group"><label for="blog-title">Título da Entrada</label><input type="text" id="blog-title" required></div>
+                            <div class="form-group"><label for="blog-description">Conteúdo</label><textarea id="blog-description" rows="5" required></textarea></div>
+                            <div class="form-group"><label for="blog-publication-date">Data de Publicação</label><input type="date" id="blog-publication-date" required></div>
+                            <div class="form-group"><label for="blog-category">Categoria</label><input type="text" id="blog-category" placeholder="Ex: Emprego, Habitação..."></div>
+                            <div class="form-group"><label for="blog-image-file-input">Carregar Imagem</label><input type="file" id="blog-image-file-input" accept="image/png, image/jpeg, image/webp"></div>
                             <button type="button" id="generate-blog-btn" class="button">Gerar Código do Blog</button>
-                            <button type="button" id="clear-blog-btn" class="button secondary"
-                                style="margin-left: 15px;">Limpar</button>
+                            <button type="button" id="clear-blog-btn" class="button secondary" style="margin-left: 15px;">Limpar</button>
                         </form>
                     </div>
                 </div>
                 <div class="right-column">
                     <div class="live-preview-section">
                         <h3>Pré-visualização da Entrada de Blog</h3>
-                        <div id="live-preview-container-blog" class="live-preview-container">
-                            <div id="capture-area-blog"></div>
-                        </div>
+                        <div id="live-preview-container-blog" class="live-preview-container"><div id="capture-area-blog"></div></div>
                     </div>
                     <div class="preview-section" style="margin-top:30px;">
-                        <h3>Código HTML e SEO</h3>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                           <h3>Código HTML e SEO</h3>
+                           <button type="button" id="copy-blog-code-btn" class="button secondary" style="padding: 5px 15px; font-size: 0.8em;">Copiar</button>
+                        </div>
                         <textarea id="generated-code-blog" readonly></textarea>
                     </div>
                 </div>
@@ -500,7 +174,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Lógica para Tabs
             const tabs = document.querySelectorAll('.tab-button');
             const tabContents = document.querySelectorAll('.tab-content');
             const themeSwitch = document.getElementById('checkbox');
@@ -509,7 +182,6 @@
                 tab.addEventListener('click', () => {
                     tabs.forEach(item => item.classList.remove('active'));
                     tab.classList.add('active');
-
                     const target = document.getElementById(`tab-${tab.dataset.tab}`);
                     tabContents.forEach(content => content.classList.remove('active'));
                     target.classList.add('active');
@@ -527,7 +199,6 @@
                 if (currentTheme === 'dark') themeSwitch.checked = true;
             }
 
-
             const adElements = {
                 postType: document.getElementById('post-type'),
                 adIdNumber: document.getElementById('ad-id-number'),
@@ -540,6 +211,7 @@
                 imageFileInput: document.getElementById('image-file-input'),
                 captureArea: document.getElementById('capture-area'),
                 generatedCode: document.getElementById('generated-code-anuncio'),
+                generatedHashtags: document.getElementById('generated-hashtags'),
                 generateBtn: document.getElementById('generate-ad-btn'),
                 clearBtn: document.getElementById('clear-ad-btn'),
                 form: document.getElementById('anuncios-form'),
@@ -562,18 +234,70 @@
                 adUploadedFile = { name: '', dataUrl: '' };
                 toggleFields();
                 adElements.captureArea.innerHTML = "";
+                adElements.generatedCode.value = "";
+                adElements.generatedHashtags.value = "";
             };
+
+            function generateHashtags(data) {
+                const hashtags = new Set();
+                hashtags.add('#portugalapoia');
+                hashtags.add('#comunidade');
+                hashtags.add('#ajuda');
+                hashtags.add('#solidariedade');
+                hashtags.add('#portugal');
+                switch (data.type) {
+                    case 'emprego':
+                        hashtags.add('#emprego');
+                        hashtags.add('#vaga');
+                        hashtags.add('#trabalho');
+                        hashtags.add('#recrutamento');
+                        break;
+                    case 'servico':
+                        hashtags.add('#servicos');
+                        hashtags.add('#profissional');
+                        if (data.serviceCategory) hashtags.add(`#${data.serviceCategory.toLowerCase().replace(/\s/g, '')}`);
+                        break;
+                    case 'habitacao':
+                        hashtags.add('#habitacao');
+                        hashtags.add('#arrendamento');
+                        hashtags.add('#imobiliario');
+                        if (data.propertyType) hashtags.add(`#${data.propertyType.toLowerCase().replace(/\s/g, '')}`);
+                        break;
+                    case 'doacao':
+                        hashtags.add('#doacao');
+                        hashtags.add('#doar');
+                        hashtags.add('#causasocial');
+                        if (data.itemType) hashtags.add(`#${data.itemType.toLowerCase().replace(/\s/g, '')}`);
+                        break;
+                }
+                if (data.city) {
+                    const cityHashtag = data.city.toLowerCase().replace(/\s/g, '');
+                    hashtags.add(`#${cityHashtag}`);
+                    if (data.type === 'emprego') hashtags.add(`#emprego${cityHashtag}`);
+                }
+                if (data.title) {
+                    data.title.split(' ').forEach(word => {
+                        if (word.length > 3) {
+                            hashtags.add(`#${word.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`);
+                        }
+                    });
+                }
+                return Array.from(hashtags).join(' ');
+            }
 
             function updateAllAdOutputs() {
                 const formData = getAdFormData();
                 if (!formData.title) {
                     adElements.captureArea.innerHTML = "";
                     adElements.generatedCode.value = "";
+                    adElements.generatedHashtags.value = "";
                     return;
                 }
                 const { cardHTML, fullPreviewHTML, jsonLdScript } = generateAdHtmlAndSeo(formData);
+                const hashtags = generateHashtags(formData);
                 adElements.generatedCode.value = `\n${jsonLdScript}\n${cardHTML}\n`;
                 adElements.captureArea.innerHTML = fullPreviewHTML;
+                adElements.generatedHashtags.value = hashtags;
             }
 
             function getAdFormData() {
@@ -609,8 +333,8 @@
 
                 const cardId = data.id ? `${cardIdPrefix}-${data.id.padStart(3, '0')}` : '';
                 let contactHTML = '';
-                if(data.contact.value){
-                    if(data.contact.type === 'email'){
+                if (data.contact.value) {
+                    if (data.contact.type === 'email') {
                         contactHTML = `<p class="card-description">Email: <a href="mailto:${data.contact.value}">${data.contact.value}</a></p>`;
                     } else {
                         contactHTML = `<p class="card-description">Tel. <a href="tel:${data.contact.value.replace(/\s/g, '')}">${data.contact.value}</a></p>`;
@@ -627,21 +351,15 @@
 
                 const shareButtonsHTML = `
                     <div class="card-share">
-                        <h4 class="card-share-title">Partilhar</h4>
                         <div class="card-share-buttons">
                             <a href="https://www.facebook.com/sharer/sharer.php?u=${encodedWebsiteUrl}&quote=${shareText}" target="_blank" title="Partilhar no Facebook"><i class="fab fa-facebook-f"></i></a>
                             <a href="https://api.whatsapp.com/send?text=${shareText}%20Veja%20mais%20em:%20${encodedWebsiteUrl}" target="_blank" title="Partilhar no WhatsApp"><i class="fab fa-whatsapp"></i></a>
                             <a href="${instagramProfileUrl}" target="_blank" title="Visitar Instagram"><i class="fab fa-instagram"></i></a>
                         </div>
                     </div>`;
-                
-                const visitWebsiteHTML = `
-                    <div class="card-footer-link">
-                        <a href="${websiteUrl}" target="_blank">Veja mais em PortugalApoia.com</a>
-                    </div>`;
 
-                const cardHTML = `<div class="card-causa" ${dataAttributes}>${imageHTMLForCode}<div class="card-header"><span class="card-tag ${cardTagClass}">${cardTagText}</span><span class="card-id">#${cardId}</span></div><div class="card-content"><h3 class="card-title">${data.title}</h3><p class="card-description">${data.description.replace(/\n/g, '<br>')}</p>${contactHTML}${shareButtonsHTML}</div>${visitWebsiteHTML}</div>`;
-                const fullPreviewHTML = `<div class="card-causa" ${dataAttributes}>${imageHTMLForPreview}<div class="card-header"><span class="card-tag ${cardTagClass}">${cardTagText}</span><span class="card-id">#${cardId}</span></div><div class="card-content"><h3 class="card-title">${data.title}</h3><p class="card-description">${data.description.replace(/\n/g, '<br>')}</p>${contactHTML}${shareButtonsHTML}</div>${visitWebsiteHTML}</div>`;
+                const cardHTML = `<div class="card-causa" ${dataAttributes}>${imageHTMLForCode}<div class="card-header"><span class="card-tag ${cardTagClass}">${cardTagText}</span><span class="card-id">#${cardId}</span></div><div class="card-content"><h3 class="card-title">${data.title}</h3><p class="card-description">${data.description.replace(/\n/g, '<br>')}</p>${contactHTML}${shareButtonsHTML}</div></div>`;
+                const fullPreviewHTML = `<div class="card-causa" ${dataAttributes}>${imageHTMLForPreview}<div class="card-header"><span class="card-tag ${cardTagClass}">${cardTagText}</span><span class="card-id">#${cardId}</span></div><div class="card-content"><h3 class="card-title">${data.title}</h3><p class="card-description">${data.description.replace(/\n/g, '<br>')}</p>${contactHTML}${shareButtonsHTML}</div></div>`;
 
                 const schema = { "@context": "https://schema.org", "@type": schemaType, "name": data.title, "description": data.description, "identifier": cardId, "datePosted": data.pubDate };
                 if (imagePathForCode) schema.image = `https://www.portugalapoia.com/${imagePathForCode}`;
@@ -681,95 +399,33 @@
             });
             toggleFields();
 
-            // --- Lógica para o Blog ---
-            const blogElements = {
-                title: document.getElementById('blog-title'),
-                description: document.getElementById('blog-description'),
-                publicationDate: document.getElementById('blog-publication-date'),
-                category: document.getElementById('blog-category'),
-                imageFileInput: document.getElementById('blog-image-file-input'),
-                captureArea: document.getElementById('capture-area-blog'),
-                generatedCode: document.getElementById('generated-code-blog'),
-                generateBtn: document.getElementById('generate-blog-btn'),
-                clearBtn: document.getElementById('clear-blog-btn'),
-                form: document.getElementById('blog-form')
-            };
-
-            let blogUploadedFile = { name: '', dataUrl: '' };
-
-            const clearBlogForm = () => {
-                blogElements.form.reset();
-                blogUploadedFile = { name: '', dataUrl: '' };
-                blogElements.captureArea.innerHTML = "";
-                blogElements.generatedCode.value = "";
-            };
-
-            const formatDate = (dateString) => {
-                if (!dateString) return '';
-                const date = new Date(dateString);
-                // Adding timezone offset to prevent date from changing
-                const adjustedDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
-                const day = adjustedDate.getDate().toString().padStart(2, '0');
-                const month = (adjustedDate.getMonth() + 1).toString().padStart(2, '0');
-                const year = adjustedDate.getFullYear();
-                return `${day}/${month}/${year}`;
-            };
-            
-            function updateAllBlogOutputs() {
-                const formData = getBlogFormData();
-                 if (!formData.title) {
-                    blogElements.captureArea.innerHTML = "";
-                    blogElements.generatedCode.value = "";
-                    return;
-                }
-                const { cardHTML, fullPreviewHTML, jsonLdScript } = generateBlogHtmlAndSeo(formData);
-                blogElements.generatedCode.value = `\n${jsonLdScript}\n${cardHTML}\n`;
-                blogElements.captureArea.innerHTML = fullPreviewHTML;
+            function copyToClipboard(text, buttonElement) {
+                if (!text) return; // No copiar si no hay texto
+                navigator.clipboard.writeText(text).then(() => {
+                    const originalText = buttonElement.textContent;
+                    buttonElement.textContent = 'Copiado!';
+                    buttonElement.style.backgroundColor = '#28a745'; // Color de éxito
+                    setTimeout(() => {
+                        buttonElement.textContent = originalText;
+                        buttonElement.style.backgroundColor = ''; // Volver al color original
+                    }, 2000);
+                }).catch(err => {
+                    alert('Falha ao copiar.');
+                });
             }
 
-            function getBlogFormData() {
-                 return {
-                    title: toTitleCase(blogElements.title.value),
-                    description: blogElements.description.value,
-                    pubDate: blogElements.publicationDate.value || new Date().toISOString().split('T')[0],
-                    image: blogUploadedFile,
-                    category: toCapitalizeCase(blogElements.category.value)
-                };
-            }
-
-            function generateBlogHtmlAndSeo(data) {
-                const cardTagText = data.category || 'Blog';
-                const cardTagClass = 'card-tag-blog';
-                const formattedDate = formatDate(data.pubDate);
-
-                const imageHTMLForPreview = data.image.dataUrl ? `<div class="card-image-container"><img src="${data.image.dataUrl}" alt="${data.title}" class="card-image"></div>` : '';
-                let imagePathForCode = data.image.name ? `img_servicos/${data.image.name}` : '';
-                const imageHTMLForCode = imagePathForCode ? `<div class="card-image-container"><img src="${imagePathForCode}" alt="${data.title}" class="card-image"></div>` : '';
-                 const cardHeaderHTML = `
-                    <div class="card-header">
-                        <span class="card-tag ${cardTagClass}">${cardTagText}</span>
-                        <span class="card-date">${formattedDate}</span>
-                    </div>`;
-
-                const cardHTML = `<div class="card-causa">${imageHTMLForCode}${cardHeaderHTML}<div class="card-content"><h3 class="card-title">${data.title}</h3><p class="card-description">${data.description.replace(/\n/g, '<br>')}</p></div></div>`;
-                const fullPreviewHTML = `<div class="card-causa">${imageHTMLForPreview}${cardHeaderHTML}<div class="card-content"><h3 class="card-title">${data.title}</h3><p class="card-description">${data.description.replace(/\n/g, '<br>')}</p></div></div>`;
-                
-                const schema = { "@context": "https://schema.org", "@type": "BlogPosting", "headline": data.title, "articleBody": data.description, "datePublished": data.pubDate, "author": { "@type": "Organization", "name": "PortugalApoia" }};
-                if(imagePathForCode) schema.image = `https://www.portugalapoia.com/${imagePathForCode}`;
-
-                const jsonLdScript = `<script type="application/ld+json">\n${JSON.stringify(schema, null, 2)}\n<\/script>`;
-
-                return { cardHTML, fullPreviewHTML, jsonLdScript };
-            }
-
-            blogElements.generateBtn.addEventListener('click', updateAllBlogOutputs);
-            blogElements.imageFileInput.addEventListener('change', e => {
-                const file = e.target.files[0]; if (file) { const reader = new FileReader(); reader.onload = e => { blogUploadedFile = { name: file.name, dataUrl: e.target.result }; updateAllBlogOutputs(); }; reader.readAsDataURL(file); }
+            document.getElementById('copy-code-btn').addEventListener('click', (e) => {
+                copyToClipboard(document.getElementById('generated-code-anuncio').value, e.target);
             });
-            document.querySelectorAll('#blog-form input, #blog-form textarea').forEach(input => input.addEventListener('input', updateAllBlogOutputs));
-            blogElements.clearBtn.addEventListener('click', clearBlogForm);
+
+            document.getElementById('copy-hashtags-btn').addEventListener('click', (e) => {
+                copyToClipboard(document.getElementById('generated-hashtags').value, e.target);
+            });
+
+            document.getElementById('copy-blog-code-btn').addEventListener('click', (e) => {
+                copyToClipboard(document.getElementById('generated-code-blog').value, e.target);
+            });
         });
     </script>
 </body>
-
 </html>
