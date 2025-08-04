@@ -4,47 +4,49 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
 <url>
-  <loc>https://portugalapoia.com/index.html</loc>
-  <lastmod>2025-07-30T09:20:00+00:00</lastmod>
-  <changefreq>daily</changefreq>
+  <loc>https://portugalapoia.com/</loc>
+  <lastmod>2025-08-04T21:18:17+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
-  <loc>https://portugalapoia.com/doacoes.html</loc>
-  <lastmod>2025-07-30T09:20:00+00:00</lastmod>
-  <changefreq>weekly</changefreq>
+  <loc>https://portugalapoia.com/doacoes</loc>
+  <lastmod>2025-08-04T21:18:17+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://portugalapoia.com/empregos.html</loc>
-  <lastmod>2025-07-30T09:20:00+00:00</lastmod>
-  <changefreq>weekly</changefreq>
+  <loc>https://portugalapoia.com/empregos</loc>
+  <lastmod>2025-08-04T21:18:17+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://portugalapoia.com/servicos.html</loc>
-  <lastmod>2025-07-30T09:20:00+00:00</lastmod>
-  <changefreq>weekly</changefreq>
+  <loc>https://portugalapoia.com/servicos</loc>
+  <lastmod>2025-08-04T21:18:17+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://portugalapoia.com/habitacao.html</loc>
-  <lastmod>2025-07-30T09:20:00+00:00</lastmod>
-  <changefreq>weekly</changefreq>
+  <loc>https://portugalapoia.com/habitacao</loc>
+  <lastmod>2025-08-04T21:18:17+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://portugalapoia.com/publicar.html</loc>
-  <lastmod>2025-07-30T09:20:00+00:00</lastmod>
-  <changefreq>monthly</changefreq>
-  <priority>0.70</priority>
+  <loc>https://portugalapoia.com/blog</loc>
+  <lastmod>2025-08-04T21:18:17+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://portugalapoia.com/politica-privacidade.html</loc>
-  <lastmod>2025-07-30T09:20:00+00:00</lastmod>
-  <changefreq>yearly</changefreq>
-  <priority>0.50</priority>
+  <loc>https://portugalapoia.com/publicar</loc>
+  <lastmod>2025-08-04T21:18:17+00:00</lastmod>
+  <priority>0.80</priority>
 </url>
+<url>
+  <loc>https://portugalapoia.com/politica-privacidade</loc>
+  <lastmod>2025-08-04T21:18:17+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+
 
 </urlset>
