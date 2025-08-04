@@ -149,7 +149,7 @@
                             <div class="form-group"><label for="blog-description">Conteúdo</label><textarea id="blog-description" rows="5" required></textarea></div>
                             <div class="form-group"><label for="blog-publication-date">Data de Publicação</label><input type="date" id="blog-publication-date" required></div>
                             <div class="form-group"><label for="blog-category">Categoria</label><input type="text" id="blog-category" placeholder="Ex: Emprego, Habitação..."></div>
-                            <div class="form-group"><label for="blog-image-file-input">Carregar Imagem</label><input type="file" id="blog-image-file-input" accept="image/png, image/jpeg, image/webp"></div>
+                            <div class="form-group"><label for="blog-image-url">URL da Imagem</label><input type="text" id="blog-image-url" placeholder="Cole o URL da imagem aqui"></div>
                             <button type="button" id="generate-blog-btn" class="button">Gerar Código do Blog</button>
                             <button type="button" id="clear-blog-btn" class="button secondary" style="margin-left: 15px;">Limpar</button>
                         </form>
@@ -246,29 +246,10 @@
                 hashtags.add('#solidariedade');
                 hashtags.add('#portugal');
                 switch (data.type) {
-                    case 'emprego':
-                        hashtags.add('#emprego');
-                        hashtags.add('#vaga');
-                        hashtags.add('#trabalho');
-                        hashtags.add('#recrutamento');
-                        break;
-                    case 'servico':
-                        hashtags.add('#servicos');
-                        hashtags.add('#profissional');
-                        if (data.serviceCategory) hashtags.add(`#${data.serviceCategory.toLowerCase().replace(/\s/g, '')}`);
-                        break;
-                    case 'habitacao':
-                        hashtags.add('#habitacao');
-                        hashtags.add('#arrendamento');
-                        hashtags.add('#imobiliario');
-                        if (data.propertyType) hashtags.add(`#${data.propertyType.toLowerCase().replace(/\s/g, '')}`);
-                        break;
-                    case 'doacao':
-                        hashtags.add('#doacao');
-                        hashtags.add('#doar');
-                        hashtags.add('#causasocial');
-                        if (data.itemType) hashtags.add(`#${data.itemType.toLowerCase().replace(/\s/g, '')}`);
-                        break;
+                    case 'emprego': hashtags.add('#emprego'); hashtags.add('#vaga'); hashtags.add('#trabalho'); hashtags.add('#recrutamento'); break;
+                    case 'servico': hashtags.add('#servicos'); hashtags.add('#profissional'); if (data.serviceCategory) hashtags.add(`#${data.serviceCategory.toLowerCase().replace(/\s/g, '')}`); break;
+                    case 'habitacao': hashtags.add('#habitacao'); hashtags.add('#arrendamento'); hashtags.add('#imobiliario'); if (data.propertyType) hashtags.add(`#${data.propertyType.toLowerCase().replace(/\s/g, '')}`); break;
+                    case 'doacao': hashtags.add('#doacao'); hashtags.add('#doar'); hashtags.add('#causasocial'); if (data.itemType) hashtags.add(`#${data.itemType.toLowerCase().replace(/\s/g, '')}`); break;
                 }
                 if (data.city) {
                     const cityHashtag = data.city.toLowerCase().replace(/\s/g, '');
@@ -308,10 +289,7 @@
                     id: nextId.toString(),
                     title: toTitleCase(adElements.title.value),
                     description: adElements.description.value,
-                    contact: {
-                        type: adElements.contactType.value,
-                        value: adElements.contactValue.value
-                    },
+                    contact: { type: adElements.contactType.value, value: adElements.contactValue.value },
                     city: toTitleCase(adElements.city.value),
                     pubDate: adElements.publicationDate.value || new Date().toISOString().split('T')[0],
                     image: adUploadedFile,
@@ -323,14 +301,12 @@
 
             function generateAdHtmlAndSeo(data) {
                 let cardIdPrefix = '', schemaType = '', cardTagText = '', cardTagClass = '', dataAttributes = `data-publication-date="${data.pubDate}" data-city="${data.city}"`, websiteUrl = '', shareIntro = '';
-
                 switch (data.type) {
                     case 'servico': cardIdPrefix = 'SER'; schemaType = 'Service'; cardTagText = data.serviceCategory || 'Serviço'; cardTagClass = 'card-tag-servico'; websiteUrl = 'https://www.portugalapoia.com/servicos.html'; shareIntro = 'Confira este serviço'; break;
                     case 'habitacao': cardIdPrefix = 'HAB'; schemaType = 'Apartment'; cardTagText = data.propertyType || 'Habitação'; cardTagClass = 'card-tag-habitacao'; websiteUrl = 'https://www.portugalapoia.com/habitacao.html'; shareIntro = 'Confira esta habitação'; break;
                     case 'doacao': cardIdPrefix = 'DOA'; schemaType = 'Demand'; cardTagText = 'Pedido de Artigos'; cardTagClass = 'card-tag-artigos'; websiteUrl = 'https://www.portugalapoia.com/doacoes.html'; shareIntro = 'Confira este pedido de doação'; break;
                     default: cardIdPrefix = 'EMP'; schemaType = 'JobPosting'; cardTagText = 'Vaga de Emprego'; cardTagClass = 'card-tag-emprego'; websiteUrl = 'https://www.portugalapoia.com/empregos.html'; shareIntro = 'Confira esta vaga de emprego'; break;
                 }
-
                 const cardId = data.id ? `${cardIdPrefix}-${data.id.padStart(3, '0')}` : '';
                 let contactHTML = '';
                 if (data.contact.value) {
@@ -340,11 +316,9 @@
                         contactHTML = `<p class="card-description">Tel. <a href="tel:${data.contact.value.replace(/\s/g, '')}">${data.contact.value}</a></p>`;
                     }
                 }
-
                 const imageHTMLForPreview = data.image.dataUrl ? `<div class="card-image-container"><img src="${data.image.dataUrl}" alt="${data.title}" class="card-image"></div>` : '';
                 let imagePathForCode = (data.type === 'habitacao' && data.image.name) ? `img_servicos/${data.image.name}` : '';
                 const imageHTMLForCode = imagePathForCode ? `<div class="card-image-container"><img src="${imagePathForCode}" alt="${data.title}" class="card-image"></div>` : '';
-
                 const shareText = encodeURIComponent(`${shareIntro}: "${data.title}" em ${data.city}.`);
                 const encodedWebsiteUrl = encodeURIComponent(websiteUrl);
                 const instagramProfileUrl = 'https://www.instagram.com/portugalapoia';
@@ -360,11 +334,9 @@
 
                 const cardHTML = `<div class="card-causa" ${dataAttributes}>${imageHTMLForCode}<div class="card-header"><span class="card-tag ${cardTagClass}">${cardTagText}</span><span class="card-id">#${cardId}</span></div><div class="card-content"><h3 class="card-title">${data.title}</h3><p class="card-description">${data.description.replace(/\n/g, '<br>')}</p>${contactHTML}${shareButtonsHTML}</div></div>`;
                 const fullPreviewHTML = `<div class="card-causa" ${dataAttributes}>${imageHTMLForPreview}<div class="card-header"><span class="card-tag ${cardTagClass}">${cardTagText}</span><span class="card-id">#${cardId}</span></div><div class="card-content"><h3 class="card-title">${data.title}</h3><p class="card-description">${data.description.replace(/\n/g, '<br>')}</p>${contactHTML}${shareButtonsHTML}</div></div>`;
-
                 const schema = { "@context": "https://schema.org", "@type": schemaType, "name": data.title, "description": data.description, "identifier": cardId, "datePosted": data.pubDate };
                 if (imagePathForCode) schema.image = `https://www.portugalapoia.com/${imagePathForCode}`;
                 const jsonLdScript = `<script type="application/ld+json">\n${JSON.stringify(schema, null, 2)}\n<\/script>`;
-
                 return { cardHTML, fullPreviewHTML, jsonLdScript };
             }
 
@@ -375,7 +347,6 @@
             });
             document.querySelectorAll('#anuncios-form input, #anuncios-form textarea, #anuncios-form select').forEach(input => input.addEventListener('input', updateAllAdOutputs));
             adElements.clearBtn.addEventListener('click', clearForm);
-
             adElements.downloadImageBtn.addEventListener('click', function () {
                 const elementToCapture = adElements.captureArea;
                 if (!elementToCapture.querySelector('.card-causa')) { alert("Por favor, gere primeiro uma pré-visualização do anúncio."); return; }
@@ -399,15 +370,83 @@
             });
             toggleFields();
 
+            const blogElements = {
+                title: document.getElementById('blog-title'),
+                description: document.getElementById('blog-description'),
+                publicationDate: document.getElementById('blog-publication-date'),
+                category: document.getElementById('blog-category'),
+                imageUrl: document.getElementById('blog-image-url'),
+                captureArea: document.getElementById('capture-area-blog'),
+                generatedCode: document.getElementById('generated-code-blog'),
+                generateBtn: document.getElementById('generate-blog-btn'),
+                clearBtn: document.getElementById('clear-blog-btn'),
+                form: document.getElementById('blog-form')
+            };
+
+            const clearBlogForm = () => {
+                blogElements.form.reset();
+                blogElements.captureArea.innerHTML = "";
+                blogElements.generatedCode.value = "";
+            };
+
+            const formatDate = (dateString) => {
+                if (!dateString) return '';
+                const date = new Date(dateString);
+                const adjustedDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+                const day = adjustedDate.getDate().toString().padStart(2, '0');
+                const month = (adjustedDate.getMonth() + 1).toString().padStart(2, '0');
+                const year = adjustedDate.getFullYear();
+                return `${day}/${month}/${year}`;
+            };
+
+            function updateAllBlogOutputs() {
+                const formData = getBlogFormData();
+                if (!formData.title) {
+                    blogElements.captureArea.innerHTML = "";
+                    blogElements.generatedCode.value = "";
+                    return;
+                }
+                const { cardHTML, fullPreviewHTML, jsonLdScript } = generateBlogHtmlAndSeo(formData);
+                blogElements.generatedCode.value = `\n${jsonLdScript}\n${cardHTML}\n`;
+                blogElements.captureArea.innerHTML = fullPreviewHTML;
+            }
+
+            function getBlogFormData() {
+                return {
+                    title: toTitleCase(blogElements.title.value),
+                    description: blogElements.description.value,
+                    pubDate: blogElements.publicationDate.value || new Date().toISOString().split('T')[0],
+                    imageUrl: blogElements.imageUrl.value,
+                    category: toCapitalizeCase(blogElements.category.value)
+                };
+            }
+
+            function generateBlogHtmlAndSeo(data) {
+                const cardTagText = data.category || 'Blog';
+                const cardTagClass = 'card-tag-blog';
+                const formattedDate = formatDate(data.pubDate);
+                const imageHTML = data.imageUrl ? `<div class="card-image-container"><img src="${data.imageUrl}" alt="${data.title}" class="card-image"></div>` : '';
+                const cardHeaderHTML = `<div class="card-header"><span class="card-tag ${cardTagClass}">${cardTagText}</span><span class="card-date">${formattedDate}</span></div>`;
+                const cardHTML = `<div class="card-causa">${imageHTML}${cardHeaderHTML}<div class="card-content"><h3 class="card-title">${data.title}</h3><p class="card-description">${data.description.replace(/\n/g, '<br>')}</p></div></div>`;
+                const schema = { "@context": "https://schema.org", "@type": "BlogPosting", "headline": data.title, "articleBody": data.description, "datePublished": data.pubDate, "author": { "@type": "Organization", "name": "PortugalApoia" } };
+                if (data.imageUrl) schema.image = data.imageUrl;
+                const jsonLdScript = `<script type="application/ld+json">\n${JSON.stringify(schema, null, 2)}\n<\/script>`;
+                return { cardHTML, fullPreviewHTML: cardHTML, jsonLdScript };
+            }
+            
+            blogElements.generateBtn.addEventListener('click', updateAllBlogOutputs);
+            document.querySelectorAll('#blog-form input, #blog-form textarea').forEach(input => input.addEventListener('input', updateAllBlogOutputs));
+            blogElements.clearBtn.addEventListener('click', clearBlogForm);
+
             function copyToClipboard(text, buttonElement) {
-                if (!text) return; // No copiar si no hay texto
+                if (!text) return;
                 navigator.clipboard.writeText(text).then(() => {
                     const originalText = buttonElement.textContent;
                     buttonElement.textContent = 'Copiado!';
-                    buttonElement.style.backgroundColor = '#28a745'; // Color de éxito
+                    buttonElement.style.backgroundColor = '#28a745';
                     setTimeout(() => {
                         buttonElement.textContent = originalText;
-                        buttonElement.style.backgroundColor = ''; // Volver al color original
+                        buttonElement.style.backgroundColor = '';
                     }, 2000);
                 }).catch(err => {
                     alert('Falha ao copiar.');
@@ -417,11 +456,9 @@
             document.getElementById('copy-code-btn').addEventListener('click', (e) => {
                 copyToClipboard(document.getElementById('generated-code-anuncio').value, e.target);
             });
-
             document.getElementById('copy-hashtags-btn').addEventListener('click', (e) => {
                 copyToClipboard(document.getElementById('generated-hashtags').value, e.target);
             });
-
             document.getElementById('copy-blog-code-btn').addEventListener('click', (e) => {
                 copyToClipboard(document.getElementById('generated-code-blog').value, e.target);
             });
