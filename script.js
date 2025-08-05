@@ -1,42 +1,34 @@
 /*
   JavaScript para PortugalApoia.com
   ------------------------------------
-  Versión: 7.0 (Solo banner de cookies activado)
+  Versión: 9.0 (Lógica final y correcta para cookies)
 */
-
-// --- 1. LÓGICA QUE SE EJECUTA CUANDO EL HTML ESTÁ LISTO ---
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- Funcionalidad básica de la página (menú, modal, etc.) ---
-    setupBasicInteractivity();
+    // --- LÓGICA DEL BANNER DE COOKIES ---
+    const cookieBanner = document.getElementById('cookie-consent-banner');
+    const acceptCookiesBtn = document.getElementById('accept-cookies-btn');
 
-    // --- Lógica del banner de cookies ---
-    handleCookieBanner();
+    // Comprobar si los elementos del banner existen en esta página
+    if (cookieBanner && acceptCookiesBtn) {
 
-});
+        // Si las cookies NO han sido aceptadas, mostrar el banner
+        if (localStorage.getItem('cookiesAccepted') !== 'true') {
+            // Se usa 'display: flex' porque el CSS original así lo define
+            cookieBanner.style.display = 'flex';
+        }
 
-
-// --- 2. CÓDIGO QUE SE EJECUTA CUANDO LA PÁGINA HA CARGADO COMPLETAMENTE ---
-
-window.addEventListener('load', () => {
-    // Ocultar el preloader
-    const preloader = document.getElementById('preloader');
-    if (preloader) {
-        preloader.classList.add('hidden');
+        // Añadir listener al botón de aceptar
+        acceptCookiesBtn.addEventListener('click', () => {
+            cookieBanner.style.display = 'none';
+            localStorage.setItem('cookiesAccepted', 'true');
+        });
     }
-});
 
 
-// --- 3. DEFINICIÓN DE FUNCIONES ---
+    // --- OTRA INTERACTIVIDAD DE LA PÁGINA (MENÚ, MODAL, ETC.) ---
 
-/**
- * Configura la interactividad básica del sitio:
- * - Menú móvil
- * - Modal de donativo
- * - Botón de scroll-to-top
- */
-function setupBasicInteractivity() {
     // Menú móvil
     const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
     const mainNav = document.querySelector('#main-nav');
@@ -57,36 +49,12 @@ function setupBasicInteractivity() {
         closeModalBtn.addEventListener('click', () => modal.classList.add('hidden'));
         modal.addEventListener('click', (event) => { if (event.target === modal) modal.classList.add('hidden'); });
     }
+});
 
-    // Botón de scroll-to-top
-    const scrollTopBtn = document.getElementById('scrollTopBtn');
-    if (scrollTopBtn) {
-        window.addEventListener('scroll', () => {
-            scrollTopBtn.classList.toggle('visible', window.scrollY > 300);
-        });
-        scrollTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+// Preloader
+window.addEventListener('load', () => {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        preloader.classList.add('hidden');
     }
-}
-
-/**
- * Maneja la lógica para mostrar y ocultar el banner de cookies.
- */
-function handleCookieBanner() {
-    const cookieBanner = document.getElementById('cookie-consent-banner');
-    const acceptCookiesBtn = document.getElementById('accept-cookies-btn');
-
-    if (!cookieBanner || !acceptCookiesBtn) return;
-
-    // Si las cookies no han sido aceptadas previamente, mostrar el banner.
-    if (localStorage.getItem('cookiesAccepted') !== 'true') {
-        cookieBanner.style.display = 'flex';
-    }
-
-    // Cuando el usuario hace clic en "Aceptar", ocultar el banner y guardar la preferencia.
-    acceptCookiesBtn.addEventListener('click', () => {
-        cookieBanner.style.display = 'none';
-        localStorage.setItem('cookiesAccepted', 'true');
-    });
-}
+});
