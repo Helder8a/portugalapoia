@@ -51,23 +51,43 @@
 
     <!-- Google tag adsense start (gtag.js) -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3196299619563199"
-     crossorigin="anonymous"></script>
-     <!-- Google tag adsense end (gtag.js) -->
+        crossorigin="anonymous"></script>
+    <!-- Google tag adsense end (gtag.js) -->
 
 </head>
 
 <!-- Google tag analitic start (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-VG454Y1YV4"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-  gtag('config', 'G-VG454Y1YV4');
+    gtag('config', 'G-VG454Y1YV4');
 </script>
 <!-- Google tag analitic end(gtag.js) -->
 
 <body>
+    <!-- Descarga PWA app inicio) -->
+    <div id="pwa-install-banner" class="pwa-banner hidden">
+        <div class="pwa-banner-content">
+            <div class="pwa-banner-text">
+                <h3>Agrega PortugalApoia a tu pantalla de inicio</h3>
+                <p>Accede más rápido con nuestra app. ¡Es gratis y no ocupa espacio!</p>
+            </div>
+            <div class="pwa-banner-actions">
+                <button id="pwa-install-button" class="button button-primary">Instalar</button>
+                <button id="pwa-close-button" class="pwa-close-btn">&times;</button>
+            </div>
+        </div>
+        <div id="pwa-install-instructions" class="pwa-instructions hidden">
+            <p><strong>Para instalar:</strong> Toca el ícono de 'Compartir' <i class="fas fa-share-square"></i> (en iOS)
+                o el menú <i class="fas fa-ellipsis-v"></i> (en Android) y selecciona 'Agregar a la pantalla de inicio'.
+            </p>
+        </div>
+    </div>
+    <!-- Descarga PWA app fin) -->
+
     <div id="preloader">
         <img src="images/favicon.ico.png" alt="A carregar..." class="spinner">
     </div>
@@ -75,7 +95,7 @@
     <header class="main-header">
         <div class="container">
             <a href="index.html" class="logo">PortugalApoia</a>
-            
+
             <nav class="main-nav" id="main-nav">
                 <ul>
                     <li><a href="doacoes.html">Doação de Artigos</a></li>
@@ -83,10 +103,11 @@
                     <li><a href="servicos.html">Serviços</a></li>
                     <li><a href="habitacao.html">Habitação</a></li>
                     <li><a href="blog.html">Blog</a></li>
-                    <li><a href="publicar.html" class="button button-primary" style="padding: 8px 20px;">Publicar Anúncio</a></li>
+                    <li><a href="publicar.html" class="button button-primary" style="padding: 8px 20px;">Publicar
+                            Anúncio</a></li>
                 </ul>
             </nav>
-            
+
             <button class="mobile-nav-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Menu">
                 ☰
             </button>
@@ -121,7 +142,8 @@
                 <h2 class="section-title">Explore as Nossas Categorias</h2>
                 <div class="category-links-grid">
                     <a href="doacoes.html" class="category-link-card">
-                        <img src="img_servicos/bucket.png" alt="Ícone de um balde com produtos de limpeza" class="category-icon">
+                        <img src="img_servicos/bucket.png" alt="Ícone de um balde com produtos de limpeza"
+                            class="category-icon">
                         <h3>Doação de Artigos</h3>
                         <p>Ajude quem precisa ou peça apoio para artigos.</p>
                     </a>
@@ -195,7 +217,8 @@
                 </div>
                 <div class="footer-column">
                     <h4>Siga-nos</h4>
-                    <a href="https://www.instagram.com/portugalapoia" target="_blank" rel="noopener noreferrer" class="social-link">
+                    <a href="https://www.instagram.com/portugalapoia" target="_blank" rel="noopener noreferrer"
+                        class="social-link">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -216,9 +239,9 @@
         </div>
 
     </footer>
-    
+
     <script src="script.js"></script>
-    
+
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
@@ -232,6 +255,15 @@
             });
         }
     </script>
+
+    <!-- Autorizacion Cookies Inicio) -->
+    <div id="cookie-consent-banner" class="cookie-banner">
+        <p>Utilizamos cookies para mejorar tu experiencia y para publicidad. Al continuar, aceptas nuestro uso de
+            cookies. <a href="politica-privacidade.html" style="color: white; text-decoration: underline;">Saber
+                más</a>.</p>
+        <button id="accept-cookies-btn" class="button">Aceptar</button>
+    </div>
+    <!-- Autorizacion Cookies Find) -->
 </body>
 
 </html>
