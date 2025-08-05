@@ -1,7 +1,7 @@
 /*
   JavaScript para la interactividad de PortugalApoia.com
   ---------------------------------------------------------
-  Versión: 2.1 (Simplificada para sitio estático)
+  Versión: 2.2 (Corregida)
 */
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -100,8 +100,73 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 5. LÓGICA PARA EL FORMULARIO DE PUBLICAR (página publicar.html) ---
     const formAnuncio = document.getElementById('form-anuncio');
     if (formAnuncio) {
-        // La lógica que ya tienes para el formulario de Netlify en publicar.html es correcta
-        // para que los *visitantes* envíen anuncios. No necesita cambios.
+        // La lógica para el formulario de Netlify es correcta.
+    }
+
+    // --- 6. LÓGICA PARA EL BANNER DE INSTALACIÓN DE PWA (CORREGIDO) ---
+    const pwaBanner = document.getElementById('pwa-install-banner');
+    const pwaInstallBtn = document.getElementById('pwa-install-button');
+    const pwaCloseBtn = document.getElementById('pwa-close-button');
+    const pwaInstructions = document.getElementById('pwa-install-instructions');
+
+    if (pwaBanner) {
+        // Muestra el banner después de 4 segundos si no ha sido cerrado antes
+        setTimeout(() => {
+            if (localStorage.getItem('pwaBannerClosed') !== 'true') {
+                pwaBanner.classList.remove('hidden');
+                pwaBanner.classList.add('visible');
+            }
+        }, 4000);
+
+        // Lógica para cerrar el banner
+        pwaCloseBtn.addEventListener('click', () => {
+            pwaBanner.classList.remove('visible');
+            localStorage.setItem('pwaBannerClosed', 'true');
+            setTimeout(() => {
+                pwaBanner.classList.add('hidden');
+            }, 500);
+        });
+
+        // Lógica para el botón de instalar/mostrar instrucciones
+        let deferredPrompt;
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+
+        pwaInstallBtn.addEventListener('click', (e) => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('El usuario aceptó instalar la PWA');
+                    } else {
+                        console.log('El usuario rechazó instalar la PWA');
+                    }
+                    deferredPrompt = null;
+                    pwaBanner.classList.add('hidden');
+                    localStorage.setItem('pwaBannerClosed', 'true');
+                });
+            } else {
+                pwaInstructions.classList.toggle('hidden');
+            }
+        });
+    }
+
+    // --- 7. LÓGICA PARA EL BANNER DE CONSENTIMIENTO DE COOKIES (CORREGIDO) ---
+    const cookieBanner = document.getElementById('cookie-consent-banner');
+    const acceptCookiesBtn = document.getElementById('accept-cookies-btn');
+
+    if (cookieBanner && acceptCookiesBtn) {
+        if (!localStorage.getItem('cookiesAccepted')) {
+            cookieBanner.style.display = 'flex';
+        }
+
+        acceptCookiesBtn.addEventListener('click', () => {
+            cookieBanner.style.display = 'none';
+            localStorage.setItem('cookiesAccepted', 'true');
+        });
     }
 
 });
@@ -112,79 +177,3 @@ window.addEventListener('load', () => {
         preloader.classList.add('hidden');
     }
 });
-
-/* --- 6. LÓGICA PARA EL BANNER DE INSTALACIÓN DE PWA --- */
-const pwaBanner = document.getElementById('pwa-install-banner');
-const pwaInstallBtn = document.getElementById('pwa-install-button');
-const pwaCloseBtn = document.getElementById('pwa-close-button');
-const pwaInstructions = document.getElementById('pwa-install-instructions');
-
-if (pwaBanner) {
-    // Muestra el banner después de 4 segundos si no ha sido cerrado antes
-    setTimeout(() => {
-        if (localStorage.getItem('pwaBannerClosed') !== 'true') {
-            pwaBanner.classList.remove('hidden');
-            pwaBanner.classList.add('visible');
-        }
-    }, 4000);
-
-    // Lógica para cerrar el banner
-    pwaCloseBtn.addEventListener('click', () => {
-        pwaBanner.classList.remove('visible');
-        // Oculta el banner permanentemente para esta sesión de usuario
-        localStorage.setItem('pwaBannerClosed', 'true');
-        setTimeout(() => {
-            pwaBanner.classList.add('hidden');
-        }, 500);
-    });
-
-    // Lógica para el botón de instalar/mostrar instrucciones
-    let deferredPrompt;
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-        // Prevenir que Chrome 67 y anteriores muestren el prompt automáticamente
-        e.preventDefault();
-        // Guardar el evento para que pueda ser disparado más tarde
-        deferredPrompt = e;
-    });
-
-    pwaInstallBtn.addEventListener('click', (e) => {
-        if (deferredPrompt) {
-            // Mostrar el prompt de instalación guardado
-            deferredPrompt.prompt();
-            // Esperar a que el usuario responda al prompt
-            deferredPrompt.userChoice.then((choiceResult) => {
-                if (choiceResult.outcome === 'accepted') {
-                    console.log('El usuario aceptó instalar la PWA');
-                } else {
-                    console.log('El usuario rechazó instalar la PWA');
-                }
-                deferredPrompt = null;
-                // Ocultar el banner una vez que se interactuó con el prompt
-                pwaBanner.classList.add('hidden');
-                localStorage.setItem('pwaBannerClosed', 'true');
-            });
-        } else {
-            // Si el navegador no soporta el prompt o ya está instalada, mostrar instrucciones manuales
-            pwaInstructions.classList.toggle('hidden');
-        }
-    });
-}
-
-/* --- 7. LÓGICA PARA EL BANNER DE CONSENTIMIENTO DE COOKIES --- */
-const cookieBanner = document.getElementById('cookie-consent-banner');
-const acceptCookiesBtn = document.getElementById('accept-cookies-btn');
-
-if (cookieBanner && acceptCookiesBtn) {
-    // Comprobar si el usuario ya ha aceptado las cookies
-    if (!localStorage.getItem('cookiesAccepted')) {
-        cookieBanner.style.display = 'flex';
-    }
-
-    // Evento al hacer clic en "Aceptar"
-    acceptCookiesBtn.addEventListener('click', () => {
-        cookieBanner.style.display = 'none';
-        // Guardar la preferencia del usuario en el almacenamiento local
-        localStorage.setItem('cookiesAccepted', 'true');
-    });
-}

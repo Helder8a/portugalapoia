@@ -1,8 +1,7 @@
 // Define un nombre y versión para el caché
-const CACHE_NAME = 'portugalapoia-cache-v1';
+const CACHE_NAME = 'portugalapoia-cache-v3'; // Versión actualizada para forzar la actualización
 
-// Lista de URLs y recursos que se deben cachear en la instalación
-// Se cachearán las páginas principales y los recursos estáticos críticos.
+// Lista de URLs y recursos que se deben cachear en la instalación.
 const assetsToCache = [
     '/',
     'index.html',
@@ -11,29 +10,33 @@ const assetsToCache = [
     'habitacao.html',
     'servicos.html',
     'publicar.html',
+    'blog.html',
+    'offline.html',
     'style.css',
     'script.js',
+    'manifest.json', // <-- AÑADIDO Y ESENCIAL
     'images/favicon.ico.png',
     'images/img_portada.webp'
 ];
 
 // Evento 'install': se dispara cuando el Service Worker se instala.
-// Aquí abrimos el caché y guardamos nuestros assets.
 self.addEventListener('install', event => {
     event.waitUntil(
         caches.open(CACHE_NAME)
         .then(cache => {
             console.log('Cache abierto. Cacheando assets iniciales...');
+            // addAll() es atómico: si un archivo falla, toda la operación falla.
             return cache.addAll(assetsToCache);
         })
         .catch(err => {
             console.error('Fallo al cachear assets:', err);
         })
     );
+    self.skipWaiting();
 });
 
 // Evento 'activate': se dispara cuando el Service Worker se activa.
-// Aquí limpiamos cachés antiguos para evitar conflictos.
+// Limpia cachés antiguos.
 self.addEventListener('activate', event => {
     event.waitUntil(
         caches.keys().then(cacheNames => {
@@ -45,26 +48,36 @@ self.addEventListener('activate', event => {
                     }
                 })
             );
-        })
+        }).then(() => self.clients.claim())
     );
 });
 
-// Evento 'fetch': se dispara cada vez que la app solicita un recurso (página, imagen, etc.).
-// Estrategia "Network First": intentar obtener de la red, si falla, usar el caché.
+// Evento 'fetch': Intercepta las peticiones de red.
 self.addEventListener('fetch', event => {
-    event.respondWith(
-        fetch(event.request)
-        .then(networkResponse => {
-            // Si la petición a la red tiene éxito, la cacheamos y la devolvemos
-            return caches.open(CACHE_NAME).then(cache => {
-                cache.put(event.request, networkResponse.clone());
-                return networkResponse;
-            });
-        })
-        .catch(() => {
-            // Si la red falla, intentamos servir desde el caché
-            console.log('Red no disponible. Sirviendo desde caché para:', event.request.url);
-            return caches.match(event.request);
-        })
-    );
+    // Solo aplicar la estrategia para peticiones de navegación
+    if (event.request.mode === 'navigate') {
+        event.respondWith(
+            fetch(event.request).catch(() => {
+                // Si la red falla, devuelve la página offline desde la caché
+                return caches.match('offline.html');
+            })
+        );
+    } else {
+        // Para otros recursos (CSS, JS, imágenes), usar estrategia "Cache First"
+        event.respondWith(
+            caches.match(event.request).then(response => {
+                return response || fetch(event.request).then(fetchResponse => {
+                    return caches.open(CACHE_NAME).then(cache => {
+                        cache.put(event.request, fetchResponse.clone());
+                        return fetchResponse;
+                    });
+                });
+            }).catch(() => {
+                // Si es una imagen y no está en caché/red, puedes devolver una imagen de reemplazo
+                if (event.request.destination === 'image') {
+                    // return caches.match('/images/placeholder.png'); // (Opcional)
+                }
+            })
+        );
+    }
 });
