@@ -1,8 +1,10 @@
 /*
   JavaScript para la interactividad de PortugalApoia.com
   ---------------------------------------------------------
-  Versión: 2.2 (Corregida)
+  Versión: 3.0 (Lógica de banners corregida y secuencial)
 */
+
+// Espera a que todo el contenido del HTML esté cargado antes de ejecutar cualquier script
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- 1. LÓGICA PARA EL MENÚ MÓVIL ---
@@ -44,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- 4. LÓGICA DEL BUSCADOR Y FILTROS ---
+    // (Sin cambios)
     const searchContainer = document.querySelector('.search-container');
     if (searchContainer) {
         const searchInput = searchContainer.querySelector('#search-input');
@@ -54,12 +57,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const filterCards = () => {
             let visibleCardsCount = 0;
             const searchText = searchInput ? searchInput.value.toLowerCase().trim() : '';
-
             const activeFilters = {};
             filters.forEach(filter => {
                 if (filter.value) {
                     let filterName = filter.id.replace('-filter', '');
-                    if (filterName === 'location') filterName = 'city'; // Ajuste para consistencia
+                    if (filterName === 'location') filterName = 'city';
                     activeFilters[filterName] = filter.value.toLowerCase();
                 }
             });
@@ -94,48 +96,58 @@ document.addEventListener('DOMContentLoaded', () => {
 
         searchInput?.addEventListener('keyup', filterCards);
         filters.forEach(filter => filter.addEventListener('change', filterCards));
-        filterCards(); // Llamada inicial
+        filterCards();
     }
 
-    // --- 5. LÓGICA PARA EL FORMULARIO DE PUBLICAR (página publicar.html) ---
-    const formAnuncio = document.getElementById('form-anuncio');
-    if (formAnuncio) {
-        // La lógica para el formulario de Netlify es correcta.
-    }
 
-    // --- 6. LÓGICA PARA EL BANNER DE INSTALACIÓN DE PWA (CORREGIDO) ---
-    const pwaBanner = document.getElementById('pwa-install-banner');
-    const pwaInstallBtn = document.getElementById('pwa-install-button');
-    const pwaCloseBtn = document.getElementById('pwa-close-button');
-    const pwaInstructions = document.getElementById('pwa-install-instructions');
+    // --- LÓGICA SECUENCIAL DE BANNERS ---
 
-    if (pwaBanner) {
-        // Muestra el banner después de 4 segundos si no ha sido cerrado antes
-        setTimeout(() => {
-            if (localStorage.getItem('pwaBannerClosed') !== 'true') {
-                pwaBanner.classList.remove('hidden');
-                pwaBanner.classList.add('visible');
-            }
-        }, 4000);
+    // 1. Primero, manejar el banner de cookies.
+    const cookieBanner = document.getElementById('cookie-consent-banner');
+    const acceptCookiesBtn = document.getElementById('accept-cookies-btn');
 
-        // Lógica para cerrar el banner
-        pwaCloseBtn.addEventListener('click', () => {
-            pwaBanner.classList.remove('visible');
-            localStorage.setItem('pwaBannerClosed', 'true');
-            setTimeout(() => {
-                pwaBanner.classList.add('hidden');
-            }, 500);
+    if (cookieBanner && acceptCookiesBtn) {
+        if (localStorage.getItem('cookiesAccepted') !== 'true') {
+            cookieBanner.style.display = 'flex';
+        }
+
+        acceptCookiesBtn.addEventListener('click', () => {
+            cookieBanner.style.display = 'none';
+            localStorage.setItem('cookiesAccepted', 'true');
+            // Una vez que las cookies son aceptadas, podemos intentar mostrar el banner de PWA.
+            initializePwaBanner();
         });
+    }
 
-        // Lógica para el botón de instalar/mostrar instrucciones
+    // 2. Después, si las cookies ya fueron aceptadas, intentar mostrar el banner de PWA.
+    if (localStorage.getItem('cookiesAccepted') === 'true') {
+        initializePwaBanner();
+    }
+
+
+    function initializePwaBanner() {
+        const pwaBanner = document.getElementById('pwa-install-banner');
+        const pwaInstallBtn = document.getElementById('pwa-install-button');
+        const pwaCloseBtn = document.getElementById('pwa-close-button');
+        const pwaInstructions = document.getElementById('pwa-install-instructions');
+
+        if (!pwaBanner || !pwaInstallBtn || !pwaCloseBtn) return;
+
         let deferredPrompt;
 
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
+            // Solo mostrar el banner si el evento se dispara y no ha sido cerrado antes.
+            if (localStorage.getItem('pwaBannerClosed') !== 'true') {
+                 setTimeout(() => {
+                    pwaBanner.classList.remove('hidden');
+                    pwaBanner.classList.add('visible');
+                }, 3000); // Espera 3 segundos después de que las cookies se resuelvan.
+            }
         });
 
-        pwaInstallBtn.addEventListener('click', (e) => {
+        pwaInstallBtn.addEventListener('click', () => {
             if (deferredPrompt) {
                 deferredPrompt.prompt();
                 deferredPrompt.userChoice.then((choiceResult) => {
@@ -145,32 +157,25 @@ document.addEventListener('DOMContentLoaded', () => {
                         console.log('El usuario rechazó instalar la PWA');
                     }
                     deferredPrompt = null;
+                    pwaBanner.classList.remove('visible');
                     pwaBanner.classList.add('hidden');
                     localStorage.setItem('pwaBannerClosed', 'true');
                 });
-            } else {
-                pwaInstructions.classList.toggle('hidden');
+            } else if (pwaInstructions) {
+                 pwaInstructions.classList.toggle('hidden');
             }
         });
-    }
 
-    // --- 7. LÓGICA PARA EL BANNER DE CONSENTIMIENTO DE COOKIES (CORREGIDO) ---
-    const cookieBanner = document.getElementById('cookie-consent-banner');
-    const acceptCookiesBtn = document.getElementById('accept-cookies-btn');
-
-    if (cookieBanner && acceptCookiesBtn) {
-        if (!localStorage.getItem('cookiesAccepted')) {
-            cookieBanner.style.display = 'flex';
-        }
-
-        acceptCookiesBtn.addEventListener('click', () => {
-            cookieBanner.style.display = 'none';
-            localStorage.setItem('cookiesAccepted', 'true');
+        pwaCloseBtn.addEventListener('click', () => {
+            pwaBanner.classList.remove('visible');
+            pwaBanner.classList.add('hidden');
+            localStorage.setItem('pwaBannerClosed', 'true');
         });
     }
-
 });
 
+
+// Lógica que se ejecuta cuando la ventana completa (incluyendo imágenes) ha cargado
 window.addEventListener('load', () => {
     const preloader = document.getElementById('preloader');
     if (preloader) {
