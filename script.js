@@ -28,8 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- OTRA INTERACTIVIDAD DE LA PÁGINA (MENÚ, MODAL, ETC.) ---
-
-    // Menú móvil
     const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
     const mainNav = document.querySelector('#main-nav');
     if (mobileNavToggle && mainNav) {
@@ -40,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Modal de donativo
     const modal = document.getElementById('donativo-modal');
     const openModalBtns = document.querySelectorAll('.apoia-projeto-btn');
     const closeModalBtn = modal ? modal.querySelector('.modal-close-btn') : null;
@@ -51,7 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Preloader
 window.addEventListener('load', () => {
     const preloader = document.getElementById('preloader');
     if (preloader) {
