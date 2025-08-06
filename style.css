@@ -1048,7 +1048,7 @@ section {
     .cookie-banner {
         flex-direction: column;
         text-align: center;
-        padding: 20px;
+        padding: 10px;
     }
 
     .cookie-banner p {
