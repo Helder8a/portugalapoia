@@ -1185,7 +1185,7 @@ section {
     background-color: var(--color-primary);
     color: white;
     width: 100%;
-    z-index: 1002; /* Asegura que esté por encima de otros elementos */
+    z-index: 1002;
     position: sticky;
     top: 0;
     transition: all 0.3s ease-in-out;
@@ -1205,7 +1205,7 @@ section {
     font-weight: 500;
 }
 
-.pwa-banner-top .pwa-banner-content button {
+.pwa-banner-top .pwa-banner-content .button {
     flex-shrink: 0;
     padding: 8px 20px;
     font-size: 0.9rem;
@@ -1223,7 +1223,7 @@ section {
 }
 
 .pwa-banner-top .pwa-instructions.expanded {
-    max-height: 300px; /* Altura suficiente para el contenido */
+    max-height: 300px;
     padding: 20px 24px;
 }
 
@@ -1287,15 +1287,59 @@ section {
     opacity: 1;
 }
 
-
+/* --- ESTILOS PARA MÓVILES (BOTÓN FLOTANTE) --- */
 @media (max-width: 768px) {
-    .pwa-banner-top .pwa-banner-content {
-        flex-direction: column;
-        text-align: center;
-        gap: 12px;
+    /* Ocultar el banner superior por defecto en móvil */
+    .pwa-banner-top {
+        display: none;
     }
-    .pwa-banner-top .instructions-columns {
-        flex-direction: column;
-        gap: 20px;
+    
+    /* Crear un nuevo contenedor para el botón flotante */
+    #pwa-mobile-button-container {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        z-index: 1010;
+    }
+
+    #pwa-install-button {
+        background-color: var(--color-accent);
+        color: white;
+        border: none;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        transition: transform 0.3s ease;
+    }
+
+    #pwa-install-button:hover {
+        transform: scale(1.1);
+    }
+    
+    /* Contenedor de instrucciones para móvil */
+    #pwa-mobile-instructions-container {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1009;
+        background-color: #2c3e50;
+        color: white;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        box-shadow: 0 -5px 15px rgba(0,0,0,0.2);
+        transform: translateY(100%);
+        transition: transform 0.4s ease-out;
+        padding: 25px 20px;
+    }
+
+    #pwa-mobile-instructions-container.expanded {
+        transform: translateY(0);
     }
 }
