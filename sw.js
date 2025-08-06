@@ -1,5 +1,5 @@
 // Define un nombre y versión para el caché
-const CACHE_NAME = 'portugalapoia-cache-v3'; // Versión actualizada para forzar la actualización
+const CACHE_NAME = 'portugalapoia-cache-v4'; // Versión actualizada para forzar la actualización
 
 // Lista de URLs y recursos que se deben cachear en la instalación.
 const assetsToCache = [
@@ -11,10 +11,11 @@ const assetsToCache = [
     'servicos.html',
     'publicar.html',
     'blog.html',
+    'painel_de_controlo.html', // <-- AÑADIDO PARA USO OFFLINE
     'offline.html',
     'style.css',
     'script.js',
-    'manifest.json', // <-- AÑADIDO Y ESENCIAL
+    'manifest.json',
     'images/favicon.ico.png',
     'images/img_portada.webp'
 ];

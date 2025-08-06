@@ -5,16 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel de Controlo Unificado - PortugalApoia</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
             --color-primary: #0A3D62;
             --color-accent: #00834B;
+            --color-donation: #ffd700;
+            --color-urgent: #e74c3c;
             --color-background: #F8F9FA;
             --color-surface: #ffffff;
             --color-text: #333;
             --color-border: #dee2e6;
             --shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+            --font-headings: 'Inter', sans-serif;
+            --font-body: 'Roboto', sans-serif;
         }
         html[data-theme='dark'] {
             --color-primary: #4e9ad1;
@@ -25,7 +31,7 @@
             --color-border: #444;
         }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: var(--font-body);
             background-color: var(--color-background);
             color: var(--color-text);
             line-height: 1.6;
@@ -33,43 +39,20 @@
             padding: 20px;
         }
         .container { max-width: 1800px; margin: 0 auto; }
-        h1, h2, h3, h4 { color: var(--color-primary); }
-        .tabs { display: flex; border-bottom: 1px solid var(--color-border); margin-bottom: 20px; }
-        .tab-button { padding: 10px 20px; cursor: pointer; background: none; border: none; font-size: 1.1em; color: var(--color-text); border-bottom: 3px solid transparent; }
-        .tab-button.active { border-bottom-color: var(--color-accent); font-weight: bold; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        h1, h2, h3, h4 { color: var(--color-primary); font-family: var(--font-headings); }
         .main-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; align-items: start; }
-        .form-section, .preview-section, .live-preview-section { background-color: var(--color-surface); padding: 25px; border-radius: 8px; box-shadow: var(--shadow); }
+        .form-section, .preview-section { background-color: var(--color-surface); padding: 25px; border-radius: 8px; box-shadow: var(--shadow); }
         .form-group { margin-bottom: 15px; }
-        .form-group-inline { display: flex; gap: 10px; align-items: flex-end; }
-        .form-group-inline > div { flex: 1; }
+        .form-group-checkbox { display: flex; align-items: center; gap: 10px; }
+        label { font-weight: 600; margin-bottom: 5px; display: block; }
         input, select, textarea { width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem; box-sizing: border-box; background-color: var(--color-background); color: var(--color-text); }
+        input[type="color"] { padding: 5px; height: 40px; }
+        input[type="checkbox"] { width: auto; }
         .button { background-color: var(--color-accent); color: #fff; padding: 12px 28px; border: none; border-radius: 50px; cursor: pointer; font-size: 1rem; font-weight: 700; }
         .button.secondary { background-color: #6c757d; }
-        #generated-code, #generated-hashtags { width: 100%; min-height: 150px; white-space: pre-wrap; font-family: monospace; font-size: 0.9em; background-color: #2b3035; color: #f8f8f2; }
-        .hidden { display: none; }
-        .live-preview-container { display: flex; justify-content: center; align-items: center; min-height: 400px; background-color: var(--color-background); padding: 20px; border-radius: 8px; }
-        #capture-area { padding: 20px; background-color: #FFFFFF; border-radius: 8px; }
-        .card-causa { background-color: #fff; border-radius: 8px; box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column; width: 100%; max-width: 300px; font-family: 'Roboto', sans-serif; color: var(--color-text); border: 1px solid var(--color-border); }
-        .card-image-container { width: 100%; padding-top: 75%; position: relative; background-color: #f0f0f0; }
-        .card-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
-        .card-header { padding: 16px; display: flex; justify-content: space-between; align-items: center; }
-        .card-content { padding: 0 16px 16px; flex-grow: 1; display: flex; flex-direction: column; }
-        .card-title { font-size: 1.25rem; margin: 0 0 10px 0; color: var(--color-primary); }
-        .card-description { margin: 0 0 16px 0; font-size: 0.95rem; flex-grow: 1; }
-        .card-tag { color: white; padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
-        .card-tag-servico { background-color: #3498db; }
-        .card-tag-emprego { background-color: #e67e22; }
-        .card-tag-artigos { background-color: #9b59b6; }
-        .card-tag-habitacao { background-color: #27ae60; }
-        .card-tag-blog { background-color: #f1c40f; }
-        .card-id { font-size: 0.9rem; color: var(--color-primary); background-color: var(--color-background); padding: 3px 8px; border-radius: 15px; }
-        .card-date { font-size: 0.8rem; color: #6c757d; }
-        .card-share { margin-top: auto; padding-top: 15px; border-top: 1px solid var(--color-border); text-align: center; }
-        .card-share-buttons { display: flex; justify-content: center; gap: 20px; }
-        .card-share-buttons a { font-size: 1.6rem; color: var(--color-primary); transition: transform 0.2s ease, color 0.2s ease; }
-        .card-share-buttons a:hover { color: var(--color-accent); transform: scale(1.1); }
+        textarea.code-output { width: 100%; min-height: 200px; font-family: monospace; font-size: 0.9em; background-color: #2b3035; color: #f8f8f2; }
+        
+        /* THEME SWITCH */
         .theme-switch-wrapper { display: flex; align-items: center; position: absolute; top: 20px; right: 20px; }
         .theme-switch { display: inline-block; height: 34px; position: relative; width: 60px; }
         .theme-switch input { display: none; }
@@ -79,6 +62,24 @@
         input:checked+.slider:before { transform: translateX(26px); }
         .slider.round { border-radius: 34px; }
         .slider.round:before { border-radius: 50%; }
+
+        /* CARD & CAROUSEL STYLES */
+        .card-causa { position: relative; background-color: #fff; border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); overflow: hidden; max-width: 350px; margin: auto; border: 2px solid transparent; transition: all 0.3s ease; }
+        .card-causa.destacado { border-color: var(--color-donation); }
+        .card-carousel-container { position: relative; width: 100%; overflow: hidden; background-color: #f0f0f0; }
+        .card-carousel-slides { display: flex; transition: transform 0.4s ease-in-out; }
+        .card-carousel-slide { min-width: 100%; box-sizing: border-box; position: relative; padding-bottom: 56.25%; height: 0; background-color: #000; }
+        .card-carousel-slide img, .card-carousel-slide iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border: none; }
+        .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(0,0,0,0.4); color: white; border: none; cursor: pointer; padding: 8px; z-index: 2; border-radius: 50%; width: 35px; height: 35px; font-size: 16px; }
+        .carousel-btn.prev { left: 10px; }
+        .carousel-btn.next { right: 10px; }
+        .new-tag, .status-tag { position: absolute; top: 12px; color: #fff; padding: 5px 12px; border-radius: 20px; font-size: .8rem; font-weight: 700; z-index: 5; }
+        .new-tag { left: 12px; background-color: var(--color-accent); }
+        .status-tag { right: 12px; background-color: var(--color-urgent); }
+        .status-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255,255,255,0.85); color: #333; display: flex; justify-content: center; align-items: center; z-index: 10; font-size: 1.5rem; font-weight: 700; }
+        .card-content { padding: 20px; }
+
+        @media (max-width: 992px) { .main-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -87,382 +88,261 @@
         <em style="margin-left: 10px;">Modo Oscuro</em>
     </div>
     <div class="container">
-        <h1>Painel de Controlo Unificado</h1>
-        <div class="tabs">
-            <button class="tab-button active" data-tab="anuncios">Anúncios</button>
-            <button class="tab-button" data-tab="blog">Blog</button>
-        </div>
-        <div id="tab-anuncios" class="tab-content active">
-            <div class="main-grid">
-                <div class="form-column">
-                    <div class="form-section">
-                        <h2>Criar Novo Anúncio</h2>
-                        <form id="anuncios-form" autocomplete="off" novalidate>
-                            <div class="form-group"><label for="post-type">Tipo de Anúncio</label><select id="post-type"><option value="emprego">Vaga de Emprego</option><option value="servico">Serviço Técnico</option><option value="habitacao">Habitação</option><option value="doacao">Pedido de Doação</option></select></div>
-                            <div class="form-group"><label for="ad-id-number">Introduza o último ID para gerar o seguinte</label><input type="number" id="ad-id-number" required placeholder="Ex: se o último foi 24, introduza 24"></div>
-                            <div class="form-group"><label for="title">Título do Anúncio</label><input type="text" id="title" required></div>
-                            <div class="form-group"><label for="description">Descrição</label><textarea id="description" rows="3" required></textarea></div>
-                            <div class="form-group form-group-inline">
-                                <div style="flex: 0 0 150px;"><label for="contact-type">Tipo de Contacto</label><select id="contact-type"><option value="telefone">Telefone</option><option value="email">Email</option></select></div>
-                                <div><label for="contact-value">Contacto</label><input type="text" id="contact-value" required></div>
-                            </div>
-                            <div class="form-group"><label for="publication-date">Data</label><input type="date" id="publication-date" required></div>
-                            <div class="form-group"><label for="city">Cidade</label><input type="text" id="city" required></div>
-                            <div id="servico-fields" class="hidden"><div class="form-group"><label for="service-category">Categoria</label><input type="text" id="service-category"></div></div>
-                            <div id="doacao-fields" class="hidden"><div class="form-group"><label for="item-type">Artigo</label><input type="text" id="item-type"></div></div>
-                            <div id="habitacao-fields" class="hidden"><div class="form-group"><label for="property-type">Imóvel</label><input type="text" id="property-type"></div><div class="form-group"><label for="image-file-input">Carregar Imagem</label><input type="file" id="image-file-input" accept="image/png, image/jpeg, image/webp"></div></div>
-                            <button type="button" id="generate-ad-btn" class="button">Gerar Código do Anúncio</button>
-                            <button type="button" id="clear-ad-btn" class="button secondary" style="margin-left: 15px;">Limpar</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="right-column">
-                    <div class="live-preview-section">
-                        <h3>Pré-visualização do Anúncio</h3>
-                        <div id="live-preview-container-anuncio" class="live-preview-container"><div id="capture-area"></div></div>
-                        <button type="button" id="download-image-btn" class="button" style="width: 100%; margin-top: 20px;">Guardar pré-visualização para Instagram (JPG)</button>
-                    </div>
-                    <div class="preview-section" style="margin-top:30px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <h3>Código HTML e SEO</h3>
-                            <button type="button" id="copy-code-btn" class="button secondary" style="padding: 5px 15px; font-size: 0.8em;">Copiar</button>
-                        </div>
-                        <textarea id="generated-code-anuncio" readonly></textarea>
-                    </div>
-                    <div class="preview-section" style="margin-top:30px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <h3>Hashtags para Instagram</h3>
-                            <button type="button" id="copy-hashtags-btn" class="button secondary" style="padding: 5px 15px; font-size: 0.8em;">Copiar</button>
-                        </div>
-                        <textarea id="generated-hashtags" readonly></textarea>
-                    </div>
-                </div>
+        <h1>Painel de Controlo Centralizado</h1>
+        <div class="main-grid">
+            <div class="form-section">
+                <h2>1. Criar Anúncio</h2>
+                <form id="anuncios-form" autocomplete="off" novalidate>
+                    <div class="form-group"><label for="post-type">Tipo de Anúncio</label><select id="post-type"><option value="emprego">Vaga de Emprego</option><option value="servico">Serviço Técnico</option><option value="habitacao">Habitação</option><option value="doacao">Pedido de Doação</option></select></div>
+                    <div class="form-group"><label for="ad-id-number">ID do Anúncio (Ex: 25)</label><input type="number" id="ad-id-number" required></div>
+                    <div class="form-group"><label for="title">Título</label><input type="text" id="title" required></div>
+                    <div class="form-group"><label for="description">Descrição</label><textarea id="description" rows="4" required></textarea></div>
+                    
+                    <h4>Mídia (Opcional)</h4>
+                    <div class="form-group"><label for="youtube-link">Link de Vídeo do YouTube</label><input type="url" id="youtube-link"></div>
+                    <div class="form-group"><label for="image-input">Imagens (Máximo 5)</label><input type="file" id="image-input" accept="image/*" multiple></div>
+                    
+                    <h4>Detalhes de Contacto e Publicação</h4>
+                    <div class="form-group"><label for="contact-phone">Telefone</label><input type="tel" id="contact-phone"></div>
+                    <div class="form-group"><label for="contact-email">Email</label><input type="email" id="contact-email"></div>
+                    <div class="form-group"><label for="publication-date">Data</label><input type="date" id="publication-date" required></div>
+                    <div class="form-group"><label for="city">Cidade</label><input type="text" id="city" required></div>
+
+                    <h4>Opções de Apresentação</h4>
+                    <div class="form-group"><label for="ad-priority">Prioridade</label><input type="number" id="ad-priority" value="0"></div>
+                    <div class="form-group"><label for="ad-status">Estado</label><select id="ad-status"><option value="disponivel">Disponível</option><option value="urgente">Urgente</option><option value="preenchido">Preenchido</option></select></div>
+                    <div class="form-group"><label for="card-bg-color">Cor de Fundo</label><input type="color" id="card-bg-color" value="#FFFFFF"></div>
+                    <div class="form-group form-group-checkbox"><input type="checkbox" id="is-highlighted"><label for="is-highlighted">Destacar Anúncio</label></div>
+                    <div class="form-group form-group-checkbox"><input type="checkbox" id="is-new"><label for="is-new">Marcar como "Novo"</label></div>
+                    
+                    <button type="button" id="generate-ad-btn" class="button">Gerar Código</button>
+                    <button type="button" id="clear-ad-btn" class="button secondary" style="margin-left: 15px;">Limpar</button>
+                </form>
             </div>
-        </div>
-        <div id="tab-blog" class="tab-content">
-             <div class="main-grid">
-                <div class="form-column">
-                    <div class="form-section">
-                        <h2>Criar Nova Entrada de Blog</h2>
-                        <form id="blog-form" autocomplete="off" novalidate>
-                            <div class="form-group"><label for="blog-title">Título da Entrada</label><input type="text" id="blog-title" required></div>
-                            <div class="form-group"><label for="blog-description">Conteúdo</label><textarea id="blog-description" rows="5" required></textarea></div>
-                            <div class="form-group"><label for="blog-publication-date">Data de Publicação</label><input type="date" id="blog-publication-date" required></div>
-                            <div class="form-group"><label for="blog-category">Categoria</label><input type="text" id="blog-category" placeholder="Ex: Emprego, Habitação..."></div>
-                            <div class="form-group"><label for="blog-image-url">URL da Imagem</label><input type="text" id="blog-image-url" placeholder="Cole o URL da imagem aqui"></div>
-                            <button type="button" id="generate-blog-btn" class="button">Gerar Código do Blog</button>
-                            <button type="button" id="clear-blog-btn" class="button secondary" style="margin-left: 15px;">Limpar</button>
-                        </form>
-                    </div>
+            <div>
+                <div class="preview-section">
+                    <h2>2. Pré-visualização</h2>
+                    <div id="capture-area"></div>
                 </div>
-                <div class="right-column">
-                    <div class="live-preview-section">
-                        <h3>Pré-visualização da Entrada de Blog</h3>
-                        <div id="live-preview-container-blog" class="live-preview-container"><div id="capture-area-blog"></div></div>
-                    </div>
-                    <div class="preview-section" style="margin-top:30px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                           <h3>Código HTML e SEO</h3>
-                           <button type="button" id="copy-blog-code-btn" class="button secondary" style="padding: 5px 15px; font-size: 0.8em;">Copiar</button>
-                        </div>
-                        <textarea id="generated-code-blog" readonly></textarea>
-                    </div>
+                <div class="preview-section" style="margin-top:30px;">
+                    <h2>3. Código para Copiar</h2>
+                    <textarea id="generated-code-anuncio" class="code-output" readonly></textarea>
+                </div>
+                 <div class="preview-section" style="margin-top:30px;">
+                    <h2>4. Hashtags Sugeridos</h2>
+                    <textarea id="generated-hashtags" class="code-output" readonly></textarea>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const tabs = document.querySelectorAll('.tab-button');
-            const tabContents = document.querySelectorAll('.tab-content');
-            const themeSwitch = document.getElementById('checkbox');
+    document.addEventListener('DOMContentLoaded', () => {
+        const adElements = {
+            youtubeLink: document.getElementById('youtube-link'),
+            imageInput: document.getElementById('image-input'),
+            postType: document.getElementById('post-type'),
+            adIdNumber: document.getElementById('ad-id-number'),
+            title: document.getElementById('title'),
+            description: document.getElementById('description'),
+            contactPhone: document.getElementById('contact-phone'),
+            contactEmail: document.getElementById('contact-email'),
+            publicationDate: document.getElementById('publication-date'),
+            city: document.getElementById('city'),
+            adPriority: document.getElementById('ad-priority'),
+            adStatus: document.getElementById('ad-status'),
+            cardBgColor: document.getElementById('card-bg-color'),
+            isHighlighted: document.getElementById('is-highlighted'),
+            isNew: document.getElementById('is-new'),
+            captureArea: document.getElementById('capture-area'),
+            generatedCode: document.getElementById('generated-code-anuncio'),
+            generatedHashtags: document.getElementById('generated-hashtags'),
+            generateBtn: document.getElementById('generate-ad-btn'),
+            clearBtn: document.getElementById('clear-ad-btn'),
+            form: document.getElementById('anuncios-form'),
+        };
 
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    tabs.forEach(item => item.classList.remove('active'));
-                    tab.classList.add('active');
-                    const target = document.getElementById(`tab-${tab.dataset.tab}`);
-                    tabContents.forEach(content => content.classList.remove('active'));
-                    target.classList.add('active');
-                });
-            });
+        let imageFiles = [];
 
-            themeSwitch.addEventListener('change', () => {
-                const theme = themeSwitch.checked ? 'dark' : 'light';
-                document.documentElement.setAttribute('data-theme', theme);
-                localStorage.setItem('theme', theme);
-            });
-            const currentTheme = localStorage.getItem('theme');
-            if (currentTheme) {
-                document.documentElement.setAttribute('data-theme', currentTheme);
-                if (currentTheme === 'dark') themeSwitch.checked = true;
-            }
-
-            const adElements = {
-                postType: document.getElementById('post-type'),
-                adIdNumber: document.getElementById('ad-id-number'),
-                title: document.getElementById('title'),
-                description: document.getElementById('description'),
-                contactType: document.getElementById('contact-type'),
-                contactValue: document.getElementById('contact-value'),
-                city: document.getElementById('city'),
-                publicationDate: document.getElementById('publication-date'),
-                imageFileInput: document.getElementById('image-file-input'),
-                captureArea: document.getElementById('capture-area'),
-                generatedCode: document.getElementById('generated-code-anuncio'),
-                generatedHashtags: document.getElementById('generated-hashtags'),
-                generateBtn: document.getElementById('generate-ad-btn'),
-                clearBtn: document.getElementById('clear-ad-btn'),
-                form: document.getElementById('anuncios-form'),
-                downloadImageBtn: document.getElementById('download-image-btn')
-            };
-            let adUploadedFile = { name: '', dataUrl: '' };
-
-            const toTitleCase = str => str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
-            const toCapitalizeCase = str => str ? str.charAt(0).toUpperCase() + str.slice(1).toLowerCase() : '';
-
-            const toggleFields = () => {
-                document.querySelectorAll('#servico-fields, #habitacao-fields, #doacao-fields').forEach(f => f.classList.add('hidden'));
-                const fieldsToShow = document.getElementById(`${adElements.postType.value}-fields`);
-                if (fieldsToShow) fieldsToShow.classList.remove('hidden');
-                updateAllAdOutputs();
-            };
-
-            const clearForm = () => {
-                adElements.form.reset();
-                adUploadedFile = { name: '', dataUrl: '' };
-                toggleFields();
+        const updatePreview = () => {
+            const formData = getAdFormData();
+            if (!formData.title && imageFiles.length === 0 && !formData.youtubeUrl) {
                 adElements.captureArea.innerHTML = "";
-                adElements.generatedCode.value = "";
-                adElements.generatedHashtags.value = "";
+                return;
+            }
+            const { fullPreviewHTML } = generateAdHtmlAndSeo(formData);
+            adElements.captureArea.innerHTML = fullPreviewHTML;
+        };
+
+        adElements.imageInput.addEventListener('change', (event) => {
+            imageFiles = Array.from(event.target.files).slice(0, 5);
+            updatePreview();
+        });
+
+        document.querySelectorAll('#anuncios-form input, #anuncios-form textarea, #anuncios-form select').forEach(el => {
+            el.addEventListener('input', updatePreview);
+        });
+
+        adElements.generateBtn.addEventListener('click', () => {
+            const formData = getAdFormData();
+            if (!formData.title || !formData.id) {
+                alert("Por favor, preencha o Título e o ID do Anúncio.");
+                return;
+            }
+            const { cardHTML, scriptHTML, seoHTML } = generateAdHtmlAndSeo(formData);
+            const hashtags = generateHashtags(formData);
+
+            adElements.generatedCode.value = seoHTML + '\n' + cardHTML + '\n\n' + scriptHTML;
+            adElements.generatedHashtags.value = hashtags;
+        });
+
+        adElements.clearBtn.addEventListener('click', () => {
+            adElements.form.reset();
+            adElements.publicationDate.valueAsDate = new Date();
+            imageFiles = [];
+            updatePreview();
+            adElements.generatedCode.value = "";
+            adElements.generatedHashtags.value = "";
+        });
+
+        function getYouTubeEmbedUrl(url) {
+            if (!url) return null;
+            let videoId;
+            try {
+                const urlObj = new URL(url);
+                if (urlObj.hostname === 'youtu.be') videoId = urlObj.pathname.slice(1);
+                else videoId = urlObj.searchParams.get('v');
+            } catch (e) { return null; }
+            return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+        }
+
+        function getAdFormData() {
+            return {
+                type: adElements.postType.value,
+                id: adElements.adIdNumber.value,
+                title: adElements.title.value,
+                description: adElements.description.value.replace(/\n/g, '<br>'),
+                phone: adElements.contactPhone.value,
+                email: adElements.contactEmail.value,
+                youtubeUrl: getYouTubeEmbedUrl(adElements.youtubeLink.value),
+                images: imageFiles,
+                pubDate: adElements.publicationDate.value,
+                city: adElements.city.value,
+                priority: adElements.adPriority.value || '0',
+                status: adElements.adStatus.value,
+                bgColor: adElements.cardBgColor.value,
+                isHighlighted: adElements.isHighlighted.checked,
+                isNew: adElements.isNew.checked,
             };
+        }
 
-            function generateHashtags(data) {
-                const hashtags = new Set();
-                hashtags.add('#portugalapoia');
-                hashtags.add('#comunidade');
-                hashtags.add('#ajuda');
-                hashtags.add('#solidariedade');
-                hashtags.add('#portugal');
-                switch (data.type) {
-                    case 'emprego': hashtags.add('#emprego'); hashtags.add('#vaga'); hashtags.add('#trabalho'); hashtags.add('#recrutamento'); break;
-                    case 'servico': hashtags.add('#servicos'); hashtags.add('#profissional'); if (data.serviceCategory) hashtags.add(`#${data.serviceCategory.toLowerCase().replace(/\s/g, '')}`); break;
-                    case 'habitacao': hashtags.add('#habitacao'); hashtags.add('#arrendamento'); hashtags.add('#imobiliario'); if (data.propertyType) hashtags.add(`#${data.propertyType.toLowerCase().replace(/\s/g, '')}`); break;
-                    case 'doacao': hashtags.add('#doacao'); hashtags.add('#doar'); hashtags.add('#causasocial'); if (data.itemType) hashtags.add(`#${data.itemType.toLowerCase().replace(/\s/g, '')}`); break;
-                }
-                if (data.city) {
-                    const cityHashtag = data.city.toLowerCase().replace(/\s/g, '');
-                    hashtags.add(`#${cityHashtag}`);
-                    if (data.type === 'emprego') hashtags.add(`#emprego${cityHashtag}`);
-                }
-                if (data.title) {
-                    data.title.split(' ').forEach(word => {
-                        if (word.length > 3) {
-                            hashtags.add(`#${word.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`);
-                        }
-                    });
-                }
-                return Array.from(hashtags).join(' ');
+        function generateHashtags(data) {
+            const hashtags = new Set(['#portugalapoia', '#comunidade', '#solidariedade', '#portugal']);
+            if (data.isNew) hashtags.add('#novidade');
+            if (data.status === 'urgente') hashtags.add('#urgente');
+            switch (data.type) {
+                case 'emprego': hashtags.add('#emprego'); hashtags.add('#vaga'); break;
+                case 'servico': hashtags.add('#servicos'); break;
+                case 'habitacao': hashtags.add('#habitacao'); hashtags.add('#arrendamento'); break;
+                case 'doacao': hashtags.add('#doacao'); break;
             }
-
-            function updateAllAdOutputs() {
-                const formData = getAdFormData();
-                if (!formData.title) {
-                    adElements.captureArea.innerHTML = "";
-                    adElements.generatedCode.value = "";
-                    adElements.generatedHashtags.value = "";
-                    return;
-                }
-                const { cardHTML, fullPreviewHTML, jsonLdScript } = generateAdHtmlAndSeo(formData);
-                const hashtags = generateHashtags(formData);
-                adElements.generatedCode.value = `\n${jsonLdScript}\n${cardHTML}\n`;
-                adElements.captureArea.innerHTML = fullPreviewHTML;
-                adElements.generatedHashtags.value = hashtags;
+            if (data.city) hashtags.add(`#${data.city.toLowerCase().replace(/\s/g, '')}`);
+            data.title.split(' ').forEach(word => { if (word.length > 3) hashtags.add(`#${word.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`); });
+            return Array.from(hashtags).join(' ');
+        }
+        
+        function generateAdHtmlAndSeo(data) {
+            let cardIdPrefix = '', schemaType = 'Thing';
+            switch (data.type) {
+                case 'emprego': cardIdPrefix = 'EMP'; schemaType = 'JobPosting'; break;
+                case 'servico': cardIdPrefix = 'SER'; schemaType = 'Service'; break;
+                case 'habitacao': cardIdPrefix = 'HAB'; schemaType = 'Apartment'; break;
+                case 'doacao': cardIdPrefix = 'DOA'; schemaType = 'Demand'; break;
             }
+            const cardId = `${cardIdPrefix}-${data.id.padStart(3, '0')}`;
 
-            function getAdFormData() {
-                const lastId = parseInt(adElements.adIdNumber.value || '0');
-                const nextId = lastId + 1;
-                return {
-                    type: adElements.postType.value,
-                    id: nextId.toString(),
-                    title: toTitleCase(adElements.title.value),
-                    description: adElements.description.value,
-                    contact: { type: adElements.contactType.value, value: adElements.contactValue.value },
-                    city: toTitleCase(adElements.city.value),
-                    pubDate: adElements.publicationDate.value || new Date().toISOString().split('T')[0],
-                    image: adUploadedFile,
-                    serviceCategory: toCapitalizeCase(document.getElementById('service-category')?.value),
-                    propertyType: toCapitalizeCase(document.getElementById('property-type')?.value),
-                    itemType: toCapitalizeCase(document.getElementById('item-type')?.value)
-                };
+            let mediaItemsPreview = [], mediaItemsFinal = [];
+            if (data.youtubeUrl) {
+                const item = `<div class="card-carousel-slide"><iframe src="${data.youtubeUrl}" frameborder="0" allowfullscreen></iframe></div>`;
+                mediaItemsPreview.push(item);
+                mediaItemsFinal.push(item);
             }
+            data.images.forEach(file => {
+                mediaItemsPreview.push(`<div class="card-carousel-slide"><img src="${URL.createObjectURL(file)}" alt="Imagem do anúncio"></div>`);
+                mediaItemsFinal.push(`<div class="card-carousel-slide"><img src="img_anuncios/${file.name.replace(/\s/g, '_')}" alt="Imagem do anúncio"></div>`);
+            });
 
-            function generateAdHtmlAndSeo(data) {
-                let cardIdPrefix = '', schemaType = '', cardTagText = '', cardTagClass = '', dataAttributes = `data-publication-date="${data.pubDate}" data-city="${data.city}"`, websiteUrl = '', shareIntro = '';
-                switch (data.type) {
-                    case 'servico': cardIdPrefix = 'SER'; schemaType = 'Service'; cardTagText = data.serviceCategory || 'Serviço'; cardTagClass = 'card-tag-servico'; websiteUrl = 'https://www.portugalapoia.com/servicos.html'; shareIntro = 'Confira este serviço'; break;
-                    case 'habitacao': cardIdPrefix = 'HAB'; schemaType = 'Apartment'; cardTagText = data.propertyType || 'Habitação'; cardTagClass = 'card-tag-habitacao'; websiteUrl = 'https://www.portugalapoia.com/habitacao.html'; shareIntro = 'Confira esta habitação'; break;
-                    case 'doacao': cardIdPrefix = 'DOA'; schemaType = 'Demand'; cardTagText = 'Pedido de Artigos'; cardTagClass = 'card-tag-artigos'; websiteUrl = 'https://www.portugalapoia.com/doacoes.html'; shareIntro = 'Confira este pedido de doação'; break;
-                    default: cardIdPrefix = 'EMP'; schemaType = 'JobPosting'; cardTagText = 'Vaga de Emprego'; cardTagClass = 'card-tag-emprego'; websiteUrl = 'https://www.portugalapoia.com/empregos.html'; shareIntro = 'Confira esta vaga de emprego'; break;
-                }
-                const cardId = data.id ? `${cardIdPrefix}-${data.id.padStart(3, '0')}` : '';
-                let contactHTML = '';
-                if (data.contact.value) {
-                    if (data.contact.type === 'email') {
-                        contactHTML = `<p class="card-description">Email: <a href="mailto:${data.contact.value}">${data.contact.value}</a></p>`;
-                    } else {
-                        contactHTML = `<p class="card-description">Tel. <a href="tel:${data.contact.value.replace(/\s/g, '')}">${data.contact.value}</a></p>`;
-                    }
-                }
-                const imageHTMLForPreview = data.image.dataUrl ? `<div class="card-image-container"><img src="${data.image.dataUrl}" alt="${data.title}" class="card-image"></div>` : '';
-                let imagePathForCode = (data.type === 'habitacao' && data.image.name) ? `img_servicos/${data.image.name}` : '';
-                const imageHTMLForCode = imagePathForCode ? `<div class="card-image-container"><img src="${imagePathForCode}" alt="${data.title}" class="card-image"></div>` : '';
-                const shareText = encodeURIComponent(`${shareIntro}: "${data.title}" em ${data.city}.`);
-                const encodedWebsiteUrl = encodeURIComponent(websiteUrl);
-                const instagramProfileUrl = 'https://www.instagram.com/portugalapoia';
-
-                const shareButtonsHTML = `
-                    <div class="card-share">
-                        <div class="card-share-buttons">
-                            <a href="https://www.facebook.com/sharer/sharer.php?u=${encodedWebsiteUrl}&quote=${shareText}" target="_blank" title="Partilhar no Facebook"><i class="fab fa-facebook-f"></i></a>
-                            <a href="https://api.whatsapp.com/send?text=${shareText}%20Veja%20mais%20em:%20${encodedWebsiteUrl}" target="_blank" title="Partilhar no WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                            <a href="${instagramProfileUrl}" target="_blank" title="Visitar Instagram"><i class="fab fa-instagram"></i></a>
+            let mediaHTMLPreview = '', mediaHTMLFinal = '';
+            if (mediaItemsPreview.length > 0) {
+                 const carouselId = `carousel-${Date.now()}`;
+                 const createCarousel = (items) => `
+                    <div class="card-carousel-container">
+                        <div class="card-carousel-slides" id="${carouselId}" data-total="${items.length}">
+                            ${items.join('')}
                         </div>
+                        ${items.length > 1 ? `<button class="carousel-btn prev" onclick="moveSlide('${carouselId}', -1)">&#10094;</button><button class="carousel-btn next" onclick="moveSlide('${carouselId}', 1)">&#10095;</button>` : ''}
                     </div>`;
-
-                const cardHTML = `<div class="card-causa" ${dataAttributes}>${imageHTMLForCode}<div class="card-header"><span class="card-tag ${cardTagClass}">${cardTagText}</span><span class="card-id">#${cardId}</span></div><div class="card-content"><h3 class="card-title">${data.title}</h3><p class="card-description">${data.description.replace(/\n/g, '<br>')}</p>${contactHTML}${shareButtonsHTML}</div></div>`;
-                const fullPreviewHTML = `<div class="card-causa" ${dataAttributes}>${imageHTMLForPreview}<div class="card-header"><span class="card-tag ${cardTagClass}">${cardTagText}</span><span class="card-id">#${cardId}</span></div><div class="card-content"><h3 class="card-title">${data.title}</h3><p class="card-description">${data.description.replace(/\n/g, '<br>')}</p>${contactHTML}${shareButtonsHTML}</div></div>`;
-                const schema = { "@context": "https://schema.org", "@type": schemaType, "name": data.title, "description": data.description, "identifier": cardId, "datePosted": data.pubDate };
-                if (imagePathForCode) schema.image = `https://www.portugalapoia.com/${imagePathForCode}`;
-                const jsonLdScript = `<script type="application/ld+json">\n${JSON.stringify(schema, null, 2)}\n<\/script>`;
-                return { cardHTML, fullPreviewHTML, jsonLdScript };
-            }
-
-            adElements.generateBtn.addEventListener('click', updateAllAdOutputs);
-            adElements.postType.addEventListener('change', toggleFields);
-            adElements.imageFileInput.addEventListener('change', e => {
-                const file = e.target.files[0]; if (file) { const reader = new FileReader(); reader.onload = e => { adUploadedFile = { name: file.name, dataUrl: e.target.result }; updateAllAdOutputs(); }; reader.readAsDataURL(file); }
-            });
-            document.querySelectorAll('#anuncios-form input, #anuncios-form textarea, #anuncios-form select').forEach(input => input.addEventListener('input', updateAllAdOutputs));
-            adElements.clearBtn.addEventListener('click', clearForm);
-            adElements.downloadImageBtn.addEventListener('click', function () {
-                const elementToCapture = adElements.captureArea;
-                if (!elementToCapture.querySelector('.card-causa')) { alert("Por favor, gere primeiro uma pré-visualização do anúncio."); return; }
-                html2canvas(elementToCapture, { useCORS: true, scale: 3, backgroundColor: '#FFFFFF' }).then(capturedCanvas => {
-                    const TARGET_WIDTH = 1080, TARGET_HEIGHT = 1080;
-                    const finalCanvas = document.createElement('canvas');
-                    finalCanvas.width = TARGET_WIDTH; finalCanvas.height = TARGET_HEIGHT;
-                    const ctx = finalCanvas.getContext('2d');
-                    ctx.fillStyle = 'white'; ctx.fillRect(0, 0, TARGET_WIDTH, TARGET_HEIGHT);
-                    const ratio = Math.min((TARGET_WIDTH * 0.9) / capturedCanvas.width, (TARGET_HEIGHT * 0.9) / capturedCanvas.height);
-                    const newWidth = capturedCanvas.width * ratio;
-                    const newHeight = capturedCanvas.height * ratio;
-                    const x = (TARGET_WIDTH - newWidth) / 2;
-                    const y = (TARGET_HEIGHT - newHeight) / 2;
-                    ctx.drawImage(capturedCanvas, x, y, newWidth, newHeight);
-                    const link = document.createElement('a');
-                    link.href = finalCanvas.toDataURL('image/jpeg', 0.9);
-                    link.download = 'anuncio-instagram.jpg';
-                    document.body.appendChild(link); link.click(); document.body.removeChild(link);
-                }).catch(error => console.error('Oops, algo correu mal!', error));
-            });
-            toggleFields();
-
-            const blogElements = {
-                title: document.getElementById('blog-title'),
-                description: document.getElementById('blog-description'),
-                publicationDate: document.getElementById('blog-publication-date'),
-                category: document.getElementById('blog-category'),
-                imageUrl: document.getElementById('blog-image-url'),
-                captureArea: document.getElementById('capture-area-blog'),
-                generatedCode: document.getElementById('generated-code-blog'),
-                generateBtn: document.getElementById('generate-blog-btn'),
-                clearBtn: document.getElementById('clear-blog-btn'),
-                form: document.getElementById('blog-form')
-            };
-
-            const clearBlogForm = () => {
-                blogElements.form.reset();
-                blogElements.captureArea.innerHTML = "";
-                blogElements.generatedCode.value = "";
-            };
-
-            const formatDate = (dateString) => {
-                if (!dateString) return '';
-                const date = new Date(dateString);
-                const adjustedDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
-                const day = adjustedDate.getDate().toString().padStart(2, '0');
-                const month = (adjustedDate.getMonth() + 1).toString().padStart(2, '0');
-                const year = adjustedDate.getFullYear();
-                return `${day}/${month}/${year}`;
-            };
-
-            function updateAllBlogOutputs() {
-                const formData = getBlogFormData();
-                if (!formData.title) {
-                    blogElements.captureArea.innerHTML = "";
-                    blogElements.generatedCode.value = "";
-                    return;
-                }
-                const { cardHTML, fullPreviewHTML, jsonLdScript } = generateBlogHtmlAndSeo(formData);
-                blogElements.generatedCode.value = `\n${jsonLdScript}\n${cardHTML}\n`;
-                blogElements.captureArea.innerHTML = fullPreviewHTML;
-            }
-
-            function getBlogFormData() {
-                return {
-                    title: toTitleCase(blogElements.title.value),
-                    description: blogElements.description.value,
-                    pubDate: blogElements.publicationDate.value || new Date().toISOString().split('T')[0],
-                    imageUrl: blogElements.imageUrl.value,
-                    category: toCapitalizeCase(blogElements.category.value)
-                };
-            }
-
-            function generateBlogHtmlAndSeo(data) {
-                const cardTagText = data.category || 'Blog';
-                const cardTagClass = 'card-tag-blog';
-                const formattedDate = formatDate(data.pubDate);
-                const imageHTML = data.imageUrl ? `<div class="card-image-container"><img src="${data.imageUrl}" alt="${data.title}" class="card-image"></div>` : '';
-                const cardHeaderHTML = `<div class="card-header"><span class="card-tag ${cardTagClass}">${cardTagText}</span><span class="card-date">${formattedDate}</span></div>`;
-                const cardHTML = `<div class="card-causa">${imageHTML}${cardHeaderHTML}<div class="card-content"><h3 class="card-title">${data.title}</h3><p class="card-description">${data.description.replace(/\n/g, '<br>')}</p></div></div>`;
-                const schema = { "@context": "https://schema.org", "@type": "BlogPosting", "headline": data.title, "articleBody": data.description, "datePublished": data.pubDate, "author": { "@type": "Organization", "name": "PortugalApoia" } };
-                if (data.imageUrl) schema.image = data.imageUrl;
-                const jsonLdScript = `<script type="application/ld+json">\n${JSON.stringify(schema, null, 2)}\n<\/script>`;
-                return { cardHTML, fullPreviewHTML: cardHTML, jsonLdScript };
+                mediaHTMLPreview = createCarousel(mediaItemsPreview);
+                mediaHTMLFinal = createCarousel(mediaItemsFinal);
             }
             
-            blogElements.generateBtn.addEventListener('click', updateAllBlogOutputs);
-            document.querySelectorAll('#blog-form input, #blog-form textarea').forEach(input => input.addEventListener('input', updateAllBlogOutputs));
-            blogElements.clearBtn.addEventListener('click', clearBlogForm);
+            let contactHTML = '';
+            if(data.phone) contactHTML += `<p><strong>Telefone:</strong> <a href="tel:${data.phone}">${data.phone}</a></p>`;
+            if(data.email) contactHTML += `<p><strong>Email:</strong> <a href="mailto:${data.email}">${data.email}</a></p>`;
 
-            function copyToClipboard(text, buttonElement) {
-                if (!text) return;
-                navigator.clipboard.writeText(text).then(() => {
-                    const originalText = buttonElement.textContent;
-                    buttonElement.textContent = 'Copiado!';
-                    buttonElement.style.backgroundColor = '#28a745';
-                    setTimeout(() => {
-                        buttonElement.textContent = originalText;
-                        buttonElement.style.backgroundColor = '';
-                    }, 2000);
-                }).catch(err => {
-                    alert('Falha ao copiar.');
-                });
-            }
+            let statusTagHTML = data.status === 'urgente' ? `<div class="status-tag">Urgente</div>` : '';
+            let statusOverlayHTML = data.status === 'preenchido' ? `<div class="status-overlay">Preenchido</div>` : '';
+            let newTagHTML = data.isNew ? `<div class="new-tag">Novo</div>` : '';
 
-            document.getElementById('copy-code-btn').addEventListener('click', (e) => {
-                copyToClipboard(document.getElementById('generated-code-anuncio').value, e.target);
-            });
-            document.getElementById('copy-hashtags-btn').addEventListener('click', (e) => {
-                copyToClipboard(document.getElementById('generated-hashtags').value, e.target);
-            });
-            document.getElementById('copy-blog-code-btn').addEventListener('click', (e) => {
-                copyToClipboard(document.getElementById('generated-code-blog').value, e.target);
-            });
+            const cardContent = `
+                <div class="card-content">
+                    <h3>${data.title}</h3>
+                    <p>${data.description}</p>
+                    ${contactHTML}
+                    <p><small>#${cardId} | ${data.city}, ${data.pubDate}</small></p>
+                </div>`;
+            
+            const cardClasses = `card-causa ${data.isHighlighted ? 'destacado' : ''}`;
+            const dataAttributes = `data-publication-date="${data.pubDate}" data-city="${data.city}" data-priority="${data.priority}"`;
+
+            const fullPreviewHTML = `<div class="${cardClasses}" style="background-color: ${data.bgColor};">${statusOverlayHTML}${newTagHTML}${statusTagHTML}${mediaHTMLPreview}${cardContent}</div>`;
+            const cardHTML = `<div class="${cardClasses}" ${dataAttributes} style="background-color: ${data.bgColor};">${statusOverlayHTML}${newTagHTML}${statusTagHTML}${mediaHTMLFinal}${cardContent}</div>`;
+
+            const schema = { "@context": "https://schema.org", "@type": schemaType, "name": data.title, "description": data.description.replace(/<br>/g, ' '), "identifier": cardId, "datePosted": data.pubDate };
+            const seoHTML = `<script type="application/ld+json">\n${JSON.stringify(schema, null, 2)}\n<\/script>`;
+
+            const scriptHTML = mediaItemsPreview.length > 1 ? `
+<script>
+    if (typeof window.moveSlide !== 'function') {
+        window.slideStates = window.slideStates || {};
+        window.moveSlide = function(carouselId, direction) {
+            const slides = document.getElementById(carouselId);
+            if (!slides) return;
+            const totalSlides = parseInt(slides.dataset.total) || slides.children.length;
+            if (window.slideStates[carouselId] === undefined) window.slideStates[carouselId] = 0;
+            window.slideStates[carouselId] = (window.slideStates[carouselId] + direction + totalSlides) % totalSlides;
+            slides.style.transform = \`translateX(-\${window.slideStates[carouselId] * 100}%)\`;
+        }
+    }
+<\/script>` : '';
+            
+            return { cardHTML, fullPreviewHTML, scriptHTML, seoHTML };
+        }
+
+        const themeSwitch = document.getElementById('checkbox');
+        themeSwitch.addEventListener('change', () => {
+            const theme = themeSwitch.checked ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
         });
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme) {
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            if (currentTheme === 'dark') themeSwitch.checked = true;
+        }
+
+        adElements.publicationDate.valueAsDate = new Date();
+    });
     </script>
 </body>
 </html>
