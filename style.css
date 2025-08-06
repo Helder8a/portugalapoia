@@ -1110,7 +1110,7 @@ section {
     border-color: var(--color-text-light);
 }
 
-@media (max-width: 740px) {
+@media (max-width: 720px) {
     .pwa-banner-content {
         flex-direction: column;
         text-align: center;
