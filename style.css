@@ -946,3 +946,119 @@ section {
     }
 }
 
+/* --- MEDIA QUERIES (DISEÑO RESPONSIVO) --- */
+@media (max-width: 992px) {
+    .main-nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        border-top: 1px solid var(--color-border);
+        flex-direction: column;
+    }
+
+    .main-nav.nav-visible {
+        display: flex;
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .main-nav li {
+        margin: 0;
+        width: 100%;
+    }
+
+    .main-nav a {
+        display: block;
+        padding: 15px;
+        text-align: center;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .main-nav li:last-child a {
+        border-bottom: none;
+    }
+
+    .main-nav a::after {
+        display: none;
+    }
+
+    .mobile-nav-toggle {
+        display: block;
+    }
+
+    .search-box {
+        flex-direction: column;
+    }
+
+    .filter-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.4rem;
+        line-height: 1.2;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-buttons .button {
+        width: 80%;
+        max-width: 320px;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .footer-grid {
+        text-align: center;
+        grid-template-columns: 1fr;
+    }
+
+    .footer-column {
+        align-items: center;
+    }
+
+    #scrollTopBtn {
+        bottom: 15px;
+        right: 15px;
+        width: 45px;
+        height: 45px;
+        padding: 12px;
+    }
+
+    /* Ajustes para el banner de cookies en móviles */
+    .cookie-banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .cookie-banner p {
+        margin-bottom: 15px;
+    }
+
+    .cookie-banner button {
+        margin-left: 0;
+        width: 60%;
+        max-width: 200px;
+    }
+}
+
