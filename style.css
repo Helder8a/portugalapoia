@@ -1542,3 +1542,19 @@ blockquote {
 .button.is-loading .button-text {
     margin-right: 10px
 }
+
+/* Estilo de foco visible para una mejor accesibilidad */
+a:focus,
+button:focus,
+input:focus,
+textarea:focus {
+  outline: 3px solid #005fcc; /* Un azul brillante y grueso */
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px rgba(0, 95, 204, 0.3);
+  border-radius: 4px; /* Opcional: para redondear el borde */
+}
+
+.elemento-pantalla-completa {
+  height: 100dvh; /* Mal en móviles */
+  height: 100dvh; /* Correcto para móviles modernos */
+}
