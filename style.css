@@ -1775,11 +1775,13 @@ blockquote {
 }
 
 /* ================================================================ */
-/* == CORRECCIÓN FINAL Y DEFINITIVA PARA BOTÓN EN TARJETAS == */
+/* ==   CORRECCIÓN FINAL PARA EL BOTÓN EN VISTA MÓVIL (MÁXIMA PRIORIDAD)   == */
 /* ================================================================ */
 
-/* Esta regla fuerza el texto de los botones primarios dentro de
-   cualquier tarjeta a ser siempre blanco, anulando cualquier otro estilo. */
-.card-causa a.button-primary {
-    color: #ffffff !important;
+/* Esta media query se aplica a todas las pantallas con un ancho
+   máximo de 992px (tablets y móviles) para garantizar la corrección. */
+@media (max-width: 992px) {
+  .card-causa a.button.button-primary {
+    color: #ffffff !important; /* Blanco, con máxima prioridad */
+  }
 }
