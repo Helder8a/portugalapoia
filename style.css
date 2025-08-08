@@ -1,4 +1,4 @@
-/* --- ESTILOS BASE Y RESETEO AGRESIVO --- */
+/* --- RESET Y ESTILOS GLOBALES DE MÁXIMA COMPATIBILIDAD --- */
 :root {
     --color-primary: #0a3d62;
     --color-accent: #00834b;
@@ -14,40 +14,46 @@
     --shadow: 0 5px 15px rgba(0, 0, 0, .07);
 }
 
-*,
-*::before,
-*::after {
+*, *::before, *::after {
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    /* Máxima compatibilidad */
-}
-
-html,
-body {
     margin: 0;
     padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%; /* Previene el auto-ajuste de texto en iOS */
+}
+
+body {
     width: 100%;
-    overflow-x: hidden;
-    /* ¡CLAVE! Previene el desbordamiento horizontal */
+    overflow-x: hidden; /* ¡CLAVE! Previene el scroll horizontal indeseado */
     background-color: var(--color-background);
     color: var(--color-text);
     font-family: var(--font-body);
     line-height: 1.7;
     font-size: 16px;
-    -webkit-text-size-adjust: 100%;
-    /* Previene el ajuste de texto en iOS */
+}
+
+img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+input, button, textarea, select {
+    font: inherit;
+    font-size: 16px; /* ¡CLAVE! Evita el zoom automático en formularios de iOS */
+    -webkit-appearance: none; /* Elimina estilos por defecto de iOS en inputs */
+    -moz-appearance: none;
+    appearance: none;
 }
 
 .container {
     max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 24px;
-}
-
-img {
-    max-width: 100%;
-    height: auto;
-    display: block;
+    margin-inline: auto; /* Propiedad lógica moderna para centrar */
+    padding-inline: 24px;
 }
 
 /* --- HEADER Y NAVEGACIÓN --- */
@@ -65,6 +71,7 @@ img {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 1rem;
 }
 
 .logo {
@@ -76,31 +83,8 @@ img {
     flex-shrink: 0;
 }
 
-.main-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center;
-}
-
-.main-nav li {
-    margin-left: 35px;
-}
-
-.main-nav a {
-    font-family: var(--font-headings);
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--color-text);
-    text-decoration: none;
-    padding-bottom: 8px;
-    position: relative;
-    white-space: nowrap;
-}
-
 .mobile-nav-toggle {
-    display: none;
+    display: none; /* Oculto por defecto en escritorio */
     background: none;
     border: none;
     font-size: 1.8rem;
@@ -109,41 +93,45 @@ img {
     z-index: 1001;
     padding: 5px;
 }
+.mobile-nav-toggle .close-icon { display: none; }
+.mobile-nav-toggle.toggled .hamburger-icon { display: none; }
+.mobile-nav-toggle.toggled .close-icon { display: block; }
 
-.mobile-nav-toggle .close-icon {
-    display: none;
-}
-
-.mobile-nav-toggle.toggled .hamburger-icon {
-    display: none;
-}
-
-.mobile-nav-toggle.toggled .close-icon {
-    display: block;
-}
-
-/* --- HERO SECTION (SOLUCIÓN DEFINITIVA PARA IOS) --- */
-#hero {
-    height: 85vh;
-    /* Fallback para navegadores antiguos */
-    height: 85dvh;
-    /* ¡CLAVE! Dynamic Viewport Height para iOS 15.4+ */
+.main-nav ul {
+    list-style: none;
     display: flex;
+    gap: 35px; /* Usar gap para espaciado es más moderno */
     align-items: center;
-    justify-content: center;
+}
+
+.main-nav a {
+    font-family: var(--font-headings);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text);
+    text-decoration: none;
+    padding-block-end: 8px; /* Propiedad lógica */
+    position: relative;
+    white-space: nowrap;
+}
+
+/* --- HERO SECTION: SOLUCIÓN DEFINITIVA DE VIEWPORT PARA IOS --- */
+#hero {
+    min-height: 85vh; /* Fallback */
+    min-height: 85dvh; /* ¡CLAVE! Dynamic Viewport Height para iOS 15.4+ */
+    display: grid; /* Usar grid para centrar es más robusto */
+    place-items: center;
     background-image: url(images/img_portada.webp);
     background-size: cover;
     background-position: center;
     padding: 40px 24px;
-    text-align: center;
     position: relative;
     color: var(--color-text-light);
 }
 
 .hero-overlay {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0; /* Propiedad lógica moderna */
     width: 100%;
     height: 100%;
     background: linear-gradient(to top, rgba(10, 61, 98, 0.85), rgba(10, 61, 98, 0.5));
@@ -152,20 +140,21 @@ img {
 .hero-content {
     position: relative;
     z-index: 2;
+    text-align: center;
 }
 
 .hero-title {
     font-family: var(--font-headings);
-    font-size: clamp(2.2rem, 5vw, 3.2rem);
-    /* Tipografía fluida */
+    font-size: clamp(2.2rem, 5vw, 3.2rem); /* Tipografía fluida */
     font-weight: 700;
-    margin-bottom: 1rem;
+    margin-block-end: 1rem;
 }
 
 .hero-subtitle {
     font-size: clamp(1.1rem, 2.5vw, 1.3rem);
     max-width: 650px;
-    margin: 0 auto 2.5rem;
+    margin-inline: auto;
+    margin-block-end: 2.5rem;
 }
 
 .hero-buttons {
@@ -175,6 +164,7 @@ img {
     flex-wrap: wrap;
 }
 
+/* --- ESTILOS GENERALES Y BOTONES --- */
 .button {
     padding: 12px 28px;
     border-radius: 50px;
@@ -183,153 +173,19 @@ img {
     font-size: 1rem;
     font-family: var(--font-headings);
     text-decoration: none;
-    transition: transform 0.2s, box-shadow 0.2s;
     -webkit-transition: transform 0.2s, box-shadow 0.2s;
-    /* Prefijo para Safari */
+    transition: transform 0.2s, box-shadow 0.2s;
 }
+.button-primary { background-color: var(--color-accent); color: var(--color-text-light); }
+.button-secondary { background-color: transparent; border: 2px solid var(--color-text-light); color: var(--color-text-light); }
 
-.button:hover {
-    transform: translateY(-2px);
-}
-
-.button-primary {
-    background-color: var(--color-accent);
-    color: var(--color-text-light);
-}
-
-.button-secondary {
-    background-color: transparent;
-    border: 2px solid var(--color-text-light);
-    color: var(--color-text-light);
-}
-
-
-/* --- SECCIONES Y TARJETAS --- */
-.section-light {
-    padding: 60px 0;
-    background-color: var(--color-background-light);
-}
-
-.section-title {
-    font-family: var(--font-headings);
-    font-size: 2.5rem;
-    color: var(--color-primary);
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.causas-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
-}
-
-.card-causa {
-    background-color: #fff;
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    transition: transform .3s, box-shadow .3s;
-    -webkit-transition: transform .3s, box-shadow .3s;
-}
-
-.card-causa:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, .1);
-}
-
-.card-header {
-    padding: 10px 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--color-background-light);
-    font-size: 0.9em;
-}
-
-.card-tag {
-    padding: 4px 10px;
-    border-radius: 20px;
-    color: #fff;
-}
-
-.card-tag-servico {
-    background-color: var(--color-accent);
-}
-
-.card-tag-artigos {
-    background-color: var(--color-donation);
-    color: var(--color-text);
-}
-
-
-.card-content {
-    padding: 20px;
-    flex-grow: 1;
-}
-
-.card-title {
-    font-family: var(--font-headings);
-    margin: 0 0 10px;
-    font-size: 1.3rem;
-    color: var(--color-primary);
-}
-
-/* --- FOOTER --- */
-.main-footer {
-    background-color: var(--color-primary);
-    color: #fff;
-    padding: 50px 0 20px;
-}
-
-.footer-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 30px;
-    margin-bottom: 40px;
-}
-
-.footer-column h4 {
-    margin-bottom: 15px;
-}
-
-.footer-column ul {
-    list-style: none;
-    padding: 0;
-}
-
-.footer-column ul li {
-    margin-bottom: 10px;
-}
-
-.main-footer a {
-    color: var(--color-text-light);
-    text-decoration: none;
-}
-
-.main-footer a:hover {
-    text-decoration: underline;
-}
-
-.footer-bottom {
-    text-align: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    padding-top: 20px;
-    font-size: 0.9em;
-}
-
-
-/* --- MEDIA QUERIES (ENFOQUE MÓVIL) --- */
-
+/* --- MEDIA QUERIES (ENFOQUE "MOBILE-FIRST") --- */
 @media (max-width: 992px) {
     .main-nav {
         display: none;
         flex-direction: column;
         position: absolute;
-        top: 100%;
-        left: 0;
+        inset: 100% 0 auto 0;
         width: 100%;
         background-color: rgba(255, 255, 255, 0.98);
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -338,30 +194,12 @@ img {
         backdrop-filter: blur(5px);
     }
 
-    .main-nav.nav-visible {
-        display: flex;
-    }
+    .main-nav.nav-visible { display: flex; }
+    .main-nav ul { flex-direction: column; width: 100%; gap: 0; }
+    .main-nav li { width: 100%; }
+    .main-nav a { display: block; padding: 16px; text-align: center; border-bottom: 1px solid var(--color-border); }
 
-    .main-nav ul {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .main-nav li {
-        margin: 0;
-        width: 100%;
-    }
-
-    .main-nav a {
-        display: block;
-        padding: 16px;
-        text-align: center;
-        border-bottom: 1px solid var(--color-border);
-    }
-
-    .mobile-nav-toggle {
-        display: block;
-    }
+    .mobile-nav-toggle { display: block; }
 }
 
 @media (max-width: 768px) {
@@ -369,38 +207,11 @@ img {
         flex-direction: column;
         align-items: center;
     }
-
     .hero-buttons .button {
         width: 90%;
         max-width: 300px;
     }
-
     .causas-grid {
         grid-template-columns: 1fr;
     }
-
-    .footer-grid {
-        text-align: center;
-        grid-template-columns: 1fr;
-    }
-}
-
-/* --- FIX PARA FORMULARIOS EN IOS --- */
-input,
-textarea,
-select {
-    font-size: 16px;
-    /* Evita el zoom automático de Safari */
-}
-
-select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23333' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 15px center;
-    background-size: 16px;
-    padding-right: 40px;
-    /* Espacio para la flecha */
 }
