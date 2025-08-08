@@ -1,4 +1,4 @@
-/* --- RESET Y ESTILOS GLOBALES DE MÁXIMA COMPATIBILIDAD --- */
+/* --- ESTILOS GLOBALES Y RESET DE MÁXIMA COMPATIBILIDAD --- */
 :root {
     --color-primary: #0a3d62;
     --color-accent: #00834b;
@@ -14,21 +14,26 @@
     --shadow: 0 5px 15px rgba(0, 0, 0, .07);
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
+    /* Máxima compatibilidad con Safari */
     margin: 0;
     padding: 0;
 }
 
 html {
     scroll-behavior: smooth;
-    -webkit-text-size-adjust: 100%; /* Previene el auto-ajuste de texto en iOS */
+    -webkit-text-size-adjust: 100%;
+    /* Previene el auto-ajuste de texto en iOS */
 }
 
 body {
     width: 100%;
-    overflow-x: hidden; /* ¡CLAVE! Previene el scroll horizontal indeseado */
+    overflow-x: hidden;
+    /* ¡CLAVE! Previene el scroll horizontal indeseado */
     background-color: var(--color-background);
     color: var(--color-text);
     font-family: var(--font-body);
@@ -36,23 +41,33 @@ body {
     font-size: 16px;
 }
 
-img, picture, video, canvas, svg {
+img,
+picture,
+video,
+canvas,
+svg {
     display: block;
     max-width: 100%;
     height: auto;
 }
 
-input, button, textarea, select {
+input,
+button,
+textarea,
+select {
     font: inherit;
-    font-size: 16px; /* ¡CLAVE! Evita el zoom automático en formularios de iOS */
-    -webkit-appearance: none; /* Elimina estilos por defecto de iOS en inputs */
+    font-size: 16px;
+    /* ¡CLAVE! Evita el zoom automático en formularios de iOS */
+    -webkit-appearance: none;
+    /* Elimina estilos por defecto de iOS en inputs */
     -moz-appearance: none;
     appearance: none;
 }
 
 .container {
     max-width: 1200px;
-    margin-inline: auto; /* Propiedad lógica moderna para centrar */
+    margin-inline: auto;
+    /* Propiedad lógica moderna para centrar */
     padding-inline: 24px;
 }
 
@@ -84,7 +99,7 @@ input, button, textarea, select {
 }
 
 .mobile-nav-toggle {
-    display: none; /* Oculto por defecto en escritorio */
+    display: none;
     background: none;
     border: none;
     font-size: 1.8rem;
@@ -93,14 +108,23 @@ input, button, textarea, select {
     z-index: 1001;
     padding: 5px;
 }
-.mobile-nav-toggle .close-icon { display: none; }
-.mobile-nav-toggle.toggled .hamburger-icon { display: none; }
-.mobile-nav-toggle.toggled .close-icon { display: block; }
+
+.mobile-nav-toggle .close-icon {
+    display: none;
+}
+
+.mobile-nav-toggle.toggled .hamburger-icon {
+    display: none;
+}
+
+.mobile-nav-toggle.toggled .close-icon {
+    display: block;
+}
 
 .main-nav ul {
     list-style: none;
     display: flex;
-    gap: 35px; /* Usar gap para espaciado es más moderno */
+    gap: 35px;
     align-items: center;
 }
 
@@ -110,16 +134,18 @@ input, button, textarea, select {
     font-weight: 600;
     color: var(--color-text);
     text-decoration: none;
-    padding-block-end: 8px; /* Propiedad lógica */
+    padding-block-end: 8px;
     position: relative;
     white-space: nowrap;
 }
 
 /* --- HERO SECTION: SOLUCIÓN DEFINITIVA DE VIEWPORT PARA IOS --- */
 #hero {
-    min-height: 85vh; /* Fallback */
-    min-height: 85dvh; /* ¡CLAVE! Dynamic Viewport Height para iOS 15.4+ */
-    display: grid; /* Usar grid para centrar es más robusto */
+    min-height: 85vh;
+    /* Fallback para navegadores antiguos */
+    min-height: 85dvh;
+    /* ¡EL CÓDIGO ESPECIAL! Dynamic Viewport Height para iOS */
+    display: grid;
     place-items: center;
     background-image: url(images/img_portada.webp);
     background-size: cover;
@@ -131,9 +157,8 @@ input, button, textarea, select {
 
 .hero-overlay {
     position: absolute;
-    inset: 0; /* Propiedad lógica moderna */
-    width: 100%;
-    height: 100%;
+    inset: 0;
+    /* Propiedad moderna para top/right/bottom/left: 0 */
     background: linear-gradient(to top, rgba(10, 61, 98, 0.85), rgba(10, 61, 98, 0.5));
 }
 
@@ -145,7 +170,8 @@ input, button, textarea, select {
 
 .hero-title {
     font-family: var(--font-headings);
-    font-size: clamp(2.2rem, 5vw, 3.2rem); /* Tipografía fluida */
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    /* Tipografía 100% fluida */
     font-weight: 700;
     margin-block-end: 1rem;
 }
@@ -164,7 +190,7 @@ input, button, textarea, select {
     flex-wrap: wrap;
 }
 
-/* --- ESTILOS GENERALES Y BOTONES --- */
+/* --- BOTONES Y OTROS ESTILOS --- */
 .button {
     padding: 12px 28px;
     border-radius: 50px;
@@ -174,12 +200,25 @@ input, button, textarea, select {
     font-family: var(--font-headings);
     text-decoration: none;
     -webkit-transition: transform 0.2s, box-shadow 0.2s;
+    /* Prefijo para Safari */
     transition: transform 0.2s, box-shadow 0.2s;
 }
-.button-primary { background-color: var(--color-accent); color: var(--color-text-light); }
-.button-secondary { background-color: transparent; border: 2px solid var(--color-text-light); color: var(--color-text-light); }
+
+.button-primary {
+    background-color: var(--color-accent);
+    color: var(--color-text-light);
+}
+
+.button-secondary {
+    background-color: transparent;
+    border: 2px solid var(--color-text-light);
+    color: var(--color-text-light);
+}
+
 
 /* --- MEDIA QUERIES (ENFOQUE "MOBILE-FIRST") --- */
+
+/* Estilos para pantallas de hasta 992px de ancho */
 @media (max-width: 992px) {
     .main-nav {
         display: none;
@@ -194,23 +233,44 @@ input, button, textarea, select {
         backdrop-filter: blur(5px);
     }
 
-    .main-nav.nav-visible { display: flex; }
-    .main-nav ul { flex-direction: column; width: 100%; gap: 0; }
-    .main-nav li { width: 100%; }
-    .main-nav a { display: block; padding: 16px; text-align: center; border-bottom: 1px solid var(--color-border); }
+    .main-nav.nav-visible {
+        display: flex;
+    }
 
-    .mobile-nav-toggle { display: block; }
+    .main-nav ul {
+        flex-direction: column;
+        width: 100%;
+        gap: 0;
+    }
+
+    .main-nav li {
+        width: 100%;
+    }
+
+    .main-nav a {
+        display: block;
+        padding: 16px;
+        text-align: center;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .mobile-nav-toggle {
+        display: block;
+    }
 }
 
+/* Estilos para pantallas de hasta 768px de ancho */
 @media (max-width: 768px) {
     .hero-buttons {
         flex-direction: column;
         align-items: center;
     }
+
     .hero-buttons .button {
         width: 90%;
         max-width: 300px;
     }
+
     .causas-grid {
         grid-template-columns: 1fr;
     }
