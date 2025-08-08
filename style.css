@@ -1,3 +1,13 @@
+#preloader,
+.card-image,
+.hero-overlay,
+.modal-overlay {
+    top: 0;
+    height: 100%;
+    width: 100%;
+    left: 0
+}
+
 #hero,
 .main-nav a {
     position: relative
@@ -10,16 +20,33 @@
 }
 
 .button,
+.card-title,
+.category-link-card h3,
+.footer-column h4,
 .hero-title,
 .logo,
 .main-nav a,
+.pwa-banner-text h3,
 .section-title {
     font-family: var(--font-headings)
 }
 
+#search-input,
+.main-footer,
+body,
+html {
+    font-family: var(--font-body)
+}
+
+#blog-hero,
 #hero,
 .button,
+.category-link-card,
+.cookie-banner,
+.cta-box,
+.footer-bottom,
 .form-container,
+.pwa-instructions,
 .section-title {
     text-align: center
 }
@@ -49,8 +76,7 @@ html {
 
 .main-footer a,
 .main-nav a {
-    transition: color .3s;
-    text-decoration: none
+    transition: color .3s
 }
 
 #blog-content-area,
@@ -87,7 +113,6 @@ body,
 html {
     margin: 0;
     padding: 0;
-    font-family: var(--font-body);
     background-color: var(--color-background);
     line-height: 1.7;
     font-size: 16px;
@@ -123,7 +148,12 @@ img {
     box-shadow: 0 6px 20px rgba(0, 0, 0, .2)
 }
 
-.button-primary {
+#scrollTopBtn:hover,
+.button-primary,
+.card-causa .card-content a::after,
+.new-tag,
+.section-title::after,
+.social-share a:hover {
     background-color: var(--color-accent)
 }
 
@@ -214,7 +244,8 @@ img {
 
 .main-nav a {
     font-size: 1rem;
-    padding-bottom: 8px
+    padding-bottom: 8px;
+    transition: color var(--transition-fast), transform var(--transition-fast)
 }
 
 .main-nav a::after {
@@ -256,10 +287,6 @@ img {
 
 .hero-overlay {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
     background: linear-gradient(to top, rgba(10, 61, 98, .8), rgba(10, 61, 98, .4))
 }
 
@@ -271,11 +298,6 @@ img {
 .hero-title {
     font-size: 3.2rem;
     margin-bottom: 1rem
-}
-
-#search-input,
-.main-footer {
-    font-family: var(--font-body)
 }
 
 .hero-subtitle {
@@ -316,21 +338,13 @@ section {
 }
 
 .card-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%
+    position: absolute
 }
 
 #preloader,
 .modal-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    opacity: 1;
-    width: 100%
+    opacity: 1
 }
 
 .card-header {
@@ -429,15 +443,6 @@ section {
     word-wrap: break-word
 }
 
-#blog-hero,
-.category-link-card,
-.cookie-banner,
-.cta-box,
-.footer-bottom,
-.pwa-instructions {
-    text-align: center
-}
-
 .donativo-info p,
 .footer-bottom p {
     margin: 5px 0
@@ -454,13 +459,6 @@ section {
     background-color: var(--color-primary);
     color: #fff;
     padding: 40px 0 20px
-}
-
-.card-title,
-.category-link-card h3,
-.footer-column h4,
-.pwa-banner-text h3 {
-    font-family: var(--font-headings)
 }
 
 .main-footer a:hover {
@@ -569,12 +567,6 @@ section {
     border: 1px solid var(--color-border)
 }
 
-#scrollTopBtn:hover,
-.card-causa .card-content a::after,
-.new-tag {
-    background-color: var(--color-accent)
-}
-
 .search-box {
     display: flex;
     gap: 15px;
@@ -678,6 +670,12 @@ section {
     position: fixed
 }
 
+#scrollTopBtn,
+.cookie-banner button {
+    background-color: var(--color-donation);
+    cursor: pointer
+}
+
 .category-link-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 15px 25px rgba(0, 0, 0, .1)
@@ -733,11 +731,9 @@ section {
 
 .cookie-banner button {
     padding: 8px 15px;
-    background-color: var(--color-donation);
     color: var(--color-primary);
     border: none;
     border-radius: 5px;
-    cursor: pointer;
     margin-left: 15px
 }
 
@@ -813,7 +809,10 @@ section {
     font-size: .9rem
 }
 
+.blog-post-body a,
+.main-nav a:hover,
 .pwa-instructions i,
+.reading-time i,
 .widget-list a:hover {
     color: var(--color-accent)
 }
@@ -893,9 +892,7 @@ section {
     z-index: 99;
     border: none;
     outline: 0;
-    background-color: var(--color-donation);
     color: var(--color-primary);
-    cursor: pointer;
     padding: 10px;
     border-radius: 50%;
     width: 50px;
@@ -1032,19 +1029,9 @@ section {
     color: rgba(255, 255, 255, .8)
 }
 
-.blog-post-body a,
-.main-nav a:hover,
-.reading-time i {
-    color: var(--color-accent)
-}
-
 body {
     --transition-fast: all 0.2s ease-out;
     --transition-smooth: all 0.35s cubic-bezier(0.4, 0, 0.2, 1)
-}
-
-.main-nav a {
-    transition: color var(--transition-fast), transform var(--transition-fast)
 }
 
 #search-input,
@@ -1067,12 +1054,6 @@ body {
 .filter-group select:focus {
     background-color: #fff;
     transform: scale(1.02)
-}
-
-#scrollTopBtn:hover,
-.section-title::after,
-.social-share a:hover {
-    background-color: var(--color-accent)
 }
 
 .blog-post {
@@ -1269,6 +1250,11 @@ section .container {
     gap: 10px
 }
 
+.button.is-loading .spinner-icon,
+.widget-title {
+    display: inline-block
+}
+
 .author-avatar {
     width: 35px;
     height: 35px;
@@ -1359,6 +1345,11 @@ blockquote {
     border: 1px solid var(--color-border)
 }
 
+.cta-box,
+.sidebar-widget {
+    border-radius: var(--border-radius)
+}
+
 .social-share a:hover {
     color: #fff;
     transform: translateY(-3px)
@@ -1366,7 +1357,6 @@ blockquote {
 
 .cta-box {
     background-color: var(--color-background-light);
-    border-radius: var(--border-radius);
     padding: 30px
 }
 
@@ -1383,7 +1373,6 @@ blockquote {
 .sidebar-widget {
     background: #fff;
     padding: 25px;
-    border-radius: var(--border-radius);
     margin-bottom: 30px
 }
 
@@ -1392,8 +1381,7 @@ blockquote {
     color: var(--color-primary);
     margin: 0 0 20px;
     padding-bottom: 10px;
-    border-bottom: 2px solid var(--color-accent);
-    display: inline-block
+    border-bottom: 2px solid var(--color-accent)
 }
 
 .widget-list {
@@ -1483,6 +1471,12 @@ blockquote {
 @media (max-width:992px) {
 
     .main-nav,
+    .main-nav ul,
+    .search-box {
+        flex-direction: column
+    }
+
+    .main-nav,
     .main-nav ul {
         width: 100%
     }
@@ -1498,18 +1492,12 @@ blockquote {
         left: 0;
         background-color: #fff;
         box-shadow: 0 4px 10px rgba(0, 0, 0, .1);
-        border-top: 1px solid var(--color-border);
-        flex-direction: column
+        border-top: 1px solid var(--color-border)
     }
 
     .main-nav a,
     .mobile-nav-toggle {
         display: block
-    }
-
-    .main-nav ul,
-    .search-box {
-        flex-direction: column
     }
 
     .main-nav.nav-visible {
@@ -1541,24 +1529,16 @@ blockquote {
     }
 }
 
-/* =================================================================== */
-/* ==   MEJORA UX: FEEDBACK VISUAL EN BOTÓN DE FORMULARIO         == */
-/* =================================================================== */
-
 .button .spinner-icon {
-  display: none; /* Oculto por defecto */
-  width: 20px;
-  height: 20px;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  border-top-color: #ffffff;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+    display: none;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, .3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: 1s linear infinite spin
 }
 
 .button.is-loading .button-text {
-  margin-right: 10px;
-}
-
-.button.is-loading .spinner-icon {
-  display: inline-block;
+    margin-right: 10px
 }
