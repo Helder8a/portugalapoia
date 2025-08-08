@@ -1719,15 +1719,6 @@ blockquote {
     border-radius: 0 var(--border-radius) var(--border-radius) 0;
 }
 
-/* ================================================================ */
-/* ==   CORRECCIÓN DEFINITIVA PARA EL COLOR DEL TEXTO DEL BOTÓN  == */
-/* ================================================================ */
-
-/* Esta regla fuerza el texto de los botones dentro de las tarjetas a ser blanco. */
-.card-causa .card-content a.button.button-primary {
-    color: #ffffff !important;
-}
-
 /* =================================================================== */
 /* ==       MEJORAS DE RESPONSIVIDAD PARA EL BLOG EN MÓVILES        == */
 /* =================================================================== */
@@ -1781,4 +1772,13 @@ blockquote {
         max-width: 100%;
         height: auto;
     }
+}
+
+/* ================================================================ */
+/* ==   CORRECCIÓN DEFINITIVA PARA EL COLOR DEL TEXTO DEL BOTÓN  == */
+/* ================================================================ */
+
+/* Esta regla fuerza el texto de los botones dentro de las tarjetas a ser blanco. */
+.card-causa .card-content a.button.button-primary {
+    color: #ffffff !important;
 }
