@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Painel de Controlo Unificado - PortugalApoia</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <style>
+        :root {
+            --color-primary: #0A3D62;
+            --color-accent: #00834B;
+            --color-donation: #ffd700;
+            --color-urgent: #e74c3c;
+            --color-error: #c0392b;
+            --color-blog: #9b59b6;
+            --color-ai: #8e44ad;
+            --color-background: #F8F9FA;
+            --color-surface: #ffffff;
+            --color-text: #333;
+            --color-border: #dee2e6;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+            --font-headings: 'Inter', sans-serif;
+            --font-body: 'Roboto', sans-serif;
+        }
+
+        html[data-theme='dark'] {
+            --color-primary: #4e9ad1;
+            --color-accent: #2ecc71;
+            --color-background: #121212;
+            --color-surface: #1e1e1e;
+            --color-text: #e0e0e0;
+            --color-border: #444;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-background);
+            color: var(--color-text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container { max-width: 1800px; margin: 0 auto; }
+        h1, h2, h3, h4 { color: var(--color-primary); font-family: var(--font-headings); }
+
+        .main-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 30px; align-items: start; }
+        .form-section, .preview-section { background-color: var(--color-surface); padding: 25px; border-radius: 8px; box-shadow: var(--shadow); }
+
+        .form-group { margin-bottom: 18px; }
+        .form-group-checkbox { display: flex; align-items: center; gap: 10px; margin-top: 20px; }
+        label { font-weight: 600; margin-bottom: 6px; display: block; }
+        
+        input, select, textarea {
+            width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: 8px; font-size: 1rem;
+            box-sizing: border-box; background-color: var(--color-background); color: var(--color-text); transition: border-color .3s, box-shadow .3s;
+        }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--color-accent); box-shadow: 0 0 0 3px rgba(0, 131, 75, 0.2); }
+        input.invalid, textarea.invalid { border-color: var(--color-error) !important; }
+        input[type="color"] { padding: 5px; height: 45px; }
+        input[type="checkbox"] { width: auto; }
+
+        .button {
+            background-color: var(--color-accent); color: #fff; padding: 12px 28px; border: none; border-radius: 50px;
+            cursor: pointer; font-size: 1rem; font-weight: 700; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px;
+        }
+        .button:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); }
+        .button.ai-button { background-color: var(--color-ai); }
+        .button.secondary { background-color: #6c757d; }
+        .button.danger { background-color: var(--color-error); }
+        .button.small { padding: 5px 10px; font-size: 0.8em; }
+
+        .code-output-wrapper { position: relative; }
+        .code-output-display {
+            background-color: #2d2d2d; color: #f8f8f2; white-space: pre-wrap; word-wrap: break-word; overflow: auto;
+            padding: 15px; border: 1px solid var(--color-border); min-height: 200px; font-family: 'Fira Code', 'Courier New', monospace; font-size: 0.9em; border-radius: 8px;
+        }
+        .code-output { display: none; }
+        .copy-btn {
+            position: absolute; top: 10px; right: 10px; z-index: 10; background-color: #444; color: white;
+            border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem;
+        }
+        .copy-btn:hover { background-color: var(--color-accent); }
+        .error-message { color: var(--color-error); font-size: 0.85em; margin-top: 5px; display: none; }
+
+        details { border: 1px solid var(--color-border); border-radius: 8px; margin-bottom: 15px; }
+        details>summary { padding: 15px; font-weight: 700; cursor: pointer; color: var(--color-primary); list-style: none; }
+        details>summary::-webkit-details-marker { display: none; }
+        details>summary::before { content: '\25B6'; margin-right: 10px; transition: transform 0.2s; }
+        details[open]>summary::before { transform: rotate(90deg); }
+        details[open]>summary { border-bottom: 1px solid var(--color-border); }
+        .details-content { padding: 20px; }
+
+        .drop-zone { border: 2px dashed var(--color-border); border-radius: 8px; padding: 30px; text-align: center; color: #aaa; cursor: pointer; transition: background-color .3s, border-color .3s; }
+        .drop-zone.dragover { background-color: var(--color-accent); border-color: var(--color-accent); color: white; }
+        
+        #image-preview-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+        .img-preview { position: relative; width: 100px; height: 100px; }
+        .img-preview img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+        .remove-img-btn {
+            position: absolute; top: -5px; right: -5px; background: var(--color-error); color: white; border: none;
+            border-radius: 50%; width: 22px; height: 22px; cursor: pointer; font-weight: bold; line-height: 20px; text-align: center;
+        }
+
+        #color-palette { display: flex; gap: 10px; margin-top: 10px; }
+        .color-swatch { width: 30px; height: 30px; border-radius: 50%; cursor: pointer; border: 2px solid var(--color-border); }
+
+        #history-section { margin-top: 30px; }
+        .history-header { display: flex; justify-content: space-between; align-items: center; }
+        #history-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        #history-table th, #history-table td { border: 1px solid var(--color-border); padding: 8px; text-align: left; font-size: 0.9em; }
+        #history-table th { background-color: var(--color-background); }
+        html[data-theme='dark'] #history-table th { background-color: #2a2a2a; }
+        #history-table .action-buttons { display: flex; gap: 5px; }
+
+        .theme-switch-wrapper { display: flex; align-items: center; position: absolute; top: 20px; right: 20px; }
+        .theme-switch { display: inline-block; height: 34px; position: relative; width: 60px; }
+        .theme-switch input { display: none; }
+        .slider { background-color: #ccc; bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s; }
+        .slider:before { background-color: #fff; bottom: 4px; content: ""; height: 26px; left: 4px; position: absolute; transition: .4s; width: 26px; }
+        input:checked+.slider { background-color: var(--color-accent); }
+        input:checked+.slider:before { transform: translateX(26px); }
+        .slider.round { border-radius: 34px; }
+        .slider.round:before { border-radius: 50%; }
+
+        .preview-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .preview-toggles button { background: none; border: 2px solid transparent; cursor: pointer; padding: 5px; border-radius: 5px; }
+        .preview-toggles button.active { border-color: var(--color-accent); }
+        .preview-toggles button svg { width: 24px; height: 24px; fill: var(--color-text); }
+        html[data-theme='dark'] .preview-toggles button svg { fill: var(--color-text); }
+        #preview-wrapper.mobile-view #capture-area { max-width: 375px; height: 667px; border: 8px solid #333; border-radius: 20px; overflow-y: auto; margin: auto; background: #fff; }
+        
+        .card-causa {
+            position: relative; background-color: var(--color-surface); border-radius: 12px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden; max-width: 350px; margin: auto; border: 2px solid transparent; transition: all 0.3s ease;
+        }
+        .card-causa.destacado { border-color: var(--color-donation); }
+        
+        .card-carousel-container { position: relative; width: 100%; overflow: hidden; background-color: #f0f0f0; }
+        html[data-theme='dark'] .card-carousel-container { background-color: #333; }
+        .card-carousel-slides { display: flex; transition: transform 0.4s ease-in-out; }
+        .card-carousel-slide { min-width: 100%; box-sizing: border-box; position: relative; padding-bottom: 56.25%; height: 0; background-color: #000; }
+        .card-carousel-slide img, .card-carousel-slide iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border: none; }
+        
+        .new-tag, .status-tag, .destacado-tag {
+            position: absolute; top: 12px; color: #fff; padding: 5px 12px;
+            border-radius: 20px; font-size: .8rem; font-weight: 700; z-index: 5;
+        }
+        .new-tag { left: 12px; background-color: var(--color-accent); }
+        .destacado-tag { right: 12px; background-color: var(--color-donation); color: var(--color-primary); }
+        .status-tag { right: 12px; background-color: var(--color-urgent); }
+        
+        .status-overlay {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(255, 255, 255, 0.85);
+            color: #333; display: flex; justify-content: center; align-items: center; z-index: 10; font-size: 1.5rem; font-weight: 700;
+        }
+        html[data-theme='dark'] .status-overlay { background-color: rgba(0, 0, 0, 0.8); color: white; }
+        .card-content { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; }
+        .card-content p:last-of-type { margin-bottom: 0; }
+        
+        .card-footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border-top: 1px solid var(--color-border);
+            margin-top: auto;
+        }
+        .card-footer a {
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+        .card-footer a:hover {
+            opacity: 0.7;
+        }
+
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 2000;
+            display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-overlay.visible { opacity: 1; visibility: visible; }
+        .modal-container { background: var(--color-surface); padding: 30px; border-radius: 8px; width: 90%; max-width: 800px; max-height: 80vh; display: flex; flex-direction: column; position: relative; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--color-border); padding-bottom: 15px; margin-bottom: 20px; }
+        .modal-close-btn { background: none; border: none; font-size: 1.8rem; cursor: pointer; color: var(--color-text); }
+        .modal-content { overflow-y: auto; }
+
+        @media (max-width: 1200px) { .main-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { body { padding: 10px; } .form-section, .preview-section { padding: 15px; } h1 { font-size: 1.8rem; } }
+    </style>
+</head>
+
+<body>
+    <div class="theme-switch-wrapper">
+        <label class="theme-switch" for="theme-toggle-checkbox"><input type="checkbox" id="theme-toggle-checkbox" />
+            <div class="slider round"></div>
+        </label>
+        <em style="margin-left: 10px;">Modo Oscuro</em>
+    </div>
+    <div class="container">
+        <h1>Painel de Controlo Unificado</h1>
+        <div class="main-grid">
+            <div class="form-section">
+                <h2>1. Selecione o Tipo de Conteúdo</h2>
+                <form id="unified-form" autocomplete="off" novalidate>
+                    <div class="form-group">
+                        <label for="post-type">Tipo de Conteúdo</label>
+                        <select id="post-type">
+                            <option value="emprego">Vaga de Emprego</option>
+                            <option value="servico">Serviço Técnico</option>
+                            <option value="habitacao">Habitação</option>
+                            <option value="doacao">Pedido de Doação</option>
+                            <option value="extract">Extrair de Imagem</option>
+                        </select>
+                    </div>
+
+                    <div id="image-extraction-fields" style="display: none;"></div>
+
+                    <div id="ad-fields">
+                        <div class="form-group">
+                            <label for="ad-id-number">ID do Anúncio (Ex: 25)</label>
+                            <input type="number" id="ad-id-number" required>
+                            <div class="error-message">Este campo é obrigatório.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="title">Título</label>
+                            <input type="text" id="title" required>
+                            <div class="error-message">Este campo é obrigatório.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Descrição</label>
+                            <textarea id="description" rows="4" required></textarea>
+                            <div class="error-message">Este campo é obrigatório.</div>
+                            <button type="button" class="button ai-button small" style="margin-top: 10px;">
+                                <i class="fas fa-magic"></i> Gerar com IA
+                            </button>
+                        </div>
+                        <details>
+                           <summary>Mídia (Opcional)</summary>
+                            <div class="details-content">
+                                <div class="form-group"><label for="youtube-link">Link de Vídeo do YouTube</label><input type="url" id="youtube-link" placeholder="https://www.youtube.com/watch?v=..."></div>
+                                <div class="form-group">
+                                    <label for="image-input">Imagens (Máximo 5)</label>
+                                    <div class="drop-zone" id="drop-zone">Arraste e solte as imagens aqui ou clique para selecionar.</div>
+                                    <input type="file" id="image-input" accept="image/*" multiple hidden>
+                                    <div id="image-preview-container"></div>
+                                </div>
+                            </div>
+                        </details>
+                        <details>
+                            <summary>Detalhes de Contacto e Publicação</summary>
+                            <div class="details-content">
+                                <div class="form-group"><label for="contact-phone">Telefone</label><input type="tel" id="contact-phone"></div>
+                                <div class="form-group"><label for="contact-email">Email</label><input type="email" id="contact-email"></div>
+                                <div class="form-group"><label for="city">Cidade</label><input type="text" id="city" required><div class="error-message">Este campo é obrigatório.</div></div>
+                            </div>
+                        </details>
+                        <details open>
+                            <summary>Opções de Apresentação</summary>
+                            <div class="details-content">
+                                <div class="form-group"><label for="ad-status">Estado</label><select id="ad-status"><option value="disponivel">Disponível</option><option value="urgente">Urgente</option><option value="preenchido">Preenchido</option></select></div>
+                                <div class="form-group">
+                                    <label for="card-bg-color">Cor de Fundo</label>
+                                    <input type="color" id="card-bg-color" value="#FFFFFF">
+                                    <div id="color-palette"></div>
+                                </div>
+                                <div class="form-group form-group-checkbox"><input type="checkbox" id="is-highlighted"><label for="is-highlighted">⭐ Destacar Anúncio</label></div>
+                                <div class="form-group form-group-checkbox"><input type="checkbox" id="is-new"><label for="is-new">Marcar como "Novo"</label></div>
+                            </div>
+                        </details>
+                    </div>
+
+                    <div class="form-group" id="publication-date-group">
+                        <label for="publication-date">Data de Publicação</label>
+                        <input type="date" id="publication-date" required>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="button" id="generate-btn" class="button">Gerar Código</button>
+                        <button type="button" id="clear-btn" class="button secondary">Limpar</button>
+                    </div>
+                </form>
+            </div>
+            <div>
+                 <div class="preview-section">
+                    <div class="preview-header">
+                        <h2>2. Pré-visualização</h2>
+                        <div class="preview-toggles">
+                            <button id="desktop-view-btn" class="active"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.99 16H2V4h20v12zM22 2H2C.9 2 0 2.9 0 4v12c0 1.1.9 2 2 2h9v2H8v2h8v-2h-3v-2h9c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" /></svg></button>
+                            <button id="mobile-view-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 1H7c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-2-2-2zm-5 20c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm3-3H9V5h6v13z" /></svg></button>
+                        </div>
+                    </div>
+                    <div id="preview-wrapper">
+                        <div id="capture-area"></div>
+                    </div>
+                </div>
+                 <div class="preview-section" id="history-section">
+                    <div class="history-header">
+                        <h2>3. Historial</h2>
+                        <button id="clear-history-btn" class="button danger small">Limpar Historial</button>
+                    </div>
+                    <table id="history-table">
+                        <thead><tr><th>Tipo</th><th>Título/ID</th><th>Data</th><th>Ações</th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="code-modal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2>Código Gerado</h2>
+                <button class="modal-close-btn" id="modal-close-btn">&times;</button>
+            </div>
+            <div class="modal-content">
+                <div class="code-output-wrapper">
+                    <pre><code id="generated-code-display" class="language-html code-output-display"></code></pre>
+                    <textarea id="generated-code-anuncio" class="code-output" readonly></textarea>
+                    <button class="copy-btn" id="copy-code-btn">Copiar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const elements = {
+            postType: document.getElementById('post-type'),
+            captureArea: document.getElementById('capture-area'),
+            previewWrapper: document.getElementById('preview-wrapper'),
+            desktopViewBtn: document.getElementById('desktop-view-btn'),
+            mobileViewBtn: document.getElementById('mobile-view-btn'),
+            generatedCodeDisplay: document.getElementById('generated-code-display'),
+            generatedCode: document.getElementById('generated-code-anuncio'),
+            generateBtn: document.getElementById('generate-btn'),
+            clearBtn: document.getElementById('clear-btn'),
+            form: document.getElementById('unified-form'),
+            copyCodeBtn: document.getElementById('copy-code-btn'),
+            historyTableBody: document.querySelector('#history-table tbody'),
+            clearHistoryBtn: document.getElementById('clear-history-btn'),
+            publicationDate: document.getElementById('publication-date'),
+            adFieldsContainer: document.getElementById('ad-fields'),
+            themeSwitch: document.getElementById('theme-toggle-checkbox'),
+            codeModal: document.getElementById('code-modal'),
+            modalCloseBtn: document.getElementById('modal-close-btn'),
+            ad: {
+                youtubeLink: document.getElementById('youtube-link'),
+                imageInput: document.getElementById('image-input'),
+                dropZone: document.getElementById('drop-zone'),
+                imagePreviewContainer: document.getElementById('image-preview-container'),
+                idNumber: document.getElementById('ad-id-number'),
+                title: document.getElementById('title'),
+                description: document.getElementById('description'),
+                phone: document.getElementById('contact-phone'),
+                email: document.getElementById('contact-email'),
+                city: document.getElementById('city'),
+                status: document.getElementById('ad-status'),
+                bgColor: document.getElementById('card-bg-color'),
+                colorPalette: document.getElementById('color-palette'),
+                isHighlighted: document.getElementById('is-highlighted'),
+                isNew: document.getElementById('is-new'),
+            }
+        };
+
+        let imageFiles = [];
+        const MAX_IMAGES = 5;
+
+        const getFormData = (forStorage = false) => ({
+            type: elements.postType.value, id: elements.ad.idNumber.value, title: elements.ad.title.value,
+            description: elements.ad.description.value, phone: elements.ad.phone.value, email: elements.ad.email.value,
+            youtubeUrl: elements.ad.youtubeLink.value, pubDate: elements.publicationDate.value, city: elements.ad.city.value,
+            status: elements.ad.status.value, bgColor: elements.ad.bgColor.value, isHighlighted: elements.ad.isHighlighted.checked,
+            isNew: elements.ad.isNew.checked,
+            images: forStorage ? imageFiles.map(f => ({ name: f.name, type: f.type })) : [],
+        });
+
+        const setFormData = (data) => {
+            elements.postType.value = data.type;
+            elements.ad.idNumber.value = data.id;
+            elements.ad.title.value = data.title;
+            elements.ad.description.value = data.description;
+            elements.ad.phone.value = data.phone;
+            elements.ad.email.value = data.email;
+            elements.ad.youtubeLink.value = data.youtubeUrl;
+            elements.publicationDate.value = data.pubDate;
+            elements.ad.city.value = data.city;
+            elements.ad.status.value = data.status;
+            elements.ad.bgColor.value = data.bgColor;
+            elements.ad.isHighlighted.checked = data.isHighlighted;
+            elements.ad.isNew.checked = data.isNew;
+            imageFiles = [];
+            updateImagePreview();
+        };
+        
+        const getYouTubeEmbedUrl = (url) => {
+            const match = url.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/);
+            return (match && match[2].length === 11) ? `https://www.youtube.com/embed/${match[2]}` : null;
+        };
+
+        const generateAdHTML = (data) => {
+            const descriptionHTML = data.description.replace(/\n/g, '<br>');
+            const cardIdPrefix = { emprego: 'EMP', servico: 'SER', habitacao: 'HAB', doacao: 'DOA' }[data.type] || 'GEN';
+            const cardId = `${cardIdPrefix}-${(data.id || '000').padStart(3, '0')}`;
+            
+            let mediaItemsPreview = [], mediaItemsFinal = [];
+            const embedUrl = getYouTubeEmbedUrl(data.youtubeUrl);
+            if (embedUrl) {
+                const item = `<div class="card-carousel-slide"><iframe src="${embedUrl}" frameborder="0" allowfullscreen></iframe></div>`;
+                mediaItemsPreview.push(item); mediaItemsFinal.push(item);
+            }
+            imageFiles.forEach(file => {
+                const url = URL.createObjectURL(file);
+                mediaItemsPreview.push(`<div class="card-carousel-slide"><img src="${url}" alt="${data.title}"></div>`);
+                mediaItemsFinal.push(`<div class="card-carousel-slide"><img src="img_anuncios/${file.name.replace(/\s/g, '_')}" alt="${data.title}"></div>`);
+            });
+
+            const createMediaHTML = (items) => items.length ? `<div class="card-carousel-container"><div class="card-carousel-slides">${items.join('')}</div></div>` : '';
+            
+            let contactHTML = '';
+            if (data.phone) contactHTML += `<p><strong>Telefone:</strong> <a href="tel:${data.phone.replace(/\s/g, '')}">${data.phone}</a></p>`;
+            if (data.email) contactHTML += `<p><strong>Email:</strong> <a href="mailto:${data.email}">${data.email}</a></p>`;
+
+            const shareURL = `https://www.portugalapoia.com/anuncio/${cardId}`;
+            const shareTitle = encodeURIComponent(data.title);
+            const socialShareHTML = `
+            <div class="card-footer">
+                <a href="https://www.facebook.com/sharer/sharer.php?u=${shareURL}" target="_blank" title="Partilhar no Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#3b5998"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v2.385z"/></svg></a>
+                <a href="https://twitter.com/intent/tweet?url=${shareURL}&text=${shareTitle}" target="_blank" title="Partilhar no Twitter"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#1da1f2"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-.424.727-.666 1.561-.666 2.477 0 1.61.82 3.027 2.053 3.847-.764-.024-1.483-.234-2.11-.583v.062c0 2.256 1.605 4.14 3.737 4.568-.39.106-.803.162-1.227.162-.3 0-.593-.028-.877-.082.593 1.85 2.307 3.2 4.334 3.237-1.595 1.25-3.604 1.995-5.786 1.995-.376 0-.747-.022-1.112-.065 2.062 1.323 4.51 2.092 7.14 2.092 8.57 0 13.255-7.099 13.255-13.254 0-.202-.005-.403-.014-.604.91-.658 1.7-1.475 2.323-2.41z"/></svg></a>
+                <a href="https://api.whatsapp.com/send?text=${shareTitle}%20${shareURL}" target="_blank" title="Partilhar no WhatsApp"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#25d366"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99 0-3.903-.52-5.586-1.456l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.451-4.437-9.885-9.888-9.885-5.452 0-9.887 4.434-9.889 9.885.002 2.024.605 3.965 1.696 5.611l-1.127 4.122 4.224-1.103z"/></svg></a>
+            </div>`;
+
+            const cardContent = `<div class="card-content"><h3>${data.title}</h3><p>${descriptionHTML}</p>${contactHTML}<p><small>#${cardId} | ${data.city}, ${data.pubDate}</small></p></div>${socialShareHTML}`;
+            const cardClasses = `card-causa ${data.isHighlighted ? 'destacado' : ''}`;
+            const cardStyle = `background-color: ${data.bgColor};`;
+            const tagsHTML = `${data.status === 'preenchido' ? '<div class="status-overlay">Preenchido</div>' : ''}${data.isNew ? '<div class="new-tag">Novo</div>' : ''}${data.isHighlighted ? '<div class="destacado-tag">⭐</div>' : ''}${data.status === 'urgente' ? '<div class="status-tag">Urgente</div>' : ''}`;
+
+            const previewHTML = `<div class="${cardClasses}" style="${cardStyle} display: flex; flex-direction: column; height: 100%;">${tagsHTML}${createMediaHTML(mediaItemsPreview)}${cardContent}</div>`;
+            const finalCardHTML = `<div class="${cardClasses}" id="${cardId}" data-publication-date="${data.pubDate}" data-city="${data.city}" style="${cardStyle}"><div style="display: flex; flex-direction: column; height: 100%;">${tagsHTML}${createMediaHTML(mediaItemsFinal)}${cardContent}</div></div>`;
+            const schemaHTML = `<script type="application/ld+json">\n${JSON.stringify({ "@context": "https://schema.org", "@type": "JobPosting", "name": data.title, "description": data.description, "identifier": cardId, "datePosted": data.pubDate }, null, 2)}\n<\/script>`;
+            
+            return { previewHTML, finalCode: `${schemaHTML}\n\n${finalCardHTML}` };
+        };
+        
+        const updatePreview = () => {
+            const data = getFormData();
+            elements.captureArea.innerHTML = '';
+            if (elements.postType.value === 'extract' || (!data.title && imageFiles.length === 0 && !data.youtubeUrl)) return;
+            const { previewHTML } = generateAdHTML(data);
+            elements.captureArea.innerHTML = `<div class="causas-grid" style="justify-content: center; display: flex;">${previewHTML}</div>`;
+        };
+        
+        const validateForm = () => {
+            let isValid = true;
+            document.querySelectorAll('#ad-fields [required]').forEach(field => {
+                const errorDiv = field.nextElementSibling;
+                if (!field.value.trim()) {
+                    field.classList.add('invalid');
+                    if (errorDiv && errorDiv.classList.contains('error-message')) errorDiv.style.display = 'block';
+                    isValid = false;
+                } else {
+                    field.classList.remove('invalid');
+                    if (errorDiv && errorDiv.classList.contains('error-message')) errorDiv.style.display = 'none';
+                }
+            });
+            return isValid;
+        };
+        
+        const clearForm = () => {
+            elements.form.reset();
+            imageFiles = [];
+            updateImagePreview();
+            elements.publicationDate.valueAsDate = new Date();
+            document.querySelectorAll('.invalid').forEach(el => el.classList.remove('invalid'));
+            document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+            updatePreview();
+        };
+
+        function updateImagePreview() {
+            elements.ad.imagePreviewContainer.innerHTML = '';
+            imageFiles.forEach((file, index) => {
+                const wrap = document.createElement('div');
+                wrap.className = 'img-preview';
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(file);
+                const rmvBtn = document.createElement('button');
+                rmvBtn.className = 'remove-img-btn';
+                rmvBtn.innerHTML = '&times;';
+                rmvBtn.onclick = () => { imageFiles.splice(index, 1); updateImagePreview(); };
+                wrap.append(img, rmvBtn);
+                elements.ad.imagePreviewContainer.appendChild(wrap);
+            });
+            updatePreview();
+        }
+
+        const saveHistory = (data) => {
+            let history = JSON.parse(localStorage.getItem('adHistory')) || [];
+            history.unshift(data);
+            localStorage.setItem('adHistory', JSON.stringify(history.slice(0, 20)));
+            loadHistory();
+        };
+
+        const loadHistory = () => {
+            let history = JSON.parse(localStorage.getItem('adHistory')) || [];
+            elements.historyTableBody.innerHTML = '';
+            history.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td>${item.type}</td><td>${item.title.substring(0,25)}...</td><td>${item.pubDate}</td><td class="action-buttons"><button class="button small" data-idx="${index}">Recarregar</button></td>`;
+                elements.historyTableBody.appendChild(row);
+            });
+        };
+
+        elements.historyTableBody.addEventListener('click', (e) => {
+            if (e.target.dataset.idx) {
+                const history = JSON.parse(localStorage.getItem('adHistory')) || [];
+                setFormData(history[e.target.dataset.idx]);
+                alert('Anúncio recarregado!');
+            }
+        });
+        
+        elements.clearHistoryBtn.addEventListener('click', () => {
+            if (confirm('Tem a certeza?')) { localStorage.removeItem('adHistory'); loadHistory(); }
+        });
+
+        // --- EVENT LISTENERS ---
+        elements.form.addEventListener('input', updatePreview);
+        elements.desktopViewBtn.addEventListener('click', () => { elements.previewWrapper.classList.remove('mobile-view'); elements.desktopViewBtn.classList.add('active'); elements.mobileViewBtn.classList.remove('active'); });
+        elements.mobileViewBtn.addEventListener('click', () => { elements.previewWrapper.classList.add('mobile-view'); elements.mobileViewBtn.classList.add('active'); elements.desktopViewBtn.classList.remove('active'); });
+
+        elements.ad.dropZone.addEventListener('dragover', (e) => { e.preventDefault(); e.currentTarget.classList.add('dragover'); });
+        elements.ad.dropZone.addEventListener('dragleave', (e) => e.currentTarget.classList.remove('dragover'));
+        elements.ad.dropZone.addEventListener('drop', (e) => {
+            e.preventDefault(); e.currentTarget.classList.remove('dragover');
+            const newFiles = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+            imageFiles = [...imageFiles, ...newFiles].slice(0, MAX_IMAGES);
+            updateImagePreview();
+        });
+        elements.ad.imageInput.addEventListener('change', (e) => {
+            const newFiles = Array.from(e.target.files).filter(f => f.type.startsWith('image/'));
+            imageFiles = [...imageFiles, ...newFiles].slice(0, MAX_IMAGES);
+            updateImagePreview();
+        });
+        elements.ad.dropZone.addEventListener('click', () => elements.ad.imageInput.click());
+
+        elements.generateBtn.addEventListener('click', () => {
+            if (!validateForm()) { alert('Por favor, preencha os campos obrigatórios.'); return; }
+            const data = getFormData();
+            const { finalCode } = generateAdHTML(data);
+            elements.generatedCode.value = finalCode;
+            elements.generatedCodeDisplay.textContent = finalCode;
+            Prism.highlightElement(elements.generatedCodeDisplay);
+            elements.codeModal.classList.add('visible');
+            saveHistory(getFormData(true));
+        });
+
+        elements.clearBtn.addEventListener('click', () => { if (confirm('Limpar o formulário?')) clearForm(); });
+        elements.modalCloseBtn.addEventListener('click', () => elements.codeModal.classList.remove('visible'));
+        elements.copyCodeBtn.addEventListener('click', () => { navigator.clipboard.writeText(elements.generatedCode.value).then(() => alert('Código copiado!')); });
+
+        const themeSwitch = elements.themeSwitch;
+        const applyTheme = (theme) => {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            themeSwitch.checked = theme === 'dark';
+        };
+        themeSwitch.addEventListener('change', (e) => applyTheme(e.target.checked ? 'dark' : 'light'));
+        
+        const PRESET_COLORS = ['#FFFFFF', '#F8F9FA', '#E9ECEF', '#FFF0F5', '#F0F8FF', '#F5FFFA', '#FFFFE0'];
+        PRESET_COLORS.forEach(color => {
+            const swatch = document.createElement('div');
+            swatch.className = 'color-swatch';
+            swatch.style.backgroundColor = color;
+            swatch.addEventListener('click', () => { elements.ad.bgColor.value = color; updatePreview(); });
+            elements.ad.colorPalette.appendChild(swatch);
+        });
+
+        // --- INITIALIZATION ---
+        applyTheme(localStorage.getItem('theme') || 'light');
+        loadHistory();
+        elements.publicationDate.valueAsDate = new Date();
+    });
+    </script>
+</body>
+</html>
