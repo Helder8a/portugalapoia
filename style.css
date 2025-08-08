@@ -1498,7 +1498,7 @@ blockquote {
     }
 }
 
-@media (max-width:768px) {
+@media (max-width: 768px) {
     #blog-content-area {
         padding: 40px 0;
     }
