@@ -19,6 +19,7 @@
 *::after {
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
+    /* Máxima compatibilidad */
 }
 
 html,
@@ -27,7 +28,7 @@ body {
     padding: 0;
     width: 100%;
     overflow-x: hidden;
-    /* Previene el desbordamiento horizontal */
+    /* ¡CLAVE! Previene el desbordamiento horizontal */
     background-color: var(--color-background);
     color: var(--color-text);
     font-family: var(--font-body);
@@ -73,7 +74,6 @@ img {
     color: var(--color-primary);
     text-decoration: none;
     flex-shrink: 0;
-    /* Evita que el logo se encoja */
 }
 
 .main-nav ul {
@@ -97,7 +97,6 @@ img {
     padding-bottom: 8px;
     position: relative;
     white-space: nowrap;
-    /* Evita que los enlaces se rompan en varias líneas */
 }
 
 .mobile-nav-toggle {
@@ -111,12 +110,24 @@ img {
     padding: 5px;
 }
 
-/* --- HERO SECTION (SOLUCIÓN PARA VIEWPORT EN IOS) --- */
+.mobile-nav-toggle .close-icon {
+    display: none;
+}
+
+.mobile-nav-toggle.toggled .hamburger-icon {
+    display: none;
+}
+
+.mobile-nav-toggle.toggled .close-icon {
+    display: block;
+}
+
+/* --- HERO SECTION (SOLUCIÓN DEFINITIVA PARA IOS) --- */
 #hero {
     height: 85vh;
-    /* Fallback para otros navegadores */
+    /* Fallback para navegadores antiguos */
     height: 85dvh;
-    /* UNIDAD CLAVE: Dynamic Viewport Height para iOS 15.4+ */
+    /* ¡CLAVE! Dynamic Viewport Height para iOS 15.4+ */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -174,13 +185,143 @@ img {
     text-decoration: none;
     transition: transform 0.2s, box-shadow 0.2s;
     -webkit-transition: transform 0.2s, box-shadow 0.2s;
+    /* Prefijo para Safari */
 }
 
 .button:hover {
     transform: translateY(-2px);
 }
 
-/* --- MEDIA QUERIES PARA RESPONSIVE --- */
+.button-primary {
+    background-color: var(--color-accent);
+    color: var(--color-text-light);
+}
+
+.button-secondary {
+    background-color: transparent;
+    border: 2px solid var(--color-text-light);
+    color: var(--color-text-light);
+}
+
+
+/* --- SECCIONES Y TARJETAS --- */
+.section-light {
+    padding: 60px 0;
+    background-color: var(--color-background-light);
+}
+
+.section-title {
+    font-family: var(--font-headings);
+    font-size: 2.5rem;
+    color: var(--color-primary);
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.causas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.card-causa {
+    background-color: #fff;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform .3s, box-shadow .3s;
+    -webkit-transition: transform .3s, box-shadow .3s;
+}
+
+.card-causa:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .1);
+}
+
+.card-header {
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color-background-light);
+    font-size: 0.9em;
+}
+
+.card-tag {
+    padding: 4px 10px;
+    border-radius: 20px;
+    color: #fff;
+}
+
+.card-tag-servico {
+    background-color: var(--color-accent);
+}
+
+.card-tag-artigos {
+    background-color: var(--color-donation);
+    color: var(--color-text);
+}
+
+
+.card-content {
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.card-title {
+    font-family: var(--font-headings);
+    margin: 0 0 10px;
+    font-size: 1.3rem;
+    color: var(--color-primary);
+}
+
+/* --- FOOTER --- */
+.main-footer {
+    background-color: var(--color-primary);
+    color: #fff;
+    padding: 50px 0 20px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.footer-column h4 {
+    margin-bottom: 15px;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 10px;
+}
+
+.main-footer a {
+    color: var(--color-text-light);
+    text-decoration: none;
+}
+
+.main-footer a:hover {
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 20px;
+    font-size: 0.9em;
+}
+
+
+/* --- MEDIA QUERIES (ENFOQUE MÓVIL) --- */
 
 @media (max-width: 992px) {
     .main-nav {
@@ -237,6 +378,11 @@ img {
     .causas-grid {
         grid-template-columns: 1fr;
     }
+
+    .footer-grid {
+        text-align: center;
+        grid-template-columns: 1fr;
+    }
 }
 
 /* --- FIX PARA FORMULARIOS EN IOS --- */
@@ -255,4 +401,6 @@ select {
     background-repeat: no-repeat;
     background-position: right 15px center;
     background-size: 16px;
+    padding-right: 40px;
+    /* Espacio para la flecha */
 }
