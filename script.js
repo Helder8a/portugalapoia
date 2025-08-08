@@ -1,1 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => { let e = document.getElementById("preloader"); e && setTimeout(() => { e.classList.add("hidden") }, 100); let t = document.getElementById("cookie-consent-banner"), l = document.getElementById("accept-cookies-btn"); t && l && ("true" !== localStorage.getItem("cookiesAccepted") && (t.style.display = "flex"), l.addEventListener("click", () => { t.style.display = "none", localStorage.setItem("cookiesAccepted", "true") })); let s = document.querySelector(".mobile-nav-toggle"), o = document.querySelector("#main-nav"); s && o && s.addEventListener("click", () => { o.classList.toggle("nav-visible"), s.classList.toggle("toggled"); let e = o.classList.contains("nav-visible"); s.setAttribute("aria-expanded", e) }); let n = document.getElementById("scrollTopBtn"); n && (window.onscroll = function () { document.body.scrollTop > 200 || document.documentElement.scrollTop > 200 ? n.classList.add("visible") : n.classList.remove("visible") }, n.addEventListener("click", () => { window.scrollTo({ top: 0, behavior: "smooth" }) })) });
+
+// --- LÓGICA PARA FEEDBACK EN EL FORMULARIO DE PUBLICACIÓN ---
+const adForm = document.getElementById('form-anuncio');
+if (adForm) {
+  adForm.addEventListener('submit', function (event) {
+    const submitButton = document.getElementById('submit-button');
+    const buttonText = submitButton.querySelector('.button-text');
+
+    // Deshabilitar el botón y mostrar estado de carga
+    submitButton.disabled = true;
+    submitButton.classList.add('is-loading');
+    if (buttonText) {
+      buttonText.textContent = 'Enviando...';
+    }
+  });
+}
