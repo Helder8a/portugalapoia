@@ -1775,10 +1775,11 @@ blockquote {
 }
 
 /* ================================================================ */
-/* ==   CORRECCIÓN DEFINITIVA PARA EL COLOR DEL TEXTO DEL BOTÓN  == */
+/* == CORRECCIÓN FINAL Y DEFINITIVA PARA BOTÓN EN TARJETAS == */
 /* ================================================================ */
 
-/* Esta regla fuerza el texto de los botones dentro de las tarjetas a ser blanco. */
-.card-causa .card-content a.button.button-primary {
+/* Esta regla fuerza el texto de los botones primarios dentro de
+   cualquier tarjeta a ser siempre blanco, anulando cualquier otro estilo. */
+.card-causa a.button-primary {
     color: #ffffff !important;
 }
