@@ -1,83 +1,105 @@
-// --- LÓGICA MEJORADA PARA COMPATIBILIDAD MÓVIL Y FUNCIONALIDADES EXISTENTES ---
+document.addEventListener("DOMContentLoaded", () => {
 
-// Función para gestionar la altura real del viewport en móviles
-function setViewportHeight() {
-  let vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
-}
+    // Oculta el preloader tan pronto como el contenido principal está listo
+    const preloader = document.getElementById("preloader");
+    if (preloader) {
+        // Usamos window.onload para asegurarnos que TODO (imágenes incluidas) ha cargado
+        window.onload = () => {
+            preloader.classList.add("hidden");
+        };
+    }
 
-// Ejecutar la función al cargar y al cambiar el tamaño de la ventana
-window.addEventListener('resize', setViewportHeight);
-window.addEventListener('load', setViewportHeight);
+    // Barra de navegación que se vuelve "pegajosa" (sticky) al hacer scroll
+    const mainHeader = document.querySelector('.main-header');
+    if (mainHeader) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 45) {
+                mainHeader.classList.add('nav-sticky');
+            } else {
+                mainHeader.classList.remove('nav-sticky');
+            }
+        });
+    }
+
+    // Botón para volver al inicio de la página
+    const scrollTopBtn = document.getElementById("scrollTopBtn");
+    if (scrollTopBtn) {
+        window.onscroll = function () {
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                scrollTopBtn.classList.add("visible");
+            } else {
+                scrollTopBtn.classList.remove("visible");
+            }
+        };
+        scrollTopBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    }
+
+    // Registra el Service Worker para la PWA (Progressive Web App)
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => console.log('Service Worker registrado com sucesso.'))
+                .catch(error => console.log('Falha ao registrar Service Worker:', error));
+        });
+    }
+});
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Ejecutar la función una vez que el DOM esté cargado
-  setViewportHeight();
 
-  // --- PRELOADER ---
-  let preloader = document.getElementById("preloader");
-  if (preloader) {
-    setTimeout(() => {
-      preloader.classList.add("hidden");
-    }, 100);
-  }
-
-  // --- BANNER DE COOKIES ---
-  let cookieBanner = document.getElementById("cookie-consent-banner");
-  let acceptCookiesBtn = document.getElementById("accept-cookies-btn");
-  if (cookieBanner && acceptCookiesBtn) {
-    if (localStorage.getItem("cookiesAccepted") !== "true") {
-      cookieBanner.style.display = "flex";
+    // Oculta el preloader tan pronto como el contenido principal está listo
+    const preloader = document.getElementById("preloader");
+    if (preloader) {
+        // Usamos window.onload para nos asegurarmos de que todo (incluindo imagens) ha carregado
+        window.onload = () => {
+            preloader.classList.add("hidden");
+        };
     }
-    acceptCookiesBtn.addEventListener("click", () => {
-      cookieBanner.style.display = "none";
-      localStorage.setItem("cookiesAccepted", "true");
-    });
-  }
 
-  // --- MENÚ DE NAVEGACIÓN MÓVIL ---
-  let mobileNavToggle = document.querySelector(".mobile-nav-toggle");
-  let mainNav = document.querySelector("#main-nav");
-  if (mobileNavToggle && mainNav) {
-    mobileNavToggle.addEventListener("click", () => {
-      mainNav.classList.toggle("nav-visible");
-      mobileNavToggle.classList.toggle("toggled");
-      let isVisible = mainNav.classList.contains("nav-visible");
-      mobileNavToggle.setAttribute("aria-expanded", isVisible);
-    });
-  }
+    // Barra de navegación que se vuelve "pegajosa" (sticky) al hacer scroll
+    const mainHeader = document.querySelector('.main-header');
+    if (mainHeader) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 45) {
+                mainHeader.classList.add('nav-sticky');
+            } else {
+                mainHeader.classList.remove('nav-sticky');
+            }
+        });
+    }
 
-  // --- BOTÓN DE SCROLL TO TOP ---
-  let scrollTopBtn = document.getElementById("scrollTopBtn");
-  if (scrollTopBtn) {
-    window.onscroll = function () {
-      if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-        scrollTopBtn.classList.add("visible");
-      } else {
-        scrollTopBtn.classList.remove("visible");
-      }
-    };
-    scrollTopBtn.addEventListener("click", () => {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-    });
-  }
+    // Botón para volver al inicio de la página
+    const scrollTopBtn = document.getElementById("scrollTopBtn");
+    if (scrollTopBtn) {
+        window.onscroll = function () {
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                scrollTopBtn.classList.add("visible");
+            } else {
+                scrollTopBtn.classList.remove("visible");
+            }
+        };
+        scrollTopBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    }
 
-  // --- LÓGICA PARA FEEDBACK EN EL FORMULARIO DE PUBLICACIÓN ---
-  const adForm = document.getElementById('form-anuncio');
-  if (adForm) {
-    adForm.addEventListener('submit', function (event) {
-      const submitButton = document.getElementById('submit-button');
-      const buttonText = submitButton.querySelector('.button-text');
+    // Registra el Service Worker para la PWA (Progressive Web App)
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => console.log('Service Worker registrado com sucesso.'))
+                .catch(error => console.log('Falha ao registrar Service Worker:', error));
+        });
+    }
 
-      // Deshabilitar el botón y mostrar estado de carga
-      submitButton.disabled = true;
-      submitButton.classList.add('is-loading');
-      if (buttonText) {
-        buttonText.textContent = 'Enviando...';
-      }
-    });
-  }
+    // Lógica para el interruptor de modo oscuro
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        themeToggle.addEventListener('change', () => {
+            document.body.classList.toggle('dark-theme', themeToggle.checked);
+        });
+    }
 });

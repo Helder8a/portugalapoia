@@ -1,276 +1,177 @@
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="pt">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>PortugalApoia.com - Solidariedade, Anúncios, Aluguer de quarto, Serviços Técnicos e Domésticos, Emprego e
-        Doações em Portugal</title>
-
+    <title>Publicar Anúncio - PortugalApoia.com</title>
     <meta name="description"
-        content="A sua plataforma comunitária para encontrar e publicar pedidos de artigos, vagas de emprego, serviços e habitação em Portugal. Junte-se e ajude!">
-
-    <meta name="keywords"
-        content="doação, emprego, solidariedade, portugal, ajuda, voluntariado, causas sociais, habitação, serviços">
-
-    <meta name="author" content="Fundación Fides & HBO Consulting">
-
-    <meta name="robots" content="index, follow">
-
-    <link rel="canonical" href="https://www.portugalapoia.com/index.html">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-
-    <meta property="og:title" content="PortugalApoia - A Comunidade que nos Une">
-    <meta property="og:description"
-        content="Encontre e publique pedidos de artigos, vagas de emprego, serviços e habitação em Portugal.">
-    <meta property="og:image" content="https://www.portugalapoia.com/images/og-image.jpg">
-    <meta property="og:url" content="https://www.portugalapoia.com">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="pt_PT">
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="PortugalApoia - A Comunidade que nos Une">
-    <meta name="twitter:description"
-        content="Encontre e publique pedidos de artigos, vagas de emprego, serviços e habitação em Portugal.">
-    <meta name="twitter:image" content="https://www.portugalapoia.com/images/og-image.jpg">
-
-
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        content="Publique o seu anúncio de forma gratuita e ajude a comunidade ou encontre o que precisa.">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500&display=swap"
         rel="stylesheet">
-
+    <link rel="stylesheet" href="style.css">
     <link rel="icon" href="images/favicon.ico.png" type="image/png">
-
     <link rel="manifest" href="manifest.json">
+</head>
 
-    <meta name="theme-color" content="#0A3D62">
-
-    <link rel="apple-touch-icon" href="images/favicon.ico.png">
-
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3196299619563199"
-     crossorigin="anonymous"></script>
-     </head>
-
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-VG454Y1YV4"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-VG454Y1YV4');
-</script>
 <body>
-    <div id="preloader">
-        <img src="images/favicon.ico.png" alt="A carregar..." class="spinner">
-    </div>
+    <div id="preloader"><img src="images/favicon.ico.png" alt="A carregar..." class="spinner"></div>
 
     <header class="main-header">
-        <div class="container">
-            <a href="index.html" class="logo">PortugalApoia</a>
-
-            <nav class="main-nav" id="main-nav">
-                <ul>
-                    <li><a href="doacoes.html">Doação de Artigos</a></li>
-                    <li><a href="empregos.html">Emprego</a></li>
-                    <li><a href="servicos.html">Serviços</a></li>
-                    <li><a href="habitacao.html">Habitação</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="publicar.html">Publicar Anúncio</a></li>
-                </ul>
-            </nav>
-            <button class="mobile-nav-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Menu">
-    <span class="hamburger-icon">☰</span>
-    <span class="close-icon">✕</span>
-</button>
-        </div>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand logo" href="index.html">PortugalApoia</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="main-nav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link" href="doacoes.html">Doação de Artigos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="empregos.html">Emprego</a></li>
+                        <li class="nav-item"><a class="nav-link" href="servicos.html">Serviços</a></li>
+                        <li class="nav-item"><a class="nav-link" href="habitacao.html">Habitação</a></li>
+                        <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link btn btn-primary publish-btn"
+                                href="publicar.html">Publicar Anúncio</a></li>
+                    </ul>
+                    <div class="theme-switch-wrapper nav-item ml-lg-3">
+                        <label class="theme-switch" for="theme-toggle">
+                            <input type="checkbox" id="theme-toggle" />
+                            <div class="slider round">
+                                <i class="fas fa-sun slider-icon"></i>
+                                <i class="fas fa-moon slider-icon"></i>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </nav>
     </header>
 
     <main>
-        <section id="criar" class="section-light">
-            <div class="container form-container">
-                <h2 class="section-title">Publique o seu Anúncio Gratuito</h2>
-                <p>A sua publicação será revista e adicionada à secção correspondente. Preencha todos os campos.</p>
+        <section class="page-header page-header-publicar text-center text-white">
+            <div class="container">
+                <h1 class="page-title">Publicar Anúncio</h1>
+                <p class="lead">Crie um anúncio em poucos minutos e junte-se à nossa comunidade de ajuda mútua.</p>
+            </div>
+        </section>
 
-                <form name="anuncio-inteligente" id="form-anuncio" class="donation-form" data-netlify="true"
-                    netlify-honeypot="bot-field">
-                    <p style="display: none;">
-                        <label>
-                            Não preencher se for humano: <input name="bot-field" />
-                        </label>
-                    </p>
-                    <div class="form-group">
-                        <label>1. Qual o tipo de anúncio que quer publicar?</label>
-                        <select name="tipo_anuncio" id="tipo-anuncio-selector" class="form-group"
-                            style="width: 100%; padding: 14px; border: 1px solid var(--color-border); border-radius: var(--border-radius); font-size: 1rem;">
-                            <option value="artigos">Pedido de Artigos</option>
-                            <option value="emprego">Vaga de Emprego</option>
-                            <option value="servico">Oferta de Serviço Técnico</option>
-                            <option value="habitacao">Arrendamento de Imóvel</option>
-                        </select>
-                    </div>
+        <section class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <form id="publish-form" action="#" method="post" enctype="multipart/form-data">
+                                    <h4 class="mb-4">Detalhes do Anúncio</h4>
 
-                    <div id="campos-comuns">
-                        <div class="form-group">
-                            <label for="titulo_anuncio">2. Título do Anúncio</label>
-                            <input type="text" id="titulo_anuncio" name="titulo_anuncio"
-                                placeholder="Ex: Apartamento T2 em Lisboa ou Precisa-se de Pintor">
-                            <div class="error-message" id="error-titulo"></div>
-                        </div>
+                                    <div class="form-group">
+                                        <label for="category">Categoria do Anúncio</label>
+                                        <select class="form-control" id="category" name="category" required>
+                                            <option value="">Selecione uma categoria...</option>
+                                            <option value="doacoes">Doação de Artigos</option>
+                                            <option value="empregos">Emprego</option>
+                                            <option value="servicos">Serviços</option>
+                                            <option value="habitacao">Habitação</option>
+                                        </select>
+                                    </div>
 
-                        <div id="campos-habitacao" style="display: none;">
-                            <div class="form-group">
-                                <label for="preco_habitacao">Preço do Arrendamento (€/mês)</label>
-                                <input type="number" id="preco_habitacao" name="preco_habitacao" placeholder="Ex: 850">
-                            </div>
-                            <div class="form-group">
-                                <label for="cidade_habitacao">Cidade</label>
-                                <input type="text" id="cidade_habitacao" name="cidade_habitacao"
-                                    placeholder="Ex: Lisboa">
-                            </div>
-                        </div>
+                                    <div class="form-group">
+                                        <label for="title">Título do Anúncio</label>
+                                        <input type="text" class="form-control" id="title" name="title"
+                                            placeholder="Ex: Doação de Roupa de Bebé" required>
+                                    </div>
 
-                        <div id="campos-emprego" style="display: none;">
-                            <div class="form-group">
-                                <label for="tipo_contrato">Tipo de Contrato</label>
-                                <select id="tipo_contrato" name="tipo_contrato">
-                                    <option value="">Selecione o tipo de contrato</option>
-                                    <option value="Full-time">Full-time</option>
-                                    <option value="Part-time">Part-time</option>
-                                    <option value="Estágio">Estágio</option>
-                                    <option value="Temporário">Temporário</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="experiencia_emprego">Experiência Requerida (opcional)</label>
-                                <input type="text" id="experiencia_emprego" name="experiencia_emprego"
-                                    placeholder="Ex: 2 anos em Vendas">
-                            </div>
-                            <div class="form-group">
-                                <label for="local_emprego">Local de Trabalho (Cidade)</label>
-                                <input type="text" id="local_emprego" name="local_emprego" placeholder="Ex: Lisboa">
-                            </div>
-                        </div>
+                                    <div class="form-group">
+                                        <label for="description">Descrição</label>
+                                        <textarea class="form-control" id="description" name="description" rows="5"
+                                            placeholder="Detalhe o seu pedido ou oferta..." required></textarea>
+                                    </div>
 
-                        <div id="campos-servico" style="display: none;">
-                            <div class="form-group">
-                                <label for="categoria_servico">Categoria do Serviço</label>
-                                <select id="categoria_servico" name="categoria_servico">
-                                    <option value="">Selecione a categoria</option>
-                                    <option value="Administração">Administração de Empresas</option>
-                                    <option value="Arquitetura">Arquitetura</option>
-                                    <option value="Advocacia">Advocacia</option>
-                                    <option value="Carpintaria">Carpintaria</option>
-                                    <option value="Cozinha">Cozinha</option>
-                                    <option value="Design">Design</option>
-                                    <option value="Engenharia">Engenharia</option>
-                                    <option value="Instalações">Instalações</option>
-                                    <option value="Obras">Obras e Construção</option>
-                                    <option value="Saúde">Saúde</option>
-                                    <option value="Tecnologia">Tecnologia</option>
-                                    <option value="Transporte">Transporte</option>
-                                    <option value="Outros">Outros</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="area_atuacao_servico">Área de Atuação (Cidade/Região)</label>
-                                <input type="text" id="area_atuacao_servico" name="area_atuacao_servico"
-                                    placeholder="Ex: Porto e arredores">
-                            </div>
-                        </div>
+                                    <div class="form-group">
+                                        <label for="location">Localização</label>
+                                        <input type="text" class="form-control" id="location" name="location"
+                                            placeholder="Ex: Lisboa, Porto, Coimbra" required>
+                                    </div>
 
-                        <div class="form-group">
-                            <label for="descricao">3. Descrição Detalhada</label>
-                            <textarea id="descricao" name="descricao" rows="6"
-                                placeholder="Descreva o seu anúncio com o máximo de detalhe possível."></textarea>
-                            <div class="error-message" id="error-descricao"></div>
-                        </div>
-                        <div class="form-group">
-                            <label for="contacto">4. O seu Contacto (Email ou Telefone)</label>
-                            <input type="text" id="contacto" name="contacto"
-                                placeholder="O seu melhor email ou telefone para o contactarem">
-                            <div class="error-message" id="error-contacto"></div>
-                        </div>
-                        <div class="form-group">
-                            <label for="imagem_anuncio">5. Imagem Principal (Opcional)</label>
-                            <input type="file" id="imagem_anuncio" name="imagem_anuncio" accept="image/png, image/jpeg">
-                            <p id="image-preview-message"
-                                style="display:none; margin-top: 10px; font-size: 0.9em; color: #555;"></p>
+                                    <h4 class="mt-5 mb-4">Informação de Contacto</h4>
+
+                                    <div class="form-group">
+                                        <label for="contact-name">Nome de Contacto</label>
+                                        <input type="text" class="form-control" id="contact-name" name="contact-name"
+                                            placeholder="O seu nome ou da sua organização" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="contact-email">Email de Contacto</label>
+                                        <input type="email" class="form-control" id="contact-email"
+                                            name="contact-email" placeholder="Ex: o-seu-email@gmail.com" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="contact-phone">Número de Telefone (opcional)</label>
+                                        <input type="tel" class="form-control" id="contact-phone" name="contact-phone"
+                                            placeholder="Ex: +351 912 345 678">
+                                    </div>
+
+                                    <div class="form-group form-check">
+                                        <input type="checkbox" class="form-check-input" id="terms" required>
+                                        <label class="form-check-label" for="terms">Concordo com os <a href="#">Termos e
+                                                Condições</a></label>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block mt-4">Publicar
+                                        Anúncio</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-
-                    <button type="submit" id="submit-button" class="button button-primary button-fullwidth" style="display: flex; justify-content: center; align-items: center;">
-    <span class="button-text">Enviar Pedido de Publicação</span>
-    <span class="spinner-icon"></span>
-</button>
-                </form>
-
-                <div id="form-success-message"
-                    style="display: none; padding: 15px; margin-top: 20px; border-radius: var(--border-radius); color: white; background-color: var(--color-accent); text-align: center;">
-                    Obrigado, o seu anuncio foi enviado para revisão.
-                </div>
-                <div id="form-error-message"
-                    style="display: none; padding: 15px; margin-top: 20px; border-radius: var(--border-radius); color: white; background-color: #c0392b; text-align: center;">
-                    Ocorreu um erro ao submeter o formulário. Por favor, tente novamente.
                 </div>
             </div>
         </section>
     </main>
 
-    <button id="scrollTopBtn" title="Voltar ao topo">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 19V5M5 12l7-7 7 7" />
-        </svg>
-    </button>
+    <button id="scrollTopBtn" title="Voltar ao topo"><i class="fas fa-arrow-up"></i></button>
 
     <footer class="main-footer">
         <div class="container">
-            <div class="footer-grid">
-                <div class="footer-column">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
                     <h4>PortugalApoia</h4>
                     <p>A conectar a generosidade à necessidade.</p>
                 </div>
-                <div class="footer-column">
+                <div class="col-lg-3 col-md-6 mb-4">
                     <h4>Navegação</h4>
-                    <ul>
-                        <li><a href="doacoes.html">Doação de Artigos</a></li>
+                    <ul class="list-unstyled">
+                        <li><a href="doacoes.html">Doação</a></li>
                         <li><a href="empregos.html">Emprego</a></li>
-                        <li><a href="servicos.html">Serviços Técnicos</a></li>
+                        <li><a href="servicos.html">Serviços</a></li>
                         <li><a href="habitacao.html">Habitação</a></li>
-                        <li><a href="publicar.html">Publicar Anúncio</a></li>
                     </ul>
                 </div>
-                <div class="footer-column">
-    <h4>Siga-nos</h4>
-    <a href="https://www.instagram.com/portugalapoia" target="_blank" rel="noopener noreferrer" class="social-link">
-        Instagram
-    </a>
-</div>
-<div class="footer-bottom">
-            <p>&copy; 2025 PortugalApoia.com - Todos os direitos reservados. | <a href="politica-privacidade.html"
-                    style="color: white;">Política de Privacidade</a></p>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h4>Siga-nos</h4><a href="https://www.instagram.com/portugalapoia" target="_blank"
+                        rel="noopener noreferrer" class="social-link">Instagram</a>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h4>Contacto</h4>
+                    <p>Um projeto da <a href="mailto:fidessuc@gmail.com">Fundación Fides</a>.</p>
+                    <p>Design by <a href="mailto:hbo.consulting.pt@gmail.com">HBO Consulting</a>.</p>
+                </div>
+            </div>
+            <div class="footer-bottom text-center pt-3 mt-3">
+                <p>&copy; 2025 PortugalApoia.com | <a href="politica-privacidade.html">Política de Privacidade</a></p>
+            </div>
         </div>
-
     </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="script.js"></script>
-    <script>
-        // Comprobar si el navegador soporta Service Workers
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                // Registrar nuestro archivo sw.js
-                navigator.serviceWorker.register('/sw.js')
-                    .then(registration => {
-                        console.log('ServiceWorker registrado com éxito com o scope:', registration.scope);
-                    })
-                    .catch(error => {
-                        console.log('Fallo en el registro del ServiceWorker:', error);
-                    });
-            });
-        }
-    </script>
 </body>
 
 </html>

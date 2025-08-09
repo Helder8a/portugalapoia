@@ -1,227 +1,277 @@
 <!DOCTYPE html>
-<html lang="pt-PT">
+<html lang="pt">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>PortugalApoia.com - Solidariedade, Anúncios, Aluguer de quarto, Serviços Técnicos e Domésticos, Emprego e
-        Doações em Portugal</title>
-
+    <title>Habitação - PortugalApoia.com</title>
     <meta name="description"
-        content="A sua plataforma comunitária para encontrar e publicar pedidos de artigos, vagas de emprego, serviços e habitação em Portugal. Junte-se e ajude!">
-
-    <meta name="keywords"
-        content="doação, emprego, solidariedade, portugal, ajuda, voluntariado, causas sociais, habitação, serviços">
-
-    <meta name="author" content="Fundación Fides & HBO Consulting">
-
-    <meta name="robots" content="index, follow">
-
-    <link rel="canonical" href="https://www.portugalapoia.com/habitacao.html">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-
-    <meta property="og:title" content="Ofertas de Habitação e Quartos - PortugalApoia">
-    <meta property="og:description"
-        content="Encontre a sua próxima oportunidade. Explore dezenas de vagas de emprego publicadas pela nossa comunidade em Lisboa, Porto e mais.">
-    <meta property="og:url" content="https://www.portugalapoia.com/empregos.html">
-    <meta property="og:image" content="https://www.portugalapoia.com/images/og-image-habitacao.jpg">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="pt_PT">
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Vagas de Emprego em Portugal - PortugalApoia">
-    <meta name="twitter:description"
-        content="Encontre a sua próxima oportunidade. Explore dezenas de vagas de emprego publicadas pela nossa comunidade.">
-    <meta name="twitter:image" content="https://www.portugalapoia.com/images/og-image-habitacao.jpg"> ```
-
-
-    <link rel="stylesheet" href="style.css">
+        content="Encontre oportunidades de emprego em várias áreas em todo o país. Publique a sua vaga gratuitamente.">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <link rel="icon" href="images/favicon.ico.png" type="image/png">
-
     <link rel="manifest" href="manifest.json">
-
-    <meta name="theme-color" content="#0A3D62">
-
-    <link rel="apple-touch-icon" href="images/favicon.ico.png">
-
-    <!-- Google tag adsense start (gtag.js) -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3196299619563199"
-        crossorigin="anonymous"></script>
-    <!-- Google tag adsense end (gtag.js) -->
-
+    <style>
+        .social-share a {
+            color: var(--color-primary);
+        }
+    </style>
 </head>
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-VG454Y1YV4"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-VG454Y1YV4');
-</script>
-
 <body>
-    <div id="preloader">
-        <img src="images/favicon.ico.png" alt="A carregar..." class="spinner">
-    </div>
+    <div id="preloader"><img src="images/favicon.ico.png" alt="A carregar..." class="spinner"></div>
 
     <header class="main-header">
-        <div class="container">
-            <a href="index.html" class="logo">PortugalApoia</a>
-
-            <nav class="main-nav" id="main-nav">
-                <ul>
-                    <li><a href="doacoes.html">Doação de Artigos</a></li>
-                    <li><a href="empregos.html">Emprego</a></li>
-                    <li><a href="servicos.html">Serviços</a></li>
-                    <li><a href="habitacao.html" class="active">Habitação</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><a href="publicar.html">Publicar Anúncio</a></li>
-                </ul>
-            </nav>
-            <button class="mobile-nav-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Menu">
-                <span class="hamburger-icon">☰</span>
-                <meta property="og:title
-    <span class=" close-icon">✕</span>
-            </button>
-        </div>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand logo" href="index.html">PortugalApoia</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="main-nav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link" href="doacoes.html">Doação de Artigos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="empregos.html">Emprego</a></li>
+                        <li class="nav-item"><a class="nav-link" href="servicos.html">Serviços</a></li>
+                        <li class="nav-item"><a class="nav-link" href="habitacao.html">Habitação</a></li>
+                        <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link btn btn-primary publish-btn"
+                                href="publicar.html">Publicar Anúncio</a></li>
+                    </ul>
+                    <div class="theme-switch-wrapper nav-item ml-lg-3">
+                        <label class="theme-switch" for="theme-toggle">
+                            <input type="checkbox" id="theme-toggle" />
+                            <div class="slider round">
+                                <i class="fas fa-sun slider-icon"></i>
+                                <i class="fas fa-moon slider-icon"></i>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </nav>
     </header>
 
     <main>
-        <section id="habitacao">
+        <section class="page-header page-header-habitacao text-center text-white">
             <div class="container">
-                <h2 class="section-title">Arrendamento de Imóveis</h2>
+                <h1 class="page-title">Anúncios de Habitação</h1>
+                <p class="lead">Encontre a sua próxima casa. Vagas de aluguel e venda em diversas cidades.</p>
+            </div>
+        </section>
 
-                <div class="search-container">
-                    <div class="search-box">
-                        <div class="search-input-group">
-                            <i class="fas fa-search"></i>
-                            <input type="text" id="search-input" placeholder="Procurar por tipo, ex: 'apartamento'...">
-                        </div>
-                        <div class="filter-group">
-                            <select id="type-filter">
-                                <option value="">Todos os Tipos</option>
-                                <option value="Apartamento">Apartamento</option>
-                                <option value="Casa">Casa</option>
-                                <option value="Quarto">Quarto</option>
-                                <option value="Loja Comercial">Loja Comercial</option>
-                            </select>
-                            <select id="city-filter">
-                                <option value="">Todas as Cidades</option>
-                                <option value="Lisboa">Lisboa</option>
-                                <option value="Porto">Porto</option>
-                                <option value="Amadora">Amadora</option>
-                                <option value="Cascais">Cascais</option>
-                                <option value="Coimbra">Coimbra</option>
-                                <option value="Santarém">Santarém</option>
-                                <option value="Setúbal">Setúbal</option>
-                            </select>
+        <section class="py-4 bg-light border-bottom">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <form class="form-row align-items-center" onsubmit="event.preventDefault();">
+                                    <div class="col-md-6 mb-2 mb-md-0">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                            </div>
+                                            <input type="text" id="searchInput" class="form-control form-control-lg"
+                                                placeholder="Tipo de imóvel (ex: apartamento)">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-2 mb-md-0">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i
+                                                        class="fas fa-map-marker-alt"></i></span>
+                                            </div>
+                                            <input type="text" id="locationInput" class="form-control form-control-lg"
+                                                placeholder="Cidade (ex: Lisboa)">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-primary btn-lg btn-block"
+                                            onclick="filterHousing()">Procurar</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
 
-
-                <div id="listing-container" class="causas-grid">
-
-
-                    <div class="card-causa">
-                        <div class="card-header"><span class="card-tag card-tag-servico">Quarto</span><span
-                                class="card-id">#HAB-001</span></div>
-                        <div class="card-content">
-                            <h3 class="card-title">Quarto Individual, Lisboa, Arroios</h3>
-                            <p class="card-description">Disponível a partir de 4 de agosto<br>✅ Apenas para 1
-                                pessoa<br>💶 Valor mensal: 400€<br>🔒 Caução: 400€<br>📃 Com contrato de
-                                arrendamento<br>💡 Inclui: Água, luz, gás e internet<br><br>Ambiente tranquilo e bem
-                                localizado, ideal para quem procura conforto e privacidade.<br></p>
-                            <p class="card-description">Tel. <a href="tel:+351936851734">+351 936 851 734</a></p>
+        <section class="py-5">
+            <div class="container">
+                <div class="row" id="housing-grid">
+                    <div class="col-lg-4 col-md-6 mb-4 housing-item">
+                        <div class="card h-100 shadow-sm" id="HAB-001">
+                            <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b868?q=80&w=2574&auto=format&fit=crop"
+                                class="card-img-top" alt="Casa em Lisboa">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">Apartamento T2 em Lisboa</h5>
+                                <h6 class="card-subtitle mb-2 text-muted"><i
+                                        class="fas fa-map-marker-alt mr-2"></i>Lisboa</h6>
+                                <p class="card-text flex-grow-1">Apartamento T2 moderno e espaçoso com vista para a
+                                    cidade. Localizado no centro, próximo a transportes e comércio.</p>
+                                <p class="card-text small mt-auto"><strong>Contacto:</strong> <a
+                                        href="mailto:imovel.lisboa@email.com">imovel.lisboa@email.com</a></p>
+                                <div class="mt-2 text-center">
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="uploadContent('HAB-001', 'image')"><i class="fas fa-camera"></i> Subir Imagem</button>
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="uploadContent('HAB-001', 'video')"><i class="fas fa-video"></i> Subir Vídeo</button>
+                                </div>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between align-items-center">
+                                <small class="text-muted">ID: HAB-001</small>
+                                <div class="social-share">
+                                    <a href="https://api.whatsapp.com/send?text=Veja este anúncio de habitação: Apartamento T2 em Lisboa https://portugalapoia.com/habitacao.html#HAB-001" target="_blank" title="Partilhar no WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://portugalapoia.com/habitacao.html#HAB-001" target="_blank" title="Partilhar no Facebook"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="https://twitter.com/intent/tweet?url=https://portugalapoia.com/habitacao.html#HAB-001&text=Veja este anúncio de habitação: Apartamento T2 em Lisboa" target="_blank" title="Partilhar no X/Twitter"><i class="fab fa-twitter"></i></a>
+                                    <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://portugalapoia.com/habitacao.html#HAB-001&title=Veja este anúncio de habitação: Apartamento T2 em Lisboa" target="_blank" title="Partilhar no LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-
-                    <div class="card-causa">
-                        <div class="card-header"><span class="card-tag card-tag-servico">Quarto</span><span
-                                class="card-id">#HAB-002</span></div>
-                        <div class="card-content">
-                            <h3 class="card-title">Quarto Individual, Lisboa, Portela</h3>
-                            <p class="card-description">Disponível a partir de 1 de agosto<br>✅ Apenas para 2
-                                pessoa<br>💶 Valor mensal: 710€<br>🔒 Caução: 350€<br>📃 Com contrato de
-                                arrendamento<br>💡 Inclui: Água, luz, gás e internet, Banheiro interno<br><br>Ambiente
-                                tranquilo e bem
-                                localizado, ideal para quem procura conforto e privacidade.<br></p>
-                            <p class="card-description">Tel. <a href="tel:+351936851734">+351 313415847</a></p>
+                    <div class="col-lg-4 col-md-6 mb-4 housing-item">
+                        <div class="card h-100 shadow-sm" id="HAB-002">
+                            <img src="https://images.unsplash.com/photo-1570129477041-3b7074711311?q=80&w=2670&auto=format&fit=crop"
+                                class="card-img-top" alt="Casa no Porto">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">Moradia V3 no Porto</h5>
+                                <h6 class="card-subtitle mb-2 text-muted"><i
+                                        class="fas fa-map-marker-alt mr-2"></i>Porto</h6>
+                                <p class="card-text flex-grow-1">Moradia com 3 quartos, jardim e garagem. Ideal para
+                                    famílias. Localização tranquila e bem conectada.</p>
+                                <p class="card-text small mt-auto"><strong>Contacto:</strong> <a
+                                        href="tel:987654321">987 654 321</a></p>
+                                <div class="mt-2 text-center">
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="uploadContent('HAB-002', 'image')"><i class="fas fa-camera"></i> Subir Imagem</button>
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="uploadContent('HAB-002', 'video')"><i class="fas fa-video"></i> Subir Vídeo</button>
+                                </div>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between align-items-center">
+                                <small class="text-muted">ID: HAB-002</small>
+                                <div class="social-share">
+                                    <a href="https://api.whatsapp.com/send?text=Veja este anúncio de habitação: Moradia V3 no Porto https://portugalapoia.com/habitacao.html#HAB-002" target="_blank" title="Partilhar no WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://portugalapoia.com/habitacao.html#HAB-002" target="_blank" title="Partilhar no Facebook"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="https://twitter.com/intent/tweet?url=https://portugalapoia.com/habitacao.html#HAB-002&text=Veja este anúncio de habitação: Moradia V3 no Porto" target="_blank" title="Partilhar no X/Twitter"><i class="fab fa-twitter"></i></a>
+                                    <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://portugalapoia.com/habitacao.html#HAB-002&title=Veja este anúncio de habitação: Moradia V3 no Porto" target="_blank" title="Partilhar no LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-
+                    <div class="col-lg-4 col-md-6 mb-4 housing-item">
+                        <div class="card h-100 shadow-sm" id="HAB-003">
+                            <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0b94?q=80&w=2670&auto=format&fit=crop"
+                                class="card-img-top" alt="Quarto em Coimbra">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">Quarto para Alugar em Coimbra</h5>
+                                <h6 class="card-subtitle mb-2 text-muted"><i
+                                        class="fas fa-map-marker-alt mr-2"></i>Coimbra</h6>
+                                <p class="card-text flex-grow-1">Quarto mobilado em apartamento partilhado, ideal para
+                                    estudantes. Perto da universidade e com despesas incluídas.</p>
+                                <p class="card-text small mt-auto"><strong>Contacto:</strong> <a
+                                        href="mailto:quarto.coimbra@email.com">quarto.coimbra@email.com</a></p>
+                                <div class="mt-2 text-center">
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="uploadContent('HAB-003', 'image')"><i class="fas fa-camera"></i> Subir Imagem</button>
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="uploadContent('HAB-003', 'video')"><i class="fas fa-video"></i> Subir Vídeo</button>
+                                </div>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between align-items-center">
+                                <small class="text-muted">ID: HAB-003</small>
+                                <div class="social-share">
+                                    <a href="https://api.whatsapp.com/send?text=Veja este anúncio de habitação: Quarto para Alugar em Coimbra https://portugalapoia.com/habitacao.html#HAB-003" target="_blank" title="Partilhar no WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://portugalapoia.com/habitacao.html#HAB-003" target="_blank" title="Partilhar no Facebook"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="https://twitter.com/intent/tweet?url=https://portugalapoia.com/habitacao.html#HAB-003&text=Veja este anúncio de habitação: Quarto para Alugar em Coimbra" target="_blank" title="Partilhar no X/Twitter"><i class="fab fa-twitter"></i></a>
+                                    <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://portugalapoia.com/habitacao.html#HAB-003&title=Veja este anúncio de habitação: Quarto para Alugar em Coimbra" target="_blank" title="Partilhar no LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <div id="no-results-message" style="display: none;">
-                    <p>Não foram encontrados resultados para a sua pesquisa.</p>
-                </div>
-                <button id="load-more-btn" class="button button-primary" style="display: block; margin: 30px auto;">Ver
-                    Mais</button>
             </div>
         </section>
     </main>
 
-    <button id="scrollTopBtn" title="Voltar ao topo">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 19V5M5 12l7-7 7 7" />
-        </svg>
-    </button>
+    <button id="scrollTopBtn" title="Voltar ao topo"><i class="fas fa-arrow-up"></i></button>
 
     <footer class="main-footer">
         <div class="container">
-            <div class="footer-grid">
-                <div class="footer-column">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
                     <h4>PortugalApoia</h4>
                     <p>A conectar a generosidade à necessidade.</p>
                 </div>
-                <div class="footer-column">
+                <div class="col-lg-3 col-md-6 mb-4">
                     <h4>Navegação</h4>
-                    <ul>
-                        <li><a href="doacoes.html">Doação de Artigos</a></li>
+                    <ul class="list-unstyled">
+                        <li><a href="doacoes.html">Doação</a></li>
                         <li><a href="empregos.html">Emprego</a></li>
-                        <li><a href="servicos.html">Serviços Técnicos</a></li>
+                        <li><a href="servicos.html">Serviços</a></li>
                         <li><a href="habitacao.html">Habitação</a></li>
-                        <li><a href="publicar.html">Publicar Anúncio</a></li>
                     </ul>
                 </div>
-                <div class="footer-column">
-                    <h4>Siga-nos</h4>
-                    <a href="https://www.instagram.com/portugalapoia" target="_blank" rel="noopener noreferrer"
-                        class="social-link">
-                        Instagram
-                    </a>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h4>Siga-nos</h4><a href="https://www.instagram.com/portugalapoia" target="_blank"
+                        rel="noopener noreferrer" class="social-link">Instagram</a>
                 </div>
-                <div class="footer-bottom">
-            <p>&copy; 2025 PortugalApoia.com - Todos os direitos reservados. | <a href="politica-privacidade.html"
-                    style="color: white;">Política de Privacidade</a></p>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h4>Contacto</h4>
+                    <p>Um projeto da <a href="mailto:fidessuc@gmail.com">Fundación Fides</a>.</p>
+                    <p>Design by <a href="mailto:hbo.consulting.pt@gmail.com">HBO Consulting</a>.</p>
+                </div>
+            </div>
+            <div class="footer-bottom text-center pt-3 mt-3">
+                <p>&copy; 2025 PortugalApoia.com | <a href="politica-privacidade.html">Política de Privacidade</a></p>
+            </div>
         </div>
-
     </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="script.js"></script>
+
     <script>
-        // Comprobar si el navegador soporta Service Workers
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                // Registrar nuestro archivo sw.js
-                navigator.serviceWorker.register('/sw.js')
-                    .then(registration => {
-                        console.log('ServiceWorker registrado com éxito com o scope:', registration.scope);
-                    })
-                    .catch(error => {
-                        console.log('Fallo en el registro del ServiceWorker:', error);
-                    });
+        function filterHousing() {
+            const searchText = document.getElementById('searchInput').value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            const locationText = document.getElementById('locationInput').value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            const housingItems = document.querySelectorAll('.housing-item');
+            const noResultsMessage = document.getElementById('no-results');
+            let resultsFound = false;
+
+            housingItems.forEach(item => {
+                const title = item.querySelector('.card-title').textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                const description = item.querySelector('.card-text').textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                const location = item.querySelector('.card-subtitle').textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+                const textMatch = title.includes(searchText) || description.includes(searchText);
+                const locationMatch = location.includes(locationText);
+
+                if (textMatch && locationMatch) {
+                    item.style.display = '';
+                    resultsFound = true;
+                } else {
+                    item.style.display = 'none';
+                }
             });
+
+            if (noResultsMessage) {
+                noResultsMessage.style.display = resultsFound ? 'none' : 'block';
+            }
         }
+        
+        function uploadContent(cardId, type) {
+            alert(`Funcionalidade de subir ${type} para o anúncio ${cardId} seria implementada aqui.`);
+            // A lógica real para abrir uma janela de seleção de arquivo seria adicionada aqui.
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('searchInput');
+            const locationInput = document.getElementById('locationInput');
+            if (searchInput) searchInput.addEventListener('keyup', filterHousing);
+            if (locationInput) locationInput.addEventListener('keyup', filterHousing);
+        });
     </script>
 </body>
 

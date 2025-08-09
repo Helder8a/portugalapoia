@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <title>Evaluador Global de Sostenibilidad para Edificios | FIDES</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="description"
+        content="Herramienta interactiva y gratuita para evaluar la sostenibilidad de proyectos de edificación. Obtén un puntaje estimado para certificaciones como LEED, BREEAM, DGNB, WELL, Green Star y CASBEE.">
+    <meta name="keywords"
+        content="evaluador sostenibilidad, calculadora leed, guía breeam, certificación dgnb, well building standard, green star australia, casbee japón, construcción sostenible, edificación verde, fides sucre">
+    <link rel="canonical" href="https://fundafidescol.org/evaluador_sustentable.html" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/calculadora_sustentable.css" rel="stylesheet">
+    <link rel="icon" href="img/favicon.ico.png">
+
+    <style>
+        :root {
+            --primary-dark: #000000;
+            /* Negro Intenso */
+            --primary-accent: #FDBE33;
+            --secondary-accent: #27ae60;
+            --text-color: #555555;
+            --light-bg: #f8f9fa;
+            --white-color: #ffffff;
+        }
+
+        .navbar.bg-dark,
+        .footer,
+        .top-bar {
+            background: var(--primary-dark) !important;
+        }
+
+        .btn.btn-custom {
+            border-color: var(--primary-accent);
+            color: var(--primary-dark);
+            background-color: var(--white-color);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            font-weight: 600;
+            border-radius: 5px;
+        }
+
+        .btn.btn-custom:hover {
+            background-color: var(--primary-accent);
+            color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .results-sidebar {
+            background: var(--primary-dark);
+        }
+    </style>
+</head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-557GV639W3"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-557GV639W3');
+</script>
+
+<body>
+    <div class="top-bar d-none d-md-block">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="top-bar-left">
+                        <div class="text"><i class="fa fa-envelope"></i>
+                            <p data-key="email">fidessuc@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="top-bar-right">
+                        <div class="social">
+                            <a href="https://www.facebook.com/fidersucre/" aria-label="Visita nuestro Facebook"><i
+                                    class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.instagram.com/fidersucre/" aria-label="Visita nuestro Instagram"><i
+                                    class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="navbar navbar-expand-lg bg-dark navbar-dark">
+        <div class="container-fluid">
+            <a href="index.html" class="navbar-brand"><img class="navbar-logo" src="img/logo_fides_cuadrado.webp"
+                    alt="Logo Fundación FIDES"></a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-label="Alternar navegación"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                <div class="navbar-nav ml-auto">
+                    <a href="index.html" class="nav-item nav-link" data-key="nav_inicio">INICIO</a>
+                    <a href="proyectos.html" class="nav-item nav-link" data-key="nav_proyectos">PROYECTOS</a>
+                    <a href="galeria.html" class="nav-item nav-link" data-key="nav_galeria">GALERÍA</a>
+                    <div class="nav-item dropdown active">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"
+                            data-key="nav_herramientas">HERRAMIENTAS WEB</a>
+                        <div class="dropdown-menu">
+                            <a href="evaluador_sustentable.html" class="dropdown-item"
+                                data-key="nav_evaluador">Evaluador de Sostenibilidad</a>
+                        </div>
+                    </div>
+                    <a href="blog.html" class="nav-item nav-link" data-key="nav_blog">BLOG</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="container my-5">
+        <div class="main-content-grid">
+            <section id="evaluacion" aria-labelledby="eval-heading">
+                <div class="config-container">
+                    <h2 id="eval-heading" class="h3" data-key="evaluador_main_title_1">1. Configure su Proyecto</h2>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="certificacionSelector"><strong
+                                    data-key="evaluador_cert_label">Certificación:</strong></label>
+                            <select id="certificacionSelector" class="form-control"
+                                aria-label="Selector de certificación">
+                                <option value="leed">LEED v4.1 BD+C (Global)</option>
+                                <option value="breeam">BREEAM Int. New Construction 2016 (Global)</option>
+                                <option value="dgnb">DGNB System Version 2018 (Alemania/Int.)</option>
+                                <option value="well">WELL v2 (Global - Salud y Bienestar)</option>
+                                <option value="greenstar">Green Star Buildings v1 (Australia)</option>
+                                <option value="casbee">CASBEE for New Construction (Japón)</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6" id="context-selector-container">
+                        </div>
+                    </div>
+                    <div id="certification-description" class="mt-3"></div>
+                </div>
+
+                <h2 class="mt-4 h3" data-key="evaluador_main_title_2">2. Evalúe los Créditos</h2>
+                <div id="evaluationForm" class="accordion"></div>
+            </section>
+
+            <aside id="resultados" class="results-sidebar" aria-labelledby="results-heading">
+                <h3 id="results-heading" class="results-title" data-key="evaluador_results_title">Resultados del
+                    Proyecto</h3>
+                <div class="score-container">
+                    <p data-key="evaluador_score_label">Puntaje Estimado</p>
+                    <span id="totalScore">0</span>
+                    <p>/ <span id="maxScore">110</span> <span id="scoreUnit"
+                            data-key="evaluador_score_unit">Puntos</span></p>
+                </div>
+                <div class="progress-bar-container">
+                    <div id="progressBar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="110">
+                    </div>
+                </div>
+                <div id="certificationLevel">
+                    <h4 data-key="evaluador_level_label">Nivel de Certificación</h4>
+                    <p id="levelText" data-key="evaluador_no_score">Sin puntaje</p>
+                </div>
+
+                <div class="disclaimer">
+                    <i class="fa fa-exclamation-triangle"></i>
+                    <p data-key="evaluador_disclaimer">Este es un puntaje estimado. La certificación oficial requiere
+                        documentación y revisión por una entidad autorizada.</p>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="resultsChart"></canvas>
+                </div>
+
+                <div id="recommendations">
+                    <h4><i class="fa fa-lightbulb"></i> <span data-key="evaluador_recommendations_title">Recomendaciones
+                            Estratégicas</span></h4>
+                    <ul id="recommendationsList">
+                        <li data-key="evaluador_recommendations_default">Complete la evaluación para ver sugerencias.
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="costBenefitAnalysis">
+                    <h4><i class="fa fa-dollar-sign"></i> <span data-key="evaluador_cost_benefit_title">Análisis
+                            Costo-Beneficio</span></h4>
+                    <p id="costBenefitText" data-key="evaluador_cost_benefit_default">Seleccione créditos para ver un
+                        análisis.</p>
+                </div>
+
+                <button id="exportPdfButton" class="btn btn-custom btn-block" type="button"><i
+                        class="fa fa-file-pdf"></i> <span data-key="evaluador_export_button">Exportar
+                        Informe</span></button>
+                <button id="resetButton" class="btn btn-custom btn-block mt-2" type="button"><i
+                        class="fa fa-sync-alt"></i> <span data-key="evaluador_reset_button">Reiniciar</span></button>
+
+                <a href="donar.html" class="btn btn-donar-sidebar btn-block mt-3">
+                    <i class="fa fa-heart"></i> <span data-key="evaluador_support_button">Apoyar esta Herramienta</span>
+                </a>
+            </aside>
+        </div>
+    </main>
+
+    <div class="footer">
+        <div class="container copyright">
+            <div class="row">
+                <div class="col-md-6">
+                    <p data-key="footer_copyright">© <a href="https://fundafidescol.org/">Fundación FIDES Sucre</a>,
+                        Todos los Derechos Reservados.</p>
+                </div>
+                <div class="col-md-6">
+                    <p data-key="footer_designed_by">Diseñado por: <a href="#" target="_blank"
+                            rel="noopener noreferrer">HBO Consulting</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+    <div id="loader" class="show">
+        <div class="loader"></div>
+    </div>
+    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body" id="modalDescription"></div>
+                <div class="modal-footer" id="modalDocs"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/calculadora_sustentable.js"></script>
+</body>
+
+</html>

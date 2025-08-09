@@ -1,7 +1,7 @@
-// Define un nombre y versión para el caché
-const CACHE_NAME = 'portugalapoia-cache-v6'; // <-- VERSIÓN ACTUALIZADA
+// Versión del caché. CAMBIAR ESTE NÚMERO FUERZA LA ACTUALIZACIÓN.
+const CACHE_NAME = 'portugalapoia-cache-v8';
 
-// Lista de URLs y recursos que se deben cachear en la instalación.
+// Lista de archivos esenciales para que la app funcione offline.
 const assetsToCache = [
     '/',
     'index.html',
@@ -11,7 +11,7 @@ const assetsToCache = [
     'servicos.html',
     'publicar.html',
     'blog.html',
-    'painel_de_controlo.html',
+    'politica-privacidade.html',
     'offline.html',
     'style.css',
     'script.js',
@@ -20,24 +20,19 @@ const assetsToCache = [
     'images/img_portada.webp'
 ];
 
-// Evento 'install': se dispara cuando el Service Worker se instala.
+// Evento 'install': Cachear los assets iniciales.
 self.addEventListener('install', event => {
     event.waitUntil(
         caches.open(CACHE_NAME)
         .then(cache => {
-            console.log('Cache abierto. Cacheando assets iniciales...');
-            // addAll() es atómico: si un archivo falla, toda la operación falla.
+            console.log('Service Worker: Cacheando assets iniciales...');
             return cache.addAll(assetsToCache);
-        })
-        .catch(err => {
-            console.error('Fallo al cachear assets:', err);
         })
     );
     self.skipWaiting();
 });
 
-// Evento 'activate': se dispara cuando el Service Worker se activa.
-// Limpia cachés antiguos.
+// Evento 'activate': Limpiar cachés antiguos.
 self.addEventListener('activate', event => {
     event.waitUntil(
         caches.keys().then(cacheNames => {
@@ -53,29 +48,29 @@ self.addEventListener('activate', event => {
     );
 });
 
-// Evento 'fetch': Intercepta las peticiones de red.
+// Evento 'fetch': Decidir cómo responder a las peticiones.
 self.addEventListener('fetch', event => {
-    // Solo aplicar la estrategia para peticiones de navegación
+    // Estrategia: Network First para las páginas HTML.
     if (event.request.mode === 'navigate') {
         event.respondWith(
-            fetch(event.request).catch(() => {
-                // Si la red falla, devuelve la página offline desde la caché
-                return caches.match('offline.html');
-            })
+            fetch(event.request)
+            .catch(() => caches.match('offline.html')) // Si falla la red, mostrar página offline.
         );
-    } else {
-        // Para otros recursos (CSS, JS, imágenes), usar estrategia "Cache First"
-        event.respondWith(
-            caches.match(event.request).then(response => {
-                return response || fetch(event.request).then(fetchResponse => {
-                    return caches.open(CACHE_NAME).then(cache => {
-                        cache.put(event.request, fetchResponse.clone());
-                        return fetchResponse;
-                    });
-                });
-            }).catch(() => {
-                // Opcional: Si una imagen falla, puedes devolver una de reemplazo
-            })
-        );
+        return;
     }
+
+    // Estrategia: Cache First para otros recursos (CSS, JS, imágenes).
+    event.respondWith(
+        caches.match(event.request)
+        .then(response => {
+            // Si está en caché, lo devuelve. Si no, va a la red.
+            return response || fetch(event.request).then(fetchResponse => {
+                // Y guarda la nueva respuesta en el caché para la próxima vez.
+                return caches.open(CACHE_NAME).then(cache => {
+                    cache.put(event.request, fetchResponse.clone());
+                    return fetchResponse;
+                });
+            });
+        })
+    );
 });
