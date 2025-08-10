@@ -4,12 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluador de Sustentabilidade PRO - PortugalApoia</title>
-
-    <meta name="description"
-        content="A ferramenta profissional definitiva para avaliação e pré-certificação de projetos de construção e urbanismo segundo os sistemas LiderA, BREEAM e LEED em Portugal.">
-    <link rel="canonical" href="https://portugalapoia.com/app_evaluadorsustentable.html" />
-
+    <title>Evaluador de Sustentabilidade LiderA - PortugalApoia</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link
@@ -17,34 +12,19 @@
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="images/favicon.ico.png" type="image/png">
-
     <style>
         .vertente-header {
             cursor: pointer;
         }
 
-        .area-label {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-        }
-
         .info-icon {
             color: var(--color-accent);
             cursor: pointer;
-            margin-left: 15px;
-            font-size: 1.2rem;
         }
 
-        .modal-body h6 {
-            font-weight: 700;
-            color: var(--color-primary);
-            margin-top: 1rem;
-        }
-
-        #certificationSelector {
-            font-weight: 600;
+        .results-sidebar {
+            position: sticky;
+            top: 100px;
         }
     </style>
 </head>
@@ -56,125 +36,94 @@
         <nav class="navbar navbar-expand-lg">
             <div class="container">
                 <a class="navbar-brand logo" href="index.html">PortugalApoia</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav"><span
-                        class="navbar-toggler-icon"></span></button>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
                 <div class="collapse navbar-collapse" id="main-nav">
+
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item"><a class="nav-link" href="doacoes.html">Doações</a></li>
                         <li class="nav-item"><a class="nav-link" href="empregos.html">Emprego</a></li>
                         <li class="nav-item"><a class="nav-link" href="servicos.html">Serviços</a></li>
                         <li class="nav-item"><a class="nav-link" href="habitacao.html">Habitação</a></li>
+
                         <li class="nav-item dropdown active">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownWebApp" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Apps</a>
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Apps
+                            </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownWebApp">
-                                <a class="dropdown-item active" href="app_evaluadorsustentable.html">Evaluador
-                                    Sustentável PRO</a>
-                                <a class="dropdown-item" href="manual_evaluador.html">Manual de Uso</a>
+                                <a class="dropdown-item active" href="app_evaluadorsustentable.html">Evaluador Sustentável</a>
                             </div>
                         </li>
+
                         <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
                         <li class="nav-item"><a class="nav-link btn btn-primary publish-btn"
                                 href="publicar.html">Publicar</a></li>
                     </ul>
+
                     <div class="theme-switch-wrapper nav-item ml-lg-3">
-                        <label class="theme-switch" for="theme-toggle"><input type="checkbox" id="theme-toggle" />
-                            <div class="slider round"><i class="fas fa-sun"></i><i class="fas fa-moon"></i></div>
+                        <label class="theme-switch" for="theme-toggle">
+                            <input type="checkbox" id="theme-toggle" />
+                            <div class="slider round">
+                                <i class="fas fa-sun slider-icon"></i>
+                                <i class="fas fa-moon slider-icon"></i>
+                            </div>
                         </label>
                     </div>
                 </div>
             </div>
         </nav>
     </header>
+    
 
     <main>
         <section class="page-header page-header-publicar text-center">
             <div class="container">
-                <h1 class="page-title">Evaluador de Sustentabilidade PRO</h1>
-                <p class="lead">A ferramenta de referência para profissionais de arquitetura, urbanismo e engenharia em
-                    Portugal.</p>
+                <h1 class="page-title">Evaluador de Sustentabilidade LiderA</h1>
+                <p class="lead">Ferramenta profissional para pré-avaliação de projetos de edificação em Portugal.</p>
             </div>
         </section>
 
         <div class="container my-5">
-            <div class="evaluator-main-content">
-                <div class="row">
-                    <div class="col-lg-8">
-                        <section id="evaluacion">
-                            <h3>1. Selecione o Sistema de Certificação</h3>
-                            <div class="form-group">
-                                <select id="certificationSelector" class="form-control form-control-lg">
-                                    <option value="lidera">LiderA (Portugal)</option>
-                                    <option value="breeam">BREEAM International</option>
-                                    <option value="leed">LEED v4.1</option>
-                                </select>
-                            </div>
-                            <hr>
-                            <h3 class="mt-4">2. Avalie os Créditos do Projeto</h3>
-                            <div id="evaluationForm" class="accordion mt-3">
-                            </div>
-                        </section>
-                    </div>
-                    <aside class="col-lg-4">
-                        <div class="results-sidebar">
-                            <h3 class="text-center mb-4">Desempenho do Projeto</h3>
-                            <div class="score-container text-center">
-                                <span id="totalScore" class="display-4 font-weight-bold">0.0</span>
-                                <p>/ <span id="maxScore">20.0</span> <span id="scoreUnit">Pontos</span></p>
-                            </div>
-                            <div class="progress-bar-container">
-                                <div id="progressBar" role="progressbar"></div>
-                            </div>
-                            <div id="certificationLevel" class="text-center mt-3">
-                                <h4>Nível de Certificação (<span id="certName">LiderA</span>)</h4>
-                                <p id="levelText" class="display-4 font-weight-bold">G</p>
-                            </div>
-                            <hr>
-                            <div class="text-center">
-                                <button id="resetButton" class="btn btn-secondary" type="button"><i
-                                        class="fas fa-sync-alt mr-2"></i>Reiniciar Avaliação</button>
+            <div class="row">
+                <div class="col-lg-8">
+                    <div id="evaluationForm" class="accordion"></div>
+                </div>
+                <aside class="col-lg-4">
+                    <div class="results-sidebar">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h3 class="card-title">Resultados do Projeto</h3>
+                                <div class="my-4">
+                                    <span id="totalScore" class="display-4 font-weight-bold">0.0</span>
+                                    <p class="text-muted">/ 20.0 Pontos</p>
+                                </div>
+                                <div class="progress my-3" style="height: 20px;">
+                                    <div id="progressBar" class="progress-bar bg-success" role="progressbar"
+                                        style="width: 0%;"></div>
+                                </div>
+                                <div class="mt-4">
+                                    <h4>Nível LiderA (Estimado)</h4>
+                                    <p id="levelText" class="display-4 font-weight-bold">G</p>
+                                </div>
+                                <hr>
+                                <button id="resetButton" class="btn btn-secondary btn-block"><i
+                                        class="fas fa-sync-alt mr-2"></i>Reiniciar</button>
                             </div>
                         </div>
-                    </aside>
-                </div>
+                    </div>
+                </aside>
             </div>
         </div>
     </main>
 
     <footer class="main-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <h4>PortugalApoia</h4>
-                    <p>A conectar a generosidade à necessidade.</p>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <h4>Navegação</h4>
-                    <ul class="list-unstyled">
-                        <li><a href="doacoes.html">Doação</a></li>
-                        <li><a href="empregos.html">Emprego</a></li>
-                        <li><a href="servicos.html">Serviços</a></li>
-                        <li><a href="habitacao.html">Habitação</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <h4>Siga-nos</h4><a href="https://www.instagram.com/portugalapoia" target="_blank"
-                        rel="noopener noreferrer" class="social-link">Instagram</a>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <h4>Contacto</h4>
-                    <p>Um projeto da <a href="mailto:fidessuc@gmail.com">Fundación Fides</a>.</p>
-                    <p>Design by <a href="mailto:hbo.consulting.pt@gmail.com">HBO Consulting</a>.</p>
-                </div>
-            </div>
-            <div class="footer-bottom text-center pt-3 mt-3">
-                <p>&copy; 2025 PortugalApoia.com | <a href="politica-privacidade.html">Política de Privacidade</a></p>
-            </div>
-        </div>
     </footer>
 
     <div class="modal fade" id="infoModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="infoModalTitle"></h5><button type="button" class="close"
@@ -190,157 +139,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="script.js" defer></script>
 
-    <script>
-        // SCRIPT AUTÓNOMO DEL EVALUADOR PRO
-        document.addEventListener('DOMContentLoaded', function () {
-            const certificationsDB = {
-                lidera: {
-                    name: "LiderA", maxScore: 20.0, scoreUnit: "Pontos",
-                    levels: { 11: "A++", 9.5: "A+", 8.0: "A", 6.5: "B", 5.0: "C", 3.5: "D", 2.0: "E", 1.0: "F", 0: "G" },
-                    data: {
-                        "Integração Local": { "Bio-clima": { weight: 0.8, info: { objetivo: "Otimização do projeto face às condições climáticas locais.", exemplo: "Edifício em Lisboa com fachadas de vidro a sul protegidas por palas.", beneficios: "Redução da necessidade de ar condicionado." }, credits: { "Orientação solar otimizada": 0.4, "Proteção contra ventos dominantes": 0.2, "Estudo de sombras adequado": 0.2 } } },
-                        "Recursos": { "Eficiência Energética": { weight: 1.5, info: { objetivo: "Redução do consumo de energia do edifício.", exemplo: "Utilização de isolamento de cortiça e janelas de vidro duplo.", beneficios: "Contas de energia mais baixas." }, credits: { "Isolamento térmico de alto desempenho": 0.5, "Janelas eficientes com corte térmico": 0.4, "Sistemas AVAC de alta eficiência": 0.3, "Iluminação LED": 0.3 } } },
-                        "Cargas Ambientais": { "Gestão de Resíduos": { weight: 1.0, info: { objetivo: "Minimização da produção de resíduos.", exemplo: "Plano de obra que desvie >70% dos resíduos para reciclagem.", beneficios: "Redução do lixo." }, credits: { "Plano de gestão de resíduos de construção (>70% desviado)": 0.6, "Espaço para separação de resíduos domésticos": 0.4 } } },
-                        "Qualidade do Ambiente Interior": { "Conforto Térmico e Qualidade do Ar": { weight: 1.2, info: { objetivo: "Garantir um ambiente interior saudável e confortável.", exemplo: "Projetar ventilação natural e usar tintas sem COV.", beneficios: "Ambiente mais saudável." }, credits: { "Ventilação natural cruzada": 0.5, "Materiais com baixas emissões de COV": 0.4, "Monitorização de CO2": 0.3 } } },
-                        "Vivências Socioeconómicas": { "Acessibilidades e Inclusão": { weight: 1.0, info: { objetivo: "Garantir que o edifício seja acessível a todos.", exemplo: "Construir rampas de acesso e instalar elevadores adequados.", beneficios: "Inclusão social." }, credits: { "Acessos sem barreiras arquitetónicas": 0.6, "Instalações sanitárias adaptadas": 0.4 } } }
-                    }
-                },
-                breeam: {
-                    name: "BREEAM", maxScore: 100, scoreUnit: "%",
-                    levels: { 85: "Outstanding", 70: "Excellent", 55: "Very Good", 45: "Good", 30: "Pass", 0: "Unclassified" },
-                    data: {
-                        "Gestão": { "Gestão do Projeto": { weight: 12, info: { objetivo: "Promover práticas de gestão sustentável.", exemplo: "Contratar um Apóstolo BREEAM.", beneficios: "Melhor coordenação." }, credits: { "Consulta de stakeholders": 3, "Gestão de custos do ciclo de vida": 4, "Comissionamento e handover": 5 } } },
-                        "Saúde e Bem-estar": { "Qualidade do Ar Interior": { weight: 15, info: { objetivo: "Melhorar a qualidade do ar interior.", exemplo: "Plano de qualidade do ar e uso de materiais de baixas emissões.", beneficios: "Menor risco de problemas respiratórios." }, credits: { "Ventilação": 5, "Emissões de COV": 4, "Qualidade da iluminação": 6 } } },
-                        "Energia": { "Eficiência Energética": { weight: 19, info: { objetivo: "Reduzir o consumo de energia.", exemplo: "Simulação energética para otimizar o desempenho.", beneficios: "Poupança nos custos operacionais." }, credits: { "Redução de emissões de CO2": 10, "Monitorização energética": 5, "Iluminação de baixo consumo": 4 } } }
-                    }
-                },
-                leed: {
-                    name: "LEED", maxScore: 110, scoreUnit: "Pontos",
-                    levels: { 80: "Platinum", 60: "Gold", 50: "Silver", 40: "Certified", 0: "No Certificate" },
-                    data: {
-                        "Location and Transportation": { "Access to Quality Transit": { weight: 16, info: { objetivo: "Incentivar o uso de transportes públicos.", exemplo: "Localizar o projeto perto de uma estação de metro.", beneficios: "Menor poluição." }, credits: { "Proximidade a transportes públicos": 7, "Infraestrutura para bicicletas": 4, "Redução de estacionamento": 5 } } },
-                        "Sustainable Sites": { "Heat Island Reduction": { weight: 10, info: { objetivo: "Minimizar o efeito de ilha de calor.", exemplo: "Usar telhados verdes ou refletivos.", beneficios: "Redução da temperatura local." }, credits: { "Proteção de habitat": 4, "Telhado verde ou refletor": 3, "Gestão de águas pluviais": 3 } } },
-                        "Water Efficiency": { "Indoor Water Use Reduction": { weight: 11, info: { objetivo: "Reduzir o consumo de água potável.", exemplo: "Instalar sanitas e torneiras de alta eficiência.", beneficios: "Poupança de água." }, credits: { "Redução de consumo de água (interior)": 6, "Redução de consumo de água (exterior)": 3, "Monitorização de água": 2 } } }
-                    }
-                }
-            };
-
-            const evaluationFormEl = document.getElementById('evaluationForm');
-            const totalScoreEl = document.getElementById('totalScore');
-            const maxScoreEl = document.getElementById('maxScore');
-            const scoreUnitEl = document.getElementById('scoreUnit');
-            const certNameEl = document.getElementById('certName');
-            const progressBarEl = document.getElementById('progressBar');
-            const levelTextEl = document.getElementById('levelText');
-            const certificationSelector = document.getElementById('certificationSelector');
-            let userScores = {};
-            let currentCert = 'lidera';
-
-            function renderForm() {
-                const cert = certificationsDB[currentCert];
-                evaluationFormEl.innerHTML = '';
-                Object.entries(cert.data).forEach(([vertente, areas], vIndex) => {
-                    let areasHTML = '';
-                    Object.entries(areas).forEach(([area, data]) => {
-                        let creditsHTML = '';
-                        Object.keys(data.credits).forEach(credit => {
-                            const creditId = `${currentCert}-${vertente}-${area}-${credit}`.replace(/[^a-zA-Z0-9]/g, '');
-                            creditsHTML += `<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="${creditId}" data-vertente="${vertente}" data-area="${area}" data-credit="${credit}"><label class="custom-control-label" for="${creditId}">${credit}</label></div>`;
-                        });
-                        areasHTML += `<div class="mb-4"><h5><span class="area-label">${area}<i class="fas fa-info-circle info-icon" data-vertente="${vertente}" data-area="${area}"></i></span></h5>${creditsHTML}</div>`;
-                    });
-                    const vertenteHTML = `<div class="card mb-3"><div class="card-header vertente-header" data-toggle="collapse" data-target="#vertente-${vIndex}"><h4 class="mb-0">${vertente}</h4></div><div id="vertente-${vIndex}" class="collapse ${vIndex === 0 ? 'show' : ''}" data-parent="#evaluationForm"><div class="card-body">${areasHTML.replace(/<div class="mb-4">/g, '<hr class="my-4"><div class="mb-4">').replace('<hr class="my-4">', '')}</div></div></div>`;
-                    evaluationFormEl.insertAdjacentHTML('beforeend', vertenteHTML);
-                });
-                initializeScores();
-            }
-
-            function initializeScores() {
-                userScores = {};
-                const certData = certificationsDB[currentCert].data;
-                for (const vertente in certData) {
-                    userScores[vertente] = {};
-                    for (const area in certData[vertente]) { userScores[vertente][area] = 0; }
-                }
-                updateTotal();
-            }
-
-            function calculateTotal() {
-                const cert = certificationsDB[currentCert];
-                let total = 0;
-                if (cert.name === "LiderA") {
-                    for (const vertente in userScores) {
-                        for (const area in userScores[vertente]) {
-                            const score = userScores[vertente][area];
-                            const weight = cert.data[vertente][area].weight;
-                            const maxScore = Object.values(cert.data[vertente][area].credits).reduce((a, b) => a + b, 0);
-                            if (maxScore > 0) { total += (score / maxScore) * weight; }
-                        }
-                    }
-                } else {
-                    for (const vertente in userScores) {
-                        for (const area in userScores[vertente]) { total += userScores[vertente][area]; }
-                    }
-                }
-                return total;
-            }
-
-            function updateTotal() {
-                const cert = certificationsDB[currentCert];
-                const total = calculateTotal();
-
-                totalScoreEl.textContent = total.toFixed(1);
-                maxScoreEl.textContent = cert.maxScore.toFixed(1);
-                scoreUnitEl.textContent = cert.scoreUnit;
-                certNameEl.textContent = cert.name;
-
-                const percentage = cert.maxScore > 0 ? (total / cert.maxScore) * 100 : 0;
-                progressBarEl.style.width = `${percentage}%`;
-
-                let level = "N/A";
-                const sortedLevels = Object.entries(cert.levels).sort((a, b) => b[0] - a[0]);
-                for (const [score, name] of sortedLevels) {
-                    if (total >= parseFloat(score)) { level = name; break; }
-                }
-                levelTextEl.textContent = level;
-            }
-
-            evaluationFormEl.addEventListener('change', (e) => {
-                if (e.target.matches('input[type="checkbox"]')) {
-                    const { vertente, area, credit } = e.target.dataset;
-                    const cert = certificationsDB[currentCert];
-                    const pointValue = cert.data[vertente][area].credits[credit];
-                    userScores[vertente][area] += e.target.checked ? pointValue : -pointValue;
-                    updateTotal();
-                }
-            });
-
-            evaluationFormEl.addEventListener('click', (e) => {
-                const target = e.target.closest('.info-icon');
-                if (target) {
-                    const { vertente, area } = target.dataset;
-                    const infoData = certificationsDB[currentCert].data[vertente][area].info;
-                    if (infoData) {
-                        document.getElementById('infoModalTitle').textContent = area;
-                        document.getElementById('infoModalBody').innerHTML = `<h6>Objetivo</h6><p>${infoData.objetivo}</p><h6>Exemplo de Aplicação</h6><p>${infoData.exemplo}</p><h6>Benefícios do Projeto</h6><p>${infoData.beneficios}</p>`;
-                        $('#infoModal').modal('show');
-                    }
-                }
-            });
-
-            certificationSelector.addEventListener('change', (e) => {
-                currentCert = e.target.value;
-                renderForm();
-            });
-
-            document.getElementById('resetButton').addEventListener('click', () => {
-                document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
-                initializeScores();
-            });
-
-            renderForm();
-        });
-    </script>
+    <script src="lidera_db.js"></script>
+    <script src="evaluador_logic.js"></script>
 </body>
 
 </html>

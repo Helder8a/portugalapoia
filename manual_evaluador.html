@@ -1,16 +1,49 @@
 <!DOCTYPE html>
 <html lang="pt-PT">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manual de Uso - Evaluador Sustentável PRO</title>
-    <meta name="description" content="Aprenda a utilizar o Evaluador Sustentável PRO e conheça os fundamentos dos sistemas de certificação LiderA, BREEAM e LEED.">
+    <meta name="description"
+        content="Aprenda a utilizar o Evaluador Sustentável PRO e conheça os fundamentos dos sistemas de certificação LiderA, BREEAM e LEED.">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <header class="main-header">
-        </header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand logo" href="index.html">PortugalApoia</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav"><span
+                        class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="main-nav">
+
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link" href="doacoes.html">Doações</a></li>
+                        <li class="nav-item"><a class="nav-link" href="empregos.html">Emprego</a></li>
+                        <li class="nav-item"><a class="nav-link" href="servicos.html">Serviços</a></li>
+                        <li class="nav-item"><a class="nav-link" href="habitacao.html">Habitação</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownWebApp" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Apps
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownWebApp">
+                                <a class="dropdown-item" href="app_evaluadorsustentable.html">Evaluador Sustentável</a>
+                            </div>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link btn btn-primary publish-btn"
+                                href="publicar.html">Publicar</a></li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+    </header>
 
     <main>
         <section class="page-header page-header-publicar text-center">
@@ -22,29 +55,52 @@
 
         <div class="container my-5">
             <h2>Como Utilizar a Ferramenta</h2>
-            <p>Este evaluador foi desenhado para ser intuitivo, mas poderoso. Siga estes passos para uma avaliação completa:</p>
+            <p>Este evaluador foi desenhado para ser intuitivo, mas poderoso. Siga estes passos para uma avaliação
+                completa:</p>
             <ol>
-                <li><strong>Selecione o Sistema de Certificação:</strong> No topo da página, escolha entre LiderA, BREEAM ou LEED. A ferramenta adaptar-se-á automaticamente.</li>
-                <li><strong>Navegue pelas Categorias (Vertentes):</strong> O formulário está organizado nas categorias principais de cada certificação. Pode expandir ou colapsar cada uma para focar na sua área de interesse.</li>
-                <li><strong>Selecione os Créditos Cumpridos:</strong> Marque as caixas de seleção correspondentes às características e tecnologias que o seu projeto implementa.</li>
-                <li><strong>Consulte a Base de Conhecimento:</strong> Se tiver dúvidas sobre um critério, clique no ícone de informação <i class="fas fa-info-circle"></i> para obter uma explicação detalhada, exemplos e benefícios.</li>
-                <li><strong>Analise os Resultados em Tempo Real:</strong> A barra lateral calcula automaticamente a sua pontuação e o nível de certificação correspondente à medida que seleciona os créditos.</li>
-                <li><strong>Reinicie a Avaliação:</strong> Use o botão "Reiniciar" para limpar o formulário e começar uma nova avaliação.</li>
+                <li><strong>Configuração do Projeto:</strong> Comece por selecionar o <strong>Sistema de
+                        Certificação</strong> (LiderA, BREEAM, ou LEED) e a <strong>Tipologia de Projeto</strong>
+                    (Edifício Individual ou Projeto Urbano). A seleção da tipologia ajusta os pesos dos critérios para
+                    uma avaliação mais precisa.</li>
+                <li><strong>Avaliação de Créditos:</strong> Navegue pelas categorias (Vertentes) da certificação. Pode
+                    expandir ou colapsar cada uma para focar na sua área de interesse. Marque as caixas de seleção
+                    correspondentes às características que o seu projeto implementa.</li>
+                <li><strong>Consulte a Base de Conhecimento:</strong> Se tiver dúvidas sobre um critério, clique no
+                    ícone de informação <i class="fas fa-info-circle text-info"></i> para obter uma explicação
+                    detalhada, exemplos e benefícios.</li>
+                <li><strong>Analise os Resultados em Tempo Real:</strong> A barra lateral calcula automaticamente a sua
+                    pontuação e o nível de certificação correspondente à medida que seleciona os créditos.</li>
+                <li><strong>Gestão de Projetos:</strong> Dê um nome ao seu projeto e clique em <strong>"Guardar
+                        Projeto"</strong> para o salvar no seu navegador. Pode carregar ou eliminar projetos guardados a
+                    qualquer momento.</li>
+                <li><strong>Análise Comparativa:</strong> Após guardar um projeto, clique em <strong>"Análise
+                        Comparativa"</strong> para ver uma estimativa de como o seu projeto pontuaria nos outros
+                    sistemas de certificação.</li>
+                <li><strong>Exportar Relatório:</strong> Clique em <strong>"Exportar Relatório PDF"</strong> para gerar
+                    um documento profissional com os resultados detalhados da sua avaliação.</li>
             </ol>
             <hr class="my-5">
             <h2>Compreender as Certificações</h2>
             <h4>LiderA (Portugal)</h4>
-            <p>O LiderA é o sistema de certificação português, focado na adaptação ao contexto nacional. Avalia os projetos numa escala de G a A++, baseando-se em 6 vertentes principais: Integração Local, Recursos, Cargas Ambientais, Qualidade do Ambiente Interior, Vivências Socioeconómicas e Uso Sustentável. É a ferramenta ideal para projetos em Portugal que procuram um selo de sustentabilidade localmente relevante.</p>
-            
+            <p>O LiderA é o sistema de certificação português, focado na adaptação ao contexto nacional. Avalia os
+                projetos numa escala de G a A++, baseando-se em 6 vertentes principais. É a ferramenta ideal para
+                projetos em Portugal que procuram um selo de sustentabilidade localmente relevante.</p>
+
             <h4>BREEAM (Reino Unido / Internacional)</h4>
-            <p>O BREEAM é o sistema de avaliação mais antigo e um dos mais utilizados na Europa. É conhecido pelo seu rigor e abordagem holística. A pontuação é dada em percentagem e resulta numa classificação de Pass, Good, Very Good, Excellent ou Outstanding. É ideal para projetos que procuram um reconhecimento robusto no mercado europeu.</p>
+            <p>O BREEAM é o sistema de avaliação mais antigo e um dos mais utilizados na Europa. É conhecido pelo seu
+                rigor e abordagem holística. A pontuação é dada em percentagem e resulta numa classificação de Pass,
+                Good, Very Good, Excellent ou Outstanding. É ideal para projetos que procuram um reconhecimento robusto
+                no mercado europeu.</p>
 
             <h4>LEED (EUA / Internacional)</h4>
-            <p>O LEED é o sistema mais reconhecido a nível mundial, promovido pelo U.S. Green Building Council. É muito utilizado por empresas multinacionais e projetos que procuram uma visibilidade global. A sua pontuação atribui os níveis Certified, Silver, Gold ou Platinum.</p>
+            <p>O LEED é o sistema mais reconhecido a nível mundial. É muito utilizado por empresas multinacionais e
+                projetos que procuram uma visibilidade global. A sua pontuação atribui os níveis Certified, Silver, Gold
+                ou Platinum.</p>
         </div>
     </main>
 
     <footer class="main-footer">
-        </footer>
+    </footer>
 </body>
+
 </html>
