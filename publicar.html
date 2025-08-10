@@ -5,23 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Publicar Anúncio Grátis - PortugalApoia.com</title>
-    
-    <meta name="description" content="Crie e publique o seu anúncio de doação, emprego, serviço ou habitação de forma gratuita e rápida. Junte-se à nossa comunidade de ajuda mútua em Portugal.">
+
+    <meta name="description"
+        content="Crie e publique o seu anúncio de doação, emprego, serviço ou habitação de forma gratuita e rápida. Junte-se à nossa comunidade de ajuda mútua em Portugal.">
     <meta name="keywords" content="publicar anúncio grátis, anúncio gratuito, classificados portugal, criar anúncio">
     <link rel="canonical" href="https://portugalapoia.com/publicar.html" />
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://portugalapoia.com/publicar.html">
     <meta property="og:title" content="Publicar Anúncio Grátis - PortugalApoia.com">
-    <meta property="og:description" content="Crie e publique o seu anúncio de doação, emprego, serviço ou habitação de forma gratuita e rápida.">
+    <meta property="og:description"
+        content="Crie e publique o seu anúncio de doação, emprego, serviço ou habitação de forma gratuita e rápida.">
     <meta property="og:image" content="https://portugalapoia.com/images/img_portada.webp">
 
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://portugalapoia.com/publicar.html">
     <meta property="twitter:title" content="Publicar Anúncio Grátis - PortugalApoia.com">
-    <meta property="twitter:description" content="Crie e publique o seu anúncio de doação, emprego, serviço ou habitação de forma gratuita e rápida.">
+    <meta property="twitter:description"
+        content="Crie e publique o seu anúncio de doação, emprego, serviço ou habitação de forma gratuita e rápida.">
     <meta property="twitter:image" content="https://portugalapoia.com/images/img_portada.webp">
-    
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500&display=swap"
@@ -38,8 +41,7 @@
         <nav class="navbar navbar-expand-lg">
             <div class="container">
                 <a class="navbar-brand logo" href="index.html">PortugalApoia</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav"
-                    aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="main-nav">
@@ -49,18 +51,9 @@
                         <li class="nav-item"><a class="nav-link" href="servicos.html">Serviços</a></li>
                         <li class="nav-item"><a class="nav-link" href="habitacao.html">Habitação</a></li>
                         <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-                        <li class="nav-item"><a class="nav-link btn btn-primary publish-btn"
+                        <li class="nav-item"><a class="nav-link btn btn-primary publish-btn active"
                                 href="publicar.html">Publicar Anúncio</a></li>
                     </ul>
-                    <div class="theme-switch-wrapper nav-item ml-lg-3">
-                        <label class="theme-switch" for="theme-toggle">
-                            <input type="checkbox" id="theme-toggle" />
-                            <div class="slider round">
-                                <i class="fas fa-sun slider-icon"></i>
-                                <i class="fas fa-moon slider-icon"></i>
-                            </div>
-                        </label>
-                    </div>
                 </div>
             </div>
         </nav>
@@ -79,35 +72,43 @@
                 <div class="row">
                     <div class="col-lg-8 mx-auto">
                         <div class="card shadow-sm">
-                            <div class="card-body">
-                                <form id="publish-form" action="#" method="post" enctype="multipart/form-data">
+                            <div class="card-body p-md-5">
+
+                                <form name="anuncio" method="POST" data-netlify="true"
+                                    data-netlify-honeypot="bot-field">
+
+                                    <input type="hidden" name="form-name" value="anuncio" />
+                                    <p style="display:none;">
+                                        <label>Não preencha isto se for humano: <input name="bot-field" /></label>
+                                    </p>
+
                                     <h4 class="mb-4">Detalhes do Anúncio</h4>
 
                                     <div class="form-group">
-                                        <label for="category">Categoria do Anúncio</label>
+                                        <label for="category"><strong>Categoria do Anúncio</strong></label>
                                         <select class="form-control" id="category" name="category" required>
                                             <option value="">Selecione uma categoria...</option>
-                                            <option value="doacoes">Doação de Artigos</option>
-                                            <option value="empregos">Emprego</option>
-                                            <option value="servicos">Serviços</option>
-                                            <option value="habitacao">Habitação</option>
+                                            <option value="doacoes">Pedido de Doação</option>
+                                            <option value="empregos">Vaga de Emprego</option>
+                                            <option value="servicos">Oferta de Serviço</option>
+                                            <option value="habitacao">Anúncio de Habitação</option>
                                         </select>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="title">Título do Anúncio</label>
+                                        <label for="title"><strong>Título do Anúncio</strong></label>
                                         <input type="text" class="form-control" id="title" name="title"
                                             placeholder="Ex: Doação de Roupa de Bebé" required>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="description">Descrição</label>
+                                        <label for="description"><strong>Descrição</strong></label>
                                         <textarea class="form-control" id="description" name="description" rows="5"
                                             placeholder="Detalhe o seu pedido ou oferta..." required></textarea>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="location">Localização</label>
+                                        <label for="location"><strong>Localização (Cidade)</strong></label>
                                         <input type="text" class="form-control" id="location" name="location"
                                             placeholder="Ex: Lisboa, Porto, Coimbra" required>
                                     </div>
@@ -115,15 +116,9 @@
                                     <h4 class="mt-5 mb-4">Informação de Contacto</h4>
 
                                     <div class="form-group">
-                                        <label for="contact-name">Nome de Contacto</label>
-                                        <input type="text" class="form-control" id="contact-name" name="contact-name"
-                                            placeholder="O seu nome ou da sua organização" required>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="contact-email">Email de Contacto</label>
-                                        <input type="email" class="form-control" id="contact-email"
-                                            name="contact-email" placeholder="Ex: o-seu-email@gmail.com" required>
+                                        <label for="contact-email"><strong>Email de Contacto</strong></label>
+                                        <input type="email" class="form-control" id="contact-email" name="contact-email"
+                                            placeholder="Ex: o-seu-email@gmail.com" required>
                                     </div>
 
                                     <div class="form-group">
@@ -132,14 +127,8 @@
                                             placeholder="Ex: +351 912 345 678">
                                     </div>
 
-                                    <div class="form-group form-check">
-                                        <input type="checkbox" class="form-check-input" id="terms" required>
-                                        <label class="form-check-label" for="terms">Concordo com os <a href="#">Termos e
-                                                Condições</a></label>
-                                    </div>
-
-                                    <button type="submit" class="btn btn-primary btn-lg btn-block mt-4">Publicar
-                                        Anúncio</button>
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block mt-4">Enviar Anúncio
+                                        para Revisão</button>
                                 </form>
                             </div>
                         </div>
@@ -149,44 +138,13 @@
         </section>
     </main>
 
-    <button id="scrollTopBtn" title="Voltar ao topo"><i class="fas fa-arrow-up"></i></button>
-
     <footer class="main-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <h4>PortugalApoia</h4>
-                    <p>A conectar a generosidade à necessidade.</p>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <h4>Navegação</h4>
-                    <ul class="list-unstyled">
-                        <li><a href="doacoes.html">Doação</a></li>
-                        <li><a href="empregos.html">Emprego</a></li>
-                        <li><a href="servicos.html">Serviços</a></li>
-                        <li><a href="habitacao.html">Habitação</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <h4>Siga-nos</h4><a href="https://www.instagram.com/portugalapoia" target="_blank"
-                        rel="noopener noreferrer" class="social-link">Instagram</a>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <h4>Contacto</h4>
-                    <p>Um projeto da <a href="mailto:fidessuc@gmail.com">Fundación Fides</a>.</p>
-                    <p>Design by <a href="mailto:hbo.consulting.pt@gmail.com">HBO Consulting</a>.</p>
-                </div>
-            </div>
-            <div class="footer-bottom text-center pt-3 mt-3">
-                <p>&copy; 2025 PortugalApoia.com | <a href="politica-privacidade.html">Política de Privacidade</a></p>
-            </div>
-        </div>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 
 </html>
