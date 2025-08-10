@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluador Sustentável PRO (LiderA, BREEAM, LEED) - PortugalApoia</title>
+    <meta name="description"
+        content="A ferramenta profissional definitiva para avaliação e pré-certificação de projetos de construção e urbanismo segundo os sistemas LiderA, BREEAM e LEED em Portugal.">
+    <link rel="canonical" href="https://portugalapoia.com/app_evaluadorsustentable.html" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Roboto:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/favicon.ico.png" type="image/png">
+
+    <style>
+        .vertente-header {
+            cursor: pointer;
+        }
+
+        .area-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .info-icon {
+            color: var(--color-accent);
+            cursor: pointer;
+            margin-left: 15px;
+            font-size: 1.2rem;
+        }
+
+        .modal-body h6 {
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-top: 1rem;
+        }
+
+        #certificationSelector,
+        #projectTypeSelector {
+            font-weight: 600;
+        }
+
+        #comparisonChartContainer {
+            min-height: 400px;
+        }
+
+        .nav-tabs .nav-link.active {
+            color: var(--color-accent);
+            border-bottom: 2px solid var(--color-accent);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="preloader"><img src="images/favicon.ico.png" alt="A carregar..." class="spinner"></div>
+
+    <header class="main-header">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand logo" href="index.html">PortugalApoia</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav"><span
+                        class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="main-nav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link" href="doacoes.html">Doações</a></li>
+                        <li class="nav-item"><a class="nav-link" href="empregos.html">Emprego</a></li>
+                        <li class="nav-item"><a class="nav-link" href="servicos.html">Serviços</a></li>
+                        <li class="nav-item"><a class="nav-link" href="habitacao.html">Habitação</a></li>
+                        <li class="nav-item dropdown active">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownWebApp" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Apps</a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownWebApp">
+                                <a class="dropdown-item active" href="app_evaluadorsustentable.html">Evaluador
+                                    Sustentável PRO</a>
+                            </div>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link btn btn-primary publish-btn"
+                                href="publicar.html">Publicar</a></li>
+                    </ul>
+                    <div class="theme-switch-wrapper nav-item ml-lg-3">
+                        <label class="theme-switch" for="theme-toggle"><input type="checkbox" id="theme-toggle" />
+                            <div class="slider round"><i class="fas fa-sun"></i><i class="fas fa-moon"></i></div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-header page-header-publicar text-center">
+            <div class="container">
+                <h1 class="page-title">Evaluador de Sustentabilidade PRO</h1>
+                <p class="lead">A ferramenta de referência para profissionais de arquitetura, urbanismo e engenharia em
+                    Portugal.</p>
+            </div>
+        </section>
+
+        <div class="container my-5">
+            <div class="evaluator-main-content">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <section id="evaluacion">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h3>Configuração do Projeto</h3>
+                                <button class="btn btn-outline-primary" data-toggle="modal" data-target="#manualModal"
+                                    title="Abrir Manual de Uso"><i
+                                        class="fas fa-question-circle mr-2"></i>Manual</button>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="certificationSelector"><strong>1. Sistema de
+                                            Certificação</strong></label>
+                                    <select id="certificationSelector" class="form-control form-control-lg">
+                                        <option value="lidera">LiderA (Portugal)</option>
+                                        <option value="breeam">BREEAM International</option>
+                                        <option value="leed">LEED v4.1</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="projectTypeSelector"><strong>2. Tipologia de Projeto</strong></label>
+                                    <select id="projectTypeSelector" class="form-control form-control-lg">
+                                        <option value="edificio">Edifício Individual</option>
+                                        <option value="urbano">Projeto Urbano</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr>
+                            <h3 class="mt-4">3. Avaliação de Créditos</h3>
+                            <div id="evaluationForm" class="accordion mt-3"></div>
+                        </section>
+                    </div>
+                    <aside class="col-lg-4">
+                        <div class="results-sidebar">
+                            <h3 class="text-center mb-4">Desempenho do Projeto</h3>
+                            <div class="score-container text-center">
+                                <span id="totalScore" class="display-4 font-weight-bold">0.0</span>
+                                <p>/ <span id="maxScore">20.0</span> <span id="scoreUnit">Pontos</span></p>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div id="progressBar" role="progressbar"></div>
+                            </div>
+                            <div id="certificationLevel" class="text-center mt-3">
+                                <h4>Nível (<span id="certName">LiderA</span>)</h4>
+                                <p id="levelText" class="display-4 font-weight-bold">G</p>
+                            </div>
+                            <hr>
+                            <div class="project-management-controls">
+                                <h4 class="text-center h5">Gestão de Projetos</h4>
+                                <div class="form-group"><input type="text" id="projectName" class="form-control"
+                                        placeholder="Nome do Projeto Atual"></div>
+                                <button id="saveProjectButton" class="btn btn-info btn-block mb-2" type="button"><i
+                                        class="fas fa-save mr-2"></i>Guardar Projeto</button>
+                                <div class="input-group mb-2">
+                                    <select id="savedProjectsSelector" class="custom-select"></select>
+                                    <div class="input-group-append">
+                                        <button id="loadProjectButton" class="btn btn-success" type="button"
+                                            title="Carregar Projeto"><i class="fas fa-folder-open"></i></button>
+                                        <button id="deleteProjectButton" class="btn btn-danger" type="button"
+                                            title="Eliminar Projeto"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="comparison-controls">
+                                <h4 class="text-center h5">Análise Avançada</h4>
+                                <button id="compareButton" class="btn btn-warning btn-block text-dark" type="button"
+                                    disabled><i class="fas fa-chart-bar mr-2"></i>Análise Comparativa</button>
+                            </div>
+                            <hr>
+                            <div class="pdf-export-controls">
+                                <h4 class="text-center h5">Exportar Relatório</h4>
+                                <button id="exportPdfButton" class="btn btn-primary btn-block" type="button"><i
+                                        class="fas fa-file-pdf mr-2"></i>Exportar Relatório PDF</button>
+                            </div>
+                            <hr>
+                            <div class="text-center">
+                                <button id="resetButton" class="btn btn-secondary" type="button"><i
+                                        class="fas fa-sync-alt mr-2"></i>Reiniciar Avaliação</button>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer"></footer>
+
+    <div class="modal fade" id="infoModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="infoModalTitle"></h5><button type="button" class="close"
+                        data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body" id="infoModalBody"></div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="comparisonModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Análise Comparativa de Certificações</h5><button type="button" class="close"
+                        data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-8"><canvas id="comparisonChartContainer"></canvas></div>
+                        <div class="col-lg-4">
+                            <h4>Resultados Estimados</h4>
+                            <div id="comparisonResults"></div>
+                            <hr>
+                            <h4>Sinergias Chave</h4>
+                            <p class="small text-muted">A avaliação identificou que os esforços em áreas como 'Recursos'
+                                e 'Qualidade do Ambiente Interior' têm um forte impacto positivo em todos os sistemas de
+                                certificação.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="manualModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Manual de Uso do Evaluador PRO</h5><button type="button" class="close"
+                        data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <h2>Como Utilizar a Ferramenta</h2>
+                    <p>Este evaluador foi desenhado para ser intuitivo, mas poderoso. Siga estes passos para uma
+                        avaliação completa:</p>
+                    <ol>
+                        <li><strong>Configuração do Projeto:</strong> Comece por selecionar o <strong>Sistema de
+                                Certificação</strong> e a <strong>Tipologia de Projeto</strong>. A seleção da tipologia
+                            ajusta os pesos dos critérios para uma avaliação mais precisa.</li>
+                        <li><strong>Avaliação de Créditos:</strong> Navegue pelas categorias (Vertentes) da
+                            certificação. Pode expandir ou colapsar cada uma para focar na sua área de interesse. Marque
+                            as caixas de seleção correspondentes às características que o seu projeto implementa.</li>
+                        <li><strong>Consulte a Base de Conhecimento:</strong> Clique no ícone de informação <i
+                                class="fas fa-info-circle text-info"></i> para obter uma explicação detalhada, exemplos,
+                            benefícios e soluções práticas em Portugal.</li>
+                        <li><strong>Gestão de Projetos:</strong> Dê um nome ao seu projeto e clique em <strong>"Guardar
+                                Projeto"</strong> para o salvar no seu navegador. Pode carregar ou eliminar projetos
+                            guardados a qualquer momento.</li>
+                        <li><strong>Análise e Exportação:</strong> Utilize os botões de <strong>"Análise
+                                Comparativa"</strong> e <strong>"Exportar Relatório PDF"</strong> para obter resultados
+                            avançados e documentar o seu trabalho.</li>
+                    </ol>
+                    <hr class="my-4">
+                    <h2>Compreender as Certificações</h2>
+                    <h4>LiderA (Portugal)</h4>
+                    <p>O LiderA é o sistema de certificação português, focado na adaptação ao contexto nacional. Avalia
+                        os projetos numa escala de G a A++, baseando-se em 6 vertentes principais. É a ferramenta ideal
+                        para projetos em Portugal que procuram um selo de sustentabilidade localmente relevante.</p>
+                    <h4>BREEAM (Reino Unido / Internacional)</h4>
+                    <p>O BREEAM é o sistema de avaliação mais antigo e um dos mais utilizados na Europa. É conhecido
+                        pelo seu rigor e abordagem holística. A pontuação é dada em percentagem e resulta numa
+                        classificação de Pass, Good, Very Good, Excellent ou Outstanding.</p>
+                    <h4>LEED (EUA / Internacional)</h4>
+                    <p>O LEED é o sistema mais reconhecido a nível mundial. É muito utilizado por empresas
+                        multinacionais e projetos que procuram uma visibilidade global. A sua pontuação atribui os
+                        níveis Certified, Silver, Gold ou Platinum.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="pdf-content" style="position: absolute; left: -9999px; top: -9999px;"></div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="script.js" defer></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const certificationsDB = {
+                lidera: {
+                    name: "LiderA", maxScore: 20.0, scoreUnit: "Pontos",
+                    levels: { 11: "A++", 9.5: "A+", 8.0: "A", 6.5: "B", 5.0: "C", 3.5: "D", 2.0: "E", 1.0: "F", 0: "G" },
+                    weights: {
+                        edificio: { "Integração Local": 1, "Recursos": 1.5, "Cargas Ambientais": 1, "Qualidade do Ambiente Interior": 1.2, "Vivências Socioeconómicas": 1 },
+                        urbano: { "Integração Local": 1.5, "Recursos": 1, "Cargas Ambientais": 1.2, "Qualidade do Ambiente Interior": 0.8, "Vivências Socioeconómicas": 1.5 }
+                    },
+                    data: {
+                        "Integração Local": { "Bio-clima": { info: { objetivo: "Otimização do projeto face às condições climáticas locais.", exemplo: "Edifício em Lisboa com fachadas de vidro a sul protegidas por palas.", beneficios: "Redução da necessidade de ar condicionado." }, solucoes: [{ nome: "Brises Solares ou Palas de Sombreamento", desc: "Fabricantes como a Technal ou a Schüco oferecem sistemas adaptados ao clima português." }], credits: { "Orientação solar otimizada": 0.4, "Proteção contra ventos dominantes": 0.2, "Estudo de sombras adequado": 0.2 } } },
+                        "Recursos": { "Eficiência Energética": { info: { objetivo: "Redução do consumo de energia do edifício.", exemplo: "Utilização de isolamento de cortiça e janelas de vidro duplo.", beneficios: "Contas de energia mais baixas." }, solucoes: [{ nome: "Aglomerado de Cortiça Expandida (ICB)", desc: "Material 100% natural e português (Amorim Isolamentos), excelente para isolamento térmico e acústico." }, { nome: "Janelas de Alta Eficiência", desc: "Caixilharia com corte térmico e vidro duplo ou triplo, de fabricantes como a Caixiave ou Sosoares." }], credits: { "Isolamento térmico de alto desempenho": 0.5, "Janelas eficientes com corte térmico": 0.4, "Sistemas AVAC de alta eficiência": 0.3, "Iluminação LED": 0.3 } } },
+                        "Cargas Ambientais": { "Gestão de Resíduos": { info: { objetivo: "Minimização da produção de resíduos.", exemplo: "Plano de obra que desvie >70% dos resíduos para reciclagem.", beneficios: "Redução do lixo." }, solucoes: [], credits: { "Plano de gestão de resíduos de construção (>70% desviado)": 0.6, "Espaço para separação de resíduos domésticos": 0.4 } } },
+                        "Qualidade do Ambiente Interior": { "Conforto Térmico e Qualidade do Ar": { info: { objetivo: "Garantir um ambiente interior saudável e confortável.", exemplo: "Projetar ventilação natural e usar tintas sem COV.", beneficios: "Ambiente mais saudável." }, solucoes: [{ nome: "Tintas Ecológicas com Baixo COV", desc: "Marcas como a CIN ou a Robbialac oferecem linhas de produtos ecológicos." }], credits: { "Ventilação natural cruzada": 0.5, "Materiais com baixas emissões de COV": 0.4, "Monitorização de CO2": 0.3 } } },
+                        "Vivências Socioeconómicas": { "Acessibilidades e Inclusão": { info: { objetivo: "Garantir que o edifício seja acessível a todos.", exemplo: "Construir rampas de acesso e instalar elevadores adequados.", beneficios: "Inclusão social." }, solucoes: [], credits: { "Acessos sem barreiras arquitetónicas": 0.6, "Instalações sanitárias adaptadas": 0.4 } } }
+                    }
+                },
+                breeam: {
+                    name: "BREEAM", maxScore: 100, scoreUnit: "%",
+                    levels: { 85: "Outstanding", 70: "Excellent", 55: "Very Good", 45: "Good", 30: "Pass", 0: "Unclassified" },
+                    data: {
+                        "Management": { "Project Management": { info: { objetivo: "Promover práticas de gestão sustentável.", exemplo: "Contratar um Apóstolo BREEAM.", beneficios: "Melhor coordenação." }, credits: { "Stakeholder consultation": 3, "Lifecycle cost management": 4, "Commissioning and handover": 5 } } },
+                        "Health and Wellbeing": { "Indoor Air Quality": { info: { objetivo: "Melhorar a qualidade do ar interior.", exemplo: "Plano de qualidade do ar e uso de materiais de baixas emissões.", beneficios: "Menor risco de problemas respiratórios." }, credits: { "Ventilation": 5, "VOC emissions": 4, "Lighting quality": 6 } } },
+                        "Energy": { "Energy Efficiency": { info: { objetivo: "Reduzir o consumo de energia.", exemplo: "Simulação energética para otimizar o desempenho.", beneficios: "Poupança nos custos operacionais." }, credits: { "CO2 emission reduction": 10, "Energy monitoring": 5, "Low energy lighting": 4 } } }
+                    }
+                },
+                leed: {
+                    name: "LEED", maxScore: 110, scoreUnit: "Pontos",
+                    levels: { 80: "Platinum", 60: "Gold", 50: "Silver", 40: "Certified", 0: "No Certificate" },
+                    data: {
+                        "Location and Transportation": { "Access to Quality Transit": { info: { objetivo: "Incentivar o uso de transportes públicos.", exemplo: "Localizar o projeto perto de uma estação de metro.", beneficios: "Menor poluição." }, credits: { "Proximity to public transport": 7, "Bicycle infrastructure": 4, "Reduced parking footprint": 5 } } },
+                        "Sustainable Sites": { "Heat Island Reduction": { info: { objetivo: "Minimizar o efeito de ilha de calor.", exemplo: "Usar telhados verdes ou refletivos.", beneficios: "Redução da temperatura local." }, credits: { "Habitat protection": 4, "Green or reflective roof": 3, "Rainwater management": 3 } } },
+                        "Water Efficiency": { "Indoor Water Use Reduction": { info: { objetivo: "Reduzir o consumo de água potável.", exemplo: "Instalar sanitas e torneiras de alta eficiência.", beneficios: "Poupança de água." }, credits: { "Indoor water use reduction": 6, "Outdoor water use reduction": 3, "Water metering": 2 } } }
+                    }
+                }
+            };
+
+            const getEl = (id) => document.getElementById(id);
+            const evaluationFormEl = getEl('evaluationForm');
+            const totalScoreEl = getEl('totalScore');
+            const maxScoreEl = getEl('maxScore');
+            const scoreUnitEl = getEl('scoreUnit');
+            const certNameEl = getEl('certName');
+            const progressBarEl = getEl('progressBar');
+            const levelTextEl = getEl('levelText');
+            const certificationSelector = getEl('certificationSelector');
+            const projectTypeSelector = getEl('projectTypeSelector');
+            const projectNameEl = getEl('projectName');
+            const saveProjectButton = getEl('saveProjectButton');
+            const loadProjectButton = getEl('loadProjectButton');
+            const deleteProjectButton = getEl('deleteProjectButton');
+            const savedProjectsSelector = getEl('savedProjectsSelector');
+            const exportPdfButton = getEl('exportPdfButton');
+            const compareButton = getEl('compareButton');
+            let userScores = {};
+            let currentCert = 'lidera';
+            let currentProjectType = 'edificio';
+            let comparisonChart = null;
+
+            function renderForm() {
+                const cert = certificationsDB[currentCert];
+                evaluationFormEl.innerHTML = '';
+                Object.entries(cert.data).forEach(([vertente, areas], vIndex) => {
+                    let areasHTML = '';
+                    Object.entries(areas).forEach(([area, data]) => {
+                        let creditsHTML = '';
+                        Object.keys(data.credits).forEach(credit => {
+                            const creditId = `${currentCert}-${vertente}-${area}-${credit}`.replace(/[^a-zA-Z0-9]/g, '');
+                            creditsHTML += `<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="${creditId}" data-vertente="${vertente}" data-area="${area}" data-credit="${credit}"><label class="custom-control-label" for="${creditId}">${credit}</label></div>`;
+                        });
+                        areasHTML += `<div class="mb-4"><h5><span class="area-label">${area}<i class="fas fa-info-circle info-icon" data-vertente="${vertente}" data-area="${area}"></i></span></h5>${creditsHTML}</div>`;
+                    });
+                    const vertenteHTML = `<div class="card mb-3"><div class="card-header vertente-header" data-toggle="collapse" data-target="#vertente-${vIndex}"><h4 class="mb-0">${vertente}</h4></div><div id="vertente-${vIndex}" class="collapse ${vIndex === 0 ? 'show' : ''}" data-parent="#evaluationForm"><div class="card-body">${areasHTML.replace(/<div class="mb-4">/g, '<hr class="my-4"><div class="mb-4">').replace('<hr class="my-4">', '')}</div></div></div>`;
+                    evaluationFormEl.insertAdjacentHTML('beforeend', vertenteHTML);
+                });
+                initializeScores();
+            }
+
+            function initializeScores() {
+                userScores = {};
+                const certData = certificationsDB[currentCert].data;
+                for (const vertente in certData) {
+                    userScores[vertente] = {};
+                    for (const area in certData[vertente]) { userScores[vertente][area] = 0; }
+                }
+                updateTotal();
+            }
+
+            function calculateTotal() {
+                const cert = certificationsDB[currentCert];
+                let total = 0;
+                if (cert.name === "LiderA") {
+                    const weights = cert.weights[currentProjectType];
+                    let totalWeightedScore = 0;
+                    let totalMaxWeight = 0;
+                    for (const vertente in userScores) {
+                        const vertenteWeight = weights[vertente] || 1;
+                        totalMaxWeight += vertenteWeight;
+                        let vertenteTotalPoints = 0;
+                        let vertenteMaxPoints = 0;
+                        for (const area in userScores[vertente]) {
+                            vertenteTotalPoints += userScores[vertente][area];
+                            vertenteMaxPoints += Object.values(cert.data[vertente][area].credits).reduce((a, b) => a + b, 0);
+                        }
+                        if (vertenteMaxPoints > 0) {
+                            totalWeightedScore += (vertenteTotalPoints / vertenteMaxPoints) * vertenteWeight;
+                        }
+                    }
+                    total = totalMaxWeight > 0 ? (totalWeightedScore / totalMaxWeight) * cert.maxScore : 0;
+                } else {
+                    for (const vertente in userScores) {
+                        for (const area in userScores[vertente]) { total += userScores[vertente][area]; }
+                    }
+                }
+                return total;
+            }
+
+            function updateTotal() {
+                const cert = certificationsDB[currentCert];
+                const total = calculateTotal();
+
+                totalScoreEl.textContent = total.toFixed(1);
+                maxScoreEl.textContent = cert.maxScore.toFixed(1);
+                scoreUnitEl.textContent = cert.scoreUnit;
+                certNameEl.textContent = cert.name;
+
+                const percentage = cert.maxScore > 0 ? (total / cert.maxScore) * 100 : 0;
+                progressBarEl.style.width = `${percentage}%`;
+
+                let level = "N/A";
+                const sortedLevels = Object.entries(cert.levels).sort((a, b) => b[0] - a[0]);
+                for (const [score, name] of sortedLevels) {
+                    if (total >= parseFloat(score)) { level = name; break; }
+                }
+                levelTextEl.textContent = level;
+                compareButton.disabled = !projectNameEl.value.trim();
+            }
+
+            evaluationFormEl.addEventListener('change', (e) => {
+                if (e.target.matches('input[type="checkbox"]')) {
+                    const { vertente, area, credit } = e.target.dataset;
+                    const cert = certificationsDB[currentCert];
+                    const pointValue = cert.data[vertente][area].credits[credit];
+                    userScores[vertente][area] += e.target.checked ? pointValue : -pointValue;
+                    updateTotal();
+                }
+            });
+
+            evaluationFormEl.addEventListener('click', (e) => {
+                const target = e.target.closest('.info-icon');
+                if (target) {
+                    const { vertente, area } = target.dataset;
+                    const certData = certificationsDB[currentCert].data;
+                    if (certData[vertente] && certData[vertente][area]) {
+                        const infoData = certData[vertente][area].info;
+                        const solucoesData = certData[vertente][area].solucoes || [];
+
+                        getEl('infoModalTitle').textContent = area;
+
+                        let solucoesHTML = '<h6>Sem soluções específicas listadas para este critério.</h6>';
+                        if (solucoesData.length > 0) {
+                            solucoesHTML = solucoesData.map(s => `<h6>${s.nome}</h6><p>${s.desc}</p>`).join('');
+                        }
+
+                        getEl('infoModalBody').innerHTML = `
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#desc">Descrição do Critério</a></li>
+                                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#solucoes">Soluções em Portugal</a></li>
+                            </ul>
+                            <div class="tab-content mt-3">
+                                <div class="tab-pane container active" id="desc">
+                                    <h6>Objetivo</h6><p>${infoData.objetivo}</p>
+                                    <h6>Exemplo de Aplicação</h6><p>${infoData.exemplo}</p>
+                                    <h6>Benefícios do Projeto</h6><p>${infoData.beneficios}</p>
+                                </div>
+                                <div class="tab-pane container fade" id="solucoes">
+                                    ${solucoesHTML}
+                                </div>
+                            </div>`;
+                        $('#infoModal').modal('show');
+                    }
+                }
+            });
+
+            certificationSelector.addEventListener('change', (e) => {
+                currentCert = e.target.value;
+                projectTypeSelector.disabled = currentCert !== 'lidera';
+                renderForm();
+            });
+
+            projectTypeSelector.addEventListener('change', (e) => {
+                currentProjectType = e.target.value;
+                if (currentCert === 'lidera') {
+                    updateTotal();
+                }
+            });
+
+            function getSavedProjects() { return JSON.parse(localStorage.getItem('savedEvaluatorProjects')) || {}; }
+
+            function populateSavedProjectsSelector() {
+                const projects = getSavedProjects();
+                savedProjectsSelector.innerHTML = '<option value="">Selecione um projeto guardado...</option>';
+                for (const name in projects) {
+                    const option = document.createElement('option');
+                    option.value = name;
+                    option.textContent = name;
+                    savedProjectsSelector.appendChild(option);
+                }
+            }
+
+            saveProjectButton.addEventListener('click', () => {
+                const projectName = projectNameEl.value.trim();
+                if (!projectName) { alert("Por favor, insira um nome para o projeto."); return; }
+                const selectedCredits = Array.from(document.querySelectorAll('#evaluationForm input[type="checkbox"]:checked')).map(cb => cb.id);
+                const projectState = { name: projectName, certification: currentCert, projectType: currentProjectType, credits: selectedCredits };
+                const projects = getSavedProjects();
+                projects[projectName] = projectState;
+                localStorage.setItem('savedEvaluatorProjects', JSON.stringify(projects));
+                alert(`Projeto "${projectName}" guardado!`);
+                populateSavedProjectsSelector();
+                savedProjectsSelector.value = projectName;
+                compareButton.disabled = false;
+            });
+
+            loadProjectButton.addEventListener('click', () => {
+                const projectName = savedProjectsSelector.value;
+                if (!projectName) { alert("Selecione um projeto para carregar."); return; }
+                const projects = getSavedProjects();
+                const projectState = projects[projectName];
+
+                if (projectState) {
+                    projectNameEl.value = projectState.name;
+                    currentCert = projectState.certification;
+                    certificationSelector.value = currentCert;
+                    currentProjectType = projectState.projectType || 'edificio';
+                    projectTypeSelector.value = currentProjectType;
+                    projectTypeSelector.disabled = currentCert !== 'lidera';
+
+                    renderForm();
+                    setTimeout(() => {
+                        document.querySelectorAll('#evaluationForm input[type="checkbox"]').forEach(cb => cb.checked = false);
+                        projectState.credits.forEach(creditId => {
+                            const checkbox = document.getElementById(creditId);
+                            if (checkbox) checkbox.checked = true;
+                        });
+                        initializeScores();
+                        document.querySelectorAll('#evaluationForm input[type="checkbox"]:checked').forEach(cb => {
+                            const { vertente, area, credit } = cb.dataset;
+                            const cert = certificationsDB[currentCert];
+                            const pointValue = cert.data[vertente][area].credits[credit];
+                            userScores[vertente][area] += pointValue;
+                        });
+                        updateTotal();
+                        alert(`Projeto "${projectName}" carregado.`);
+                    }, 100);
+                }
+            });
+
+            deleteProjectButton.addEventListener('click', () => {
+                const projectName = savedProjectsSelector.value;
+                if (!projectName) { alert("Selecione um projeto para eliminar."); return; }
+                if (confirm(`Tem a certeza que deseja eliminar o projeto "${projectName}"?`)) {
+                    const projects = getSavedProjects();
+                    delete projects[projectName];
+                    localStorage.setItem('savedEvaluatorProjects', JSON.stringify(projects));
+                    alert(`Projeto "${projectName}" eliminado.`);
+                    populateSavedProjectsSelector();
+                }
+            });
+
+            resetButton.addEventListener('click', () => {
+                projectNameEl.value = '';
+                document.querySelectorAll('#evaluationForm input[type="checkbox"]').forEach(cb => cb.checked = false);
+                initializeScores();
+            });
+
+            exportPdfButton.addEventListener('click', function () {
+                const projectName = getEl('projectName').value || "Projeto Sem Nome";
+                const cert = certificationsDB[currentCert];
+                const total = calculateTotal();
+                const level = levelTextEl.textContent;
+                let selectedCreditsHTML = '';
+                let performanceByCategory = {};
+
+                Object.entries(cert.data).forEach(([vertente, areas]) => {
+                    let areaCreditsHTML = '';
+                    let hasCreditsInVertente = false;
+                    Object.entries(areas).forEach(([area, data]) => {
+                        let creditsHTML = '';
+                        Object.keys(data.credits).forEach(credit => {
+                            const creditId = `${currentCert}-${vertente}-${area}-${credit}`.replace(/[^a-zA-Z0-9]/g, '');
+                            if (document.getElementById(creditId) && document.getElementById(creditId).checked) {
+                                creditsHTML += `<li>${credit}</li>`;
+                                hasCreditsInVertente = true;
+                            }
+                        });
+                        if (creditsHTML) areaCreditsHTML += `<h6>${area}</h6><ul>${creditsHTML}</ul>`;
+                        const score = userScores[vertente] ? (userScores[vertente][area] || 0) : 0;
+                        const maxScore = Object.values(data.credits).reduce((a, b) => a + b, 0);
+                        performanceByCategory[area] = maxScore > 0 ? (score / maxScore) * 100 : 0;
+                    });
+                    if (hasCreditsInVertente) selectedCreditsHTML += `<div class="pdf-vertente"><h4>${vertente}</h4>${areaCreditsHTML}</div>`;
+                });
+
+                let recommendationsHTML = '<h6>Áreas a Melhorar</h6><ul>';
+                const sortedPerformance = Object.entries(performanceByCategory).sort(([, a], [, b]) => a - b);
+                sortedPerformance.slice(0, 3).forEach(([area, performance]) => {
+                    if (performance < 50) recommendationsHTML += `<li><strong>${area}:</strong> Considerar a implementação de mais créditos nesta área.</li>`;
+                });
+                recommendationsHTML += '</ul>';
+                const today = new Date().toLocaleDateString('pt-PT');
+
+                const pdfContentEl = getEl('pdf-content');
+                pdfContentEl.innerHTML = `<style>body{font-family:'Helvetica',sans-serif;color:#333}.pdf-page{padding:20mm}.pdf-page-break{page-break-after:always}.pdf-header{font-size:10px;color:#777;border-bottom:1px solid #ccc;margin-bottom:40px;padding-bottom:5px}h1{font-size:28px;color:#0A3D62;margin-top:50%;text-align:center}h2{font-size:20px;color:#00834B;text-align:center}p{text-align:center}h3{font-size:18px;border-bottom:2px solid #f0f0f0;padding-bottom:5px;margin-top:30px}h4{font-size:16px;font-weight:bold;color:#0A3D62;margin-top:20px}.pdf-vertente{margin-bottom:15px}ul{list-style-type:disc;padding-left:20px}#pdfChartContainer{width:100%;max-width:600px;margin:30px auto}</style><div class="pdf-page"><h1>${projectName}</h1><h2>Relatório de Avaliação de Sustentabilidade</h2><p>Sistema: ${cert.name} | Data: ${today}</p></div><div class="pdf-page-break"></div><div class="pdf-page"><div class="pdf-header">Resumo do Desempenho</div><h3>Pontuação Final: ${total.toFixed(1)} / ${cert.maxScore.toFixed(1)} ${cert.scoreUnit}</h3><h3>Nível de Certificação: <strong>${level}</strong></h3><div id="pdfChartContainer"><canvas id="pdfChart"></canvas></div></div><div class="pdf-page-break"></div><div class="pdf-page"><div class="pdf-header">Créditos Selecionados</div>${selectedCreditsHTML || '<p>Nenhum crédito selecionado.</p>'}</div><div class="pdf-page-break"></div><div class="pdf-page"><div class="pdf-header">Recomendações Estratégicas</div>${recommendationsHTML}</div>`;
+
+                const elementToPrint = pdfContentEl;
+                const chartCanvas = elementToPrint.querySelector('#pdfChart');
+                new Chart(chartCanvas, { type: 'bar', data: { labels: Object.keys(performanceByCategory), datasets: [{ label: 'Desempenho por Categoria (%)', data: Object.values(performanceByCategory), backgroundColor: 'rgba(0,131,75,.7)', borderColor: 'rgba(0,131,75,1)', borderWidth: 1 }] }, options: { indexAxis: 'y', responsive: !0, maintainAspectRatio: !0 } });
+                const opt = { margin: [10, 10, 10, 10], filename: `Relatorio_${projectName.replace(/\s+/g, '_')}.pdf`, image: { type: 'jpeg', quality: .98 }, html2canvas: { scale: 2, useCORS: !0 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } };
+                setTimeout(() => html2pdf().from(elementToPrint).set(opt).save(), 500);
+            });
+
+            compareButton.addEventListener('click', function () {
+                const categoryPerformance = {};
+                const cert = certificationsDB[currentCert];
+
+                Object.entries(cert.data).forEach(([vertente, areas]) => {
+                    let vertentePerformance = 0;
+                    let areaCount = 0;
+                    Object.entries(areas).forEach(([area, data]) => {
+                        const score = userScores[vertente][area] || 0;
+                        const maxScore = Object.values(data.credits).reduce((a, b) => a + b, 0);
+                        vertentePerformance += maxScore > 0 ? (score / maxScore) * 100 : 0;
+                        areaCount++;
+                    });
+                    categoryPerformance[vertente] = vertentePerformance / areaCount;
+                });
+
+                const comparisonResults = getEl('comparisonResults');
+                comparisonResults.innerHTML = `<h5>${projectNameEl.value || 'Projeto Atual'}</h5>`;
+
+                const radarData = {
+                    labels: Object.keys(categoryPerformance),
+                    datasets: []
+                };
+
+                ['lidera', 'breeam', 'leed'].forEach((certKey, index) => {
+                    const certInfo = certificationsDB[certKey];
+                    const estimatedScore = (Object.values(categoryPerformance).reduce((a, b) => a + b, 0) / (Object.keys(categoryPerformance).length * 100)) * certInfo.maxScore;
+
+                    comparisonResults.innerHTML += `<p><strong>${certInfo.name}:</strong> ${estimatedScore.toFixed(1)} / ${certInfo.maxScore.toFixed(1)} ${certInfo.scoreUnit}</p>`;
+
+                    const colors = ['rgba(0, 131, 75, 0.2)', 'rgba(253, 190, 51, 0.2)', 'rgba(10, 61, 98, 0.2)'];
+                    const borderColors = ['rgba(0, 131, 75, 1)', 'rgba(253, 190, 51, 1)', 'rgba(10, 61, 98, 1)'];
+
+                    radarData.datasets.push({
+                        label: certInfo.name,
+                        data: Object.values(categoryPerformance),
+                        backgroundColor: colors[index],
+                        borderColor: borderColors[index],
+                        borderWidth: 2
+                    });
+                });
+
+                const ctx = getEl('comparisonChartContainer').getContext('2d');
+                if (comparisonChart) comparisonChart.destroy();
+                comparisonChart = new Chart(ctx, { type: 'radar', data: radarData, options: { maintainAspectRatio: false } });
+
+                $('#comparisonModal').modal('show');
+            });
+
+            projectNameEl.addEventListener('keyup', () => {
+                compareButton.disabled = !projectNameEl.value.trim();
+            });
+
+            renderForm();
+            populateSavedProjectsSelector();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doação de Artigos Urgentes - PortugalApoia.com</title>
+
+    <meta name="description"
+        content="Encontre pedidos de doação urgentes ou publique o seu gratuitamente. Ajude famílias e pessoas em necessidade em Portugal com roupas, móveis e mais.">
+    <meta name="keywords"
+        content="doação de artigos, pedidos de ajuda, solidariedade portugal, doação lisboa, doação porto, ajuda comunitária">
+    <link rel="canonical" href="https://portugalapoia.com/doacoes.html" />
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://portugalapoia.com/doacoes.html">
+    <meta property="og:title" content="Doação de Artigos Urgentes - PortugalApoia.com">
+    <meta property="og:description"
+        content="Ajude famílias e pessoas em necessidade em Portugal. Encontre pedidos de roupas, móveis e mais.">
+    <meta property="og:image" content="https://portugalapoia.com/images_donacao/silla-de-ruedas.jpg">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://portugalapoia.com/doacoes.html">
+    <meta property="twitter:title" content="Doação de Artigos Urgentes - PortugalApoia.com">
+    <meta property="twitter:description"
+        content="Ajude famílias e pessoas em necessidade em Portugal. Encontre pedidos de roupas, móveis e mais.">
+    <meta property="twitter:image" content="https://portugalapoia.com/images_donacao/silla-de-ruedas.jpg">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/favicon.ico.png" type="image/png">
+    <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+    <div id="preloader"><img src="images/favicon.ico.png" alt="A carregar..." class="spinner"></div>
+
+    <header class="main-header">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container"><a class="navbar-brand logo" href="index.html">PortugalApoia</a><button
+                    class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav"><span
+                        class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="main-nav">
+
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link" href="doacoes.html">Doações</a></li>
+                        <li class="nav-item"><a class="nav-link" href="empregos.html">Emprego</a></li>
+                        <li class="nav-item"><a class="nav-link" href="servicos.html">Serviços</a></li>
+                        <li class="nav-item"><a class="nav-link" href="habitacao.html">Habitação</a></li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownWebApp" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Apps
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownWebApp">
+                                <a class="dropdown-item" href="app_evaluadorsustentable.html">Evaluador Sustentável PRO</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link btn btn-primary publish-btn"
+                                href="publicar.html">Publicar</a></li>
+                    </ul>
+
+                    <div class="theme-switch-wrapper nav-item ml-lg-3">
+                        <label class="theme-switch" for="theme-toggle">
+                            <input type="checkbox" id="theme-toggle" />
+                            <div class="slider round">
+                                <i class="fas fa-sun slider-icon"></i>
+                                <i class="fas fa-moon slider-icon"></i>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-header page-header-doacoes text-center">
+            <div class="container">
+                <h1 class="page-title">Doação de Artigos</h1>
+                <p class="lead">Ajude quem mais precisa. Encontre aqui pedidos de ajuda de pessoas e famílias em
+                    Portugal.</p>
+            </div>
+        </section>
+
+        <section class="py-4 bg-light border-bottom">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <form class="form-row align-items-center">
+                                    <div class="col-md-6 mb-2 mb-md-0">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                            </div>
+                                            <input type="text" id="searchInput" class="form-control form-control-lg"
+                                                placeholder="O que procura? (ex: cadeira de rodas)">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-2 mb-md-0">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i
+                                                        class="fas fa-map-marker-alt"></i></span>
+                                            </div>
+                                            <input type="text" id="locationInput" class="form-control form-control-lg"
+                                                placeholder="Cidade (ex: Lisboa)">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-primary btn-lg btn-block"
+                                            onclick="filterAnnouncements()">Procurar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="py-5">
+            <div class="container">
+                <div class="row" id="announcements-grid">
+                    <div class="col-lg-4 col-md-6 mb-4 announcement-item">
+                        <div class="card h-100 shadow-sm announcement-card border-warning" id="DOA-001">
+                            <span class="badge badge-danger position-absolute"
+                                style="top: 10px; right: 10px; z-index: 2;">Urgente</span>
+                            <img src="images_donacao/silla-de-ruedas.jpg" class="d-block w-100"
+                                alt="Pedido de Cadeira de Rodas">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">Pedido de Cadeira de Rodas</h5>
+                                <h6 class="card-subtitle mb-2 text-muted"><i
+                                        class="fas fa-map-marker-alt mr-2"></i>Lisboa</h6>
+                                <p class="card-text flex-grow-1">Família procura uma cadeira de rodas para um idoso com
+                                    mobilidade reduzida. Qualquer ajuda é bem-vinda e muito apreciada.</p>
+                                <div class="mt-2">
+                                    <p class="card-text small"><i class="fas fa-envelope mr-2"></i><a
+                                            href="mailto:familia.lisboa@email.com">familia.lisboa@email.com</a></p>
+                                </div>
+                                <a href="mailto:familia.lisboa@email.com?subject=Anúncio: Pedido de Cadeira de Rodas"
+                                    class="btn btn-primary mt-auto">Contactar</a>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between align-items-center">
+                                <small class="text-muted">ID: DOA-001</small>
+                                <div class="social-share">
+                                    <a href="https://api.whatsapp.com/send?text=Veja este anúncio de doação: Pedido de Cadeira de Rodas https://portugalapoia.com/doacoes.html#DOA-001"
+                                        target="_blank" title="Partilhar no WhatsApp"><i
+                                            class="fab fa-whatsapp"></i></a>
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://portugalapoia.com/doacoes.html#DOA-001"
+                                        target="_blank" title="Partilhar no Facebook"><i
+                                            class="fab fa-facebook-f"></i></a>
+                                    <a href="https://twitter.com/intent/tweet?url=https://portugalapoia.com/doacoes.html#DOA-001&text=Veja este anúncio de doação: Pedido de Cadeira de Rodas"
+                                        target="_blank" title="Partilhar no X/Twitter"><i
+                                            class="fab fa-twitter"></i></a>
+                                    <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://portugalapoia.com/doacoes.html#DOA-001&title=Veja este anúncio de doação: Pedido de Cadeira de Rodas"
+                                        target="_blank" title="Partilhar no LinkedIn"><i
+                                            class="fab fa-linkedin-in"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 mb-4 announcement-item">
+                        <div class="card h-100 shadow-sm announcement-card " id="DOA-002">
+                            <span class="badge badge-success position-absolute"
+                                style="top: 10px; left: 10px; z-index: 2;">Novo</span>
+                            <img src="images_donacao/ropa_bebe.webp" class="d-block w-100"
+                                alt="Roupa de Bebé (0-6 meses)">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">Roupa de Bebé (0-6 meses)</h5>
+                                <h6 class="card-subtitle mb-2 text-muted"><i
+                                        class="fas fa-map-marker-alt mr-2"></i>Porto</h6>
+                                <p class="card-text flex-grow-1">Preciso de ajuda com roupa para o meu bebé que vai
+                                    nascer em breve. Agradeço qualquer doação de roupa para recém-nascido (menino).</p>
+                                <div class="mt-2">
+                                    <p class="card-text small"><i class="fas fa-phone mr-2"></i><a
+                                            href="tel:+351912345678">+351 912 345 678</a></p>
+                                    <p class="card-text small"><i class="fas fa-envelope mr-2"></i><a
+                                            href="mailto:mamae.porto@email.com">mamae.porto@email.com</a></p>
+                                </div>
+                                <a href="mailto:mamae.porto@email.com?subject=Anúncio: Roupa de Bebé (0-6 meses)"
+                                    class="btn btn-primary mt-auto">Contactar</a>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between align-items-center">
+                                <small class="text-muted">ID: DOA-002</small>
+                                <div class="social-share">
+                                    <a href="https://api.whatsapp.com/send?text=Veja este anúncio de doação: Roupa de Bebé (0-6 meses) https://portugalapoia.com/doacoes.html#DOA-002"
+                                        target="_blank" title="Partilhar no WhatsApp"><i
+                                            class="fab fa-whatsapp"></i></a>
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://portugalapoia.com/doacoes.html#DOA-002"
+                                        target="_blank" title="Partilhar no Facebook"><i
+                                            class="fab fa-facebook-f"></i></a>
+                                    <a href="https://twitter.com/intent/tweet?url=https://portugalapoia.com/doacoes.html#DOA-002&text=Veja este anúncio de doação: Roupa de Bebé (0-6 meses)"
+                                        target="_blank" title="Partilhar no X/Twitter"><i
+                                            class="fab fa-twitter"></i></a>
+                                    <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://portugalapoia.com/doacoes.html#DOA-002&title=Veja este anúncio de doação: Roupa de Bebé (0-6 meses)"
+                                        target="_blank" title="Partilhar no LinkedIn"><i
+                                            class="fab fa-linkedin-in"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 mb-4 announcement-item">
+                        <div class="card h-100 shadow-sm announcement-card " id="DOA-003">
+                            <div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item"
+                                    src="images_donacao/material_escolar.mp4" allowfullscreen=""></iframe></div>
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">Material Escolar para Crianças</h5>
+                                <h6 class="card-subtitle mb-2 text-muted"><i
+                                        class="fas fa-map-marker-alt mr-2"></i>Coimbra</h6>
+                                <p class="card-text flex-grow-1">Sou mãe de duas crianças e procuro cadernos, lápis e
+                                    mochilas para o novo ano letivo. Veja o vídeo para conhecer a nossa história. Muito
+                                    obrigada.</p>
+                                <div class="mt-2">
+                                    <p class="card-text small"><i class="fas fa-envelope mr-2"></i><a
+                                            href="mailto:ajuda.coimbra@email.com">ajuda.coimbra@email.com</a></p>
+                                </div>
+                                <a href="mailto:ajuda.coimbra@email.com?subject=Anúncio: Material Escolar para Crianças"
+                                    class="btn btn-primary mt-auto">Contactar</a>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between align-items-center">
+                                <small class="text-muted">ID: DOA-003</small>
+                                <div class="social-share">
+                                    <a href="https://api.whatsapp.com/send?text=Veja este anúncio de doação: Material Escolar para Crianças https://portugalapoia.com/doacoes.html#DOA-003"
+                                        target="_blank" title="Partilhar no WhatsApp"><i
+                                            class="fab fa-whatsapp"></i></a>
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://portugalapoia.com/doacoes.html#DOA-003"
+                                        target="_blank" title="Partilhar no Facebook"><i
+                                            class="fab fa-facebook-f"></i></a>
+                                    <a href="https://twitter.com/intent/tweet?url=https://portugalapoia.com/doacoes.html#DOA-003&text=Veja este anúncio de doação: Material Escolar para Crianças"
+                                        target="_blank" title="Partilhar no X/Twitter"><i
+                                            class="fab fa-twitter"></i></a>
+                                    <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://portugalapoia.com/doacoes.html#DOA-003&title=Veja este anúncio de doação: Material Escolar para Crianças"
+                                        target="_blank" title="Partilhar no LinkedIn"><i
+                                            class="fab fa-linkedin-in"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <button id="scrollTopBtn" title="Voltar ao topo"><i class="fas fa-arrow-up"></i></button>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h4>PortugalApoia</h4>
+                    <p>A conectar a generosidade à necessidade.</p>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h4>Navegação</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="doacoes.html">Doação</a></li>
+                        <li><a href="empregos.html">Emprego</a></li>
+                        <li><a href="servicos.html">Serviços</a></li>
+                        <li><a href="habitacao.html">Habitação</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h4>Siga-nos</h4><a href="https://www.instagram.com/portugalapoia" target="_blank"
+                        rel="noopener noreferrer" class="social-link">Instagram</a>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h4>Contacto</h4>
+                    <p>Um projeto da <a href="mailto:fidessuc@gmail.com">Fundación Fides</a>.</p>
+                    <p>Design by <a href="mailto:hbo.consulting.pt@gmail.com">HBO Consulting</a>.</p>
+                </div>
+            </div>
+            <div class="footer-bottom text-center pt-3 mt-3">
+                <p>&copy; 2025 PortugalApoia.com | <a href="politica-privacidade.html">Política de Privacidade</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+        function filterAnnouncements() {
+            const searchText = document.getElementById('searchInput').value.toLowerCase();
+            const locationText = document.getElementById('locationInput').value.toLowerCase();
+            const announcements = document.querySelectorAll('.announcement-item');
+
+            announcements.forEach(announcement => {
+                const title = announcement.querySelector('.card-title').textContent.toLowerCase();
+                const description = announcement.querySelector('.card-text').textContent.toLowerCase();
+                const location = announcement.querySelector('.card-subtitle').textContent.toLowerCase();
+
+                const textMatch = title.includes(searchText) || description.includes(searchText);
+                const locationMatch = location.includes(locationText);
+
+                if (textMatch && locationMatch) {
+                    announcement.style.display = '';
+                } else {
+                    announcement.style.display = 'none';
+                }
+            });
+        }
+
+        // Activa o filtro em tempo real enquanto o utilizador escreve
+        document.getElementById('searchInput').addEventListener('keyup', filterAnnouncements);
+        document.getElementById('locationInput').addEventListener('keyup', filterAnnouncements);
+    </script>
+</body>
+
+</html>

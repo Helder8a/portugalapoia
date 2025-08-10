@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anúncios de Serviços Locais - PortugalApoia.com</title>
+
+    <meta name="description"
+        content="Encontre profissionais para diversos serviços em sua área ou anuncie a sua especialidade gratuitamente. De reparações a aulas, a nossa comunidade ajuda.">
+    <meta name="keywords"
+        content="serviços locais, profissionais portugal, anunciar serviços, eletricista, canalizador, limpeza">
+    <link rel="canonical" href="https://portugalapoia.com/servicos.html" />
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://portugalapoia.com/servicos.html">
+    <meta property="og:title" content="Anúncios de Serviços Locais - PortugalApoia.com">
+    <meta property="og:description"
+        content="Encontre profissionais para diversos serviços em sua área ou anuncie a sua especialidade gratuitamente.">
+    <meta property="og:image" content="https://portugalapoia.com/images/img_portada.webp">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://portugalapoia.com/servicos.html">
+    <meta property="twitter:title" content="Anúncios de Serviços Locais - PortugalApoia.com">
+    <meta property="twitter:description"
+        content="Encontre profissionais para diversos serviços em sua área ou anuncie a sua especialidade gratuitamente.">
+    <meta property="twitter:image" content="https://portugalapoia.com/images/img_portada.webp">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/favicon.ico.png" type="image/png">
+    <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+    <div id="preloader"><img src="images/favicon.ico.png" alt="A carregar..." class="spinner"></div>
+
+    <header class="main-header">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand logo" href="index.html">PortugalApoia</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="main-nav">
+
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link" href="doacoes.html">Doações</a></li>
+                        <li class="nav-item"><a class="nav-link" href="empregos.html">Emprego</a></li>
+                        <li class="nav-item"><a class="nav-link" href="servicos.html">Serviços</a></li>
+                        <li class="nav-item"><a class="nav-link" href="habitacao.html">Habitação</a></li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownWebApp" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Apps
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownWebApp">
+                                <a class="dropdown-item" href="app_evaluadorsustentable.html">Evaluador Sustentável PRO</a>
+                            </div>
+                        </li>
+
+                        <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link btn btn-primary publish-btn"
+                                href="publicar.html">Publicar</a></li>
+                    </ul>
+
+                    <div class="theme-switch-wrapper nav-item ml-lg-3">
+                        <label class="theme-switch" for="theme-toggle">
+                            <input type="checkbox" id="theme-toggle" />
+                            <div class="slider round">
+                                <i class="fas fa-sun slider-icon"></i>
+                                <i class="fas fa-moon slider-icon"></i>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-header page-header-servicos text-center">
+            <div class="container">
+                <h1 class="page-title">Serviços Disponíveis</h1>
+                <p class="lead">Encontre serviços de profissionais ou anuncie o seu. De informática a canalização.</p>
+            </div>
+        </section>
+
+        <section class="py-4 bg-light border-bottom">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <form class="form-row align-items-center" onsubmit="event.preventDefault();">
+                                    <div class="col-md-6 mb-2 mb-md-0">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                            </div>
+                                            <input type="text" id="searchInput" class="form-control form-control-lg"
+                                                placeholder="Tipo de serviço (ex: eletricista)">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-2 mb-md-0">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i
+                                                        class="fas fa-map-marker-alt"></i></span>
+                                            </div>
+                                            <input type="text" id="locationInput" class="form-control form-control-lg"
+                                                placeholder="Cidade (ex: Lisboa)">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="button" class="btn btn-primary btn-lg btn-block"
+                                            onclick="filterServices()">Procurar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-5">
+            <div class="container">
+                <div class="row" id="services-grid">
+
+                    <div class="col-lg-4 col-md-6 mb-4 service-item">
+                        <div class="card h-100 shadow-sm" id="SER-001">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">Eletricista Certificado</h5>
+                                <h6 class="card-subtitle mb-2 text-muted"><i
+                                        class="fas fa-map-marker-alt mr-2"></i>Lisboa</h6>
+                                <p class="card-text flex-grow-1">Serviços de eletricista para instalações, reparações e
+                                    manutenção. Orçamentos grátis.</p>
+                                <p class="card-text small mt-auto"><strong>Contacto:</strong> <a
+                                        href="tel:912345678">912 345 678</a></p>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between align-items-center">
+                                <small class="text-muted">ID: SER-001</small>
+                                <div class="social-share">
+                                    <a href="#" target="_blank" title="Partilhar no WhatsApp"><i
+                                            class="fab fa-whatsapp"></i></a>
+                                    <a href="#" target="_blank" title="Partilhar no Facebook"><i
+                                            class="fab fa-facebook-f"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 mb-4 service-item">
+                        <div class="card h-100 shadow-sm" id="SER-002">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">Canalizador 24/7</h5>
+                                <h6 class="card-subtitle mb-2 text-muted"><i
+                                        class="fas fa-map-marker-alt mr-2"></i>Porto</h6>
+                                <p class="card-text flex-grow-1">Serviços de canalização urgentes e planeados em toda a
+                                    área do Porto. Preços justos e serviço de qualidade.</p>
+                                <p class="card-text small mt-auto"><strong>Contacto:</strong> <a
+                                        href="mailto:canalizador.porto@email.com">canalizador.porto@email.com</a></p>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between align-items-center">
+                                <small class="text-muted">ID: SER-002</small>
+                                <div class="social-share">
+                                    <a href="#" target="_blank" title="Partilhar no WhatsApp"><i
+                                            class="fab fa-whatsapp"></i></a>
+                                    <a href="#" target="_blank" title="Partilhar no Facebook"><i
+                                            class="fab fa-facebook-f"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6 mb-4 service-item">
+                        <div class="card h-100 shadow-sm" id="SER-003">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title">Serviços de Limpeza</h5>
+                                <h6 class="card-subtitle mb-2 text-muted"><i
+                                        class="fas fa-map-marker-alt mr-2"></i>Coimbra</h6>
+                                <p class="card-text flex-grow-1">Ofereço serviços de limpeza para casas e escritórios.
+                                    Disponibilidade imediata e preços acessíveis.</p>
+                                <p class="card-text small mt-auto"><strong>Contacto:</strong> <a
+                                        href="mailto:limpeza.coimbra@email.com">limpeza.coimbra@email.com</a></p>
+                            </div>
+                            <div class="card-footer d-flex justify-content-between align-items-center">
+                                <small class="text-muted">ID: SER-003</small>
+                                <div class="social-share">
+                                    <a href="#" target="_blank" title="Partilhar no WhatsApp"><i
+                                            class="fab fa-whatsapp"></i></a>
+                                    <a href="#" target="_blank" title="Partilhar no Facebook"><i
+                                            class="fab fa-facebook-f"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <button id="scrollTopBtn" title="Voltar ao topo"><i class="fas fa-arrow-up"></i></button>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h4>PortugalApoia</h4>
+                    <p>A conectar a generosidade à necessidade.</p>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h4>Navegação</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="doacoes.html">Doação</a></li>
+                        <li><a href="empregos.html">Emprego</a></li>
+                        <li><a href="servicos.html">Serviços</a></li>
+                        <li><a href="habitacao.html">Habitação</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h4>Siga-nos</h4><a href="https://www.instagram.com/portugalapoia" target="_blank"
+                        rel="noopener noreferrer" class="social-link">Instagram</a>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h4>Contacto</h4>
+                    <p>Um projeto da <a href="mailto:fidessuc@gmail.com">Fundación Fides</a>.</p>
+                    <p>Design by <a href="mailto:hbo.consulting.pt@gmail.com">HBO Consulting</a>.</p>
+                </div>
+            </div>
+            <div class="footer-bottom text-center pt-3 mt-3">
+                <p>&copy; 2025 PortugalApoia.com | <a href="politica-privacidade.html">Política de Privacidade</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+        function filterServices() {
+            const searchText = document.getElementById('searchInput').value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            const locationText = document.getElementById('locationInput').value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            const serviceItems = document.querySelectorAll('.service-item');
+
+            serviceItems.forEach(item => {
+                const title = item.querySelector('.card-title').textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                const textMatch = title.includes(searchText);
+                const location = item.querySelector('.card-subtitle').textContent.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                const locationMatch = location.includes(locationText);
+
+                if (textMatch && locationMatch) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('searchInput');
+            const locationInput = document.getElementById('locationInput');
+            if (searchInput) searchInput.addEventListener('keyup', filterServices);
+            if (locationInput) locationInput.addEventListener('keyup', filterServices);
+
+            // SCRIPT PARA PLACEHOLDER DE IMAGEM
+            const serviceCards = document.querySelectorAll('.service-item .card');
+            serviceCards.forEach(card => {
+                const image = card.querySelector('img');
+                if (!image) {
+                    const title = card.querySelector('.card-title').textContent;
+                    const placeholder = document.createElement('div');
+                    placeholder.className = 'image-placeholder';
+                    placeholder.textContent = title;
+                    card.prepend(placeholder);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
