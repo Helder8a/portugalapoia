@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale-1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manual de Uso - Evaluador Sustentável PRO</title>
     <meta name="description" content="Aprenda a utilizar o Evaluador Sustentável PRO e conheça os fundamentos dos sistemas de certificação LiderA, BREEAM e LEED, incluindo todas as funcionalidades avançadas.">
     <meta name="robots" content="noindex">
@@ -42,6 +42,7 @@
         }
         .list-group-item {
             background-color: transparent;
+            border-color: var(--color-border);
         }
     </style>
 </head>
@@ -53,38 +54,20 @@
                 <a class="navbar-brand logo" href="index.html">PortugalApoia</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="main-nav">
-
-                    <ul class="navbar-nav ml-auto">
+                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item"><a class="nav-link" href="doacoes.html">Doações</a></li>
                         <li class="nav-item"><a class="nav-link" href="empregos.html">Emprego</a></li>
                         <li class="nav-item"><a class="nav-link" href="servicos.html">Serviços</a></li>
                         <li class="nav-item"><a class="nav-link" href="habitacao.html">Habitação</a></li>
-
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownWebApp" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Apps
-                            </a>
+                        <li class="nav-item dropdown active">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownWebApp" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Apps</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownWebApp">
-                                <a class="dropdown-item" href="app_evaluador_pro.html">Evaluador Sustentável PRO</a>
+                                <a class="dropdown-item" href="app_evaluadorsustentable.html">Evaluador Sustentável PRO</a>
                             </div>
                         </li>
-
                         <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-                        <li class="nav-item"><a class="nav-link btn btn-primary publish-btn"
-                                href="publicar.html">Publicar</a></li>
+                        <li class="nav-item"><a class="nav-link btn btn-primary publish-btn" href="publicar.html">Publicar</a></li>
                     </ul>
-                    
-                    <div class="theme-switch-wrapper nav-item ml-lg-3">
-                        <label class="theme-switch" for="theme-toggle">
-                            <input type="checkbox" id="theme-toggle" />
-                            <div class="slider round">
-                                <i class="fas fa-sun slider-icon"></i>
-                                <i class="fas fa-moon slider-icon"></i>
-                            </div>
-                        </label>
-                    </div>
-
                 </div>
             </div>
         </nav>
@@ -127,7 +110,7 @@
                 </ul>
 
                 <h4><i class="fas fa-chart-bar feature-icon"></i>Análise Comparativa Multi-Certificação</h4>
-                <p><strong>Para que serve:</strong> Esta é uma ferramenta de análise estratégica. Oferece uma visão única de como o seu projeto se comportaria se fosse avaliado por diferentes sistemas de certificação, permitindo-lhe decidir qual o mais vantajoso.</p>
+                <p><strong>Para que serve:</strong> Oferece uma visão estratégica única, mostrando uma estimativa de como o seu projeto se comportaria se fosse avaliado por diferentes sistemas de certificação, permitindo-lhe decidir qual o mais vantajoso.</p>
                 <p><strong>Como usar:</strong> Após avaliar e guardar um projeto, o botão "Análise Comparativa" ficará ativo. Ao clicar, abrirá um dashboard com um gráfico de radar que compara o desempenho do projeto em LiderA, BREEAM e LEED, destacando visualmente as suas forças e fraquezas em cada sistema.</p>
 
                 <h4><i class="fas fa-file-pdf feature-icon"></i>Exportador de Relatórios PDF Profissionais</h4>
@@ -141,6 +124,18 @@
                     <li><strong>Descrição do Critério:</strong> Explica o objetivo, exemplos de aplicação e os benefícios de implementar as medidas.</li>
                     <li><strong>Soluções em Portugal:</strong> Apresenta exemplos concretos de materiais, tecnologias e fabricantes disponíveis no mercado português para o ajudar a cumprir esse critério.</li>
                 </ul>
+            </div>
+
+            <div class="manual-section">
+                 <h2><i class="fas fa-certificate mr-3"></i>Compreender as Certificações</h2>
+                <h4>LiderA (Portugal)</h4>
+                <p>O LiderA é o sistema de certificação português, focado na adaptação ao contexto nacional. Avalia os projetos numa escala de G a A++, baseando-se em 6 vertentes principais. É a ferramenta ideal para projetos em Portugal que procuram um selo de sustentabilidade localmente relevante.</p>
+                
+                <h4>BREEAM (Reino Unido / Internacional)</h4>
+                <p>O BREEAM é o sistema de avaliação mais antigo e um dos mais utilizados na Europa. É conhecido pelo seu rigor e abordagem holística. A pontuação é dada em percentagem e resulta numa classificação de Pass, Good, Very Good, Excellent ou Outstanding.</p>
+
+                <h4>LEED (EUA / Internacional)</h4>
+                <p>O LEED é o sistema mais reconhecido a nível mundial. É muito utilizado por empresas multinacionais e projetos que procuram uma visibilidade global. A sua pontuação atribui os níveis Certified, Silver, Gold ou Platinum.</p>
             </div>
         </div>
     </main>

@@ -7,7 +7,7 @@
     <title>Evaluador Sustentável PRO (LiderA, BREEAM, LEED) - PortugalApoia</title>
     <meta name="description"
         content="A ferramenta profissional definitiva para avaliação e pré-certificação de projetos de construção e urbanismo segundo os sistemas LiderA, BREEAM e LEED em Portugal.">
-    <link rel="canonical" href="https://portugalapoia.com/app_evaluador_pro.html" />
+    <link rel="canonical" href="https://portugalapoia.com/app_evaluadorsustentable.html" />
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
@@ -51,12 +51,6 @@
             min-height: 400px;
         }
 
-        .help-icon {
-            font-size: 1.5rem;
-            color: var(--color-accent);
-            cursor: pointer;
-        }
-
         .nav-tabs .nav-link.active {
             color: var(--color-accent);
             border-bottom: 2px solid var(--color-accent);
@@ -83,8 +77,8 @@
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownWebApp" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Apps</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownWebApp">
-                                <a class="dropdown-item active" href="app_evaluador_pro.html">Evaluador Sustentável
-                                    PRO</a>
+                                <a class="dropdown-item active" href="app_evaluadorsustentable.html">Evaluador
+                                    Sustentável PRO</a>
                             </div>
                         </li>
                         <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
@@ -112,14 +106,15 @@
 
         <div class="container my-5">
             <div class="evaluator-main-content">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h3>Configuração do Projeto</h3>
-                    <a href="manual_evaluador.html" target="_blank" class="btn btn-outline-primary"
-                        title="Abrir Manual de Uso"><i class="fas fa-question-circle mr-2"></i>Ver Manual de Uso</a>
-                </div>
                 <div class="row">
                     <div class="col-lg-8">
                         <section id="evaluacion">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h3>Configuração do Projeto</h3>
+                                <a href="manual_evaluador.html" target="_blank" class="btn btn-outline-primary"
+                                    title="Abrir Manual de Uso"><i class="fas fa-question-circle mr-2"></i>Ver Manual de
+                                    Uso</a>
+                            </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="certificationSelector"><strong>1. Sistema de
@@ -439,7 +434,7 @@
             projectTypeSelector.addEventListener('change', (e) => {
                 currentProjectType = e.target.value;
                 if (currentCert === 'lidera') {
-                    updateTotal(); // Recalcula com os novos pesos
+                    updateTotal();
                 }
             });
 
