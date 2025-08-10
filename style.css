@@ -853,3 +853,173 @@ hr.blog-separator {
 .page-header-publicar {
     background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2670&auto=format&fit=crop');
 }
+
+/* =================================================================== */
+/* ==   1. VARIABLES Y ESTILOS BASE (CON SOPORTE PARA MODO OSCURO)  == */
+/* =================================================================== */
+:root {
+    /* Tema Claro (Default) */
+    --color-primary: #0A3D62;
+    --color-accent: #00834B;
+    --color-donation: #FDBE33;
+    --color-background: #ffffff;
+    --color-background-light: #f8f9fa;
+    --color-text: #343a40;
+    --color-text-muted: #6c757d;
+    --color-border: #dee2e6;
+    --shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
+}
+
+body.dark-theme {
+    /* Tema Oscuro */
+    --color-primary: #a9d6e5; /* Azul claro para texto principal */
+    --color-accent: #4ecdc4;  /* Verde azulado para acentos */
+    --color-donation: #FDBE33;
+    --color-background: #1e1e1e;
+    --color-background-light: #121212;
+    --color-text: #e0e0e0;
+    --color-text-muted: #adb5bd;
+    --color-border: #444;
+    --shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: var(--color-text);
+    background-color: var(--color-background-light);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+a {
+    color: var(--color-accent);
+}
+
+a:hover {
+    color: var(--color-primary);
+}
+
+/* =================================================================== */
+/* ==   2. COMPONENTES GENERALES (HEADER, FOOTER, BOTONES, TARJETAS)== */
+/* =================================================================== */
+
+/* --- Header y Navegación --- */
+.main-header {
+    background-color: var(--color-background);
+    border-bottom: 1px solid var(--color-border);
+}
+.logo {
+    color: var(--color-primary) !important;
+}
+.navbar .navbar-nav .nav-link {
+    color: var(--color-text);
+}
+.navbar .navbar-nav .nav-link:hover,
+.navbar .navbar-nav .nav-link.active {
+    color: var(--color-accent);
+}
+.publish-btn {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+/* --- Cabeceras de Página --- */
+.page-header { background-color: var(--color-primary); }
+.page-header .page-title { color: var(--color-donation); }
+.page-header .lead { color: #f1f1f1; }
+
+/* --- Tarjetas (Cards) --- */
+.card {
+    background-color: var(--color-background);
+    border-color: var(--color-border);
+    box-shadow: var(--shadow);
+}
+.card .card-title { color: var(--color-primary); }
+.card .card-subtitle { color: var(--color-text-muted); }
+.card .card-footer { background-color: transparent; border-top: 1px solid var(--color-border); }
+
+/* --- Formularios --- */
+.form-control {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    border-color: var(--color-border);
+}
+.form-control:focus {
+    background-color: var(--color-background);
+    color: var(--color-text);
+}
+body.dark-theme .form-control::placeholder { color: #888; }
+.input-group-text {
+    background-color: var(--color-background-light);
+    border-color: var(--color-border);
+    color: var(--color-text-muted);
+}
+
+/* --- Blog --- */
+#blog-full-content { font-family: 'Roboto', sans-serif; }
+.blog-post-full {
+    background-color: var(--color-background);
+    border-color: var(--color-border);
+    box-shadow: var(--shadow);
+}
+.blog-post-full h2 { color: var(--color-primary); }
+.blog-post-full .text-muted { color: var(--color-text-muted) !important; }
+.blog-post-full blockquote { border-left-color: var(--color-donation); color: var(--color-text-muted); }
+
+/* --- Footer --- */
+.main-footer {
+    background-color: #08314e;
+    color: #ccc;
+}
+body.dark-theme .main-footer { background-color: #000; }
+.main-footer h4 { color: var(--color-donation); }
+.main-footer a { color: #fff; }
+.main-footer a:hover { color: var(--color-accent); }
+
+/* =================================================================== */
+/* ==   3. INTERRUPTOR DE TEMA (Theme Switch)                       == */
+/* =================================================================== */
+.theme-switch-wrapper { display: flex; align-items: center; }
+.theme-switch { display: inline-block; height: 24px; position: relative; width: 50px; }
+.theme-switch input { display: none; }
+.slider.round {
+    background-color: #ccc;
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    transition: .4s;
+    border-radius: 34px;
+}
+.slider.round:before {
+    background-color: white;
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 3px;
+    transition: .4s;
+    border-radius: 50%;
+}
+input:checked + .slider.round { background-color: var(--color-accent); }
+input:checked + .slider.round:before { transform: translateX(26px); }
+
+/* Iconos Sol/Luna (Opcional, pero recomendado) */
+.slider.round .fa-sun, .slider.round .fa-moon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+.slider.round .fa-sun { left: 5px; }
+.slider.round .fa-moon { right: 5px; }
+body:not(.dark-theme) .slider.round .fa-sun { opacity: 1; }
+body.dark-theme .slider.round .fa-moon { opacity: 1; }

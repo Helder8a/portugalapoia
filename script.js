@@ -1,28 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Oculta el preloader tan pronto como el contenido principal está listo
     const preloader = document.getElementById("preloader");
     if (preloader) {
-        window.onload = () => {
-            preloader.classList.add("hidden");
-        };
+        window.onload = () => { preloader.classList.add("hidden"); };
     }
 
-    // Barra de navegación que se vuelve "pegajosa" (sticky) al hacer scroll
-    const mainHeader = document.querySelector('.main-header');
-    if (mainHeader) {
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 45) {
-                mainHeader.classList.add('nav-sticky');
-            } else {
-                mainHeader.classList.remove('nav-sticky');
-            }
-        });
-    }
-
-    // Botón para volver al inicio de la página
     const scrollTopBtn = document.getElementById("scrollTopBtn");
     if (scrollTopBtn) {
-        window.onscroll = function () {
+        window.onscroll = () => {
             if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
                 scrollTopBtn.classList.add("visible");
             } else {
@@ -35,36 +19,38 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Registra el Service Worker para la PWA (Progressive Web App)
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/sw.js')
-                .then(registration => console.log('Service Worker registrado com sucesso.'))
-                .catch(error => console.log('Falha ao registrar Service Worker:', error));
-        });
+    // --- LÓGICA DEL MODO OSCURO ---
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // Función para aplicar el tema
+    const applyTheme = (theme) => {
+        if (theme === 'dark') {
+            body.classList.add('dark-theme');
+            if(themeToggle) themeToggle.checked = true;
+        } else {
+            body.classList.remove('dark-theme');
+            if(themeToggle) themeToggle.checked = false;
+        }
+    };
+
+    // 1. Revisa si hay una preferencia guardada en localStorage
+    const savedTheme = localStorage.getItem('theme');
+    // 2. Revisa la preferencia del sistema operativo del usuario
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (savedTheme) {
+        applyTheme(savedTheme); // Aplica el tema guardado
+    } else if (prefersDark) {
+        applyTheme('dark'); // Aplica el tema del sistema si no hay nada guardado
     }
 
-    // Lógica para el interruptor de modo oscuro
-    const themeToggle = document.getElementById('theme-toggle');
+    // 3. Añade el listener para el interruptor
     if (themeToggle) {
-        const currentTheme = localStorage.getItem('theme');
-        if (currentTheme) {
-            document.body.classList.add(currentTheme);
-            if (currentTheme === 'dark-theme') {
-                themeToggle.checked = true;
-            }
-        }
-
         themeToggle.addEventListener('change', () => {
-            if (themeToggle.checked) {
-                document.body.classList.replace('light-theme', 'dark-theme');
-                localStorage.setItem('theme', 'dark-theme');
-            } else {
-                document.body.classList.replace('dark-theme', 'light-theme');
-                localStorage.setItem('theme', 'light-theme');
-            }
+            const newTheme = themeToggle.checked ? 'dark' : 'light';
+            localStorage.setItem('theme', newTheme); // Guarda la nueva preferencia
+            applyTheme(newTheme);
         });
-    } else {
-        document.body.classList.add('light-theme');
     }
 });
