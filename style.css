@@ -888,3 +888,45 @@ body:not(.dark-theme) .slider.round .fa-sun {
 #levelText {
     color: var(--color-primary)
 }
+
+/* =================================================================== */
+/* ==   ESTILOS PARA SISTEMA DE VALORACIONES (v3.0)                 == */
+/* =================================================================== */
+
+.reviews-section {
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+}
+
+.reviews-title {
+    font-family: var(--font-headings);
+    font-size: 1rem;
+    color: var(--color-primary);
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+}
+
+.comment {
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+.comment:not(:last-child) {
+    margin-bottom: 0.75rem;
+}
+
+.comment-author {
+    margin-bottom: 0.1rem;
+}
+
+.comment-author .stars {
+    color: #FDBE33;
+    /* Amarillo dorado para las estrellas */
+    font-size: 1.1rem;
+    vertical-align: middle;
+}
+
+.comment-text {
+    margin: 0;
+    color: var(--color-text-muted);
+}
