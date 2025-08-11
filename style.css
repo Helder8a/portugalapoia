@@ -930,3 +930,157 @@ body:not(.dark-theme) .slider.round .fa-sun {
     margin: 0;
     color: var(--color-text-muted);
 }
+
+/* =================================================================== */
+/* ==   ESTILOS PARA PANEL DE IMPACTO                             == */
+/* =================================================================== */
+
+.impact-card {
+    background-color: var(--color-background);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+}
+
+.impact-card:hover {
+    transform: translateY(-10px);
+}
+
+.impact-icon {
+    font-size: 3rem;
+    color: var(--color-accent);
+    margin-bottom: 1rem;
+}
+
+.impact-number {
+    font-family: var(--font-headings);
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    line-height: 1.2;
+}
+
+.impact-text {
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+}
+
+/* =================================================================== */
+/* ==   ESTILOS RESPONSIVOS PARA EVALUADOR SUSTENTÁVEL PRO          == */
+/* =================================================================== */
+
+/* Para tablets y dispositivos más pequeños (menos de 992px) */
+@media (max-width: 991.98px) {
+
+    /* Elimina el margen superior negativo que desplaza el contenido hacia arriba */
+    .evaluator-main-content {
+        margin-top: 0;
+        padding: 1.5rem;
+    }
+
+    /* Anula el comportamiento "pegajoso" de la barra lateral para que se desplace normalmente */
+    .results-sidebar {
+        position: static;
+        top: auto;
+    }
+
+    /* Ajusta los selectores de configuración para que se apilen en pantallas medianas */
+    .form-row .form-group.col-md-6 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+/* Para móviles (menos de 768px) */
+@media (max-width: 767.98px) {
+
+    /* Reduce el tamaño del título principal de la página */
+    .page-header .page-title {
+        font-size: 2.2rem;
+    }
+
+    /* Reduce el tamaño de la puntuación para que no ocupe tanto espacio */
+    .results-sidebar #totalScore {
+        font-size: 2.8rem;
+    }
+
+    .results-sidebar #levelText {
+        font-size: 2rem;
+    }
+
+    /* Simplifica el panel de gestión de proyectos */
+    .project-management-controls .input-group {
+        flex-direction: column;
+    }
+
+    .project-management-controls .input-group select {
+        margin-bottom: 0.5rem;
+        border-radius: .25rem !important;
+    }
+
+    .project-management-controls .input-group-append {
+        width: 100%;
+    }
+
+    .project-management-controls .input-group-append .btn {
+        width: 50%;
+        /* Los botones de cargar y eliminar ocupan la mitad cada uno */
+    }
+}
+
+/* =================================================================== */
+/* ==   ESTILOS PARA MEJORA 1: SOLUÇÕES DE MERCADO                == */
+/* =================================================================== */
+
+.area-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.icon-group {
+    display: flex;
+    align-items: center;
+}
+
+.info-icon, .solutions-icon {
+    color: var(--color-accent);
+    cursor: pointer;
+    margin-left: 15px;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.solutions-icon {
+    color: var(--color-primary); /* Un color diferente para distinguirlo */
+}
+
+.info-icon:hover, .solutions-icon:hover {
+    color: var(--color-donation);
+}
+
+/* Estilos para la ventana modal de soluciones */
+.solution-card {
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem;
+}
+
+.solution-card:last-child {
+    margin-bottom: 0;
+}
+
+.solution-card h5 {
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+}
+
+.solution-manufacturer {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+}
