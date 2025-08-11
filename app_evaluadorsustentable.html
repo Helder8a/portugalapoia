@@ -159,6 +159,8 @@
                                         placeholder="Nome do Projeto Atual"></div>
                                 <button id="saveProjectButton" class="btn btn-info btn-block mb-2" type="button"><i
                                         class="fas fa-save mr-2"></i>Guardar Projeto</button>
+                                <button id="shareProjectButton" class="btn btn-primary btn-block mb-2" type="button"><i
+                                        class="fas fa-share-alt mr-2"></i>Partilhar Projeto (Copiar Link)</button>
                                 <div class="input-group mb-2">
                                     <select id="savedProjectsSelector" class="custom-select"></select>
                                     <div class="input-group-append">
@@ -299,6 +301,7 @@
             let currentCert = 'lidera';
             let currentProjectType = 'edificio';
             let comparisonChart = null;
+            const shareProjectButton = getEl('shareProjectButton');
 
             function renderForm() {
                 const cert = certificationsDB[currentCert];
@@ -315,6 +318,88 @@
                     });
                     const vertenteHTML = `<div class="card mb-3"><div class="card-header vertente-header" data-toggle="collapse" data-target="#vertente-${vIndex}"><h4 class="mb-0">${vertente}</h4></div><div id="vertente-${vIndex}" class="collapse ${vIndex === 0 ? 'show' : ''}" data-parent="#evaluationForm"><div class="card-body">${areasHTML.replace(/<div class="mb-4">/g, '<hr class="my-4"><div class="mb-4">').replace('<hr class="my-4">', '')}</div></div></div>`;
                     evaluationFormEl.insertAdjacentHTML('beforeend', vertenteHTML);
+                    // --- INICIO: LÓGICA PARA COMPARTIR PROYECTO ---
+
+function applyStateFromUrl() {
+    const params = new URLSearchParams(window.location.hash.substring(1));
+    const state = params.get('state');
+    if (state) {
+        try {
+            const decodedState = JSON.parse(atob(state));
+
+            // Aplicar estado a los selectores principales
+            if (decodedState.cert) {
+                certificationSelector.value = decodedState.cert;
+                currentCert = decodedState.cert;
+            }
+            if (decodedState.type) {
+                projectTypeSelector.value = decodedState.type;
+                currentProjectType = decodedState.type;
+            }
+            if (decodedState.name) {
+                projectNameEl.value = decodedState.name;
+            }
+
+            // Renderizar el formulario con la certificación correcta ANTES de marcar las casillas
+            renderForm();
+
+            // Esperar un poco para que el DOM se actualice
+            setTimeout(() => {
+                // Aplicar estado a los checkboxes
+                if (decodedState.credits && Array.isArray(decodedState.credits)) {
+                    document.querySelectorAll('#evaluationForm input[type="checkbox"]').forEach(cb => cb.checked = false);
+                    decodedState.credits.forEach(creditId => {
+                        const checkbox = document.getElementById(creditId);
+                        if (checkbox) checkbox.checked = true;
+                    });
+                }
+
+                // Recalcular todo
+                initializeScores();
+                document.querySelectorAll('#evaluationForm input[type="checkbox"]:checked').forEach(cb => {
+                    const { vertente, area, credit } = cb.dataset;
+                    const cert = certificationsDB[currentCert];
+                    const pointValue = cert.data[vertente][area].credits[credit];
+                    userScores[vertente][area] += pointValue;
+                });
+                updateTotal();
+                alert("Projeto carregado a partir do link!");
+            }, 200);
+
+        } catch (e) {
+            console.error("Erro ao carregar estado a partir do URL:", e);
+        }
+    }
+}
+
+shareProjectButton.addEventListener('click', () => {
+    const selectedCredits = Array.from(document.querySelectorAll('#evaluationForm input[type="checkbox"]:checked')).map(cb => cb.id);
+
+    const projectState = {
+        name: projectNameEl.value.trim(),
+        cert: currentCert,
+        type: currentProjectType,
+        credits: selectedCredits
+    };
+
+    const encodedState = btoa(JSON.stringify(projectState));
+    const shareableLink = `${window.location.origin}${window.location.pathname}#state=${encodedState}`;
+
+    navigator.clipboard.writeText(shareableLink).then(() => {
+        alert('Link do projeto copiado para a área de transferência!');
+    }).catch(err => {
+        console.error('Erro ao copiar o link: ', err);
+        alert('Não foi possível copiar o link. Por favor, copie-o manualmente da barra de endereço.');
+    });
+
+    // Actualizar la URL sin recargar la página para que el usuario pueda copiarla manualmente si falla el portapapeles
+    window.location.hash = `state=${encodedState}`;
+});
+
+// Llamar a la función para aplicar el estado al cargar la página
+applyStateFromUrl();
+
+// --- FIN: LÓGICA PARA COMPARTIR PROYECTO ---
                 });
                 initializeScores();
             }
