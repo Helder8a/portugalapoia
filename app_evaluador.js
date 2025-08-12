@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 for (const area in userScores[vertente]) {
                     vertenteTotalPoints += userScores[vertente][area];
                     if (cert.data[vertente] && cert.data[vertente][area] && cert.data[vertente][area].credits) {
-                       vertenteMaxPoints += Object.values(cert.data[vertente][area].credits).reduce((a, b) => a + b, 0);
+                        vertenteMaxPoints += Object.values(cert.data[vertente][area].credits).reduce((a, b) => a + b, 0);
                     }
                 }
                 if (vertenteMaxPoints > 0) {
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function () {
             updateTotal();
         }
     });
-    
+
     evaluationFormEl.addEventListener('click', (e) => {
         const infoTarget = e.target.closest('.info-icon');
         if (infoTarget) {
@@ -138,8 +138,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const infoData = certificationsDB[currentCert]?.data[vertente]?.[area]?.info;
             if (infoData) {
                 const infoModalTitle = document.querySelector('#infoModal .modal-title');
-                if(infoModalTitle) infoModalTitle.textContent = `Critério: ${area}`;
-                
+                if (infoModalTitle) infoModalTitle.textContent = `Critério: ${area}`;
+
                 let normativaHTML = '';
                 if (infoData.normativa_pt) {
                     normativaHTML = `
@@ -150,9 +150,9 @@ document.addEventListener('DOMContentLoaded', function () {
                             </p>
                         </div>`;
                 }
-                
+
                 const infoModalBody = document.querySelector('#infoModal .modal-body');
-                if(infoModalBody) {
+                if (infoModalBody) {
                     infoModalBody.innerHTML = `
                         <h6>Objetivo</h6><p>${infoData.objetivo}</p>
                         <h6>Exemplo de Aplicação</h6><p>${infoData.exemplo}</p>
@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const solutionsModalTitle = document.querySelector('#solutionsModal .modal-title');
         if (solutionsModalTitle) solutionsModalTitle.textContent = `Soluções de Mercado para: ${area}`;
-        
+
         const solutionsModalBody = document.querySelector('#solutionsModal .modal-body');
         if (solutionsModalBody) {
             let solucoesHTML = solucoesData.map(s => {
@@ -210,15 +210,15 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             let addedVertentes = new Set();
             let addedAreas = new Set();
-            
+
             selectedCredits.forEach(checkbox => {
                 const { vertente, area } = checkbox.dataset;
-                
+
                 if (!addedVertentes.has(vertente)) {
                     memoriaText += `\n--- ${vertente.toUpperCase()} ---\n\n`;
                     addedVertentes.add(vertente);
                 }
-                
+
                 if (!addedAreas.has(area)) {
                     const info = certificationsDB[currentCert]?.data[vertente]?.[area]?.info;
                     if (info && info.memoria_descritiva) {
@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
         }
-        
+
         getEl('memoria-output').value = memoriaText;
         $('#memoriaModal').modal('show');
     });
@@ -241,6 +241,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.execCommand('copy');
         alert('Texto copiado para a área de transferência!');
     });
-    
+
+    // Inicialización al cargar la página
     renderForm();
 });
