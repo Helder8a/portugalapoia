@@ -7,8 +7,8 @@
                 'gtm.start':
                     new Date().getTime(), event: 'gtm.js'
             }); var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' ' : ''; j.async = true; j.src =
+            'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-PQ2Q63GR');</script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3196299619563199"
         crossorigin="anonymous"></script>
@@ -18,7 +18,6 @@
     <meta name="description"
         content="A ferramenta profissional definitiva para avaliação e pré-certificação de projetos de construção e urbanismo segundo os sistemas LiderA, BREEAM e LEED em Portugal.">
     <link rel="canonical" href="https://portugalapoia.com/app_evaluadorsustentable.html" />
-
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link
@@ -26,7 +25,6 @@
         rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="images/favicon.ico.png" type="image/png">
-
     <style>
         .vertente-header {
             cursor: pointer;
@@ -39,11 +37,16 @@
             width: 100%;
         }
 
-        .info-icon {
+        .info-icon,
+        .solutions-icon {
             color: var(--color-accent);
             cursor: pointer;
             margin-left: 15px;
             font-size: 1.2rem;
+        }
+
+        .solutions-icon {
+            color: var(--color-primary);
         }
 
         .modal-body h6 {
@@ -57,12 +60,21 @@
             padding-top: 1rem;
             border-top: 1px solid var(--color-border);
         }
+
+        #memoria-output {
+            white-space: pre-wrap;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            border-radius: 5px;
+            height: 400px;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 
 <body>
     <div id="preloader"><img src="images/favicon.ico.png" alt="A carregar..." class="spinner"></div>
-
     <header class="main-header">
         <nav class="navbar navbar-expand-lg">
             <div class="container">
@@ -80,24 +92,17 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Apps</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownWebApp">
                                 <a class="dropdown-item active" href="app_evaluadorsustentable.html">Evaluador
-                                    Sustentável
-                                    PRO</a>
+                                    Sustentável PRO</a>
                             </div>
                         </li>
                         <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
                         <li class="nav-item"><a class="nav-link btn btn-primary publish-btn"
                                 href="publicar.html">Publicar</a></li>
                     </ul>
-                    <div class="theme-switch-wrapper nav-item ml-lg-3">
-                        <label class="theme-switch" for="theme-toggle"><input type="checkbox" id="theme-toggle" />
-                            <div class="slider round"><i class="fas fa-sun"></i><i class="fas fa-moon"></i></div>
-                        </label>
-                    </div>
                 </div>
             </div>
         </nav>
     </header>
-
     <main>
         <section class="page-header page-header-publicar text-center">
             <div class="container">
@@ -106,7 +111,6 @@
                     Portugal.</p>
             </div>
         </section>
-
         <div class="container my-5">
             <div class="evaluator-main-content">
                 <div class="row">
@@ -162,22 +166,27 @@
                                         placeholder="Nome do Projeto Atual"></div>
                                 <button id="saveProjectButton" class="btn btn-info btn-block mb-2" type="button"><i
                                         class="fas fa-save mr-2"></i>Guardar Projeto</button>
-                                <button id="loadProjectButton" class="btn btn-success" type="button"
-                                    title="Carregar Projeto"><i class="fas fa-folder-open mr-2"></i>Carregar</button>
-                                <button id="deleteProjectButton" class="btn btn-danger" type="button"
-                                    title="Eliminar Projeto"><i class="fas fa-trash mr-2"></i>Eliminar</button>
+                                <div class="input-group mb-2">
+                                    <select id="savedProjectsSelector" class="custom-select"></select>
+                                    <div class="input-group-append">
+                                        <button id="loadProjectButton" class="btn btn-success" type="button"
+                                            title="Carregar Projeto"><i class="fas fa-folder-open"></i></button>
+                                        <button id="deleteProjectButton" class="btn btn-danger" type="button"
+                                            title="Eliminar Projeto"><i class="fas fa-trash"></i></button>
+                                    </div>
+                                </div>
                             </div>
                             <hr>
                             <div class="advanced-tools-controls">
                                 <h4 class="text-center h5">Ferramentas Avançadas</h4>
+                                <button id="memoriaGeneratorBtn" class="btn btn-info btn-block mb-2" type="button"><i
+                                        class="fas fa-file-alt mr-2"></i>Gerar Memoria Descritiva</button>
                                 <button id="carbonCalculatorBtn" class="btn btn-dark btn-block mb-2" type="button"><i
                                         class="fas fa-smog mr-2"></i>Calculadora de Carbono</button>
-                                <button id="compareButton" class="btn btn-warning btn-block text-dark" type="button"
-                                    disabled><i class="fas fa-chart-bar mr-2"></i>Análise Comparativa</button>
                             </div>
                             <hr>
                             <div class="pdf-export-controls">
-                                <h4 class="text-center h5">Exportar Relatório</h4>
+                                <h4 class="text-center h5">Exportar</h4>
                                 <button id="exportPdfButton" class="btn btn-primary btn-block" type="button"><i
                                         class="fas fa-file-pdf mr-2"></i>Exportar Relatório PDF</button>
                             </div>
@@ -192,9 +201,7 @@
             </div>
         </div>
     </main>
-
     <footer class="main-footer"></footer>
-
     <div class="modal fade" id="infoModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -206,81 +213,30 @@
             </div>
         </div>
     </div>
-
     <div class="modal fade" id="solutionsModal" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="solutionsModalTitle">Soluções de Mercado em Portugal</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="modal-title" id="solutionsModalTitle">Soluções de Mercado</h5><button type="button"
+                        class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body" id="solutionsModalBody"></div>
             </div>
         </div>
     </div>
-
-    <div class="modal fade" id="lccaModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="lccaModalTitle">Análise de Custo do Ciclo de Vida (ACV)</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body" id="lccaModalBody"></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="carbonCalculatorModal" tabindex="-1">
+    <div class="modal fade" id="memoriaModal" tabindex="-1">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Calculadora de Huella de Carbono (Carbono Incorporado)</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="modal-title">Memoria Descritiva de Sustentabilidade</h5><button type="button"
+                        class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-5">
-                            <h6>Adicionar Material</h6>
-                            <div class="form-group">
-                                <label for="materialSelect">Material</label>
-                                <select id="materialSelect" class="form-control"></select>
-                            </div>
-                            <div class="form-group">
-                                <label for="materialQuantity">Quantidade (unidade indicada no material)</label>
-                                <input type="number" id="materialQuantity" class="form-control" placeholder="Ex: 150">
-                            </div>
-                            <button id="addMaterialBtn" class="btn btn-primary">Adicionar à Lista</button>
-                        </div>
-                        <div class="col-md-7">
-                            <h6>Lista de Materiais do Projeto</h6>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Material</th>
-                                        <th>Quantidade</th>
-                                        <th>Impacto (kgCO₂e)</th>
-                                        <th>Ação</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="carbon-table-body">
-                                </tbody>
-                            </table>
-                            <hr>
-                            <div class="text-right">
-                                <h4>Total de Carbono Incorporado: <span id="totalCarbonFootprint"
-                                        class="badge badge-dark">0.00 kgCO₂e</span></h4>
-                                <small class="form-text text-muted">Valores aproximados baseados em médias de
-                                    mercado.</small>
-                            </div>
-                        </div>
-                    </div>
+                    <p>O texto abaixo foi gerado com base nos créditos selecionados. Pode copiar e colar no seu
+                        documento.</p><textarea id="memoria-output" class="form-control" rows="15"></textarea><button
+                        id="copyMemoriaBtn" class="btn btn-success mt-2"><i class="fas fa-copy mr-2"></i>Copiar
+                        Texto</button>
                 </div>
             </div>
         </div>
@@ -289,9 +245,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
     <script src="script.js"></script>
     <script src="materials_db.js"></script>
     <script src="lcca_db.js"></script>
