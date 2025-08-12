@@ -14,6 +14,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Roboto:wght@400;500&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/favicon.ico.png" type="image/png">
 
     <style>
         :root {
@@ -24,7 +26,6 @@
             --font-body: 'Roboto', sans-serif;
             --border-radius: 8px;
             --color-text: #333;
-            --color-text-light: #fff;
             --color-background: #fff;
             --color-background-light: #f8f9fa;
             --color-border: #dee2e6;
@@ -33,37 +34,27 @@
 
         body {
             font-family: var(--font-body);
-            color: var(--color-text);
             background-color: var(--color-background-light);
-            line-height: 1.7;
-            font-size: 16px;
-            transition: background-color .3s, color .3s
+            position: relative;
         }
 
         .main-header {
             background-color: var(--color-background);
             border-bottom: 1px solid var(--color-border);
-            position: sticky;
-            top: 0;
-            z-index: 1030;
-            transition: .3s ease-in-out
         }
 
-        .navbar-brand,
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--color-primary) !important
+        .navbar-brand.logo {
+            color: var(--color-primary) !important;
         }
 
-        .manual-section {
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            background-color: var(--color-background);
-            border: 1px solid var(--color-border);
-            border-left: 5px solid var(--color-accent);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
+        .page-header {
+            background: linear-gradient(rgba(10, 61, 98, .9), rgba(10, 61, 98, .9));
+            padding: 60px 0;
+        }
+
+        .page-title {
+            font-family: var(--font-headings);
+            color: var(--color-donation);
         }
 
         .manual-section h2 {
@@ -71,6 +62,10 @@
             font-size: 2rem;
             margin-bottom: 1.5rem;
             color: var(--color-primary);
+            padding-top: 80px;
+            /* Offset for fixed navbar */
+            margin-top: -60px;
+            /* Negative margin to counteract padding */
         }
 
         .manual-section h4 {
@@ -81,229 +76,270 @@
             color: var(--color-accent);
         }
 
-        .feature-icon {
-            font-size: 2rem;
-            margin-right: 15px;
-            float: left;
-            color: var(--color-primary);
-        }
-
-        .list-group-item {
-            background-color: transparent;
-            border-color: var(--color-border);
-        }
-
-        .page-header {
-            background: linear-gradient(rgba(10, 61, 98, .9), rgba(10, 61, 98, .9)) 0 0/cover, url(images/img_portada.webp) center center/cover no-repeat;
-            position: relative;
-            color: #fff;
-            padding: 80px 0;
-            text-align: center;
-        }
-
-        .page-title {
-            font-family: var(--font-headings);
-            font-size: 2.8rem;
-            color: var(--color-donation);
-        }
-
         .info-image {
             max-width: 100%;
             height: auto;
             border-radius: var(--border-radius);
-            margin-top: 15px;
-            margin-bottom: 15px;
+            margin: 15px auto;
+            display: block;
             box-shadow: var(--shadow);
+            border: 1px solid var(--color-border);
         }
 
         .chart-container {
             width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
+            max-width: 700px;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background-color: #fff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
         }
 
-        @media (max-width: 767.98px) {
-            .chart-container {
-                padding: 0;
-            }
+        #sidebar {
+            position: sticky;
+            top: 80px;
+            height: calc(100vh - 100px);
+            overflow-y: auto;
+        }
+
+        #sidebar .nav-link {
+            color: var(--color-primary);
+            font-weight: 600;
+            border-left: 3px solid transparent;
+        }
+
+        #sidebar .nav-link.active {
+            color: var(--color-accent);
+            border-left: 3px solid var(--color-accent);
+        }
+
+        .workflow-diagram {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 2rem 0;
+        }
+
+        .workflow-step {
+            text-align: center;
+        }
+
+        .workflow-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--color-primary);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.8rem;
+            margin: 0 auto 10px;
+        }
+
+        .workflow-arrow {
+            font-size: 2rem;
+            color: var(--color-border);
+        }
+
+        .pro-tip {
+            background-color: #e7f3fe;
+            border-left: 5px solid #2196F3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: var(--border-radius);
+        }
+
+        .pro-tip p {
+            margin-bottom: 0;
         }
     </style>
 </head>
 
-<body>
-    <header class="main-header">
+<body data-spy="scroll" data-target="#sidebar" data-offset="80">
+    <header class="main-header sticky-top">
         <nav class="navbar navbar-expand-lg">
             <div class="container">
                 <a class="navbar-brand logo" href="index.html">PortugalApoia</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav"><span
-                        class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="main-nav">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a class="nav-link" href="doacoes.html">Donaciones</a></li>
-                        <li class="nav-item"><a class="nav-link" href="empregos.html">Empleo</a></li>
-                        <li class="nav-item"><a class="nav-link" href="servicos.html">Servicios</a></li>
-                        <li class="nav-item"><a class="nav-link" href="habitacao.html">Vivienda</a></li>
-                        <li class="nav-item dropdown active">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownWebApp" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Apps</a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownWebApp">
-                                <a class="dropdown-item" href="app_evaluador_pro.html">Evaluador de Sostenibilidad
-                                    PRO</a>
-                            </div>
-                        </li>
-                        <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-                        <li class="nav-item"><a class="nav-link btn btn-primary publish-btn"
-                                href="publicar.html">Publicar</a></li>
-                    </ul>
-                </div>
+                <a href="app_evaluadorsustentable.html" class="btn btn-outline-primary ml-auto">Volver al Evaluador</a>
             </div>
         </nav>
     </header>
 
-    <main>
-        <section class="page-header page-header-publicar text-center">
-            <div class="container">
-                <h1 class="page-title">Manual de Uso del Evaluador PRO</h1>
-                <p class="lead">Su guía completa para evaluar y certificar sus proyectos de forma profesional.</p>
-            </div>
-        </section>
-
-        <div class="container my-5">
-            <div class="manual-section">
-                <h2><i class="fas fa-rocket mr-3"></i>Primeros Pasos: Guía de Inicio Rápido</h2>
-                <p>Este evaluador es una herramienta poderosa diseñada para ser intuitiva. Para empezar, siga estos 5
-                    pasos esenciales del flujo de trabajo de un profesional:</p>
-                <ol>
-                    <li><strong>Configurar:</strong> Comience por dar un nombre a su proyecto y seleccionar el
-                        <strong>Sistema de Certificación</strong> y la <strong>Tipología</strong>.
-                    </li>
-                    <li><strong>Evaluar:</strong> Navegue por las categorías y seleccione los <strong>créditos</strong>
-                        que
-                        su proyecto implementa. Use el icono <i class="fas fa-info-circle text-info"></i> para obtener
-                        más información.</li>
-                    <li><strong>Analizar:</strong> Observe cómo su puntuación y nivel de certificación se actualizan en
-                        <strong>tiempo real</strong> en la barra lateral.
-                    </li>
-                    <li><strong>Guardar:</strong> Haga clic en <strong>"Guardar Proyecto"</strong> para no perder su
-                        trabajo. Podrá cargarlo más tarde en cualquier momento.</li>
-                    <li><strong>Exportar:</strong> Cuando su evaluación esté completa, haga clic en <strong>"Exportar
-                            Informe PDF"</strong> para generar un documento profesional.</li>
-                </ol>
-            </div>
-
-            <div class="manual-section">
-                <h2><i class="fas fa-cogs mr-3"></i>Explicación Detallada de las Funcionalidades</h2>
-
-                <h4><i class="fas fa-user-cog feature-icon"></i>Perfiles de Proyecto (Edificio vs. Urbano)</h4>
-                <p><strong>Para qué sirve:</strong> Esta funcionalidad crítica ajusta la importancia (los pesos) de cada
-                    categoría de evaluación para reflejar con mayor precisión la realidad de su proyecto. Un plan de
-                    urbanización no tiene las mismas prioridades de sostenibilidad que una vivienda unifamiliar.</p>
-                <p><strong>Cómo usar:</strong> En el campo "Tipología de Proyecto", seleccione la opción que mejor
-                    describe
-                    su proyecto. La herramienta aplicará los cálculos correctos automáticamente, especialmente relevante
-                    para la certificación LiderA, que tiene pesos diferentes para cada tipología.</p>
-
-                <h4><i class="fas fa-save feature-icon"></i>Gestión de Proyectos (Guardar, Cargar, Eliminar)</h4>
-                <p><strong>Para qué sirve:</strong> Le permite guardar múltiples evaluaciones en su navegador. Es
-                    esencial
-                    para profesionales que trabajan en varios proyectos simultáneamente o para estudiantes que quieren
-                    guardar diferentes versiones de un caso de estudio.</p>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><strong>Guardar:</strong> Asigne un nombre único a su proyecto en el
-                        campo "Nome
-                        do Projeto Atual" y haga clic en "Guardar Projeto". Si el nombre ya existe, el proyecto se
-                        actualizará.</li>
-                    <li class="list-group-item"><strong>Cargar:</strong> Seleccione un proyecto de la lista desplegable
-                        y
-                        haga clic en el botón verde <i class="fas fa-folder-open"></i> para cargar su estado, incluyendo
-                        la
-                        certificación y todos los créditos marcados.</li>
-                    <li class="list-group-item"><strong>Eliminar:</strong> Seleccione un proyecto de la lista y haga
-                        clic en el
-                        botón rojo <i class="fas fa-trash"></i> para eliminarlo permanentemente.</li>
+    <main class="container-fluid my-5">
+        <div class="row">
+            <nav id="sidebar" class="col-md-3 col-lg-2 d-none d-md-block">
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item"><a class="nav-link" href="#section1">Inicio Rápido</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#section2">Funcionalidades Clave</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#section3">Herramientas Avanzadas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#section4">Sistemas de Certificación</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#section5">Preguntas Frecuentes</a></li>
                 </ul>
-                <img src="images/project_management.png" alt="Controles de gestión de proyectos" class="info-image">
+            </nav>
 
-                <h4><i class="fas fa-chart-bar feature-icon"></i>Análisis Comparativo Multi-Certificación</h4>
-                <p><strong>Para qué sirve:</strong> Ofrece una visión estratégica única, mostrando una estimación de
-                    cómo su proyecto se comportaría si fuera evaluado por diferentes sistemas de certificación,
-                    permitiéndole decidir cuál es el más ventajoso. Verá un gráfico de radar comparando el desempeño del
-                    proyecto en LiderA, BREEAM y LEED.</p>
-                <p><strong>Cómo usar:</strong> Después de evaluar y guardar un proyecto, el botón "Análisis Comparativo"
-                    se activará.
-                    Al hacer clic, se abrirá un panel con un gráfico de radar que compara el rendimiento del proyecto en
-                    LiderA, BREEAM y LEED, destacando visualmente sus fortalezas y debilidades en cada sistema.</p>
-                <div class="chart-container"><canvas id="comparisonChartManual"></canvas></div>
+            <div class="col-md-9 col-lg-10">
+                <div id="section1" class="manual-section">
+                    <h2><i class="fas fa-rocket mr-3"></i>Inicio Rápido: Su Flujo de Trabajo</h2>
+                    <p>Comience a evaluar sus proyectos en 5 pasos intuitivos. Este diagrama ilustra el proceso
+                        completo, desde la configuración inicial hasta la exportación de resultados.</p>
+                    <div class="workflow-diagram">
+                        <div class="workflow-step">
+                            <div class="workflow-icon">1</div>
+                            <strong>Configurar</strong>
+                        </div>
+                        <div class="workflow-arrow d-none d-md-block">&rarr;</div>
+                        <div class="workflow-step">
+                            <div class="workflow-icon">2</div>
+                            <strong>Evaluar</strong>
+                        </div>
+                        <div class="workflow-arrow d-none d-md-block">&rarr;</div>
+                        <div class="workflow-step">
+                            <div class="workflow-icon">3</div>
+                            <strong>Analizar</strong>
+                        </div>
+                        <div class="workflow-arrow d-none d-md-block">&rarr;</div>
+                        <div class="workflow-step">
+                            <div class="workflow-icon">4</div>
+                            <strong>Guardar</strong>
+                        </div>
+                        <div class="workflow-arrow d-none d-md-block">&rarr;</div>
+                        <div class="workflow-step">
+                            <div class="workflow-icon">5</div>
+                            <strong>Exportar</strong>
+                        </div>
+                    </div>
+                </div>
 
-                <h4><i class="fas fa-file-pdf feature-icon"></i>Exportador de Informes PDF Profesionales</h4>
-                <p><strong>Para qué sirve:</strong> Genera un documento profesional, listo para ser compartido con
-                    clientes, equipos o para fines académicos, documentando de forma clara y visual los resultados de la
-                    evaluación.</p>
-                <p><strong>Cómo usar:</strong> Después de nombrar su proyecto, haga clic en "Exportar Informe PDF". La
-                    herramienta creará un documento de varias páginas que incluye una portada, un resumen de los
-                    resultados, un gráfico
-                    de rendimiento por categoría y la lista completa de todos los créditos que seleccionó.</p>
+                <div id="section2" class="manual-section">
+                    <h2><i class="fas fa-cogs mr-3"></i>Funcionalidades Clave</h2>
 
-                <h4><i class="fas fa-book-open feature-icon"></i>Base de Conocimiento Integrada</h4>
-                <p><strong>Para qué sirve:</strong> Transforma la herramienta en una referencia de consulta rápida,
-                    proporcionando información detallada sobre los objetivos, ejemplos y beneficios de cada crédito de
-                    certificación. Además, para algunos criterios, encontrará una lista de "Soluciones de Mercado" en
-                    Portugal, con productos, fabricantes y enlaces, para ayudar en la implementación de su proyecto.</p>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><strong>Ícono de Información <i
-                                class="fas fa-info-circle text-info"></i>:</strong> Haga clic para ver la descripción
-                        detallada del objetivo de un crédito, un ejemplo práctico y sus beneficios.</li>
-                    <li class="list-group-item"><strong>Ícono de Soluciones <i class="fas fa-cubes"></i>:</strong> Haga
-                        clic para ver una lista de productos, fabricantes y materiales específicos disponibles en el
-                        mercado portugués que ayudan a cumplir los requisitos de un determinado crédito.</li>
-                </ul>
-            </div>
+                    <h4>Base de Conocimiento Integrada</h4>
+                    <p>El evaluador es también una herramienta de aprendizaje. Para cada criterio, encontrará dos iconos
+                        de ayuda:</p>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-info-circle text-info mr-2"></i><strong>Información del Criterio:</strong>
+                            Le explica el objetivo, beneficios y le da un ejemplo práctico.</li>
+                        <li><i class="fas fa-cubes mr-2" style="color: var(--color-primary);"></i><strong>Soluciones de
+                                Mercado:</strong> Le muestra materiales y fabricantes reales en Portugal para cumplir
+                            con el crédito.</li>
+                    </ul>
 
-            <div class="manual-section">
-                <h2><i class="fas fa-chart-line mr-3"></i>Análisis e Interpretación de Resultados</h2>
-                <p>El panel de resultados en la barra lateral ofrece un resumen en tiempo real del desempeño de su
-                    proyecto. Es fácil de entender y permite tomar decisiones informadas durante la fase de evaluación.
-                </p>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><strong>Puntuación Total:</strong> El número principal (por ejemplo,
-                        <strong>15.5</strong> de 20.0 puntos) muestra el resultado global de su proyecto, calculado en
-                        base a los créditos seleccionados y los pesos de cada categoría.</li>
-                    <li class="list-group-item"><strong>Nivel de Certificación:</strong> Debajo de la puntuación, verá
-                        la letra correspondiente al nivel de certificación alcanzado (por ejemplo, <strong>A+</strong>).
-                        El sistema asigna el nivel más alto para el cual su proyecto cumple con la puntuación mínima
-                        requerida.</li>
-                    <li class="list-group-item"><strong>Barra de Progreso:</strong> La barra de progreso visual es una
-                        forma simple e intuitiva de ver su avance hacia la puntuación máxima.</li>
-                </ul>
-                <img src="images/results_sidebar.png" alt="Barra lateral de resultados del evaluador"
-                    class="info-image">
-            </div>
+                    <h4>Gestión de Proyectos</h4>
+                    <p>Guarde y gestione múltiples evaluaciones. Ideal para comparar escenarios o trabajar en diferentes
+                        proyectos.</p>
+                    <img src="https://i.imgur.com/example-projects.png" alt="Panel de gestión de proyectos"
+                        class="info-image" style="max-width: 400px;">
 
-            <div class="manual-section">
-                <h2><i class="fas fa-leaf mr-3"></i>Detalles de los Sistemas de Certificación</h2>
+                    <div class="pro-tip">
+                        <p><i class="fas fa-lightbulb mr-2"></i><strong>Consejo de Profesional:</strong> Guarde
+                            diferentes versiones de su proyecto (ej. "Proyecto_con_CLT" y "Proyecto_con_Hormigon") para
+                            comparar el impacto de sus decisiones en la puntuación y la huella de carbono.</p>
+                    </div>
+                </div>
 
-                <h4>LiderA: Sistema de Evaluación de la Sostenibilidad de Edificios</h4>
-                <p>LiderA es un sistema de certificación de sostenibilidad para edificios y proyectos urbanos, creado en
-                    Portugal. Se enfoca en el ciclo de vida del edificio, desde la concepción hasta la operación, y
-                    utiliza un sistema de puntos que se traduce en un nivel de certificación de la **G** a la **A++**.
-                </p>
-                <p>La puntuación de cada categoría se multiplica por un "peso" específico, que varía si se evalúa un
-                    Edificio o un Proyecto Urbano. Esto asegura que la evaluación sea relevante para el tipo de
-                    proyecto.</p>
-                <div class="chart-container"><canvas id="lideraLevelsChart"></canvas></div>
+                <div id="section3" class="manual-section">
+                    <h2><i class="fas fa-tools mr-3"></i>Herramientas Avanzadas</h2>
 
-                <h4>BREEAM International</h4>
-                <p>BREEAM (Building Research Establishment Environmental Assessment Method) es uno de los sistemas de
-                    evaluación de sostenibilidad más antiguos y reconocidos a nivel mundial. Evalúa aspectos como la
-                    energía, el agua, los materiales, la gestión de residuos y la salud y bienestar. Sus niveles de
-                    certificación van de **Pass** a **Outstanding**.</p>
+                    <h4>Calculadora de Huella de Carbono</h4>
+                    <p>Calcule el carbono incorporado de su proyecto. Esta herramienta le permite cuantificar el impacto
+                        ambiental de sus elecciones de materiales.</p>
+                    <ol>
+                        <li>Haga clic en el botón <strong>"Calculadora de Carbono"</strong> en el panel lateral.</li>
+                        <li>Seleccione materiales de la lista (solo aparecen los que tienen datos de CO₂).</li>
+                        <li>Introduzca la cantidad. La tabla se actualizará automáticamente con el impacto total.</li>
+                    </ol>
+                    <div class="chart-container">
+                        <canvas id="carbonFootprintChart"></canvas>
+                    </div>
 
-                <h4>LEED v4.1</h4>
-                <p>LEED (Leadership in Energy and Environmental Design) es un programa de certificación de edificios
-                    ecológicos, desarrollado por el U.S. Green Building Council. Sus categorías incluyen la localización
-                    y transporte, sitios sostenibles, eficiencia del agua, energía y atmósfera, entre otras. Los niveles
-                    de certificación van de **Certified** a **Platinum**.</p>
+                    <h4>Análisis del Coste del Ciclo de Vida (ACV)</h4>
+                    <p>Justifique económicamente sus decisiones. Esta calculadora, integrada en las "Soluciones de
+                        Mercado", estima el coste total de un material a lo largo de 50 años.</p>
+                    <p><strong>Para acceder:</strong> Vaya a <i class="fas fa-cubes"></i> Soluciones de Mercado y busque
+                        el botón <strong>"Analisar Custo de Ciclo de Vida"</strong>.</p>
+
+                    <h4>Análisis Comparativo Multi-Certificación</h4>
+                    <p>Obtenga una visión estratégica de cómo se comportaría su proyecto bajo los sistemas LiderA,
+                        BREEAM y LEED para decidir cuál es el más ventajoso.</p>
+                    <div class="chart-container">
+                        <canvas id="comparisonChartManual"></canvas>
+                    </div>
+                </div>
+
+                <div id="section4" class="manual-section">
+                    <h2><i class="fas fa-leaf mr-3"></i>Fundamentos de los Sistemas de Certificación</h2>
+
+                    <h4>LiderA (Portugal)</h4>
+                    <p>LiderA es el sistema de certificación portugués. Evalúa el desempeño en 6 áreas clave, asignando
+                        una puntuación que resulta en una clasificación desde **G** (la más baja) hasta **A++** (la más
+                        alta).</p>
+                    <div class="chart-container">
+                        <canvas id="lideraLevelsChart"></canvas>
+                    </div>
+
+                    <h4>BREEAM y LEED</h4>
+                    <p>Son los sistemas de certificación más reconocidos a nivel mundial. Aunque el evaluador se centra
+                        en LiderA, la herramienta de análisis comparativo le da una estimación de su rendimiento en
+                        estos sistemas.</p>
+                </div>
+
+                <div id="section5" class="manual-section">
+                    <h2><i class="fas fa-question-circle mr-3"></i>Preguntas Frecuentes (FAQ)</h2>
+                    <div id="faqAccordion">
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne">
+                                        ¿Por qué mi puntuación no cambia al marcar una casilla?
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseOne" class="collapse show" data-parent="#faqAccordion">
+                                <div class="card-body">
+                                    Asegúrese de haber seleccionado un sistema de certificación (ej. LiderA) en el paso
+                                    1. La calculadora solo funciona si hay un sistema activo para evaluar.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingTwo">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" data-toggle="collapse"
+                                        data-target="#collapseTwo">
+                                        ¿Mis proyectos se guardan en la nube?
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseTwo" class="collapse" data-parent="#faqAccordion">
+                                <div class="card-body">
+                                    No. Por motivos de privacidad y simplicidad, todos sus proyectos se guardan
+                                    <strong>localmente en su navegador</strong>. Esto significa que si cambia de
+                                    navegador o borra los datos de navegación, los proyectos se perderán.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingThree">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" data-toggle="collapse"
+                                        data-target="#collapseThree">
+                                        Los valores de coste y CO₂ son solo aproximados, ¿verdad?
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="collapseThree" class="collapse" data-parent="#faqAccordion">
+                                <div class="card-body">
+                                    <strong>Correcto.</strong> Todos los valores en las calculadoras de Coste de Ciclo
+                                    de Vida y Huella de Carbono son <strong>estimaciones y valores aproximados</strong>
+                                    basados en medias de mercado para fines comparativos. No constituyen un presupuesto
+                                    ni una garantía.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
@@ -314,92 +350,45 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
 
     <script>
-        // Lógica del Evaluador de Sostenibilidad PRO - Adaptada y comentada para claridad
         document.addEventListener('DOMContentLoaded', function () {
-            // Base de datos de certificaciones (simplificada para el manual)
-            const certificationsDB = {
-                lidera: {
-                    name: "LiderA", maxScore: 20.0, scoreUnit: "Pontos",
-                    levels: { 11: "A++", 9.5: "A+", 8.0: "A", 6.5: "B", 5.0: "C", 3.5: "D", 2.0: "E", 1.0: "F", 0: "G" },
-                    weights: {
-                        edificio: { "Integração Local": 1, "Recursos": 1.5, "Cargas Ambientais": 1, "Qualidade do Ambiente Interior": 1.2, "Vivências Socioeconómicas": 1 },
-                        urbano: { "Integração Local": 1.5, "Recursos": 1, "Cargas Ambientais": 1.2, "Qualidade do Ambiente Interior": 0.8, "Vivências Socioeconómicas": 1.5 }
-                    },
-                    data: {
-                        "Integração Local": { "Bio-clima": { info: { objetivo: "Otimização do projeto face às condições climáticas locais.", exemplo: "Edifício em Lisboa com fachadas de vidro a sul protegidas por palas.", beneficios: "Redução da necessidade de ar condicionado." }, credits: { "Orientação solar otimizada": 0.4, "Proteção contra ventos dominantes": 0.2, "Estudo de sombras adequado": 0.2 } } },
-                        "Recursos": { "Eficiência Energética": { info: { objetivo: "Redução do consumo de energia do edifício.", exemplo: "Utilização de isolamento de cortiça e janelas de vidro duplo.", beneficios: "Contas de energia mais baixas." }, solucoes_pt: [{ nome: "Aglomerado de Cortiça Expandida (ICB)", fabricante: "Amorim Isolamentos", descricao: "Material 100% natural e português, proveniente da cortiça. É um excelente isolante térmico e acústico, totalmente reciclável e com um balanço de carbono negativo.", aplicacao: "Isolamento de paredes exteriores (ETICS/Cappotto), coberturas planas e inclinadas, e lajes.", link: "https://www.amorimisolamentos.com/" }], credits: { "Isolamento térmico de alto desempenho": 0.5, "Janelas eficientes com corte térmico": 0.4, "Sistemas AVAC de alta eficiência": 0.3, "Iluminação LED": 0.3 } } },
-                        "Cargas Ambientais": { "Gestão de Resíduos": { info: { objetivo: "Minimização da produção de resíduos.", exemplo: "Plano de obra que desvie >70% dos resíduos para reciclagem.", beneficios: "Redução do lixo." }, credits: { "Plano de gestão de resíduos de construção (>70% desviado)": 0.6, "Espaço para separação de resíduos domésticos": 0.4 } } },
-                        "Qualidade do Ambiente Interior": { "Conforto Térmico e Qualidade do Ar": { info: { objetivo: "Garantir um ambiente interior saudável e confortável.", exemplo: "Projetar ventilação natural e usar tintas sem COV.", beneficios: "Ambiente mais saudável." }, solucoes_pt: [{ nome: "Tintas Ecológicas com Baixo COV", fabricante: "CIN / Robbialac (Exemplos)", descricao: "Tintas à base de água com emissões de Compostos Orgânicos Voláteis (COV) muito reduzidas ou nulas. Melhoram a qualidade do ar interior e são mais seguras para a saúde.", aplicacao: "Pintura de paredes e tetos interiores.", link: "https://www.cin.com/" }], credits: { "Ventilação natural cruzada": 0.5, "Materiais com baixas emissões de COV": 0.4, "Monitorização de CO2": 0.3 } } },
-                        "Vivências Socioeconómicas": { "Acessibilidades e Inclusão": { info: { objetivo: "Garantir que o edifício seja acessível a todos.", exemplo: "Construir rampas de acesso e instalar elevadores adequados.", beneficios: "Inclusão social." }, credits: { "Acessos sem barreiras arquitetónicas": 0.6, "Instalações sanitárias adaptadas": 0.4 } } }
-                    }
-                },
-                breeam: { name: "BREEAM", maxScore: 100, scoreUnit: "Pontos", levels: { 85: "Outstanding", 70: "Excellent", 55: "Very Good", 45: "Good", 30: "Pass", 0: "Unclassified" }, data: {} },
-                leed: { name: "LEED", maxScore: 110, scoreUnit: "Pontos", levels: { 80: "Platinum", 60: "Gold", 50: "Silver", 40: "Certified", 0: "Uncertified" }, data: {} }
-            };
+            // Activar Scrollspy
+            $('body').scrollspy({ target: '#sidebar' });
 
-            // Gráfico de los niveles de certificación LiderA
-            const lideraLevelsChart = document.getElementById('lideraLevelsChart');
-            new Chart(lideraLevelsChart, {
-                type: 'bar',
-                data: {
-                    labels: Object.values(certificationsDB.lidera.levels),
-                    datasets: [{
-                        label: 'Pontuação Mínima',
-                        data: Object.keys(certificationsDB.lidera.levels).map(Number),
-                        backgroundColor: [
-                            '#A9D6E5', '#4ECDC4', '#A9D6E5', '#B8D8BA', '#E8D5B5',
-                            '#F7B801', '#F57F17', '#E0A340', '#9E9E9E'
-                        ],
-                        borderColor: [
-                            '#0A3D62', '#00834B', '#0A3D62', '#4F844F', '#7F6744',
-                            '#B58A15', '#C06810', '#E0A340', '#616161'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: { display: false },
-                        title: { display: true, text: 'Níveis de Certificação LiderA' }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: { display: true, text: 'Pontuação' }
-                        }
-                    }
-                }
-            });
-
-            // Gráfico de Análisis Comparativo de ejemplo
-            const comparisonChartManual = document.getElementById('comparisonChartManual');
-            const sampleData = {
+            // Datos para los gráficos
+            const lideraLevels = { "A++": 11, "A+": 9.5, "A": 8.0, "B": 6.5, "C": 5.0, "D": 3.5, "E": 2.0, "F": 1.0, "G": 0 };
+            const comparisonSampleData = {
                 labels: ['Integração Local', 'Recursos', 'Cargas Ambientais', 'Qualidade do Ambiente Interior', 'Vivências Socioeconómicas'],
                 datasets: [
-                    { label: 'LiderA', data: [75, 85, 60, 90, 70], backgroundColor: 'rgba(0, 131, 75, 0.2)', borderColor: 'rgba(0, 131, 75, 1)', borderWidth: 2, pointBackgroundColor: 'rgba(0, 131, 75, 1)' },
-                    { label: 'BREEAM', data: [70, 80, 55, 95, 65], backgroundColor: 'rgba(253, 190, 51, 0.2)', borderColor: 'rgba(253, 190, 51, 1)', borderWidth: 2, pointBackgroundColor: 'rgba(253, 190, 51, 1)' },
-                    { label: 'LEED', data: [80, 70, 75, 85, 75], backgroundColor: 'rgba(10, 61, 98, 0.2)', borderColor: 'rgba(10, 61, 98, 1)', borderWidth: 2, pointBackgroundColor: 'rgba(10, 61, 98, 1)' }
+                    { label: 'LiderA', data: [75, 85, 60, 90, 70], backgroundColor: 'rgba(0, 131, 75, 0.2)', borderColor: 'rgba(0, 131, 75, 1)', borderWidth: 2 },
+                    { label: 'BREEAM (Estimado)', data: [70, 80, 55, 95, 65], backgroundColor: 'rgba(253, 190, 51, 0.2)', borderColor: 'rgba(253, 190, 51, 1)', borderWidth: 2 },
+                    { label: 'LEED (Estimado)', data: [80, 70, 75, 85, 75], backgroundColor: 'rgba(10, 61, 98, 0.2)', borderColor: 'rgba(10, 61, 98, 1)', borderWidth: 2 }
                 ]
             };
-            new Chart(comparisonChartManual, {
-                type: 'radar',
-                data: sampleData,
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'top' },
-                        title: { display: true, text: 'Exemplo de Análise Comparativa' }
-                    },
-                    scales: {
-                        r: {
-                            min: 0,
-                            max: 100,
-                            ticks: { backdropColor: 'rgba(255, 255, 255, 0.8)' }
-                        }
-                    }
-                }
+            const carbonSampleData = {
+                labels: ['Betão (Hormigón)', 'Madeira (CLT)', 'Isolamento (Lã Mineral)', 'Tintas'],
+                datasets: [{
+                    label: 'Huella de Carbono (kgCO₂e)',
+                    data: [12500, -8000, 3200, 500],
+                    backgroundColor: ['#dc3545', '#00834b', '#ffc107', '#6c757d']
+                }]
+            };
+
+            // Gráfico LiderA
+            new Chart(document.getElementById('lideraLevelsChart').getContext('2d'), {
+                type: 'bar', data: { labels: Object.keys(lideraLevels).reverse(), datasets: [{ label: 'Pontuação Mínima', data: Object.values(lideraLevels).reverse(), backgroundColor: '#00834b' }] },
+                options: { indexAxis: 'y', responsive: true, plugins: { legend: { display: false }, title: { display: true, text: 'Níveis de Certificação LiderA e Pontuação Mínima' } }, scales: { x: { beginAtZero: true, title: { display: true, text: 'Pontuação (de 20)' } } } }
+            });
+
+            // Gráfico Comparativo
+            new Chart(document.getElementById('comparisonChartManual').getContext('2d'), {
+                type: 'radar', data: comparisonSampleData,
+                options: { responsive: true, plugins: { legend: { position: 'top' }, title: { display: true, text: 'Exemplo de Análise Comparativa' } }, scales: { r: { suggestedMin: 0, suggestedMax: 100 } } }
+            });
+
+            // Gráfico Huella de Carbono
+            new Chart(document.getElementById('carbonFootprintChart').getContext('2d'), {
+                type: 'doughnut', data: carbonSampleData,
+                options: { responsive: true, plugins: { legend: { position: 'top' }, title: { display: true, text: 'Exemplo de Distribuição da Huella de Carbono' } } }
             });
         });
     </script>
