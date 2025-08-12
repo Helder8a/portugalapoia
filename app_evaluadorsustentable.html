@@ -22,6 +22,7 @@
     <title>Evaluador Sustentável PRO (LiderA, BREEAM, LEED) - PortugalApoia</title>
     <meta name="description"
         content="A ferramenta profissional definitiva para avaliação e pré-certificação de projetos de construção e urbanismo segundo os sistemas LiderA, BREEAM e LEED em Portugal.">
+        <link rel="canonical" href="https://portugalapoia.com/app_evaluadorsustentable.html">
     <link rel="canonical" href="https://portugalapoia.com/app_evaluadorsustentable.html" />
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -80,6 +81,21 @@
         }
     </style>
 </head>
+
+<script>
+    // --- Lógica de Registro del Service Worker para PWA ---
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => {
+                    console.log('Service Worker registrado con éxito:', registration);
+                })
+                .catch(error => {
+                    console.log('Error al registrar el Service Worker:', error);
+                });
+        });
+    }
+</script>
 
 <body>
     <div id="preloader"><img src="images/favicon.ico.png" alt="A carregar..." class="spinner"></div>

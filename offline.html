@@ -36,7 +36,22 @@
     </style>
 </head>
 
-<body>
+<script>
+    // --- Lógica de Registro del Service Worker para PWA ---
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => {
+                    console.log('Service Worker registrado con éxito:', registration);
+                })
+                .catch(error => {
+                    console.log('Error al registrar el Service Worker:', error);
+                });
+        });
+    }
+</script>
+
+</body>
     <main>
         <div class="container">
             <h1 class="section-title">Você está sem conexão</h1>

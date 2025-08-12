@@ -21,6 +21,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Avaliador Urbano - PortugalApoia</title>
     <meta name="description" content="Ferramenta para avaliação comercial de imóveis urbanos.">
+    <link rel="canonical" href="https://portugalapoia.com/app_avaliadorurbano.html">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link
@@ -32,6 +33,21 @@
 
     <link rel="icon" href="images/favicon.ico.png" type="image/png">
 </head>
+
+<script>
+    // --- Lógica de Registro del Service Worker para PWA ---
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+                .then(registration => {
+                    console.log('Service Worker registrado con éxito:', registration);
+                })
+                .catch(error => {
+                    console.log('Error al registrar el Service Worker:', error);
+                });
+        });
+    }
+</script>
 
 <body>
     <header class="main-header">
