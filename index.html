@@ -31,9 +31,10 @@
     <meta name="theme-color" content="#0A3D62">
 
     <style>
-        /* Correção para o título do Hero */
+        /* --- Correção Específica para o Título do Hero --- */
         #hero .hero-title {
             color: #fff !important;
+            /* Garante que o texto seja sempre branco */
         }
 
         /* --- Estilos para o Banner e Modal de Cookies --- */
@@ -48,24 +49,22 @@
             width: 100%;
             background-color: #2c3e50;
             color: white;
-            padding: 16px 24px;
+            padding: 16px;
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.4);
-            display: flex;
+            display: none;
+            /* Inicia oculto e o JS controla a visibilidade */
             justify-content: space-between;
             align-items: center;
             gap: 16px;
             z-index: 9998;
             flex-wrap: wrap;
-            /* Permite que os itens se ajustem em telas pequenas */
         }
 
         #cpra-banner p {
             margin: 0;
             flex-grow: 1;
             min-width: 100%;
-            /* Ocupa toda a largura em telas pequenas */
             text-align: center;
-            /* Centraliza o texto em telas pequenas */
         }
 
         #cpra-banner .cpra-banner-buttons {
@@ -73,9 +72,7 @@
             gap: 12px;
             flex-shrink: 0;
             width: 100%;
-            /* Ocupa toda a largura em telas pequenas */
             justify-content: center;
-            /* Centraliza os botões */
         }
 
         #cpra-banner button {
@@ -86,7 +83,6 @@
             font-weight: bold;
             transition: background-color 0.2s;
             flex-grow: 1;
-            /* Faz os botões crescerem para preencher o espaço */
         }
 
         #cpra-banner #accept-cookies {
@@ -107,27 +103,23 @@
             background-color: #bdc3c7;
         }
 
-        /* Estilos para telas maiores (desktop) */
         @media (min-width: 768px) {
             #cpra-banner {
                 flex-wrap: nowrap;
-                /* Impede o wrap em telas grandes */
+                padding: 16px 24px;
             }
 
             #cpra-banner p {
                 min-width: auto;
                 text-align: left;
-                /* Alinha o texto à esquerda */
             }
 
             #cpra-banner .cpra-banner-buttons {
                 width: auto;
-                /* Largura automática para os botões */
             }
 
             #cpra-banner button {
                 flex-grow: 0;
-                /* Impede que os botões cresçam */
             }
         }
 
@@ -157,7 +149,6 @@
             position: relative;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             color: #333;
-            /* Cor de texto padrão para o modal */
         }
 
         #cpra-close-button {
@@ -197,6 +188,9 @@
             width: 100%;
             font-size: 16px;
             margin-top: 20px;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 20px;
         }
 
         .switch {
@@ -380,7 +374,7 @@
         </div>
     </footer>
 
-    <div id="cpra-banner" class="cpra-font" style="display: none;">
+    <div id="cpra-banner" class="cpra-font">
         <p>Utilizamos cookies para melhorar a sua experiência. Ao continuar, aceita a nossa <a
                 href="politica-privacidade.html" style="color:white; text-decoration:underline;">Política de
                 Privacidade</a>.</p>
@@ -450,7 +444,6 @@
                 hideModal();
                 hideBanner();
                 console.log('Preferências de cookies guardadas:', prefs);
-                // Aqui pode adicionar lógica para carregar ou bloquear scripts com base nas preferências
             };
 
             if (localStorage.getItem(COOKIE_CONSENT_KEY)) {
