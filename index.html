@@ -2,7 +2,6 @@
 <html lang="pt-PT">
 
 <head>
-    <!-- Google Tag Manager Analitic Strar-->
     <script>(function (w, d, s, l, i) {
             w[l] = w[l] || []; w[l].push({
                 'gtm.start':
@@ -11,13 +10,8 @@
                 j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
                     'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-PQ2Q63GR');</script>
-    <!-- End Google Tag Manager Analitic End-->
-
-    <!-- Google adsense monetizar Strar-->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3196299619563199"
-     crossorigin="anonymous"></script>
-    <!-- Google adsense monetizar end-->
-
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3196299619563199"
+        crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PortugalApoia | Doações, Emprego e Ajuda Comunitária em Portugal</title>
@@ -35,6 +29,217 @@
     <link rel="icon" href="images/favicon.ico.png" type="image/png">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#0A3D62">
+
+    <style>
+        /* --- Estilos para o Banner e Modal de Cookies --- */
+        .cpra-font {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        #cpra-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #2c3e50;
+            color: white;
+            padding: 16px 24px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.4);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            z-index: 9998;
+            flex-wrap: wrap;
+            /* Permite que os itens se ajustem em telas pequenas */
+        }
+
+        #cpra-banner p {
+            margin: 0;
+            flex-grow: 1;
+            min-width: 100%;
+            /* Ocupa toda a largura em telas pequenas */
+            text-align: center;
+            /* Centraliza o texto em telas pequenas */
+        }
+
+        #cpra-banner .cpra-banner-buttons {
+            display: flex;
+            gap: 12px;
+            flex-shrink: 0;
+            width: 100%;
+            /* Ocupa toda a largura em telas pequenas */
+            justify-content: center;
+            /* Centraliza os botões */
+        }
+
+        #cpra-banner button {
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+            flex-grow: 1;
+            /* Faz os botões crescerem para preencher o espaço */
+        }
+
+        #cpra-banner #accept-cookies {
+            background-color: #27ae60;
+            color: white;
+        }
+
+        #cpra-banner #accept-cookies:hover {
+            background-color: #2ecc71;
+        }
+
+        #cpra-banner #manage-prefs {
+            background-color: #ecf0f1;
+            color: #2c3e50;
+        }
+
+        #cpra-banner #manage-prefs:hover {
+            background-color: #bdc3c7;
+        }
+
+        /* Estilos para telas maiores (desktop) */
+        @media (min-width: 768px) {
+            #cpra-banner {
+                flex-wrap: nowrap;
+                /* Impede o wrap em telas grandes */
+            }
+
+            #cpra-banner p {
+                min-width: auto;
+                text-align: left;
+                /* Alinha o texto à esquerda */
+            }
+
+            #cpra-banner .cpra-banner-buttons {
+                width: auto;
+                /* Largura automática para os botões */
+            }
+
+            #cpra-banner button {
+                flex-grow: 0;
+                /* Impede que os botões cresçam */
+            }
+        }
+
+        #cpra-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        #cpra-modal-overlay.visible {
+            display: flex;
+        }
+
+        #cpra-modal-content {
+            background: white;
+            padding: 24px 32px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 550px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            color: #333;
+            /* Cor de texto padrão para o modal */
+        }
+
+        #cpra-close-button {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #7f8c8d;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        #cpra-close-button:hover {
+            color: #34495e;
+        }
+
+        #cpra-modal-content h2 {
+            color: #34495e;
+        }
+
+        #cpra-modal-content a {
+            color: #3498db;
+        }
+
+        .cpra-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        #save-prefs {
+            background-color: #3498db;
+            color: white;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 28px;
+            flex-shrink: 0;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #bdc3c7;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: #27ae60;
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(22px);
+        }
+    </style>
 </head>
 
 <body>
@@ -62,7 +267,8 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownWebApp">
                                 <a class="dropdown-item" href="app_evaluadorsustentable.html">Avaliador Sustentável
                                     PRO</a>
-                                    <a class="dropdown-item" href="app_avaliadorurbano.html">Avaliador de Imóveis Urbanos</a>
+                                <a class="dropdown-item" href="app_avaliadorurbano.html">Avaliador de Imóveis
+                                    Urbanos</a>
                             </div>
                         </li>
                         <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
@@ -169,254 +375,107 @@
         </div>
     </footer>
 
+    <div id="cpra-banner" class="cpra-font" style="display: none;">
+        <p>Utilizamos cookies para melhorar a sua experiência. Ao continuar, aceita a nossa <a
+                href="politica-privacidade.html" style="color:white; text-decoration:underline;">Política de
+                Privacidade</a>.</p>
+        <div class="cpra-banner-buttons">
+            <button id="manage-prefs">Gerir Preferências</button>
+            <button id="accept-cookies">Aceitar Tudo</button>
+        </div>
+    </div>
+
+    <div id="cpra-modal-overlay" class="cpra-font">
+        <div id="cpra-modal-content">
+            <span id="cpra-close-button">&times;</span>
+            <h2>Preferências de Privacidade</h2>
+            <p>Pode gerir como os seus dados são utilizados. Consulte a nossa <a
+                    href="politica-privacidade.html">Política de Privacidade</a> para mais detalhes.</p>
+            <div class="cpra-option">
+                <label for="cookies-analiticos">Cookies Analíticos (Google Analytics)</label>
+                <label class="switch">
+                    <input type="checkbox" id="cookies-analiticos" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="cpra-option">
+                <label for="cookies-publicidade">Cookies de Publicidade (Google AdSense)</label>
+                <label class="switch">
+                    <input type="checkbox" id="cookies-publicidade" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <button id="save-prefs" class="btn btn-primary">Guardar Preferências</button>
+        </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="script.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const COOKIE_CONSENT_KEY = 'cookie_consent_v1';
+            const COOKIE_PREFS_KEY = 'cookie_prefs_v1';
+
+            const banner = document.getElementById('cpra-banner');
+            const modal = document.getElementById('cpra-modal-overlay');
+            const acceptButton = document.getElementById('accept-cookies');
+            const managePrefsButton = document.getElementById('manage-prefs');
+            const closeModalButton = document.getElementById('cpra-close-button');
+            const savePrefsButton = document.getElementById('save-prefs');
+
+            const analyticsSwitch = document.getElementById('cookies-analiticos');
+            const adsSwitch = document.getElementById('cookies-publicidade');
+
+            const showModal = () => {
+                const prefs = JSON.parse(localStorage.getItem(COOKIE_PREFS_KEY)) || { analytics: true, ads: true };
+                analyticsSwitch.checked = prefs.analytics;
+                adsSwitch.checked = prefs.ads;
+                modal.classList.add('visible');
+            };
+
+            const hideModal = () => modal.classList.remove('visible');
+            const hideBanner = () => { if (banner) banner.style.display = 'none'; };
+
+            const savePreferences = (prefs) => {
+                localStorage.setItem(COOKIE_PREFS_KEY, JSON.stringify(prefs));
+                localStorage.setItem(COOKIE_CONSENT_KEY, 'true');
+                hideModal();
+                hideBanner();
+                console.log('Preferências de cookies guardadas:', prefs);
+                // Aqui pode adicionar lógica para carregar ou bloquear scripts com base nas preferências
+            };
+
+            if (localStorage.getItem(COOKIE_CONSENT_KEY)) {
+                hideBanner();
+            } else {
+                banner.style.display = 'flex';
+            }
+
+            acceptButton.addEventListener('click', () => {
+                savePreferences({ analytics: true, ads: true });
+            });
+
+            savePrefsButton.addEventListener('click', () => {
+                savePreferences({
+                    analytics: analyticsSwitch.checked,
+                    ads: adsSwitch.checked,
+                });
+            });
+
+            managePrefsButton.addEventListener('click', showModal);
+            closeModalButton.addEventListener('click', hideModal);
+
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) hideModal();
+            });
+        });
+    </script>
 </body>
 
-<style>
-    /* --- Estilos Generales --- */
-    .cpra-font { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; }
-
-    /* --- Estilos del Banner --- */
-    #cpra-banner {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background-color: #2c3e50; /* Azul oscuro */
-        color: white;
-        padding: 16px 24px;
-        box-shadow: 0 -2px 10px rgba(0,0,0,0.4);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 16px;
-        z-index: 9998;
-        box-sizing: border-box;
-    }
-    #cpra-banner p { margin: 0; flex-grow: 1; min-width: 250px; }
-    #cpra-banner .cpra-banner-buttons { display: flex; gap: 12px; flex-shrink: 0; }
-    #cpra-banner button {
-        padding: 10px 20px;
-        border: none;
-        cursor: pointer;
-        border-radius: 5px;
-        font-weight: bold;
-        transition: background-color 0.2s;
-    }
-    #cpra-banner #accept-cookies { background-color: #27ae60; color: white; } /* Verde */
-    #cpra-banner #accept-cookies:hover { background-color: #2ecc71; }
-    #cpra-banner #manage-prefs { background-color: #ecf0f1; color: #2c3e50; } /* Gris claro */
-    #cpra-banner #manage-prefs:hover { background-color: #bdc3c7; }
-
-    /* --- Estilos del Modal --- */
-    #cpra-modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.65);
-        display: none; /* Oculto por defecto */
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-    }
-    #cpra-modal-overlay.visible { display: flex; }
-    #cpra-modal-content {
-        background: white;
-        padding: 24px 32px;
-        border-radius: 8px;
-        width: 90%;
-        max-width: 550px;
-        position: relative;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    }
-    #cpra-close-button {
-        position: absolute;
-        top: 10px;
-        right: 15px;
-        font-size: 28px;
-        font-weight: bold;
-        color: #7f8c8d;
-        cursor: pointer;
-        transition: color 0.2s;
-    }
-    #cpra-close-button:hover { color: #34495e; }
-    #cpra-modal-content h2 { margin-top: 0; color: #34495e; }
-    #cpra-modal-content p { color: #7f8c8d; }
-    #cpra-modal-content a { color: #3498db; text-decoration: none; }
-    #cpra-modal-content a:hover { text-decoration: underline; }
-    .cpra-option {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 0;
-        border-bottom: 1px solid #ecf0f1;
-    }
-    .cpra-option:last-of-type { border-bottom: none; }
-    .cpra-option label { color: #34495e; flex-grow: 1; padding-right: 16px; }
-    #save-prefs {
-        background-color: #3498db; /* Azul */
-        color: white;
-        padding: 12px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-top: 20px;
-        width: 100%;
-        font-size: 16px;
-        font-weight: bold;
-        transition: background-color 0.2s;
-    }
-    #save-prefs:hover { background-color: #2980b9; }
-
-    /* --- Estilos del Interruptor (Switch) --- */
-    .switch { position: relative; display: inline-block; width: 50px; height: 28px; flex-shrink: 0; }
-    .switch input { opacity: 0; width: 0; height: 0; }
-    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #bdc3c7; transition: .4s; }
-    .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; }
-    input:checked + .slider { background-color: #27ae60; }
-    input:checked + .slider:before { transform: translateX(22px); }
-    .slider.round { border-radius: 34px; }
-    .slider.round:before { border-radius: 50%; }
-
-    /* --- Estilos para enlaces del Footer --- */
-    /* Asegúrate de que tu footer tenga estos enlaces con los IDs correspondientes */
-    .footer-cpra-links a {
-      cursor: pointer;
-      text-decoration: underline;
-      color: #3498db;
-    }
-</style>
-
-<div id="cpra-banner" class="cpra-font">
-    <p>Utilizamos cookies y tecnologías similares para mejorar su experiencia. Al continuar navegando, aceptas nuestra <a href="/privacy-policy.html" style="color:white; text-decoration:underline;">Política de Privacidad</a>.</p>
-    <div class="cpra-banner-buttons">
-        <button id="manage-prefs">Gestionar Preferencias</button>
-        <button id="accept-cookies">Aceptar Todas</button>
-    </div>
-</div>
-
-<div id="cpra-modal-overlay" class="cpra-font">
-    <div id="cpra-modal-content">
-        <span id="cpra-close-button">&times;</span>
-        <h2>Preferencias de Privacidad</h2>
-        <p>Conforme a la ley, puedes gestionar cómo se utilizan tus datos. Desactiva las siguientes opciones si deseas optar por no participar. Consulta nuestra <a href="/privacy-policy.html">Política de Privacidad</a> para más detalles.</p>
-        
-        <div class="cpra-option">
-            <label for="do-not-sell-share">No vender ni compartir mi información personal</label>
-            <label class="switch">
-                <input type="checkbox" id="do-not-sell-share">
-                <span class="slider round"></span>
-            </label>
-        </div>
-
-        <div class="cpra-option">
-            <label for="limit-sensitive-info">Limitar el uso de mi información personal sensible</label>
-            <label class="switch">
-                <input type="checkbox" id="limit-sensitive-info">
-                <span class="slider round"></span>
-            </label>
-        </div>
-        
-        <button id="save-prefs">Guardar Mis Preferencias</button>
-    </div>
-</div>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    // Claves para el almacenamiento local
-    const CPRA_CONSENT_KEY = 'cpra_consent_given_v1';
-    const CPRA_PREFS_KEY = 'cpra_prefs_v1';
-
-    // Seleccionar elementos del DOM una sola vez
-    const banner = document.getElementById('cpra-banner');
-    const modal = document.getElementById('cpra-modal-overlay');
-    const acceptButton = document.getElementById('accept-cookies');
-    const managePrefsButton = document.getElementById('manage-prefs');
-    const closeModalButton = document.getElementById('cpra-close-button');
-    const savePrefsButton = document.getElementById('save-prefs');
-    const doNotSellSwitch = document.getElementById('do-not-sell-share');
-    const limitSensitiveSwitch = document.getElementById('limit-sensitive-info');
-    
-    // --- Lógica de la Aplicación ---
-
-    // Función para mostrar el modal y cargar preferencias
-    const showModal = () => {
-        const prefs = JSON.parse(localStorage.getItem(CPRA_PREFS_KEY)) || {};
-        doNotSellSwitch.checked = prefs.doNotSell || false;
-        limitSensitiveSwitch.checked = prefs.limitSensitive || false;
-        modal.classList.add('visible');
-    };
-
-    // Función para ocultar el modal
-    const hideModal = () => modal.classList.remove('visible');
-
-    // Función para ocultar el banner
-    const hideBanner = () => {
-        if (banner) {
-            banner.style.display = 'none';
-        }
-    };
-
-    // Función para guardar las preferencias
-    const savePreferences = (prefs) => {
-        localStorage.setItem(CPRA_PREFS_KEY, JSON.stringify(prefs));
-        localStorage.setItem(CPRA_CONSENT_KEY, 'true');
-        hideModal();
-        hideBanner();
-        
-        console.log('Preferencias CPRA guardadas:', prefs);
-        // ====> IMPORTANTE: Aquí debes añadir la lógica para activar/desactivar scripts <====
-        // Ejemplo:
-        // if (prefs.doNotSell) {
-        //   window['ga-disable-UA-XXXXX-Y'] = true; // Deshabilitar Google Analytics
-        // }
-    };
-
-    // Comprobar si el consentimiento ya fue otorgado
-    if (localStorage.getItem(CPRA_CONSENT_KEY)) {
-        hideBanner();
-    }
-
-    // --- Asignación de Eventos ---
-
-    acceptButton.addEventListener('click', () => {
-        savePreferences({ doNotSell: false, limitSensitive: false });
-    });
-
-    savePrefsButton.addEventListener('click', () => {
-        savePreferences({
-            doNotSell: doNotSellSwitch.checked,
-            limitSensitive: limitSensitiveSwitch.checked,
-        });
-    });
-
-    managePrefsButton.addEventListener('click', showModal);
-    closeModalButton.addEventListener('click', hideModal);
-
-    // Eventos para los enlaces del footer (si existen)
-    const dnsLink = document.getElementById('dns-link');
-    const lsiLink = document.getElementById('lsi-link');
-    if (dnsLink) dnsLink.addEventListener('click', (e) => { e.preventDefault(); showModal(); });
-    if (lsiLink) lsiLink.addEventListener('click', (e) => { e.preventDefault(); showModal(); });
-    
-    // Cerrar modal al hacer clic en el fondo oscuro
-    modal.addEventListener('click', (event) => {
-        if (event.target === modal) {
-            hideModal();
-        }
-    });
-});
-</script>
-
-<!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PQ2Q63GR" height="0" width="0"
         style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
 
 </html>
