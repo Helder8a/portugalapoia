@@ -11,59 +11,11 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Roboto:wght@400;500&display=swap"
         rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="avaliador-urbano-style.css">
+
     <link rel="icon" href="images/favicon.ico.png" type="image/png">
-
-    <style>
-        .preview-placeholder {
-            width: 100%;
-            min-height: 180px;
-            background-color: var(--color-background-light);
-            border: 1px dashed var(--color-border);
-            border-radius: var(--border-radius);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 1rem;
-            text-align: center;
-            overflow: hidden;
-        }
-
-        .preview-placeholder img {
-            object-fit: cover;
-        }
-
-        .solution-card {
-            padding: 1rem;
-            border: 1px solid var(--color-border);
-            border-radius: var(--border-radius);
-            margin-bottom: 1rem;
-        }
-
-        .solution-card:last-child {
-            margin-bottom: 0;
-        }
-
-        .solution-card h5 {
-            font-weight: 700;
-            color: var(--color-primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .solution-manufacturer {
-            font-size: 0.9rem;
-            color: var(--color-text-muted);
-        }
-
-        .material-option {
-            margin-bottom: 0.5rem;
-        }
-
-        .transport-info {
-            display: none;
-            margin-top: 0.5rem;
-        }
-    </style>
 </head>
 
 <body>
@@ -85,9 +37,10 @@
                                 Apps
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownWebApp">
-                                <a class="dropdown-item" href="app_evaluadorsustentable.html">Evaluador Sustentável
+                                <a class="dropdown-item" href="app_evaluadorsustentable.html">Avaliador Sustentável
                                     PRO</a>
-                                <a class="dropdown-item active" href="app_avaliadorurbano.html">Avaliação Urbana</a>
+                                <a class="dropdown-item" href="app_avaliadorurbano.html">Avaliador de Imóveis
+                                    Urbanos</a>
                             </div>
                         </li>
                         <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
@@ -100,155 +53,553 @@
     </header>
 
     <main>
-        <section class="page-header page-header-publicar text-center">
+        <section class="page-header page-header-avaliador-urbano text-center">
             <div class="container">
                 <h1 class="page-title">Avaliador Urbano</h1>
                 <p class="lead">Ferramenta para realizar avaliações comerciais de imóveis urbanos.</p>
             </div>
         </section>
 
-        <div class="container my-5">
-            <div id="avaliador-urbano-app" class="card p-4">
+        <div class="avaliador-urbano-container my-5">
+            <form id="avaliador-urbano-app">
 
-                <h3 class="mb-4">1. Dados Gerais da Avaliação</h3>
-                <div class="card p-4 shadow-sm mb-5">
-                    <div class="form-group">
-                        <label for="nomeSolicitante">Identificação do Solicitante</label>
-                        <input type="text" class="form-control" id="nomeSolicitante"
-                            placeholder="Nome e identificação do solicitante">
-                    </div>
-                    <div class="form-group">
-                        <label for="nomeAvaliador">Identificação do Avaliador</label>
-                        <input type="text" class="form-control" id="nomeAvaliador"
-                            placeholder="Nome, identificação e registo do avaliador">
-                    </div>
-                    <div class="form-group">
-                        <label for="objetoAvaliacao">Objeto da Avaliação</label>
-                        <textarea class="form-control" id="objetoAvaliacao" rows="2"
+                <div class="form-section">
+                    <h3>1. Dados Gerais da Avaliação</h3>
+                    <div class="form-group"><label for="nomeSolicitante">Identificação do Solicitante</label><input
+                            type="text" class="form-control" id="nomeSolicitante"
+                            placeholder="Nome e identificação do solicitante"></div>
+                    <div class="form-group"><label for="nomeAvaliador">Identificação do Avaliador</label><input
+                            type="text" class="form-control" id="nomeAvaliador"
+                            placeholder="Nome, identificação e registo do avaliador"></div>
+                    <div class="form-group"><label for="objetoAvaliacao">Objeto da Avaliação</label><textarea
+                            class="form-control" id="objetoAvaliacao" rows="2"
                             placeholder="Descreva o propósito da avaliação (ex: compra e venda, garantia hipotecária, etc.)."></textarea>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label for="dataVisita">Data da Visita</label>
-                            <input type="date" class="form-control" id="dataVisita">
+                        <div class="form-group col-md-6"><label for="dataVisita">Data da Visita</label><input
+                                type="date" class="form-control" id="dataVisita"></div>
+                        <div class="form-group col-md-6"><label for="dataRelatorio">Data do Relatório</label><input
+                                type="date" class="form-control" id="dataRelatorio"></div>
+                    </div>
+                </div>
+                <div class="form-section">
+                    <h3>2. Tipo e Detalhes do Imóvel</h3>
+                    <div class="form-group"><label for="tipoInmueble">Tipo de Imóvel</label><select class="form-control"
+                            id="tipoInmueble">
+                            <option value="selecione">Selecione o tipo...</option>
+                            <option value="casa">Casa</option>
+                            <option value="apartamento">Apartamento</option>
+                            <option value="edificio">Edifício</option>
+                            <option value="terreno">Terreno</option>
+                            <option value="casa-rustica">Casa Rústica ou Quinta</option>
+                        </select></div>
+                    <div id="detalhes-casa" class="conditional-details">
+                        <div class="form-group"><label for="pisos-casa">Número de Pisos da Casa</label><select
+                                id="pisos-casa" name="pisos_casa" class="form-control">
+                                <option value="1">1 Piso (Térrea)</option>
+                                <option value="2">2 Pisos</option>
+                                <option value="3">3 ou mais Pisos</option>
+                            </select></div>
+                    </div>
+                    <div id="detalhes-apartamento" class="conditional-details">
+                        <div class="form-row">
+                            <div class="form-group col-md-6"><label for="piso-apartamento">Piso do
+                                    Apartamento</label><input type="number" id="piso-apartamento"
+                                    name="piso_apartamento" class="form-control" min="0" placeholder="Ex: 3"></div>
+                            <div class="form-group col-md-6"><label for="total-pisos-edificio">Total Pisos do
+                                    Edifício</label><input type="number" id="total-pisos-edificio"
+                                    name="total_pisos_edificio" class="form-control" min="1" placeholder="Ex: 8"></div>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="dataRelatorio">Data do Relatório</label>
-                            <input type="date" class="form-control" id="dataRelatorio">
+                    </div>
+                </div>
+                <div class="form-section">
+                    <h3>3. Morada do Imóvel</h3>
+                    <div class="form-row">
+                        <div class="form-group col-md-6"><label for="cidadeImovel">Cidade</label><input type="text"
+                                class="form-control" id="cidadeImovel" placeholder="Ex: Lisboa, Porto, Coimbra"></div>
+                        <div class="form-group col-md-6"><label for="codigoPostalImovel">Código Postal</label><input
+                                type="text" class="form-control" id="codigoPostalImovel" placeholder="Ex: 4000-447">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="tipoAvaliacao">Tipo de Avaliação</label>
-                        <input type="text" class="form-control" id="tipoAvaliacao" value="Avaliação Comercial Urbana"
-                            disabled>
-                    </div>
-                    <hr class="my-4">
-                    <div class="form-group">
-                        <label for="ambitoTrabalho">Âmbito do Trabalho</label>
-                        <textarea class="form-control" id="ambitoTrabalho" rows="4"
-                            disabled>A avaliação comercial urbana é um processo técnico para determinar o valor de mercado mais provável de um imóvel, com o propósito de orientar transações, financiamentos, planeamento patrimonial, compra e venda ou gestão de ativos. É uma estimativa do valor que um comprador estaria disposto a pagar num mercado livre e aberto.</textarea>
-                    </div>
+                    <div class="form-group"><label for="moradaImovel">Morada Completa</label><input type="text"
+                            class="form-control" id="moradaImovel" placeholder="Ex: Rua de Santa Catarina, 123"></div>
                 </div>
-
-                <h3 class="mb-4">2. Seleção do Método de Avaliação</h3>
-                <div class="form-group">
-                    <label for="metodoSeleccionado">Método de Avaliação</label>
-                    <select class="form-control" id="metodoSeleccionado">
-                        <option value="comparacion">Método de Comparação de Mercado</option>
-                        <option value="costo">Método do Custo</option>
-                        <option value="ingresos">Método de Capitalização de Rendimentos</option>
-                    </select>
-                </div>
-
-                <div class="form-group mt-4">
-                    <label for="tipoInmueble">Tipo de Imóvel</label>
-                    <select class="form-control" id="tipoInmueble">
-                        <option value="casa">Casa</option>
-                        <option value="edificio">Edifício</option>
-                        <option value="apartamento">Apartamento</option>
-                        <option value="terreno">Terreno</option>
-                        <option value="casa-rustica">Casa Rústica ou Quinta</option>
-                    </select>
-                </div>
-
-                <hr class="my-5">
-                <h3 class="mb-4">3. Morada do Imóvel</h3>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="cidadeImovel">Cidade</label>
-                        <input type="text" class="form-control" id="cidadeImovel"
-                            placeholder="Ex: Lisboa, Porto, Coimbra">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="codigoPostalImovel">Código Postal</label>
-                        <input type="text" class="form-control" id="codigoPostalImovel" placeholder="Ex: 4000-447">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="moradaImovel">Morada Completa</label>
-                    <input type="text" class="form-control" id="moradaImovel"
-                        placeholder="Ex: Rua de Santa Catarina, 123">
-                </div>
-
-                <hr class="my-5">
-                <h4 class="mb-4 text-center">4. Diagrama de Localização do Imóvel</h4>
-                <p class="text-center text-muted">Carregue imagens para visualizar a localização do imóvel.</p>
-
-                <div class="row">
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100 shadow-sm text-center">
-                            <div class="card-body d-flex flex-column align-items-center">
-                                <h5 class="card-title">País: Portugal</h5>
-                                <img src="https://i.imgur.com/gK9o10e.png" alt="Mapa de Portugal"
-                                    class="img-fluid border rounded" style="max-height: 180px;">
-                                <p class="mt-3 text-muted small">Representação a nível nacional.</p>
+                <div class="form-section">
+                    <h3>4. Diagrama de Localização do Imóvel <i class="fas fa-map-marked-alt"></i></h3>
+                    <p class="text-muted">Carregue imagens para visualizar a localização do imóvel.</p>
+                    <div class="row">
+                        <div class="col-md-4 mb-4">
+                            <h5 class="text-center">País: Portugal</h5><img src="https://i.imgur.com/gK9o10e.png"
+                                alt="Mapa de Portugal" class="img-fluid border rounded">
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <h5 class="text-center">Localização da Cidade</h5><input type="file"
+                                class="form-control-file mb-2" id="imagemCidade" accept="image/*">
+                            <div id="preview-imagen-cidade" class="preview-placeholder">
+                                <p>A imagem da cidade aparecerá aqui.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <h5 class="text-center">Localização da Morada</h5><input type="file"
+                                class="form-control-file mb-2" id="imagemMorada" accept="image/*">
+                            <div id="preview-imagen-morada" class="preview-placeholder">
+                                <p>A imagem da morada aparecerá aqui.</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100 shadow-sm text-center">
-                            <div class="card-body d-flex flex-column align-items-center">
-                                <h5 class="card-title">Localização da Cidade</h5>
-                                <input type="file" class="form-control-file my-2" id="imagemCidade" accept="image/*">
-                                <div id="preview-imagen-cidade" class="preview-placeholder">
-                                    <p class="text-muted">A imagem da cidade aparecerá aqui.</p>
+                </div>
+                <div class="form-section">
+                    <h3>5. Vias de Acesso ao Imóvel 🛣️</h3>
+                    <div class="road-type-group">
+                        <h4 class="h5">Vias Primárias</h4>
+                        <div class="road-selection-row">
+                            <div class="form-group mb-0"><label for="material-primaria">Material de
+                                    Construção</label><select id="material-primaria" name="material_primaria"
+                                    class="form-control">
+                                    <option value="">Selecione o material...</option>
+                                    <option value="asfalto">Asfalto (Betuminoso)</option>
+                                    <option value="betao">Pavimento Rígido (Betão)</option>
+                                    <option value="outro">Outro</option>
+                                </select></div>
+                            <div class="form-group mb-0"><label>Dispõe de Passeios (Andenes)?</label>
+                                <div>
+                                    <div class="custom-control custom-radio custom-control-inline"><input type="radio"
+                                            id="passeios-primaria-sim" name="passeios_primaria"
+                                            class="custom-control-input" value="sim"><label class="custom-control-label"
+                                            for="passeios-primaria-sim">Sim</label></div>
+                                    <div class="custom-control custom-radio custom-control-inline"><input type="radio"
+                                            id="passeios-primaria-nao" name="passeios_primaria"
+                                            class="custom-control-input" value="nao"><label class="custom-control-label"
+                                            for="passeios-primaria-nao">Não</label></div>
                                 </div>
-                                <p class="mt-auto text-muted small">Carregue uma foto aérea da cidade ou bairro.</p>
                             </div>
                         </div>
+                        <div class="road-evaluation-row"><label>Estado de Conservação</label>
+                            <div class="evaluation-group"><label><input type="radio" name="estado_primaria" value="bom">
+                                    Bom</label><label><input type="radio" name="estado_primaria" value="regular">
+                                    Regular</label><label><input type="radio" name="estado_primaria" value="mau">
+                                    Mau</label></div>
+                        </div>
                     </div>
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100 shadow-sm text-center">
-                            <div class="card-body d-flex flex-column align-items-center">
-                                <h5 class="card-title">Localização da Morada</h5>
-                                <input type="file" class="form-control-file my-2" id="imagemMorada" accept="image/*">
-                                <div id="preview-imagen-morada" class="preview-placeholder">
-                                    <p class="text-muted">A imagem da morada aparecerá aqui.</p>
+                    <div class="road-type-group mt-5">
+                        <h4 class="h5">Vias Secundárias</h4>
+                        <div class="road-selection-row">
+                            <div class="form-group mb-0"><label for="material-secundaria">Material de
+                                    Construção</label><select id="material-secundaria" name="material_secundaria"
+                                    class="form-control">
+                                    <option value="">Selecione o material...</option>
+                                    <option value="calcada">Calçada Portuguesa</option>
+                                    <option value="paralelos">Paralelos de Granito/Calcário</option>
+                                    <option value="terra">Terra Batida / Saibro</option>
+                                    <option value="asfalto">Asfalto (Betuminoso)</option>
+                                    <option value="outro">Outro</option>
+                                </select></div>
+                            <div class="form-group mb-0"><label>Dispõe de Passeios (Andenes)?</label>
+                                <div>
+                                    <div class="custom-control custom-radio custom-control-inline"><input type="radio"
+                                            id="passeios-secundaria-sim" name="passeios_secundaria"
+                                            class="custom-control-input" value="sim"><label class="custom-control-label"
+                                            for="passeios-secundaria-sim">Sim</label></div>
+                                    <div class="custom-control custom-radio custom-control-inline"><input type="radio"
+                                            id="passeios-secundaria-nao" name="passeios_secundaria"
+                                            class="custom-control-input" value="nao"><label class="custom-control-label"
+                                            for="passeios-secundaria-nao">Não</label></div>
                                 </div>
-                                <p class="mt-auto text-muted small">Carregue uma foto aérea da parcela do imóvel.</p>
                             </div>
+                        </div>
+                        <div class="road-evaluation-row"><label>Estado de Conservação</label>
+                            <div class="evaluation-group"><label><input type="radio" name="estado_secundaria"
+                                        value="bom"> Bom</label><label><input type="radio" name="estado_secundaria"
+                                        value="regular"> Regular</label><label><input type="radio"
+                                        name="estado_secundaria" value="mau"> Mau</label></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-section">
+                    <h3>6. Proximidade a Transportes Públicos 🚌🚆🚇</h3>
+                    <div class="transport-option-row">
+                        <div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"
+                                id="transporte-autocarro"><label class="custom-control-label"
+                                for="transporte-autocarro">Autocarro (Ônibus)</label></div><input type="text"
+                            class="form-control form-control-sm" placeholder="Nº da Rota / Paragem"><input type="text"
+                            class="form-control form-control-sm" placeholder="Distância (m)">
+                    </div>
+                    <div class="transport-option-row">
+                        <div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"
+                                id="transporte-metro"><label class="custom-control-label" for="transporte-metro">Metro
+                                (Metropolitano)</label></div><input type="text" class="form-control form-control-sm"
+                            placeholder="Nome da Estação"><input type="text" class="form-control form-control-sm"
+                            placeholder="Distância (m)">
+                    </div>
+                    <div class="transport-option-row">
+                        <div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"
+                                id="transporte-comboio"><label class="custom-control-label"
+                                for="transporte-comboio">Comboio (Trem)</label></div><input type="text"
+                            class="form-control form-control-sm" placeholder="Nome da Estação"><input type="text"
+                            class="form-control form-control-sm" placeholder="Distância (m)">
+                    </div>
+                    <div class="transport-option-row">
+                        <div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"
+                                id="transporte-eletrico"><label class="custom-control-label"
+                                for="transporte-eletrico">Elétrico (Bonde)</label></div><input type="text"
+                            class="form-control form-control-sm" placeholder="Nº da Linha / Paragem"><input type="text"
+                            class="form-control form-control-sm" placeholder="Distância (m)">
+                    </div>
+                    <div class="transport-option-row">
+                        <div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"
+                                id="transporte-fluvial"><label class="custom-control-label"
+                                for="transporte-fluvial">Transporte Fluvial (Barco/Ferry)</label></div><input
+                            type="text" class="form-control form-control-sm" placeholder="Nome do Terminal"><input
+                            type="text" class="form-control form-control-sm" placeholder="Distância (m)">
+                    </div>
+                    <div class="transport-option-row">
+                        <div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"
+                                id="transporte-taxi"><label class="custom-control-label" for="transporte-taxi">Praça de
+                                Táxis / TVDE</label></div><input type="text" class="form-control form-control-sm"
+                            placeholder="Localização"><input type="text" class="form-control form-control-sm"
+                            placeholder="Distância (m)">
+                    </div>
+                </div>
+                <div class="form-section">
+                    <h3>7. Disponibilidade de Serviços Públicos</h3>
+                    <div class="public-services-grid">
+                        <div class="service-item">
+                            <div class="service-icon"><i class="fas fa-bolt"></i></div><label class="service-label">Rede
+                                Elétrica</label>
+                            <div class="service-toggle"><input type="radio" id="eletricidade-sim"
+                                    name="servico_eletricidade" value="sim"><label
+                                    for="eletricidade-sim">Tem</label><input type="radio" id="eletricidade-nao"
+                                    name="servico_eletricidade" value="nao"><label for="eletricidade-nao">Não
+                                    Tem</label></div>
+                        </div>
+                        <div class="service-item">
+                            <div class="service-icon"><i class="fas fa-tint"></i></div><label class="service-label">Água
+                                Canalizada</label>
+                            <div class="service-toggle"><input type="radio" id="agua-sim" name="servico_agua"
+                                    value="sim"><label for="agua-sim">Tem</label><input type="radio" id="agua-nao"
+                                    name="servico_agua" value="nao"><label for="agua-nao">Não Tem</label></div>
+                        </div>
+                        <div class="service-item">
+                            <div class="service-icon"><i class="fas fa-fire"></i></div><label class="service-label">Gás
+                                Natural</label>
+                            <div class="service-toggle"><input type="radio" id="gas-sim" name="servico_gas"
+                                    value="sim"><label for="gas-sim">Tem</label><input type="radio" id="gas-nao"
+                                    name="servico_gas" value="nao"><label for="gas-nao">Não Tem</label></div>
+                        </div>
+                        <div class="service-item">
+                            <div class="service-icon"><i class="fas fa-toilet"></i></div><label
+                                class="service-label">Saneamento Básico</label>
+                            <div class="service-toggle"><input type="radio" id="saneamento-sim"
+                                    name="servico_saneamento" value="sim"><label for="saneamento-sim">Tem</label><input
+                                    type="radio" id="saneamento-nao" name="servico_saneamento" value="nao"><label
+                                    for="saneamento-nao">Não Tem</label></div>
+                        </div>
+                        <div class="service-item">
+                            <div class="service-icon"><i class="fas fa-wifi"></i></div><label
+                                class="service-label">Telecomunicações (Fibra)</label>
+                            <div class="service-toggle"><input type="radio" id="telecom-sim" name="servico_telecom"
+                                    value="sim"><label for="telecom-sim">Tem</label><input type="radio" id="telecom-nao"
+                                    name="servico_telecom" value="nao"><label for="telecom-nao">Não Tem</label></div>
+                        </div>
+                        <div class="service-item">
+                            <div class="service-icon"><i class="fas fa-trash-alt"></i></div><label
+                                class="service-label">Recolha de Resíduos</label>
+                            <div class="service-toggle"><input type="radio" id="lixo-sim" name="servico_lixo"
+                                    value="sim"><label for="lixo-sim">Tem</label><input type="radio" id="lixo-nao"
+                                    name="servico_lixo" value="nao"><label for="lixo-nao">Não Tem</label></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-section">
+                    <h3>8. Características do Imóvel <i class="fas fa-home"></i></h3>
+                    <div class="form-group highlighted-input-group"><label for="area-construcao">Área de Construção
+                            (m²)</label><input type="number" id="area-construcao" min="0" class="form-control"
+                            placeholder="Introduza a área total de construção"></div>
+                    <div class="property-features-grid">
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-couch"></i></div><label for="qtd-sala"
+                                class="feature-label">Sala</label>
+                            <div class="feature-quantity"><input type="number" id="qtd-sala" name="qtd_sala" min="0"
+                                    value="1" class="form-control"></div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-utensils"></i></div><label for="qtd-comedor"
+                                class="feature-label">Sala de Jantar</label>
+                            <div class="feature-quantity"><input type="number" id="qtd-comedor" name="qtd_comedor"
+                                    min="0" value="1" class="form-control"></div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-kitchen-set"></i></div><label for="qtd-cozinha"
+                                class="feature-label">Cozinha</label>
+                            <div class="feature-quantity"><input type="number" id="qtd-cozinha" name="qtd_cozinha"
+                                    min="0" value="1" class="form-control"></div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-bed"></i></div><label for="qtd-quartos"
+                                class="feature-label">Quartos</label>
+                            <div class="feature-quantity"><input type="number" id="qtd-quartos" name="qtd_quartos"
+                                    min="0" value="3" class="form-control"></div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-bath"></i></div><label for="qtd-banos"
+                                class="feature-label">Casa de Banho</label>
+                            <div class="feature-quantity"><input type="number" id="qtd-banos" name="qtd_banos" min="0"
+                                    value="2" class="form-control"></div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-car"></i></div><label for="qtd-garagem"
+                                class="feature-label">Garagem</label>
+                            <div class="feature-quantity"><input type="number" id="qtd-garagem" name="qtd_garagem"
+                                    min="0" value="1" class="form-control"></div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-tree"></i></div><label for="qtd-jardim"
+                                class="feature-label">Jardim / Quintal</label>
+                            <div class="feature-quantity"><input type="number" id="qtd-jardim" name="qtd_jardim" min="0"
+                                    value="0" class="form-control"></div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-person-balcony"></i></div><label
+                                for="qtd-varanda" class="feature-label">Varanda / Terraço</label>
+                            <div class="feature-quantity"><input type="number" id="qtd-varanda" name="qtd_varanda"
+                                    min="0" value="0" class="form-control"></div>
+                        </div>
+                    </div>
+                    <div class="feature-others"><label>Outros Espaços</label>
+                        <div class="other-item"><input type="text" class="form-control"
+                                placeholder="Nome do espaço (ex: Escritório)"><input type="number" min="0" value="0"
+                                class="form-control" title="Quantidade"></div>
+                        <div class="other-item"><input type="text" class="form-control"
+                                placeholder="Nome do espaço (ex: Arrecadação)"><input type="number" min="0" value="0"
+                                class="form-control" title="Quantidade"></div>
+                    </div>
+                </div>
+                <div id="caracteristicas-edificio" class="form-section conditional-details">
+                    <h3>8.5 Características do Edifício <i class="fas fa-building"></i></h3>
+                    <div class="building-features-grid">
+                        <div class="building-feature-item"><i class="fas fa-users-viewfinder"></i><label>Salão
+                                Comunitário</label>
+                            <div class="feature-toggle"><input type="radio" id="salao-sim" name="salao_comunitario"
+                                    value="sim"><label for="salao-sim">Sim</label><input type="radio" id="salao-nao"
+                                    name="salao_comunitario" value="nao" checked><label for="salao-nao">Não</label>
+                            </div>
+                        </div>
+                        <div class="building-feature-item"><i class="fas fa-car-tunnel"></i><label>Parqueadero
+                                Subterrâneo</label>
+                            <div class="feature-toggle"><input type="radio" id="parque-sim"
+                                    name="parqueadero_subterraneo" value="sim"><label for="parque-sim">Sim</label><input
+                                    type="radio" id="parque-nao" name="parqueadero_subterraneo" value="nao"
+                                    checked><label for="parque-nao">Não</label></div>
+                        </div>
+                        <div class="building-feature-item"><i class="fas fa-elevator"></i><label>Ascensor
+                                (Elevador)</label><input type="number" min="0" value="1"
+                                class="form-control form-control-sm" placeholder="Qtd."></div>
+                        <div class="building-feature-item"><i class="fas fa-bolt-lightning"></i><label>Planta
+                                Elétrica</label>
+                            <div class="feature-toggle"><input type="radio" id="planta-sim" name="planta_eletrica"
+                                    value="sim"><label for="planta-sim">Sim</label><input type="radio" id="planta-nao"
+                                    name="planta_eletrica" value="nao" checked><label for="planta-nao">Não</label></div>
+                        </div>
+                        <div class="building-feature-item"><i class="fas fa-droplet"></i><label>Tanque de Água</label>
+                            <div class="feature-toggle"><input type="radio" id="tanque-sim" name="tanque_agua"
+                                    value="sim"><label for="tanque-sim">Sim</label><input type="radio" id="tanque-nao"
+                                    name="tanque_agua" value="nao" checked><label for="tanque-nao">Não</label></div>
+                        </div>
+                        <div class="building-feature-item"><i class="fas fa-fire-extinguisher"></i><label>Rede Contra
+                                Incêndio</label>
+                            <div class="feature-toggle"><input type="radio" id="incendio-sim" name="rede_incendio"
+                                    value="sim"><label for="incendio-sim">Sim</label><input type="radio"
+                                    id="incendio-nao" name="rede_incendio" value="nao" checked><label
+                                    for="incendio-nao">Não</label></div>
+                        </div>
+                        <div class="building-feature-item"><i class="fas fa-fence"></i><label>Cerramento
+                                Perimetral</label>
+                            <div class="feature-toggle"><input type="radio" id="cerramento-sim" name="cerramento"
+                                    value="sim"><label for="cerramento-sim">Sim</label><input type="radio"
+                                    id="cerramento-nao" name="cerramento" value="nao" checked><label
+                                    for="cerramento-nao">Não</label></div>
+                        </div>
+                        <div class="building-feature-item"><i class="fas fa-user-shield"></i><label>Porteiro /
+                                Vigilante</label>
+                            <div class="feature-toggle"><input type="radio" id="porteiro-sim" name="porteiro"
+                                    value="sim"><label for="porteiro-sim">Sim</label><input type="radio"
+                                    id="porteiro-nao" name="porteiro" value="nao" checked><label
+                                    for="porteiro-nao">Não</label></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-section">
+                    <h3>9. Acabamentos e Materiais de Construção</h3>
+                    <div class="finishes-grid">
+                        <div class="finish-item">
+                            <div class="finish-icon"><i class="fas fa-border-style"></i></div><label
+                                class="finish-label">Muros / Paredes</label><select class="form-control mb-2">
+                                <option>Tijolo</option>
+                                <option>Bloco de Betão</option>
+                                <option>Betão Armado</option>
+                                <option>Drywall (Gesso)</option>
+                                <option>Madeira</option>
+                            </select>
+                            <div class="evaluation-group"><label><input type="radio" name="estado_muros" value="bom">
+                                    Bom</label><label><input type="radio" name="estado_muros" value="regular">
+                                    Regular</label><label><input type="radio" name="estado_muros" value="mau">
+                                    Mau</label></div>
+                        </div>
+                        <div class="finish-item">
+                            <div class="finish-icon"><i class="fas fa-fill-drip"></i></div><label
+                                class="finish-label">Reboco (Revoque)</label><select class="form-control mb-2">
+                                <option>Gesso Projetado</option>
+                                <option>Estuque</option>
+                                <option>Cimento Liso</option>
+                                <option>Texturizado</option>
+                            </select>
+                            <div class="evaluation-group"><label><input type="radio" name="estado_reboco" value="bom">
+                                    Bom</label><label><input type="radio" name="estado_reboco" value="regular">
+                                    Regular</label><label><input type="radio" name="estado_reboco" value="mau">
+                                    Mau</label></div>
+                        </div>
+                        <div class="finish-item">
+                            <div class="finish-icon"><i class="fas fa-palette"></i></div><label
+                                class="finish-label">Revestimentos</label><select class="form-control mb-2">
+                                <option>Pintura Plástica</option>
+                                <option>Cerâmica</option>
+                                <option>Papel de Parede</option>
+                                <option>Madeira</option>
+                            </select>
+                            <div class="evaluation-group"><label><input type="radio" name="estado_revestimentos"
+                                        value="bom"> Bom</label><label><input type="radio" name="estado_revestimentos"
+                                        value="regular"> Regular</label><label><input type="radio"
+                                        name="estado_revestimentos" value="mau"> Mau</label></div>
+                        </div>
+                        <div class="finish-item">
+                            <div class="finish-icon"><i class="fas fa-home-user"></i></div><label
+                                class="finish-label">Teto / Coberta</label><select class="form-control mb-2">
+                                <option>Telha Cerâmica</option>
+                                <option>Laje de Betão</option>
+                                <option>Telha Metálica</option>
+                                <option>Teto Falso (Gesso)</option>
+                            </select>
+                            <div class="evaluation-group"><label><input type="radio" name="estado_teto" value="bom">
+                                    Bom</label><label><input type="radio" name="estado_teto" value="regular">
+                                    Regular</label><label><input type="radio" name="estado_teto" value="mau">
+                                    Mau</label></div>
+                        </div>
+                        <div class="finish-item">
+                            <div class="finish-icon"><i class="fas fa-shoe-prints"></i></div><label
+                                class="finish-label">Pisos</label><select class="form-control mb-2">
+                                <option>Cerâmica</option>
+                                <option>Soalho Flutuante</option>
+                                <option>Madeira Maciça</option>
+                                <option>Mármore/Granito</option>
+                            </select>
+                            <div class="evaluation-group"><label><input type="radio" name="estado_pisos" value="bom">
+                                    Bom</label><label><input type="radio" name="estado_pisos" value="regular">
+                                    Regular</label><label><input type="radio" name="estado_pisos" value="mau">
+                                    Mau</label></div>
+                        </div>
+                        <div class="finish-item">
+                            <div class="finish-icon"><i class="fas fa-building-columns"></i></div><label
+                                class="finish-label">Estrutura</label><select class="form-control mb-2">
+                                <option>Betão Armado</option>
+                                <option>Aço</option>
+                                <option>Madeira</option>
+                                <option>Alvenaria Estrutural</option>
+                            </select>
+                            <div class="evaluation-group"><label><input type="radio" name="estado_estrutura"
+                                        value="bom"> Bom</label><label><input type="radio" name="estado_estrutura"
+                                        value="regular"> Regular</label><label><input type="radio"
+                                        name="estado_estrutura" value="mau"> Mau</label></div>
+                        </div>
+                        <div class="finish-item">
+                            <div class="finish-icon"><i class="fas fa-shower"></i></div><label
+                                class="finish-label">Inst. Hidrossanitárias</label><select class="form-control mb-2">
+                                <option>PVC</option>
+                                <option>PEX</option>
+                                <option>Cobre</option>
+                            </select>
+                            <div class="evaluation-group"><label><input type="radio" name="estado_hidro" value="bom">
+                                    Bom</label><label><input type="radio" name="estado_hidro" value="regular">
+                                    Regular</label><label><input type="radio" name="estado_hidro" value="mau">
+                                    Mau</label></div>
+                        </div>
+                        <div class="finish-item">
+                            <div class="finish-icon"><i class="fas fa-plug-circle-bolt"></i></div><label
+                                class="finish-label">Inst. Elétricas</label><select class="form-control mb-2">
+                                <option>Cablagem Standard</option>
+                                <option>Domótica Básica</option>
+                                <option>Domótica Avançada</option>
+                            </select>
+                            <div class="evaluation-group"><label><input type="radio" name="estado_eletricas"
+                                        value="bom"> Bom</label><label><input type="radio" name="estado_eletricas"
+                                        value="regular"> Regular</label><label><input type="radio"
+                                        name="estado_eletricas" value="mau"> Mau</label></div>
                         </div>
                     </div>
                 </div>
 
-                <div class="row mt-4">
-                    <div class="col-12 text-center">
-                        <div id="collage-profesional" class="mt-4 p-4 border rounded" style="display: none;">
-                            <h4>Colagem de Localização Arquitetónica</h4>
-                            <div class="d-flex justify-content-center align-items-center">
-                                <img id="collage-pais-img" src="https://i.imgur.com/gK9o10e.png" alt="Mapa de Portugal"
-                                    class="img-fluid m-2 border" style="max-height: 150px;">
-                                <i class="fas fa-arrow-right fa-2x text-primary mx-3 d-none d-md-block"></i>
-                                <img id="collage-cidade-img" alt="Localização da Cidade" class="img-fluid m-2 border"
-                                    style="max-height: 150px;">
-                                <i class="fas fa-arrow-right fa-2x text-primary mx-3 d-none d-md-block"></i>
-                                <img id="collage-morada-img" alt="Localização da Morada" class="img-fluid m-2 border"
-                                    style="max-height: 150px;">
-                            </div>
+                <div class="form-section">
+                    <h3>10. Método de Valorização</h3>
+                    <div id="terrain-valuation" class="conditional-details">
+                        <h4 class="h5">10.1 Valorização do Terreno</h4>
+                        <p><strong>Método Utilizado:</strong> Método Comparativo de Mercado</p>
+                        <div class="form-group highlighted-input-group"><label for="area-terreno-imovel">Área do Terreno
+                                do Imóvel (m²)</label><input type="number" id="area-terreno-imovel" min="0"
+                                class="form-control" placeholder="Introduza a área do seu terreno"></div>
+                        <div class="table-responsive">
+                            <table id="terrain-comparison-table" class="table table-bordered table-hover">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th>Amostra</th>
+                                        <th>Localização da Amostra</th>
+                                        <th>Área (m²)</th>
+                                        <th>Valor por m² (€)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td><input type="text" class="form-control"></td>
+                                        <td><input type="number" min="0" class="form-control"></td>
+                                        <td><input type="number" min="0" class="form-control"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td><input type="text" class="form-control"></td>
+                                        <td><input type="number" min="0" class="form-control"></td>
+                                        <td><input type="number" min="0" class="form-control"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td><input type="text" class="form-control"></td>
+                                        <td><input type="number" min="0" class="form-control"></td>
+                                        <td><input type="number" min="0" class="form-control"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td><input type="text" class="form-control"></td>
+                                        <td><input type="number" min="0" class="form-control"></td>
+                                        <td><input type="number" min="0" class="form-control"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td><input type="text" class="form-control"></td>
+                                        <td><input type="number" min="0" class="form-control"></td>
+                                        <td><input type="number" min="0" class="form-control"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="valuation-results-box">
+                            <div class="result-item"><span>Valor Médio por m² (Amostras):</span><strong
+                                    id="avg-m2-value">€ 0.00</strong></div>
+                            <div class="result-item final-value"><span>Valor Estimado do Terreno:</span><strong
+                                    id="total-terrain-value">€ 0.00</strong></div>
                         </div>
                     </div>
                 </div>
-            </div>
+
+                <button type="submit" class="submit-button">Gerar Relatório de Avaliação</button>
+            </form>
         </div>
     </main>
 
@@ -261,39 +612,57 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Lógica para mostrar/ocultar a explicação do método de avaliação
-            $('#metodoSeleccionado').change(function () {
-                $('#metodo-explicacion > div').hide();
-                var selectedMethod = $(this).val();
-                $('#explicacion-' + selectedMethod).show();
-            });
-
-            function setupImagePreviewWithCollage(inputId, previewId, collageImgId) {
+            // Lógica para previsualización de imágenes
+            function setupImagePreview(inputId, previewId) {
                 const input = document.getElementById(inputId);
                 const preview = document.getElementById(previewId);
-                const collageImg = document.getElementById(collageImgId);
+                if (input) { input.addEventListener('change', function (e) { const file = e.target.files[0]; if (file && preview) { const reader = new FileReader(); reader.onload = function (e) { const img = document.createElement('img'); img.src = e.target.result; img.classList.add('img-fluid', 'rounded'); preview.innerHTML = ''; preview.appendChild(img); }; reader.readAsDataURL(file); } }); }
+            }
+            setupImagePreview('imagemCidade', 'preview-imagen-cidade');
+            setupImagePreview('imagemMorada', 'preview-imagen-morada');
 
-                input.addEventListener('change', function (e) {
-                    const file = e.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = function (e) {
-                            const img = document.createElement('img');
-                            img.src = e.target.result;
-                            img.classList.add('img-fluid', 'border', 'rounded');
-                            preview.innerHTML = '';
-                            preview.appendChild(img);
+            // LÓGICA PARA CAMPOS CONDICIONAIS
+            const tipoImovelSelect = document.getElementById('tipoInmueble');
+            const detalhesCasa = document.getElementById('detalhes-casa');
+            const detalhesApartamento = document.getElementById('detalhes-apartamento');
+            const caracteristicasEdificio = document.getElementById('caracteristicas-edificio');
+            const terrainValuation = document.getElementById('terrain-valuation');
 
-                            collageImg.src = e.target.result;
-                            document.getElementById('collage-profesional').style.display = 'flex';
-                        };
-                        reader.readAsDataURL(file);
+            function handleTipoImovelChange() {
+                const tipo = tipoImovelSelect.value;
+                detalhesCasa.style.display = (tipo === 'casa') ? 'block' : 'none';
+                detalhesApartamento.style.display = (tipo === 'apartamento') ? 'block' : 'none';
+                caracteristicasEdificio.style.display = (tipo === 'apartamento') ? 'block' : 'none';
+                terrainValuation.style.display = (tipo === 'casa' || tipo === 'casa-rustica') ? 'block' : 'none';
+            }
+            tipoImovelSelect.addEventListener('change', handleTipoImovelChange);
+            handleTipoImovelChange();
+
+            // LÓGICA PARA CÁLCULO DO VALOR DO TERRENO
+            const comparisonTable = document.getElementById('terrain-comparison-table');
+            const areaTerrenoImovel = document.getElementById('area-terreno-imovel');
+            const avgM2ValueEl = document.getElementById('avg-m2-value');
+            const totalTerrainValueEl = document.getElementById('total-terrain-value');
+
+            function calculateTerrainValue() {
+                let totalM2Value = 0;
+                let validSamples = 0;
+                const rows = comparisonTable.querySelectorAll('tbody tr');
+                rows.forEach(row => {
+                    const valueM2 = parseFloat(row.cells[3].querySelector('input').value);
+                    if (!isNaN(valueM2) && valueM2 > 0) {
+                        totalM2Value += valueM2;
+                        validSamples++;
                     }
                 });
+                const avgM2Value = validSamples > 0 ? totalM2Value / validSamples : 0;
+                const subjectArea = parseFloat(areaTerrenoImovel.value) || 0;
+                const totalTerrainValue = avgM2Value * subjectArea;
+                avgM2ValueEl.textContent = `€ ${avgM2Value.toFixed(2)}`;
+                totalTerrainValueEl.textContent = `€ ${totalTerrainValue.toFixed(2)}`;
             }
-
-            setupImagePreviewWithCollage('imagemCidade', 'preview-imagen-cidade', 'collage-cidade-img');
-            setupImagePreviewWithCollage('imagemMorada', 'preview-imagen-morada', 'collage-morada-img');
+            comparisonTable.addEventListener('input', calculateTerrainValue);
+            areaTerrenoImovel.addEventListener('input', calculateTerrainValue);
         });
     </script>
 </body>
