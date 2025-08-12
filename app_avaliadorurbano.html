@@ -680,7 +680,7 @@
 
     <div class="modal fade" id="fitoCorviniModal" tabindex="-1" role="dialog" aria-labelledby="fitoCorviniModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="fitoCorviniModalLabel">Calculadora de Depreciação (Fito-Corvini)</h5>
@@ -688,6 +688,50 @@
                             aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
+                    <h5 class="h6">Tabela de Referência Fito-Corvini</h5>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-sm text-center" style="font-size: 0.8rem;">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th style="width: 5%;">Estado</th>
+                                    <th style="width: 55%;">Descrição</th>
+                                    <th style="width: 40%;">Fórmula de Depreciação (Y)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>**Novo ou como novo.** Sem deterioração aparente.</td>
+                                    <td>Y = 0.0050 X² + 0.5001 X - 0.0071</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>**Bom.** Ligeiro desgaste natural, necessita reparações menores nos acabamentos.
+                                    </td>
+                                    <td>Y = 0.0049 X² + 0.4861 X + 2.5407</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>**Regular.** Desgaste evidente, necessita reparações simples (pisos, etc.).</td>
+                                    <td>Y = 0.0041 X² + 0.4092 X + 18.1041</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>**Mau.** Deterioração significativa, necessita reparações importantes na
+                                        estrutura.</td>
+                                    <td>Y = 0.0023 X² + 0.2400 X + 52.5274</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>**Muito Mau / Demolição.** Ameaça de ruína.</td>
+                                    <td>Y = 100%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <small class="form-text text-muted">Onde X = (Idade / Vida Útil) * 100</small>
+                    </div>
+                    <hr>
+                    <h5 class="h6">Calculadora Precisa</h5>
                     <div class="form-group">
                         <label for="fito-idade">Idade do Imóvel (anos)</label>
                         <input type="number" id="fito-idade" class="form-control" min="0" placeholder="Ex: 20">
@@ -720,7 +764,6 @@
             </div>
         </div>
     </div>
-
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
