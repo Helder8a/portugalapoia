@@ -2,7 +2,6 @@
 <html lang="pt-PT">
 
 <head>
-    <!-- Google Tag Manager Analitic Strar-->
     <script>(function (w, d, s, l, i) {
             w[l] = w[l] || []; w[l].push({
                 'gtm.start':
@@ -11,13 +10,8 @@
                 j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
                     'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-PQ2Q63GR');</script>
-    <!-- End Google Tag Manager Analitic End-->
-
-    <!-- Google adsense monetizar Strar-->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3196299619563199"
         crossorigin="anonymous"></script>
-    <!-- Google adsense monetizar end-->
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Evaluador Sustentável PRO (LiderA, BREEAM, LEED) - PortugalApoia</title>
@@ -256,89 +250,12 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="materials_db.js"></script>
     <script src="script.js" defer></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const certificationsDB = {
-                lidera: {
-                    name: "LiderA", maxScore: 20.0, scoreUnit: "Pontos",
-                    levels: { 11: "A++", 9.5: "A+", 8.0: "A", 6.5: "B", 5.0: "C", 3.5: "D", 2.0: "E", 1.0: "F", 0: "G" },
-                    weights: {
-                        edificio: { "Integração Local": 1, "Recursos": 1.5, "Cargas Ambientais": 1, "Qualidade do Ambiente Interior": 1.2, "Vivências Socioeconómicas": 1 },
-                        urbano: { "Integração Local": 1.5, "Recursos": 1, "Cargas Ambientais": 1.2, "Qualidade do Ambiente Interior": 0.8, "Vivências Socioeconómicas": 1.5 }
-                    },
-                    data: {
-                        "Integração Local": {
-                            "Bio-clima": {
-                                info: { objetivo: "Otimização do projeto face às condições climáticas locais.", exemplo: "Edifício em Lisboa com fachadas de vidro a sul protegidas por palas.", beneficios: "Redução da necessidade de ar condicionado." },
-                                credits: { "Orientação solar otimizada": 0.4, "Proteção contra ventos dominantes": 0.2, "Estudo de sombras adequado": 0.2 }
-                            }
-                        },
-                        "Recursos": {
-                            "Eficiência Energética": {
-                                info: { objetivo: "Redução do consumo de energia do edifício.", exemplo: "Utilização de isolamento de cortiça e janelas de vidro duplo.", beneficios: "Contas de energia mais baixas." },
-                                // --- INICIO DE LA NUEVA BASE DE DATOS DE SOLUCIONES ---
-                                solucoes_pt: [
-                                    {
-                                        nome: "Aglomerado de Cortiça Expandida (ICB)",
-                                        fabricante: "Amorim Isolamentos",
-                                        descricao: "Material 100% natural e português, proveniente da cortiça. É um excelente isolante térmico e acústico, totalmente reciclável e com um balanço de carbono negativo.",
-                                        aplicacao: "Isolamento de paredes exteriores (ETICS/Cappotto), coberturas planas e inclinadas, e lajes.",
-                                        link: "https://www.amorimisolamentos.com/"
-                                    },
-                                    {
-                                        nome: "Janelas de Alta Eficiência Energética",
-                                        fabricante: "Caixiave / Sosoares (Exemplos)",
-                                        descricao: "Caixilharia com corte térmico (PVC ou Alumínio) e vidro duplo ou triplo com baixo teor emissivo (low-e). Reduzem significativamente as perdas de calor no inverno e os ganhos no verão.",
-                                        aplicacao: "Vãos exteriores em geral (janelas, portas de sacada).",
-                                        link: "https://www.caixiave.pt/"
-                                    },
-                                    {
-                                        nome: "Lã Mineral (Lã de Rocha ou Lã de Vidro)",
-                                        fabricante: "Volcalis / Saint-Gobain (Exemplos)",
-                                        descricao: "Isolantes fabricados a partir de matérias-primas naturais (rocha basáltica ou areia). Oferecem excelente desempenho térmico, acústico e de proteção contra incêndios.",
-                                        aplicacao: "Paredes duplas, divisórias interiores, tetos falsos e coberturas.",
-                                        link: "https://www.volcalis.pt/"
-                                    }
-                                ],
-                                // --- FIN DE LA NUEVA BASE DE DATOS DE SOLUCIONES ---
-                                credits: { "Isolamento térmico de alto desempenho": 0.5, "Janelas eficientes com corte térmico": 0.4, "Sistemas AVAC de alta eficiência": 0.3, "Iluminação LED": 0.3 }
-                            }
-                        },
-                        "Cargas Ambientais": {
-                            "Gestão de Resíduos": {
-                                info: { objetivo: "Minimização da produção de resíduos.", exemplo: "Plano de obra que desvie >70% dos resíduos para reciclagem.", beneficios: "Redução do lixo." },
-                                credits: { "Plano de gestão de resíduos de construção (>70% desviado)": 0.6, "Espaço para separação de resíduos domésticos": 0.4 }
-                            }
-                        },
-                        "Qualidade do Ambiente Interior": {
-                            "Conforto Térmico e Qualidade do Ar": {
-                                info: { objetivo: "Garantir um ambiente interior saudável e confortável.", exemplo: "Projetar ventilação natural e usar tintas sem COV.", beneficios: "Ambiente mais saudável." },
-                                solucoes_pt: [
-                                    {
-                                        nome: "Tintas Ecológicas com Baixo COV",
-                                        fabricante: "CIN / Robbialac (Exemplos)",
-                                        descricao: "Tintas à base de água com emissões de Compostos Orgânicos Voláteis (COV) muito reduzidas ou nulas. Melhoram a qualidade do ar interior e são mais seguras para a saúde.",
-                                        aplicacao: "Pintura de paredes e tetos interiores.",
-                                        link: "https://www.cin.com/"
-                                    }
-                                ],
-                                credits: { "Ventilação natural cruzada": 0.5, "Materiais com baixas emissões de COV": 0.4, "Monitorização de CO2": 0.3 }
-                            }
-                        },
-                        "Vivências Socioeconómicas": {
-                            "Acessibilidades e Inclusão": {
-                                info: { objetivo: "Garantir que o edifício seja acessível a todos.", exemplo: "Construir rampas de acesso e instalar elevadores adequados.", beneficios: "Inclusão social." },
-                                credits: { "Acessos sem barreiras arquitetónicas": 0.6, "Instalações sanitárias adaptadas": 0.4 }
-                            }
-                        }
-                    }
-                },
-                // Las bases de datos de BREEAM y LEED se mantienen igual...
-                breeam: { /* ... (sin cambios) ... */ },
-                leed: { /* ... (sin cambios) ... */ }
-            };
+            // La variable `certificationsDB` ya está disponible gracias a `materials_db.js`
 
             const getEl = (id) => document.getElementById(id);
             const evaluationFormEl = getEl('evaluationForm');
@@ -375,10 +292,8 @@
                             creditsHTML += `<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="${creditId}" data-vertente="${vertente}" data-area="${area}" data-credit="${credit}"><label class="custom-control-label" for="${creditId}">${credit}</label></div>`;
                         });
 
-                        // --- CÓDIGO MODIFICADO AQUÍ PARA AÑADIR EL NUEVO ICONO ---
                         const solutionsIconHTML = data.solucoes_pt ? `<i class="fas fa-cubes solutions-icon" data-vertente="${vertente}" data-area="${area}" title="Ver Soluções de Mercado"></i>` : '';
                         areasHTML += `<div class="mb-4"><h5><span class="area-label">${area}<span class="icon-group"><i class="fas fa-info-circle info-icon" data-vertente="${vertente}" data-area="${area}"></i>${solutionsIconHTML}</span></span></h5>${creditsHTML}</div>`;
-                        // --- FIN DE LA MODIFICACIÓN ---
                     });
                     const vertenteHTML = `<div class="card mb-3"><div class="card-header vertente-header" data-toggle="collapse" data-target="#vertente-${vIndex}"><h4 class="mb-0">${vertente}</h4></div><div id="vertente-${vIndex}" class="collapse ${vIndex === 0 ? 'show' : ''}" data-parent="#evaluationForm"><div class="card-body">${areasHTML.replace(/<div class="mb-4">/g, '<hr class="my-4"><div class="mb-4">').replace('<hr class="my-4">', '')}</div></div></div>`;
                     evaluationFormEl.insertAdjacentHTML('beforeend', vertenteHTML);
@@ -492,7 +407,6 @@
                 }
             });
 
-            // --- INICIO: LÓGICA PARA MOSTRAR SOLUCIONES DE MERCADO ---
             evaluationFormEl.addEventListener('click', (e) => {
                 const target = e.target.closest('.solutions-icon');
                 if (target) {
@@ -518,9 +432,6 @@
                     }
                 }
             });
-            // --- FIN: LÓGICA PARA MOSTRAR SOLUCIONES DE MERCADO --- 
-
-
 
             certificationSelector.addEventListener('change', (e) => {
                 currentCert = e.target.value;
@@ -737,9 +648,7 @@
     </div>
 
 </body>
-<!-- Google Tag Manager (noscript)  -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PQ2Q63GR" height="0" width="0"
         style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
 
 </html>

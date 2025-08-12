@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avaliador Urbano - PortugalApoia</title>
+    <meta name="description" content="Ferramenta para avaliação comercial de imóveis urbanos.">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Roboto:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/favicon.ico.png" type="image/png">
+
+    <style>
+        .preview-placeholder {
+            width: 100%;
+            min-height: 180px;
+            background-color: var(--color-background-light);
+            border: 1px dashed var(--color-border);
+            border-radius: var(--border-radius);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .preview-placeholder img {
+            object-fit: cover;
+        }
+
+        .solution-card {
+            padding: 1rem;
+            border: 1px solid var(--color-border);
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+        }
+
+        .solution-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .solution-card h5 {
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .solution-manufacturer {
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+        }
+
+        .material-option {
+            margin-bottom: 0.5rem;
+        }
+
+        .transport-info {
+            display: none;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="main-header">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand logo" href="index.html">PortugalApoia</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="main-nav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link" href="doacoes.html">Doações</a></li>
+                        <li class="nav-item"><a class="nav-link" href="empregos.html">Emprego</a></li>
+                        <li class="nav-item"><a class="nav-link" href="servicos.html">Serviços</a></li>
+                        <li class="nav-item dropdown active">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownWebApp" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Apps
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownWebApp">
+                                <a class="dropdown-item" href="app_evaluadorsustentable.html">Evaluador Sustentável
+                                    PRO</a>
+                                <a class="dropdown-item active" href="app_avaliadorurbano.html">Avaliação Urbana</a>
+                            </div>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link btn btn-primary publish-btn"
+                                href="publicar.html">Publicar</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-header page-header-publicar text-center">
+            <div class="container">
+                <h1 class="page-title">Avaliador Urbano</h1>
+                <p class="lead">Ferramenta para realizar avaliações comerciais de imóveis urbanos.</p>
+            </div>
+        </section>
+
+        <div class="container my-5">
+            <div id="avaliador-urbano-app" class="card p-4">
+
+                <h3 class="mb-4">1. Dados Gerais da Avaliação</h3>
+                <div class="card p-4 shadow-sm mb-5">
+                    <div class="form-group">
+                        <label for="nomeSolicitante">Identificação do Solicitante</label>
+                        <input type="text" class="form-control" id="nomeSolicitante"
+                            placeholder="Nome e identificação do solicitante">
+                    </div>
+                    <div class="form-group">
+                        <label for="nomeAvaliador">Identificação do Avaliador</label>
+                        <input type="text" class="form-control" id="nomeAvaliador"
+                            placeholder="Nome, identificação e registo do avaliador">
+                    </div>
+                    <div class="form-group">
+                        <label for="objetoAvaliacao">Objeto da Avaliação</label>
+                        <textarea class="form-control" id="objetoAvaliacao" rows="2"
+                            placeholder="Descreva o propósito da avaliação (ex: compra e venda, garantia hipotecária, etc.)."></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="dataVisita">Data da Visita</label>
+                            <input type="date" class="form-control" id="dataVisita">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="dataRelatorio">Data do Relatório</label>
+                            <input type="date" class="form-control" id="dataRelatorio">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="tipoAvaliacao">Tipo de Avaliação</label>
+                        <input type="text" class="form-control" id="tipoAvaliacao" value="Avaliação Comercial Urbana"
+                            disabled>
+                    </div>
+                    <hr class="my-4">
+                    <div class="form-group">
+                        <label for="ambitoTrabalho">Âmbito do Trabalho</label>
+                        <textarea class="form-control" id="ambitoTrabalho" rows="4"
+                            disabled>A avaliação comercial urbana é um processo técnico para determinar o valor de mercado mais provável de um imóvel, com o propósito de orientar transações, financiamentos, planeamento patrimonial, compra e venda ou gestão de ativos. É uma estimativa do valor que um comprador estaria disposto a pagar num mercado livre e aberto.</textarea>
+                    </div>
+                </div>
+
+                <h3 class="mb-4">2. Seleção do Método de Avaliação</h3>
+                <div class="form-group">
+                    <label for="metodoSeleccionado">Método de Avaliação</label>
+                    <select class="form-control" id="metodoSeleccionado">
+                        <option value="comparacion">Método de Comparação de Mercado</option>
+                        <option value="costo">Método do Custo</option>
+                        <option value="ingresos">Método de Capitalização de Rendimentos</option>
+                    </select>
+                </div>
+
+                <div class="form-group mt-4">
+                    <label for="tipoInmueble">Tipo de Imóvel</label>
+                    <select class="form-control" id="tipoInmueble">
+                        <option value="casa">Casa</option>
+                        <option value="edificio">Edifício</option>
+                        <option value="apartamento">Apartamento</option>
+                        <option value="terreno">Terreno</option>
+                        <option value="casa-rustica">Casa Rústica ou Quinta</option>
+                    </select>
+                </div>
+
+                <hr class="my-5">
+                <h3 class="mb-4">3. Morada do Imóvel</h3>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="cidadeImovel">Cidade</label>
+                        <input type="text" class="form-control" id="cidadeImovel"
+                            placeholder="Ex: Lisboa, Porto, Coimbra">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="codigoPostalImovel">Código Postal</label>
+                        <input type="text" class="form-control" id="codigoPostalImovel" placeholder="Ex: 4000-447">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="moradaImovel">Morada Completa</label>
+                    <input type="text" class="form-control" id="moradaImovel"
+                        placeholder="Ex: Rua de Santa Catarina, 123">
+                </div>
+
+                <hr class="my-5">
+                <h4 class="mb-4 text-center">4. Diagrama de Localização do Imóvel</h4>
+                <p class="text-center text-muted">Carregue imagens para visualizar a localização do imóvel.</p>
+
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 shadow-sm text-center">
+                            <div class="card-body d-flex flex-column align-items-center">
+                                <h5 class="card-title">País: Portugal</h5>
+                                <img src="https://i.imgur.com/gK9o10e.png" alt="Mapa de Portugal"
+                                    class="img-fluid border rounded" style="max-height: 180px;">
+                                <p class="mt-3 text-muted small">Representação a nível nacional.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 shadow-sm text-center">
+                            <div class="card-body d-flex flex-column align-items-center">
+                                <h5 class="card-title">Localização da Cidade</h5>
+                                <input type="file" class="form-control-file my-2" id="imagemCidade" accept="image/*">
+                                <div id="preview-imagen-cidade" class="preview-placeholder">
+                                    <p class="text-muted">A imagem da cidade aparecerá aqui.</p>
+                                </div>
+                                <p class="mt-auto text-muted small">Carregue uma foto aérea da cidade ou bairro.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 shadow-sm text-center">
+                            <div class="card-body d-flex flex-column align-items-center">
+                                <h5 class="card-title">Localização da Morada</h5>
+                                <input type="file" class="form-control-file my-2" id="imagemMorada" accept="image/*">
+                                <div id="preview-imagen-morada" class="preview-placeholder">
+                                    <p class="text-muted">A imagem da morada aparecerá aqui.</p>
+                                </div>
+                                <p class="mt-auto text-muted small">Carregue uma foto aérea da parcela do imóvel.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-12 text-center">
+                        <div id="collage-profesional" class="mt-4 p-4 border rounded" style="display: none;">
+                            <h4>Colagem de Localização Arquitetónica</h4>
+                            <div class="d-flex justify-content-center align-items-center">
+                                <img id="collage-pais-img" src="https://i.imgur.com/gK9o10e.png" alt="Mapa de Portugal"
+                                    class="img-fluid m-2 border" style="max-height: 150px;">
+                                <i class="fas fa-arrow-right fa-2x text-primary mx-3 d-none d-md-block"></i>
+                                <img id="collage-cidade-img" alt="Localização da Cidade" class="img-fluid m-2 border"
+                                    style="max-height: 150px;">
+                                <i class="fas fa-arrow-right fa-2x text-primary mx-3 d-none d-md-block"></i>
+                                <img id="collage-morada-img" alt="Localização da Morada" class="img-fluid m-2 border"
+                                    style="max-height: 150px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-5">
+                <h3 class="mb-4">5. Características das Vias de Acesso</h3>
+                <p class="text-muted">Descreva as vias principais e secundárias e, se desejar, carregue uma imagem de
+                    cada uma.</p>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100 shadow-sm p-3">
+                            <label for="viasAcessoPrincipal">Vias de Acesso Principais</label>
+                            <textarea class="form-control mb-2" id="viasAcessoPrincipal" rows="3"
+                                placeholder="Ex: Avenida da República, Eixo Norte-Sul..."></textarea>
+                            <input type="file" class="form-control-file my-2" id="imagemViaPrincipal" accept="image/*">
+                            <div id="preview-imagen-via-principal" class="preview-placeholder">
+                                <p class="text-muted small">A imagem da via principal aparecerá aqui.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100 shadow-sm p-3">
+                            <label for="viasAcessoSecundarias">Vias de Acesso Secundárias</label>
+                            <textarea class="form-control mb-2" id="viasAcessoSecundarias" rows="3"
+                                placeholder="Ex: Rua de Santa Catarina, Rua Gonçalo de Carvalho..."></textarea>
+                            <input type="file" class="form-control-file my-2" id="imagemViaSecundaria" accept="image/*">
+                            <div id="preview-imagen-via-secundaria" class="preview-placeholder">
+                                <p class="text-muted small">A imagem da via secundária aparecerá aqui.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-5">
+                <h3 class="mb-4">6. Descrição do Imóvel e do Entorno</h3>
+                <div class="card p-4 shadow-sm mb-5">
+                    <h4 class="mb-3">Identificação Legal do Imóvel</h4>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="matriculaPredial">Matrícula Predial</label>
+                            <input type="text" class="form-control" id="matriculaPredial" placeholder="Ex: 000-000000">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="numeroCadastro">Número de Cadastro</label>
+                            <input type="text" class="form-control" id="numeroCadastro" placeholder="Ej: 123456789">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="limitesImovel">Limites</label>
+                        <textarea class="form-control" id="limitesImovel" rows="2"
+                            placeholder="Descreva os limites do prédio."></textarea>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <h4 class="mb-3">Características do Terreno</h4>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="areaTerreno">Área do Terreno (m²)</label>
+                            <input type="number" class="form-control" id="areaTerreno" placeholder="Ex: 300">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="topografiaTerreno">Topografia do Terreno</label>
+                            <select class="form-control" id="topografiaTerreno">
+                                <option>Plana</option>
+                                <option>Inclinada para a frente</option>
+                                <option>Inclinada para trás</option>
+                                <option>Irregular</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <h4 class="mb-3">Características da Construção</h4>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="areaConstruida">Área Construída (m²)</label>
+                            <input type="number" class="form-control" id="areaConstruida" placeholder="Ex: 150">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="dataConstrucao">Data de Construção</label>
+                            <input type="date" class="form-control" id="dataConstrucao">
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="idadeImovel">Idade do Imóvel (anos)</label>
+                            <input type="text" class="form-control" id="idadeImovel" placeholder="Calculado" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label>Muros</label>
+                        <div class="row align-items-center mb-2">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="muroTijolo">
+                                    <label class="form-check-label" for="muroTijolo">Tijolo</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="muroTijoloConservacao">
+                                    <option value="">Estado de Conservação</option>
+                                    <option>Bom</option>
+                                    <option>Razoável</option>
+                                    <option>Mau</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="muroTijoloAcabamento">
+                                    <option value="">Acabamento</option>
+                                    <option>De Luxo</option>
+                                    <option>Convencional</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row align-items-center mb-2">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="muroBeton">
+                                    <label class="form-check-label" for="muroBeton">Betão</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="muroBetonConservacao">
+                                    <option value="">Estado de Conservação</option>
+                                    <option>Bom</option>
+                                    <option>Razoável</option>
+                                    <option>Mau</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="muroBetonAcabamento">
+                                    <option value="">Acabamento</option>
+                                    <option>De Luxo</option>
+                                    <option>Convencional</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="muroPedra">
+                                    <label class="form-check-label" for="muroPedra">Pedra</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="muroPedraConservacao">
+                                    <option value="">Estado de Conservação</option>
+                                    <option>Bom</option>
+                                    <option>Razoável</option>
+                                    <option>Mau</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="muroPedraAcabamento">
+                                    <option value="">Acabamento</option>
+                                    <option>De Luxo</option>
+                                    <option>Convencional</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label>Rebocos e Pintura</label>
+                        <div class="row align-items-center mb-2">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="rebocoEstuco">
+                                    <label class="form-check-label" for="rebocoEstuco">Reboco/Estuque</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="rebocoConservacao">
+                                    <option value="">Estado de Conservação</option>
+                                    <option>Bom</option>
+                                    <option>Razoável</option>
+                                    <option>Mau</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="rebocoAcabamento">
+                                    <option value="">Tipo de Acabamento</option>
+                                    <option>De Luxo</option>
+                                    <option>Convencional</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="pintura">
+                                    <label class="form-check-label" for="pintura">Pintura</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="pinturaConservacao">
+                                    <option value="">Estado de Conservação</option>
+                                    <option>Bom</option>
+                                    <option>Razoável</option>
+                                    <option>Mau</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="pinturaAcabamento">
+                                    <option value="">Tipo de Acabamento</option>
+                                    <option>De Luxo</option>
+                                    <option>Convencional</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label>Pisos</label>
+                        <div class="row align-items-center mb-2">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="pisoFlutuante">
+                                    <label class="form-check-label" for="pisoFlutuante">Flutuante/Laminado</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="pisoFlutuanteConservacao">
+                                    <option value="">Estado de Conservação</option>
+                                    <option>Bom</option>
+                                    <option>Razoável</option>
+                                    <option>Mau</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="pisoFlutuanteAcabamento">
+                                    <option value="">Tipo de Acabamento</option>
+                                    <option>De Luxo</option>
+                                    <option>Convencional</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row align-items-center mb-2">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="pisoMadeira">
+                                    <label class="form-check-label" for="pisoMadeira">Madeira Maciça</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="pisoMadeiraConservacao">
+                                    <option value="">Estado de Conservación</option>
+                                    <option>Bom</option>
+                                    <option>Razoável</option>
+                                    <option>Mau</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="pisoMadeiraAcabamento">
+                                    <option value="">Tipo de Acabamento</option>
+                                    <option>De Luxo</option>
+                                    <option>Convencional</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row align-items-center mb-2">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="pisoCeramica">
+                                    <label class="form-check-label" for="pisoCeramica">Cerâmica/Azulejo</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="pisoCeramicaConservacao">
+                                    <option value="">Estado de Conservación</option>
+                                    <option>Bom</option>
+                                    <option>Razoável</option>
+                                    <option>Mau</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="pisoCeramicaAcabamento">
+                                    <option value="">Tipo de Acabamento</option>
+                                    <option>De Luxo</option>
+                                    <option>Convencional</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row align-items-center mb-2">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="pisoPedra">
+                                    <label class="form-check-label" for="pisoPedra">Pedra Natural</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="pisoPedraConservacao">
+                                    <option value="">Estado de Conservación</option>
+                                    <option>Bom</option>
+                                    <option>Razoável</option>
+                                    <option>Mau</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="pisoPedraAcabamento">
+                                    <option value="">Tipo de Acabamento</option>
+                                    <option>De Luxo</option>
+                                    <option>Convencional</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="pisoVinilico">
+                                    <label class="form-check-label" for="pisoVinilico">Vinílico</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="pisoVinilicoConservacao">
+                                    <option value="">Estado de Conservación</option>
+                                    <option>Bom</option>
+                                    <option>Razoável</option>
+                                    <option>Mau</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="pisoVinilicoAcabamento">
+                                    <option value="">Tipo de Acabamento</option>
+                                    <option>De Luxo</option>
+                                    <option>Convencional</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label>Telhado</label>
+                        <div class="row align-items-center mb-2">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="telhadoCeramica">
+                                    <label class="form-check-label" for="telhadoCeramica">Telha Cerâmica</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="telhadoCeramicaConservacao">
+                                    <option value="">Estado de Conservação</option>
+                                    <option>Bom</option>
+                                    <option>Razoável</option>
+                                    <option>Mau</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="telhadoCeramicaAcabamento">
+                                    <option value="">Tipo de Acabamento</option>
+                                    <option>De Luxo</option>
+                                    <option>Convencional</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row align-items-center mb-2">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="telhadoAco">
+                                    <label class="form-check-label" for="telhadoAco">Telha de Aço</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="telhadoAcoConservacao">
+                                    <option value="">Estado de Conservação</option>
+                                    <option>Bom</option>
+                                    <option>Razoável</option>
+                                    <option>Mau</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="telhadoAcoAcabamento">
+                                    <option value="">Tipo de Acabamento</option>
+                                    <option>De Luxo</option>
+                                    <option>Convencional</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row align-items-center mb-2">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="telhadoFibrocimento">
+                                    <label class="form-check-label" for="telhadoFibrocimento">Fibrocimento</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="telhadoFibrocimentoConservacao">
+                                    <option value="">Estado de Conservación</option>
+                                    <option>Bom</option>
+                                    <option>Razoável</option>
+                                    <option>Mau</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="telhadoFibrocimentoAcabamento">
+                                    <option value="">Tipo de Acabamento</option>
+                                    <option>De Luxo</option>
+                                    <option>Convencional</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="telhadoPainel">
+                                    <label class="form-check-label" for="telhadoPainel">Painel Sandwich</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="telhadoPainelConservacao">
+                                    <option value="">Estado de Conservación</option>
+                                    <option>Bom</option>
+                                    <option>Razoável</option>
+                                    <option>Mau</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="telhadoPainelAcabamento">
+                                    <option value="">Tipo de Acabamento</option>
+                                    <option>De Luxo</option>
+                                    <option>Convencional</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label>Portas</label>
+                        <div class="row align-items-center mb-2">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="portaMadeira">
+                                    <label class="form-check-label" for="portaMadeira">Madeira</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="portaMadeiraConservacao">
+                                    <option value="">Estado de Conservação</option>
+                                    <option>Bom</option>
+                                    <option>Razoável</option>
+                                    <option>Mau</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="portaMadeiraAcabamento">
+                                    <option value="">Tipo de Acabamento</option>
+                                    <option>De Luxo</option>
+                                    <option>Convencional</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row align-items-center mb-2">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="portaAluminio">
+                                    <label class="form-check-label" for="portaAluminio">Alumínio</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="portaAluminioConservacao">
+                                    <option value="">Estado de Conservación</option>
+                                    <option>Bom</option>
+                                    <option>Razoável</option>
+                                    <option>Mau</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="portaAluminioAcabamento">
+                                    <option value="">Tipo de Acabamento</option>
+                                    <option>De Luxo</option>
+                                    <option>Convencional</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="portaGalvanizada">
+                                    <label class="form-check-label" for="portaGalvanizada">Chapa Galvanizada</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="portaGalvanizadaConservacao">
+                                    <option value="">Estado de Conservación</option>
+                                    <option>Bom</option>
+                                    <option>Razoável</option>
+                                    <option>Mau</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control form-control-sm" id="portaGalvanizadaAcabamento">
+                                    <option value="">Tipo de Acabamento</option>
+                                    <option>De Luxo</option>
+                                    <option>Convencional</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label>Instalações</label>
+                        <div class="row align-items-center mb-2">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="instalacaoEletricas">
+                                    <label class="form-check-label" for="instalacaoEletricas">Elétricas</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <select class="form-control form-control-sm" id="instalacaoEletricasConservacao">
+                                    <option value="">Estado de Conservação</option>
+                                    <option>Bom</option>
+                                    <option>Razoável</option>
+                                    <option>Mau</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row align-items-center mb-2">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="instalacaoHidraulicas">
+                                    <label class="form-check-label" for="instalacaoHidraulicas">Hidráulicas</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <select class="form-control form-control-sm" id="instalacaoHidraulicasConservacao">
+                                    <option value="">Estado de Conservación</option>
+                                    <option>Bom</option>
+                                    <option>Razoável</option>
+                                    <option>Mau</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="instalacaoSanitarias">
+                                    <label class="form-check-label" for="instalacaoSanitarias">Sanitárias</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <select class="form-control form-control-sm" id="instalacaoSanitariasConservacao">
+                                    <option value="">Estado de Conservación</option>
+                                    <option>Bom</option>
+                                    <option>Razoável</option>
+                                    <option>Mau</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="observacoesConstrucao">Outras Observações</label>
+                        <textarea class="form-control" id="observacoesConstrucao" rows="2"
+                            placeholder="Descreva outras características da construção."></textarea>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <h4 class="mb-3">Descrição do Entorno</h4>
+                    <div class="form-group">
+                        <label for="entornoLocalizacao">Detalhes da Localização</label>
+                        <textarea class="form-control" id="entornoLocalizacao" rows="2"
+                            placeholder="Descreva o entorno imediato, pontos de referência, etc."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Infraestrutura Rodoviária</label>
+                        <div class="row align-items-center mb-2">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="rua-calcada"
+                                        id="viaRuaCalcada">
+                                    <label class="form-check-label" for="viaRuaCalcada">Rua Calçada</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <select class="form-control form-control-sm" id="estadoRuaCalcada">
+                                    <option value="">Estado de Conservação</option>
+                                    <option>Bom</option>
+                                    <option>Razoável</option>
+                                    <option>Mau</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row align-items-center mb-2">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="rua-pavimentada"
+                                        id="viaRuaPavimentada">
+                                    <label class="form-check-label" for="viaRuaPavimentada">Rua Pavimentada</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <select class="form-control form-control-sm" id="estadoRuaPavimentada">
+                                    <option value="">Estado de Conservación</option>
+                                    <option>Bom</option>
+                                    <option>Razoável</option>
+                                    <option>Mau</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="autoestrada"
+                                        id="viaAutoestrada">
+                                    <label class="form-check-label" for="viaAutoestrada">Acesso a Autoestrada (até
+                                        5km)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <select class="form-control form-control-sm" id="estadoAutoestrada">
+                                    <option value="">Estado de Conservación</option>
+                                    <option>Bom</option>
+                                    <option>Razoável</option>
+                                    <option>Mau</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label>Acesso a Transportes Públicos</label>
+                        <div class="row align-items-center mb-2">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="temParagemBus">
+                                    <label class="form-check-label" for="temParagemBus">Paragem de Autocarro</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control form-control-sm" id="nomeParagemBus"
+                                    placeholder="Nome da Paragem">
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control form-control-sm" id="distanciaParagemBus"
+                                    placeholder="Distância (metros)">
+                            </div>
+                        </div>
+                        <div class="row align-items-center mb-2">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="temEstacaoMetro">
+                                    <label class="form-check-label" for="temEstacaoMetro">Estação de Metro</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control form-control-sm" id="nomeEstacaoMetro"
+                                    placeholder="Nome da Estação">
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control form-control-sm" id="distanciaEstacaoMetro"
+                                    placeholder="Distância (metros)">
+                            </div>
+                        </div>
+                        <div class="row align-items-center">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="temEstacaoComboio">
+                                    <label class="form-check-label" for="temEstacaoComboio">Estação de Comboio</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control form-control-sm" id="nomeEstacaoComboio"
+                                    placeholder="Nome da Estação">
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control form-control-sm" id="distanciaEstacaoComboio"
+                                    placeholder="Distância (metros)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mt-4">
+                        <label data-toggle="collapse" href="#servicosComplementaresCollapse" role="button"
+                            aria-expanded="false" aria-controls="servicosComplementaresCollapse"
+                            style="cursor: pointer;">
+                            <strong>Serviços Complementares <i class="fas fa-chevron-down ml-2"></i></strong>
+                        </label>
+                        <div class="collapse" id="servicosComplementaresCollapse">
+                            <div class="card card-body">
+                                <div class="row align-items-center mb-2">
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="servicoComercio">
+                                            <label class="form-check-label" for="servicoComercio">Áreas
+                                                Comerciais</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select class="form-control form-control-sm" id="servicoComercioConservacao">
+                                            <option value="">Estado de Conservação</option>
+                                            <option>Bom</option>
+                                            <option>Razoável</option>
+                                            <option>Mau</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row align-items-center mb-2">
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="servicoSaude">
+                                            <label class="form-check-label" for="servicoSaude">Centros de Saúde</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select class="form-control form-control-sm" id="servicoSaudeConservacao">
+                                            <option value="">Estado de Conservação</option>
+                                            <option>Bom</option>
+                                            <option>Razoável</option>
+                                            <option>Mau</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row align-items-center mb-2">
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="servicoEscolas">
+                                            <label class="form-check-label" for="servicoEscolas">Escolas</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select class="form-control form-control-sm" id="servicoEscolasConservacao">
+                                            <option value="">Estado de Conservação</option>
+                                            <option>Bom</option>
+                                            <option>Razoável</option>
+                                            <option>Mau</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row align-items-center mb-2">
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="servicoParques">
+                                            <label class="form-check-label" for="servicoParques">Parques e
+                                                Jardins</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select class="form-control form-control-sm" id="servicoParquesConservacao">
+                                            <option value="">Estado de Conservação</option>
+                                            <option>Bom</option>
+                                            <option>Razoável</option>
+                                            <option>Mau</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row align-items-center mb-2">
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="servicoDesporto">
+                                            <label class="form-check-label" for="servicoDesporto">Ginásios e Instalações
+                                                Desportivas</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select class="form-control form-control-sm" id="servicoDesportoConservacao">
+                                            <option value="">Estado de Conservação</option>
+                                            <option>Bom</option>
+                                            <option>Razoável</option>
+                                            <option>Mau</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row align-items-center">
+                                    <div class="col-md-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="servicoSeguranca">
+                                            <label class="form-check-label" for="servicoSeguranca">Segurança Pública
+                                                (Polícia/Bombeiros)</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select class="form-control form-control-sm" id="servicoSegurancaConservacao">
+                                            <option value="">Estado de Conservação</option>
+                                            <option>Bom</option>
+                                            <option>Razoável</option>
+                                            <option>Mau</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="metodo-explicacion" class="mt-4">
+                    <div id="explicacion-comparacion">
+                        <h4>Método de Comparação de Mercado</h4>
+                        <p>Este método estima o valor de um imóvel comparando-o com propriedades semelhantes que foram
+                            vendidas ou estão no mercado. É o mais comum e baseia-se no princípio de substituição.</p>
+                    </div>
+                    <div id="explicacion-costo" style="display: none;">
+                        <h4>Método do Custo</h4>
+                        <p>Este método calcula o valor do imóvel somando o custo de um terreno semelhante e o custo
+                            de construção de uma nova edificação, subtraindo a depreciação por idade e estado.</p>
+                    </div>
+                    <div id="explicacion-ingresos" style="display: none;">
+                        <h4>Método de Capitalização de Rendimentos</h4>
+                        <p>Este método determina o valor da propriedade com base nos rendimentos que poderia gerar.
+                            É ideal para imóveis comerciais ou de arrendamento.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer"></footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Lógica para mostrar/ocultar a explicação do método de avaliação
+            $('#metodoSeleccionado').change(function () {
+                $('#metodo-explicacion > div').hide();
+                var selectedMethod = $(this).val();
+                $('#explicacion-' + selectedMethod).show();
+            });
+
+            // Lógica para a pré-visualização de imagens de localização e colagem
+            function setupImagePreviewWithCollage(inputId, previewId, collageImgId) {
+                const input = document.getElementById(inputId);
+                const preview = document.getElementById(previewId);
+                const collageImg = document.getElementById(collageImgId);
+
+                input.addEventListener('change', function (e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            const img = document.createElement('img');
+                            img.src = e.target.result;
+                            img.classList.add('img-fluid', 'border', 'rounded');
+                            preview.innerHTML = '';
+                            preview.appendChild(img);
+
+                            collageImg.src = e.target.result;
+                            document.getElementById('collage-profesional').style.display = 'flex';
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+
+            // Lógica para a pré-visualização de imagens de vias de acesso
+            function setupImagePreview(inputId, previewId) {
+                const input = document.getElementById(inputId);
+                const preview = document.getElementById(previewId);
+
+                input.addEventListener('change', function (e) {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            const img = document.createElement('img');
+                            img.src = e.target.result;
+                            img.classList.add('img-fluid', 'border', 'rounded', 'h-100', 'w-100');
+                            img.style.objectFit = 'cover';
+                            preview.innerHTML = '';
+                            preview.appendChild(img);
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+
+            // Lógica para calcular a idade do imóvel
+            $('#dataConstrucao').change(function () {
+                var dataConstrucao = $(this).val();
+                if (dataConstrucao) {
+                    var anoConstrucao = new Date(dataConstrucao).getFullYear();
+                    var anoAtual = new Date().getFullYear();
+                    var idade = anoAtual - anoConstrucao;
+                    $('#idadeImovel').val(idade);
+                } else {
+                    $('#idadeImovel').val('');
+                }
+            });
+
+            // Lógica para mostrar/esconder campos de transporte público
+            function setupTransporteToggle(checkboxId, infoDivId) {
+                $('#' + checkboxId).change(function () {
+                    if ($(this).is(':checked')) {
+                        $('#' + infoDivId).show();
+                    } else {
+                        $('#' + infoDivId).hide();
+                    }
+                });
+            }
+
+            // Inicializar as pré-visualizações de imagens e a lógica de transporte
+            setupImagePreviewWithCollage('imagemCidade', 'preview-imagen-cidade', 'collage-cidade-img');
+            setupImagePreviewWithCollage('imagemMorada', 'preview-imagen-morada', 'collage-morada-img');
+            setupImagePreview('imagemViaPrincipal', 'preview-imagen-via-principal');
+            setupImagePreview('imagemViaSecundaria', 'preview-imagen-via-secundaria');
+            setupTransporteToggle('temParagemBus', 'infoParagemBus');
+            setupTransporteToggle('temEstacaoMetro', 'infoEstacaoMetro');
+            setupTransporteToggle('temEstacaoComboio', 'infoEstacaoComboio');
+        });
+    </script>
+</body>
+
+</html>
