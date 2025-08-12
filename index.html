@@ -175,6 +175,246 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="script.js"></script>
 </body>
+
+<style>
+    /* --- Estilos Generales --- */
+    .cpra-font { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"; }
+
+    /* --- Estilos del Banner --- */
+    #cpra-banner {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #2c3e50; /* Azul oscuro */
+        color: white;
+        padding: 16px 24px;
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.4);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 16px;
+        z-index: 9998;
+        box-sizing: border-box;
+    }
+    #cpra-banner p { margin: 0; flex-grow: 1; min-width: 250px; }
+    #cpra-banner .cpra-banner-buttons { display: flex; gap: 12px; flex-shrink: 0; }
+    #cpra-banner button {
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.2s;
+    }
+    #cpra-banner #accept-cookies { background-color: #27ae60; color: white; } /* Verde */
+    #cpra-banner #accept-cookies:hover { background-color: #2ecc71; }
+    #cpra-banner #manage-prefs { background-color: #ecf0f1; color: #2c3e50; } /* Gris claro */
+    #cpra-banner #manage-prefs:hover { background-color: #bdc3c7; }
+
+    /* --- Estilos del Modal --- */
+    #cpra-modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.65);
+        display: none; /* Oculto por defecto */
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+    #cpra-modal-overlay.visible { display: flex; }
+    #cpra-modal-content {
+        background: white;
+        padding: 24px 32px;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 550px;
+        position: relative;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    #cpra-close-button {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 28px;
+        font-weight: bold;
+        color: #7f8c8d;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+    #cpra-close-button:hover { color: #34495e; }
+    #cpra-modal-content h2 { margin-top: 0; color: #34495e; }
+    #cpra-modal-content p { color: #7f8c8d; }
+    #cpra-modal-content a { color: #3498db; text-decoration: none; }
+    #cpra-modal-content a:hover { text-decoration: underline; }
+    .cpra-option {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 0;
+        border-bottom: 1px solid #ecf0f1;
+    }
+    .cpra-option:last-of-type { border-bottom: none; }
+    .cpra-option label { color: #34495e; flex-grow: 1; padding-right: 16px; }
+    #save-prefs {
+        background-color: #3498db; /* Azul */
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 20px;
+        width: 100%;
+        font-size: 16px;
+        font-weight: bold;
+        transition: background-color 0.2s;
+    }
+    #save-prefs:hover { background-color: #2980b9; }
+
+    /* --- Estilos del Interruptor (Switch) --- */
+    .switch { position: relative; display: inline-block; width: 50px; height: 28px; flex-shrink: 0; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #bdc3c7; transition: .4s; }
+    .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; }
+    input:checked + .slider { background-color: #27ae60; }
+    input:checked + .slider:before { transform: translateX(22px); }
+    .slider.round { border-radius: 34px; }
+    .slider.round:before { border-radius: 50%; }
+
+    /* --- Estilos para enlaces del Footer --- */
+    /* Asegúrate de que tu footer tenga estos enlaces con los IDs correspondientes */
+    .footer-cpra-links a {
+      cursor: pointer;
+      text-decoration: underline;
+      color: #3498db;
+    }
+</style>
+
+<div id="cpra-banner" class="cpra-font">
+    <p>Utilizamos cookies y tecnologías similares para mejorar su experiencia. Al continuar navegando, aceptas nuestra <a href="/privacy-policy.html" style="color:white; text-decoration:underline;">Política de Privacidad</a>.</p>
+    <div class="cpra-banner-buttons">
+        <button id="manage-prefs">Gestionar Preferencias</button>
+        <button id="accept-cookies">Aceptar Todas</button>
+    </div>
+</div>
+
+<div id="cpra-modal-overlay" class="cpra-font">
+    <div id="cpra-modal-content">
+        <span id="cpra-close-button">&times;</span>
+        <h2>Preferencias de Privacidad</h2>
+        <p>Conforme a la ley, puedes gestionar cómo se utilizan tus datos. Desactiva las siguientes opciones si deseas optar por no participar. Consulta nuestra <a href="/privacy-policy.html">Política de Privacidad</a> para más detalles.</p>
+        
+        <div class="cpra-option">
+            <label for="do-not-sell-share">No vender ni compartir mi información personal</label>
+            <label class="switch">
+                <input type="checkbox" id="do-not-sell-share">
+                <span class="slider round"></span>
+            </label>
+        </div>
+
+        <div class="cpra-option">
+            <label for="limit-sensitive-info">Limitar el uso de mi información personal sensible</label>
+            <label class="switch">
+                <input type="checkbox" id="limit-sensitive-info">
+                <span class="slider round"></span>
+            </label>
+        </div>
+        
+        <button id="save-prefs">Guardar Mis Preferencias</button>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Claves para el almacenamiento local
+    const CPRA_CONSENT_KEY = 'cpra_consent_given_v1';
+    const CPRA_PREFS_KEY = 'cpra_prefs_v1';
+
+    // Seleccionar elementos del DOM una sola vez
+    const banner = document.getElementById('cpra-banner');
+    const modal = document.getElementById('cpra-modal-overlay');
+    const acceptButton = document.getElementById('accept-cookies');
+    const managePrefsButton = document.getElementById('manage-prefs');
+    const closeModalButton = document.getElementById('cpra-close-button');
+    const savePrefsButton = document.getElementById('save-prefs');
+    const doNotSellSwitch = document.getElementById('do-not-sell-share');
+    const limitSensitiveSwitch = document.getElementById('limit-sensitive-info');
+    
+    // --- Lógica de la Aplicación ---
+
+    // Función para mostrar el modal y cargar preferencias
+    const showModal = () => {
+        const prefs = JSON.parse(localStorage.getItem(CPRA_PREFS_KEY)) || {};
+        doNotSellSwitch.checked = prefs.doNotSell || false;
+        limitSensitiveSwitch.checked = prefs.limitSensitive || false;
+        modal.classList.add('visible');
+    };
+
+    // Función para ocultar el modal
+    const hideModal = () => modal.classList.remove('visible');
+
+    // Función para ocultar el banner
+    const hideBanner = () => {
+        if (banner) {
+            banner.style.display = 'none';
+        }
+    };
+
+    // Función para guardar las preferencias
+    const savePreferences = (prefs) => {
+        localStorage.setItem(CPRA_PREFS_KEY, JSON.stringify(prefs));
+        localStorage.setItem(CPRA_CONSENT_KEY, 'true');
+        hideModal();
+        hideBanner();
+        
+        console.log('Preferencias CPRA guardadas:', prefs);
+        // ====> IMPORTANTE: Aquí debes añadir la lógica para activar/desactivar scripts <====
+        // Ejemplo:
+        // if (prefs.doNotSell) {
+        //   window['ga-disable-UA-XXXXX-Y'] = true; // Deshabilitar Google Analytics
+        // }
+    };
+
+    // Comprobar si el consentimiento ya fue otorgado
+    if (localStorage.getItem(CPRA_CONSENT_KEY)) {
+        hideBanner();
+    }
+
+    // --- Asignación de Eventos ---
+
+    acceptButton.addEventListener('click', () => {
+        savePreferences({ doNotSell: false, limitSensitive: false });
+    });
+
+    savePrefsButton.addEventListener('click', () => {
+        savePreferences({
+            doNotSell: doNotSellSwitch.checked,
+            limitSensitive: limitSensitiveSwitch.checked,
+        });
+    });
+
+    managePrefsButton.addEventListener('click', showModal);
+    closeModalButton.addEventListener('click', hideModal);
+
+    // Eventos para los enlaces del footer (si existen)
+    const dnsLink = document.getElementById('dns-link');
+    const lsiLink = document.getElementById('lsi-link');
+    if (dnsLink) dnsLink.addEventListener('click', (e) => { e.preventDefault(); showModal(); });
+    if (lsiLink) lsiLink.addEventListener('click', (e) => { e.preventDefault(); showModal(); });
+    
+    // Cerrar modal al hacer clic en el fondo oscuro
+    modal.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            hideModal();
+        }
+    });
+});
+</script>
+
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PQ2Q63GR" height="0" width="0"
         style="display:none;visibility:hidden"></iframe></noscript>
