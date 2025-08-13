@@ -48,12 +48,30 @@
     <link rel="icon" href="images/favicon.ico.png" type="image/png">
 
     <style>
-        /* Estilos para a impressão profissional do relatório */
+        .annual-costs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .total-costs-display {
+            background-color: #e9ecef;
+            border-radius: var(--border-radius-main);
+            padding: 10px 15px;
+            text-align: right;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        body.dark-theme .total-costs-display {
+            background-color: #343a40;
+        }
+
         @media print {
             @page {
                 size: A4;
                 margin: 1.5cm;
-                /* Margens da página */
             }
 
             body,
@@ -114,7 +132,6 @@
             .photo-block img {
                 max-width: 100%;
                 max-height: 20cm;
-                /* Limita a altura da imagem na impressão */
                 border: 1px solid #ccc;
             }
 
@@ -467,24 +484,54 @@
                 <div class="form-section">
                     <h3>9. Análise de Rentabilidade (Arrendamento)</h3>
                     <div class="form-group">
-                        <label for="acquisition-value">Valor de Aquisição (ou Valor Total Estimado)</label>
-                        <div class="input-group">
-                            <input type="number" id="acquisition-value" class="form-control"
-                                placeholder="Introduza o custo total de aquisição">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button"
-                                    id="use-estimated-value-btn">Usar Valor Estimado</button>
+                        <label for="acquisition-value">Valor de Aquisição (Baseado no Valor Total do Avalúo)</label>
+                        <input type="number" id="acquisition-value" class="form-control"
+                            placeholder="Calculado automaticamente" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Custos Anuais</label>
+                        <div class="annual-costs-grid">
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text">IMI</span></div>
+                                <input type="number" class="form-control annual-cost-input" id="cost-imi"
+                                    placeholder="€">
+                            </div>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text">Condomínio</span></div>
+                                <input type="number" class="form-control annual-cost-input" id="cost-condo"
+                                    placeholder="€">
+                            </div>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text">Seguro</span></div>
+                                <input type="number" class="form-control annual-cost-input" id="cost-seguro"
+                                    placeholder="€">
+                            </div>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text">Manutenção</span></div>
+                                <input type="number" class="form-control annual-cost-input" id="cost-manutencao"
+                                    placeholder="€">
+                            </div>
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text">Outras</span></div>
+                                <input type="number" class="form-control annual-cost-input" id="cost-outras"
+                                    placeholder="€">
                             </div>
                         </div>
+                        <div class="total-costs-display">
+                            <span>Total de Custos Anuais:</span>
+                            <strong id="total-annual-costs-display">€ 0,00</strong>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="annual-costs">Custos Anuais (IMI, condomínio, manutenção, etc.)</label>
-                        <input type="number" id="annual-costs" class="form-control"
-                            placeholder="Introduza a soma de todos os custos anuais">
-                    </div>
+
                     <div class="form-group">
                         <label for="rent-city">Cidade para Cálculo da Renda</label>
-                        <select id="rent-city" class="form-control"></select>
+                        <div class="input-group">
+                            <select id="rent-city" class="form-control"></select>
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="rent-yield-display">0.0% Yield Anual</span>
+                            </div>
+                        </div>
                     </div>
                     <div id="profitability-results" class="valuation-results-box mt-4" style="display:none;">
                         <div class="result-item"><span>Rentabilidade Bruta Anual (Yield):</span><strong
@@ -532,7 +579,6 @@
             </div>
         </div>
     </div>
-
     <div class="modal fade" id="fitoCorviniModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -541,8 +587,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
                 </div>
-                <div class="modal-body">
-                </div>
+                <div class="modal-body"></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                     <button type="button" class="btn btn-success" id="applyFitoValue">Aplicar %</button>
@@ -550,7 +595,6 @@
             </div>
         </div>
     </div>
-
     <div class="modal fade" id="costSuggestionModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -585,7 +629,6 @@
         </div>
     </div>
 
-
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -595,8 +638,16 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
 
-            // --- BASE DE DADOS E VARIÁVEIS GLOBAIS ---
-            const RENTAL_YIELDS = { "Lisboa": 4.7, "Porto": 5.7, "Coimbra": 6.9, "Braga": 6.5, "Faro": 5.5, "Aveiro": 5.2, "Setúbal": 5.4, "Leiria": 6.3, "Santarém": 7.5, "Castelo Branco": 8.6, "Outra": 6.0 };
+            // --- DATABASE & GLOBAL VARS ---
+            // Fonte: Idealista/news, 1º trimestre de 2025
+            // Esta secção pode ser facilmente atualizada por um administrador.
+            const RENTAL_YIELDS = {
+                "Aveiro": 6.2, "Beja": 7.0, "Braga": 6.5, "Bragança": 8.4, "Castelo Branco": 8.6,
+                "Coimbra": 6.9, "Évora": 6.0, "Faro": 5.5, "Funchal (Madeira)": 6.1, "Guarda": 6.7,
+                "Leiria": 6.3, "Lisboa": 4.7, "Ponta Delgada (Açores)": 5.8, "Portalegre": 6.9,
+                "Porto": 5.7, "Santarém": 7.5, "Setúbal": 5.4, "Viana do Castelo": 6.9,
+                "Vila Real": 6.4, "Viseu": 7.9, "Outra": 6.0
+            };
             const FITO_CORVINI_DATA = {
                 estados: ["Novo", "Como Novo", "Ligeiramente Degradado", "Reparação Simples", "Reparação Importante", "Ruinoso"],
                 idades: ["0-5", "6-10", "11-20", "21-30", "31-40", "41-50", ">50"],
@@ -609,32 +660,34 @@
                 'Zona III': { 'Económica': 732, 'Regular': 950, 'Luxo': 1200 }
             };
 
-            const form = document.getElementById('avaliador-urbano-app');
-            const photoUploadContainer = document.getElementById('photo-upload-container');
-            const addPhotoBtn = document.getElementById('add-photo-btn');
             let photoCounter = 0;
             const MAX_PHOTOS = 20;
             let valueBreakdownChart, profitabilityChart;
 
-            // --- INICIALIZAÇÃO DO FORMULÁRIO E MODAIS ---
-            const citySelect = document.getElementById('rent-city');
-            Object.keys(RENTAL_YIELDS).sort().forEach(city => {
-                const option = document.createElement('option');
-                option.value = city;
-                option.textContent = city;
-                citySelect.appendChild(option);
-            });
+            // --- FORM & MODAL INITIALIZATION ---
+            function initializeForm() {
+                const citySelect = document.getElementById('rent-city');
+                Object.keys(RENTAL_YIELDS).sort().forEach(city => {
+                    const option = document.createElement('option');
+                    option.value = city;
+                    option.textContent = city;
+                    citySelect.appendChild(option);
+                });
 
-            const districtSelect = document.getElementById('cost-district');
-            Object.keys(DISTRICT_ZONES).sort().forEach(district => {
-                const option = document.createElement('option');
-                option.value = district;
-                option.textContent = district;
-                districtSelect.appendChild(option);
-            });
+                const districtSelect = document.getElementById('cost-district');
+                Object.keys(DISTRICT_ZONES).sort().forEach(district => {
+                    const option = document.createElement('option');
+                    option.value = district;
+                    option.textContent = district;
+                    districtSelect.appendChild(option);
+                });
 
-            // Lógica de adicionar fotos...
+                document.getElementById('add-photo-btn').click();
+                updateYieldDisplay();
+            }
+
             function createPhotoInput(index) {
+                const photoUploadContainer = document.getElementById('photo-upload-container');
                 const div = document.createElement('div');
                 div.className = 'photo-input-group border rounded p-3 mb-3';
                 div.innerHTML = `
@@ -669,78 +722,83 @@
                 });
             }
 
-            addPhotoBtn.addEventListener('click', () => {
-                if (photoCounter < MAX_PHOTOS) {
-                    photoCounter++;
-                    createPhotoInput(photoCounter);
-                    if (photoCounter === MAX_PHOTOS) addPhotoBtn.style.display = 'none';
-                }
-            });
-
-            addPhotoBtn.click();
-
-            // --- LÓGICA DAS CALCULADORAS (FITO-CORVINI & CUSTO DE CONSTRUÇÃO) ---
-            document.getElementById('openFitoCorviniModal').addEventListener('click', () => {
-                const modalBody = document.querySelector('#fitoCorviniModal .modal-body');
-                let tableHTML = '<div class="table-responsive"><table class="table table-bordered text-center">';
-                tableHTML += '<thead><tr><th>Idade \\ Estado</th>';
-                FITO_CORVINI_DATA.estados.forEach(estado => tableHTML += `<th>${estado}</th>`);
-                tableHTML += '</tr></thead>';
-                tableHTML += '<tbody>';
-                FITO_CORVINI_DATA.idades.forEach((idade, i) => {
-                    tableHTML += `<tr><th>${idade}</th>`;
-                    FITO_CORVINI_DATA.valores.forEach((coluna, j) => {
-                        const value = FITO_CORVINI_DATA.valores[j][i];
-                        tableHTML += `<td><div class="custom-control custom-radio"><input type="radio" id="fito-${i}-${j}" name="fito-value" class="custom-control-input" value="${value}"><label class="custom-control-label" for="fito-${i}-${j}">${value}%</label></div></td>`;
+            // --- CALCULATOR LOGIC ---
+            function setupCalculators() {
+                document.getElementById('openFitoCorviniModal').addEventListener('click', () => {
+                    const modalBody = document.querySelector('#fitoCorviniModal .modal-body');
+                    let tableHTML = '<div class="table-responsive"><table class="table table-bordered text-center">';
+                    tableHTML += '<thead><tr><th>Idade \\ Estado</th>';
+                    FITO_CORVINI_DATA.estados.forEach(estado => tableHTML += `<th>${estado}</th>`);
+                    tableHTML += '</tr></thead><tbody>';
+                    FITO_CORVINI_DATA.idades.forEach((idade, i) => {
+                        tableHTML += `<tr><th>${idade}</th>`;
+                        FITO_CORVINI_DATA.valores.forEach((coluna, j) => {
+                            const value = FITO_CORVINI_DATA.valores[j][i];
+                            tableHTML += `<td><div class="custom-control custom-radio"><input type="radio" id="fito-${i}-${j}" name="fito-value" class="custom-control-input" value="${value}"><label class="custom-control-label" for="fito-${i}-${j}">${value}%</label></div></td>`;
+                        });
+                        tableHTML += '</tr>';
                     });
-                    tableHTML += '</tr>';
+                    tableHTML += '</tbody></table></div>';
+                    modalBody.innerHTML = tableHTML;
+                    $('#fitoCorviniModal').modal('show');
                 });
-                tableHTML += '</tbody></table></div>';
-                modalBody.innerHTML = tableHTML;
-                $('#fitoCorviniModal').modal('show');
-            });
 
-            document.getElementById('applyFitoValue').addEventListener('click', () => {
-                const selected = document.querySelector('input[name="fito-value"]:checked');
-                if (selected) {
-                    document.getElementById('depreciacao').value = selected.value;
-                    calculateAndDisplayAll();
+                document.getElementById('applyFitoValue').addEventListener('click', () => {
+                    const selected = document.querySelector('input[name="fito-value"]:checked');
+                    if (selected) {
+                        document.getElementById('depreciacao').value = selected.value;
+                        calculateAndDisplayAll();
+                    }
+                    $('#fitoCorviniModal').modal('hide');
+                });
+
+                const costDistrict = document.getElementById('cost-district');
+                const costQuality = document.getElementById('cost-quality');
+                const suggestedCostDisplay = document.getElementById('suggested-cost-display');
+
+                function updateSuggestedCost() {
+                    const district = costDistrict.value;
+                    const quality = costQuality.value;
+                    const zone = DISTRICT_ZONES[district];
+                    const cost = COST_BY_ZONE_QUALITY[zone][quality];
+                    suggestedCostDisplay.textContent = `€ ${cost.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+                    suggestedCostDisplay.dataset.cost = cost;
                 }
-                $('#fitoCorviniModal').modal('hide');
-            });
 
-            const costDistrict = document.getElementById('cost-district');
-            const costQuality = document.getElementById('cost-quality');
-            const suggestedCostDisplay = document.getElementById('suggested-cost-display');
+                document.getElementById('suggested-cost-btn').addEventListener('click', () => {
+                    updateSuggestedCost();
+                    $('#costSuggestionModal').modal('show');
+                });
 
-            function updateSuggestedCost() {
-                const district = costDistrict.value;
-                const quality = costQuality.value;
-                const zone = DISTRICT_ZONES[district];
-                const cost = COST_BY_ZONE_QUALITY[zone][quality];
-                suggestedCostDisplay.textContent = `€ ${cost.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-                suggestedCostDisplay.dataset.cost = cost;
+                costDistrict.addEventListener('change', updateSuggestedCost);
+                costQuality.addEventListener('change', updateSuggestedCost);
+
+                document.getElementById('applySuggestedCost').addEventListener('click', () => {
+                    const cost = suggestedCostDisplay.dataset.cost;
+                    if (cost) {
+                        document.getElementById('custo-direto').value = cost;
+                        calculateAndDisplayAll();
+                    }
+                    $('#costSuggestionModal').modal('hide');
+                });
             }
 
-            document.getElementById('suggested-cost-btn').addEventListener('click', () => {
-                updateSuggestedCost();
-                $('#costSuggestionModal').modal('show');
-            });
+            function updateTotalAnnualCosts() {
+                let total = 0;
+                document.querySelectorAll('.annual-cost-input').forEach(input => {
+                    total += parseFloat(input.value) || 0;
+                });
+                document.getElementById('total-annual-costs-display').textContent = `€ ${total.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+                calculateAndDisplayAll();
+            }
 
-            costDistrict.addEventListener('change', updateSuggestedCost);
-            costQuality.addEventListener('change', updateSuggestedCost);
+            function updateYieldDisplay() {
+                const city = document.getElementById('rent-city').value;
+                const yieldValue = RENTAL_YIELDS[city] || 0;
+                document.getElementById('rent-yield-display').textContent = `${yieldValue.toFixed(1)}% Yield Anual`;
+            }
 
-            document.getElementById('applySuggestedCost').addEventListener('click', () => {
-                const cost = suggestedCostDisplay.dataset.cost;
-                if (cost) {
-                    document.getElementById('custo-direto').value = cost;
-                    calculateAndDisplayAll();
-                }
-                $('#costSuggestionModal').modal('hide');
-            });
-
-
-            // --- FUNÇÃO DE CÁLCULO CENTRAL ---
+            // --- MAIN CALCULATION FUNCTION ---
             function calculateAndDisplayAll() {
                 let terrainValue = 0;
                 const terrainArea = parseFloat(document.getElementById('area-terreno-imovel').value) || 0;
@@ -768,14 +826,21 @@
                 const totalPropertyValue = terrainValue + constructionValue;
                 document.getElementById('total-property-value').textContent = `€ ${totalPropertyValue.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
-                const acquisitionValue = parseFloat(document.getElementById('acquisition-value').value) || 0;
-                const annualCosts = parseFloat(document.getElementById('annual-costs').value) || 0;
+                document.getElementById('acquisition-value').value = totalPropertyValue > 0 ? totalPropertyValue.toFixed(2) : '';
+
+                const acquisitionValue = totalPropertyValue;
+
+                let totalAnnualCosts = 0;
+                document.querySelectorAll('.annual-cost-input').forEach(input => {
+                    totalAnnualCosts += parseFloat(input.value) || 0;
+                });
+
                 const selectedCity = document.getElementById('rent-city').value;
                 const yieldPercent = RENTAL_YIELDS[selectedCity] || 0;
 
                 if (acquisitionValue > 0) {
                     const grossAnnualRent = acquisitionValue * (yieldPercent / 100);
-                    const netAnnualRent = grossAnnualRent - annualCosts;
+                    const netAnnualRent = grossAnnualRent - totalAnnualCosts;
                     const roi = (netAnnualRent / acquisitionValue) * 100;
                     const monthlyRent = grossAnnualRent / 12;
                     let paybackYears = 'N/A';
@@ -793,51 +858,62 @@
                 }
             }
 
-            // --- LISTENERS PARA CÁLCULO AUTOMÁTICO ---
-            const fieldsToListen = ['area-terreno-imovel', 'area-construcao', 'custo-direto', 'custo-indireto', 'beneficio', 'depreciacao', 'acquisition-value', 'annual-costs', 'rent-city'];
-            fieldsToListen.forEach(id => document.getElementById(id).addEventListener('input', calculateAndDisplayAll));
-            document.querySelectorAll('#terrain-comparison-table input').forEach(input => input.addEventListener('input', calculateAndDisplayAll));
+            // --- EVENT LISTENERS ---
+            function setupEventListeners() {
+                const fieldsToListen = ['area-terreno-imovel', 'area-construcao', 'custo-direto', 'custo-indireto', 'beneficio', 'depreciacao'];
+                fieldsToListen.forEach(id => document.getElementById(id).addEventListener('input', calculateAndDisplayAll));
 
-            document.getElementById('use-estimated-value-btn').addEventListener('click', () => {
-                const totalValueText = document.getElementById('total-property-value').textContent;
-                const totalValue = parseFloat(totalValueText.replace(/[€\s.]/g, '').replace(',', '.')) || 0;
-                document.getElementById('acquisition-value').value = totalValue.toFixed(2);
-                calculateAndDisplayAll();
-            });
+                document.querySelectorAll('#terrain-comparison-table input').forEach(input => input.addEventListener('input', calculateAndDisplayAll));
+                document.querySelectorAll('.annual-cost-input').forEach(input => input.addEventListener('input', updateTotalAnnualCosts));
+                document.getElementById('rent-city').addEventListener('change', () => {
+                    updateYieldDisplay();
+                    calculateAndDisplayAll();
+                });
 
-            // --- GERAÇÃO DO RELATÓRIO ---
+                document.getElementById('cidadeImovel').addEventListener('blur', () => {
+                    const typedCity = document.getElementById('cidadeImovel').value;
+                    const rentCitySelect = document.getElementById('rent-city');
+                    const cityOption = Array.from(rentCitySelect.options).find(opt => opt.value.toLowerCase() === typedCity.toLowerCase());
+
+                    if (cityOption) {
+                        rentCitySelect.value = cityOption.value;
+                    } else {
+                        rentCitySelect.value = "Outra"; // Fallback
+                    }
+                    updateYieldDisplay();
+                    calculateAndDisplayAll();
+                });
+
+                document.getElementById('add-photo-btn').addEventListener('click', () => {
+                    if (photoCounter < MAX_PHOTOS) {
+                        photoCounter++;
+                        createPhotoInput(photoCounter);
+                        if (photoCounter === MAX_PHOTOS) document.getElementById('add-photo-btn').style.display = 'none';
+                    }
+                });
+
+                document.getElementById('avaliador-urbano-app').addEventListener('submit', generateReport);
+            }
+
+            // --- REPORT GENERATION ---
             async function generateReport() {
                 const getInputValue = id => document.getElementById(id)?.value || 'N/A';
                 const formatCurrency = val => `€ ${val.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+                let totalAnnualCosts = 0;
+                document.querySelectorAll('.annual-cost-input').forEach(input => {
+                    totalAnnualCosts += parseFloat(input.value) || 0;
+                });
+
                 const reportData = {
-                    solicitante: getInputValue('nomeSolicitante'),
-                    avaliador: getInputValue('nomeAvaliador'),
-                    idAvaliador: getInputValue('idAvaliador'),
-                    regAvaliador: getInputValue('regAvaliador'),
-                    objeto: getInputValue('objetoAvaliacao'),
-                    dataVisita: getInputValue('dataVisita'),
-                    dataRelatorio: getInputValue('dataRelatorio'),
-                    tipoImovel: getInputValue('tipoInmueble'),
-                    moradaCompleta: `${getInputValue('moradaImovel')}, ${getInputValue('codigoPostalImovel')} ${getInputValue('cidadeImovel')}`,
-                    areaConstrucao: parseFloat(getInputValue('area-construcao')) || 0,
-                    areaTerreno: parseFloat(getInputValue('area-terreno-imovel')) || 0,
-                    swot: {
-                        strengths: getInputValue('swot-strengths').replace(/\n/g, '<br>'),
-                        weaknesses: getInputValue('swot-weaknesses').replace(/\n/g, '<br>'),
-                        opportunities: getInputValue('swot-opportunities').replace(/\n/g, '<br>'),
-                        threats: getInputValue('swot-threats').replace(/\n/g, '<br>')
-                    },
+                    solicitante: getInputValue('nomeSolicitante'), avaliador: getInputValue('nomeAvaliador'), idAvaliador: getInputValue('idAvaliador'), regAvaliador: getInputValue('regAvaliador'), objeto: getInputValue('objetoAvaliacao'), dataVisita: getInputValue('dataVisita'), dataRelatorio: getInputValue('dataRelatorio'), tipoImovel: getInputValue('tipoInmueble'), moradaCompleta: `${getInputValue('moradaImovel')}, ${getInputValue('codigoPostalImovel')} ${getInputValue('cidadeImovel')}`, areaConstrucao: parseFloat(getInputValue('area-construcao')) || 0, areaTerreno: parseFloat(getInputValue('area-terreno-imovel')) || 0,
+                    swot: { strengths: getInputValue('swot-strengths').replace(/\n/g, '<br>'), weaknesses: getInputValue('swot-weaknesses').replace(/\n/g, '<br>'), opportunities: getInputValue('swot-opportunities').replace(/\n/g, '<br>'), threats: getInputValue('swot-threats').replace(/\n/g, '<br>') },
                     finalRemarks: getInputValue('final-remarks').replace(/\n/g, '<br>'),
                     valorTotal: parseFloat(document.getElementById('total-property-value').textContent.replace(/[€\s.]/g, '').replace(',', '.')) || 0,
                     valorTerreno: parseFloat(document.getElementById('total-terrain-value').textContent.replace(/[€\s.]/g, '').replace(',', '.')) || 0,
                     custoReposicao: parseFloat(document.getElementById('total-construction-value').textContent.replace(/[€\s.]/g, '').replace(',', '.')) || 0,
-                    rentabilidade: {
-                        yield: document.getElementById('gross-yield-result').textContent,
-                        rendaMensal: document.getElementById('monthly-rent-result').textContent,
-                        roi: document.getElementById('roi-result').textContent,
-                        payback: document.getElementById('payback-result').textContent
-                    },
-                    custosAnuais: parseFloat(getInputValue('annual-costs')) || 0,
+                    rentabilidade: { yield: document.getElementById('gross-yield-result').textContent, rendaMensal: document.getElementById('monthly-rent-result').textContent, roi: document.getElementById('roi-result').textContent, payback: document.getElementById('payback-result').textContent },
+                    custosAnuais: totalAnnualCosts,
                 };
                 reportData.rentabilidade.rendaAnualBruta = reportData.valorTotal * (parseFloat(reportData.rentabilidade.yield.replace('%', '')) / 100);
 
@@ -920,7 +996,10 @@
                 $('#reportModal').modal('show');
             }
 
-            form.addEventListener('submit', generateReport);
+            // --- APP INITIALIZATION ---
+            initializeForm();
+            setupCalculators();
+            setupEventListeners();
         });
 
         function printReport() {
