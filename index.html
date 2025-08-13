@@ -555,8 +555,6 @@
                             </div>
                         </li>
                         <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-                        <li class="nav-item"><a class="nav-link btn btn-primary publish-btn"
-                                href="publicar.html">Publicar</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4">
@@ -575,51 +573,41 @@
         </div>
     </footer>
 
-    <div id="cpra-banner" class="cpra-font">
-        <p>Utilizamos cookies para melhorar a sua experiência. Ao continuar, aceita a nossa <a
-                href="politica-privacidade.html" style="color:white; text-decoration:underline;">Política de
-                Privacidade</a>.</p>
-        <div class="cpra-banner-buttons">
-            <button id="manage-prefs">Gerir Preferências</button>
-            <button id="accept-cookies">Aceitar Tudo</button>
-        </div>
-    </div>
-
-    <div id="cpra-modal-overlay" class="cpra-font">
-        <div id="cpra-modal-content">
-            <span id="cpra-close-button">&times;</span>
-            <h2>Preferências de Privacidade</h2>
-            <p>Pode gerir como os seus dados são utilizados. Consulte a nossa <a
-                    href="politica-privacidade.html">Política
-                    de Privacidade</a> para mais detalhes.</p>
-            <div class="cpra-option">
-                <label for="cookies-analiticos">Cookies Analíticos (Google Analytics)</label>
-                <label class="switch">
-                    <input type="checkbox" id="cookies-analiticos" checked>
-                    <span class="slider"></span>
-                </label>
-            </div>
-            <div class="cpra-option">
-                <label for="cookies-publicidade">Cookies de Publicidade (Google AdSense)</label>
-                <label class="switch">
-                    <input type="checkbox" id="cookies-publicidade" checked>
-                    <span class="slider"></span>
-                </label>
-            </div>
-            <button id="save-prefs" class="btn btn-primary">Guardar Preferências</button>
-        </div>
-    </div>
-
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="script.js" defer></script>
 
     <script>
-        // Script de cookies e outras funcionalidades
+        function filterAnnouncements() {
+            const searchText = document.getElementById('searchInput').value.toLowerCase();
+            const locationText = document.getElementById('locationInput').value.toLowerCase();
+            const announcements = document.querySelectorAll('.announcement-item');
+
+            announcements.forEach(announcement => {
+                const title = announcement.querySelector('.card-title').textContent.toLowerCase();
+                const description = announcement.querySelector('.card-text').textContent.toLowerCase();
+                const location = announcement.querySelector('.card-subtitle').textContent.toLowerCase();
+
+                const textMatch = title.includes(searchText) || description.includes(searchText);
+                const locationMatch = location.includes(locationText);
+
+                if (textMatch && locationMatch) {
+                    announcement.style.display = '';
+                } else {
+                    announcement.style.display = 'none';
+                }
+            });
+        }
+
+        // Activa o filtro em tempo real enquanto o utilizador escreve
+        document.getElementById('searchInput').addEventListener('keyup', filterAnnouncements);
+        document.getElementById('locationInput').addEventListener('keyup', filterAnnouncements);
     </script>
 </body>
+<!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PQ2Q63GR" height="0" width="0"
         style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 
 </html>
