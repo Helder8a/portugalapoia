@@ -331,6 +331,16 @@
         });
     });
 </script>
+
+<script>
+    function clearFilters() {
+        document.getElementById('searchInput').value = '';
+        document.getElementById('locationInput').value = '';
+        filterServices(); // Llama a la función de filtro de servicios para actualizar la vista
+    }
+    // El resto de tu código JavaScript para filterServices() va aquí...
+</script>
+
 </body>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PQ2Q63GR" height="0" width="0"
