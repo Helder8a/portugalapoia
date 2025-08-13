@@ -1036,3 +1036,20 @@ body:not(.dark-theme) .slider.round .fa-sun {
     font-size: .9rem;
     color: var(--color-text-muted)
 }
+
+/* Adiciona este código ao final do teu ficheiro style.css */
+.page-header .page-title,
+.hero-title {
+    font-size: 2.8rem;
+    /* Podes ajustar este valor conforme o teu gosto */
+}
+
+/* Media query para ecrãs mais pequenos (telemóveis) */
+@media (max-width: 767.98px) {
+
+    .page-header .page-title,
+    .hero-title {
+        font-size: 2.2rem;
+        /* Tamanho ajustado para dispositivos móveis */
+    }
+}
