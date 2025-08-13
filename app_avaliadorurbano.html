@@ -2,60 +2,134 @@
 <html lang="pt-PT">
 
 <head>
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VG454Y1YV4"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-
         gtag('config', 'G-VG454Y1YV4');
     </script>
 
-    <!-- Google adsense monetizar Strar-->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3196299619563199"
         crossorigin="anonymous"></script>
-    <!-- Google adsense monetizar end-->
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Avaliador Urbano - PortugalApoia</title>
-    <meta name="description" content="Ferramenta para avaliação comercial de imóveis urbanos.">
+    <title>Avaliador Urbano PRO - PortugalApoia</title>
+    <meta name="description"
+        content="Ferramenta profissional e completa para avaliação comercial de imóveis urbanos, com relatórios detalhados, gráficos analíticos e registo fotográfico.">
     <link rel="apple-touch-icon" href="/images/favicon.ico.png">
     <link rel="canonical" href="https://portugalapoia.com/app_avaliadorurbano.html">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" media="print"
         onload="this.media='all'">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <noscript>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     </noscript>
-
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-        as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        media="print" onload="this.media='all'">
     <noscript>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     </noscript>
-
-    <link rel="preload"
+    <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500&display=swap"
-        as="style" onload="this.onload=null;this.rel='stylesheet'">
+        media="print" onload="this.media='all'">
     <noscript>
         <link rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500&display=swap">
     </noscript>
-
-    <link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="style.css" media="print" onload="this.media='all'">
     <noscript>
         <link rel="stylesheet" href="style.css">
     </noscript>
-
-    <link rel="preload" href="avaliador-urbano-style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="stylesheet" href="avaliador-urbano-style.css" media="print" onload="this.media='all'">
     <noscript>
         <link rel="stylesheet" href="avaliador-urbano-style.css">
     </noscript>
-
     <link rel="icon" href="images/favicon.ico.png" type="image/png">
+
+    <style>
+        /* Estilos para a impressão profissional do relatório */
+        @media print {
+            @page {
+                size: A4;
+                margin: 1.5cm;
+                /* Margens da página */
+            }
+
+            body,
+            .avaliador-urbano-container,
+            .modal-content {
+                background-color: #fff !important;
+                box-shadow: none !important;
+                border: none !important;
+                color: #000 !important;
+            }
+
+            .modal-header,
+            .modal-footer,
+            .main-header,
+            main>section:first-of-type,
+            form,
+            footer {
+                display: none !important;
+            }
+
+            .modal {
+                position: static !important;
+                display: block !important;
+                overflow: visible !important;
+            }
+
+            .modal-dialog {
+                max-width: 100% !important;
+                margin: 0 !important;
+            }
+
+            .modal-body {
+                padding: 0 !important;
+            }
+
+            .report-page {
+                page-break-after: always;
+            }
+
+            .report-page:last-child {
+                page-break-after: auto;
+            }
+
+            .report-section,
+            .photo-block {
+                page-break-inside: avoid;
+            }
+
+            .photo-report-section {
+                page-break-before: always;
+            }
+
+            .photo-block {
+                width: 100%;
+                margin-bottom: 1cm;
+            }
+
+            .photo-block img {
+                max-width: 100%;
+                max-height: 20cm;
+                /* Limita a altura da imagem na impressão */
+                border: 1px solid #ccc;
+            }
+
+            .chart-container {
+                width: 100% !important;
+                max-width: 18cm !important;
+                height: auto !important;
+                margin: 20px auto;
+            }
+
+            canvas {
+                max-width: 100% !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -96,8 +170,9 @@
     <main>
         <section class="page-header page-header-avaliador-urbano text-center">
             <div class="container">
-                <h1 class="page-title">Avaliador Urbano</h1>
-                <p class="lead">Ferramenta para realizar avaliações comerciais de imóveis urbanos.</p>
+                <h1 class="page-title">Avaliador Urbano PRO</h1>
+                <p class="lead">Ferramenta avançada para avaliações comerciais de imóveis urbanos com relatórios
+                    detalhados.</p>
             </div>
         </section>
 
@@ -106,52 +181,52 @@
 
                 <div class="form-section">
                     <h3>1. Dados Gerais da Avaliação</h3>
-                    <div class="form-group"><label for="nomeSolicitante">Identificação do Solicitante</label><input
-                            type="text" class="form-control" id="nomeSolicitante"
-                            placeholder="Nome e identificação do solicitante"></div>
-                    <div class="form-group"><label for="nomeAvaliador">Identificação do Avaliador</label><input
-                            type="text" class="form-control" id="nomeAvaliador"
-                            placeholder="Nome, identificação e registo do avaliador"></div>
-                    <div class="form-group"><label for="objetoAvaliacao">Objeto da Avaliação</label><textarea
-                            class="form-control" id="objetoAvaliacao" rows="2"
+                    <div class="form-group">
+                        <label for="nomeSolicitante">Identificação do Solicitante</label>
+                        <input type="text" class="form-control" id="nomeSolicitante"
+                            placeholder="Nome e identificação do solicitante">
+                    </div>
+                    <div class="form-group">
+                        <label for="nomeAvaliador">Identificação do Avaliador</label>
+                        <input type="text" class="form-control" id="nomeAvaliador" placeholder="Nome do avaliador">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="idAvaliador">Nº de Cédula</label>
+                            <input type="text" class="form-control" id="idAvaliador" placeholder="Ex: 123456789">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="regAvaliador">Nº de Registo</label>
+                            <input type="text" class="form-control" id="regAvaliador" placeholder="Ex: CMVM/0001">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="objetoAvaliacao">Objeto da Avaliação</label>
+                        <textarea class="form-control" id="objetoAvaliacao" rows="2"
                             placeholder="Descreva o propósito da avaliação (ex: compra e venda, garantia hipotecária, etc.)."></textarea>
                     </div>
                     <div class="form-row">
-                        <div class="form-group col-md-6"><label for="dataVisita">Data da Visita</label><input
-                                type="date" class="form-control" id="dataVisita"></div>
-                        <div class="form-group col-md-6"><label for="dataRelatorio">Data do Relatório</label><input
-                                type="date" class="form-control" id="dataRelatorio"></div>
+                        <div class="form-group col-md-6">
+                            <label for="dataVisita">Data da Visita</label>
+                            <input type="date" class="form-control" id="dataVisita">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="dataRelatorio">Data do Relatório</label>
+                            <input type="date" class="form-control" id="dataRelatorio">
+                        </div>
                     </div>
                 </div>
 
                 <div class="form-section">
                     <h3>2. Tipo e Detalhes do Imóvel</h3>
-                    <div class="form-group"><label for="tipoInmueble">Tipo de Imóvel</label><select class="form-control"
-                            id="tipoInmueble">
+                    <div class="form-group">
+                        <label for="tipoInmueble">Tipo de Imóvel</label>
+                        <select class="form-control" id="tipoInmueble">
                             <option value="selecione">Selecione o tipo...</option>
-                            <option value="casa">Casa</option>
-                            <option value="apartamento">Apartamento</option>
-                            <option value="edificio">Edifício</option>
-                            <option value="terreno">Terreno</option>
-                            <option value="casa-rustica">Casa Rústica ou Quinta</option>
-                        </select></div>
-                    <div id="detalhes-casa" class="conditional-details">
-                        <div class="form-group"><label for="pisos-casa">Número de Pisos da Casa</label><select
-                                id="pisos-casa" name="pisos_casa" class="form-control">
-                                <option value="1">1 Piso (Térrea)</option>
-                                <option value="2">2 Pisos</option>
-                                <option value="3">3 ou mais Pisos</option>
-                            </select></div>
-                    </div>
-                    <div id="detalhes-apartamento" class="conditional-details">
-                        <div class="form-row">
-                            <div class="form-group col-md-6"><label for="piso-apartamento">Piso do
-                                    Apartamento</label><input type="number" id="piso-apartamento"
-                                    name="piso_apartamento" class="form-control" min="0" placeholder="Ex: 3"></div>
-                            <div class="form-group col-md-6"><label for="total-pisos-edificio">Total Pisos do
-                                    Edifício</label><input type="number" id="total-pisos-edificio"
-                                    name="total_pisos_edificio" class="form-control" min="1" placeholder="Ex: 8"></div>
-                        </div>
+                            <option value="Apartamento">Apartamento</option>
+                            <option value="Moradia">Moradia</option>
+                            <option value="Terreno">Terreno Urbano</option>
+                        </select>
                     </div>
                 </div>
 
@@ -169,219 +244,11 @@
                 </div>
 
                 <div class="form-section">
-                    <h3>4. Diagrama de Localização do Imóvel <i class="fas fa-map-marked-alt"></i></h3>
-                    <p class="text-muted">Carregue imagens para visualizar a localização do imóvel.</p>
-                    <div class="row">
-                        <div class="col-md-4 mb-4">
-                            <h5 class="text-center">País: Portugal</h5><img src="https://i.imgur.com/gK9o10e.png"
-                                alt="Mapa de Portugal" class="img-fluid border rounded">
-                        </div>
-                        <div class="col-md-4 mb-4">
-                            <h5 class="text-center">Localização da Cidade</h5><input type="file"
-                                class="form-control-file mb-2" id="imagemCidade" accept="image/*">
-                            <div id="preview-imagen-cidade" class="preview-placeholder">
-                                <p>A imagem da cidade aparecerá aqui.</p>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-4">
-                            <h5 class="text-center">Localização da Morada</h5><input type="file"
-                                class="form-control-file mb-2" id="imagemMorada" accept="image/*">
-                            <div id="preview-imagen-morada" class="preview-placeholder">
-                                <p>A imagem da morada aparecerá aqui.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-section">
-                    <h3>5. Vias de Acesso ao Imóvel 🛣️</h3>
-                    <div class="road-type-group">
-                        <h4 class="h5">Vias Primárias</h4>
-                        <div class="road-selection-row">
-                            <div class="form-group mb-0"><label for="material-primaria">Material de
-                                    Construção</label><select id="material-primaria" name="material_primaria"
-                                    class="form-control">
-                                    <option value="">Selecione o material...</option>
-                                    <option value="asfalto">Asfalto (Betuminoso)</option>
-                                    <option value="betao">Pavimento Rígido (Betão)</option>
-                                    <option value="outro">Outro</option>
-                                </select></div>
-                            <div class="form-group mb-0"><label>Dispõe de Passeios (Andenes)?</label>
-                                <div>
-                                    <div class="custom-control custom-radio custom-control-inline"><input type="radio"
-                                            id="passeios-primaria-sim" name="passeios_primaria"
-                                            class="custom-control-input" value="sim"><label class="custom-control-label"
-                                            for="passeios-primaria-sim">Sim</label></div>
-                                    <div class="custom-control custom-radio custom-control-inline"><input type="radio"
-                                            id="passeios-primaria-nao" name="passeios_primaria"
-                                            class="custom-control-input" value="nao"><label class="custom-control-label"
-                                            for="passeios-primaria-nao">Não</label></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="road-evaluation-row"><label>Estado de Conservação</label>
-                            <div class="evaluation-group"><label><input type="radio" name="estado_primaria" value="bom">
-                                    Bom</label><label><input type="radio" name="estado_primaria" value="regular">
-                                    Regular</label><label><input type="radio" name="estado_primaria" value="mau">
-                                    Mau</label></div>
-                        </div>
-                    </div>
-                    <div class="road-type-group mt-5">
-                        <h4 class="h5">Vias Secundárias</h4>
-                        <div class="road-selection-row">
-                            <div class="form-group mb-0"><label for="material-secundaria">Material de
-                                    Construção</label><select id="material-secundaria" name="material_secundaria"
-                                    class="form-control">
-                                    <option value="">Selecione o material...</option>
-                                    <option value="calcada">Calçada Portuguesa</option>
-                                    <option value="paralelos">Paralelos de Granito/Calcário</option>
-                                    <option value="terra">Terra Batida / Saibro</option>
-                                    <option value="asfalto">Asfalto (Betuminoso)</option>
-                                    <option value="outro">Outro</option>
-                                </select></div>
-                            <div class="form-group mb-0"><label>Dispõe de Passeios (Andenes)?</label>
-                                <div>
-                                    <div class="custom-control custom-radio custom-control-inline"><input type="radio"
-                                            id="passeios-secundaria-sim" name="passeios_secundaria"
-                                            class="custom-control-input" value="sim"><label class="custom-control-label"
-                                            for="passeios-secundaria-sim">Sim</label></div>
-                                    <div class="custom-control custom-radio custom-control-inline"><input type="radio"
-                                            id="passeios-secundaria-nao" name="passeios_secundaria"
-                                            class="custom-control-input" value="nao"><label class="custom-control-label"
-                                            for="passeios-secundaria-nao">Não</label></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="road-evaluation-row"><label>Estado de Conservação</label>
-                            <div class="evaluation-group"><label><input type="radio" name="estado_secundaria"
-                                        value="bom"> Bom</label><label><input type="radio" name="estado_secundaria"
-                                        value="regular"> Regular</label><label><input type="radio"
-                                        name="estado_secundaria" value="mau"> Mau</label></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-section">
-                    <h3>6. Proximidade a Transportes Públicos 🚌🚆🚇</h3>
-                    <div class="transport-option-row">
-                        <div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"
-                                id="transporte-autocarro"><label class="custom-control-label"
-                                for="transporte-autocarro">Autocarro (Ônibus)</label></div><input type="text"
-                            class="form-control form-control-sm" placeholder="Nº da Rota / Paragem"><input type="text"
-                            class="form-control form-control-sm" placeholder="Distância (m)">
-                    </div>
-                    <div class="transport-option-row">
-                        <div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"
-                                id="transporte-metro"><label class="custom-control-label" for="transporte-metro">Metro
-                                (Metropolitano)</label></div><input type="text" class="form-control form-control-sm"
-                            placeholder="Nome da Estação"><input type="text" class="form-control form-control-sm"
-                            placeholder="Distância (m)">
-                    </div>
-                    <div class="transport-option-row">
-                        <div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"
-                                id="transporte-comboio"><label class="custom-control-label"
-                                for="transporte-comboio">Comboio (Trem)</label></div><input type="text"
-                            class="form-control form-control-sm" placeholder="Nome da Estação"><input type="text"
-                            class="form-control form-control-sm" placeholder="Distância (m)">
-                    </div>
-                    <div class="transport-option-row">
-                        <div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"
-                                id="transporte-eletrico"><label class="custom-control-label"
-                                for="transporte-eletrico">Elétrico (Bonde)</label></div><input type="text"
-                            class="form-control form-control-sm" placeholder="Nº da Linha / Paragem"><input type="text"
-                            class="form-control form-control-sm" placeholder="Distância (m)">
-                    </div>
-                    <div class="transport-option-row">
-                        <div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"
-                                id="transporte-fluvial"><label class="custom-control-label"
-                                for="transporte-fluvial">Transporte Fluvial (Barco/Ferry)</label></div><input
-                            type="text" class="form-control form-control-sm" placeholder="Nome do Terminal"><input
-                            type="text" class="form-control form-control-sm" placeholder="Distância (m)">
-                    </div>
-                    <div class="transport-option-row">
-                        <div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input"
-                                id="transporte-taxi"><label class="custom-control-label" for="transporte-taxi">Praça de
-                                Táxis / TVDE</label></div><input type="text" class="form-control form-control-sm"
-                            placeholder="Localização"><input type="text" class="form-control form-control-sm"
-                            placeholder="Distância (m)">
-                    </div>
-                </div>
-
-                <div class="form-section">
-                    <h3>7. Disponibilidade de Serviços Públicos</h3>
-                    <div class="public-services-grid">
-                        <div class="service-item">
-                            <div class="service-icon"><i class="fas fa-bolt"></i></div><label class="service-label">Rede
-                                Elétrica</label>
-                            <div class="service-toggle"><input type="radio" id="eletricidade-sim"
-                                    name="servico_eletricidade" value="sim"><label
-                                    for="eletricidade-sim">Tem</label><input type="radio" id="eletricidade-nao"
-                                    name="servico_eletricidade" value="nao"><label for="eletricidade-nao">Não
-                                    Tem</label></div>
-                        </div>
-                        <div class="service-item">
-                            <div class="service-icon"><i class="fas fa-tint"></i></div><label class="service-label">Água
-                                Canalizada</label>
-                            <div class="service-toggle"><input type="radio" id="agua-sim" name="servico_agua"
-                                    value="sim"><label for="agua-sim">Tem</label><input type="radio" id="agua-nao"
-                                    name="servico_agua" value="nao"><label for="agua-nao">Não Tem</label></div>
-                        </div>
-                        <div class="service-item">
-                            <div class="service-icon"><i class="fas fa-fire"></i></div><label class="service-label">Gás
-                                Natural</label>
-                            <div class="service-toggle"><input type="radio" id="gas-sim" name="servico_gas"
-                                    value="sim"><label for="gas-sim">Tem</label><input type="radio" id="gas-nao"
-                                    name="servico_gas" value="nao"><label for="gas-nao">Não Tem</label></div>
-                        </div>
-                        <div class="service-item">
-                            <div class="service-icon"><i class="fas fa-toilet"></i></div><label
-                                class="service-label">Saneamento Básico</label>
-                            <div class="service-toggle"><input type="radio" id="saneamento-sim"
-                                    name="servico_saneamento" value="sim"><label for="saneamento-sim">Tem</label><input
-                                    type="radio" id="saneamento-nao" name="servico_saneamento" value="nao"><label
-                                    for="saneamento-nao">Não Tem</label></div>
-                        </div>
-                        <div class="service-item">
-                            <div class="service-icon"><i class="fas fa-wifi"></i></div><label
-                                class="service-label">Telecomunicações (Fibra)</label>
-                            <div class="service-toggle"><input type="radio" id="telecom-sim" name="servico_telecom"
-                                    value="sim"><label for="telecom-sim">Tem</label><input type="radio" id="telecom-nao"
-                                    name="servico_telecom" value="nao"><label for="telecom-nao">Não Tem</label></div>
-                        </div>
-                        <div class="service-item">
-                            <div class="service-icon"><i class="fas fa-trash-alt"></i></div><label
-                                class="service-label">Recolha de Resíduos</label>
-                            <div class="service-toggle"><input type="radio" id="lixo-sim" name="servico_lixo"
-                                    value="sim"><label for="lixo-sim">Tem</label><input type="radio" id="lixo-nao"
-                                    name="servico_lixo" value="nao"><label for="lixo-nao">Não Tem</label></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-section">
-                    <h3>8. Características do Imóvel <i class="fas fa-home"></i></h3>
-                    <div class="form-group highlighted-input-group"><label for="area-construcao">Área de Construção
+                    <h3>4. Características do Imóvel <i class="fas fa-home"></i></h3>
+                    <div class="form-group highlighted-input-group"><label for="area-construcao">Área Bruta Privativa
                             (m²)</label><input type="number" id="area-construcao" min="0" class="form-control"
                             placeholder="Introduza a área total de construção"></div>
                     <div class="property-features-grid">
-                        <div class="feature-item">
-                            <div class="feature-icon"><i class="fas fa-couch"></i></div><label for="qtd-sala"
-                                class="feature-label">Sala</label>
-                            <div class="feature-quantity"><input type="number" id="qtd-sala" name="qtd_sala" min="0"
-                                    value="1" class="form-control"></div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon"><i class="fas fa-utensils"></i></div><label for="qtd-comedor"
-                                class="feature-label">Sala de Jantar</label>
-                            <div class="feature-quantity"><input type="number" id="qtd-comedor" name="qtd_comedor"
-                                    min="0" value="1" class="form-control"></div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon"><i class="fas fa-kitchen-set"></i></div><label for="qtd-cozinha"
-                                class="feature-label">Cozinha</label>
-                            <div class="feature-quantity"><input type="number" id="qtd-cozinha" name="qtd_cozinha"
-                                    min="0" value="1" class="form-control"></div>
-                        </div>
                         <div class="feature-item">
                             <div class="feature-icon"><i class="fas fa-bed"></i></div><label for="qtd-quartos"
                                 class="feature-label">Quartos</label>
@@ -396,202 +263,119 @@
                         </div>
                         <div class="feature-item">
                             <div class="feature-icon"><i class="fas fa-car"></i></div><label for="qtd-garagem"
-                                class="feature-label">Garagem</label>
+                                class="feature-label">Garagem (vagas)</label>
                             <div class="feature-quantity"><input type="number" id="qtd-garagem" name="qtd_garagem"
                                     min="0" value="1" class="form-control"></div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon"><i class="fas fa-tree"></i></div><label for="qtd-jardim"
-                                class="feature-label">Jardim / Quintal</label>
-                            <div class="feature-quantity"><input type="number" id="qtd-jardim" name="qtd_jardim" min="0"
-                                    value="0" class="form-control"></div>
-                        </div>
-                        <div class="feature-item">
-                            <div class="feature-icon"><i class="fas fa-person-balcony"></i></div><label
-                                for="qtd-varanda" class="feature-label">Varanda / Terraço</label>
-                            <div class="feature-quantity"><input type="number" id="qtd-varanda" name="qtd_varanda"
-                                    min="0" value="0" class="form-control"></div>
-                        </div>
-                    </div>
-                    <div class="feature-others"><label>Outros Espaços</label>
-                        <div class="other-item"><input type="text" class="form-control"
-                                placeholder="Nome do espaço (ex: Escritório)"><input type="number" min="0" value="0"
-                                class="form-control" title="Quantidade"></div>
-                        <div class="other-item"><input type="text" class="form-control"
-                                placeholder="Nome do espaço (ex: Arrecadação)"><input type="number" min="0" value="0"
-                                class="form-control" title="Quantidade"></div>
-                    </div>
-                </div>
-
-                <div id="caracteristicas-edificio" class="form-section conditional-details">
-                    <h3>8.5 Características do Edifício <i class="fas fa-building"></i></h3>
-                    <div class="building-features-grid">
-                        <div class="building-feature-item"><i class="fas fa-users-viewfinder"></i><label>Salão
-                                Comunitário</label>
-                            <div class="feature-toggle"><input type="radio" id="salao-sim" name="salao_comunitario"
-                                    value="sim"><label for="salao-sim">Sim</label><input type="radio" id="salao-nao"
-                                    name="salao_comunitario" value="nao" checked=""><label for="salao-nao">Não</label>
-                            </div>
-                        </div>
-                        <div class="building-feature-item"><i class="fas fa-car-tunnel"></i><label>Parqueadero
-                                Subterrâneo</label>
-                            <div class="feature-toggle"><input type="radio" id="parque-sim"
-                                    name="parqueadero_subterraneo" value="sim"><label for="parque-sim">Sim</label><input
-                                    type="radio" id="parque-nao" name="parqueadero_subterraneo" value="nao"
-                                    checked=""><label for="parque-nao">Não</label></div>
-                        </div>
-                        <div class="building-feature-item"><i class="fas fa-elevator"></i><label>Ascensor
-                                (Elevador)</label><input type="number" min="0" value="1"
-                                class="form-control form-control-sm" placeholder="Qtd."></div>
-                        <div class="building-feature-item"><i class="fas fa-bolt-lightning"></i><label>Planta
-                                Elétrica</label>
-                            <div class="feature-toggle"><input type="radio" id="planta-sim" name="planta_eletrica"
-                                    value="sim"><label for="planta-sim">Sim</label><input type="radio" id="planta-nao"
-                                    name="planta_eletrica" value="nao" checked=""><label for="planta-nao">Não</label>
-                            </div>
-                        </div>
-                        <div class="building-feature-item"><i class="fas fa-droplet"></i><label>Tanque de Água</label>
-                            <div class="feature-toggle"><input type="radio" id="tanque-sim" name="tanque_agua"
-                                    value="sim"><label for="tanque-sim">Sim</label><input type="radio" id="tanque-nao"
-                                    name="tanque_agua" value="nao" checked=""><label for="tanque-nao">Não</label></div>
-                        </div>
-                        <div class="building-feature-item"><i class="fas fa-fire-extinguisher"></i><label>Rede Contra
-                                Incêndio</label>
-                            <div class="feature-toggle"><input type="radio" id="incendio-sim" name="rede_incendio"
-                                    value="sim"><label for="incendio-sim">Sim</label><input type="radio"
-                                    id="incendio-nao" name="rede_incendio" value="nao" checked=""><label
-                                    for="incendio-nao">Não</label></div>
-                        </div>
-                        <div class="building-feature-item"><i class="fas fa-fence"></i><label>Cerramento
-                                Perimetral</label>
-                            <div class="feature-toggle"><input type="radio" id="cerramento-sim" name="cerramento"
-                                    value="sim"><label for="cerramento-sim">Sim</label><input type="radio"
-                                    id="cerramento-nao" name="cerramento" value="nao" checked=""><label
-                                    for="cerramento-nao">Não</label></div>
-                        </div>
-                        <div class="building-feature-item"><i class="fas fa-user-shield"></i><label>Porteiro /
-                                Vigilante</label>
-                            <div class="feature-toggle"><input type="radio" id="porteiro-sim" name="porteiro"
-                                    value="sim"><label for="porteiro-sim">Sim</label><input type="radio"
-                                    id="porteiro-nao" name="porteiro" value="nao" checked=""><label
-                                    for="porteiro-nao">Não</label></div>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-section">
-                    <h3>9. Acabamentos e Materiais de Construção</h3>
+                    <h3>5. Acabamentos e Materiais de Construção</h3>
                     <div class="finishes-grid">
                         <div class="finish-item">
                             <div class="finish-icon"><i class="fas fa-border-style"></i></div><label
-                                class="finish-label">Muros / Paredes</label><select class="form-control mb-2">
+                                class="finish-label">Muros / Paredes</label><select class="form-control mb-2"
+                                id="material_muros">
                                 <option>Tijolo</option>
                                 <option>Bloco de Betão</option>
                                 <option>Betão Armado</option>
                                 <option>Drywall (Gesso)</option>
                                 <option>Madeira</option>
                             </select>
-                            <div class="evaluation-group"><label><input type="radio" name="estado_muros" value="bom">
+                            <div class="evaluation-group"><label><input type="radio" name="estado_muros" value="bom"
+                                        checked>
                                     Bom</label><label><input type="radio" name="estado_muros" value="regular">
                                     Regular</label><label><input type="radio" name="estado_muros" value="mau">
                                     Mau</label></div>
                         </div>
                         <div class="finish-item">
-                            <div class="finish-icon"><i class="fas fa-fill-drip"></i></div><label
-                                class="finish-label">Reboco (Revoque)</label><select class="form-control mb-2">
-                                <option>Gesso Projetado</option>
-                                <option>Estuque</option>
-                                <option>Cimento Liso</option>
-                                <option>Texturizado</option>
-                            </select>
-                            <div class="evaluation-group"><label><input type="radio" name="estado_reboco" value="bom">
-                                    Bom</label><label><input type="radio" name="estado_reboco" value="regular">
-                                    Regular</label><label><input type="radio" name="estado_reboco" value="mau">
-                                    Mau</label></div>
-                        </div>
-                        <div class="finish-item">
                             <div class="finish-icon"><i class="fas fa-palette"></i></div><label
-                                class="finish-label">Revestimentos</label><select class="form-control mb-2">
+                                class="finish-label">Revestimentos</label><select class="form-control mb-2"
+                                id="material_revestimentos">
                                 <option>Pintura Plástica</option>
                                 <option>Cerâmica</option>
                                 <option>Papel de Parede</option>
                                 <option>Madeira</option>
                             </select>
                             <div class="evaluation-group"><label><input type="radio" name="estado_revestimentos"
-                                        value="bom"> Bom</label><label><input type="radio" name="estado_revestimentos"
-                                        value="regular"> Regular</label><label><input type="radio"
-                                        name="estado_revestimentos" value="mau"> Mau</label></div>
-                        </div>
-                        <div class="finish-item">
-                            <div class="finish-icon"><i class="fas fa-home-user"></i></div><label
-                                class="finish-label">Teto / Coberta</label><select class="form-control mb-2">
-                                <option>Telha Cerâmica</option>
-                                <option>Laje de Betão</option>
-                                <option>Telha Metálica</option>
-                                <option>Teto Falso (Gesso)</option>
-                            </select>
-                            <div class="evaluation-group"><label><input type="radio" name="estado_teto" value="bom">
-                                    Bom</label><label><input type="radio" name="estado_teto" value="regular">
-                                    Regular</label><label><input type="radio" name="estado_teto" value="mau">
-                                    Mau</label></div>
+                                        value="bom" checked> Bom</label><label><input type="radio"
+                                        name="estado_revestimentos" value="regular"> Regular</label><label><input
+                                        type="radio" name="estado_revestimentos" value="mau"> Mau</label></div>
                         </div>
                         <div class="finish-item">
                             <div class="finish-icon"><i class="fas fa-shoe-prints"></i></div><label
-                                class="finish-label">Pisos</label><select class="form-control mb-2">
+                                class="finish-label">Pisos</label><select class="form-control mb-2" id="material_pisos">
                                 <option>Cerâmica</option>
                                 <option>Soalho Flutuante</option>
                                 <option>Madeira Maciça</option>
                                 <option>Mármore/Granito</option>
                             </select>
-                            <div class="evaluation-group"><label><input type="radio" name="estado_pisos" value="bom">
+                            <div class="evaluation-group"><label><input type="radio" name="estado_pisos" value="bom"
+                                        checked>
                                     Bom</label><label><input type="radio" name="estado_pisos" value="regular">
                                     Regular</label><label><input type="radio" name="estado_pisos" value="mau">
                                     Mau</label></div>
                         </div>
                         <div class="finish-item">
-                            <div class="finish-icon"><i class="fas fa-building-columns"></i></div><label
-                                class="finish-label">Estrutura</label><select class="form-control mb-2">
-                                <option>Betão Armado</option>
-                                <option>Aço</option>
-                                <option>Madeira</option>
-                                <option>Alvenaria Estrutural</option>
-                            </select>
-                            <div class="evaluation-group"><label><input type="radio" name="estado_estrutura"
-                                        value="bom"> Bom</label><label><input type="radio" name="estado_estrutura"
-                                        value="regular"> Regular</label><label><input type="radio"
-                                        name="estado_estrutura" value="mau"> Mau</label></div>
-                        </div>
-                        <div class="finish-item">
-                            <div class="finish-icon"><i class="fas fa-shower"></i></div><label
-                                class="finish-label">Inst. Hidrossanitárias</label><select class="form-control mb-2">
+                            <div class="finish-icon"><i class="fas fa-door-closed"></i></div><label
+                                class="finish-label">Carpintaria</label><select class="form-control mb-2"
+                                id="material_carpintaria">
+                                <option>Madeira Maciça</option>
+                                <option>MDF Lacado</option>
+                                <option>Alumínio</option>
                                 <option>PVC</option>
-                                <option>PEX</option>
-                                <option>Cobre</option>
                             </select>
-                            <div class="evaluation-group"><label><input type="radio" name="estado_hidro" value="bom">
-                                    Bom</label><label><input type="radio" name="estado_hidro" value="regular">
-                                    Regular</label><label><input type="radio" name="estado_hidro" value="mau">
+                            <div class="evaluation-group"><label><input type="radio" name="estado_carpintaria"
+                                        value="bom" checked>
+                                    Bom</label><label><input type="radio" name="estado_carpintaria" value="regular">
+                                    Regular</label><label><input type="radio" name="estado_carpintaria" value="mau">
                                     Mau</label></div>
-                        </div>
-                        <div class="finish-item">
-                            <div class="finish-icon"><i class="fas fa-plug-circle-bolt"></i></div><label
-                                class="finish-label">Inst. Elétricas</label><select class="form-control mb-2">
-                                <option>Cablagem Standard</option>
-                                <option>Domótica Básica</option>
-                                <option>Domótica Avançada</option>
-                            </select>
-                            <div class="evaluation-group"><label><input type="radio" name="estado_eletricas"
-                                        value="bom"> Bom</label><label><input type="radio" name="estado_eletricas"
-                                        value="regular"> Regular</label><label><input type="radio"
-                                        name="estado_eletricas" value="mau"> Mau</label></div>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-section">
-                    <h3>10. Método de Valorização</h3>
+                    <h3>6. Análise Qualitativa (SWOT)</h3>
+                    <div class="form-group">
+                        <label for="swot-strengths"><strong><i class="fas fa-thumbs-up text-success"></i> Pontos Fortes
+                                (Strengths)</strong></label>
+                        <textarea id="swot-strengths" class="form-control" rows="3"
+                            placeholder="Ex: Localização central, boa exposição solar, acabamentos de alta qualidade..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="swot-weaknesses"><strong><i class="fas fa-thumbs-down text-danger"></i> Pontos
+                                Fracos (Weaknesses)</strong></label>
+                        <textarea id="swot-weaknesses" class="form-control" rows="3"
+                            placeholder="Ex: Necessita de remodelação, ausência de garagem, fraco isolamento acústico..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="swot-opportunities"><strong><i class="fas fa-lightbulb text-info"></i> Oportunidades
+                                (Opportunities)</strong></label>
+                        <textarea id="swot-opportunities" class="form-control" rows="3"
+                            placeholder="Ex: Nova linha de metro nas proximidades, valorização da zona, potencial para arrendamento turístico..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="swot-threats"><strong><i class="fas fa-exclamation-triangle text-warning"></i>
+                                Ameaças (Threats)</strong></label>
+                        <textarea id="swot-threats" class="form-control" rows="3"
+                            placeholder="Ex: Excesso de oferta na zona, restrições urbanísticas, degradação da vizinhança..."></textarea>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>7. Registo Fotográfico (Anexos)</h3>
+                    <p class="text-muted">Anexe até 20 fotografias do imóvel. Apenas as fotografias carregadas
+                        aparecerão no relatório.</p>
+                    <div id="photo-upload-container"></div>
+                    <button type="button" id="add-photo-btn" class="btn btn-secondary mt-3"><i class="fas fa-plus"></i>
+                        Adicionar Fotografia</button>
+                </div>
+
+                <div class="form-section">
+                    <h3>8. Método de Valorização</h3>
                     <div id="terrain-valuation" class="conditional-details" style="display: block;">
-                        <h4 class="h5">10.1 Valorização do Terreno</h4>
+                        <h4 class="h5">8.1 Valorização do Terreno</h4>
                         <p><strong>Método Utilizado:</strong> Método Comparativo de Mercado</p>
                         <div class="form-group highlighted-input-group"><label for="area-terreno-imovel">Área do Terreno
                                 do Imóvel (m²)</label><input type="number" id="area-terreno-imovel" min="0"
@@ -625,30 +409,26 @@
                                         <td><input type="number" min="0" class="form-control"></td>
                                         <td><input type="number" min="0" class="form-control"></td>
                                     </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td><input type="text" class="form-control"></td>
-                                        <td><input type="number" min="0" class="form-control"></td>
-                                        <td><input type="number" min="0" class="form-control"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td><input type="text" class="form-control"></td>
-                                        <td><input type="number" min="0" class="form-control"></td>
-                                        <td><input type="number" min="0" class="form-control"></td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                     <div id="construction-valuation">
-                        <h4 class="h5 mt-4">10.2 Valorização da Construção</h4>
+                        <h4 class="h5 mt-4">8.2 Valorização da Construção</h4>
                         <p><strong>Método Utilizado:</strong> Custo de Reposição (Fito-Corvini)</p>
                         <div class="form-row">
                             <div class="form-group col-md-6 highlighted-input-group">
                                 <label for="custo-direto">Custos Diretos (CD) por m² (€)</label>
-                                <input type="number" id="custo-direto" min="0" class="form-control"
-                                    placeholder="Ex: 1200">
+                                <div class="input-group">
+                                    <input type="number" id="custo-direto" min="0" class="form-control"
+                                        placeholder="Ex: 1350">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="button" id="suggested-cost-btn"
+                                            title="Usar custo médio sugerido">Sugerir</button>
+                                    </div>
+                                </div>
+                                <small id="suggested-cost-text" class="form-text text-muted"
+                                    style="display:none;"></small>
                             </div>
                             <div class="form-group col-md-6 highlighted-input-group">
                                 <label for="custo-indireto">Custos Indiretos (CI) - % de CD</label>
@@ -677,12 +457,7 @@
                         </div>
                     </div>
                     <div class="valuation-results-box mt-4">
-                        <div class="result-item"><span>Valor da Construção (VC):</span><strong
-                                id="valor-construcao-vc">€ 0,00</strong></div>
-                        <div class="result-item"><span>(-) Depreciação (D):</span><strong id="valor-depreciacao">€
-                                0,00</strong></div>
-                        <hr>
-                        <div class="result-item"><span>(=) Custo de Reposição (CR) da Construção:</span><strong
+                        <div class="result-item"><span>Custo de Reposição (CR) da Construção:</span><strong
                                 id="total-construction-value">€ 0,00</strong></div>
                         <div class="result-item"><span>(+) Valor Estimado do Terreno:</span><strong
                                 id="total-terrain-value">€ 0,00</strong></div>
@@ -691,6 +466,50 @@
                     </div>
                 </div>
 
+                <div class="form-section">
+                    <h3>9. Análise de Rentabilidade (Arrendamento)</h3>
+                    <div class="form-group">
+                        <label for="acquisition-value">Valor de Aquisição (ou Valor Total Estimado)</label>
+                        <div class="input-group">
+                            <input type="number" id="acquisition-value" class="form-control"
+                                placeholder="Introduza o custo total de aquisição">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button"
+                                    id="use-estimated-value-btn">Usar Valor Estimado</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="annual-costs">Custos Anuais (IMI, condomínio, manutenção, etc.)</label>
+                        <input type="number" id="annual-costs" class="form-control"
+                            placeholder="Introduza a soma de todos os custos anuais">
+                    </div>
+                    <div class="form-group">
+                        <label for="rent-city">Cidade para Cálculo da Renda</label>
+                        <select id="rent-city" class="form-control"></select>
+                    </div>
+                    <div id="profitability-results" class="valuation-results-box mt-4" style="display:none;">
+                        <div class="result-item"><span>Rentabilidade Bruta Anual (Yield):</span><strong
+                                id="gross-yield-result">0.00%</strong></div>
+                        <div class="result-item"><span>Renda Mensal Estimada:</span><strong id="monthly-rent-result">€
+                                0,00</strong></div>
+                        <div class="result-item"><span>Retorno Sobre o Investimento (ROI) Anual:</span><strong
+                                id="roi-result">0.00%</strong></div>
+                        <div class="result-item final-value"><span>Tempo de Retorno da Inversão:</span><strong
+                                id="payback-result">N/A</strong></div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>10. Conclusões e Observações Finais</h3>
+                    <div class="form-group">
+                        <label for="final-remarks">Parecer Final do Avaliador</label>
+                        <textarea id="final-remarks" class="form-control" rows="5"
+                            placeholder="Descreva as suas conclusões finais sobre o valor, estado e potencial do imóvel."></textarea>
+                    </div>
+                </div>
+
+
                 <button type="submit" class="submit-button">Gerar Relatório de Avaliação</button>
             </form>
         </div>
@@ -698,18 +517,15 @@
 
     <footer class="main-footer"></footer>
 
-    <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="reportModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="reportModalLabel">Relatório de Avaliação do Imóvel</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h5 class="modal-title">Relatório de Avaliação de Imóvel</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
                 </div>
-                <div class="modal-body" id="reportOutput">
-                </div>
+                <div class="modal-body" id="reportOutput"></div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                     <button type="button" class="btn btn-primary" onclick="printReport();"><i
@@ -719,8 +535,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="fitoCorviniModal" tabindex="-1" role="dialog" aria-labelledby="fitoCorviniModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="fitoCorviniModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -729,74 +544,6 @@
                             aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <h5 class="h6">Tabela de Referência Fito-Corvini</h5>
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-sm text-center" style="font-size: 0.8rem;">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th style="width: 5%;">Estado</th>
-                                    <th style="width: 55%;">Descrição</th>
-                                    <th style="width: 40%;">Fórmula de Depreciação (Y)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>**Novo ou como novo.** Sem deterioração aparente.</td>
-                                    <td>Y = 0.0050 X² + 0.5001 X - 0.0071</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>**Bom.** Ligeiro desgaste natural, necessita reparações menores nos acabamentos.
-                                    </td>
-                                    <td>Y = 0.0049 X² + 0.4861 X + 2.5407</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>**Regular.** Desgaste evidente, necessita reparações simples (pisos, etc.).</td>
-                                    <td>Y = 0.0041 X² + 0.4092 X + 18.1041</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>**Mau.** Deterioração significativa, necessita reparações importantes na
-                                        estrutura.</td>
-                                    <td>Y = 0.0023 X² + 0.2400 X + 52.5274</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>**Muito Mau / Demolição.** Ameaça de ruína.</td>
-                                    <td>Y = 100%</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <small class="form-text text-muted">Onde X = (Idade / Vida Útil) * 100</small>
-                    </div>
-                    <hr>
-                    <h5 class="h6">Calculadora Precisa</h5>
-                    <div class="form-group">
-                        <label for="fito-idade">Idade do Imóvel (anos)</label>
-                        <input type="number" id="fito-idade" class="form-control" min="0" placeholder="Ex: 20">
-                    </div>
-                    <div class="form-group">
-                        <label for="fito-vida-util">Vida Útil Estimada (anos)</label>
-                        <input type="number" id="fito-vida-util" class="form-control" min="1" placeholder="Ex: 70">
-                    </div>
-                    <div class="form-group">
-                        <label for="fito-estado">Estado de Conservação</label>
-                        <select id="fito-estado" class="form-control">
-                            <option value="1">1 - Novo ou como novo</option>
-                            <option value="2">2 - Bom (ligeiro desgaste)</option>
-                            <option value="3" selected>3 - Regular (desgaste evidente)</option>
-                            <option value="4">4 - Mau (deterioração significativa)</option>
-                            <option value="5">5 - Muito Mau / Demolição</option>
-                        </select>
-                    </div>
-                    <button type="button" class="btn btn-primary btn-block" id="calculateFito">Calcular
-                        Depreciação</button>
-                    <div class="mt-4 text-center">
-                        <h4>Depreciação Calculada:</h4>
-                        <h3 id="fito-result" class="font-weight-bold">0.00 %</h3>
-                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -809,248 +556,287 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
     <script src="script.js" defer></script>
 
     <script>
-        // Função de impressão para o modal
-        function printReport() {
-            const reportContent = document.getElementById('reportOutput').innerHTML;
-            const originalContent = document.body.innerHTML;
-            const printStyles = `
-                <style>
-                    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-                    .report-section { margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #dee2e6; page-break-inside: avoid; }
-                    .report-section:last-child { border-bottom: none; }
-                    .report-section h4 { color: #0a3d62; font-size: 1.2rem; }
-                    h2 { font-size: 1.5rem; text-align: center; color: #005A9C; }
-                    p, strong { font-size: 0.9rem; }
-                    .final-value-report { font-weight: bold; font-size: 1.1rem; color: #005A9C; }
-                </style>
-            `;
-            document.body.innerHTML = printStyles + "<h2>Relatório de Avaliação de Imóvel</h2>" + reportContent;
-            window.print();
-            document.body.innerHTML = originalContent;
-            location.reload();
-        }
-
         document.addEventListener('DOMContentLoaded', function () {
-            function setupImagePreview(inputId, previewId) {
-                const input = document.getElementById(inputId);
-                const preview = document.getElementById(previewId);
-                if (input) {
-                    input.addEventListener('change', function (e) {
-                        const file = e.target.files[0];
-                        if (file && preview) {
-                            const reader = new FileReader();
-                            reader.onload = function (e) {
-                                const img = document.createElement('img');
-                                img.src = e.target.result;
-                                img.classList.add('img-fluid', 'rounded');
-                                preview.innerHTML = '';
-                                preview.appendChild(img);
-                            };
-                            reader.readAsDataURL(file);
-                        }
-                    });
-                }
-            }
-            setupImagePreview('imagemCidade', 'preview-imagen-cidade');
-            setupImagePreview('imagemMorada', 'preview-imagen-morada');
 
-            const tipoImovelSelect = document.getElementById('tipoInmueble');
-            const detalhesCasa = document.getElementById('detalhes-casa');
-            const detalhesApartamento = document.getElementById('detalhes-apartamento');
-            const caracteristicasEdificio = document.getElementById('caracteristicas-edificio');
-            const terrainValuation = document.getElementById('terrain-valuation');
-
-            function handleTipoImovelChange() {
-                const tipo = tipoImovelSelect.value;
-                detalhesCasa.style.display = (tipo === 'casa' || tipo === 'casa-rustica') ? 'block' : 'none';
-                detalhesApartamento.style.display = tipo === 'apartamento' ? 'block' : 'none';
-                caracteristicasEdificio.style.display = tipo === 'apartamento' ? 'block' : 'none';
-                terrainValuation.style.display = (tipo === 'casa' || tipo === 'casa-rustica' || tipo === 'terreno') ? 'block' : 'none';
-            }
-            tipoImovelSelect.addEventListener('change', handleTipoImovelChange);
-            handleTipoImovelChange();
-
-            const areaConstrucaoInput = document.getElementById('area-construcao');
-            const areaTerrenoImovelInput = document.getElementById('area-terreno-imovel');
-            const comparisonTable = document.getElementById('terrain-comparison-table');
-            const custoDiretoInput = document.getElementById('custo-direto');
-            const custoIndiretoInput = document.getElementById('custo-indireto');
-            const beneficioInput = document.getElementById('beneficio');
-            const depreciacaoInput = document.getElementById('depreciacao');
-
-            const valorConstrucaoVcEl = document.getElementById('valor-construcao-vc');
-            const valorDepreciacaoEl = document.getElementById('valor-depreciacao');
-            const totalConstructionValueEl = document.getElementById('total-construction-value');
-            const totalTerrainValueEl = document.getElementById('total-terrain-value');
-            const totalPropertyValueEl = document.getElementById('total-property-value');
-
-            function formatCurrency(value) {
-                if (isNaN(value)) return '€ 0,00';
-                return `€ ${value.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
-            }
-
-            function updateValuation() {
-                let totalM2Value = 0;
-                let validSamples = 0;
-                const rows = comparisonTable.querySelectorAll('tbody tr');
-                rows.forEach(row => {
-                    const valueM2Input = row.cells[3].querySelector('input');
-                    if (valueM2Input) {
-                        const valueM2 = parseFloat(valueM2Input.value);
-                        if (!isNaN(valueM2) && valueM2 > 0) {
-                            totalM2Value += valueM2;
-                            validSamples++;
-                        }
-                    }
-                });
-                const avgM2Value = validSamples > 0 ? totalM2Value / validSamples : 0;
-                const subjectArea = parseFloat(areaTerrenoImovelInput.value) || 0;
-                const totalTerrainValue = avgM2Value * subjectArea;
-
-                const areaConstrucao = parseFloat(areaConstrucaoInput.value) || 0;
-                const custoDiretoM2 = parseFloat(custoDiretoInput.value) || 0;
-                const percCI = parseFloat(custoIndiretoInput.value) || 0;
-                const percB = parseFloat(beneficioInput.value) || 0;
-                const percD = parseFloat(depreciacaoInput.value) || 0;
-
-                const cdTotal = custoDiretoM2 * areaConstrucao;
-                const ciTotal = cdTotal * (percCI / 100);
-                const subtotal = cdTotal + ciTotal;
-                const bTotal = subtotal * (percB / 100);
-
-                const valorConstrucaoVC = subtotal + bTotal;
-                const valorDepreciacao = valorConstrucaoVC * (percD / 100);
-                const custoReposicaoCR = valorConstrucaoVC - valorDepreciacao;
-
-                const totalPropertyValue = totalTerrainValue + custoReposicaoCR;
-
-                totalTerrainValueEl.textContent = formatCurrency(totalTerrainValue);
-                valorConstrucaoVcEl.textContent = formatCurrency(valorConstrucaoVC);
-                valorDepreciacaoEl.textContent = formatCurrency(valorDepreciacao);
-                totalConstructionValueEl.textContent = formatCurrency(custoReposicaoCR);
-                totalPropertyValueEl.textContent = formatCurrency(totalPropertyValue);
-            }
-
-            const inputsToWatch = [
-                areaConstrucaoInput, areaTerrenoImovelInput, custoDiretoInput,
-                custoIndiretoInput, beneficioInput, depreciacaoInput,
-                ...comparisonTable.querySelectorAll('input')
-            ];
-
-            inputsToWatch.forEach(input => {
-                if (input) {
-                    input.addEventListener('input', updateValuation);
-                }
-            });
-
-            const openFitoCorviniModalBtn = document.getElementById('openFitoCorviniModal');
-            openFitoCorviniModalBtn.addEventListener('click', () => {
-                $('#fitoCorviniModal').modal('show');
-            });
-
-            const calculateFitoBtn = document.getElementById('calculateFito');
-            const applyFitoValueBtn = document.getElementById('applyFitoValue');
-            const fitoResultEl = document.getElementById('fito-result');
-
-            calculateFitoBtn.addEventListener('click', () => {
-                const idade = parseFloat(document.getElementById('fito-idade').value) || 0;
-                const vidaUtil = parseFloat(document.getElementById('fito-vida-util').value) || 1;
-                const estado = parseInt(document.getElementById('fito-estado').value, 10);
-
-                const X = Math.min(100, (idade / vidaUtil) * 100);
-                let Y = 0;
-
-                switch (estado) {
-                    case 1: Y = 0.0050 * X ** 2 + 0.5001 * X - 0.0071; break;
-                    case 2: Y = 0.0049 * X ** 2 + 0.4861 * X + 2.5407; break;
-                    case 3: Y = 0.0041 * X ** 2 + 0.4092 * X + 18.1041; break;
-                    case 4: Y = 0.0023 * X ** 2 + 0.2400 * X + 52.5274; break;
-                    case 5: Y = 100; break;
-                }
-
-                Y = Math.max(0, Math.min(100, Y));
-                fitoResultEl.textContent = `${Y.toFixed(2)} %`;
-            });
-
-            applyFitoValueBtn.addEventListener('click', () => {
-                const resultValue = parseFloat(fitoResultEl.textContent);
-                if (!isNaN(resultValue)) {
-                    depreciacaoInput.value = resultValue.toFixed(2);
-                    depreciacaoInput.dispatchEvent(new Event('input'));
-                }
-                $('#fitoCorviniModal').modal('hide');
-            });
+            // --- BASE DE DADOS E VARIÁVEIS GLOBAIS ---
+            const RENTAL_YIELDS = {
+                "Lisboa": 4.7, "Porto": 5.7, "Coimbra": 6.9, "Braga": 6.5, "Faro": 5.5,
+                "Aveiro": 5.2, "Setúbal": 5.4, "Leiria": 6.3, "Santarém": 7.5, "Castelo Branco": 8.6,
+                "Outra": 6.0 // Média nacional como fallback
+            };
+            const SUGGESTED_CONSTRUCTION_COST = 1350;
 
             const form = document.getElementById('avaliador-urbano-app');
-            form.addEventListener('submit', function (event) {
-                event.preventDefault();
-                generateReport();
+            const photoUploadContainer = document.getElementById('photo-upload-container');
+            const addPhotoBtn = document.getElementById('add-photo-btn');
+            let photoCounter = 0;
+            const MAX_PHOTOS = 20;
+            let valueBreakdownChart, profitabilityChart;
+
+            // --- INICIALIZAÇÃO DO FORMULÁRIO ---
+
+            const citySelect = document.getElementById('rent-city');
+            Object.keys(RENTAL_YIELDS).sort().forEach(city => {
+                const option = document.createElement('option');
+                option.value = city;
+                option.textContent = city;
+                citySelect.appendChild(option);
             });
 
-            function getInputValue(id) {
-                const element = document.getElementById(id);
-                return element ? element.value : 'N/A';
+            function createPhotoInput(index) {
+                const div = document.createElement('div');
+                div.className = 'photo-input-group border rounded p-3 mb-3';
+                div.innerHTML = `
+                    <div class="form-row">
+                        <div class="form-group col-md-5 mb-md-0">
+                            <label for="photo-file-${index}">Fotografia ${index}</label>
+                            <input type="file" class="form-control-file photo-file" id="photo-file-${index}" data-index="${index}" accept="image/*">
+                            <div class="mt-2" id="photo-preview-${index}" style="max-height: 150px; overflow: hidden;"></div>
+                        </div>
+                        <div class="form-group col-md-7 mb-0">
+                            <label for="photo-desc-${index}">Descrição da Fotografia</label>
+                            <textarea class="form-control photo-desc" id="photo-desc-${index}" rows="4" placeholder="Ex: Fachada principal, vista da varanda, etc."></textarea>
+                        </div>
+                    </div>`;
+                photoUploadContainer.appendChild(div);
+
+                document.getElementById(`photo-file-${index}`).addEventListener('change', function (e) {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    const previewContainer = document.getElementById(`photo-preview-${index}`);
+                    previewContainer.innerHTML = '';
+                    const reader = new FileReader();
+                    reader.onload = function (event) {
+                        const img = document.createElement('img');
+                        img.src = event.target.result;
+                        img.style.maxWidth = '100%';
+                        img.style.maxHeight = '150px';
+                        img.style.objectFit = 'cover';
+                        previewContainer.appendChild(img);
+                    }
+                    reader.readAsDataURL(file);
+                });
             }
 
-            function generateReport() {
+            addPhotoBtn.addEventListener('click', () => {
+                if (photoCounter < MAX_PHOTOS) {
+                    photoCounter++;
+                    createPhotoInput(photoCounter);
+                    if (photoCounter === MAX_PHOTOS) addPhotoBtn.style.display = 'none';
+                }
+            });
+
+            addPhotoBtn.click(); // Adiciona o primeiro campo de foto
+
+            // --- FUNÇÕES DE CÁLCULO ---
+            function calculateAndDisplayAll() {
+                // Cálculo da Valorização
+                let terrainValue = 0;
+                const terrainArea = parseFloat(document.getElementById('area-terreno-imovel').value) || 0;
+                let totalValM2 = 0;
+                let sampleCount = 0;
+                document.querySelectorAll('#terrain-comparison-table tbody tr').forEach(row => {
+                    const valM2 = parseFloat(row.cells[3].querySelector('input').value);
+                    if (!isNaN(valM2) && valM2 > 0) {
+                        totalValM2 += valM2;
+                        sampleCount++;
+                    }
+                });
+                const avgValM2 = sampleCount > 0 ? totalValM2 / sampleCount : 0;
+                terrainValue = terrainArea * avgValM2;
+                document.getElementById('total-terrain-value').textContent = `€ ${terrainValue.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+                const constructionArea = parseFloat(document.getElementById('area-construcao').value) || 0;
+                const cd = parseFloat(document.getElementById('custo-direto').value) || 0;
+                const ci = (parseFloat(document.getElementById('custo-indireto').value) || 0) / 100;
+                const b = (parseFloat(document.getElementById('beneficio').value) || 0) / 100;
+                const d = (parseFloat(document.getElementById('depreciacao').value) || 0) / 100;
+
+                const vc = cd * (1 + ci) * (1 + b) * constructionArea;
+                const constructionValue = vc * (1 - d);
+                document.getElementById('total-construction-value').textContent = `€ ${constructionValue.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+                const totalPropertyValue = terrainValue + constructionValue;
+                document.getElementById('total-property-value').textContent = `€ ${totalPropertyValue.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+                // Cálculo de Rentabilidade
+                const acquisitionValue = parseFloat(document.getElementById('acquisition-value').value) || 0;
+                const annualCosts = parseFloat(document.getElementById('annual-costs').value) || 0;
+                const selectedCity = document.getElementById('rent-city').value;
+                const yieldPercent = RENTAL_YIELDS[selectedCity] || 0;
+
+                if (acquisitionValue > 0) {
+                    const grossAnnualRent = acquisitionValue * (yieldPercent / 100);
+                    const netAnnualRent = grossAnnualRent - annualCosts;
+                    const roi = (netAnnualRent / acquisitionValue) * 100;
+                    const monthlyRent = grossAnnualRent / 12;
+                    let paybackYears = 'N/A';
+                    if (netAnnualRent > 0) {
+                        const years = acquisitionValue / netAnnualRent;
+                        paybackYears = `${years.toFixed(1)} Anos`;
+                    }
+
+                    document.getElementById('gross-yield-result').textContent = `${yieldPercent.toFixed(2)}%`;
+                    document.getElementById('monthly-rent-result').textContent = `€ ${monthlyRent.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+                    document.getElementById('roi-result').textContent = `${roi.toFixed(2)}%`;
+                    document.getElementById('payback-result').textContent = paybackYears;
+                    document.getElementById('profitability-results').style.display = 'block';
+                } else {
+                    document.getElementById('profitability-results').style.display = 'none';
+                }
+            }
+
+            // Adicionar listeners a todos os campos relevantes
+            const fieldsToListen = [
+                'area-terreno-imovel', 'area-construcao', 'custo-direto', 'custo-indireto',
+                'beneficio', 'depreciacao', 'acquisition-value', 'annual-costs', 'rent-city'
+            ];
+            fieldsToListen.forEach(id => document.getElementById(id).addEventListener('input', calculateAndDisplayAll));
+            document.querySelectorAll('#terrain-comparison-table input').forEach(input => {
+                input.addEventListener('input', calculateAndDisplayAll);
+            });
+
+            document.getElementById('use-estimated-value-btn').addEventListener('click', () => {
+                const totalValueText = document.getElementById('total-property-value').textContent;
+                const totalValue = parseFloat(totalValueText.replace(/[€\s.]/g, '').replace(',', '.')) || 0;
+                document.getElementById('acquisition-value').value = totalValue.toFixed(2);
+                calculateAndDisplayAll();
+            });
+
+
+            // --- GERAÇÃO DO RELATÓRIO ---
+            async function generateReport() {
+                const getInputValue = id => document.getElementById(id)?.value || 'N/A';
+                const formatCurrency = val => `€ ${val.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
                 const reportData = {
                     solicitante: getInputValue('nomeSolicitante'),
                     avaliador: getInputValue('nomeAvaliador'),
+                    idAvaliador: getInputValue('idAvaliador'),
+                    regAvaliador: getInputValue('regAvaliador'),
                     objeto: getInputValue('objetoAvaliacao'),
                     dataVisita: getInputValue('dataVisita'),
                     dataRelatorio: getInputValue('dataRelatorio'),
                     tipoImovel: getInputValue('tipoInmueble'),
-                    cidade: getInputValue('cidadeImovel'),
-                    codigoPostal: getInputValue('codigoPostalImovel'),
-                    morada: getInputValue('moradaImovel'),
-                    areaConstrucao: getInputValue('area-construcao'),
-                    areaTerreno: getInputValue('area-terreno-imovel'),
-                    custoReposicao: totalConstructionValueEl.textContent,
-                    valorTerreno: totalTerrainValueEl.textContent,
-                    valorTotal: totalPropertyValueEl.textContent,
-                    valorVC: valorConstrucaoVcEl.textContent,
-                    valorD: valorDepreciacaoEl.textContent
+                    moradaCompleta: `${getInputValue('moradaImovel')}, ${getInputValue('codigoPostalImovel')} ${getInputValue('cidadeImovel')}`,
+                    areaConstrucao: parseFloat(getInputValue('area-construcao')) || 0,
+                    areaTerreno: parseFloat(getInputValue('area-terreno-imovel')) || 0,
+                    swot: {
+                        strengths: getInputValue('swot-strengths').replace(/\n/g, '<br>'),
+                        weaknesses: getInputValue('swot-weaknesses').replace(/\n/g, '<br>'),
+                        opportunities: getInputValue('swot-opportunities').replace(/\n/g, '<br>'),
+                        threats: getInputValue('swot-threats').replace(/\n/g, '<br>')
+                    },
+                    finalRemarks: getInputValue('final-remarks').replace(/\n/g, '<br>'),
+                    valorTotal: parseFloat(document.getElementById('total-property-value').textContent.replace(/[€\s.]/g, '').replace(',', '.')) || 0,
+                    valorTerreno: parseFloat(document.getElementById('total-terrain-value').textContent.replace(/[€\s.]/g, '').replace(',', '.')) || 0,
+                    custoReposicao: parseFloat(document.getElementById('total-construction-value').textContent.replace(/[€\s.]/g, '').replace(',', '.')) || 0,
+                    rentabilidade: {
+                        yield: document.getElementById('gross-yield-result').textContent,
+                        rendaMensal: document.getElementById('monthly-rent-result').textContent,
+                        roi: document.getElementById('roi-result').textContent,
+                        payback: document.getElementById('payback-result').textContent
+                    },
+                    custosAnuais: parseFloat(getInputValue('annual-costs')) || 0,
                 };
+                reportData.rentabilidade.rendaAnualBruta = reportData.valorTotal * (parseFloat(reportData.rentabilidade.yield) / 100);
+
+
+                let photosHTML = '';
+                let photoCount = 0;
+                for (let i = 1; i <= photoCounter; i++) {
+                    const fileInput = document.getElementById(`photo-file-${i}`);
+                    if (fileInput && fileInput.files[0]) {
+                        photoCount++;
+                        const desc = document.getElementById(`photo-desc-${i}`).value;
+                        const src = document.querySelector(`#photo-preview-${i} img`)?.src;
+                        if (src) {
+                            photosHTML += `
+                                <div class="photo-block">
+                                    <img src="${src}" alt="Fotografia ${photoCount} do Imóvel">
+                                    <p class="mt-2"><strong>Fig. ${photoCount}:</strong> ${desc || 'Sem descrição.'}</p>
+                                </div>`;
+                        }
+                    }
+                }
 
                 let reportHTML = `
-                    <div class="report-section">
-                        <h4>1. Dados Gerais</h4>
-                        <p><strong>Solicitante:</strong> ${reportData.solicitante}</p>
-                        <p><strong>Avaliador:</strong> ${reportData.avaliador}</p>
-                        <p><strong>Objeto da Avaliação:</strong> ${reportData.objeto}</p>
-                        <p><strong>Data da Visita:</strong> ${reportData.dataVisita}</p>
-                        <p><strong>Data do Relatório:</strong> ${reportData.dataRelatorio}</p>
+                    <div class="report-page">
+                        <h2 class="text-center mb-4" style="color: #005A9C;">Relatório de Avaliação de Imóvel</h2>
+                        <div class="report-section"><h4>1. Dados Gerais</h4><p><strong>Solicitante:</strong> ${reportData.solicitante}</p><p><strong>Avaliador:</strong> ${reportData.avaliador} (Cédula: ${reportData.idAvaliador}, Registo: ${reportData.regAvaliador})</p><p><strong>Objeto:</strong> ${reportData.objeto}</p><p><strong>Datas:</strong> Visita a ${reportData.dataVisita}, Relatório a ${reportData.dataRelatorio}</p></div>
+                        <div class="report-section"><h4>2. Detalhes do Imóvel</h4><p><strong>Tipo:</strong> ${reportData.tipoImovel}</p><p><strong>Morada:</strong> ${reportData.moradaCompleta}</p><p><strong>Área Bruta Privativa:</strong> ${reportData.areaConstrucao} m²</p><p><strong>Área do Terreno:</strong> ${reportData.areaTerreno} m²</p></div>
+                        <div class="report-section"><h4>3. Resumo da Valorização</h4><p><strong>Valor Total Estimado:</strong> ${formatCurrency(reportData.valorTotal)}</p><p><strong>Valor do Terreno:</strong> ${formatCurrency(reportData.valorTerreno)}</p><p><strong>Custo de Reposição da Construção:</strong> ${formatCurrency(reportData.custoReposicao)}</p><div class="chart-container"><canvas id="valueBreakdownChart"></canvas></div></div>
                     </div>
-                    <div class="report-section">
-                        <h4>2. Dados do Imóvel</h4>
-                        <p><strong>Tipo de Imóvel:</strong> ${reportData.tipoImovel}</p>
-                        <p><strong>Localização:</strong> ${reportData.morada}, ${reportData.codigoPostal}, ${reportData.cidade}</p>
-                        <p><strong>Área de Construção:</strong> ${reportData.areaConstrucao} m²</p>
-                        <p><strong>Área do Terreno:</strong> ${reportData.areaTerreno} m²</p>
+                    <div class="report-page">
+                        <div class="report-section"><h4>4. Análise de Rentabilidade</h4>
+                            <p><strong>Rentabilidade Bruta (Yield) Anual Estimada:</strong> ${reportData.rentabilidade.yield}</p>
+                            <p><strong>Renda Mensal Estimada:</strong> ${reportData.rentabilidade.rendaMensal}</p>
+                            <p><strong>Retorno Sobre o Investimento (ROI) Anual Estimado:</strong> ${reportData.rentabilidade.roi}</p>
+                            <p><strong>Tempo de Retorno da Inversão (Payback):</strong> ${reportData.rentabilidade.payback}</p>
+                            <div class="chart-container"><canvas id="profitabilityChart"></canvas></div>
+                        </div>
+                        <div class="report-section"><h4>5. Análise SWOT</h4><strong>Pontos Fortes:</strong><div>${reportData.swot.strengths || 'N/A'}</div><br><strong>Pontos Fracos:</strong><div>${reportData.swot.weaknesses || 'N/A'}</div><br><strong>Oportunidades:</strong><div>${reportData.swot.opportunities || 'N/A'}</div><br><strong>Ameaças:</strong><div>${reportData.swot.threats || 'N/A'}</div></div>
+                        <div class="report-section"><h4>6. Conclusões Finais</h4><p>${reportData.finalRemarks || 'N/A'}</p></div>
                     </div>
-                    <div class="report-section">
-                        <h4>3. Resumo da Valorização</h4>
-                        <p><strong>Valor Estimado do Terreno (Método Comparativo):</strong> ${reportData.valorTerreno}</p>
-                        <p><strong>Valor da Construção (VC):</strong> ${reportData.valorVC}</p>
-                        <p><strong>(-) Depreciação (D - Fito Corvini):</strong> ${reportData.valorD}</p>
-                        <p><strong>(=) Custo de Reposição da Construção (CR):</strong> ${reportData.custoReposicao}</p>
-                        <hr>
-                        <h5 class="mt-3 final-value-report">Valor Total Estimado do Imóvel (Terreno + CR): ${reportData.valorTotal}</h5>
+                    ${photosHTML ? `<div class="report-page photo-report-section"><h4 class="mb-4">Anexo Fotográfico</h4>${photosHTML}</div>` : ''}
+                    <div class="report-page">
+                        <div class="report-section" style="border:none;">
+                            <h4>Declaração e Assinatura</h4>
+                            <p class="text-muted"><small>O presente relatório foi elaborado de forma imparcial e objetiva, com base nas informações recolhidas e na metodologia descrita.</small></p>
+                            <div style="margin-top: 4cm; display: flex; justify-content: space-between; text-align: center;">
+                                <div style="width: 45%;"><hr style="border-top: 1px solid #333; margin-bottom: 5px;"><p class="mb-0"><strong>${reportData.avaliador}</strong></p><p class="mb-0"><small>O Avaliador</small></p></div>
+                                <div style="width: 45%;"><hr style="border-top: 1px solid #333; margin-bottom: 5px;"><p class="mb-0"><strong>${reportData.solicitante}</strong></p><p class="mb-0"><small>O Solicitante</small></p></div>
+                            </div>
+                        </div>
                     </div>
                 `;
 
                 document.getElementById('reportOutput').innerHTML = reportHTML;
+
+                // Geração de gráficos APÓS o HTML estar no DOM
+                setTimeout(() => {
+                    if (valueBreakdownChart) valueBreakdownChart.destroy();
+                    valueBreakdownChart = new Chart(document.getElementById('valueBreakdownChart').getContext('2d'), {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Valor do Terreno', 'Valor da Construção'],
+                            datasets: [{
+                                data: [reportData.valorTerreno, reportData.custoReposicao],
+                                backgroundColor: ['#36a2eb', '#ff6384'],
+                            }]
+                        },
+                        options: { responsive: true, plugins: { legend: { position: 'top' }, title: { display: true, text: 'Desglose del Valor del Inmueble' } } }
+                    });
+
+                    if (profitabilityChart) profitabilityChart.destroy();
+                    profitabilityChart = new Chart(document.getElementById('profitabilityChart').getContext('2d'), {
+                        type: 'bar',
+                        data: {
+                            labels: ['Análise Financeira'],
+                            datasets: [
+                                { label: 'Ingresos Brutos Anuales', data: [reportData.rentabilidade.rendaAnualBruta], backgroundColor: '#28a745' },
+                                { label: 'Costes Anuales', data: [reportData.custosAnuais], backgroundColor: '#dc3545' },
+                                { label: 'Beneficio Neto Anual', data: [reportData.rentabilidade.rendaAnualBruta - reportData.custosAnuais], backgroundColor: '#007bff' }
+                            ]
+                        },
+                        options: { responsive: true, plugins: { legend: { position: 'top' }, title: { display: true, text: 'Análisis de Rentabilidad Anual' } }, scales: { y: { beginAtZero: true } } }
+                    });
+                }, 100); // Pequeno timeout para garantir que o canvas está renderizado
+
                 $('#reportModal').modal('show');
             }
+
+            form.addEventListener('submit', generateReport);
         });
+
+        function printReport() {
+            window.print();
+        }
     </script>
 </body>
-<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PQ2Q63GR" height="0" width="0"
-        style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
 
 </html>
