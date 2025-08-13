@@ -68,6 +68,38 @@
             background-color: #343a40;
         }
 
+        .transport-item {
+            display: grid;
+            grid-template-columns: auto 1fr 1fr 100px;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .transport-item:last-child {
+            border-bottom: none;
+        }
+
+        .transport-item .icon-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .transport-item i {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .transport-item {
+                grid-template-columns: 1fr;
+            }
+        }
+
         @media print {
             @page {
                 size: A4;
@@ -250,8 +282,10 @@
                 <div class="form-section">
                     <h3>3. Morada do Imóvel</h3>
                     <div class="form-row">
-                        <div class="form-group col-md-6"><label for="cidadeImovel">Cidade</label><input type="text"
-                                class="form-control" id="cidadeImovel" placeholder="Ex: Lisboa, Porto, Coimbra"></div>
+                        <div class="form-group col-md-6">
+                            <label for="cidadeImovel">Cidade</label>
+                            <select class="form-control" id="cidadeImovel"></select>
+                        </div>
                         <div class="form-group col-md-6"><label for="codigoPostalImovel">Código Postal</label><input
                                 type="text" class="form-control" id="codigoPostalImovel" placeholder="Ex: 4000-447">
                         </div>
@@ -285,10 +319,118 @@
                                     min="0" value="1" class="form-control"></div>
                         </div>
                     </div>
+                    <hr>
+                    <div class="property-features-grid mt-4">
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-utensils"></i></div>
+                            <label class="feature-label">Cozinha</label>
+                            <div class="custom-control custom-checkbox"><input type="checkbox"
+                                    class="custom-control-input" id="check-cozinha"><label class="custom-control-label"
+                                    for="check-cozinha">Incluído</label></div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-tshirt"></i></div>
+                            <label class="feature-label">Lavandaria</label>
+                            <div class="custom-control custom-checkbox"><input type="checkbox"
+                                    class="custom-control-input" id="check-lavandaria"><label
+                                    class="custom-control-label" for="check-lavandaria">Incluído</label></div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon"><i class="fas fa-mountain-sun"></i></div>
+                            <label class="feature-label">Varanda/Terraço</label>
+                            <div class="custom-control custom-checkbox"><input type="checkbox"
+                                    class="custom-control-input" id="check-terraco"><label class="custom-control-label"
+                                    for="check-terraco">Incluído</label></div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-section">
-                    <h3>5. Acabamentos e Materiais de Construção</h3>
+                    <h3>5. Infraestrutura e Serviços <i class="fas fa-broadcast-tower"></i></h3>
+                    <h4 class="h5">Serviços Públicos</h4>
+                    <div class="public-services-grid">
+                        <div class="service-item"><i class="fas fa-faucet service-icon"></i><label
+                                class="service-label">Água Canalizada</label>
+                            <div class="service-toggle"><input type="radio" id="serv-agua-sim" name="serv-agua"
+                                    value="sim" checked><label for="serv-agua-sim">Sim</label><input type="radio"
+                                    id="serv-agua-nao" name="serv-agua" value="nao"><label
+                                    for="serv-agua-nao">Não</label></div>
+                        </div>
+                        <div class="service-item"><i class="fas fa-bolt service-icon"></i><label
+                                class="service-label">Eletricidade</label>
+                            <div class="service-toggle"><input type="radio" id="serv-ele-sim" name="serv-ele"
+                                    value="sim" checked><label for="serv-ele-sim">Sim</label><input type="radio"
+                                    id="serv-ele-nao" name="serv-ele" value="nao"><label for="serv-ele-nao">Não</label>
+                            </div>
+                        </div>
+                        <div class="service-item"><i class="fas fa-fire-flame-simple service-icon"></i><label
+                                class="service-label">Gás Natural</label>
+                            <div class="service-toggle"><input type="radio" id="serv-gas-sim" name="serv-gas"
+                                    value="sim"><label for="serv-gas-sim">Sim</label><input type="radio"
+                                    id="serv-gas-nao" name="serv-gas" value="nao" checked><label
+                                    for="serv-gas-nao">Não</label></div>
+                        </div>
+                        <div class="service-item"><i class="fas fa-toilet service-icon"></i><label
+                                class="service-label">Saneamento</label>
+                            <div class="service-toggle"><input type="radio" id="serv-san-sim" name="serv-san"
+                                    value="sim" checked><label for="serv-san-sim">Sim</label><input type="radio"
+                                    id="serv-san-nao" name="serv-san" value="nao"><label for="serv-san-nao">Não</label>
+                            </div>
+                        </div>
+                        <div class="service-item"><i class="fas fa-wifi service-icon"></i><label
+                                class="service-label">Internet Fibra</label>
+                            <div class="service-toggle"><input type="radio" id="serv-net-sim" name="serv-net"
+                                    value="sim"><label for="serv-net-sim">Sim</label><input type="radio"
+                                    id="serv-net-nao" name="serv-net" value="nao" checked><label
+                                    for="serv-net-nao">Não</label></div>
+                        </div>
+                    </div>
+
+                    <h4 class="h5 mt-4">Vias de Acesso</h4>
+                    <div class="form-group">
+                        <label for="vias-acesso"><i class="fas fa-road mr-2"></i>Nomes das principais vias de
+                            acesso</label>
+                        <textarea id="vias-acesso" class="form-control" rows="3"
+                            placeholder="Ex: A1, VCI, Avenida da Boavista..."></textarea>
+                    </div>
+
+                    <h4 class="h5 mt-4">Transporte Público Próximo</h4>
+                    <div id="transport-list">
+                        <div class="transport-item">
+                            <div class="icon-label"><input type="checkbox" class="form-check-input" id="check-metro"><i
+                                    class="fas fa-train-subway"></i><span>Metro</span></div><input type="text"
+                                class="form-control" placeholder="Estação mais próxima"><input type="number"
+                                class="form-control" placeholder="Distância (m)">
+                        </div>
+                        <div class="transport-item">
+                            <div class="icon-label"><input type="checkbox" class="form-check-input"
+                                    id="check-autocarro"><i class="fas fa-bus"></i><span>Autocarro</span></div><input
+                                type="text" class="form-control" placeholder="Paragem mais próxima"><input type="number"
+                                class="form-control" placeholder="Distância (m)">
+                        </div>
+                        <div class="transport-item">
+                            <div class="icon-label"><input type="checkbox" class="form-check-input"
+                                    id="check-comboio"><i class="fas fa-train"></i><span>Comboio</span></div><input
+                                type="text" class="form-control" placeholder="Estação mais próxima"><input type="number"
+                                class="form-control" placeholder="Distância (m)">
+                        </div>
+                        <div class="transport-item">
+                            <div class="icon-label"><input type="checkbox" class="form-check-input"
+                                    id="check-eletrico"><i class="fas fa-train-tram"></i><span>Elétrico</span></div>
+                            <input type="text" class="form-control" placeholder="Paragem mais próxima"><input
+                                type="number" class="form-control" placeholder="Distância (m)">
+                        </div>
+                        <div class="transport-item">
+                            <div class="icon-label"><input type="checkbox" class="form-check-input" id="check-barco"><i
+                                    class="fas fa-ferry"></i><span>Barco/Ferry</span></div><input type="text"
+                                class="form-control" placeholder="Cais mais próximo"><input type="number"
+                                class="form-control" placeholder="Distância (m)">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>6. Acabamentos e Materiais de Construção</h3>
                     <div class="finishes-grid">
                         <div class="finish-item">
                             <div class="finish-icon"><i class="fas fa-border-style"></i></div><label
@@ -353,7 +495,7 @@
                 </div>
 
                 <div class="form-section">
-                    <h3>6. Análise Qualitativa (SWOT)</h3>
+                    <h3>7. Análise Qualitativa (SWOT)</h3>
                     <div class="form-group">
                         <label for="swot-strengths"><strong><i class="fas fa-thumbs-up text-success"></i> Pontos Fortes
                                 (Strengths)</strong></label>
@@ -381,7 +523,7 @@
                 </div>
 
                 <div class="form-section">
-                    <h3>7. Registo Fotográfico (Anexos)</h3>
+                    <h3>8. Registo Fotográfico (Anexos)</h3>
                     <p class="text-muted">Anexe até 20 fotografias do imóvel. Apenas as fotografias carregadas
                         aparecerão no relatório.</p>
                     <div id="photo-upload-container"></div>
@@ -390,9 +532,9 @@
                 </div>
 
                 <div class="form-section">
-                    <h3>8. Método de Valorização</h3>
+                    <h3>9. Método de Valorização</h3>
                     <div id="terrain-valuation" class="conditional-details" style="display: block;">
-                        <h4 class="h5">8.1 Valorização do Terreno</h4>
+                        <h4 class="h5">9.1 Valorização do Terreno</h4>
                         <p><strong>Método Utilizado:</strong> Método Comparativo de Mercado</p>
                         <div class="form-group highlighted-input-group"><label for="area-terreno-imovel">Área do Terreno
                                 do Imóvel (m²)</label><input type="number" id="area-terreno-imovel" min="0"
@@ -431,7 +573,7 @@
                         </div>
                     </div>
                     <div id="construction-valuation">
-                        <h4 class="h5 mt-4">8.2 Valorização da Construção</h4>
+                        <h4 class="h5 mt-4">9.2 Valorização da Construção</h4>
                         <p><strong>Método Utilizado:</strong> Custo de Reposição (Fito-Corvini)</p>
                         <div class="form-row">
                             <div class="form-group col-md-6 highlighted-input-group">
@@ -482,7 +624,7 @@
                 </div>
 
                 <div class="form-section">
-                    <h3>9. Análise de Rentabilidade (Arrendamento)</h3>
+                    <h3>10. Análise de Rentabilidade (Arrendamento)</h3>
                     <div class="form-group">
                         <label for="acquisition-value">Valor de Aquisição (Baseado no Valor Total do Avalúo)</label>
                         <input type="number" id="acquisition-value" class="form-control"
@@ -546,7 +688,7 @@
                 </div>
 
                 <div class="form-section">
-                    <h3>10. Conclusões e Observações Finais</h3>
+                    <h3>11. Conclusões e Observações Finais</h3>
                     <div class="form-group">
                         <label for="final-remarks">Parecer Final do Avaliador</label>
                         <textarea id="final-remarks" class="form-control" rows="5"
@@ -639,8 +781,6 @@
         document.addEventListener('DOMContentLoaded', function () {
 
             // --- DATABASE & GLOBAL VARS ---
-            // Fonte: Idealista/news, 1º trimestre de 2025
-            // Esta secção pode ser facilmente atualizada por um administrador.
             const RENTAL_YIELDS = {
                 "Aveiro": 6.2, "Beja": 7.0, "Braga": 6.5, "Bragança": 8.4, "Castelo Branco": 8.6,
                 "Coimbra": 6.9, "Évora": 6.0, "Faro": 5.5, "Funchal (Madeira)": 6.1, "Guarda": 6.7,
@@ -666,12 +806,20 @@
 
             // --- FORM & MODAL INITIALIZATION ---
             function initializeForm() {
-                const citySelect = document.getElementById('rent-city');
-                Object.keys(RENTAL_YIELDS).sort().forEach(city => {
-                    const option = document.createElement('option');
-                    option.value = city;
-                    option.textContent = city;
-                    citySelect.appendChild(option);
+                const cidadeImovelSelect = document.getElementById('cidadeImovel');
+                const rentCitySelect = document.getElementById('rent-city');
+                const cities = Object.keys(RENTAL_YIELDS).sort();
+
+                cities.forEach(city => {
+                    const option1 = document.createElement('option');
+                    option1.value = city;
+                    option1.textContent = city;
+                    cidadeImovelSelect.appendChild(option1);
+
+                    const option2 = document.createElement('option');
+                    option2.value = city;
+                    option2.textContent = city;
+                    rentCitySelect.appendChild(option2);
                 });
 
                 const districtSelect = document.getElementById('cost-district');
@@ -865,21 +1013,15 @@
 
                 document.querySelectorAll('#terrain-comparison-table input').forEach(input => input.addEventListener('input', calculateAndDisplayAll));
                 document.querySelectorAll('.annual-cost-input').forEach(input => input.addEventListener('input', updateTotalAnnualCosts));
-                document.getElementById('rent-city').addEventListener('change', () => {
+
+                document.getElementById('cidadeImovel').addEventListener('change', () => {
+                    const selectedCity = document.getElementById('cidadeImovel').value;
+                    document.getElementById('rent-city').value = selectedCity;
                     updateYieldDisplay();
                     calculateAndDisplayAll();
                 });
 
-                document.getElementById('cidadeImovel').addEventListener('blur', () => {
-                    const typedCity = document.getElementById('cidadeImovel').value;
-                    const rentCitySelect = document.getElementById('rent-city');
-                    const cityOption = Array.from(rentCitySelect.options).find(opt => opt.value.toLowerCase() === typedCity.toLowerCase());
-
-                    if (cityOption) {
-                        rentCitySelect.value = cityOption.value;
-                    } else {
-                        rentCitySelect.value = "Outra"; // Fallback
-                    }
+                document.getElementById('rent-city').addEventListener('change', () => {
                     updateYieldDisplay();
                     calculateAndDisplayAll();
                 });
