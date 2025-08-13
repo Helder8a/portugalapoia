@@ -1,53 +1,383 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let e = e => document.getElementById(e), t = e("evaluationForm"), a = e("totalScore"), o = e("maxScore"), n = e("scoreUnit"), i = e("certName"), r = e("progressBar"), l = e("levelText"); e("certificationSelector"), e("projectTypeSelector"); let s = e("projectName"); e("saveProjectButton"), e("loadProjectButton"), e("deleteProjectButton"), e("savedProjectsSelector"), e("exportPdfButton"), e("resetButton"), e("carbonCalculatorBtn"); let c = e("memoriaGeneratorBtn"), d = {}, m = "lidera"; function u() { d = {}; let e = certificationsDB[m]?.data; if (!e) { p(); return } for (let t in e) for (let a in d[t] = {}, e[t]) d[t][a] = 0; p() } function p() { let e = certificationsDB[m]; if (!e) { a.textContent = "0.0", o.textContent = "0.0", i.textContent = "N/A", l.textContent = "N/A", r.style.width = "0%"; return } let t = function e() { let t = certificationsDB[m]; if (!t) return 0; let a = 0; if ("LiderA" === t.name && t.data) { let o = t.weights.edificio, n = 0, i = 0; for (let r in d) { let l = o[r] || 1; i += l; let s = 0, c = 0; for (let u in d[r]) s += d[r][u], t.data[r] && t.data[r][u] && t.data[r][u].credits && (c += Object.values(t.data[r][u].credits).reduce((e, t) => e + t, 0)); c > 0 && (n += s / c * l) } a = i > 0 ? n / i * t.maxScore : 0 } return a }(); a.textContent = t.toFixed(1), o.textContent = e.maxScore.toFixed(1), n.textContent = e.scoreUnit, i.textContent = e.name; let s = e.maxScore > 0 ? t / e.maxScore * 100 : 0; r.style.width = `${s}%`; let c = "N/A"; if (e.levels) { let u = Object.entries(e.levels).sort((e, t) => t[0] - e[0]); for (let [p, f] of u) if (t >= parseFloat(p)) { c = f; break } } l.textContent = c } t.addEventListener("change", e => { if (e.target.matches('input[type="checkbox"]')) { let { vertente: t, area: a, credit: o } = e.target.dataset, n = certificationsDB[m], i = n.data[t][a].credits[o]; d[t][a] += e.target.checked ? i : -i, p() } }), t.addEventListener("click", e => {
-        let t = e.target.closest(".info-icon"); if (t) {
-            let { vertente: a, area: o } = t.dataset, n = certificationsDB[m]?.data[a]?.[o]?.info; if (n) {
-                let i = document.querySelector("#infoModal .modal-title"); i && (i.textContent = `Crit\xe9rio: ${o}`); let r = ""; n.normativa_pt && (r = `
-                        <div class="normativa-section">
-                            <h6>Normativa Aplic\xe1vel em Portugal</h6>
-                            <p><strong>${n.normativa_pt.nome}</strong><br>
-                               <a href="${n.normativa_pt.link}" target="_blank">Consultar Documento Oficial <i class="fas fa-external-link-alt fa-xs"></i></a>
-                            </p>
-                        </div>`); let l = document.querySelector("#infoModal .modal-body"); l && (l.innerHTML = `
-                        <h6>Objetivo</h6><p>${n.objetivo}</p>
-                        <h6>Exemplo de Aplica\xe7\xe3o</h6><p>${n.exemplo}</p>
-                        <h6>Benef\xedcios do Projeto</h6><p>${n.beneficios}</p>
-                        ${r}`, $("#infoModal").modal("show"))
-            }
-        } let s = e.target.closest(".solutions-icon"); if (s) {
-            let { vertente: c, area: d } = s.dataset; (function e(t, a) {
-                let o = certificationsDB[m].data, n = o[t][a]?.solucoes_pt; if (!n) return; let i = document.querySelector("#solutionsModal .modal-title"); i && (i.textContent = `Solu\xe7\xf5es de Mercado para: ${a}`); let r = document.querySelector("#solutionsModal .modal-body"); if (r) {
-                    let l = n.map(e => {
-                        let t = e.lcca_id, a = t && "undefined" != typeof lccaDB && lccaDB[t] ? `<button class="btn btn-success btn-sm mt-2 launch-lcca-btn" data-lcca-id="${t}">Analisar Custo de Ciclo de Vida</button>` : ""; return `
-                    <div class="solution-card">
-                        <h5>${e.nome}</h5>
-                        <p class="solution-manufacturer"><strong>Fabricante/Marca:</strong> ${e.fabricante}</p>
-                        <p><strong>Descri\xe7\xe3o:</strong> ${e.descricao}</p>
-                        <p><strong>Aplica\xe7\xe3o T\xedpica:</strong> ${e.aplicacao}</p>
-                        <a href="${e.link}" target="_blank" class="btn btn-outline-primary btn-sm">Visitar Website <i class="fas fa-external-link-alt"></i></a>
-                        ${a}
-                    </div>`}).join(""); r.innerHTML = l, $("#solutionsModal").modal("show")
-                }
-            })(c, d)
+    const getEl = id => document.getElementById(id);
+
+    // --- Elementos DOM Principais ---
+    const evaluationForm = getEl("evaluationForm");
+    const totalScoreEl = getEl("totalScore");
+    const maxScoreEl = getEl("maxScore");
+    const scoreUnitEl = getEl("scoreUnit");
+    const certNameEl = getEl("certName");
+    const progressBarEl = getEl("progressBar");
+    const levelTextEl = getEl("levelText");
+    const projectNameEl = getEl("projectName");
+    const memoriaGeneratorBtn = getEl("memoriaGeneratorBtn");
+
+    let evaluationData = {};
+    let currentCertification = "lidera";
+    let lccaChartInstance = null;
+
+    // --- Funções de Avaliação Principal ---
+
+    function initializeEvaluation() {
+        evaluationData = {};
+        const certData = certificationsDB[currentCertification]?.data;
+        if (!certData) {
+            updateScoreDisplay();
+            return;
         }
-    }), c.addEventListener("click", () => {
-        let t = s.value.trim() || "este projeto", a = `MEM\xd3RIA DESCRITIVA DE SUSTENTABILIDADE
-`; a += `PROJETO: ${t.toUpperCase()}
+        for (let vertente in certData) {
+            evaluationData[vertente] = {};
+            for (let area in certData[vertente]) {
+                evaluationData[vertente][area] = 0;
+            }
+        }
+        updateScoreDisplay();
+    }
 
-`, a += `A presente mem\xf3ria descreve as estrat\xe9gias de sustentabilidade adotadas para ${t}, com base nos crit\xe9rios do sistema de avalia\xe7\xe3o LiderA.
+    function updateScoreDisplay() {
+        const certConfig = certificationsDB[currentCertification];
+        if (!certConfig) {
+            totalScoreEl.textContent = "0.0";
+            maxScoreEl.textContent = "0.0";
+            certNameEl.textContent = "N/A";
+            levelTextEl.textContent = "N/A";
+            progressBarEl.style.width = "0%";
+            return;
+        }
 
-`; let o = document.querySelectorAll('#evaluationForm input[type="checkbox"]:checked'); if (0 === o.length) a += "Nenhum crit\xe9rio de sustentabilidade foi selecionado na avalia\xe7\xe3o."; else {
-            let n = new Set, i = new Set; o.forEach(e => {
-                let { vertente: t, area: o } = e.dataset; if (n.has(t) || (a += `
---- ${t.toUpperCase()} ---
+        const score = calculateScore();
+        totalScoreEl.textContent = score.toFixed(1);
+        maxScoreEl.textContent = certConfig.maxScore.toFixed(1);
+        scoreUnitEl.textContent = certConfig.scoreUnit;
+        certNameEl.textContent = certConfig.name;
 
-`, n.add(t)), !i.has(o)) {
-                    let r = certificationsDB[m]?.data[t]?.[o]?.info; r && r.memoria_descritiva && (a += `>> CRIT\xc9RIO: ${o.toUpperCase()}
-`, a += `${r.memoria_descritiva}
+        const progress = certConfig.maxScore > 0 ? (score / certConfig.maxScore) * 100 : 0;
+        progressBarEl.style.width = `${progress}%`;
 
-`, i.add(o))
+        let level = "N/A";
+        if (certConfig.levels) {
+            const sortedLevels = Object.entries(certConfig.levels).sort((a, b) => b[0] - a[0]);
+            for (const [minScore, levelName] of sortedLevels) {
+                if (score >= parseFloat(minScore)) {
+                    level = levelName;
+                    break;
                 }
-            })
-        } e("memoria-output").value = a, $("#memoriaModal").modal("show")
-    }), e("copyMemoriaBtn").addEventListener("click", () => { let t = e("memoria-output"); t.select(), t.setSelectionRange(0, 99999), document.execCommand("copy"), alert("Texto copiado para a \xe1rea de transfer\xeancia!") }), function e() { let a = certificationsDB[m]; if (t.innerHTML = "", !a || !a.data) { t.innerHTML = '<p class="text-muted">Este sistema de certifica\xe7\xe3o ainda n\xe3o tem crit\xe9rios definidos na base de dados.</p>', u(); return } Object.entries(a.data).forEach(([e, a], o) => { let n = ""; Object.entries(a).forEach(([t, a]) => { let o = ""; a.credits && Object.keys(a.credits).forEach(a => { let n = `${m}-${e}-${t}-${a}`.replace(/[^a-zA-Z0-9]/g, ""); o += `<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="${n}" data-vertente="${e}" data-area="${t}" data-credit="${a}"><label class="custom-control-label" for="${n}">${a}</label></div>` }); let i = a.solucoes_pt ? `<i class="fas fa-cubes solutions-icon" data-vertente="${e}" data-area="${t}" title="Ver Solu\xe7\xf5es de Mercado"></i>` : ""; n += `<div class="mb-4"><h5><span class="area-label">${t}<span class="icon-group"><i class="fas fa-info-circle info-icon" data-vertente="${e}" data-area="${t}"></i>${i}</span></span></h5>${o}</div>` }); let i = `<div class="card mb-3"><div class="card-header vertente-header" data-toggle="collapse" data-target="#vertente-${o}"><h4 class="mb-0">${e}</h4></div><div id="vertente-${o}" class="collapse ${0 === o ? "show" : ""}" data-parent="#evaluationForm"><div class="card-body">${n.replace(/<div class="mb-4">/g, '<hr class="my-4"><div class="mb-4">').replace('<hr class="my-4">', "")}</div></div></div>`; t.insertAdjacentHTML("beforeend", i) }), u() }()
+            }
+        }
+        levelTextEl.textContent = level;
+    }
+
+    function calculateScore() {
+        const certConfig = certificationsDB[currentCertification];
+        if (!certConfig) return 0;
+        let totalScore = 0;
+        if (certConfig.name === "LiderA" && certConfig.data) {
+            const weights = certConfig.weights.edificio;
+            let weightedSum = 0;
+            let totalWeight = 0;
+            for (const vertente in evaluationData) {
+                const weight = weights[vertente] || 1;
+                totalWeight += weight;
+                let vertenteScore = 0;
+                let maxVertenteScore = 0;
+                for (const area in evaluationData[vertente]) {
+                    vertenteScore += evaluationData[vertente][area];
+                    if (certConfig.data[vertente] && certConfig.data[vertente][area] && certConfig.data[vertente][area].credits) {
+                        maxVertenteScore += Object.values(certConfig.data[vertente][area].credits).reduce((sum, val) => sum + val, 0);
+                    }
+                }
+                if (maxVertenteScore > 0) {
+                    weightedSum += (vertenteScore / maxVertenteScore) * weight;
+                }
+            }
+            totalScore = totalWeight > 0 ? (weightedSum / totalWeight) * certConfig.maxScore : 0;
+        }
+        return totalScore;
+    }
+
+    // --- Geração Dinâmica do Formulário ---
+
+    function renderForm() {
+        const certConfig = certificationsDB[currentCertification];
+        evaluationForm.innerHTML = "";
+        if (!certConfig || !certConfig.data) {
+            evaluationForm.innerHTML = '<p class="text-muted">Este sistema de certificação ainda não tem critérios definidos na base de dados.</p>';
+            initializeEvaluation();
+            return;
+        }
+
+        Object.entries(certConfig.data).forEach(([vertente, areas], index) => {
+            let areaHTML = "";
+            Object.entries(areas).forEach(([area, details]) => {
+                let creditsHTML = "";
+                if (details.credits) {
+                    Object.keys(details.credits).forEach(creditName => {
+                        const creditId = `${currentCertification}-${vertente}-${area}-${creditName}`.replace(/[^a-zA-Z0-9]/g, "");
+                        creditsHTML += `
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="${creditId}" data-vertente="${vertente}" data-area="${area}" data-credit="${creditName}">
+                                <label class="custom-control-label" for="${creditId}">${creditName}</label>
+                            </div>`;
+                    });
+                }
+                const solutionsIcon = details.solucoes_pt ? `<i class="fas fa-cubes solutions-icon" data-vertente="${vertente}" data-area="${area}" title="Ver Soluções de Mercado"></i>` : "";
+                areaHTML += `
+                    <div class="mb-4">
+                        <h5>
+                            <span class="area-label">${area}
+                                <span class="icon-group">
+                                    <i class="fas fa-info-circle info-icon" data-vertente="${vertente}" data-area="${area}"></i>
+                                    ${solutionsIcon}
+                                </span>
+                            </span>
+                        </h5>
+                        ${creditsHTML}
+                    </div>`;
+            });
+
+            const vertenteHTML = `
+                <div class="card mb-3">
+                    <div class="card-header vertente-header" data-toggle="collapse" data-target="#vertente-${index}">
+                        <h4 class="mb-0">${vertente}</h4>
+                    </div>
+                    <div id="vertente-${index}" class="collapse ${index === 0 ? "show" : ""}" data-parent="#evaluationForm">
+                        <div class="card-body">
+                            ${areaHTML.replace(/<div class="mb-4">/g, '<hr class="my-4"><div class="mb-4">').replace('<hr class="my-4">', '')}
+                        </div>
+                    </div>
+                </div>`;
+            evaluationForm.insertAdjacentHTML("beforeend", vertenteHTML);
+        });
+        initializeEvaluation();
+    }
+
+    // --- Lógica dos Modais ---
+
+    function showInfoModal(vertente, area) {
+        const info = certificationsDB[currentCertification]?.data[vertente]?.[area]?.info;
+        if (info) {
+            const modalTitle = document.querySelector("#infoModal .modal-title");
+            if (modalTitle) modalTitle.textContent = `Critério: ${area}`;
+
+            let normativaHTML = "";
+            if (info.normativa_pt) {
+                normativaHTML = `
+                    <div class="normativa-section">
+                        <h6>Normativa Aplicável em Portugal</h6>
+                        <p><strong>${info.normativa_pt.nome}</strong><br>
+                           <a href="${info.normativa_pt.link}" target="_blank" rel="noopener noreferrer">Consultar Documento Oficial <i class="fas fa-external-link-alt fa-xs"></i></a>
+                        </p>
+                    </div>`;
+            }
+
+            const modalBody = document.querySelector("#infoModal .modal-body");
+            if (modalBody) {
+                modalBody.innerHTML = `
+                    <h6>Objetivo</h6><p>${info.objetivo}</p>
+                    <h6>Exemplo de Aplicação</h6><p>${info.exemplo}</p>
+                    <h6>Benefícios do Projeto</h6><p>${info.beneficios}</p>
+                    ${normativaHTML}`;
+                $("#infoModal").modal("show");
+            }
+        }
+    }
+
+    function showSolutionsModal(vertente, area) {
+        const solutions = certificationsDB[currentCertification].data[vertente][area]?.solucoes_pt;
+        if (!solutions) return;
+
+        const modalTitle = document.querySelector("#solutionsModal .modal-title");
+        if (modalTitle) modalTitle.textContent = `Soluções de Mercado para: ${area}`;
+
+        const modalBody = document.querySelector("#solutionsModal .modal-body");
+        if (modalBody) {
+            const solutionsHTML = solutions.map(sol => {
+                const lccaButton = (sol.lcca_id && typeof lccaDB !== 'undefined' && lccaDB[sol.lcca_id])
+                    ? `<button class="btn btn-success btn-sm mt-2 launch-lcca-btn" data-lcca-id="${sol.lcca_id}">Analisar Custo de Ciclo de Vida</button>`
+                    : "";
+                return `
+                    <div class="solution-card">
+                        <h5>${sol.nome}</h5>
+                        <p class="solution-manufacturer"><strong>Fabricante/Marca:</strong> ${sol.fabricante}</p>
+                        <p><strong>Descrição:</strong> ${sol.descricao}</p>
+                        <p><strong>Aplicação Típica:</strong> ${sol.aplicacao}</p>
+                        <a href="${sol.link}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-sm">Visitar Website <i class="fas fa-external-link-alt"></i></a>
+                        ${lccaButton}
+                    </div>`;
+            }).join("");
+            modalBody.innerHTML = solutionsHTML;
+            $("#solutionsModal").modal("show");
+        }
+    }
+
+    memoriaGeneratorBtn.addEventListener("click", () => {
+        const projectName = projectNameEl.value.trim() || "este projeto";
+        let memoriaText = `MEMÓRIA DESCRITIVA DE SUSTENTABILIDADE\n`;
+        memoriaText += `PROJETO: ${projectName.toUpperCase()}\n\n`;
+        memoriaText += `A presente memória descreve as estratégias de sustentabilidade adotadas para ${projectName}, com base nos critérios do sistema de avaliação LiderA.\n\n`;
+
+        const checkedBoxes = document.querySelectorAll('#evaluationForm input[type="checkbox"]:checked');
+
+        if (checkedBoxes.length === 0) {
+            memoriaText += "Nenhum critério de sustentabilidade foi selecionado na avaliação.";
+        } else {
+            const processedVertentes = new Set();
+            const processedAreas = new Set();
+            checkedBoxes.forEach(checkbox => {
+                const { vertente, area } = checkbox.dataset;
+                if (!processedVertentes.has(vertente)) {
+                    memoriaText += `\n--- ${vertente.toUpperCase()} ---\n\n`;
+                    processedVertentes.add(vertente);
+                }
+                if (!processedAreas.has(area)) {
+                    const info = certificationsDB[currentCertification]?.data[vertente]?.[area]?.info;
+                    if (info && info.memoria_descritiva) {
+                        memoriaText += `>> CRITÉRIO: ${area.toUpperCase()}\n`;
+                        memoriaText += `${info.memoria_descritiva}\n\n`;
+                        processedAreas.add(area);
+                    }
+                }
+            });
+        }
+
+        getEl("memoria-output").value = memoriaText;
+        $("#memoriaModal").modal("show");
+    });
+
+    getEl("copyMemoriaBtn").addEventListener("click", () => {
+        const memoriaOutput = getEl("memoria-output");
+        memoriaOutput.select();
+        memoriaOutput.setSelectionRange(0, 99999);
+        document.execCommand("copy");
+        alert("Texto copiado para a área de transferência!");
+    });
+
+
+    // --- Lógica da Calculadora LCCA (NOVO E CORRIGIDO) ---
+
+    function calculateLCCA(material, quantity, discountRate) {
+        const rate = discountRate / 100;
+        const years = material.vida_util;
+        let maintenanceCosts = 0;
+        let replacementCosts = 0;
+        let energySavings = 0;
+
+        for (let i = 1; i <= years; i++) {
+            // Manutenção
+            maintenanceCosts += (material.custo_manutencao_anual * quantity) / Math.pow(1 + rate, i);
+            // Substituição (assume-se no final da vida útil)
+            if (i === years) {
+                replacementCosts += (material.custo_inicial * material.custo_substituicao * quantity) / Math.pow(1 + rate, i);
+            }
+            // Poupança
+            energySavings += (material.poupanca_energetica_anual * quantity) / Math.pow(1 + rate, i);
+        }
+
+        const initialCost = material.custo_inicial * quantity;
+        const totalCost = initialCost + maintenanceCosts + replacementCosts - energySavings;
+
+        return { initialCost, maintenanceCosts, replacementCosts, energySavings, totalCost };
+    }
+
+    function updateLccaDisplay(material, quantity, discountRate) {
+        const results = calculateLCCA(material, quantity, discountRate);
+        const formatCurrency = val => `€ ${val.toLocaleString('pt-PT', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+        getEl('lccaInitialCost').textContent = formatCurrency(results.initialCost);
+        getEl('lccaMaintenanceCost').textContent = formatCurrency(results.maintenanceCosts);
+        getEl('lccaReplacementCost').textContent = formatCurrency(results.replacementCosts);
+        getEl('lccaSavings').textContent = formatCurrency(results.energySavings);
+        getEl('lccaTotalCost').textContent = formatCurrency(results.totalCost);
+
+        const ctx = getEl('lccaChart').getContext('2d');
+        if (lccaChartInstance) {
+            lccaChartInstance.destroy();
+        }
+        lccaChartInstance = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Custo Inicial', 'Manutenção', 'Substituição', 'Poupança'],
+                datasets: [{
+                    data: [results.initialCost, results.maintenanceCosts, results.replacementCosts, -results.energySavings],
+                    backgroundColor: ['#0a3d62', '#ffc107', '#dc3545', '#28a745'],
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'top' },
+                    title: { display: true, text: `Distribuição de Custos para ${quantity} ${material.unidade}` }
+                }
+            }
+        });
+    }
+
+    function launchLccaCalculator(lccaId) {
+        const material = lccaDB[lccaId];
+        if (!material) {
+            alert("Erro: Dados do material não encontrados.");
+            return;
+        }
+
+        getEl('lccaMaterialName').textContent = material.nome;
+        getEl('lccaUnit').textContent = material.unidade;
+
+        const quantityInput = getEl('lccaQuantity');
+        const discountRateInput = getEl('lccaDiscountRate');
+
+        // Remove event listeners antigos para evitar duplicação
+        const newQuantityInput = quantityInput.cloneNode(true);
+        quantityInput.parentNode.replaceChild(newQuantityInput, quantityInput);
+
+        const newDiscountRateInput = discountRateInput.cloneNode(true);
+        discountRateInput.parentNode.replaceChild(newDiscountRateInput, discountRateInput);
+
+        const updateHandler = () => {
+            const quantity = parseFloat(newQuantityInput.value) || 1;
+            const discountRate = parseFloat(newDiscountRateInput.value) || 0;
+            updateLccaDisplay(material, quantity, discountRate);
+        };
+
+        newQuantityInput.addEventListener('input', updateHandler);
+        newDiscountRateInput.addEventListener('input', updateHandler);
+
+        updateHandler(); // Chamar uma vez para o cálculo inicial
+        $("#lccaModal").modal("show");
+    }
+
+    // --- Event Listeners ---
+
+    evaluationForm.addEventListener("change", e => {
+        if (e.target.matches('input[type="checkbox"]')) {
+            const { vertente, area, credit } = e.target.dataset;
+            const certConfig = certificationsDB[currentCertification];
+            const creditValue = certConfig.data[vertente][area].credits[credit];
+            evaluationData[vertente][area] += e.target.checked ? creditValue : -creditValue;
+            updateScoreDisplay();
+        }
+    });
+
+    evaluationForm.addEventListener("click", e => {
+        const infoIcon = e.target.closest(".info-icon");
+        if (infoIcon) {
+            const { vertente, area } = infoIcon.dataset;
+            showInfoModal(vertente, area);
+        }
+        const solutionsIcon = e.target.closest(".solutions-icon");
+        if (solutionsIcon) {
+            const { vertente, area } = solutionsIcon.dataset;
+            showSolutionsModal(vertente, area);
+        }
+    });
+
+    // Event Delegation para o botão da calculadora LCCA
+    document.querySelector("#solutionsModal .modal-body").addEventListener('click', function (e) {
+        if (e.target && e.target.classList.contains('launch-lcca-btn')) {
+            const lccaId = e.target.dataset.lccaId;
+            launchLccaCalculator(lccaId);
+        }
+    });
+
+    // --- Inicialização ---
+    renderForm();
 });
