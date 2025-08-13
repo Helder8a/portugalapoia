@@ -94,9 +94,64 @@
             color: var(--primary-color);
         }
 
+        .location-upload-grid {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .location-upload-box {
+            flex: 1;
+            text-align: center;
+        }
+
+        .location-arrow {
+            font-size: 2.5rem;
+            color: var(--border-color);
+        }
+
+        .image-upload-box {
+            border: 2px dashed var(--border-color);
+            border-radius: var(--border-radius-main);
+            padding: 1rem;
+            cursor: pointer;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+
+        .image-upload-box:hover {
+            border-color: var(--primary-color);
+            background-color: #f8f9fa;
+        }
+
+        .image-upload-box i {
+            font-size: 2.5rem;
+            color: #adb5bd;
+            margin-bottom: 0.5rem;
+        }
+
+        .image-upload-box img {
+            max-width: 100%;
+            max-height: 150px;
+            border-radius: var(--border-radius-main);
+        }
+
         @media (max-width: 768px) {
             .transport-item {
                 grid-template-columns: 1fr;
+            }
+
+            .location-upload-grid {
+                flex-direction: column;
+            }
+
+            .location-arrow {
+                transform: rotate(90deg);
             }
         }
 
@@ -295,7 +350,42 @@
                 </div>
 
                 <div class="form-section">
-                    <h3>4. Características do Imóvel <i class="fas fa-home"></i></h3>
+                    <h3>4. Localização Gráfica <i class="fas fa-map-marked-alt"></i></h3>
+                    <div class="location-upload-grid">
+                        <div class="location-upload-box">
+                            <label for="loc-pais" class="w-100">
+                                <div class="image-upload-box" id="preview-loc-pais">
+                                    <i class="fas fa-globe-europe"></i>
+                                    <span>Localização do País</span>
+                                </div>
+                            </label>
+                            <input type="file" id="loc-pais" class="d-none" accept="image/*">
+                        </div>
+                        <div class="location-arrow"><i class="fas fa-long-arrow-alt-right"></i></div>
+                        <div class="location-upload-box">
+                            <label for="loc-cidade" class="w-100">
+                                <div class="image-upload-box" id="preview-loc-cidade">
+                                    <i class="fas fa-city"></i>
+                                    <span>Localização da Cidade</span>
+                                </div>
+                            </label>
+                            <input type="file" id="loc-cidade" class="d-none" accept="image/*">
+                        </div>
+                        <div class="location-arrow"><i class="fas fa-long-arrow-alt-right"></i></div>
+                        <div class="location-upload-box">
+                            <label for="loc-bairro" class="w-100">
+                                <div class="image-upload-box" id="preview-loc-bairro">
+                                    <i class="fas fa-map-pin"></i>
+                                    <span>Localização do Bairro</span>
+                                </div>
+                            </label>
+                            <input type="file" id="loc-bairro" class="d-none" accept="image/*">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>5. Características do Imóvel <i class="fas fa-home"></i></h3>
                     <div class="form-group highlighted-input-group"><label for="area-construcao">Área Bruta Privativa
                             (m²)</label><input type="number" id="area-construcao" min="0" class="form-control"
                             placeholder="Introduza a área total de construção"></div>
@@ -346,7 +436,7 @@
                 </div>
 
                 <div class="form-section">
-                    <h3>5. Infraestrutura e Serviços <i class="fas fa-broadcast-tower"></i></h3>
+                    <h3>6. Infraestrutura e Serviços <i class="fas fa-broadcast-tower"></i></h3>
                     <h4 class="h5">Serviços Públicos</h4>
                     <div class="public-services-grid">
                         <div class="service-item"><i class="fas fa-faucet service-icon"></i><label
@@ -430,7 +520,7 @@
                 </div>
 
                 <div class="form-section">
-                    <h3>6. Acabamentos e Materiais de Construção</h3>
+                    <h3>7. Acabamentos e Materiais de Construção</h3>
                     <div class="finishes-grid">
                         <div class="finish-item">
                             <div class="finish-icon"><i class="fas fa-border-style"></i></div><label
@@ -495,7 +585,7 @@
                 </div>
 
                 <div class="form-section">
-                    <h3>7. Análise Qualitativa (SWOT)</h3>
+                    <h3>8. Análise Qualitativa (SWOT)</h3>
                     <div class="form-group">
                         <label for="swot-strengths"><strong><i class="fas fa-thumbs-up text-success"></i> Pontos Fortes
                                 (Strengths)</strong></label>
@@ -523,7 +613,7 @@
                 </div>
 
                 <div class="form-section">
-                    <h3>8. Registo Fotográfico (Anexos)</h3>
+                    <h3>9. Registo Fotográfico (Anexos)</h3>
                     <p class="text-muted">Anexe até 20 fotografias do imóvel. Apenas as fotografias carregadas
                         aparecerão no relatório.</p>
                     <div id="photo-upload-container"></div>
@@ -532,9 +622,9 @@
                 </div>
 
                 <div class="form-section">
-                    <h3>9. Método de Valorização</h3>
+                    <h3>10. Método de Valorização</h3>
                     <div id="terrain-valuation" class="conditional-details" style="display: block;">
-                        <h4 class="h5">9.1 Valorização do Terreno</h4>
+                        <h4 class="h5">10.1 Valorização do Terreno</h4>
                         <p><strong>Método Utilizado:</strong> Método Comparativo de Mercado</p>
                         <div class="form-group highlighted-input-group"><label for="area-terreno-imovel">Área do Terreno
                                 do Imóvel (m²)</label><input type="number" id="area-terreno-imovel" min="0"
@@ -573,7 +663,7 @@
                         </div>
                     </div>
                     <div id="construction-valuation">
-                        <h4 class="h5 mt-4">9.2 Valorização da Construção</h4>
+                        <h4 class="h5 mt-4">10.2 Valorização da Construção</h4>
                         <p><strong>Método Utilizado:</strong> Custo de Reposição (Fito-Corvini)</p>
                         <div class="form-row">
                             <div class="form-group col-md-6 highlighted-input-group">
@@ -624,7 +714,7 @@
                 </div>
 
                 <div class="form-section">
-                    <h3>10. Análise de Rentabilidade (Arrendamento)</h3>
+                    <h3>11. Análise de Rentabilidade (Arrendamento)</h3>
                     <div class="form-group">
                         <label for="acquisition-value">Valor de Aquisição (Baseado no Valor Total do Avalúo)</label>
                         <input type="number" id="acquisition-value" class="form-control"
@@ -688,7 +778,7 @@
                 </div>
 
                 <div class="form-section">
-                    <h3>11. Conclusões e Observações Finais</h3>
+                    <h3>12. Conclusões e Observações Finais</h3>
                     <div class="form-group">
                         <label for="final-remarks">Parecer Final do Avaliador</label>
                         <textarea id="final-remarks" class="form-control" rows="5"
@@ -802,7 +892,7 @@
 
             let photoCounter = 0;
             const MAX_PHOTOS = 20;
-            let valueBreakdownChart, profitabilityChart;
+            let valueBreakdownChart, profitabilityChart, valuationComparisonChart, annualCostsChart;
 
             // --- FORM & MODAL INITIALIZATION ---
             function initializeForm() {
