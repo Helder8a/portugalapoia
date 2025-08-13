@@ -1,1 +1,58 @@
-document.addEventListener("DOMContentLoaded", function () { let e = document.getElementById("sunlightAnalyzerBtn"); if (!e) return; let t = document.getElementById("sunlightCanvas"), n = t.getContext("2d"), a = document.getElementById("planUpload"); document.getElementById("northAngle"), document.getElementById("scaleInput"), document.getElementById("setScaleBtn"); let l = document.getElementById("drawWallBtn"), d = document.getElementById("drawWindowBtn"), i = document.getElementById("calculateSunlightBtn"), s = document.getElementById("clearCanvasBtn"), o = null, r = !1, c = {}, h = [], g = null; function m() { let e = t.parentElement; t.width = e.clientWidth, t.height = e.clientHeight, u() } function u() { n.clearRect(0, 0, t.width, t.height), g && n.drawImage(g, 0, 0, t.width, t.height), h.forEach(e => { n.beginPath(), n.moveTo(e.start.x, e.start.y), n.lineTo(e.end.x, e.end.y), n.strokeStyle = "wall" === e.type ? "#343a40" : "#007bff", n.lineWidth = "wall" === e.type ? 5 : 7, n.stroke() }) } a.addEventListener("change", e => { let n = e.target.files[0]; if (n) { let a = new FileReader; a.onload = e => { (g = new Image).onload = () => { let e = g.width / g.height; t.height = t.width / e, u() }, g.src = e.target.result }, a.readAsDataURL(n) } }), l.addEventListener("click", () => { o = "wall", t.style.cursor = "crosshair", l.classList.add("active"), d.classList.remove("active") }), d.addEventListener("click", () => { o = "window", t.style.cursor = "crosshair", d.classList.add("active"), l.classList.remove("active") }), t.addEventListener("mousedown", e => { o && (r = !0, c = { x: e.offsetX, y: e.offsetY }) }), t.addEventListener("mouseup", e => { if (!r || !o) return; r = !1; let t = { x: e.offsetX, y: e.offsetY }; h.push({ type: o, start: c, end: t }), u() }), s.addEventListener("click", () => { confirm("Tem a certeza que deseja limpar todo o desenho?") && (h = [], g = null, a.value = "", u()) }), i.addEventListener("click", () => { alert("Funcionalidade em desenvolvimento.\nEste seria o ponto em que um algoritmo complexo calcularia a incid\xeancia de luz com base na orienta\xe7\xe3o norte, janelas e paredes, gerando um mapa de calor sobre a planta.") }), e.addEventListener("click", () => { $("#sunlightModal").modal("show"), setTimeout(m, 200) }), window.addEventListener("resize", m) });
+const CACHE_NAME = 'portugalapoia-cache-v1';
+const urlsToCache = [
+    '/',
+    '/index.html',
+    '/style.css',
+    '/script.js',
+    '/manifest.json',
+    '/images/favicon.ico.png',
+    '/images/img_portada.webp',
+    '/doacoes.html',
+    '/empregos.html',
+    '/servicos.html',
+    '/habitacao.html',
+    '/blog.html'
+];
+
+// Evento de instalación: se abre el caché y se agregan los archivos principales.
+self.addEventListener('install', event => {
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+            .then(cache => {
+                console.log('Cache abierto');
+                return cache.addAll(urlsToCache);
+            })
+    );
+});
+
+// Evento de activación: se limpia el caché antiguo.
+self.addEventListener('activate', event => {
+    const cacheWhitelist = [CACHE_NAME];
+    event.waitUntil(
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames.map(cacheName => {
+                    if (cacheWhitelist.indexOf(cacheName) === -1) {
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
+        })
+    );
+});
+
+// Evento de fetch: responde con los archivos del caché si están disponibles.
+self.addEventListener('fetch', event => {
+    event.respondWith(
+        caches.match(event.request)
+            .then(response => {
+                // Si el recurso está en caché, lo devuelve.
+                if (response) {
+                    return response;
+                }
+                // Si no, lo busca en la red.
+                return fetch(event.request);
+            }
+            )
+    );
+});
