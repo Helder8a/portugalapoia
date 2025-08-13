@@ -144,6 +144,10 @@
                                     <button type="button" class="btn btn-primary btn-lg btn-block"
                                         onclick="filterJobs()">Procurar</button>
                                 </div>
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-secondary btn-lg btn-block"
+                                        onclick="clearFilters()">Limpar</button>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -1017,6 +1021,12 @@
         if (searchInput) searchInput.addEventListener('keyup', filterJobs);
         if (locationInput) locationInput.addEventListener('keyup', filterJobs);
     });
+
+    function clearFilters() {
+    document.getElementById('searchInput').value = '';
+    document.getElementById('locationInput').value = '';
+    filterJobs(); // o la función de filtro correspondiente
+}
 </script>
 </body>
 <!-- Google Tag Manager (noscript) -->
