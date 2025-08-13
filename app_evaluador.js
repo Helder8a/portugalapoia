@@ -1,247 +1,53 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const getEl = (id) => document.getElementById(id);
-    const evaluationFormEl = getEl('evaluationForm');
-    const totalScoreEl = getEl('totalScore');
-    const maxScoreEl = getEl('maxScore');
-    const scoreUnitEl = getEl('scoreUnit');
-    const certNameEl = getEl('certName');
-    const progressBarEl = getEl('progressBar');
-    const levelTextEl = getEl('levelText');
-    const certificationSelector = getEl('certificationSelector');
-    const projectTypeSelector = getEl('projectTypeSelector');
-    const projectNameEl = getEl('projectName');
-    const saveProjectButton = getEl('saveProjectButton');
-    const loadProjectButton = getEl('loadProjectButton');
-    const deleteProjectButton = getEl('deleteProjectButton');
-    const savedProjectsSelector = getEl('savedProjectsSelector');
-    const exportPdfButton = getEl('exportPdfButton');
-    const resetButton = getEl('resetButton');
-    const carbonCalculatorBtn = getEl('carbonCalculatorBtn');
-    const memoriaGeneratorBtn = getEl('memoriaGeneratorBtn');
-
-    let userScores = {};
-    let currentCert = 'lidera';
-    let currentProjectType = 'edificio';
-
-    function renderForm() {
-        const cert = certificationsDB[currentCert];
-        evaluationFormEl.innerHTML = '';
-        if (!cert || !cert.data) {
-            evaluationFormEl.innerHTML = '<p class="text-muted">Este sistema de certificação ainda não tem critérios definidos na base de dados.</p>';
-            initializeScores();
-            return;
-        }
-
-        Object.entries(cert.data).forEach(([vertente, areas], vIndex) => {
-            let areasHTML = '';
-            Object.entries(areas).forEach(([area, data]) => {
-                let creditsHTML = '';
-                if (data.credits) {
-                    Object.keys(data.credits).forEach(credit => {
-                        const creditId = `${currentCert}-${vertente}-${area}-${credit}`.replace(/[^a-zA-Z0-9]/g, '');
-                        creditsHTML += `<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="${creditId}" data-vertente="${vertente}" data-area="${area}" data-credit="${credit}"><label class="custom-control-label" for="${creditId}">${credit}</label></div>`;
-                    });
-                }
-
-                const solutionsIconHTML = data.solucoes_pt ? `<i class="fas fa-cubes solutions-icon" data-vertente="${vertente}" data-area="${area}" title="Ver Soluções de Mercado"></i>` : '';
-                areasHTML += `<div class="mb-4"><h5><span class="area-label">${area}<span class="icon-group"><i class="fas fa-info-circle info-icon" data-vertente="${vertente}" data-area="${area}"></i>${solutionsIconHTML}</span></span></h5>${creditsHTML}</div>`;
-            });
-            const vertenteHTML = `<div class="card mb-3"><div class="card-header vertente-header" data-toggle="collapse" data-target="#vertente-${vIndex}"><h4 class="mb-0">${vertente}</h4></div><div id="vertente-${vIndex}" class="collapse ${vIndex === 0 ? 'show' : ''}" data-parent="#evaluationForm"><div class="card-body">${areasHTML.replace(/<div class="mb-4">/g, '<hr class="my-4"><div class="mb-4">').replace('<hr class="my-4">', '')}</div></div></div>`;
-            evaluationFormEl.insertAdjacentHTML('beforeend', vertenteHTML);
-        });
-        initializeScores();
-    }
-
-    function initializeScores() {
-        userScores = {};
-        const certData = certificationsDB[currentCert]?.data;
-        if (!certData) {
-            updateTotal();
-            return;
-        };
-        for (const vertente in certData) {
-            userScores[vertente] = {};
-            for (const area in certData[vertente]) { userScores[vertente][area] = 0; }
-        }
-        updateTotal();
-    }
-
-    function calculateTotal() {
-        const cert = certificationsDB[currentCert];
-        if (!cert) return 0;
-        let total = 0;
-        if (cert.name === "LiderA" && cert.data) {
-            const weights = cert.weights[currentProjectType];
-            let totalWeightedScore = 0;
-            let totalMaxWeight = 0;
-            for (const vertente in userScores) {
-                const vertenteWeight = weights[vertente] || 1;
-                totalMaxWeight += vertenteWeight;
-                let vertenteTotalPoints = 0;
-                let vertenteMaxPoints = 0;
-                for (const area in userScores[vertente]) {
-                    vertenteTotalPoints += userScores[vertente][area];
-                    if (cert.data[vertente] && cert.data[vertente][area] && cert.data[vertente][area].credits) {
-                        vertenteMaxPoints += Object.values(cert.data[vertente][area].credits).reduce((a, b) => a + b, 0);
-                    }
-                }
-                if (vertenteMaxPoints > 0) {
-                    totalWeightedScore += (vertenteTotalPoints / vertenteMaxPoints) * vertenteWeight;
-                }
-            }
-            total = totalMaxWeight > 0 ? (totalWeightedScore / totalMaxWeight) * cert.maxScore : 0;
-        }
-        return total;
-    }
-
-    function updateTotal() {
-        const cert = certificationsDB[currentCert];
-        if (!cert) {
-            totalScoreEl.textContent = '0.0';
-            maxScoreEl.textContent = '0.0';
-            certNameEl.textContent = 'N/A';
-            levelTextEl.textContent = 'N/A';
-            progressBarEl.style.width = '0%';
-            return;
-        }
-        const total = calculateTotal();
-        totalScoreEl.textContent = total.toFixed(1);
-        maxScoreEl.textContent = cert.maxScore.toFixed(1);
-        scoreUnitEl.textContent = cert.scoreUnit;
-        certNameEl.textContent = cert.name;
-        const percentage = cert.maxScore > 0 ? (total / cert.maxScore) * 100 : 0;
-        progressBarEl.style.width = `${percentage}%`;
-        let level = "N/A";
-        if (cert.levels) {
-            const sortedLevels = Object.entries(cert.levels).sort((a, b) => b[0] - a[0]);
-            for (const [score, name] of sortedLevels) {
-                if (total >= parseFloat(score)) { level = name; break; }
-            }
-        }
-        levelTextEl.textContent = level;
-    }
-
-    evaluationFormEl.addEventListener('change', (e) => {
-        if (e.target.matches('input[type="checkbox"]')) {
-            const { vertente, area, credit } = e.target.dataset;
-            const cert = certificationsDB[currentCert];
-            const pointValue = cert.data[vertente][area].credits[credit];
-            userScores[vertente][area] += e.target.checked ? pointValue : -pointValue;
-            updateTotal();
-        }
-    });
-
-    evaluationFormEl.addEventListener('click', (e) => {
-        const infoTarget = e.target.closest('.info-icon');
-        if (infoTarget) {
-            const { vertente, area } = infoTarget.dataset;
-            const infoData = certificationsDB[currentCert]?.data[vertente]?.[area]?.info;
-            if (infoData) {
-                const infoModalTitle = document.querySelector('#infoModal .modal-title');
-                if (infoModalTitle) infoModalTitle.textContent = `Critério: ${area}`;
-
-                let normativaHTML = '';
-                if (infoData.normativa_pt) {
-                    normativaHTML = `
+document.addEventListener("DOMContentLoaded", function () {
+    let e = e => document.getElementById(e), t = e("evaluationForm"), a = e("totalScore"), o = e("maxScore"), n = e("scoreUnit"), i = e("certName"), r = e("progressBar"), l = e("levelText"); e("certificationSelector"), e("projectTypeSelector"); let s = e("projectName"); e("saveProjectButton"), e("loadProjectButton"), e("deleteProjectButton"), e("savedProjectsSelector"), e("exportPdfButton"), e("resetButton"), e("carbonCalculatorBtn"); let c = e("memoriaGeneratorBtn"), d = {}, m = "lidera"; function u() { d = {}; let e = certificationsDB[m]?.data; if (!e) { p(); return } for (let t in e) for (let a in d[t] = {}, e[t]) d[t][a] = 0; p() } function p() { let e = certificationsDB[m]; if (!e) { a.textContent = "0.0", o.textContent = "0.0", i.textContent = "N/A", l.textContent = "N/A", r.style.width = "0%"; return } let t = function e() { let t = certificationsDB[m]; if (!t) return 0; let a = 0; if ("LiderA" === t.name && t.data) { let o = t.weights.edificio, n = 0, i = 0; for (let r in d) { let l = o[r] || 1; i += l; let s = 0, c = 0; for (let u in d[r]) s += d[r][u], t.data[r] && t.data[r][u] && t.data[r][u].credits && (c += Object.values(t.data[r][u].credits).reduce((e, t) => e + t, 0)); c > 0 && (n += s / c * l) } a = i > 0 ? n / i * t.maxScore : 0 } return a }(); a.textContent = t.toFixed(1), o.textContent = e.maxScore.toFixed(1), n.textContent = e.scoreUnit, i.textContent = e.name; let s = e.maxScore > 0 ? t / e.maxScore * 100 : 0; r.style.width = `${s}%`; let c = "N/A"; if (e.levels) { let u = Object.entries(e.levels).sort((e, t) => t[0] - e[0]); for (let [p, f] of u) if (t >= parseFloat(p)) { c = f; break } } l.textContent = c } t.addEventListener("change", e => { if (e.target.matches('input[type="checkbox"]')) { let { vertente: t, area: a, credit: o } = e.target.dataset, n = certificationsDB[m], i = n.data[t][a].credits[o]; d[t][a] += e.target.checked ? i : -i, p() } }), t.addEventListener("click", e => {
+        let t = e.target.closest(".info-icon"); if (t) {
+            let { vertente: a, area: o } = t.dataset, n = certificationsDB[m]?.data[a]?.[o]?.info; if (n) {
+                let i = document.querySelector("#infoModal .modal-title"); i && (i.textContent = `Crit\xe9rio: ${o}`); let r = ""; n.normativa_pt && (r = `
                         <div class="normativa-section">
-                            <h6>Normativa Aplicável em Portugal</h6>
-                            <p><strong>${infoData.normativa_pt.nome}</strong><br>
-                               <a href="${infoData.normativa_pt.link}" target="_blank">Consultar Documento Oficial <i class="fas fa-external-link-alt fa-xs"></i></a>
+                            <h6>Normativa Aplic\xe1vel em Portugal</h6>
+                            <p><strong>${n.normativa_pt.nome}</strong><br>
+                               <a href="${n.normativa_pt.link}" target="_blank">Consultar Documento Oficial <i class="fas fa-external-link-alt fa-xs"></i></a>
                             </p>
-                        </div>`;
-                }
-
-                const infoModalBody = document.querySelector('#infoModal .modal-body');
-                if (infoModalBody) {
-                    infoModalBody.innerHTML = `
-                        <h6>Objetivo</h6><p>${infoData.objetivo}</p>
-                        <h6>Exemplo de Aplicação</h6><p>${infoData.exemplo}</p>
-                        <h6>Benefícios do Projeto</h6><p>${infoData.beneficios}</p>
-                        ${normativaHTML}`;
-                    $('#infoModal').modal('show');
-                }
+                        </div>`); let l = document.querySelector("#infoModal .modal-body"); l && (l.innerHTML = `
+                        <h6>Objetivo</h6><p>${n.objetivo}</p>
+                        <h6>Exemplo de Aplica\xe7\xe3o</h6><p>${n.exemplo}</p>
+                        <h6>Benef\xedcios do Projeto</h6><p>${n.beneficios}</p>
+                        ${r}`, $("#infoModal").modal("show"))
             }
-        }
-
-        const solutionsTarget = e.target.closest('.solutions-icon');
-        if (solutionsTarget) {
-            const { vertente, area } = solutionsTarget.dataset;
-            showSolutionsModal(vertente, area);
-        }
-    });
-
-    function showSolutionsModal(vertente, area) {
-        const certData = certificationsDB[currentCert].data;
-        const solucoesData = certData[vertente][area]?.solucoes_pt;
-        if (!solucoesData) return;
-
-        const solutionsModalTitle = document.querySelector('#solutionsModal .modal-title');
-        if (solutionsModalTitle) solutionsModalTitle.textContent = `Soluções de Mercado para: ${area}`;
-
-        const solutionsModalBody = document.querySelector('#solutionsModal .modal-body');
-        if (solutionsModalBody) {
-            let solucoesHTML = solucoesData.map(s => {
-                const lccaId = s.lcca_id;
-                const lccaButton = (lccaId && typeof lccaDB !== 'undefined' && lccaDB[lccaId]) ? `<button class="btn btn-success btn-sm mt-2 launch-lcca-btn" data-lcca-id="${lccaId}">Analisar Custo de Ciclo de Vida</button>` : '';
-                return `
+        } let s = e.target.closest(".solutions-icon"); if (s) {
+            let { vertente: c, area: d } = s.dataset; (function e(t, a) {
+                let o = certificationsDB[m].data, n = o[t][a]?.solucoes_pt; if (!n) return; let i = document.querySelector("#solutionsModal .modal-title"); i && (i.textContent = `Solu\xe7\xf5es de Mercado para: ${a}`); let r = document.querySelector("#solutionsModal .modal-body"); if (r) {
+                    let l = n.map(e => {
+                        let t = e.lcca_id, a = t && "undefined" != typeof lccaDB && lccaDB[t] ? `<button class="btn btn-success btn-sm mt-2 launch-lcca-btn" data-lcca-id="${t}">Analisar Custo de Ciclo de Vida</button>` : ""; return `
                     <div class="solution-card">
-                        <h5>${s.nome}</h5>
-                        <p class="solution-manufacturer"><strong>Fabricante/Marca:</strong> ${s.fabricante}</p>
-                        <p><strong>Descrição:</strong> ${s.descricao}</p>
-                        <p><strong>Aplicação Típica:</strong> ${s.aplicacao}</p>
-                        <a href="${s.link}" target="_blank" class="btn btn-outline-primary btn-sm">Visitar Website <i class="fas fa-external-link-alt"></i></a>
-                        ${lccaButton}
-                    </div>`;
-            }).join('');
-            solutionsModalBody.innerHTML = solucoesHTML;
-            $('#solutionsModal').modal('show');
-        }
-    }
-
-    memoriaGeneratorBtn.addEventListener('click', () => {
-        const projectName = projectNameEl.value.trim() || "este projeto";
-        let memoriaText = `MEMÓRIA DESCRITIVA DE SUSTENTABILIDADE\n`;
-        memoriaText += `PROJETO: ${projectName.toUpperCase()}\n\n`;
-        memoriaText += `A presente memória descreve as estratégias de sustentabilidade adotadas para ${projectName}, com base nos critérios do sistema de avaliação LiderA.\n\n`;
-
-        const selectedCredits = document.querySelectorAll('#evaluationForm input[type="checkbox"]:checked');
-        if (selectedCredits.length === 0) {
-            memoriaText += "Nenhum critério de sustentabilidade foi selecionado na avaliação.";
-        } else {
-            let addedVertentes = new Set();
-            let addedAreas = new Set();
-
-            selectedCredits.forEach(checkbox => {
-                const { vertente, area } = checkbox.dataset;
-
-                if (!addedVertentes.has(vertente)) {
-                    memoriaText += `\n--- ${vertente.toUpperCase()} ---\n\n`;
-                    addedVertentes.add(vertente);
+                        <h5>${e.nome}</h5>
+                        <p class="solution-manufacturer"><strong>Fabricante/Marca:</strong> ${e.fabricante}</p>
+                        <p><strong>Descri\xe7\xe3o:</strong> ${e.descricao}</p>
+                        <p><strong>Aplica\xe7\xe3o T\xedpica:</strong> ${e.aplicacao}</p>
+                        <a href="${e.link}" target="_blank" class="btn btn-outline-primary btn-sm">Visitar Website <i class="fas fa-external-link-alt"></i></a>
+                        ${a}
+                    </div>`}).join(""); r.innerHTML = l, $("#solutionsModal").modal("show")
                 }
-
-                if (!addedAreas.has(area)) {
-                    const info = certificationsDB[currentCert]?.data[vertente]?.[area]?.info;
-                    if (info && info.memoria_descritiva) {
-                        memoriaText += `>> CRITÉRIO: ${area.toUpperCase()}\n`;
-                        memoriaText += `${info.memoria_descritiva}\n\n`;
-                        addedAreas.add(area);
-                    }
-                }
-            });
+            })(c, d)
         }
+    }), c.addEventListener("click", () => {
+        let t = s.value.trim() || "este projeto", a = `MEM\xd3RIA DESCRITIVA DE SUSTENTABILIDADE
+`; a += `PROJETO: ${t.toUpperCase()}
 
-        getEl('memoria-output').value = memoriaText;
-        $('#memoriaModal').modal('show');
-    });
+`, a += `A presente mem\xf3ria descreve as estrat\xe9gias de sustentabilidade adotadas para ${t}, com base nos crit\xe9rios do sistema de avalia\xe7\xe3o LiderA.
 
-    getEl('copyMemoriaBtn').addEventListener('click', () => {
-        const memoriaOutput = getEl('memoria-output');
-        memoriaOutput.select();
-        memoriaOutput.setSelectionRange(0, 99999);
-        document.execCommand('copy');
-        alert('Texto copiado para a área de transferência!');
-    });
+`; let o = document.querySelectorAll('#evaluationForm input[type="checkbox"]:checked'); if (0 === o.length) a += "Nenhum crit\xe9rio de sustentabilidade foi selecionado na avalia\xe7\xe3o."; else {
+            let n = new Set, i = new Set; o.forEach(e => {
+                let { vertente: t, area: o } = e.dataset; if (n.has(t) || (a += `
+--- ${t.toUpperCase()} ---
 
-    // Inicialización al cargar la página
-    renderForm();
+`, n.add(t)), !i.has(o)) {
+                    let r = certificationsDB[m]?.data[t]?.[o]?.info; r && r.memoria_descritiva && (a += `>> CRIT\xc9RIO: ${o.toUpperCase()}
+`, a += `${r.memoria_descritiva}
+
+`, i.add(o))
+                }
+            })
+        } e("memoria-output").value = a, $("#memoriaModal").modal("show")
+    }), e("copyMemoriaBtn").addEventListener("click", () => { let t = e("memoria-output"); t.select(), t.setSelectionRange(0, 99999), document.execCommand("copy"), alert("Texto copiado para a \xe1rea de transfer\xeancia!") }), function e() { let a = certificationsDB[m]; if (t.innerHTML = "", !a || !a.data) { t.innerHTML = '<p class="text-muted">Este sistema de certifica\xe7\xe3o ainda n\xe3o tem crit\xe9rios definidos na base de dados.</p>', u(); return } Object.entries(a.data).forEach(([e, a], o) => { let n = ""; Object.entries(a).forEach(([t, a]) => { let o = ""; a.credits && Object.keys(a.credits).forEach(a => { let n = `${m}-${e}-${t}-${a}`.replace(/[^a-zA-Z0-9]/g, ""); o += `<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="${n}" data-vertente="${e}" data-area="${t}" data-credit="${a}"><label class="custom-control-label" for="${n}">${a}</label></div>` }); let i = a.solucoes_pt ? `<i class="fas fa-cubes solutions-icon" data-vertente="${e}" data-area="${t}" title="Ver Solu\xe7\xf5es de Mercado"></i>` : ""; n += `<div class="mb-4"><h5><span class="area-label">${t}<span class="icon-group"><i class="fas fa-info-circle info-icon" data-vertente="${e}" data-area="${t}"></i>${i}</span></span></h5>${o}</div>` }); let i = `<div class="card mb-3"><div class="card-header vertente-header" data-toggle="collapse" data-target="#vertente-${o}"><h4 class="mb-0">${e}</h4></div><div id="vertente-${o}" class="collapse ${0 === o ? "show" : ""}" data-parent="#evaluationForm"><div class="card-body">${n.replace(/<div class="mb-4">/g, '<hr class="my-4"><div class="mb-4">').replace('<hr class="my-4">', "")}</div></div></div>`; t.insertAdjacentHTML("beforeend", i) }), u() }()
 });

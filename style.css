@@ -26,8 +26,7 @@
 .slider,
 .slider.round {
     top: 0;
-    right: 0;
-    cursor: pointer
+    right: 0
 }
 
 #scrollTopBtn,
@@ -114,8 +113,10 @@ body.dark-theme .navbar .navbar-nav .nav-link {
     color: #ccc
 }
 
+.info-icon:hover,
 .main-footer h4,
 .page-header .page-title,
+.solutions-icon:hover,
 body.dark-theme .navbar .navbar-nav .nav-link.active,
 body.dark-theme .navbar .navbar-nav .nav-link:hover {
     color: var(--color-donation)
@@ -143,18 +144,6 @@ body.dark-theme .navbar .navbar-nav .nav-link:hover {
     background-color: #00663a;
     border-color: #00663a;
     transform: translateY(-2px)
-}
-
-@media (max-width:991.98px) {
-    .navbar-collapse {
-        margin-top: 15px
-    }
-
-    .publish-btn {
-        margin-left: 0;
-        margin-top: 10px;
-        width: 100%
-    }
 }
 
 #hero {
@@ -277,6 +266,22 @@ body.dark-theme .section-title {
     font-size: 2.8rem
 }
 
+#levelText,
+#scrollTopBtn,
+.blog-post-full h2,
+.card .card-title,
+.category-link-card h3,
+.solutions-icon,
+a:hover,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--color-primary)
+}
+
 .card {
     border: 1px solid var(--color-border);
     box-shadow: var(--shadow);
@@ -289,14 +294,20 @@ body.dark-theme .section-title {
     border-color: var(--color-accent)
 }
 
-.card .card-title {
-    color: var(--color-primary)
-}
-
 .category-link-card,
 .category-link-card:hover {
     color: var(--color-text);
     text-decoration: none
+}
+
+.category-icon,
+.main-footer a:hover,
+.navbar .navbar-nav .nav-link.active,
+.navbar .navbar-nav .nav-link:hover,
+.results-sidebar #totalScore,
+a {
+    color: var(--color-accent);
+    color: var(--color-accent)
 }
 
 .category-link-card {
@@ -309,12 +320,6 @@ body.dark-theme .section-title {
     height: 100%
 }
 
-.category-icon,
-.main-footer a:hover {
-    color: var(--color-accent);
-    color: var(--color-accent)
-}
-
 .category-icon {
     font-size: 50px;
     margin-bottom: 15px
@@ -322,7 +327,6 @@ body.dark-theme .section-title {
 
 .category-link-card h3 {
     font-size: 1.4rem;
-    color: var(--color-primary);
     margin-top: 0;
     margin-bottom: 10px
 }
@@ -398,7 +402,6 @@ h6 {
     width: 50px;
     height: 50px;
     background-color: var(--color-donation);
-    color: var(--color-primary);
     border: none;
     border-radius: 50%;
     align-items: center;
@@ -682,18 +685,6 @@ body.dark-theme {
     --shadow: 0 5px 20px rgba(0, 0, 0, 0.25)
 }
 
-.blog-post-full h2,
-.card .card-title,
-a:hover,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    color: var(--color-primary)
-}
-
 h1,
 h2,
 h3,
@@ -701,12 +692,6 @@ h4,
 h5,
 h6 {
     font-weight: 700
-}
-
-.navbar .navbar-nav .nav-link.active,
-.navbar .navbar-nav .nav-link:hover,
-a {
-    color: var(--color-accent)
 }
 
 .main-header {
@@ -785,6 +770,13 @@ body.dark-theme .main-footer {
     color: #fff
 }
 
+.evaluator-main-content h3,
+.reviews-title {
+    color: var(--color-primary);
+    font-family: var(--font-headings)
+}
+
+.icon-group,
 .theme-switch-wrapper {
     display: flex;
     align-items: center
@@ -850,8 +842,6 @@ body:not(.dark-theme) .slider.round .fa-sun {
 }
 
 .evaluator-main-content h3 {
-    font-family: var(--font-headings);
-    color: var(--color-primary);
     margin-bottom: 1.5rem
 }
 
@@ -866,7 +856,6 @@ body:not(.dark-theme) .slider.round .fa-sun {
 .results-sidebar #totalScore {
     font-size: 3.5rem;
     font-weight: 800;
-    color: var(--color-accent);
     line-height: 1
 }
 
@@ -878,6 +867,11 @@ body:not(.dark-theme) .slider.round .fa-sun {
     overflow: hidden
 }
 
+.comment:not(:last-child),
+.reviews-title {
+    margin-bottom: .75rem
+}
+
 #progressBar {
     height: 100%;
     border-radius: 50px;
@@ -885,73 +879,53 @@ body:not(.dark-theme) .slider.round .fa-sun {
     transition: width .5s ease-in-out
 }
 
-#levelText {
-    color: var(--color-primary)
-}
-
-/* =================================================================== */
-/* ==   ESTILOS PARA SISTEMA DE VALORACIONES (v3.0)                 == */
-/* =================================================================== */
-
 .reviews-section {
     padding-top: 1rem;
-    border-top: 1px solid var(--color-border);
+    border-top: 1px solid var(--color-border)
 }
 
 .reviews-title {
-    font-family: var(--font-headings);
     font-size: 1rem;
-    color: var(--color-primary);
-    margin-bottom: 0.75rem;
-    font-weight: 600;
+    font-weight: 600
 }
 
 .comment {
-    font-size: 0.85rem;
-    line-height: 1.5;
-}
-
-.comment:not(:last-child) {
-    margin-bottom: 0.75rem;
+    font-size: .85rem;
+    line-height: 1.5
 }
 
 .comment-author {
-    margin-bottom: 0.1rem;
+    margin-bottom: .1rem
 }
 
 .comment-author .stars {
-    color: #FDBE33;
-    /* Amarillo dorado para las estrellas */
+    color: #fdbe33;
     font-size: 1.1rem;
-    vertical-align: middle;
+    vertical-align: middle
 }
 
 .comment-text {
     margin: 0;
-    color: var(--color-text-muted);
+    color: var(--color-text-muted)
 }
-
-/* =================================================================== */
-/* ==   ESTILOS PARA PANEL DE IMPACTO                             == */
-/* =================================================================== */
 
 .impact-card {
     background-color: var(--color-background);
     padding: 2rem;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    height: 100%;
+    transition: transform .3s, box-shadow .3s;
+    height: 100%
 }
 
 .impact-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-10px)
 }
 
 .impact-icon {
     font-size: 3rem;
     color: var(--color-accent);
-    margin-bottom: 1rem;
+    margin-bottom: 1rem
 }
 
 .impact-number {
@@ -959,128 +933,106 @@ body:not(.dark-theme) .slider.round .fa-sun {
     font-size: 2.8rem;
     font-weight: 800;
     color: var(--color-primary);
-    line-height: 1.2;
+    line-height: 1.2
 }
 
 .impact-text {
     font-size: 1.1rem;
-    color: var(--color-text-muted);
+    color: var(--color-text-muted)
 }
 
-/* =================================================================== */
-/* ==   ESTILOS RESPONSIVOS PARA EVALUADOR SUSTENTÁVEL PRO          == */
-/* =================================================================== */
+@media (max-width:991.98px) {
+    .navbar-collapse {
+        margin-top: 15px
+    }
 
-/* Para tablets y dispositivos más pequeños (menos de 992px) */
-@media (max-width: 991.98px) {
+    .publish-btn {
+        margin-left: 0;
+        margin-top: 10px;
+        width: 100%
+    }
 
-    /* Elimina el margen superior negativo que desplaza el contenido hacia arriba */
     .evaluator-main-content {
         margin-top: 0;
-        padding: 1.5rem;
+        padding: 1.5rem
     }
 
-    /* Anula el comportamiento "pegajoso" de la barra lateral para que se desplace normalmente */
     .results-sidebar {
         position: static;
-        top: auto;
+        top: auto
     }
 
-    /* Ajusta los selectores de configuración para que se apilen en pantallas medianas */
     .form-row .form-group.col-md-6 {
         flex: 0 0 100%;
-        max-width: 100%;
+        max-width: 100%
     }
 }
 
-/* Para móviles (menos de 768px) */
-@media (max-width: 767.98px) {
-
-    /* Reduce el tamaño del título principal de la página */
+@media (max-width:767.98px) {
     .page-header .page-title {
-        font-size: 2.2rem;
+        font-size: 2.2rem
     }
 
-    /* Reduce el tamaño de la puntuación para que no ocupe tanto espacio */
     .results-sidebar #totalScore {
-        font-size: 2.8rem;
+        font-size: 2.8rem
     }
 
     .results-sidebar #levelText {
-        font-size: 2rem;
+        font-size: 2rem
     }
 
-    /* Simplifica el panel de gestión de proyectos */
     .project-management-controls .input-group {
-        flex-direction: column;
+        flex-direction: column
     }
 
     .project-management-controls .input-group select {
-        margin-bottom: 0.5rem;
-        border-radius: .25rem !important;
+        margin-bottom: .5rem;
+        border-radius: .25rem !important
     }
 
     .project-management-controls .input-group-append {
-        width: 100%;
+        width: 100%
     }
 
     .project-management-controls .input-group-append .btn {
-        width: 50%;
-        /* Los botones de cargar y eliminar ocupan la mitad cada uno */
+        width: 50%
     }
 }
-
-/* =================================================================== */
-/* ==   ESTILOS PARA MEJORA 1: SOLUÇÕES DE MERCADO                == */
-/* =================================================================== */
 
 .area-label {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    width: 100%
 }
 
-.icon-group {
-    display: flex;
-    align-items: center;
-}
-
-.info-icon, .solutions-icon {
+.info-icon,
+.solutions-icon {
     color: var(--color-accent);
     cursor: pointer;
     margin-left: 15px;
     font-size: 1.2rem;
-    transition: color 0.3s ease;
+    transition: color .3s
 }
 
-.solutions-icon {
-    color: var(--color-primary); /* Un color diferente para distinguirlo */
-}
-
-.info-icon:hover, .solutions-icon:hover {
-    color: var(--color-donation);
-}
-
-/* Estilos para la ventana modal de soluciones */
 .solution-card {
     padding: 1rem;
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius);
-    margin-bottom: 1rem;
+    margin-bottom: 1rem
 }
 
 .solution-card:last-child {
-    margin-bottom: 0;
+    margin-bottom: 0
 }
 
 .solution-card h5 {
     font-weight: 700;
     color: var(--color-primary);
-    margin-bottom: 0.5rem;
+    margin-bottom: .5rem
 }
 
 .solution-manufacturer {
-    font-size: 0.9rem;
-    color: var(--color-text-muted);
+    font-size: .9rem;
+    color: var(--color-text-muted)
 }
