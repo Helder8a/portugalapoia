@@ -1,4 +1,5 @@
-const CACHE_NAME = 'portugalapoia-cache-v2'; // Incrementé la versión para forzar la actualización
+const CACHE_NAME = 'portugalapoia-cache-v3'; // Nueva versión para forzar actualización
+const OFFLINE_URL = 'offline.html';
 const urlsToCache = [
     '/',
     '/index.html',
@@ -14,10 +15,10 @@ const urlsToCache = [
     '/habitacao.html',
     '/blog.html',
     'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css',
-    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css'
+    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css',
+    OFFLINE_URL // Asegúrate de que la página offline también esté en caché
 ];
 
-// Evento de instalación: guarda los archivos en el caché
 self.addEventListener('install', event => {
     event.waitUntil(
         caches.open(CACHE_NAME)
@@ -26,30 +27,50 @@ self.addEventListener('install', event => {
                 return cache.addAll(urlsToCache);
             })
     );
+    self.skipWaiting();
 });
 
-// Evento de activación: limpia cachés antiguos
 self.addEventListener('activate', event => {
     event.waitUntil(
         caches.keys().then(cacheNames => {
             return Promise.all(
                 cacheNames.map(cacheName => {
                     if (cacheName !== CACHE_NAME) {
-                        console.log('Eliminando caché antiguo:', cacheName);
                         return caches.delete(cacheName);
                     }
                 })
             );
         })
     );
+    self.clients.claim();
 });
 
-// Evento de fetch: responde desde el caché para habilitar el modo offline
 self.addEventListener('fetch', event => {
-    event.respondWith(
-        caches.match(event.request)
-            .then(response => {
-                return response || fetch(event.request);
-            })
-    );
+    // Solo manejamos peticiones GET (navegación)
+    if (event.request.mode === 'navigate') {
+        event.respondWith(
+            (async () => {
+                try {
+                    // Primero, intenta ir a la red
+                    const networkResponse = await fetch(event.request);
+                    return networkResponse;
+                } catch (error) {
+                    // Si falla, busca en el caché
+                    console.log('Fetch fallido; devolviendo del caché o página offline.');
+                    const cache = await caches.open(CACHE_NAME);
+                    const cachedResponse = await cache.match(event.request);
+                    // Si está en caché, la devuelve. Si no, devuelve la página offline.
+                    return cachedResponse || await cache.match(OFFLINE_URL);
+                }
+            })()
+        );
+    } else {
+        // Para otros recursos (CSS, JS, imágenes), usa la estrategia "cache-first"
+        event.respondWith(
+            caches.match(event.request)
+                .then(response => {
+                    return response || fetch(event.request);
+                })
+        );
+    }
 });
