@@ -1,5 +1,5 @@
 // Versión del caché. CAMBIAR ESTE NÚMERO FUERZA LA ACTUALIZACIÓN.
-const CACHE_NAME = 'portugalapoia-cache-v8';
+const CACHE_NAME = 'portugalapoia-cache-v10'; // Versión incrementada para forzar la actualización
 
 // Lista de archivos esenciales para que la app funcione offline.
 const assetsToCache = [
@@ -17,17 +17,19 @@ const assetsToCache = [
     'script.js',
     'manifest.json',
     'images/favicon.ico.png',
-    'images/img_portada.webp'
+    'images/img_portada.webp',
+    'images_donacao/sillarueda.jpg',
+    'images_donacao/ropabebe.webp'
 ];
 
 // Evento 'install': Cachear los assets iniciales.
 self.addEventListener('install', event => {
     event.waitUntil(
         caches.open(CACHE_NAME)
-        .then(cache => {
-            console.log('Service Worker: Cacheando assets iniciales...');
-            return cache.addAll(assetsToCache);
-        })
+            .then(cache => {
+                console.log('Service Worker: Cacheando assets iniciales...');
+                return cache.addAll(assetsToCache);
+            })
     );
     self.skipWaiting();
 });
@@ -48,29 +50,39 @@ self.addEventListener('activate', event => {
     );
 });
 
-// Evento 'fetch': Decidir cómo responder a las peticiones.
+// Evento 'fetch': Decidir cómo responder a las peticiones (NUEVA ESTRATEGIA).
 self.addEventListener('fetch', event => {
-    // Estrategia: Network First para las páginas HTML.
+    // Para las páginas de navegación (HTML)
     if (event.request.mode === 'navigate') {
         event.respondWith(
-            fetch(event.request)
-            .catch(() => caches.match('offline.html')) // Si falla la red, mostrar página offline.
+            caches.open(CACHE_NAME).then(cache => {
+                // 1. Intenta obtener la página de la red primero (Stale-While-Revalidate)
+                return fetch(event.request).then(networkResponse => {
+                    // Si la obtiene, la guarda en caché para la próxima vez
+                    cache.put(event.request, networkResponse.clone());
+                    return networkResponse;
+                }).catch(() => {
+                    // 2. Si la red falla, busca la página en el caché
+                    return cache.match(event.request).then(cachedResponse => {
+                        // Si está en caché, la devuelve. Si no, devuelve la página offline.
+                        return cachedResponse || caches.match('offline.html');
+                    });
+                });
+            })
         );
         return;
     }
 
-    // Estrategia: Cache First para otros recursos (CSS, JS, imágenes).
+    // Para otros recursos (CSS, JS, imágenes), mantenemos la estrategia "Cache First"
     event.respondWith(
         caches.match(event.request)
-        .then(response => {
-            // Si está en caché, lo devuelve. Si no, va a la red.
-            return response || fetch(event.request).then(fetchResponse => {
-                // Y guarda la nueva respuesta en el caché para la próxima vez.
-                return caches.open(CACHE_NAME).then(cache => {
-                    cache.put(event.request, fetchResponse.clone());
-                    return fetchResponse;
+            .then(response => {
+                return response || fetch(event.request).then(fetchResponse => {
+                    return caches.open(CACHE_NAME).then(cache => {
+                        cache.put(event.request, fetchResponse.clone());
+                        return fetchResponse;
+                    });
                 });
-            });
-        })
+            })
     );
 });
