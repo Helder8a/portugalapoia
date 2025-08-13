@@ -43,11 +43,167 @@
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500&display=swap">
     </noscript>
 
+    <style>
+        :root {
+            --color-primary: #0a3d62;
+            --color-accent: #00834b;
+            --color-donation: #ffd700;
+            --font-headings: 'Inter', sans-serif;
+            --font-body: 'Roboto', sans-serif;
+            --border-radius: 8px;
+            --color-text: #333;
+            --color-text-light: #fff;
+            --color-background: #fff;
+            --color-background-light: #f8f9fa;
+            --color-border: #dee2e6;
+            --shadow: 0 5px 15px rgba(0, 0, 0, .07)
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--color-text);
+            background-color: var(--color-background-light);
+            line-height: 1.7;
+            font-size: 16px;
+            transition: background-color .3s, color .3s
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: Inter, sans-serif;
+            font-weight: 700;
+        }
+
+        .main-header {
+            background-color: var(--color-background);
+            border-bottom: 1px solid var(--color-border);
+            position: sticky;
+            top: 0;
+            z-index: 1030;
+            transition: .3s ease-in-out
+        }
+
+        .navbar {
+            padding: .8rem 1rem
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--color-primary) !important;
+            font-family: var(--font-headings);
+        }
+
+        .navbar .navbar-nav .nav-link {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-text);
+            padding: .5rem 1rem;
+            transition: color .3s;
+            font-family: var(--font-headings);
+        }
+
+        .navbar-toggler {
+            border-color: rgba(0, 0, 0, .1);
+            background-color: var(--color-primary)
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e")
+        }
+
+        .publish-btn {
+            background-color: var(--color-accent);
+            border-color: var(--color-accent);
+            border-radius: 50px;
+            padding: 8px 20px !important;
+            margin-left: 15px;
+            transition: .3s;
+            color: #fff !important;
+        }
+
+        #hero {
+            position: relative;
+            min-height: 80vh;
+            background: url(images/img_portada.webp) center center/cover no-repeat;
+            color: #fff;
+            padding: 60px 0;
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
+
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(10, 61, 98, .8), rgba(10, 61, 98, .4));
+            z-index: 1
+        }
+
+        #hero .container {
+            position: relative;
+            z-index: 2
+        }
+
+        .hero-title {
+            font-size: 3.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, .5);
+            font-family: var(--font-headings);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            max-width: 650px;
+            margin: 0 auto 2.5rem
+        }
+
+        .hero-buttons .btn {
+            margin: 5px 10px;
+            padding: 14px 32px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            border-width: 2px
+        }
+
+        .hero-buttons .btn-primary {
+            background-color: var(--color-accent);
+            border-color: var(--color-accent)
+        }
+
+        .hero-buttons .btn-secondary {
+            background-color: transparent;
+            border-color: #fff;
+            color: #fff
+        }
+
+        @media (max-width:991.98px) {
+            .navbar-collapse {
+                margin-top: 15px
+            }
+
+            .publish-btn {
+                margin-left: 0;
+                margin-top: 10px;
+                width: 100%
+            }
+        }
+    </style>
+
     <link rel="stylesheet" href="style.css" media="print" onload="this.media='all'">
     <noscript>
         <link rel="stylesheet" href="style.css">
     </noscript>
-
     <link rel="stylesheet" href="avaliador-urbano-style.css" media="print" onload="this.media='all'">
     <noscript>
         <link rel="stylesheet" href="avaliador-urbano-style.css">
@@ -56,6 +212,9 @@
     <link rel="preload" as="image" href="images/img_portada.webp">
     <link rel="icon" href="images/favicon.ico.png" type="image/png">
     <link rel="manifest" href="manifest.json">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <meta name="theme-color" content="#0A3D62">
 
     <style>
@@ -378,11 +537,26 @@
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4">
                     <h4>Navegação</h4>
-                    <ul class="list-unstyled">
-                        <li><a href="doacoes.html">Doação</a></li>
-                        <li><a href="empregos.html">Emprego</a></li>
-                        <li><a href="servicos.html">Serviços</a></li>
-                        <li><a href="habitacao.html">Habitação</a></li>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link" href="doacoes.html">Doações</a></li>
+                        <li class="nav-item"><a class="nav-link" href="empregos.html">Emprego</a></li>
+                        <li class="nav-item"><a class="nav-link" href="servicos.html">Serviços</a></li>
+                        <li class="nav-item"><a class="nav-link" href="habitação.html">Habitação</a></li>
+                        <li class="nav-item dropdown active">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownWebApp" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Apps
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownWebApp">
+                                <a class="dropdown-item" href="app_evaluadorsustentable.html">Avaliador Sustentável
+                                    PRO</a>
+                                <a class="dropdown-item" href="app_avaliadorurbano.html">Avaliador de Imóveis
+                                    Urbanos</a>
+                            </div>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link btn btn-primary publish-btn"
+                                href="publicar.html">Publicar</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4">
