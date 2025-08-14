@@ -1053,3 +1053,45 @@ body:not(.dark-theme) .slider.round .fa-sun {
         /* Tamanho ajustado para dispositivos móveis */
     }
 }
+
+/* --- CÓDIGO PARA MARCA DE ÁGUA AUTOMÁTICA (MÉTODO ROBUSTO E PROFISSIONAL) --- */
+
+/* Garante que o posicionamento da marca de água é relativo à cabecera */
+#hero,
+[class^="page-header"] {
+    position: relative;
+}
+
+/* Cria o pseudo-elemento que será a marca de água */
+#hero::after,
+[class^="page-header"]::after {
+    content: ''; /* Essencial para o pseudo-elemento */
+    position: absolute;
+    bottom: 15px; /* Mais perto da borda inferior */
+    right: 15px;  /* Mais perto da borda direita */
+    width: 130px; /* Largura do logo (ajustado para proporção) */
+    height: 55px; /* Altura do logo (ajustado para proporção) */
+    
+    /* 1. Define o teu logo como imagem de fundo do elemento */
+    background-image: url('images_pta/logocuadrado.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    /* 2. Efeito de design gráfico profissional */
+    opacity: 0.6; /* Torna-o mais subtil, como uma marca de água real */
+    mix-blend-mode: screen; /* Este modo de fusão cria um efeito de luz suave sobre a imagem */
+    
+    z-index: 2;   /* Garante que a marca de água fica por cima do filtro escuro */
+    pointer-events: none; /* Impede que interfira com cliques */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Animação suave */
+}
+
+/* Efeito de destaque ao passar o rato por cima da imagem */
+#hero:hover::after,
+[class^="page-header"]:hover::after {
+    opacity: 0.9; /* Aumenta a visibilidade ao interagir */
+    transform: scale(1.03); /* Ligeiro zoom para dar feedback */
+}
+
+/* --- FIM DO CÓDIGO DE MARCA DE AGUA --- */
