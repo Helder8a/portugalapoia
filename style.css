@@ -1051,18 +1051,20 @@ body:not(.dark-theme) .slider.round .fa-sun {
     }
 }
 
+/* Asegura que el texto del logo se encoja en móviles. */
 .brand-text-responsive {
-    /*
-     * AÑADIMOS !important PARA DARLE MÁXIMA PRIORIDAD A ESTA REGLA.
-     * Esto forzará a que el texto se encoja, ignorando otros estilos en conflicto.
-    */
-    font-size: clamp(0.75rem, 3.5vw, 1.2rem) !important;
-    
-    /* El resto de estilos se mantienen igual */
-    font-weight: bold;
-    color: #2c3e50;
-    line-height: 1;
-    white-space: nowrap;
+    /* Define un tamaño de fuente fluido entre 0.8rem (mínimo) y 1.25rem (máximo) */
+    font-size: clamp(0.8rem, 3.5vw, 1.25rem) !important;
+    font-weight: 700;
+    color: var(--color-primary); /* Usa el color primario que ya tienes definido */
+    white-space: nowrap; /* Evita que el nombre se parta en dos líneas */
+    line-height: 1; /* Ayuda a la alineación vertical */
+    transition: font-size 0.2s ease-in-out; /* Una transición suave */
+}
+
+/* Fuerza el color del logo a blanco en modo oscuro */
+body.dark-theme .brand-text-responsive {
+    color: #fff !important;
 }
 
 
