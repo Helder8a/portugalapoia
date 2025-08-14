@@ -1052,17 +1052,19 @@ body:not(.dark-theme) .slider.round .fa-sun {
 }
 
 .brand-text-responsive {
-    /* * Hace que el texto sea fluido y se ajuste a la pantalla.
-     * clamp(TAMAÑO MÍNIMO, TAMAÑO PREFERIDO, TAMAÑO MÁXIMO)
+    /*
+     * AÑADIMOS !important PARA DARLE MÁXIMA PRIORIDAD A ESTA REGLA.
+     * Esto forzará a que el texto se encoja, ignorando otros estilos en conflicto.
     */
-    font-size: clamp(0.75rem, 3.5vw, 1.2rem);
+    font-size: clamp(0.75rem, 3.5vw, 1.2rem) !important;
     
-    /* Estilos adicionales para el nombre de la marca */
+    /* El resto de estilos se mantienen igual */
     font-weight: bold;
     color: #2c3e50;
-    line-height: 1; /* Ayuda con la alineación vertical */
-    white-space: nowrap; /* Evita que el texto se parta en dos líneas */
+    line-height: 1;
+    white-space: nowrap;
 }
+
 
 /* ======================================================= */
 /* ARCHIVO CSS: estilos.css                              */
