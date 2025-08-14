@@ -1125,34 +1125,6 @@ body.dark-theme .brand-text-responsive {
     }
 }
 
-/* ===== CÓDIGO PARA TEXTO RESPONSIVO DEL LOGO ===== */
-.brand-text-responsive {
-    /*
-     * Con !important nos aseguramos de que este estilo gane
-     * sobre cualquier otro estilo de Bootstrap que pueda interferir.
-    */
-    font-size: clamp(0.75rem, 3.5vw, 1.2rem) !important;
-    
-    /* Estilos para mantener la apariencia del texto */
-    font-weight: bold;
-    color: #2c3e50;
-    line-height: 1;
-    white-space: nowrap; /* Evita que el nombre se parta en dos líneas */
-}
-
-/* ===== CÓDIGO CORREGIDO PARA EL TEXTO DEL LOGO ===== */
-/* Esta regla se asegura de que el texto del logo se encoja en móviles. */
-/* El !important le da la máxima prioridad para que funcione siempre. */
-
-.brand-text-responsive {
-    font-size: clamp(0.8rem, 3.5vw, 1.25rem) !important;
-    font-weight: 700;
-    color: var(--color-primary); /* Usa el color primario que ya tienes definido */
-    white-space: nowrap; /* Evita que el nombre se parta en dos líneas */
-    line-height: 1; /* Ayuda a la alineación vertical */
-    transition: font-size 0.2s ease-in-out; /* Una transición suave */
-}
-
 /* Corrección específica para dispositivos móviles */
 @media (max-width: 767.98px) {
     .brand-text-responsive {
