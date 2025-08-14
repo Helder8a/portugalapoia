@@ -1051,7 +1051,7 @@ body:not(.dark-theme) .slider.round .fa-sun {
     }
 }
 
-/* --- CÓDIGO FINAL, COMPLETO E RESPONSIVO: MARCA DE ÁGUA AUTOMÁTICA (VISIBILIDADE GARANTIDA) --- */
+/* --- CÓDIGO MARCA DE ÁGUA AUTOMÁTICA --- */
 
 /* 1. ESTILOS GERAIS PARA AS MARCAS DE ÁGUA */
 #hero,
@@ -1082,16 +1082,17 @@ body:not(.dark-theme) .slider.round .fa-sun {
 /* 2. EFEITOS E POSICIONAMENTO PARA DESKTOP (Ecrãs com mais de 768px) */
 @media (min-width: 768px) {
 
-    /* Cabeçaleras à DIREITA */
+    /* Header centrado abaixo */
     #hero::after,
     [class^="page-header"]::after {
         bottom: 15px !important;
-        right: 15px !important;
-        opacity: 0.6 !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        opacity: 0.5 !important;
         mix-blend-mode: screen;
     }
 
-    /* Rodapé à ESQUERDA */
+    /* Footer à ESQUERDA (sem alterações) */
     .main-footer::after {
         bottom: 15px !important;
         left: 15px !important;
@@ -1116,21 +1117,20 @@ body:not(.dark-theme) .slider.round .fa-sun {
     [class^="page-header"]::after,
     .main-footer::after {
         mix-blend-mode: normal !important;
-        /* Remove a fusão que causa a invisibilidade */
-        opacity: 0.7 !important;
-        /* Define uma opacidade visível */
+        opacity: 0.6 !important;
     }
 
-    /* Cabeçaleras em móveis (à direita) */
+    /* Cabeçaleras em móveis (centrado abaixo) */
     #hero::after,
     [class^="page-header"]::after {
         width: 90px !important;
         height: 38px !important;
         bottom: 10px !important;
-        right: 10px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
     }
 
-    /* Rodapé em móveis (à esquerda) */
+    /* Rodapé em móveis (à esquerda, sem alterações) */
     .main-footer::after {
         width: 80px !important;
         height: 34px !important;
@@ -1138,5 +1138,3 @@ body:not(.dark-theme) .slider.round .fa-sun {
         left: 8px !important;
     }
 }
-
-/* --- FIM DO CÓDIGO DE MARCA DE AGUA --- */
