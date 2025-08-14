@@ -1,3 +1,4 @@
+/* --- CÓDIGO COMPLETO Y CORREGIDO PARA style.css --- */
 #hero::before,
 #preloader {
     width: 100%;
@@ -1037,106 +1038,105 @@ body:not(.dark-theme) .slider.round .fa-sun {
     color: var(--color-text-muted)
 }
 
-/* Adiciona este código ao final do teu ficheiro style.css */
 .page-header .page-title,
 .hero-title {
     font-size: 2.8rem;
-    /* Podes ajustar este valor conforme o teu gosto */
 }
 
-/* Media query para ecrãs mais pequenos (telemóveis) */
 @media (max-width: 767.98px) {
 
     .page-header .page-title,
     .hero-title {
         font-size: 2.2rem;
-        /* Tamanho ajustado para dispositivos móveis */
     }
 }
 
-/* --- CÓDIGO FINAL E RESPONSIVO: MARCA DE ÁGUA AUTOMÁTICA (VISIBILIDADE GARANTIDA) --- */
+/* --- CÓDIGO FINAL, COMPLETO E RESPONSIVO: MARCA DE ÁGUA AUTOMÁTICA --- */
 
 /* 1. ESTILOS GERAIS PARA AS MARCAS DE ÁGUA */
 #hero,
 [class^="page-header"],
 .main-footer {
-    position: relative;
-    overflow: hidden; 
+    position: relative !important;
+    overflow: hidden !important;
 }
 
 /* Pseudo-elemento base para todas as marcas de água */
 #hero::after,
 [class^="page-header"]::after,
 .main-footer::after {
-    content: '';
-    position: absolute;
-    width: 130px;
-    height: 55px;
-    background-image: url('images_pta/logocuadrado.jpg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    z-index: 2;
-    pointer-events: none;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    content: '' !important;
+    display: block !important;
+    position: absolute !important;
+    width: 130px !important;
+    height: 55px !important;
+    background-image: url('images_pta/logocuadrado.jpg') !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    z-index: 999 !important;
+    pointer-events: none !important;
+    transition: opacity 0.3s ease, transform 0.3s ease !important;
 }
 
-/* 2. EFEITOS E POSICIONAMENTO PARA DESKTOP */
-
-/* Para as cabeçaleras (DIREITA) */
-#hero::after,
-[class^="page-header"]::after {
-    bottom: 15px;
-    right: 15px;
-    opacity: 0.6;
-    mix-blend-mode: screen; /* Efeito de luz suave em desktop */
-}
-
-/* Para o rodapé (ESQUERDA) */
-.main-footer::after {
-    bottom: 15px;
-    left: 15px;
-    opacity: 0.6;
-    mix-blend-mode: screen; /* Efeito de luz suave em desktop */
-}
-
-/* 3. EFEITO HOVER PARA DESKTOP (Ecrãs com mais de 768px) */
+/* 2. EFEITOS E POSICIONAMENTO PARA DESKTOP (Ecrãs com mais de 768px) */
 @media (min-width: 768px) {
+
+    /* Cabeçaleras à DIREITA */
+    #hero::after,
+    [class^="page-header"]::after {
+        bottom: 15px !important;
+        right: 15px !important;
+        opacity: 0.6 !important;
+        mix-blend-mode: screen;
+    }
+
+    /* Rodapé à ESQUERDA */
+    .main-footer::after {
+        bottom: 15px !important;
+        left: 15px !important;
+        opacity: 0.6 !important;
+        mix-blend-mode: screen;
+    }
+
+    /* Efeito Hover */
     #hero:hover::after,
     [class^="page-header"]:hover::after,
     .main-footer:hover::after {
-        opacity: 0.9;
-        transform: scale(1.03);
+        opacity: 0.9 !important;
+        transform: scale(1.03) !important;
     }
 }
 
-/* 4. CORREÇÃO DEFINITIVA PARA DISPOSITIVOS MÓVEIS (Ecrãs até 767px) */
+/* 3. CORREÇÃO DEFINITIVA PARA DISPOSITIVOS MÓVEIS (Ecrãs até 767px) */
 @media (max-width: 767.98px) {
-    
+
     /* Regra geral para TODAS as marcas de água em móvel para garantir a visibilidade */
     #hero::after,
     [class^="page-header"]::after,
     .main-footer::after {
-        mix-blend-mode: normal; /* Remove a fusão de cores que causa a invisibilidade */
-        opacity: 0.5;           /* Define uma opacidade base que é sempre visível */
+        mix-blend-mode: normal !important;
+        /* Remove a fusão que causa a invisibilidade */
+        opacity: 0.7 !important;
+        /* Define uma opacidade visível */
     }
 
-    /* Ajuste de tamanho e posição para as cabeçaleras (à direita) */
+    /* Cabeçaleras em móveis (à direita) */
     #hero::after,
     [class^="page-header"]::after {
-        width: 90px;
-        height: 38px;
-        bottom: 10px;
-        right: 10px;
+        width: 90px !important;
+        height: 38px !important;
+        bottom: 10px !important;
+        right: 10px !important;
     }
 
-    /* Ajuste de tamanho e posição para o rodapé (à esquerda) */
+    /* Rodapé em móveis (à esquerda) */
     .main-footer::after {
-        width: 75px;
-        height: 32px;
-        bottom: 8px;
-        left: 8px;
-        opacity: 0.4; /* Um pouco mais subtil no rodapé */
+        width: 80px !important;
+        height: 34px !important;
+        bottom: 8px !important;
+        left: 8px !important;
     }
 }
+
 /* --- FIM DO CÓDIGO DE MARCA DE AGUA --- */
