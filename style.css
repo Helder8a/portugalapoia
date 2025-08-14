@@ -1054,7 +1054,7 @@ body:not(.dark-theme) .slider.round .fa-sun {
     }
 }
 
-/* --- CÓDIGO FINAL E RESPONSIVO: MARCA DE ÁGUA AUTOMÁTICA --- */
+/* --- CÓDIGO FINAL E RESPONSIVO: MARCA DE ÁGUA AUTOMÁTICA (VISIBILIDADE GARANTIDA) --- */
 
 /* 1. ESTILOS GERAIS PARA AS MARCAS DE ÁGUA */
 #hero,
@@ -1076,30 +1076,31 @@ body:not(.dark-theme) .slider.round .fa-sun {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    opacity: 0.6;
-    mix-blend-mode: screen;
     z-index: 2;
     pointer-events: none;
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* 2. POSICIONAMENTO ESPECÍFICO */
+/* 2. EFEITOS E POSICIONAMENTO PARA DESKTOP */
 
-/* Marcas de água nas CABEÇALERAS ficam à DIREITA */
+/* Para as cabeçaleras (DIREITA) */
 #hero::after,
 [class^="page-header"]::after {
     bottom: 15px;
     right: 15px;
+    opacity: 0.6;
+    mix-blend-mode: screen; /* Efeito de luz suave em desktop */
 }
 
-/* Marca de água no RODAPÉ fica à ESQUERDA */
+/* Para o rodapé (ESQUERDA) */
 .main-footer::after {
     bottom: 15px;
-    left: 15px; /* <<-- AQUI A MUDANÇA */
+    left: 15px;
+    opacity: 0.6;
+    mix-blend-mode: screen; /* Efeito de luz suave em desktop */
 }
 
-
-/* 3. EFEITO HOVER PARA DESKTOP */
+/* 3. EFEITO HOVER PARA DESKTOP (Ecrãs com mais de 768px) */
 @media (min-width: 768px) {
     #hero:hover::after,
     [class^="page-header"]:hover::after,
@@ -1109,26 +1110,33 @@ body:not(.dark-theme) .slider.round .fa-sun {
     }
 }
 
-/* 4. CORREÇÃO RESPONSIVA PARA DISPOSITIVOS MÓVEIS */
+/* 4. CORREÇÃO DEFINITIVA PARA DISPOSITIVOS MÓVEIS (Ecrãs até 767px) */
 @media (max-width: 767.98px) {
     
-    /* Ajuste para as cabeçaleras em móveis (à direita) */
+    /* Regra geral para TODAS as marcas de água em móvel para garantir a visibilidade */
     #hero::after,
-    [class^="page-header"]::after {
-        bottom: 10px;
-        right: 10px;
-        width: 100px;
-        height: 42px;
+    [class^="page-header"]::after,
+    .main-footer::after {
+        mix-blend-mode: normal; /* Remove a fusão de cores que causa a invisibilidade */
+        opacity: 0.5;           /* Define uma opacidade base que é sempre visível */
     }
 
-    /* Ajuste para o rodapé em móveis (à esquerda) */
+    /* Ajuste de tamanho e posição para as cabeçaleras (à direita) */
+    #hero::after,
+    [class^="page-header"]::after {
+        width: 90px;
+        height: 38px;
+        bottom: 10px;
+        right: 10px;
+    }
+
+    /* Ajuste de tamanho e posição para o rodapé (à esquerda) */
     .main-footer::after {
-        width: 80px;
-        height: 34px;
+        width: 75px;
+        height: 32px;
         bottom: 8px;
-        left: 8px; /* <<-- AQUI A MUDANÇA PARA MÓVEIS */
-        opacity: 0.3;
-        mix-blend-mode: luminosity;
+        left: 8px;
+        opacity: 0.4; /* Um pouco mais subtil no rodapé */
     }
 }
 /* --- FIM DO CÓDIGO DE MARCA DE AGUA --- */
