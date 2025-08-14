@@ -1057,7 +1057,7 @@ body:not(.dark-theme) .slider.round .fa-sun {
      * Esto forzará a que el texto se encoja, ignorando otros estilos en conflicto.
     */
     font-size: clamp(0.75rem, 3.5vw, 1.2rem) !important;
-
+    
     /* El resto de estilos se mantienen igual */
     font-weight: bold;
     color: #2c3e50;
@@ -1075,10 +1075,8 @@ body:not(.dark-theme) .slider.round .fa-sun {
  * El elemento que lleve esta clase debe tener un color de fondo definido.
 */
 .con-marca-de-agua {
-    position: relative;
-    /* Obligatorio para que la marca de agua funcione */
-    overflow: hidden;
-    /* Recomendado para evitar desbordamientos */
+    position: relative; /* Obligatorio para que la marca de agua funcione */
+    overflow: hidden;   /* Recomendado para evitar desbordamientos */
 }
 
 /*
@@ -1086,14 +1084,13 @@ body:not(.dark-theme) .slider.round .fa-sun {
  * desde CSS, sin necesidad de añadir una <img> en el HTML.
 */
 .con-marca-de-agua::before {
-    content: '';
-    /* Requerido para que se muestre */
+    content: ''; /* Requerido para que se muestre */
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-
+    
     /* ----- CONFIGURACIÓN DE TU LOGO ----- */
     /* IMPORTANTE: Coloca la URL de tu logo aquí */
     background-image: url('images_pta/logocuadrado.jpg');
@@ -1102,23 +1099,18 @@ body:not(.dark-theme) .slider.round .fa-sun {
     /* ------------------------------------ */
 
     /* ----- EFECTO Y TAMAÑO RESPONSIVO ----- */
-    opacity: 0.06;
-    /* La transparencia de la marca de agua */
-    background-size: 280px;
-    /* Tamaño inicial para móviles */
-    transition: background-size 0.3s ease;
-    /* Transición suave */
-    z-index: 1;
-    /* Lo pone en la capa de atrás */
-    pointer-events: none;
-    /* Evita que interfiera con los clics */
+    opacity: 0.06; /* La transparencia de la marca de agua */
+    background-size: 280px; /* Tamaño inicial para móviles */
+    transition: background-size 0.3s ease; /* Transición suave */
+    z-index: 1; /* Lo pone en la capa de atrás */
+    pointer-events: none; /* Evita que interfiera con los clics */
 }
 
 /*
  * Esta regla es importante: asegura que cualquier contenido
  * DIRECTO dentro del elemento con la marca de agua, se ponga por encima.
 */
-.con-marca-de-agua>* {
+.con-marca-de-agua > * {
     position: relative;
     z-index: 2;
 }
@@ -1138,11 +1130,23 @@ body:not(.dark-theme) .slider.round .fa-sun {
      * sobre cualquier otro estilo de Bootstrap que pueda interferir.
     */
     font-size: clamp(0.75rem, 3.5vw, 1.2rem) !important;
-
+    
     /* Estilos para mantener la apariencia del texto */
     font-weight: bold;
     color: #2c3e50;
     line-height: 1;
-    white-space: nowrap;
-    /* Evita que el nombre se parta en dos líneas */
+    white-space: nowrap; /* Evita que el nombre se parta en dos líneas */
+}
+
+/* ===== CÓDIGO CORREGIDO PARA EL TEXTO DEL LOGO ===== */
+/* Esta regla se asegura de que el texto del logo se encoja en móviles. */
+/* El !important le da la máxima prioridad para que funcione siempre. */
+
+.brand-text-responsive {
+    font-size: clamp(0.8rem, 3.5vw, 1.25rem) !important;
+    font-weight: 700;
+    color: var(--color-primary); /* Usa el color primario que ya tienes definido */
+    white-space: nowrap; /* Evita que el nombre se parta en dos líneas */
+    line-height: 1; /* Ayuda a la alineación vertical */
+    transition: font-size 0.2s ease-in-out; /* Una transición suave */
 }
