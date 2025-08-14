@@ -1054,48 +1054,81 @@ body:not(.dark-theme) .slider.round .fa-sun {
     }
 }
 
-/* --- CÓDIGO FINAL PARA MARCA DE ÁGUA AUTOMÁTICA EM TODAS AS CABEÇALERAS --- */
+/* --- CÓDIGO FINAL E RESPONSIVO: MARCA DE ÁGUA AUTOMÁTICA --- */
 
-/* Este seletor aplica a marca de água à cabeçalera da página inicial (#hero) 
-  e a todas as outras cabeçaleras de páginas internas (qualquer classe que comece com "page-header").
-  Isto garante uma cobertura total em todo o site.
-*/
+/* 1. ESTILOS GERAIS PARA AS MARCAS DE ÁGUA */
 #hero,
-[class^="page-header"] {
-    position: relative; /* Necessário para posicionar a marca de água dentro da cabeçalera */
+[class^="page-header"],
+.main-footer {
+    position: relative;
+    overflow: hidden; 
 }
 
-/* Este é o pseudo-elemento que cria a camada da marca de água.
-*/
+/* Pseudo-elemento base para todas as marcas de água */
 #hero::after,
-[class^="page-header"]::after {
-    content: ''; /* Não apagar, é essencial */
+[class^="page-header"]::after,
+.main-footer::after {
+    content: '';
     position: absolute;
-    bottom: 15px; /* Posição: 15px da parte inferior */
-    right: 15px;  /* Posição: 15px da direita (bem na esquina) */
-    width: 130px; /* Largura do logo */
-    height: 55px; /* Altura do logo */
-    
-    /* Caminho para a imagem do logo */
+    width: 130px;
+    height: 55px;
     background-image: url('images_pta/logocuadrado.jpg');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-
-    /* Efeito de design para uma integração profissional */
     opacity: 0.6;
-    mix-blend-mode: screen; /* Efeito de luz suave que se adapta à imagem de fundo */
-    
-    z-index: 2;   /* Garante que a marca de água é visível por cima de outros filtros */
-    pointer-events: none; /* Impede que interfira com cliques */
-    transition: opacity 0.3s ease, transform 0.3s ease; /* Animação suave */
+    mix-blend-mode: screen;
+    z-index: 2;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* Efeito de destaque ao passar o rato por cima da imagem da cabeçalera.
-*/
-#hero:hover::after,
-[class^="page-header"]:hover::after {
-    opacity: 0.9;
-    transform: scale(1.03);
+/* 2. POSICIONAMENTO ESPECÍFICO */
+
+/* Marcas de água nas CABEÇALERAS ficam à DIREITA */
+#hero::after,
+[class^="page-header"]::after {
+    bottom: 15px;
+    right: 15px;
+}
+
+/* Marca de água no RODAPÉ fica à ESQUERDA */
+.main-footer::after {
+    bottom: 15px;
+    left: 15px; /* <<-- AQUI A MUDANÇA */
+}
+
+
+/* 3. EFEITO HOVER PARA DESKTOP */
+@media (min-width: 768px) {
+    #hero:hover::after,
+    [class^="page-header"]:hover::after,
+    .main-footer:hover::after {
+        opacity: 0.9;
+        transform: scale(1.03);
+    }
+}
+
+/* 4. CORREÇÃO RESPONSIVA PARA DISPOSITIVOS MÓVEIS */
+@media (max-width: 767.98px) {
+    
+    /* Ajuste para as cabeçaleras em móveis (à direita) */
+    #hero::after,
+    [class^="page-header"]::after {
+        bottom: 10px;
+        right: 10px;
+        width: 100px;
+        height: 42px;
+    }
+
+    /* Ajuste para o rodapé em móveis (à esquerda) */
+    .main-footer::after {
+        width: 80px;
+        height: 34px;
+        bottom: 8px;
+        left: 8px; /* <<-- AQUI A MUDANÇA PARA MÓVEIS */
+        opacity: 0.3;
+        mix-blend-mode: luminosity;
+    }
 }
 /* --- FIM DO CÓDIGO DE MARCA DE AGUA --- */
