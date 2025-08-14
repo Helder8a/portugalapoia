@@ -1051,6 +1051,19 @@ body:not(.dark-theme) .slider.round .fa-sun {
     }
 }
 
+.brand-text-responsive {
+    /* * Hace que el texto sea fluido y se ajuste a la pantalla.
+     * clamp(TAMAÑO MÍNIMO, TAMAÑO PREFERIDO, TAMAÑO MÁXIMO)
+    */
+    font-size: clamp(0.75rem, 3.5vw, 1.2rem);
+    
+    /* Estilos adicionales para el nombre de la marca */
+    font-weight: bold;
+    color: #2c3e50;
+    line-height: 1; /* Ayuda con la alineación vertical */
+    white-space: nowrap; /* Evita que el texto se parta en dos líneas */
+}
+
 /* ======================================================= */
 /* ARCHIVO CSS: estilos.css                              */
 /* Contiene la clase reutilizable para la marca de agua  */
