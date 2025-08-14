@@ -1150,18 +1150,17 @@ body.dark-theme .brand-text-responsive {
     /* Azul Oscuro */
     --color-secondary: #2196F3;
     /* Azul Medio */
-    --color-accent: #FDBE33;
-    /* Amarillo (para llamadas a la acción) */
-    --color-donation: #FDBE33;
-    /* Amarillo (el color que quieres para donaciones) */
+    --color-accent: #F57C00; /* Naranja Vibrante y Accesible */
+    --color-donation: #F57C00; /* Naranja Vibrante y Accesible */
     --color-success: #28A745;
+    /* Verde */
     /* Verde */
     --font-headings: 'Inter', sans-serif;
     --font-body: 'Roboto', sans-serif;
     --border-radius: 8px;
     --color-text: #343a40;
     --color-text-light: #fff;
-    --color-background: #fff;
+    --color-background: #FFF8E1;
     --color-background-light: #f8f9fa;
     --color-border: #dee2e6;
     --shadow: 0 5px 15px rgba(0, 0, 0, .07);
@@ -1170,7 +1169,7 @@ body.dark-theme .brand-text-responsive {
 body.dark-theme {
     --color-text: #e0e0e0;
     --color-text-light: #121212;
-    --color-background: #1e1e1e;
+    --color-background: #2F240C;
     --color-background-light: #121212;
     --color-border: #444;
     --shadow: 0 5px 15px rgba(0, 0, 0, .2);
