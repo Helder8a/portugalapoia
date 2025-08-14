@@ -1051,3 +1051,59 @@ body:not(.dark-theme) .slider.round .fa-sun {
     }
 }
 
+/* ======================================================= */
+/* ARCHIVO CSS: estilos.css                              */
+/* Contiene la clase reutilizable para la marca de agua  */
+/* ======================================================= */
+
+/* * Clase reutilizable para añadir una marca de agua a cualquier elemento.
+ * El elemento que lleve esta clase debe tener un color de fondo definido.
+*/
+.con-marca-de-agua {
+    position: relative; /* Obligatorio para que la marca de agua funcione */
+    overflow: hidden;   /* Recomendado para evitar desbordamientos */
+}
+
+/*
+ * Usamos el pseudo-elemento ::before para generar la marca de agua
+ * desde CSS, sin necesidad de añadir una <img> en el HTML.
+*/
+.con-marca-de-agua::before {
+    content: ''; /* Requerido para que se muestre */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* ----- CONFIGURACIÓN DE TU LOGO ----- */
+    /* IMPORTANTE: Coloca la URL de tu logo aquí */
+    background-image: url('images_pta/logocuadrado.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    /* ------------------------------------ */
+
+    /* ----- EFECTO Y TAMAÑO RESPONSIVO ----- */
+    opacity: 0.06; /* La transparencia de la marca de agua */
+    background-size: 280px; /* Tamaño inicial para móviles */
+    transition: background-size 0.3s ease; /* Transición suave */
+    z-index: 1; /* Lo pone en la capa de atrás */
+    pointer-events: none; /* Evita que interfiera con los clics */
+}
+
+/*
+ * Esta regla es importante: asegura que cualquier contenido
+ * DIRECTO dentro del elemento con la marca de agua, se ponga por encima.
+*/
+.con-marca-de-agua > * {
+    position: relative;
+    z-index: 2;
+}
+
+/* ----- MEDIA QUERY PARA HACERLO RESPONSIVO ----- */
+@media (min-width: 768px) {
+    .con-marca-de-agua::before {
+        /* Hacemos la marca de agua más grande en pantallas de tablet o escritorio */
+        background-size: 450px;
+    }
+}
