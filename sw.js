@@ -1,13 +1,14 @@
-const CACHE_NAME = 'portugalapoia-cache-v6'; // Nueva versión para forzar actualización
-const OFFLINE_URL = 'offline.html';
+// --- CÓDIGO CORREGIDO PARA sw.js ---
+const CACHE_NAME = 'portugalapoia-cache-v8'; // <-- Incrementa la versión
+
 const urlsToCache = [
     '/',
     '/index.html',
-    '/style.css',
+    '/style.css?v=6', // <-- AÑADE EL NÚMERO DE VERSIÓN AQUÍ
     '/avaliador-urbano-style.css',
     '/script.js',
     '/manifest.json',
-    '/images/favicon.ico.png',
+    '/images_pta/logofavicon.ico', // Corregido para que coincida con tu HTML
     '/images/img_portada.webp',
     '/doacoes.html',
     '/empregos.html',
@@ -15,8 +16,8 @@ const urlsToCache = [
     '/habitacao.html',
     '/blog.html',
     'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css',
-    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css',
-    OFFLINE_URL // Asegúrate de que la página offline también esté en caché
+    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css', // Corregido a la versión que usas
+    'offline.html'
 ];
 
 self.addEventListener('install', event => {
