@@ -37,23 +37,6 @@
     cursor: pointer
 }
 
-:root {
-    --color-primary: #0A3D62;
-    --color-secondary: #2196F3;
-    --color-accent: #FDBE33;
-    --color-donation: #DC3545;
-    --color-success: #28A745;
-    --font-headings: 'Inter', sans-serif;
-    --font-body: 'Roboto', sans-serif;
-    --border-radius: 8px;
-    --color-text: #343a40;
-    --color-text-light: #fff;
-    --color-background: #fff;
-    --color-background-light: #f8f9fa;
-    --color-border: #dee2e6;
-    --shadow: 0 5px 15px rgba(0, 0, 0, .07)
-}
-
 body.dark-theme {
     --color-text: #e0e0e0;
     --color-text-light: #121212;
@@ -633,11 +616,6 @@ hr.blog-separator {
     padding: 80px 0
 }
 
-:root,
-body.dark-theme {
-    --color-donation: #FDBE33
-}
-
 .page-header::before {
     content: '';
     position: absolute;
@@ -671,28 +649,6 @@ body.dark-theme {
 
 .page-header-publicar {
     background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2670&auto=format&fit=crop')
-}
-
-:root {
-    --color-primary: #0A3D62;
-    /* Azul Oscuro - Base de tu marca */
-    --color-secondary: #2196F3;
-    /* Azul medio - Para elementos secundarios */
-    --color-accent: #FDBE33;
-    /* Amarillo - Para llamadas a la acción y botones */
-    --color-donation: #DC3545;
-    /* Rojo - Para advertencias o urgencias (ej: 'Urgente') */
-    --color-success: #28A745;
-    /* Verde - Para elementos positivos o de éxito */
-    --font-headings: 'Inter', sans-serif;
-    --font-body: 'Roboto', sans-serif;
-    --border-radius: 8px;
-    --color-text: #343a40;
-    --color-text-light: #fff;
-    --color-background: #fff;
-    --color-background-light: #f8f9fa;
-    --color-border: #dee2e6;
-    --shadow: 0 5px 15px rgba(0, 0, 0, .07);
 }
 
 body.dark-theme {
@@ -1161,4 +1117,61 @@ body.dark-theme .brand-text-responsive {
     .brand-text-responsive {
         font-size: 1.0rem !important;
     }
+}
+
+/* Estilos para los iconos de redes sociales en el footer */
+.social-links a {
+    font-size: 22px;
+    /* Tamaño del icono */
+    margin-right: 18px;
+    /* Espacio entre iconos */
+    color: #ccc;
+    /* Color inicial del icono */
+    transition: color 0.3s ease-in-out;
+    /* Transición suave */
+}
+
+.social-links a:last-child {
+    margin-right: 0;
+    /* Elimina el margen del último icono */
+}
+
+.social-links a:hover {
+    color: #fff;
+    /* Color del icono al pasar el ratón */
+    text-decoration: none;
+}
+
+/* PALETA DE COLORES ÚNICA Y CORREGIDA */
+:root {
+    --color-primary: #0A3D62;
+    /* Azul Oscuro */
+    --color-secondary: #2196F3;
+    /* Azul Medio */
+    --color-accent: #FDBE33;
+    /* Amarillo (para llamadas a la acción) */
+    --color-donation: #FDBE33;
+    /* Amarillo (el color que quieres para donaciones) */
+    --color-success: #28A745;
+    /* Verde */
+    --font-headings: 'Inter', sans-serif;
+    --font-body: 'Roboto', sans-serif;
+    --border-radius: 8px;
+    --color-text: #343a40;
+    --color-text-light: #fff;
+    --color-background: #fff;
+    --color-background-light: #f8f9fa;
+    --color-border: #dee2e6;
+    --shadow: 0 5px 15px rgba(0, 0, 0, .07);
+}
+
+body.dark-theme {
+    --color-text: #e0e0e0;
+    --color-text-light: #121212;
+    --color-background: #1e1e1e;
+    --color-background-light: #121212;
+    --color-border: #444;
+    --shadow: 0 5px 15px rgba(0, 0, 0, .2);
+    --color-donation: #FDBE33;
+    /* Mantenemos el amarillo en tema oscuro */
 }
