@@ -1,12 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // --- CÓDIGO PARA PRELOADER, SCROLL Y TEMA OSCURO ---
+    // --- CÓDIGO CORREGIDO PARA EL PRELOADER ---
     let preloader = document.getElementById("preloader");
     if (preloader) {
+        // Oculta el preloader al cargar la ventana
         window.addEventListener("load", () => {
             preloader.classList.add("hidden");
         });
+        // También oculta el preloader después de un tiempo, por si hay fallos en la carga
+        setTimeout(() => {
+            preloader.classList.add("hidden");
+        }, 1500); // Se oculta a los 1.5 segundos
     }
 
+    // --- CÓDIGO PARA SCROLL Y TEMA OSCURO ---
     let scrollTopBtn = document.getElementById("scrollTopBtn");
     if (scrollTopBtn) {
         window.onscroll = () => {
@@ -62,23 +68,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const savePrefsBtn = document.getElementById('save-prefs');
     const COOKIE_PREFS_KEY = 'cookie_preferences';
 
-    // Función para obtener las preferencias (si existen)
     const getCookiePreferences = () => {
         const prefs = localStorage.getItem(COOKIE_PREFS_KEY);
         return prefs ? JSON.parse(prefs) : null;
     };
 
-    // Función para guardar las preferencias
     const setCookiePreferences = (prefs) => {
         localStorage.setItem(COOKIE_PREFS_KEY, JSON.stringify(prefs));
     };
 
-    // Mostrar el banner solo si no hay preferencias guardadas
     if (!getCookiePreferences() && banner) {
         banner.style.display = 'flex';
     }
 
-    // Acción para el botón de Aceptar
     if (acceptBtn) {
         acceptBtn.addEventListener('click', () => {
             const prefs = {
@@ -91,7 +93,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Acción para abrir el modal de gestión
     if (manageBtn) {
         manageBtn.addEventListener('click', () => {
             if (modalOverlay) modalOverlay.classList.add('visible');
@@ -105,14 +106,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Acción para cerrar el modal
     if (closeModalBtn) {
         closeModalBtn.addEventListener('click', () => {
             if (modalOverlay) modalOverlay.classList.remove('visible');
         });
     }
 
-    // Acción para guardar las preferencias desde el modal
     if (savePrefsBtn) {
         savePrefsBtn.addEventListener('click', () => {
             const analyticsToggle = document.getElementById('analytics-toggle');
