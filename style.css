@@ -1120,15 +1120,17 @@ body.dark-theme .brand-text-responsive {
 }
 
 /* Estilos para los iconos de redes sociales en el footer */
-.social-links a {
+.social-links a i {
+    /* <-- Le decimos que afecte directamente al icono <i> */
     font-size: 22px;
-    /* Tamaño del icono */
-    margin-right: 18px;
-    /* Espacio entre iconos */
-    color: #ccc;
-    /* Color inicial del icono */
+    /* Mantenemos tu tamaño perfecto */
     transition: color 0.3s ease-in-out;
-    /* Transición suave */
+}
+
+.social-links a {
+    /* Mantenemos el espaciado en el enlace */
+    margin-right: 18px;
+    color: #ccc;
 }
 
 .social-links a:last-child {

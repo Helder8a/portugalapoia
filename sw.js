@@ -1,4 +1,4 @@
-const CACHE_NAME = 'portugalapoia-cache-v5'; // Nueva versión para forzar actualización
+const CACHE_NAME = 'portugalapoia-cache-v6'; // Nueva versión para forzar actualización
 const OFFLINE_URL = 'offline.html';
 const urlsToCache = [
     '/',
