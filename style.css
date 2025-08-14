@@ -1056,14 +1056,10 @@ body:not(.dark-theme) .slider.round .fa-sun {
     /* Define un tamaño de fuente fluido entre 0.8rem (mínimo) y 1.25rem (máximo) */
     font-size: clamp(0.8rem, 3.5vw, 1.25rem) !important;
     font-weight: 700;
-    color: var(--color-primary);
-    /* Usa el color primario que ya tienes definido */
-    white-space: nowrap;
-    /* Evita que el nombre se parta en dos líneas */
-    line-height: 1;
-    /* Ayuda a la alineación vertical */
-    transition: font-size 0.2s ease-in-out;
-    /* Una transición suave */
+    color: var(--color-primary); /* Usa el color primario que ya tienes definido */
+    white-space: nowrap; /* Evita que el nombre se parta en dos líneas */
+    line-height: 1; /* Ayuda a la alineación vertical */
+    transition: font-size 0.2s ease-in-out; /* Una transición suave */
 }
 
 /* Fuerza el color del logo a blanco en modo oscuro */
@@ -1081,10 +1077,8 @@ body.dark-theme .brand-text-responsive {
  * El elemento que lleve esta clase debe tener un color de fondo definido.
 */
 .con-marca-de-agua {
-    position: relative;
-    /* Obligatorio para que la marca de agua funcione */
-    overflow: hidden;
-    /* Recomendado para evitar desbordamientos */
+    position: relative; /* Obligatorio para que la marca de agua funcione */
+    overflow: hidden;   /* Recomendado para evitar desbordamientos */
 }
 
 /*
@@ -1092,14 +1086,13 @@ body.dark-theme .brand-text-responsive {
  * desde CSS, sin necesidad de añadir una <img> en el HTML.
 */
 .con-marca-de-agua::before {
-    content: '';
-    /* Requerido para que se muestre */
+    content: ''; /* Requerido para que se muestre */
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-
+    
     /* ----- CONFIGURACIÓN DE TU LOGO ----- */
     /* IMPORTANTE: Coloca la URL de tu logo aquí */
     background-image: url('images_pta/logocuadrado.jpg');
@@ -1108,23 +1101,18 @@ body.dark-theme .brand-text-responsive {
     /* ------------------------------------ */
 
     /* ----- EFECTO Y TAMAÑO RESPONSIVO ----- */
-    opacity: 0.06;
-    /* La transparencia de la marca de agua */
-    background-size: 280px;
-    /* Tamaño inicial para móviles */
-    transition: background-size 0.3s ease;
-    /* Transición suave */
-    z-index: 1;
-    /* Lo pone en la capa de atrás */
-    pointer-events: none;
-    /* Evita que interfiera con los clics */
+    opacity: 0.06; /* La transparencia de la marca de agua */
+    background-size: 280px; /* Tamaño inicial para móviles */
+    transition: background-size 0.3s ease; /* Transición suave */
+    z-index: 1; /* Lo pone en la capa de atrás */
+    pointer-events: none; /* Evita que interfiera con los clics */
 }
 
 /*
  * Esta regla es importante: asegura que cualquier contenido
  * DIRECTO dentro del elemento con la marca de agua, se ponga por encima.
 */
-.con-marca-de-agua>* {
+.con-marca-de-agua > * {
     position: relative;
     z-index: 2;
 }
@@ -1144,13 +1132,12 @@ body.dark-theme .brand-text-responsive {
      * sobre cualquier otro estilo de Bootstrap que pueda interferir.
     */
     font-size: clamp(0.75rem, 3.5vw, 1.2rem) !important;
-
+    
     /* Estilos para mantener la apariencia del texto */
     font-weight: bold;
     color: #2c3e50;
     line-height: 1;
-    white-space: nowrap;
-    /* Evita que el nombre se parta en dos líneas */
+    white-space: nowrap; /* Evita que el nombre se parta en dos líneas */
 }
 
 /* ===== CÓDIGO CORREGIDO PARA EL TEXTO DEL LOGO ===== */
@@ -1160,22 +1147,15 @@ body.dark-theme .brand-text-responsive {
 .brand-text-responsive {
     font-size: clamp(0.8rem, 3.5vw, 1.25rem) !important;
     font-weight: 700;
-    color: var(--color-primary);
-    /* Usa el color primario que ya tienes definido */
-    white-space: nowrap;
-    /* Evita que el nombre se parta en dos líneas */
-    line-height: 1;
-    /* Ayuda a la alineación vertical */
-    transition: font-size 0.2s ease-in-out;
-    /* Una transición suave */
+    color: var(--color-primary); /* Usa el color primario que ya tienes definido */
+    white-space: nowrap; /* Evita que el nombre se parta en dos líneas */
+    line-height: 1; /* Ayuda a la alineación vertical */
+    transition: font-size 0.2s ease-in-out; /* Una transición suave */
 }
 
-/*
- * Corrección de compatibilidad para asegurar que el logo se hace más pequeño
- * en dispositivos móviles, anulando estilos potencialmente conflictivos.
- */
-@media (max-width: 768px) {
-    .navbar-brand .brand-text-responsive {
-        font-size: 1.1rem !important;
+/* Corrección específica para dispositivos móviles */
+@media (max-width: 767.98px) {
+    .brand-text-responsive {
+        font-size: 1.0rem !important;
     }
 }
