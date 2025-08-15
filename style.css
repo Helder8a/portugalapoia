@@ -1210,3 +1210,31 @@ body.dark-theme {
     box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
     z-index: 3; /* Se asegura de que esté por encima del logo */
 }
+/* --- NUEVOS ESTILOS PARA ICONOS DE CONTACTO EN TARJETAS --- */
+
+.card-contact-icons {
+    padding-top: 10px;
+    margin-top: auto; /* Empuja los iconos al final de la tarjeta */
+    border-top: 1px solid var(--color-border);
+    text-align: right; /* Alinea los iconos a la derecha */
+}
+
+.contact-icon {
+    display: inline-block;
+    font-size: 2rem; /* Tamaño del icono */
+    margin-left: 15px; /* Espacio entre iconos */
+    text-decoration: none;
+    transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.contact-icon:hover {
+    transform: scale(1.2); /* Efecto de zoom al pasar el ratón */
+}
+
+.whatsapp-icon {
+    color: #25D366; /* Color oficial de WhatsApp */
+}
+
+.email-icon {
+    color: #D44638; /* Un color representativo para email */
+}

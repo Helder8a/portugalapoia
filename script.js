@@ -114,23 +114,27 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>`;
     }
 
-    // --- FUNCIÓN CORREGIDA PARA SERVICIOS CON LOGO Y PRECIO ---
+    // --- FUNCIÓN CORREGIDA PARA SERVICIOS CON ICONOS DE CONTACTO ---
     function renderServico(item) {
         const logoHTML = item.logo_empresa ? `
             <div class="service-card-logo">
                 <img src="${item.logo_empresa}" alt="Logo de ${item.titulo}">
             </div>` : '';
 
-        // Comprueba si hay un valor para el servicio y lo añade
         const priceHTML = item.valor_servico ? `
             <div class="card-price">${item.valor_servico}</div>` : '';
 
-        let contatoHTML = '';
-        if (item.contato) { contatoHTML += `<strong>Tel:</strong> ${item.contato}<br>`; }
-        if (item.link_contato) {
-            const emailText = item.link_contato.replace('mailto:', '');
-            contatoHTML += `<strong>Email:</strong> <a href="${item.link_contato}">${emailText}</a>`;
+        // Generamos los iconos de contacto
+        let contactIconsHTML = '';
+        if (item.contato) {
+            // Limpiamos el número de teléfono para el link de WhatsApp
+            const cleanedPhone = item.contato.replace(/[\s+()-]/g, '');
+            contactIconsHTML += `<a href="https://wa.me/${cleanedPhone}" class="contact-icon whatsapp-icon" target="_blank" aria-label="Contactar por WhatsApp"><i class="fab fa-whatsapp"></i></a>`;
         }
+        if (item.link_contato) {
+            contactIconsHTML += `<a href="${item.link_contato}" class="contact-icon email-icon" aria-label="Contactar por Email"><i class="fas fa-envelope"></i></a>`;
+        }
+
         return `
         <div class="col-lg-4 col-md-6 mb-4 service-item">
             <div class="card h-100 shadow-sm" id="${item.id}">
@@ -140,7 +144,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     <h5 class="card-title">${item.titulo}</h5>
                     <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${item.localizacao}</h6>
                     <p class="card-text flex-grow-1">${item.descricao}</p>
-                    <p class="card-text small mt-auto">${contatoHTML}</p>
+                    <div class="card-contact-icons">
+                        ${contactIconsHTML}
+                    </div>
                 </div>
                 <div class="card-footer d-flex justify-content-between align-items-center">
                     <small class="text-muted">ID: ${item.id}</small>
