@@ -1248,19 +1248,19 @@ body.dark-theme {
 
     /* --- AJUSTES PARA DISPOSITIVOS MÓVILES --- */
 
-    @media (max-width: 767.98px) {
-        .service-card-logo {
-            width: 40px;
-            height: 40px;
-            top: 10px;
-            right: 10px;
-        }
-
-        .contact-icon {
-            font-size: 1.5rem;
-            margin-left: 10px;
-        }
+@media (max-width: 767.98px) {
+    .service-card-logo {
+        width: 40px;
+        height: 40px;
+        top: 10px;
+        right: 10px;
     }
+
+    .contact-icon {
+        font-size: 1.5rem;
+        margin-left: 10px;
+    }
+}
 
     /* --- ESTILOS PARA LA ETIQUETA DE PRECIO EN TARJETAS DE SERVICIOS--- */
 
