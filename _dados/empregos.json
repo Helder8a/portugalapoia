@@ -135,6 +135,14 @@
       "localizacao": "Lisboa",
       "contato": " +351 928 122 372",
       "link_contato": " +351 928 122 372"
+    },
+    {
+      "id": "18",
+      "titulo": "Apoio Domiciliário",
+      "localizacao": "Almada",
+      "descricao": " Experiência em cuidados a idosos",
+      "contato": "+351 928 122 372",
+      "link_contato": "+351 928 122 372"
     }
   ]
 }
