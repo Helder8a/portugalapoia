@@ -134,8 +134,9 @@
                 <div class="col-md-10">
                     <div class="card shadow-sm">
                         <div class="card-body">
+
                             <form class="form-row align-items-center" onsubmit="event.preventDefault();">
-                                <div class="col-md-6 mb-2 mb-md-0">
+                                <div class="col-md-5 mb-2 mb-md-0">
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fas fa-search"></i></span>
@@ -153,11 +154,16 @@
                                             placeholder="Cidade (ex: Lisboa)">
                                     </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <button type="button" class="btn btn-primary btn-lg btn-block"
-                                        onclick="filterHousing()">Procurar</button>
+                                <div class="col-md-3">
+                                    <div class="d-flex">
+                                        <button type="button" class="btn btn-primary btn-lg flex-grow-1 mr-2"
+                                            onclick="filterAnnouncements()">Procurar</button>
+                                        <button type="button" class="btn btn-secondary btn-lg flex-grow-1"
+                                            onclick="clearFilters()">Limpar</button>
+                                    </div>
                                 </div>
                             </form>
+
                         </div>
                     </div>
                 </div>
