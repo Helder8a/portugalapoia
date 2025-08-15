@@ -114,21 +114,20 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>`;
     }
 
-    // --- FUNCIÓN CORREGIDA PARA SERVICIOS CON LOGO Y CONTACTO DE ICONOS ---
+    // --- FUNCIÓN CORREGIDA PARA SERVICIOS CON ICONOS DE CONTACTO ---
     function renderServico(item) {
-        // Genera el HTML para el logo solo si existe
         const logoHTML = item.logo_empresa ? `
             <div class="service-card-logo">
                 <img src="${item.logo_empresa}" alt="Logo de ${item.titulo}">
             </div>` : '';
 
-        // Genera la etiqueta de precio solo si existe
         const priceHTML = item.valor_servico ? `
             <div class="card-price">${item.valor_servico}</div>` : '';
 
-        // Genera los iconos de contacto solo si existe la información
+        // Generamos los iconos de contacto
         let contactIconsHTML = '';
         if (item.contato) {
+            // Limpiamos el número de teléfono para el link de WhatsApp
             const cleanedPhone = item.contato.replace(/[\s+()-]/g, '');
             contactIconsHTML += `<a href="https://wa.me/${cleanedPhone}" class="contact-icon whatsapp-icon" target="_blank" aria-label="Contactar por WhatsApp"><i class="fab fa-whatsapp"></i></a>`;
         }
