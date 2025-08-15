@@ -79,6 +79,14 @@
       "contato": "+55 21 97898-5541",
       "descricao": "Pedreiros para obra",
       "link_contato": "+55 21 97898-5541"
+    },
+    {
+      "id": "11",
+      "titulo": "Call Center",
+      "link_contato": " sales@atravel.pt",
+      "contato": "+55 21 97898-5541",
+      "descricao": "PERFIL QUE PROCURAMOS:\n- Proatividade e vontade de crescimento na carreira\n- Espírito de equipa e forte habilidades de comunicação\n- Capacidade de aprendizagem contínua\n- Organização e apresentação cuidada\n- Disponibilidade total e imediata",
+      "localizacao": "Lisboa"
     }
   ]
 }
