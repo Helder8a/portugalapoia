@@ -1,7 +1,8 @@
 # --- Configuración del Backend ---
 backend:
-  name: git-gateway
-  branch: main # O 'master' si tu rama principal se llama así en GitHub
+  name: github 
+  repo: Helder8a/portugalapoia 
+  branch: main 
 
 # --- Dónde guardar las imágenes que subas desde el panel ---
 media_folder: "images/uploads" # Recomiendo una carpeta dedicada para nuevas subidas
