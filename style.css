@@ -1278,3 +1278,51 @@ body.dark-theme {
         /* Un color representativo para email */
     }
 }
+
+/* --- ESTILOS PARA EL LOGO EN LAS TARJETAS DE SERVICIOS --- */
+
+.card {
+    position: relative;
+    overflow: hidden;
+}
+
+.service-card-logo {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 60px;
+    height: 60px;
+    background-color: #ffffff;
+    /* Fondo blanco para que el logo se vea en modo claro */
+    border-radius: 50%;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+/* Solo cambia el borde de la tarjeta y el fondo del logo en modo oscuro */
+body.dark-theme .service-card-logo {
+    background-color: var(--color-background-light);
+}
+
+.service-card-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Mantén el resto de los estilos del modo oscuro sin cambios */
+body.dark-theme {
+    --color-text: #e0e0e0;
+    --color-text-light: #121212;
+    --color-background: #2F240C;
+    --color-background-light: #121212;
+    --color-border: #444;
+    --shadow: 0 5px 15px rgba(0, 0, 0, .2);
+    --color-donation: #FDBE33;
+    /* Mantenemos el amarillo en tema oscuro */
+}
