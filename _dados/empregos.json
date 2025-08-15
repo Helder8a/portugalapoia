@@ -167,6 +167,14 @@
       "localizacao": "Santarém",
       "link_contato": "escritacomcharme@gmail.com",
       "contato": "escritacomcharme@gmail.com"
+    },
+    {
+      "id": "22",
+      "titulo": "Emprego Hotelaria",
+      "localizacao": "Lisboa",
+      "descricao": "otel de 5 Estrelas , situado na Av da Liberdade",
+      "contato": "liberdadehotel8@gmail.com",
+      "link_contato": "liberdadehotel8@gmail.com"
     }
   ]
 }
