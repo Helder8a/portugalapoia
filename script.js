@@ -116,23 +116,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- FUNCIÓN CORREGIDA PARA SERVICIOS CON LOGO Y CONTACTO DE ICONOS ---
     function renderServico(item) {
+        // Genera el HTML para el logo solo si existe
         const logoHTML = item.logo_empresa ? `
-        <div class="service-card-logo">
-            <img src="${item.logo_empresa}" alt="Logo de ${item.titulo}">
-        </div>` : '';
+            <div class="service-card-logo">
+                <img src="${item.logo_empresa}" alt="Logo de ${item.titulo}">
+            </div>` : '';
 
+        // Genera la etiqueta de precio solo si existe
         const priceHTML = item.valor_servico ? `
-        <div class="card-price">${item.valor_servico}</div>` : '';
+            <div class="card-price">${item.valor_servico}</div>` : '';
 
-        let contactHTML = '';
-        if (item.contato) {
-            contactHTML += `<p class="card-text small mb-1"><strong>Tel:</strong> ${item.contato}</p>`;
-        }
-        if (item.link_contato) {
-            const emailText = item.link_contato.replace('mailto:', '');
-            contactHTML += `<p class="card-text small mb-1"><strong>Email:</strong> <a href="${item.link_contato}">${emailText}</a></p>`;
-        }
-
+        // Genera los iconos de contacto solo si existe la información
         let contactIconsHTML = '';
         if (item.contato) {
             const cleanedPhone = item.contato.replace(/[\s+()-]/g, '');
@@ -143,26 +137,23 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         return `
-    <div class="col-lg-4 col-md-6 mb-4 service-item">
-        <div class="card h-100 shadow-sm" id="${item.id}">
-            ${logoHTML}
-            ${priceHTML}
-            <div class="card-body d-flex flex-column">
-                <h5 class="card-title">${item.titulo}</h5>
-                <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${item.localizacao}</h6>
-                <p class="card-text flex-grow-1">${item.descricao}</p>
-                <div class="mt-auto">
-                    ${contactHTML}
+        <div class="col-lg-4 col-md-6 mb-4 service-item">
+            <div class="card h-100 shadow-sm" id="${item.id}">
+                ${logoHTML}
+                ${priceHTML}
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">${item.titulo}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${item.localizacao}</h6>
+                    <p class="card-text flex-grow-1">${item.descricao}</p>
                     <div class="card-contact-icons">
                         ${contactIconsHTML}
                     </div>
                 </div>
+                <div class="card-footer d-flex justify-content-between align-items-center">
+                    <small class="text-muted">ID: ${item.id}</small>
+                </div>
             </div>
-            <div class="card-footer d-flex justify-content-between align-items-center">
-                <small class="text-muted">ID: ${item.id}</small>
-            </div>
-        </div>
-    </div>`;
+        </div>`;
     }
 
     // --- Llamadas para cargar el contenido en cada página ---
