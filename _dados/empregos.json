@@ -85,8 +85,16 @@
       "titulo": "Call Center",
       "link_contato": " sales@atravel.pt",
       "contato": "+55 21 97898-5541",
-      "descricao": "PERFIL QUE PROCURAMOS:\n- Proatividade e vontade de crescimento na carreira\n- Espírito de equipa e forte habilidades de comunicação\n",
+      "descricao": "PERFIL QUE PROCURAMOS:\n- Proatividade e vontade de crescimento na carreira\n",
       "localizacao": "Lisboa"
+    },
+    {
+      "id": "12",
+      "localizacao": "Porto",
+      "descricao": "- Carta de condução (opcional)\n- Assídua e pontual\n- Dinâmica e proativa",
+      "titulo": "Tecnica de Limpeza",
+      "contato": "915202894",
+      "link_contato": "915202894"
     }
   ]
 }
