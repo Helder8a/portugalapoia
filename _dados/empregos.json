@@ -12,7 +12,15 @@
       "id": "2",
       "localizacao": "Porto",
       "titulo": "Pedreiros",
-      "descricao": "Pedreiros",
+      "descricao": "Não hesite em contactar ou proceder ao envio do CV, estamos disponíveis para qualquer esclarecimento.",
+      "contato": "936645276 ",
+      "link_contato": "recursoshumanos@groupna.pt"
+    },
+    {
+      "id": "3",
+      "localizacao": "Leiria ",
+      "titulo": "Pedreiros",
+      "descricao": "Não hesite em contactar ou proceder ao envio do CV, estamos disponíveis para qualquer esclarecimento.",
       "contato": "936645276 ",
       "link_contato": "recursoshumanos@groupna.pt"
     }
