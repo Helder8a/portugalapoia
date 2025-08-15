@@ -1,0 +1,12 @@
+{
+  "anuncios": [
+    {
+      "id": "1",
+      "descricao": "Quarto com casa de banho privativa",
+      "titulo": "Quarto",
+      "localizacao": "Lisboa, Portela",
+      "contato": "+351 913415847",
+      "link_contato": "+351 913415847"
+    }
+  ]
+}
