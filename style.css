@@ -1150,8 +1150,10 @@ body.dark-theme .brand-text-responsive {
     /* Azul Oscuro */
     --color-secondary: #2196F3;
     /* Azul Medio */
-    --color-accent: #F57C00; /* Naranja Vibrante y Accesible */
-    --color-donation: #F57C00; /* Naranja Vibrante y Accesible */
+    --color-accent: #F57C00;
+    /* Naranja Vibrante y Accesible */
+    --color-donation: #F57C00;
+    /* Naranja Vibrante y Accesible */
     --color-success: #28A745;
     /* Verde */
     /* Verde */
@@ -1177,64 +1179,101 @@ body.dark-theme {
     /* Mantenemos el amarillo en tema oscuro */
 
 
-/* --- ESTILOS PARA EL LOGO EN LAS TARJETAS DE SERVICIOS --- */
+    /* --- ESTILOS PARA EL LOGO EN LAS TARJETAS DE SERVICIOS --- */
 
-.card-logo-container {
-    width: 100%;
-    height: 180px; /* Altura fija para el contenedor de la imagen */
-    overflow: hidden; /* Oculta partes de la imagen que se salgan */
-    margin-bottom: 15px; /* Espacio entre la imagen y el título */
-    border-bottom: 1px solid var(--color-border);
-}
+    .card {
+        position: relative;
+        /* Muy importante para posicionar el logo dentro */
+        overflow: hidden;
+        /* Evita que los elementos se salgan de las esquinas redondeadas */
+    }
 
-.card-logo-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain; /* ESTA ES LA PROPIEDAD MÁGICA */
-    /* 'contain' asegura que toda la imagen quepa, manteniendo la proporción */
-    /* 'cover' haría que la imagen cubra todo el espacio, cortando partes si es necesario */
-}}
+    .service-card-logo {
+        position: absolute;
+        /* Posiciona el logo de forma flotante sobre la tarjeta */
+        top: 15px;
+        /* Distancia desde la parte superior */
+        right: 15px;
+        /* Distancia desde la derecha */
+        width: 60px;
+        /* Ancho fijo del logo */
+        height: 60px;
+        /* Alto fijo del logo */
+        background-color: #ffffff;
+        /* Fondo blanco por si el logo tiene transparencias */
+        border-radius: 50%;
+        /* Lo hace perfectamente redondo */
+        border: 1px solid var(--color-border);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        /* Sombra sutil para darle profundidad */
+        padding: 5px;
+        /* Espacio interno para que el logo respire */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+        /* Se asegura de que esté por encima de otros elementos */
+    }
 
-/* --- ESTILOS PARA LA ETIQUETA DE PRECIO EN TARJETAS DE SERVICIOS--- */
+    .service-card-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        /* Asegura que el logo completo quepa dentro del círculo sin deformarse */
+    }
 
-.card-price {
-    position: absolute;
-    top: 12px;
-    left: -8px; /* Un pequeño truco para que sobresalga */
-    background-color: var(--color-accent); /* Usa tu color de acento */
-    color: var(--color-text-light); /* Usa el color de texto claro */
-    padding: 5px 15px;
-    font-size: 1rem;
-    font-weight: 700;
-    border-radius: 0 4px 4px 0;
-    box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
-    z-index: 3; /* Se asegura de que esté por encima del logo */
-}
-/* --- NUEVOS ESTILOS PARA ICONOS DE CONTACTO EN TARJETAS --- */
+    /* --- ESTILOS PARA LA ETIQUETA DE PRECIO EN TARJETAS DE SERVICIOS--- */
 
-.card-contact-icons {
-    padding-top: 10px;
-    margin-top: auto; /* Empuja los iconos al final de la tarjeta */
-    border-top: 1px solid var(--color-border);
-    text-align: right; /* Alinea los iconos a la derecha */
-}
+    .card-price {
+        position: absolute;
+        top: 12px;
+        left: -8px;
+        /* Un pequeño truco para que sobresalga */
+        background-color: var(--color-accent);
+        /* Usa tu color de acento */
+        color: var(--color-text-light);
+        /* Usa el color de texto claro */
+        padding: 5px 15px;
+        font-size: 1rem;
+        font-weight: 700;
+        border-radius: 0 4px 4px 0;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+        z-index: 3;
+        /* Se asegura de que esté por encima del logo */
+    }
 
-.contact-icon {
-    display: inline-block;
-    font-size: 2rem; /* Tamaño del icono */
-    margin-left: 15px; /* Espacio entre iconos */
-    text-decoration: none;
-    transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
-}
+    /* --- NUEVOS ESTILOS PARA ICONOS DE CONTACTO EN TARJETAS --- */
 
-.contact-icon:hover {
-    transform: scale(1.2); /* Efecto de zoom al pasar el ratón */
-}
+    .card-contact-icons {
+        padding-top: 10px;
+        margin-top: auto;
+        /* Empuja los iconos al final de la tarjeta */
+        border-top: 1px solid var(--color-border);
+        text-align: right;
+        /* Alinea los iconos a la derecha */
+    }
 
-.whatsapp-icon {
-    color: #25D366; /* Color oficial de WhatsApp */
-}
+    .contact-icon {
+        display: inline-block;
+        font-size: 2rem;
+        /* Tamaño del icono */
+        margin-left: 15px;
+        /* Espacio entre iconos */
+        text-decoration: none;
+        transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+    }
 
-.email-icon {
-    color: #D44638; /* Un color representativo para email */
-}
+    .contact-icon:hover {
+        transform: scale(1.2);
+        /* Efecto de zoom al pasar el ratón */
+    }
+
+    .whatsapp-icon {
+        color: #25D366;
+        /* Color oficial de WhatsApp */
+    }
+
+    .email-icon {
+        color: #D44638;
+        /* Un color representativo para email */
+    }
