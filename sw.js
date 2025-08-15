@@ -4,7 +4,7 @@ const CACHE_NAME = 'portugalapoia-cache-v8'; // <-- Incrementa la versión
 const urlsToCache = [
     '/',
     '/index.html',
-    '/style.css?v=6', // <-- AÑADE EL NÚMERO DE VERSIÓN AQUÍ
+    '/style.css?v=8', // <-- AÑADE EL NÚMERO DE VERSIÓN AQUÍ
     '/avaliador-urbano-style.css',
     '/script.js',
     '/manifest.json',
