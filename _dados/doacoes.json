@@ -19,6 +19,16 @@
       "imagem": "/images/uploads/ropabebe.webp",
       "contato": "+351 911972787",
       "link_contato": "helderb8a@gmail.com"
+    },
+    {
+      "urgente": false,
+      "id": "3",
+      "titulo": "Material Escolar para Crianças",
+      "localizacao": "Lisboa",
+      "descricao": "Sou mãe de duas crianças e procuro cadernos, lápis e mochilas para o novo ano letivo. Veja o vídeo para conhecer a nossa história. Muito obrigada",
+      "imagem": null,
+      "contato": "+351 911972787",
+      "link_contato": "helderb8a@gmail.com"
     }
   ]
 }
