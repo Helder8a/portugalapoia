@@ -68,14 +68,73 @@ document.addEventListener("DOMContentLoaded", () => {
         // ... (sin cambios)
     }
     function renderDoacao(pedido) {
-        // ... (sin cambios)
+        const badgeUrgente = pedido.urgente ? '<span class="badge badge-danger position-absolute" style="top: 10px; right: 10px; z-index: 2;">Urgente</span>' : '';
+        const imagemHTML = pedido.imagem ? `<img loading="lazy" src="${pedido.imagem}" class="d-block w-100" alt="${pedido.titulo}" style="height: 200px; object-fit: cover;">` : '';
+
+        // --- INICIO DE LA MEJORA ---
+        let contatoHTML = '';
+        if (pedido.contato) {
+            // Limpia el número de teléfono para el enlace tel:
+            const numeroLimpo = pedido.contato.replace(/[\s+()-]/g, '');
+            contatoHTML = `<p class="card-text small"><strong>Tel:</strong> <a href="tel:${numeroLimpo}">${pedido.contato}</a></p>`;
+        }
+        // --- FIN DE LA MEJORA ---
+
+        return `
+    <div class="col-lg-4 col-md-6 mb-4 announcement-item">
+        <div class="card h-100 shadow-sm" id="${pedido.id}">
+            ${badgeUrgente}
+            ${imagemHTML}
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">${pedido.titulo}</h5>
+                <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${pedido.localizacao}</h6>
+                <p class="card-text flex-grow-1">${pedido.descricao}</p>
+                <div class="mt-auto">
+                    ${contatoHTML}
+                    <a href="${pedido.link_contato}" class="btn btn-primary btn-block">Contactar por Email</a>
+                </div>
+            </div>
+            <div class="card-footer d-flex justify-content-between align-items-center">
+                <small class="text-muted">ID: ${pedido.id}</small>
+            </div>
+        </div>
+    </div>`;
     }
     function renderServico(item) {
         // ... (sin cambios)
     }
     function renderHabitacao(anuncio) {
-        // ... (sin cambios)
+    // --- INICIO DE LA MEJORA ---
+    let contatoHTML = '';
+    if (anuncio.contato) {
+        const numeroLimpo = anuncio.contato.replace(/[\s+()-]/g, '');
+        contatoHTML += `<strong>Tel:</strong> <a href="tel:${numeroLimpo}">${anuncio.contato}</a><br>`; 
     }
+    if (anuncio.link_contato) {
+        // Aseguramos que el link_contato sea un email si no lo es ya
+        const emailLink = anuncio.link_contato.startsWith('mailto:') ? anuncio.link_contato : `mailto:${anuncio.link_contato}`;
+        const emailText = emailLink.replace('mailto:', '');
+        contatoHTML += `<strong>Email:</strong> <a href="${emailLink}">${emailText}</a>`;
+    }
+    // --- FIN DE LA MEJORA ---
+
+    return `
+    <div class="col-lg-4 col-md-6 mb-4 housing-item">
+        <div class="card h-100 shadow-sm" id="${anuncio.id}">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">${anuncio.titulo}</h5>
+                <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${anuncio.localizacao}</h6>
+                <p class="card-text flex-grow-1">${anuncio.descricao}</p>
+                <div class="mt-auto">
+                     <p class="card-text small contact-info">${contatoHTML}</p>
+                </div>
+            </div>
+            <div class="card-footer d-flex justify-content-between align-items-center">
+                <small class="text-muted">ID: ${anuncio.id}</small>
+            </div>
+        </div>
+    </div>`;
+}
 
     carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'vagas');
     carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'pedidos');
