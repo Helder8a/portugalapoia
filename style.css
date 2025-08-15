@@ -1229,7 +1229,9 @@ body.dark-theme {
     .contact-icon {
         display: inline-block;
         font-size: 2rem;
+        /* Aumentado a 2rem para que sean más grandes */
         margin-left: 15px;
+        /* Aumentado para mayor separación */
         text-decoration: none;
         transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
     }
@@ -1248,19 +1250,19 @@ body.dark-theme {
 
     /* --- AJUSTES PARA DISPOSITIVOS MÓVILES --- */
 
-@media (max-width: 767.98px) {
-    .service-card-logo {
-        width: 40px;
-        height: 40px;
-        top: 10px;
-        right: 10px;
-    }
+    @media (max-width: 767.98px) {
+        .service-card-logo {
+            width: 40px;
+            height: 40px;
+            top: 10px;
+            right: 10px;
+        }
 
-    .contact-icon {
-        font-size: 1.5rem;
-        margin-left: 10px;
+        .contact-icon {
+            font-size: 1.5rem;
+            margin-left: 10px;
+        }
     }
-}
 
     /* --- ESTILOS PARA LA ETIQUETA DE PRECIO EN TARJETAS DE SERVICIOS--- */
 
@@ -1319,7 +1321,7 @@ body.dark-theme {
     }
 }
 
-/* --- ESTILOS PARA EL LOGO EN LAS TARJETAS DE SERVICIOS --- */
+/* --- ESTILOS PARA EL LOGO EN LAS TARJETAS DE SERVICIOS (CORREGIDO) --- */
 
 .card {
     position: relative;
@@ -1353,16 +1355,4 @@ body.dark-theme .service-card-logo {
     width: 100%;
     height: 100%;
     object-fit: contain;
-}
-
-/* Mantén el resto de los estilos del modo oscuro sin cambios */
-body.dark-theme {
-    --color-text: #e0e0e0;
-    --color-text-light: #121212;
-    --color-background: #2F240C;
-    --color-background-light: #121212;
-    --color-border: #444;
-    --shadow: 0 5px 15px rgba(0, 0, 0, .2);
-    --color-donation: #FDBE33;
-    /* Mantenemos el amarillo en tema oscuro */
 }
