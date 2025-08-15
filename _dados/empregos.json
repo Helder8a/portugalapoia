@@ -287,6 +287,14 @@
       "localizacao": "Leiria",
       "contato": "rh@dasprent.pt",
       "link_contato": "rh@dasprent.pt"
+    },
+    {
+      "id": "37",
+      "titulo": "Cozinheiro",
+      "descricao": "Cozinheiro com experiência cozinha Portuguesa e Italiana",
+      "localizacao": "Lisboa",
+      "link_contato": "enoragrouppt@gmail.com",
+      "contato": "enoragrouppt@gmail.com"
     }
   ]
 }
