@@ -231,6 +231,14 @@
       "descricao": "Empregado(a) Mesa - Restaurante ",
       "localizacao": "Empregado(a) Mesa - Restaurante ",
       "link_contato": "marcio.afonso@live.com"
+    },
+    {
+      "id": "30",
+      "titulo": "Operador de Produção",
+      "descricao": "Operador de Produção",
+      "localizacao": "Vila do Conde",
+      "contato": "912 154 406",
+      "link_contato": "porto@job-impulse.pt"
     }
   ]
 }
