@@ -95,6 +95,38 @@
       "titulo": "Tecnica de Limpeza",
       "contato": "915202894",
       "link_contato": "915202894"
+    },
+    {
+      "id": "13",
+      "titulo": "Cuidadoras",
+      "localizacao": "Barcelos",
+      "descricao": "Cuidadoras, Internas\nApoio a idosa dependente, higiene, companhia e vigilância.",
+      "contato": "+351 939 364 703",
+      "link_contato": "+351 939 364 703"
+    },
+    {
+      "id": "14",
+      "titulo": "Serviço Doméstico",
+      "descricao": "Serviço Doméstico,Mulher",
+      "localizacao": "Porto",
+      "contato": "913 216 522",
+      "link_contato": "913 216 522"
+    },
+    {
+      "id": "15",
+      "titulo": "2 Cuidadoras",
+      "descricao": "2 Cuidadoras para apoio a utente com Alzheimer",
+      "localizacao": "Lisboa",
+      "contato": "+351 928 122 372",
+      "link_contato": "+351 928 122 372"
+    },
+    {
+      "id": "16",
+      "titulo": "Operador(a) de Produção",
+      "descricao": "Operador(a) de Produção para Gandra, Paredes",
+      "localizacao": "Portugal",
+      "contato": " (+351) 913 814 331",
+      "link_contato": " (+351) 913 814 331"
     }
   ]
 }
