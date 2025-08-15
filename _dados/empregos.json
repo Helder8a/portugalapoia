@@ -2,7 +2,7 @@
   "vagas": [
     {
       "id": "1",
-      "titulo": "Pedreiros",
+      "titulo": "Pedreiros para Obra",
       "localizacao": "Viseu",
       "descricao": "Não hesite em contactar ou proceder ao envio do CV, estamos disponíveis para qualquer esclarecimento.",
       "contato": "936645276 ",
@@ -11,7 +11,7 @@
     {
       "id": "2",
       "localizacao": "Porto",
-      "titulo": "Pedreiros",
+      "titulo": "Pedreiros para Obra",
       "descricao": "Não hesite em contactar ou proceder ao envio do CV, estamos disponíveis para qualquer esclarecimento.",
       "contato": "936645276 ",
       "link_contato": "recursoshumanos@groupna.pt"
@@ -19,7 +19,7 @@
     {
       "id": "3",
       "localizacao": "Leiria ",
-      "titulo": "Pedreiros",
+      "titulo": "Pedreiros para Obra",
       "descricao": "Não hesite em contactar ou proceder ao envio do CV, estamos disponíveis para qualquer esclarecimento.",
       "contato": "936645276 ",
       "link_contato": "recursoshumanos@groupna.pt"
