@@ -151,6 +151,14 @@
       "localizacao": "Lisboa",
       "link_contato": "geral@better-life.pt",
       "contato": "937 513 951"
+    },
+    {
+      "id": "20",
+      "titulo": "Apoio Domiciliario",
+      "descricao": "Apoio Domiciliario",
+      "localizacao": "Vila Franca de Xira",
+      "contato": "937 513 951",
+      "link_contato": "937 513 951"
     }
   ]
 }
