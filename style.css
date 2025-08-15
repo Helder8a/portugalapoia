@@ -1194,3 +1194,19 @@ body.dark-theme {
     /* 'contain' asegura que toda la imagen quepa, manteniendo la proporción */
     /* 'cover' haría que la imagen cubra todo el espacio, cortando partes si es necesario */
 }}
+
+/* --- ESTILOS PARA LA ETIQUETA DE PRECIO EN TARJETAS DE SERVICIOS--- */
+
+.card-price {
+    position: absolute;
+    top: 12px;
+    left: -8px; /* Un pequeño truco para que sobresalga */
+    background-color: var(--color-accent); /* Usa tu color de acento */
+    color: var(--color-text-light); /* Usa el color de texto claro */
+    padding: 5px 15px;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 0 4px 4px 0;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+    z-index: 3; /* Se asegura de que esté por encima del logo */
+}

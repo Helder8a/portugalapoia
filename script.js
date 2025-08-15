@@ -114,12 +114,16 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>`;
     }
 
-    // --- NUEVA FUNCIÓN PARA SERVICIOS CON LOGO ---
+    // --- FUNCIÓN CORREGIDA PARA SERVICIOS CON LOGO Y PRECIO ---
     function renderServico(item) {
         const logoHTML = item.logo_empresa ? `
-            <div class="card-logo-container">
+            <div class="service-card-logo">
                 <img src="${item.logo_empresa}" alt="Logo de ${item.titulo}">
             </div>` : '';
+
+        // Comprueba si hay un valor para el servicio y lo añade
+        const priceHTML = item.valor_servico ? `
+            <div class="card-price">${item.valor_servico}</div>` : '';
 
         let contatoHTML = '';
         if (item.contato) { contatoHTML += `<strong>Tel:</strong> ${item.contato}<br>`; }
@@ -131,6 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="col-lg-4 col-md-6 mb-4 service-item">
             <div class="card h-100 shadow-sm" id="${item.id}">
                 ${logoHTML}
+                ${priceHTML}
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">${item.titulo}</h5>
                     <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${item.localizacao}</h6>
@@ -147,6 +152,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- Llamadas para cargar el contenido en cada página ---
     carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'vagas');
     carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'pedidos');
-    carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'servicos'); // <-- USA LA NUEVA FUNCIÓN
+    carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'servicos');
     carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderEmprego, 'anuncios');
 });
