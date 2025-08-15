@@ -10,7 +10,7 @@ const urlsToCache = [
     '/manifest.json',
     '/images_pta/logofavicon.ico', // Corregido para que coincida con tu HTML
     '/images/img_portada.webp',
-    '/doacoes.html',
+    '/.html',
     '/empregos.html',
     '/servicos.html',
     '/habitacao.html',
