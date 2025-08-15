@@ -175,6 +175,14 @@
       "descricao": "otel de 5 Estrelas , situado na Av da Liberdade",
       "contato": "liberdadehotel8@gmail.com",
       "link_contato": "liberdadehotel8@gmail.com"
+    },
+    {
+      "id": "23",
+      "titulo": "Babysitter",
+      "descricao": "Babysitter - Acompanhamento de crianças entre as 18:00 e as 24:00",
+      "localizacao": "Zona de Canidelo - Vila Nova de Gaia",
+      "contato": "candidaturasdunasecascatas@gmail.com",
+      "link_contato": "candidaturasdunasecascatas@gmail.com"
     }
   ]
 }
