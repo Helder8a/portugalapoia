@@ -1,12 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
     // ... (todo el código de preloader, scroll, tema oscuro se mantiene igual) ...
-
     let preloader = document.getElementById("preloader");
     if (preloader) {
         window.addEventListener("load", () => { preloader.classList.add("hidden"); });
         setTimeout(() => { preloader.classList.add("hidden"); }, 1500);
     }
-
     let scrollTopBtn = document.getElementById("scrollTopBtn");
     if (scrollTopBtn) {
         window.onscroll = () => {
@@ -21,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
             window.scrollTo({ top: 0, behavior: "smooth" });
         });
     }
-
     let themeToggle = document.getElementById("theme-toggle");
     if (themeToggle) {
         let body = document.body;
@@ -45,47 +42,36 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // --- CÓDIGO PARA CARGAR CONTENIDO DESDE EL CMS ---
-    
     async function carregarConteudo(jsonPath, containerId, renderFunction, dataKey) {
         const container = document.getElementById(containerId);
-        if (!container) return; 
-
+        if (!container) return;
         try {
             const response = await fetch(jsonPath);
             if (!response.ok) throw new Error(`Erro ao carregar o ficheiro: ${response.statusText}`);
-            
             const data = await response.json();
             const items = data[dataKey] || [];
-
             if (items.length === 0) {
                 container.innerHTML = `<p class="col-12 text-center lead text-muted mt-5">De momento, não há anúncios publicados nesta secção.</p>`;
                 return;
             }
-
-            container.innerHTML = ''; 
+            container.innerHTML = '';
             items.forEach(item => {
-                container.innerHTML += renderFunction(item); 
+                container.innerHTML += renderFunction(item);
             });
-
         } catch (error) {
             console.error(`Erro ao carregar conteúdo de ${jsonPath}:`, error);
             container.innerHTML = `<p class="col-12 text-center">Não foi possível carregar o conteúdo neste momento. Tente mais tarde.</p>`;
         }
     }
 
-    // --- Funciones de renderizado (AQUÍ ESTÁ EL CAMBIO) ---
-
+    // --- Funciones de renderizado ---
     function renderEmprego(item) {
-        // Mostramos el teléfono y el email de forma separada si existen
         let contatoHTML = '';
-        if (item.contato) {
-            contatoHTML += `<strong>Tel:</strong> ${item.contato}<br>`;
-        }
+        if (item.contato) { contatoHTML += `<strong>Tel:</strong> ${item.contato}<br>`; }
         if (item.link_contato) {
             const emailText = item.link_contato.replace('mailto:', '');
             contatoHTML += `<strong>Email:</strong> <a href="${item.link_contato}">${emailText}</a>`;
         }
-
         return `
         <div class="col-lg-4 col-md-6 mb-4 job-item">
             <div class="card h-100 shadow-sm" id="${item.id}">
@@ -105,13 +91,8 @@ document.addEventListener("DOMContentLoaded", () => {
     function renderDoacao(pedido) {
         const badgeUrgente = pedido.urgente ? '<span class="badge badge-danger position-absolute" style="top: 10px; right: 10px; z-index: 2;">Urgente</span>' : '';
         const imagemHTML = pedido.imagem ? `<img loading="lazy" src="${pedido.imagem}" class="d-block w-100" alt="${pedido.titulo}" style="height: 200px; object-fit: cover;">` : '';
-
-        // Preparamos el HTML de contacto para añadirlo antes del botón
         let contatoHTML = '';
-        if (pedido.contato) {
-            contatoHTML = `<p class="card-text small"><strong>Tel:</strong> ${pedido.contato}</p>`;
-        }
-
+        if (pedido.contato) { contatoHTML = `<p class="card-text small"><strong>Tel:</strong> ${pedido.contato}</p>`; }
         return `
         <div class="col-lg-4 col-md-6 mb-4 announcement-item">
             <div class="card h-100 shadow-sm" id="${pedido.id}">
@@ -132,10 +113,40 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
         </div>`;
     }
-    
+
+    // --- NUEVA FUNCIÓN PARA SERVICIOS CON LOGO ---
+    function renderServico(item) {
+        const logoHTML = item.logo_empresa ? `
+            <div class="card-logo-container">
+                <img src="${item.logo_empresa}" alt="Logo de ${item.titulo}">
+            </div>` : '';
+
+        let contatoHTML = '';
+        if (item.contato) { contatoHTML += `<strong>Tel:</strong> ${item.contato}<br>`; }
+        if (item.link_contato) {
+            const emailText = item.link_contato.replace('mailto:', '');
+            contatoHTML += `<strong>Email:</strong> <a href="${item.link_contato}">${emailText}</a>`;
+        }
+        return `
+        <div class="col-lg-4 col-md-6 mb-4 service-item">
+            <div class="card h-100 shadow-sm" id="${item.id}">
+                ${logoHTML}
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">${item.titulo}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${item.localizacao}</h6>
+                    <p class="card-text flex-grow-1">${item.descricao}</p>
+                    <p class="card-text small mt-auto">${contatoHTML}</p>
+                </div>
+                <div class="card-footer d-flex justify-content-between align-items-center">
+                    <small class="text-muted">ID: ${item.id}</small>
+                </div>
+            </div>
+        </div>`;
+    }
+
     // --- Llamadas para cargar el contenido en cada página ---
     carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'vagas');
     carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'pedidos');
-    carregarConteudo('/_dados/servicos.json', 'services-grid', renderEmprego, 'servicos');
+    carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'servicos'); // <-- USA LA NUEVA FUNCIÓN
     carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderEmprego, 'anuncios');
 });

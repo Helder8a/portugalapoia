@@ -1175,4 +1175,22 @@ body.dark-theme {
     --shadow: 0 5px 15px rgba(0, 0, 0, .2);
     --color-donation: #FDBE33;
     /* Mantenemos el amarillo en tema oscuro */
+
+
+/* --- ESTILOS PARA EL LOGO EN LAS TARJETAS DE SERVICIOS --- */
+
+.card-logo-container {
+    width: 100%;
+    height: 180px; /* Altura fija para el contenedor de la imagen */
+    overflow: hidden; /* Oculta partes de la imagen que se salgan */
+    margin-bottom: 15px; /* Espacio entre la imagen y el título */
+    border-bottom: 1px solid var(--color-border);
 }
+
+.card-logo-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* ESTA ES LA PROPIEDAD MÁGICA */
+    /* 'contain' asegura que toda la imagen quepa, manteniendo la proporción */
+    /* 'cover' haría que la imagen cubra todo el espacio, cortando partes si es necesario */
+}}
