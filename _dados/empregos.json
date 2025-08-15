@@ -159,6 +159,14 @@
       "localizacao": "Vila Franca de Xira",
       "contato": "937 513 951",
       "link_contato": "937 513 951"
+    },
+    {
+      "titulo": "Vendedor/a Tabacaria",
+      "id": "21",
+      "descricao": "Vendedor/a Tabacaria Santarém",
+      "localizacao": "Santarém",
+      "link_contato": "escritacomcharme@gmail.com",
+      "contato": "escritacomcharme@gmail.com"
     }
   ]
 }
