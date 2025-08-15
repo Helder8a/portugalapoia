@@ -1,10 +1,10 @@
 // --- CÓDIGO CORREGIDO PARA sw.js ---
-const CACHE_NAME = 'portugalapoia-cache-v8'; // <-- Incrementa la versión
+const CACHE_NAME = 'portugalapoia-cache-v9'; // <-- Incrementa la versión
 
 const urlsToCache = [
     '/',
     '/index.html',
-    '/style.css?v=8', // <-- AÑADE EL NÚMERO DE VERSIÓN AQUÍ
+    '/style.css?v=9', // <-- AÑADE EL NÚMERO DE VERSIÓN AQUÍ
     '/avaliador-urbano-style.css',
     '/script.js',
     '/manifest.json',
