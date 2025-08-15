@@ -1146,35 +1146,31 @@ body.dark-theme .brand-text-responsive {
 
 /* PALETA DE COLORES ÚNICA Y CORREGIDA */
 :root {
-    --color-primary: #0A3D62;
-    /* Azul Oscuro */
-    --color-secondary: #2196F3;
-    /* Azul Medio */
-    --color-accent: #F57C00; /* Naranja Vibrante y Accesible */
-    --color-donation: #F57C00; /* Naranja Vibrante y Accesible */
-    --color-success: #28A745;
-    /* Verde */
-    /* Verde */
+    --color-primary: #0A3D62;          /* Azul Oscuro Principal */
+    --color-secondary: #2196F3;         /* Azul Medio para enlaces y acentos */
+    --color-accent: #F57C00;           /* Naranja Vibrante y Accesible para botones y alertas */
+    --color-donation: #F57C00;         /* Alias para el color de acento, usado en títulos */
+    --color-success: #28A745;           /* Verde para mensajes de éxito */
     --font-headings: 'Inter', sans-serif;
     --font-body: 'Roboto', sans-serif;
     --border-radius: 8px;
-    --color-text: #343a40;
-    --color-text-light: #fff;
-    --color-background: #FFF8E1;
-    --color-background-light: #f8f9fa;
+    --color-text: #343a40;             /* Texto principal oscuro */
+    --color-background: #FFFFFF;           /* Fondo principal blanco */
+    --color-background-light: #f8f9fa; /* Fondo ligeramente gris */
     --color-border: #dee2e6;
     --shadow: 0 5px 15px rgba(0, 0, 0, .07);
 }
 
 body.dark-theme {
+    --color-primary: #82b1ff;          /* Azul claro para tema oscuro */
+    --color-secondary: #64b5f6;
+    --color-accent: #ffb74d;           /* Naranja más claro */
+    --color-donation: #ffb74d;
     --color-text: #e0e0e0;
-    --color-text-light: #121212;
-    --color-background: #2F240C;
-    --color-background-light: #121212;
+    --color-background: #121212;
+    --color-background-light: #1e1e1e;
     --color-border: #444;
-    --shadow: 0 5px 15px rgba(0, 0, 0, .2);
-    --color-donation: #FDBE33;
-    /* Mantenemos el amarillo en tema oscuro */
+    --shadow: 0 5px 15px rgba(0, 0, 0, .25);
 }
 
 /* --- ESTILOS MEJORADOS PARA TARJETAS DE SERVICIOS --- */
