@@ -191,6 +191,14 @@
       "localizacao": "Porto",
       "contato": "geral@marosi.pt",
       "link_contato": "geral@marosi.pt"
+    },
+    {
+      "id": "25",
+      "titulo": "Empregada de mesa",
+      "descricao": "Empregada de mesa/ balcão,  Fale corretamente a língua Portuguesa;",
+      "localizacao": "Lisboa",
+      "link_contato": "emprego@docel.pt",
+      "contato": "emprego@docel.pt"
     }
   ]
 }
