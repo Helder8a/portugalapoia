@@ -60,7 +60,8 @@ collections:
               - { label: "Título do Serviço", name: "titulo", widget: "string" }
               - { label: "Localização", name: "localizacao", widget: "string" }
               - { label: "Descrição", name: "descricao", widget: "text" }
-              - { label: "Contacto", name: "contato", widget: "string" }
+              - { label: "Tel.", name: "contato", widget: "string" }
+              - { label: "Email.", name: "contato", widget: "string" }
               - { label: "Link de Contacto", name: "link_contato", widget: "string" }
 
       # --- Editor para la página de Vivienda ---
