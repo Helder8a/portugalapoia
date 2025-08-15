@@ -199,6 +199,14 @@
       "localizacao": "Lisboa",
       "link_contato": "emprego@docel.pt",
       "contato": "emprego@docel.pt"
+    },
+    {
+      "id": "26",
+      "titulo": "Telemarketing - Famalicão",
+      "descricao": "Disponibilidade Imediata",
+      "localizacao": "Lisboa",
+      "contato": "geral@acquadouro.pt",
+      "link_contato": "geral@acquadouro.pt"
     }
   ]
 }
