@@ -275,9 +275,9 @@ h6 {
 }
 
 .card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-8px) scale(1.02); /* <-- AÑADE scale(1.02) */
     box-shadow: 0 12px 24px rgba(0, 0, 0, .15) !important;
-    border-color: var(--color-accent)
+    border-color: var(--color-accent);
 }
 
 .category-link-card,
