@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // --- CÓDIGO DEL PRELOADER, SCROLL Y TEMA OSCURO ---
+    // ... (todo el código de preloader, scroll, tema oscuro se mantiene igual) ...
+
     let preloader = document.getElementById("preloader");
     if (preloader) {
         window.addEventListener("load", () => { preloader.classList.add("hidden"); });
@@ -42,11 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
             setTheme(newTheme);
         });
     }
-    
-    // ... tu otro código como el de cookies puede ir aquí ...
 
-
-    // --- NUEVO CÓDIGO PARA CARGAR CONTENIDO DESDE EL CMS ---
+    // --- CÓDIGO PARA CARGAR CONTENIDO DESDE EL CMS ---
     
     async function carregarConteudo(jsonPath, containerId, renderFunction, dataKey) {
         const container = document.getElementById(containerId);
@@ -75,20 +73,30 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // --- Funciones de renderizado para cada sección ---
+    // --- Funciones de renderizado (AQUÍ ESTÁ EL CAMBIO) ---
 
-    function renderEmprego(vaga) {
+    function renderEmprego(item) {
+        // Mostramos el teléfono y el email de forma separada si existen
+        let contatoHTML = '';
+        if (item.contato) {
+            contatoHTML += `<strong>Tel:</strong> ${item.contato}<br>`;
+        }
+        if (item.link_contato) {
+            const emailText = item.link_contato.replace('mailto:', '');
+            contatoHTML += `<strong>Email:</strong> <a href="${item.link_contato}">${emailText}</a>`;
+        }
+
         return `
         <div class="col-lg-4 col-md-6 mb-4 job-item">
-            <div class="card h-100 shadow-sm" id="${vaga.id}">
+            <div class="card h-100 shadow-sm" id="${item.id}">
                 <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">${vaga.titulo}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${vaga.localizacao}</h6>
-                    <p class="card-text flex-grow-1">${vaga.descricao}</p>
-                    <p class="card-text small mt-auto"><strong>Contacto:</strong> <a href="${vaga.link_contato}">${vaga.contato}</a></p>
+                    <h5 class="card-title">${item.titulo}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${item.localizacao}</h6>
+                    <p class="card-text flex-grow-1">${item.descricao}</p>
+                    <p class="card-text small mt-auto">${contatoHTML}</p>
                 </div>
                 <div class="card-footer d-flex justify-content-between align-items-center">
-                    <small class="text-muted">ID: ${vaga.id}</small>
+                    <small class="text-muted">ID: ${item.id}</small>
                 </div>
             </div>
         </div>`;
@@ -97,6 +105,12 @@ document.addEventListener("DOMContentLoaded", () => {
     function renderDoacao(pedido) {
         const badgeUrgente = pedido.urgente ? '<span class="badge badge-danger position-absolute" style="top: 10px; right: 10px; z-index: 2;">Urgente</span>' : '';
         const imagemHTML = pedido.imagem ? `<img loading="lazy" src="${pedido.imagem}" class="d-block w-100" alt="${pedido.titulo}" style="height: 200px; object-fit: cover;">` : '';
+
+        // Preparamos el HTML de contacto para añadirlo antes del botón
+        let contatoHTML = '';
+        if (pedido.contato) {
+            contatoHTML = `<p class="card-text small"><strong>Tel:</strong> ${pedido.contato}</p>`;
+        }
 
         return `
         <div class="col-lg-4 col-md-6 mb-4 announcement-item">
@@ -107,7 +121,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     <h5 class="card-title">${pedido.titulo}</h5>
                     <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${pedido.localizacao}</h6>
                     <p class="card-text flex-grow-1">${pedido.descricao}</p>
-                    <a href="${pedido.link_contato}" class="btn btn-primary mt-auto">Contactar</a>
+                    <div class="mt-auto">
+                        ${contatoHTML}
+                        <a href="${pedido.link_contato}" class="btn btn-primary btn-block">Contactar por Email</a>
+                    </div>
                 </div>
                 <div class="card-footer d-flex justify-content-between align-items-center">
                     <small class="text-muted">ID: ${pedido.id}</small>
@@ -116,17 +133,9 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>`;
     }
     
-    function renderServico(servico) {
-        return renderEmprego(servico);
-    }
-
-    function renderHabitacao(anuncio) {
-        return renderEmprego(anuncio);
-    }
-
     // --- Llamadas para cargar el contenido en cada página ---
     carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'vagas');
     carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'pedidos');
-    carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'servicos');
-    carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderHabitacao, 'anuncios');
+    carregarConteudo('/_dados/servicos.json', 'services-grid', renderEmprego, 'servicos');
+    carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderEmprego, 'anuncios');
 });
