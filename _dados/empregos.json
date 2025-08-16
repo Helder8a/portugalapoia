@@ -391,6 +391,14 @@
       "link_contato": "recrutamento@propiping.pt",
       "contato": "recrutamento@propiping.pt",
       "localizacao": "Torres Vedras"
+    },
+    {
+      "id": "50",
+      "titulo": "Operador de Armazem",
+      "localizacao": "Castanheira do Ribatejo",
+      "descricao": "Operador de Armaze, \nSegunda a Sexta Feria",
+      "contato": "930 402 891",
+      "link_contato": "930 402 891"
     }
   ]
 }
