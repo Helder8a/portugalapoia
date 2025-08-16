@@ -26,8 +26,8 @@ collections:
               - { label: "Título da Vaga", name: "titulo", widget: "string" }
               - { label: "Localização", name: "localizacao", widget: "string" }
               - { label: "Descrição", name: "descricao", widget: "text" }
-              - { label: "Tel", name: "contato", widget: "string" }
-              - { label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com" }
+              - { label: "Tel", name: "contato", widget: "string", required: false }
+              - { label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com", required: false }
 
       # --- Editor para la página de Donaciones ---
       - file: "_dados/doacoes.json"
