@@ -1,18 +1,22 @@
-# netlify.toml (Versión Final)
-
+# --- CÓDIGO FINAL Y CORRECTO para netlify.toml ---
+# Este bloque define la configuración general para TODAS las funciones.
+# Solo puede aparecer UNA VEZ en todo el fichero.
 [functions]
   directory = "netlify/functions/"
   node_bundler = "esbuild"
 
-  # netlify.toml (Versión Final con la nueva función programada)
+# A partir de aquí, usamos [[functions]] (con dobles corchetes)
+# para configurar cada función de forma individual.
 
-[functions]
-  directory = "netlify/functions/"
-  node_bundler = "esbuild"
+# Función #1: Se activa cuando se crea una sumisión de formulario
+[[functions]]
+  name = "submission-created"
 
-# --- NUEVO BLOQUE PARA PROGRAMAR A TAREFA DE LIMPEZA ---
-# O formato "cron" significa: Minuto Hora Dia-do-Mês Mês Dia-da-Semana
-# "0 3 * * *" significa "Às 3:00 da manhã, todos os dias"
+# Función #2: También se activa cuando se crea una sumisión de formulario
+[[functions]]
+  name = "submission-notification"
+
+# Función #3: Se activa según un horario (cron job)
 [[functions]]
   name = "cleanup-expired"
   schedule = "0 3 * * *"
