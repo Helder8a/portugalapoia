@@ -1,0 +1,19 @@
+# --- CÓDIGO FINAL Y CORRECTO para config.yml ---
+backend:
+  name: git-gateway # Esto activa la conexión con Netlify Identity
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "blog"
+    label: "Blog"
+    folder: "_posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Título da Publicação", name: "title", widget: "string" }
+      - { label: "Data de Publicação", name: "date", widget: "datetime" }
+      - { label: "Imagem de Destaque", name: "thumbnail", widget: "image" }
+      - { label: "Corpo da Publicação", name: "body", widget: "markdown" }
