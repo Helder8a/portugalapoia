@@ -1,7 +1,6 @@
 # --- Configuração do Backend ---
 backend:
-  name: github
-  repo: Helder8a/portugalapoia
+  name: git-gateway # Alterado de 'github' para 'git-gateway'
   branch: main
 
 # --- Onde guardar as imagens que envias a partir do painel ---
@@ -13,7 +12,7 @@ collections:
   # --- Coleção para o Blog ---
   - name: "blog"
     label: "Blog"
-    folder: "_posts" # Alterado de _blog para um diretório mais convencional
+    folder: "_posts"
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
