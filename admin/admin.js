@@ -54,6 +54,7 @@ function highlightExpiredEntries() {
 
 // 3. Usamos un MutationObserver para ejecutar nuestra función cada vez que el panel cargue nuevos anuncios.
 const observer = new MutationObserver((mutations) => {
+    // Un pequeño retraso para asegurar que todos los elementos están en el DOM.
     setTimeout(highlightExpiredEntries, 200);
 });
 
