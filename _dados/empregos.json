@@ -237,7 +237,8 @@
       "localizacao": "Porto",
       "contato": "geral@marosi.pt",
       "link_contato": "geral@marosi.pt",
-      "data_publicacao": "2025-08-17"
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "25",
@@ -245,7 +246,9 @@
       "descricao": "Empregada de mesa/ balcão,  Fale corretamente a língua Portuguesa;",
       "localizacao": "Lisboa",
       "link_contato": "emprego@docel.pt",
-      "contato": "emprego@docel.pt"
+      "contato": "emprego@docel.pt",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "26",
@@ -253,7 +256,9 @@
       "descricao": "Disponibilidade Imediata",
       "localizacao": "Lisboa",
       "contato": "geral@acquadouro.pt",
-      "link_contato": "geral@acquadouro.pt"
+      "link_contato": "geral@acquadouro.pt",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "27",
@@ -261,7 +266,9 @@
       "descricao": "Promotor(a) de Vendas – Full-time",
       "localizacao": "Bragança",
       "contato": "kazevedo@staffglobalgroup.com",
-      "link_contato": "kazevedo@staffglobalgroup.com"
+      "link_contato": "kazevedo@staffglobalgroup.com",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "28",
@@ -269,7 +276,9 @@
       "contato": "kazevedo@staffglobalgroup.com",
       "link_contato": "kazevedo@staffglobalgroup.com",
       "descricao": "Promotor(a) de Vendas – Full-time",
-      "localizacao": "Vila Nova de Gaia"
+      "localizacao": "Vila Nova de Gaia",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "29",
@@ -277,7 +286,9 @@
       "contato": "marcio.afonso@live.com",
       "descricao": "Empregado(a) Mesa - Restaurante ",
       "localizacao": "Empregado(a) Mesa - Restaurante ",
-      "link_contato": "marcio.afonso@live.com"
+      "link_contato": "marcio.afonso@live.com",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "30",
@@ -285,7 +296,9 @@
       "descricao": "Operador de Produção",
       "localizacao": "Vila do Conde",
       "contato": "912 154 406",
-      "link_contato": "porto@job-impulse.pt"
+      "link_contato": "porto@job-impulse.pt",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "31",
@@ -293,7 +306,9 @@
       "descricao": "Cozinheiro/a para uma fabrica",
       "localizacao": "zona de Pero Pinheiro",
       "contato": "recrutamentosul@daccord.pt",
-      "link_contato": "recrutamentosul@daccord.pt"
+      "link_contato": "recrutamentosul@daccord.pt",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "32",
@@ -301,7 +316,9 @@
       "titulo": " Empregadas de Andare",
       "localizacao": "Vila Real de Santo António",
       "link_contato": "recrutamentosul@daccord.pt",
-      "contato": "913 874 829"
+      "contato": "913 874 829",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "33",
@@ -309,7 +326,9 @@
       "titulo": " Copeiros(as)",
       "localizacao": "Albufeira",
       "contato": "recrutamentosul@daccord.pt",
-      "link_contato": "recrutamentosul@daccord.pt"
+      "link_contato": "recrutamentosul@daccord.pt",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "34",
@@ -317,7 +336,9 @@
       "localizacao": "Lisboa",
       "descricao": "Empregada/o de Balcão - Time Out Market (FT)\n Gostar do atendimento ao Cliente\n- Falar inglês fluentemente (fator eliminatório)\n- Ser simpático/a e pró-ativo/a",
       "link_contato": "people@gastroco.com",
-      "contato": "people@gastroco.com"
+      "contato": "people@gastroco.com",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "35",
@@ -325,7 +346,9 @@
       "descricao": "• Receção de Clientes\n• Transporte de cães\n• Higienização e desinfeção dos alojamentos/instalações",
       "localizacao": " Mafra",
       "link_contato": "geral@madbes.pt",
-      "contato": "geral@madbes.pt"
+      "contato": "geral@madbes.pt",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "36",
@@ -333,7 +356,9 @@
       "descricao": "- Experiência comprovada em mecânica de ligeiros (Exclusivo)\n- Profissional, Polivalente e Responsável;\n- Capacidade para trabalhar em equipa",
       "localizacao": "Leiria",
       "contato": "rh@dasprent.pt",
-      "link_contato": "rh@dasprent.pt"
+      "link_contato": "rh@dasprent.pt",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "37",
@@ -341,7 +366,9 @@
       "descricao": "Cozinheiro com experiência cozinha Portuguesa e Italiana",
       "localizacao": "Lisboa",
       "link_contato": "enoragrouppt@gmail.com",
-      "contato": "enoragrouppt@gmail.com"
+      "contato": "enoragrouppt@gmail.com",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "38",
@@ -349,7 +376,9 @@
       "descricao": "- Bons conhecimentos de inglês falado e escrito\n- Conhecimentos de informática em ambiente MS Office\n",
       "localizacao": "Portimao",
       "link_contato": "sales@atravel.pt",
-      "contato": "sales@atravel.pt"
+      "contato": "sales@atravel.pt",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "39",
@@ -357,7 +386,9 @@
       "localizacao": "VISEU",
       "descricao": "motoristas de pesados, para a nossa base de Viseu",
       "contato": "+351 912695087",
-      "link_contato": "saboresunanimes@gmail.com "
+      "link_contato": "saboresunanimes@gmail.com ",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "40",
