@@ -186,7 +186,9 @@
       "descricao": "Auxiliares de Geriatria ou Ajudante Familiar para  a zona de Moscavide",
       "localizacao": "Lisboa",
       "link_contato": "geral@better-life.pt",
-      "contato": "937 513 951"
+      "contato": "937 513 951",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "20",
@@ -194,7 +196,9 @@
       "descricao": "Apoio Domiciliario",
       "localizacao": "Vila Franca de Xira",
       "contato": "937 513 951",
-      "link_contato": "937 513 951"
+      "link_contato": "937 513 951",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "titulo": "Vendedor/a Tabacaria",
@@ -202,7 +206,9 @@
       "descricao": "Vendedor/a Tabacaria Santarém",
       "localizacao": "Santarém",
       "link_contato": "escritacomcharme@gmail.com",
-      "contato": "escritacomcharme@gmail.com"
+      "contato": "escritacomcharme@gmail.com",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "22",
@@ -210,7 +216,9 @@
       "localizacao": "Lisboa",
       "descricao": "otel de 5 Estrelas , situado na Av da Liberdade",
       "contato": "liberdadehotel8@gmail.com",
-      "link_contato": "liberdadehotel8@gmail.com"
+      "link_contato": "liberdadehotel8@gmail.com",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "23",
@@ -218,7 +226,9 @@
       "descricao": "Babysitter - Acompanhamento de crianças entre as 18:00 e as 24:00",
       "localizacao": "Zona de Canidelo - Vila Nova de Gaia",
       "contato": "candidaturasdunasecascatas@gmail.com",
-      "link_contato": "candidaturasdunasecascatas@gmail.com"
+      "link_contato": "candidaturasdunasecascatas@gmail.com",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "24",
@@ -226,7 +236,8 @@
       "descricao": "Profissionais de Construção Civi",
       "localizacao": "Porto",
       "contato": "geral@marosi.pt",
-      "link_contato": "geral@marosi.pt"
+      "link_contato": "geral@marosi.pt",
+      "data_publicacao": "2025-08-17"
     },
     {
       "id": "25",
