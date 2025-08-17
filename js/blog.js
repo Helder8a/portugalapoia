@@ -2,21 +2,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const listSection = document.getElementById('blog-list-section');
     const postSection = document.getElementById('blog-post-section');
     
-    // --- FUNCIÓN PRINCIPAL QUE GESTIONA LAS VISTAS ---
     const handleRouting = () => {
         const params = new URLSearchParams(window.location.search);
         const postName = params.get('post');
 
         if (postName) {
-            // Si hay un `?post=...` en la URL, muestra el artículo
             showPostView(postName);
         } else {
-            // Si no, muestra la lista de artículos
             showListView();
         }
     };
 
-    // --- MUESTRA LA VISTA DE LA LISTA DE ARTÍCULOS ---
     const showListView = () => {
         listSection.style.display = 'block';
         postSection.style.display = 'none';
@@ -37,14 +33,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     return;
                 }
 
-                postsContainer.innerHTML = ''; // Limpia el contenedor antes de añadir nuevos posts
+                postsContainer.innerHTML = '';
                 postFiles.sort().reverse().forEach(file => {
                     fetch(`/_posts/${file}`)
                         .then(res => res.text())
                         .then(markdown => {
                             const postData = parseFrontMatter(markdown);
                             const postSlug = file.replace('.md', '');
-                            const postUrl = `/blog.html?post=${postSlug}`; // URL para el modo SPA
+                            const postUrl = `/blog.html?post=${postSlug}`;
 
                             const postElement = document.createElement('div');
                             postElement.className = 'col-md-6 col-lg-4 mb-4';
@@ -67,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     };
 
-    // --- MUESTRA LA VISTA DE UN ARTÍCULO INDIVIDUAL ---
     const showPostView = (postName) => {
         listSection.style.display = 'none';
         postSection.style.display = 'block';
@@ -96,7 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     };
 
-    // --- GESTIÓN DE CLICS Y NAVEGACIÓN ---
     document.body.addEventListener('click', e => {
         if (e.target.matches('.post-link')) {
             e.preventDefault();
@@ -110,7 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
     handleRouting();
 });
 
-// --- FUNCIONES AUXILIARES ---
 function parseFrontMatter(markdown) {
     const match = /---\s*([\s-S]*?)\s*---/.exec(markdown);
     if (!match) return { body: markdown };
