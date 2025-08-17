@@ -28,6 +28,8 @@ collections:
               - { label: "Descrição", name: "descricao", widget: "text" }
               - { label: "Tel", name: "contato", widget: "string", required: false }
               - { label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com", required: false }
+              - { label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
+              - { label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
 
       # --- Editor para la página de Donaciones ---
       - file: "_dados/doacoes.json"
@@ -46,6 +48,8 @@ collections:
               - { label: "Imagem (Opcional)", name: "imagem", widget: "image", required: false }
               - { label: "Tel", name: "contato", widget: "string" }
               - { label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com" }
+              - { label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
+              - { label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
 
       # --- Editor para la página de Servicios  ---
       - file: "_dados/servicos.json"
@@ -64,6 +68,8 @@ collections:
               - { label: "Descrição", name: "descricao", widget: "text" }
               - { label: "Tel", name: "contato", widget: "string" }
               - { label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com" }
+              - { label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
+              - { label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
 
       # --- Editor para la página de Vivienda ---
       - file: "_dados/habitacao.json"
@@ -80,6 +86,8 @@ collections:
               - { label: "Descrição", name: "descricao", widget: "text" }
               - { label: "Tel", name: "contato", widget: "string" }
               - { label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com" }
+              - { label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
+              - { label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
 
   # --- Colección separada para el Blog ---
   - name: "blog"
