@@ -489,6 +489,16 @@
       "localizacao": "Torres Vedras",
       "data_publicacao": "2025-08-17",
       "data_vencimento": "2025-08-17"
+    },
+    {
+      "id": "EMP-41774",
+      "titulo": "prueba 17-08-2025",
+      "localizacao": "lisboa",
+      "descricao": "prueba",
+      "contato": "+351 911972987",
+      "link_contato": "helderb8a@gmail.com",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-09-16"
     }
   ]
 }
