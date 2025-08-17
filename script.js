@@ -1,4 +1,4 @@
-// --- CÓDIGO FINAL Y COMPLETO PARA script.js (CON SEO CORREGIDO) ---
+// --- CÓDIGO FINAL Y COMPLETO PARA script.js (CON SEO PARA EMPREGOS Y DOAÇÕES) ---
 document.addEventListener("DOMContentLoaded", async () => {
     // --- GESTOR DE PRELOADER, SCROLL Y TEMA OSCURO ---
     let preloader = document.getElementById("preloader");
@@ -130,21 +130,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // --- FUNCIONES PARA RENDERIZAR CADA TIPO DE ANUNCIO ---
 
-    // =================================================================
-    // FUNCIÓN DE EMPLEOS CON SEO CORREGIDO Y VALIDADO
-    // =================================================================
     function renderEmprego(item, pageName) {
-        // Objeto de datos estructurados (Schema.org) para Google
         const jobPostingSchema = {
             "@context": "https://schema.org/",
             "@type": "JobPosting",
             "title": item.titulo,
             "description": `<p>${item.descricao}</p>`,
-            "datePosted": item.data_publicacao, // Usando el campo correcto de tu JSON
-            "validThrough": item.data_vencimento, // Añadido campo de expiración
+            "datePosted": item.data_publicacao,
+            "validThrough": item.data_vencimento,
             "hiringOrganization": {
                 "@type": "Organization",
-                "name": "Empresa Anunciante (via PortugalApoia)" // Valor por defecto ya que no existe en el JSON
+                "name": "Empresa Anunciante (via PortugalApoia)"
             },
             "jobLocation": {
                 "@type": "Place",
@@ -154,14 +150,13 @@ document.addEventListener("DOMContentLoaded", async () => {
                     "addressCountry": "PT"
                 }
             },
-            "employmentType": "FULL_TIME, PART_TIME" // Valor por defecto ya que no existe en el JSON
+            "employmentType": "FULL_TIME, PART_TIME"
         };
 
         let contatoHTML = '';
         if (item.contato) { contatoHTML += `<p class="card-text small mb-1"><strong>Tel:</strong> <a href="tel:${item.contato.replace(/[\s+()-]/g, '')}">${item.contato}</a></p>`; }
         if (item.link_contato && item.link_contato.includes('@')) { const emailLink = item.link_contato.startsWith('mailto:') ? item.link_contato : `mailto:${item.link_contato}`; contatoHTML += `<p class="card-text small"><strong>Email:</strong> <a href="${emailLink}">${item.link_contato.replace('mailto:', '')}</a></p>`; }
         
-        // El return ahora incluye el SCRIPT de JSON-LD al final
         return `
         <div class="col-lg-4 col-md-6 mb-4 job-item">
             <div class="card h-100 shadow-sm" id="${item.id}">
@@ -182,11 +177,31 @@ document.addEventListener("DOMContentLoaded", async () => {
         </script>`;
     }
 
+    // =================================================================
+    // FUNCIÓN DE DONACIONES CON SEO AÑADIDO
+    // =================================================================
     function renderDoacao(pedido, pageName) {
+        // Objeto de datos estructurados (Schema.org) para Google
+        const productSchema = {
+            "@context": "https://schema.org/",
+            "@type": "Product",
+            "name": pedido.titulo,
+            "description": pedido.descricao,
+            "image": pedido.imagem ? `https://portugalapoia.com${pedido.imagem}` : `https://portugalapoia.com/images/img_portada.webp`,
+            "offers": {
+                "@type": "Offer",
+                "price": "0", // Es una donación, por lo que el precio es 0
+                "priceCurrency": "EUR",
+                "availability": "https://schema.org/InStock"
+            },
+            "itemCondition": "https://schema.org/UsedCondition" // Asumimos que son artículos usados
+        };
+
         const badgeUrgente = pedido.urgente ? '<span class="badge badge-danger position-absolute" style="top: 10px; right: 10px; z-index: 2;">Urgente</span>' : '';
         const imagemHTML = pedido.imagem ? `<img loading="lazy" src="${pedido.imagem}" class="d-block w-100" alt="${pedido.titulo}" style="height: 200px; object-fit: cover;">` : '<div class="image-placeholder">SEM IMAGEM</div>';
         let contatoHTML = '';
         if (pedido.contato) { contatoHTML = `<p class="card-text small"><strong>Tel:</strong> <a href="tel:${pedido.contato.replace(/[\s+()-]/g, '')}">${pedido.contato}</a></p>`; }
+        
         return `
         <div class="col-lg-4 col-md-6 mb-4 announcement-item">
             <div class="card h-100 shadow-sm" id="${pedido.id}">
@@ -206,7 +221,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                     ${renderShareButtons(pedido, pageName)}
                 </div>
             </div>
-        </div>`;
+        </div>
+        <script type="application/ld+json">
+            ${JSON.stringify(productSchema)}
+        </script>`;
     }
 
     function renderServico(item, pageName) {
