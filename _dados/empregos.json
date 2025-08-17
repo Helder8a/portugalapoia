@@ -117,7 +117,8 @@
       "titulo": "Tecnica de Limpeza",
       "contato": "915202894",
       "link_contato": "915202894",
-      "data_publicacao": "2025-08-17"
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "13",
@@ -125,7 +126,9 @@
       "localizacao": "Barcelos",
       "descricao": "Cuidadoras, Internas\nApoio a idosa dependente, higiene, companhia e vigilância.",
       "contato": "+351 939 364 703",
-      "link_contato": "+351 939 364 703"
+      "link_contato": "+351 939 364 703",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "14",
@@ -133,7 +136,9 @@
       "descricao": "Serviço Doméstico,Mulher",
       "localizacao": "Porto",
       "contato": "913 216 522",
-      "link_contato": "913 216 522"
+      "link_contato": "913 216 522",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "15",
@@ -141,7 +146,9 @@
       "descricao": "2 Cuidadoras para apoio a utente com Alzheimer",
       "localizacao": "Lisboa",
       "contato": "+351 928 122 372",
-      "link_contato": "+351 928 122 372"
+      "link_contato": "+351 928 122 372",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "16",
@@ -149,7 +156,9 @@
       "descricao": "Operador(a) de Produção para Gandra, Paredes",
       "localizacao": "Portugal",
       "contato": " (+351) 913 814 331",
-      "link_contato": " (+351) 913 814 331"
+      "link_contato": " (+351) 913 814 331",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "17",
@@ -157,7 +166,9 @@
       "descricao": "2 Cuidadoras para apoio a utente com Alzheimer em Lisboa",
       "localizacao": "Lisboa",
       "contato": " +351 928 122 372",
-      "link_contato": " +351 928 122 372"
+      "link_contato": " +351 928 122 372",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "18",
@@ -165,7 +176,9 @@
       "localizacao": "Almada",
       "descricao": " Experiência em cuidados a idosos",
       "contato": "+351 928 122 372",
-      "link_contato": "+351 928 122 372"
+      "link_contato": "+351 928 122 372",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "19",
