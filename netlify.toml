@@ -3,3 +3,16 @@
 [functions]
   directory = "netlify/functions/"
   node_bundler = "esbuild"
+
+  # netlify.toml (Versión Final con la nueva función programada)
+
+[functions]
+  directory = "netlify/functions/"
+  node_bundler = "esbuild"
+
+# --- NUEVO BLOQUE PARA PROGRAMAR A TAREFA DE LIMPEZA ---
+# O formato "cron" significa: Minuto Hora Dia-do-Mês Mês Dia-da-Semana
+# "0 3 * * *" significa "Às 3:00 da manhã, todos os dias"
+[[functions]]
+  name = "cleanup-expired"
+  schedule = "0 3 * * *"

@@ -1264,3 +1264,42 @@ body.dark-theme {
   color: #DC3545 !important; /* Rojo de Bootstrap */
   font-weight: bold;
 }
+
+/* --- ESTILOS PARA LOS BOTONES DE PARTILHAR --- */
+
+.share-buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espacio entre el texto y los iconos */
+}
+
+.share-label {
+    font-size: 0.8rem;
+    color: #6c757d; /* Color de texto secundario */
+    margin-right: 4px;
+    white-space: nowrap; /* Evita que el texto se parta en dos líneas */
+}
+
+.share-btn {
+    font-size: 1.2rem; /* Tamaño de los iconos */
+    color: #6c757d;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.share-btn:hover {
+    transform: scale(1.2); /* Efecto de zoom al pasar el ratón */
+}
+
+.share-btn.whatsapp:hover {
+    color: #25D366; /* Cor do WhatsApp */
+}
+
+.share-btn.facebook:hover {
+    color: #1877F2; /* Cor do Facebook */
+}
+
+/* Estilo para el modo oscuro */
+body.dark-theme .share-label,
+body.dark-theme .share-btn {
+    color: #aaa;
+}
