@@ -1303,3 +1303,38 @@ body.dark-theme .share-label,
 body.dark-theme .share-btn {
     color: #aaa;
 }
+
+/* --- ESTILOS MEJORADOS PARA ICONOS DE CONTACTO Y PARTILHA --- */
+
+/* Contenedor principal de los iconos de contacto en la tarjeta de servicio */
+.card-contact-icons {
+    display: flex; /* Usa flexbox para alinear fácilmente */
+    justify-content: flex-end; /* Alinea los ítems a la derecha */
+    align-items: center; /* Centra verticalmente */
+    gap: 10px; /* Espacio entre el texto y los iconos */
+}
+
+/* Etiqueta de texto "Contacto:" */
+.contact-label {
+    font-size: 0.8rem;
+    color: var(--color-text-muted); /* Color de texto secundario */
+    font-weight: bold;
+}
+
+/* Enlaces de los iconos (WhatsApp y Email) */
+.card-contact-icons a.contact-icon {
+    display: inline-block;
+    color: var(--color-secondary);
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+/* Iconos dentro de los enlaces */
+.card-contact-icons a.contact-icon i {
+    font-size: 1.8rem; /* Tamaño de los iconos de contacto */
+}
+
+/* Efecto hover para los iconos de contacto */
+.card-contact-icons a.contact-icon:hover {
+    transform: scale(1.15);
+    color: var(--color-primary);
+}

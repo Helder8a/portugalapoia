@@ -1,4 +1,4 @@
-// --- CÓDIGO FINAL Y COMPLETO PARA script.js (CON TEXTO EN BOTONES DE PARTILHAR) ---
+// --- CÓDIGO FINAL Y COMPLETO PARA script.js (CON ETIQUETA DE CONTACTO) ---
 document.addEventListener("DOMContentLoaded", async () => {
     // --- GESTOR DE PRELOADER, SCROLL Y TEMA OSCURO ---
     let preloader = document.getElementById("preloader");
@@ -98,23 +98,25 @@ document.addEventListener("DOMContentLoaded", async () => {
         const hoje = new Date();
         hoje.setHours(0, 0, 0, 0);
         const dataFormatada = dataPublicacao.toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
         let classeVencido = '';
         let textoVencido = '';
+
         if (dataVencimento < hoje) {
             classeVencido = 'vencido';
             textoVencido = `(Vencido)`;
         }
+
         return `<small class="text-muted">Publicado em: ${dataFormatada}</small>
                 <small class="text-muted ml-2 ${classeVencido}">${textoVencido}</small>`;
     }
 
-    // --- FUNCIÓN ACTUALIZADA PARA LOS BOTONES DE PARTILHAR ---
+    // --- FUNCIÓN PARA LOS BOTONES DE PARTILHAR ---
     function renderShareButtons(item, page) {
         const url = `https://portugalapoia.com/${page}#${item.id}`;
         const text = `Vi este anúncio em PortugalApoia e lembrei-me de ti: "${item.titulo}"`;
         const encodedUrl = encodeURIComponent(url);
         const encodedText = encodeURIComponent(text);
-
         const whatsappUrl = `https://api.whatsapp.com/send?text=${encodedText}%20${encodedUrl}`;
         const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
 
@@ -126,7 +128,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         </div>`;
     }
 
-    // --- FUNCIONES PARA RENDERIZAR CADA TIPO DE ANUNCIO (ACTUALIZADAS) ---
+    // --- FUNCIONES PARA RENDERIZAR CADA TIPO DE ANUNCIO ---
+
     function renderEmprego(item, pageName) {
         let contatoHTML = '';
         if (item.contato) { contatoHTML += `<p class="card-text small mb-1"><strong>Tel:</strong> <a href="tel:${item.contato.replace(/[\s+()-]/g, '')}">${item.contato}</a></p>`; }
@@ -141,7 +144,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <div class="mt-auto">${contatoHTML}</div>
                 </div>
                 <div class="card-footer d-flex justify-content-between align-items-center">
-                    <div>${formatarDatas(item)}</div>
+                    <div class="date-info">${formatarDatas(item)}</div>
                     ${renderShareButtons(item, pageName)}
                 </div>
             </div>
@@ -152,7 +155,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const badgeUrgente = pedido.urgente ? '<span class="badge badge-danger position-absolute" style="top: 10px; right: 10px; z-index: 2;">Urgente</span>' : '';
         const imagemHTML = pedido.imagem ? `<img loading="lazy" src="${pedido.imagem}" class="d-block w-100" alt="${pedido.titulo}" style="height: 200px; object-fit: cover;">` : '<div class="image-placeholder">SEM IMAGEM</div>';
         let contatoHTML = '';
-        if (pedido.contato) { contatoHTML = `<p class="card-text small"><strong>Tel:</strong> <a href="tel:${pedido.contato.replace(/[\s+()-]/g, '')}">${pedido.contato}</a></p>`;}
+        if (pedido.contato) { contatoHTML = `<p class="card-text small"><strong>Tel:</strong> <a href="tel:${pedido.contato.replace(/[\s+()-]/g, '')}">${pedido.contato}</a></p>`; }
         return `
         <div class="col-lg-4 col-md-6 mb-4 announcement-item">
             <div class="card h-100 shadow-sm" id="${pedido.id}">
@@ -175,10 +178,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         </div>`;
     }
 
+    // --- FUNCIÓN DE SERVIÇOS MODIFICADA ---
     function renderServico(item, pageName) {
         const logoHTML = item.logo_empresa ? `<div class="service-card-logo"><img src="${item.logo_empresa}" alt="Logo"></div>` : '';
         const precoHTML = item.valor_servico ? `<div class="card-price">${item.valor_servico}</div>` : '';
-        let contatoIconsHTML = '';
+        let contatoIconsHTML = '<small class="contact-label">Contacto:</small>'; // <-- TEXTO AÑADIDO
         if (item.contato) { contatoIconsHTML += `<a href="https://wa.me/${item.contato.replace(/[\s+()-]/g, '')}" target="_blank" class="contact-icon" title="Contactar por WhatsApp"><i class="fab fa-whatsapp"></i></a>`; }
         if (item.link_contato && item.link_contato.includes('@')) { const emailLink = item.link_contato.startsWith('mailto:') ? item.link_contato : `mailto:${item.link_contato}`; contatoIconsHTML += `<a href="${emailLink}" class="contact-icon" title="Contactar por Email"><i class="fas fa-envelope"></i></a>`; }
         return `
@@ -226,7 +230,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'empregos.html');
     carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'serviços.html');
     carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderHabitacao, 'habitação.html');
-    
+
     if (document.getElementById('contador-total')) {
         atualizarContadores();
     }
