@@ -7,4 +7,4 @@ thumbnail: https://images.pexels.com/photos/1498273/pexels-photo-1498273.jpeg?au
 Más allá de sus paisajes impresionantes y su rica historia, Portugal ofrece un sistema educativo superior en constante crecimiento y reconocido internacionalmente. Sus universidades destacan en áreas como la ingeniería, la tecnología, las artes y las ciencias. Además, el ambiente multicultural y la hospitalidad de su gente hacen de Portugal un lugar ideal para una experiencia académica y personal inolvidable. 
 
 Tipos de Becas y Ayudas Disponibles:
-Becas de las Propias Universidades,Programas de la Unión Europea, Becas de Fundaciones e Instituciones Privadas,
+Becas de las Propias Universidades,Programas de la Unión Europea, Becas de Fundaciones e Instituciones Privadas.
