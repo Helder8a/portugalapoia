@@ -1258,3 +1258,9 @@ body.dark-theme {
     font-weight: 700;
     box-shadow: 2px 2px 8px rgba(0,0,0,0.15);
 }
+
+/* Estilo para anuncios vencidos */
+.card-footer .vencido {
+  color: #DC3545 !important; /* Rojo de Bootstrap */
+  font-weight: bold;
+}

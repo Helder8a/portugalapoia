@@ -1,4 +1,4 @@
-# netlify.toml (Versión Corregida y Simplificada)
+# netlify.toml (Versión Final)
 
 [functions]
   directory = "netlify/functions/"
