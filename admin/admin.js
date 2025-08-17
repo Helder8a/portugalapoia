@@ -20,13 +20,13 @@ document.head.appendChild(styleSheet);
 
 // 2. Función que busca y marca los anuncios vencidos.
 function highlightExpiredEntries() {
-    const entryCards = document.querySelectorAll('[data-testid^="entry-card-container-"]');
+    // Usamos un selector más robusto que busca los enlaces de las entradas.
+    const entryLinks = document.querySelectorAll('a[href^="#/collections/conteudos/files/"]');
     
-    entryCards.forEach(card => {
-        const summaryElement = card.querySelector('h2');
-        const linkElement = card.querySelector('a'); // Seleccionamos el enlace que envuelve la tarjeta
+    entryLinks.forEach(link => {
+        const summaryElement = link.querySelector('h2');
 
-        if (summaryElement && linkElement && summaryElement.textContent.includes('Vence em:')) {
+        if (summaryElement && summaryElement.textContent.includes('Vence em:')) {
             const summaryText = summaryElement.textContent;
             
             // Extraemos la fecha (formato YYYY-MM-DD)
@@ -41,13 +41,12 @@ function highlightExpiredEntries() {
                 expirationDate.setHours(23, 59, 59, 999); // Consideramos el día completo
 
                 if (expirationDate < today) {
-                    linkElement.classList.add('expired-entry');
+                    link.classList.add('expired-entry');
                 } else {
-                    linkElement.classList.remove('expired-entry');
+                    link.classList.remove('expired-entry');
                 }
             } else {
-                // Si no hay fecha, nos aseguramos de que no tenga el estilo de vencido
-                linkElement.classList.remove('expired-entry');
+                link.classList.remove('expired-entry');
             }
         }
     });
@@ -55,7 +54,6 @@ function highlightExpiredEntries() {
 
 // 3. Usamos un MutationObserver para ejecutar nuestra función cada vez que el panel cargue nuevos anuncios.
 const observer = new MutationObserver((mutations) => {
-    // Un pequeño retraso para asegurar que todos los elementos están en el DOM.
     setTimeout(highlightExpiredEntries, 200);
 });
 
