@@ -1,26 +1,5 @@
-# netlify.toml
-
-# Configuración base para las funciones de Netlify
-[functions]
-  # Especifica la carpeta donde vivirán tus funciones
-  directory = "netlify/functions/"
-  # Define el empaquetador de Node.js a usar
-  node_bundler = "esbuild"
-
-  # netlify.toml
+# netlify.toml (Versión Corregida y Simplificada)
 
 [functions]
   directory = "netlify/functions/"
   node_bundler = "esbuild"
-
-# [[ ESTE ES EL NUEVO BLOQUE ]]
-# Activa la función "procesar-anuncio" cuando se envíe el formulario "anuncio".
-[[functions]]
-  name = "procesar-anuncio"
-  path = "/.netlify/functions/procesar-anuncio"
-  # Este es el "trigger" o disparador
-  [functions.schedule]
-    # Se activa con el evento de "submission-created"
-    event = "submission-created"
-    # Para el formulario con el nombre "anuncio"
-    form = "anuncio"
