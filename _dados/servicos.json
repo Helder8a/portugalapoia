@@ -1,13 +1,15 @@
 {
   "servicos": [
     {
-      "id": "1",
-      "titulo": "Desenvolvimento Web",
-      "localizacao": "Lisboa",
+      "data_vencimento": "2025-08-17",
+      "valor_servico": "500€",
+      "link_contato": "helderb8a@gmail.com",
       "descricao": "HTML, CCS, JavaScript",
       "contato": "+351 911972787",
-      "link_contato": "helderb8a@gmail.com",
-      "valor_servico": "500€"
+      "localizacao": "Lisboa",
+      "data_publicacao": "2025-08-17",
+      "titulo": "Desenvolvimento Web",
+      "id": "1"
     },
     {
       "id": "2",
@@ -15,7 +17,9 @@
       "localizacao": "Lisboa",
       "descricao": "Designer gráfico",
       "contato": "+1 5873417019",
-      "link_contato": "helderb8a@gmail.com"
+      "link_contato": "helderb8a@gmail.com",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "3",
@@ -23,7 +27,9 @@
       "localizacao": "Lisboa",
       "descricao": "Técnico de Eletricidade",
       "contato": "+357 3166169422",
-      "link_contato": "Técnico de Eletricidade"
+      "link_contato": "Técnico de Eletricidade",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     }
   ]
 }
