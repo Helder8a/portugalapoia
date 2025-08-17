@@ -476,7 +476,9 @@
       "localizacao": "Grnde Prto, Santo Tirso",
       "descricao": " Operadores indiferenciados\n- Pintores de superficies metálicas\n- Serralheiros\n- Eletricistas\n- Soldadores",
       "contato": "manuel@trablider.com",
-      "link_contato": "manuel@trablider.com"
+      "link_contato": "manuel@trablider.com",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "49",
@@ -484,7 +486,9 @@
       "descricao": " Assiduidade e pontualidade;\n. Dinamismo e proatividade;\n. Disponibilidade total e imediata para viajar fora do país.\nObrigatório titulo de residência. ",
       "link_contato": "recrutamento@propiping.pt",
       "contato": "recrutamento@propiping.pt",
-      "localizacao": "Torres Vedras"
+      "localizacao": "Torres Vedras",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     }
   ]
 }
