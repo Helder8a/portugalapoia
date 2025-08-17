@@ -396,7 +396,9 @@
       "localizacao": "Braga",
       "descricao": "Estamos a contratar funcionaria para trabalho no atendimento a clientes e na preparacao de bebidas.",
       "contato": "MHS@SOUAND.pt",
-      "link_contato": "MHS@SOUAND.pt"
+      "link_contato": "MHS@SOUAND.pt",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "41",
@@ -404,7 +406,9 @@
       "localizacao": "Lisboa, Centro",
       "descricao": "Pretendemos reforçar a nossa equipa com um Digital Marketing Manager (M/F) para a área da beleza.",
       "contato": "recrutamentoslisb@gmail.com",
-      "link_contato": "recrutamentoslisb@gmail.com"
+      "link_contato": "recrutamentoslisb@gmail.com",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "42",
@@ -412,7 +416,9 @@
       "descricao": "- Experiência em funções de atendimento ou vendas por telefone;\n- Boa capacidade de comunicação e empatia com o cliente;",
       "contato": "aexpectavel@gmail.com",
       "link_contato": "aexpectavel@gmail.com",
-      "localizacao": "Lisboa"
+      "localizacao": "Lisboa",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "43",
@@ -420,7 +426,9 @@
       "localizacao": "Porto",
       "descricao": "Clínica Axandrite com sede no Porto, está a recrutar esteticista para a nossa clínica de Esposende",
       "contato": "miaclinic.recursos.humanos@gmail.com",
-      "link_contato": "miaclinic.recursos.humanos@gmail.com"
+      "link_contato": "miaclinic.recursos.humanos@gmail.com",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "44",
@@ -428,7 +436,8 @@
       "localizacao": "Lisboa",
       "descricao": "Estamos a recrutar Marmorista(acabador de pedras)",
       "link_contato": "detalhes.marmores@gmail.com",
-      "contato": "910611963"
+      "contato": "910611963",
+      "data_publicacao": "2025-08-17"
     },
     {
       "id": "45",
