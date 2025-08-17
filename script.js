@@ -131,25 +131,59 @@ document.addEventListener("DOMContentLoaded", async () => {
     // --- FUNCIONES PARA RENDERIZAR CADA TIPO DE ANUNCIO ---
 
     function renderEmprego(item, pageName) {
-        let contatoHTML = '';
-        if (item.contato) { contatoHTML += `<p class="card-text small mb-1"><strong>Tel:</strong> <a href="tel:${item.contato.replace(/[\s+()-]/g, '')}">${item.contato}</a></p>`; }
-        if (item.link_contato && item.link_contato.includes('@')) { const emailLink = item.link_contato.startsWith('mailto:') ? item.link_contato : `mailto:${item.link_contato}`; contatoHTML += `<p class="card-text small"><strong>Email:</strong> <a href="${emailLink}">${item.link_contato.replace('mailto:', '')}</a></p>`; }
-        return `
-        <div class="col-lg-4 col-md-6 mb-4 job-item">
-            <div class="card h-100 shadow-sm" id="${item.id}">
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">${item.titulo}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${item.localizacao}</h6>
-                    <p class="card-text flex-grow-1">${item.descricao}</p>
-                    <div class="mt-auto">${contatoHTML}</div>
-                </div>
-                <div class="card-footer d-flex justify-content-between align-items-center">
-                    <div class="date-info">${formatarDatas(item)}</div>
-                    ${renderShareButtons(item, pageName)}
-                </div>
+    // ========== INICIO DEL CÓDIGO NUEVO PARA SEO ==========
+
+    // Creamos el objeto de datos estructurados para esta oferta de empleo
+    const jobPostingSchema = {
+        "@context": "https://schema.org/",
+        "@type": "JobPosting",
+        "title": item.titulo,
+        "description": `<p>${item.descricao}</p>`,
+        "datePosted": item.data_publicacao, // Usamos el campo correcto de tu JSON
+        "hiringOrganization": {
+            "@type": "Organization",
+            "name": "Empresa Confidencial" // Puedes mejorar esto si el JSON tuviera el nombre de la empresa
+        },
+        "jobLocation": {
+            "@type": "Place",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": item.localizacao,
+                "addressCountry": "PT" // Portugal
+            }
+        },
+        // Asumimos un tipo de empleo si no está especificado en el JSON
+        "employmentType": "FULL_TIME" 
+    };
+
+    // ========== FIN DEL CÓDIGO NUEVO PARA SEO ==========
+
+    let contatoHTML = '';
+    if (item.contato) { contatoHTML += `<p class="card-text small mb-1"><strong>Tel:</strong> <a href="tel:${item.contato.replace(/[\s+()-]/g, '')}">${item.contato}</a></p>`; }
+    if (item.link_contato && item.link_contato.includes('@')) { const emailLink = item.link_contato.startsWith('mailto:') ? item.link_contato : `mailto:${item.link_contato}`; contatoHTML += `<p class="card-text small"><strong>Email:</strong> <a href="${emailLink}">${item.link_contato.replace('mailto:', '')}</a></p>`; }
+    
+    // Modificamos el return para que incluya el script de SEO
+    return `
+    <div class="col-lg-4 col-md-6 mb-4 job-item">
+        <div class="card h-100 shadow-sm" id="${item.id}">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">${item.titulo}</h5>
+                <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${item.localizacao}</h6>
+                <p class="card-text flex-grow-1">${item.descricao}</p>
+                <div class="mt-auto">${contatoHTML}</div>
             </div>
-        </div>`;
-    }
+            <div class="card-footer d-flex justify-content-between align-items-center">
+                <div class="date-info">${formatarDatas(item)}</div>
+                ${renderShareButtons(item, pageName)}
+            </div>
+        </div>
+    </div>
+    
+    <script type="application/ld+json">
+    ${JSON.stringify(jobPostingSchema)}
+    </script>
+    `;
+}
 
     function renderDoacao(pedido, pageName) {
         const badgeUrgente = pedido.urgente ? '<span class="badge badge-danger position-absolute" style="top: 10px; right: 10px; z-index: 2;">Urgente</span>' : '';
