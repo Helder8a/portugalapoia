@@ -1,40 +1,34 @@
 {
   "pedidos": [
     {
-      "data_vencimento": "2025-08-17",
       "urgente": false,
-      "link_contato": "helderb8a@gmail.com",
-      "descricao": "Família procura uma cadeira de rodas para um idoso com  mobilidade reduzida. Qualquer ajuda é bem-vinda e muito apreciada.",
-      "contato": "+351 911972787",
-      "localizacao": "Lisboa",
-      "data_publicacao": "2025-08-17",
-      "imagem": "/images/uploads/sillarueda.webp",
+      "id": "1",
       "titulo": "Pedido de Cadeira de Rodas",
-      "id": "1"
+      "localizacao": "Lisboa",
+      "descricao": "Família procura uma cadeira de rodas para um idoso com  mobilidade reduzida. Qualquer ajuda é bem-vinda e muito apreciada.",
+      "imagem": "/images/uploads/sillarueda.webp",
+      "contato": "+351 911972787",
+      "link_contato": "helderb8a@gmail.com"
     },
     {
-      "data_vencimento": "2025-08-17",
       "urgente": false,
-      "link_contato": "helderb8a@gmail.com",
-      "descricao": "Preciso de ajuda com roupa para o meu bebé que vai nascer em breve. Agradeço qualquer doação de roupa para recém-nascido (menino)",
-      "contato": "+351 911972787",
-      "localizacao": "Lisboa",
-      "data_publicacao": "2025-08-17",
-      "imagem": "/images/uploads/ropabebe.webp",
+      "id": "2",
       "titulo": "Roupa de Bebé (0-6 meses)",
-      "id": "2"
+      "localizacao": "Lisboa",
+      "descricao": "Preciso de ajuda com roupa para o meu bebé que vai nascer em breve. Agradeço qualquer doação de roupa para recém-nascido (menino)",
+      "imagem": "/images/uploads/ropabebe.webp",
+      "contato": "+351 911972787",
+      "link_contato": "helderb8a@gmail.com"
     },
     {
-      "data_vencimento": "2025-08-17",
       "urgente": false,
-      "link_contato": "helderb8a@gmail.com",
-      "descricao": "Sou mãe de duas crianças e procuro cadernos, lápis e mochilas para o novo ano letivo. Veja o vídeo para conhecer a nossa história. Muito obrigada",
-      "contato": "+351 911972787",
-      "localizacao": "Lisboa",
-      "data_publicacao": "2025-08-17",
-      "imagem": null,
+      "id": "3",
       "titulo": "Material Escolar para Crianças",
-      "id": "3"
+      "localizacao": "Lisboa",
+      "descricao": "Sou mãe de duas crianças e procuro cadernos, lápis e mochilas para o novo ano letivo. Veja o vídeo para conhecer a nossa história. Muito obrigada",
+      "imagem": null,
+      "contato": "+351 911972787",
+      "link_contato": "helderb8a@gmail.com"
     }
   ]
 }
