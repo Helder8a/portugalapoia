@@ -227,7 +227,8 @@
       "localizacao": "Zona de Canidelo - Vila Nova de Gaia",
       "contato": "candidaturasdunasecascatas@gmail.com",
       "link_contato": "candidaturasdunasecascatas@gmail.com",
-      "data_publicacao": "2025-08-17"
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "24",
@@ -235,7 +236,9 @@
       "descricao": "Profissionais de Construção Civi",
       "localizacao": "Porto",
       "contato": "geral@marosi.pt",
-      "link_contato": "geral@marosi.pt"
+      "link_contato": "geral@marosi.pt",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "25",
@@ -243,7 +246,9 @@
       "descricao": "Empregada de mesa/ balcão,  Fale corretamente a língua Portuguesa;",
       "localizacao": "Lisboa",
       "link_contato": "emprego@docel.pt",
-      "contato": "emprego@docel.pt"
+      "contato": "emprego@docel.pt",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "26",
@@ -251,7 +256,9 @@
       "descricao": "Disponibilidade Imediata",
       "localizacao": "Lisboa",
       "contato": "geral@acquadouro.pt",
-      "link_contato": "geral@acquadouro.pt"
+      "link_contato": "geral@acquadouro.pt",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "27",
@@ -259,7 +266,8 @@
       "descricao": "Promotor(a) de Vendas – Full-time",
       "localizacao": "Bragança",
       "contato": "kazevedo@staffglobalgroup.com",
-      "link_contato": "kazevedo@staffglobalgroup.com"
+      "link_contato": "kazevedo@staffglobalgroup.com",
+      "data_publicacao": "2025-08-17"
     },
     {
       "id": "28",
