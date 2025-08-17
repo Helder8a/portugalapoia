@@ -1,19 +1,32 @@
-# --- Configuración del Backend ---
+# --- Configuração do Backend ---
 backend:
   name: github
   repo: Helder8a/portugalapoia
   branch: main
 
-# --- Dónde guardar las imágenes que subas desde el panel ---
+# --- Onde guardar as imagens que envias a partir do painel ---
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
-# --- Colecciones de Contenido (Las secciones editables de tu web) ---
+# --- Coleções de Conteúdo (As secções editáveis do teu site) ---
 collections:
+  # --- Coleção para o Blog ---
+  - name: "blog"
+    label: "Blog"
+    folder: "_posts" # Alterado de _blog para um diretório mais convencional
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Título da Publicação", name: "title", widget: "string" }
+      - { label: "Data de Publicação", name: "date", widget: "datetime" }
+      - { label: "Imagem de Destaque", name: "thumbnail", widget: "image" }
+      - { label: "Corpo da Publicação", name: "body", widget: "markdown" }
+
+  # --- Coleções de Conteúdos das Páginas (sem alterações) ---
   - name: "conteudos"
     label: "Conteúdos das Páginas"
     files:
-      # --- Editor para la página de Empleos ---
+      # --- Editor para a página de Empregos ---
       - file: "_dados/empregos.json"
         label: "Vagas de Emprego"
         name: "empregos"
@@ -31,7 +44,7 @@ collections:
               - { label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
               - { label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
 
-      # --- Editor para la página de Donaciones ---
+      # --- Editor para a página de Doações ---
       - file: "_dados/doacoes.json"
         label: "Pedidos de Doação"
         name: "doacoes"
@@ -51,7 +64,7 @@ collections:
               - { label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
               - { label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
 
-      # --- Editor para la página de Servicios  ---
+      # --- Editor para a página de Serviços ---
       - file: "_dados/servicos.json"
         label: "Ofertas de Serviço"
         name: "servicos"
@@ -71,7 +84,7 @@ collections:
               - { label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
               - { label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
 
-      # --- Editor para la página de Vivienda ---
+      # --- Editor para a página de Habitação ---
       - file: "_dados/habitacao.json"
         label: "Anúncios de Habitação"
         name: "habitacao"
@@ -88,15 +101,3 @@ collections:
               - { label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com" }
               - { label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
               - { label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
-
-  # --- Colección separada para el Blog ---
-  - name: "blog"
-    label: "Blog"
-    folder: "_blog"
-    create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    fields:
-      - { label: "Título do Post", name: "title", widget: "string" }
-      - { label: "Data de Publicação", name: "date", widget: "datetime" }
-      - { label: "Imagem de Destaque", name: "thumbnail", widget: "image" }
-      - { label: "Corpo do Post", name: "body", widget: "markdown" }
