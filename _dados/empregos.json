@@ -66,7 +66,9 @@
       "localizacao": "Portugal, Espanha",
       "contato": "917 749 858",
       "link_contato": "917 749 858",
-      "descricao": "Carpinteiros de Cofragem"
+      "descricao": "Carpinteiros de Cofragem",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "8",
@@ -74,7 +76,9 @@
       "descricao": "Empresa com 30 anos de mercado no ramo da restauração recruta Empregado de Mesa (M/F) para as seguintes funções:\n",
       "localizacao": "Póvoa de Varzim",
       "link_contato": "marcio.afonso@live.com",
-      "contato": "marcio.afonso@live.com"
+      "contato": "marcio.afonso@live.com",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "9",
@@ -82,7 +86,9 @@
       "localizacao": "Sagres (Algarve)",
       "descricao": "Promotora (m/f)",
       "link_contato": "candidaturas@iutalent.pt .",
-      "contato": "+55 21 97898-5541"
+      "contato": "+55 21 97898-5541",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "10",
@@ -90,7 +96,9 @@
       "localizacao": "Vila Velha de Ródão - Castelo Branco",
       "contato": "+55 21 97898-5541",
       "descricao": "Pedreiros para obra",
-      "link_contato": "+55 21 97898-5541"
+      "link_contato": "+55 21 97898-5541",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "11",
@@ -98,7 +106,9 @@
       "link_contato": " sales@atravel.pt",
       "contato": "+55 21 97898-5541",
       "descricao": "PERFIL QUE PROCURAMOS:\n- Proatividade e vontade de crescimento na carreira\n",
-      "localizacao": "Lisboa"
+      "localizacao": "Lisboa",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-08-17"
     },
     {
       "id": "12",
@@ -106,7 +116,8 @@
       "descricao": "- Carta de condução (opcional)\n- Assídua e pontual\n- Dinâmica e proativa",
       "titulo": "Tecnica de Limpeza",
       "contato": "915202894",
-      "link_contato": "915202894"
+      "link_contato": "915202894",
+      "data_publicacao": "2025-08-17"
     },
     {
       "id": "13",
