@@ -1,19 +1,20 @@
-# --- Configuración del Backend ---
+# --- CÓDIGO FINAL Y CORREGIDO para admin/config.yml ---
 backend:
   name: github
   repo: Helder8a/portugalapoia
   branch: main
 
-# --- Dónde guardar las imágenes que subas desde el panel ---
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
-# --- Colecciones de Contenido (Las secciones editables de tu web) ---
+# --- Líneas Nuevas y Clave ---
+show_preview_links: true
+register_script: /admin/admin.js # <-- Esta línea carga nuestro script personalizado
+
 collections:
   - name: "conteudos"
     label: "Conteúdos das Páginas"
     files:
-      # --- Editor para la página de Empleos ---
       - file: "_dados/empregos.json"
         label: "Vagas de Emprego"
         name: "empregos"
@@ -21,6 +22,7 @@ collections:
           - label: "Lista de Vagas"
             name: "vagas"
             widget: "list"
+            summary: "{{titulo}} | Vence em: {{data_vencimento}}"
             fields:
               - { label: "ID (Ex: EMP-033)", name: "id", widget: "string" }
               - { label: "Título da Vaga", name: "titulo", widget: "string" }
@@ -31,7 +33,6 @@ collections:
               - { label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
               - { label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
 
-      # --- Editor para la página de Donaciones ---
       - file: "_dados/doacoes.json"
         label: "Pedidos de Doação"
         name: "doacoes"
@@ -39,6 +40,7 @@ collections:
           - label: "Lista de Pedidos"
             name: "pedidos"
             widget: "list"
+            summary: "{{titulo}} | Vence em: {{data_vencimento}}"
             fields:
               - { label: "ID (Ex: DOA-004)", name: "id", widget: "string" }
               - { label: "Título do Pedido", name: "titulo", widget: "string" }
@@ -51,7 +53,6 @@ collections:
               - { label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
               - { label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
 
-      # --- Editor para la página de Servicios  ---
       - file: "_dados/servicos.json"
         label: "Ofertas de Serviço"
         name: "servicos"
@@ -59,6 +60,7 @@ collections:
           - label: "Lista de Serviços"
             name: "servicos"
             widget: "list"
+            summary: "{{titulo}} | Vence em: {{data_vencimento}}"
             fields:
               - { label: "ID (Ex: SER-004)", name: "id", widget: "string" }
               - { label: "Logo da Empresa (Opcional)", name: "logo_empresa", widget: "image", required: false }
@@ -71,7 +73,6 @@ collections:
               - { label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
               - { label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
 
-      # --- Editor para la página de Vivienda ---
       - file: "_dados/habitacao.json"
         label: "Anúncios de Habitação"
         name: "habitacao"
@@ -79,6 +80,7 @@ collections:
           - label: "Lista de Anúncios"
             name: "anuncios"
             widget: "list"
+            summary: "{{titulo}} | Vence em: {{data_vencimento}}"
             fields:
               - { label: "ID (Ex: HAB-007)", name: "id", widget: "string" }
               - { label: "Título do Anúncio", name: "titulo", widget: "string" }
@@ -89,7 +91,6 @@ collections:
               - { label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
               - { label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
 
-  # --- Colección separada para el Blog ---
   - name: "blog"
     label: "Blog"
     folder: "_blog"
