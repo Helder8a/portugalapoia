@@ -50,7 +50,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     // --- LÓGICA DE DADOS ---
     async function fetchJson(url) {
         try {
-            const response = await fetch(`${url}?t=${new Date().getTime()}`); // Evita o cache
+            // Adiciona um parâmetro aleatório para evitar o cache do navegador
+            const response = await fetch(`${url}?t=${new Date().getTime()}`);
             if (!response.ok) {
                 console.error(`Erro ao carregar ${url}: ${response.statusText}`);
                 return [];
@@ -70,15 +71,21 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const items = await fetchJson(jsonPath);
 
-        if (items.length === 0) {
+        if (!items || items.length === 0) {
             container.innerHTML = `<p class="col-12 text-center lead text-muted mt-5">De momento, não há anúncios publicados nesta secção.</p>`;
             return;
         }
 
         items.sort((a, b) => new Date(b.data_publicacao || 0) - new Date(a.data_publicacao || 0));
 
-        // Construir todo o HTML de uma só vez para melhor performance e segurança
-        const htmlContent = items.map(item => renderFunction(item, pageName)).join('');
+        let htmlContent = '';
+        items.forEach(item => {
+            try {
+                htmlContent += renderFunction(item, pageName);
+            } catch (error) {
+                console.error(`Erro ao renderizar o item com ID ${item.id}:`, error, item);
+            }
+        });
         container.innerHTML = htmlContent;
     }
 
@@ -118,7 +125,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         return `<small class="text-muted">Publicado em: ${dataFormatada}</small>
                 <small class="text-muted ml-2 ${classeVencido}">${textoVencido}</small>`;
     }
-
+    
     function renderShareButtons(item, page) {
         const url = `https://portugalapoia.com/${page}#${item.id}`;
         const text = `Vi este anúncio em PortugalApoia e lembrei-me de ti: "${item.titulo}"`;
@@ -133,14 +140,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     function renderEmprego(item, pageName) {
-        // Limpa a descrição para o JSON-LD, removendo quebras de linha e aspas
-        const cleanDescription = (item.descricao || '').replace(/["\n\r]/g, ' ');
-
+        const cleanDescription = (item.descricao || '').replace(/["\n\r]/g, ' ').trim();
         const jobPostingSchema = {
             "@context": "https://schema.org/",
             "@type": "JobPosting",
             "title": item.titulo,
-            "description": cleanDescription, // Usa a descrição limpa
+            "description": cleanDescription,
             "datePosted": item.data_publicacao,
             "validThrough": item.data_vencimento,
             "hiringOrganization": { "@type": "Organization", "name": "Empresa Anunciante (via PortugalApoia)" },
@@ -154,14 +159,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             const emailLink = item.link_contato.startsWith('mailto:') ? item.link_contato : `mailto:${item.link_contato}`;
             contatoHTML += `<p class="card-text small"><strong>Email:</strong> <a href="${emailLink}">${item.link_contato.replace('mailto:', '')}</a></p>`;
         }
-
+        
         return `
         <div class="col-lg-4 col-md-6 mb-4 job-item">
             <div class="card h-100 shadow-sm" id="${item.id}">
                 <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">${item.titulo}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${item.localizacao}</h6>
-                    <p class="card-text flex-grow-1">${item.descricao}</p>
+                    <h5 class="card-title">${item.titulo || 'Sem Título'}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${item.localizacao || 'N/A'}</h6>
+                    <p class="card-text flex-grow-1">${item.descricao || 'Sem Descrição'}</p>
                     <div class="mt-auto">${contatoHTML}</div>
                 </div>
                 <div class="card-footer d-flex justify-content-between align-items-center">
@@ -173,20 +178,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         <script type="application/ld+json">${JSON.stringify(jobPostingSchema)}</script>`;
     }
     
-    // As outras funções de renderização (renderDoacao, renderServico, renderHabitacao) permanecem as mesmas
     function renderDoacao(pedido, pageName) {
+        const cleanDescription = (pedido.descricao || '').replace(/["\n\r]/g, ' ').trim();
         const productSchema = {
-            "@context": "https://schema.org/",
-            "@type": "Product",
-            "name": pedido.titulo,
-            "description": pedido.descricao,
+            "@context": "https://schema.org/", "@type": "Product", "name": pedido.titulo, "description": cleanDescription,
             "image": pedido.imagem ? `https://portugalapoia.com${pedido.imagem}` : `https://portugalapoia.com/images/img_portada.webp`,
-            "offers": {
-                "@type": "Offer",
-                "price": "0",
-                "priceCurrency": "EUR",
-                "availability": "https://schema.org/InStock"
-            },
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR", "availability": "https://schema.org/InStock" },
             "itemCondition": "https://schema.org/UsedCondition"
         };
         const badgeUrgente = pedido.urgente ? '<span class="badge badge-danger position-absolute" style="top: 10px; right: 10px; z-index: 2;">Urgente</span>' : '';
@@ -201,19 +198,16 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <h5 class="card-title">${pedido.titulo}</h5>
                     <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${pedido.localizacao}</h6>
                     <p class="card-text flex-grow-1">${pedido.descricao}</p>
-                    <div class="mt-auto">
-                        ${contatoHTML}
-                        <a href="mailto:${pedido.link_contato}" class="btn btn-primary btn-block">Contactar por Email</a>
-                    </div>
+                    <div class="mt-auto">${contatoHTML}<a href="mailto:${pedido.link_contato}" class="btn btn-primary btn-block">Contactar por Email</a></div>
                 </div>
                 <div class="card-footer d-flex justify-content-between align-items-center">
-                    <div>${formatarDatas(pedido)}</div>
-                    ${renderShareButtons(pedido, pageName)}
+                    <div>${formatarDatas(pedido)}</div>${renderShareButtons(pedido, pageName)}
                 </div>
             </div>
         </div>
         <script type="application/ld+json">${JSON.stringify(productSchema)}</script>`;
     }
+
     function renderServico(item, pageName) {
         const logoHTML = item.logo_empresa ? `<div class="service-card-logo"><img src="${item.logo_empresa}" alt="Logo"></div>` : '';
         const precoHTML = item.valor_servico ? `<div class="card-price">${item.valor_servico}</div>` : '';
@@ -231,12 +225,12 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <div class="mt-auto card-contact-icons">${contatoIconsHTML}</div>
                 </div>
                 <div class="card-footer d-flex justify-content-between align-items-center">
-                    <div>${formatarDatas(item)}</div>
-                    ${renderShareButtons(item, pageName)}
+                    <div>${formatarDatas(item)}</div>${renderShareButtons(item, pageName)}
                 </div>
             </div>
         </div>`;
     }
+
     function renderHabitacao(anuncio, pageName) {
         let contatoHTML = '';
         if (anuncio.contato) { contatoHTML += `<strong>Tel:</strong> <a href="tel:${anuncio.contato.replace(/[\s+()-]/g, '')}">${anuncio.contato}</a><br>`; }
@@ -251,13 +245,12 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <div class="mt-auto"><p class="card-text small contact-info">${contatoHTML}</p></div>
                 </div>
                 <div class="card-footer d-flex justify-content-between align-items-center">
-                    <div>${formatarDatas(anuncio)}</div>
-                    ${renderShareButtons(anuncio, pageName)}
+                    <div>${formatarDatas(anuncio)}</div>${renderShareButtons(anuncio, pageName)}
                 </div>
             </div>
         </div>`;
     }
-
+    
     // --- CARGA INICIAL ---
     if (document.getElementById('announcements-grid')) carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'doações.html');
     if (document.getElementById('jobs-grid')) carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'empregos.html');
