@@ -535,6 +535,15 @@
       "localizacao": "Lisboa",
       "descricao": "Ajudante Familiar",
       "contato": "939148024"
+    },
+    {
+      "data_publicacao": "2025-08-18",
+      "data_vencimento": "Invalid date",
+      "id": "55",
+      "titulo": "Carvoeiro",
+      "localizacao": "Algarve",
+      "descricao": "Carvoeiro",
+      "contato": "Carvoeiro"
     }
   ]
 }
