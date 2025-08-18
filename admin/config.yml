@@ -1,13 +1,15 @@
-# --- Backend ---
+# --- Configuración del Backend ---
 backend:
   name: git-gateway
   branch: main
 
-# --- Media ---
+# --- Dónde guardar las imágenes ---
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
-# --- Colección del Blog ---
+# --- Colección para el Blog (Definitiva) ---
+# Esta es la configuración final.
+# Usará la carpeta "_posts" para que blog.html pueda encontrar los artículos.
 collections:
   - name: "blog"
     label: "Publicaciones del Blog"
@@ -18,4 +20,4 @@ collections:
       - { label: "Título del Post", name: "title", widget: "string" }
       - { label: "Data de Publicação", name: "date", widget: "datetime" }
       - { label: "Imagem de Destaque", name: "thumbnail", widget: "image", required: false }
-      - { label: "Corpo do Post", name: "body", widget: "markdown", required: false, default: "" } # <-- Esta línea es la clave para el futuro
+      - { label: "Corpo do Post", name: "body", widget: "markdown", required: false, default: "" }
