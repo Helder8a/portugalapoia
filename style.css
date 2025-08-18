@@ -1344,12 +1344,12 @@ body.dark-theme .share-btn {
 /* Estilo para el número en la esquina de la tarjeta */
 .card-number {
     position: absolute;
-    bottom: 10px; /* Alinhe com a parte inferior */
-    right: 10px; /* Alinhe com o lado direito */
-    font-size: 0.8rem; /* Fonte menor */
+    bottom: 10px;
+    right: 10px;
+    font-size: 0.8rem;
     font-weight: bold;
-    color: #6c757d; /* Cor do texto secundário */
-    z-index: 2; /* Para que esteja por cima de outros elementos */
+    color: #6c757d;
+    z-index: 2;
     background: transparent;
     padding: 0;
     width: auto;
@@ -1357,17 +1357,6 @@ body.dark-theme .share-btn {
     border-radius: 0;
     box-shadow: none;
 }
-
-/* Os seguintes estilos foram removidos para atender ao seu pedido. */
-/* Removido: position: absolute; */
-/* Removido: top: 10px; */
-/* Removido: left: 10px; */
-/* Removido: background-color: rgba(10, 61, 98, 0.85); */
-/* Removido: min-width: 35px; */
-/* Removido: height: 35px; */
-/* Removido: padding: 0 8px; */
-/* Removido: border-radius: 20px; */
-/* Removido: box-shadow: 0 2px 5px rgba(0,0,0,0.2); */
 
 /* Estilo para el texto de la fecha de publicación y vencimiento */
 .date-info {
