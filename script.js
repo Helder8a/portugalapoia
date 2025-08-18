@@ -50,7 +50,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     // --- LÓGICA DE DADOS ---
     async function fetchJson(url) {
         try {
-            // Adiciona um parâmetro aleatório para evitar o cache do navegador
             const response = await fetch(`${url}?t=${new Date().getTime()}`);
             if (!response.ok) {
                 console.error(`Erro ao carregar ${url}: ${response.statusText}`);
@@ -78,14 +77,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         items.sort((a, b) => new Date(b.data_publicacao || 0) - new Date(a.data_publicacao || 0));
 
-        let htmlContent = '';
-        items.forEach(item => {
+        const htmlContent = items.map(item => {
             try {
-                htmlContent += renderFunction(item, pageName);
+                return renderFunction(item, pageName);
             } catch (error) {
                 console.error(`Erro ao renderizar o item com ID ${item.id}:`, error, item);
+                return ''; // Retorna uma string vazia para não quebrar a página
             }
-        });
+        }).join('');
         container.innerHTML = htmlContent;
     }
 
@@ -152,14 +151,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             "jobLocation": { "@type": "Place", "address": { "@type": "PostalAddress", "addressLocality": item.localizacao, "addressCountry": "PT" } },
             "employmentType": "FULL_TIME, PART_TIME"
         };
-
         let contatoHTML = '';
         if (item.contato) { contatoHTML += `<p class="card-text small mb-1"><strong>Tel:</strong> <a href="tel:${item.contato.replace(/[\s+()-]/g, '')}">${item.contato}</a></p>`; }
         if (item.link_contato && item.link_contato.includes('@')) {
             const emailLink = item.link_contato.startsWith('mailto:') ? item.link_contato : `mailto:${item.link_contato}`;
             contatoHTML += `<p class="card-text small"><strong>Email:</strong> <a href="${emailLink}">${item.link_contato.replace('mailto:', '')}</a></p>`;
         }
-        
         return `
         <div class="col-lg-4 col-md-6 mb-4 job-item">
             <div class="card h-100 shadow-sm" id="${item.id}">
@@ -170,8 +167,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <div class="mt-auto">${contatoHTML}</div>
                 </div>
                 <div class="card-footer d-flex justify-content-between align-items-center">
-                    <div>${formatarDatas(item)}</div>
-                    ${renderShareButtons(item, pageName)}
+                    <div>${formatarDatas(item)}</div>${renderShareButtons(item, pageName)}
                 </div>
             </div>
         </div>
@@ -259,4 +255,50 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (document.getElementById('contador-total')) {
         atualizarContadores();
     }
+
+    // --- LÓGICA DO BUSCADOR (RESTAURADA) ---
+    const searchInput = document.getElementById('searchInput');
+    const locationInput = document.getElementById('locationInput');
+    const searchButton = document.getElementById('searchButton');
+    const clearButton = document.getElementById('clearButton');
+    const noResults = document.getElementById('no-results');
+
+    function filterCards() {
+        const searchText = searchInput.value.toLowerCase().trim();
+        const locationText = locationInput.value.toLowerCase().trim();
+        // Seleciona todos os tipos de cartões em qualquer página
+        const cards = document.querySelectorAll('.job-item, .announcement-item, .service-item, .housing-item');
+        let visibleCount = 0;
+
+        cards.forEach(card => {
+            const title = (card.querySelector('.card-title')?.textContent || '').toLowerCase();
+            const description = (card.querySelector('.card-text')?.textContent || '').toLowerCase();
+            const location = (card.querySelector('.card-subtitle')?.textContent || '').toLowerCase();
+
+            const textMatch = !searchText || title.includes(searchText) || description.includes(searchText);
+            const locationMatch = !locationText || location.includes(locationText);
+
+            if (textMatch && locationMatch) {
+                card.style.display = '';
+                visibleCount++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+        
+        if (noResults) {
+            noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+    }
+
+    function clearFilters() {
+        if (searchInput) searchInput.value = '';
+        if (locationInput) locationInput.value = '';
+        filterCards();
+    }
+
+    if (searchButton) searchButton.addEventListener('click', filterCards);
+    if (clearButton) clearButton.addEventListener('click', clearFilters);
+    if (searchInput) searchInput.addEventListener('keyup', filterCards);
+    if (locationInput) locationInput.addEventListener('keyup', filterCards);
 });

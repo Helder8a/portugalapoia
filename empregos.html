@@ -120,6 +120,33 @@
                         <div class="card shadow-sm">
                             <div class="card-body">
                                 <form class="form-row align-items-center" onsubmit="event.preventDefault();">
+                                    <div class="col-md-5 mb-2 mb-md-0">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                            </div>
+                                            <input type="text" id="searchInput" class="form-control form-control-lg"
+                                                placeholder="O que procura? (ex: Pedreiro)">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mb-2 mb-md-0">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i
+                                                        class="fas fa-map-marker-alt"></i></span>
+                                            </div>
+                                            <input type="text" id="locationInput" class="form-control form-control-lg"
+                                                placeholder="Cidade (ex: Lisboa)">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="d-flex">
+                                            <button type="button" class="btn btn-primary btn-lg flex-grow-1 mr-2"
+                                                id="searchButton">Procurar</button>
+                                            <button type="button" class="btn btn-secondary btn-lg flex-grow-1"
+                                                id="clearButton">Limpar</button>
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -178,7 +205,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="script.js" defer></script>
-
 </body>
 
 <!-- Google Tag Manager (noscript) -->
