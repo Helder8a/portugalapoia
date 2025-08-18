@@ -83,9 +83,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             container.innerHTML = `<p class="col-12 text-center lead text-muted mt-5">De momento, não há anúncios publicados nesta secção.</p>`;
             return;
         }
-        container.innerHTML = '';
+        
         items.sort((a, b) => (new Date(b.data_publicacao || 0)) - (new Date(a.data_publicacao || 0)));
-        items.forEach(item => container.innerHTML += renderFunction(item, pageName));
+        
+        let htmlContent = '';
+        items.forEach(item => {
+            htmlContent += renderFunction(item, pageName);
+        });
+        container.innerHTML = htmlContent;
     }
 
     // --- FUNCIÓN PARA FORMATEAR FECHAS Y ESTADO ---
@@ -135,7 +140,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             "@context": "https://schema.org/",
             "@type": "JobPosting",
             "title": item.titulo,
-            "description": `<p>${item.descricao}</p>`,
+            "description": item.descricao, // CORREÇÃO: Removido o HTML daqui
             "datePosted": item.data_publicacao,
             "validThrough": item.data_vencimento,
             "hiringOrganization": {
@@ -177,11 +182,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         </script>`;
     }
 
-    // =================================================================
-    // FUNCIÓN DE DONACIONES CON SEO AÑADIDO
-    // =================================================================
     function renderDoacao(pedido, pageName) {
-        // Objeto de datos estructurados (Schema.org) para Google
         const productSchema = {
             "@context": "https://schema.org/",
             "@type": "Product",
@@ -190,11 +191,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             "image": pedido.imagem ? `https://portugalapoia.com${pedido.imagem}` : `https://portugalapoia.com/images/img_portada.webp`,
             "offers": {
                 "@type": "Offer",
-                "price": "0", // Es una donación, por lo que el precio es 0
+                "price": "0",
                 "priceCurrency": "EUR",
                 "availability": "https://schema.org/InStock"
             },
-            "itemCondition": "https://schema.org/UsedCondition" // Asumimos que son artículos usados
+            "itemCondition": "https://schema.org/UsedCondition"
         };
 
         const badgeUrgente = pedido.urgente ? '<span class="badge badge-danger position-absolute" style="top: 10px; right: 10px; z-index: 2;">Urgente</span>' : '';
