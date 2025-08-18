@@ -7,7 +7,6 @@
   node_bundler = "esbuild"
 
 # Para programar una función específica, se hace de esta manera.
-# Esto le dice a Netlify: "Dentro de tus funciones, la que se llama 
-# 'cleanup-expired' tiene una configuración especial de horario".
-[functions.cleanup-expired]
-  schedule = "0 3 * * *"
+# La siguiente línea ha sido comentada para desactivar la limpieza automática.
+# [functions.cleanup-expired]
+#   schedule = "0 3 * * *"
