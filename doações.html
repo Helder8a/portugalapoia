@@ -131,48 +131,45 @@
         </section>
 
         <section class="py-4 bg-light border-bottom">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-10">
-                        <div class="card shadow-sm">
-                            <div class="card-body">
-
-                                <form class="form-row align-items-center" onsubmit="event.preventDefault();">
-                                    <div class="col-md-5 mb-2 mb-md-0">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                            </div>
-                                            <input type="text" id="searchInput" class="form-control form-control-lg"
-                                                placeholder="O que procura? (ex: cadeira de rodas)">
-                                        </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <form class="form-row align-items-center" onsubmit="event.preventDefault();">
+                            <div class="col-md-5 mb-2 mb-md-0">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-search"></i></span>
                                     </div>
-                                    <div class="col-md-4 mb-2 mb-md-0">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i
-                                                        class="fas fa-map-marker-alt"></i></span>
-                                            </div>
-                                            <input type="text" id="locationInput" class="form-control form-control-lg"
-                                                placeholder="Cidade (ex: Lisboa)">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <div class="d-flex">
-                                            <button type="button" class="btn btn-primary btn-lg flex-grow-1 mr-2"
-                                                onclick="filterAnnouncements()">Procurar</button>
-                                            <button type="button" class="btn btn-secondary btn-lg flex-grow-1"
-                                                onclick="clearFilters()">Limpar</button>
-                                        </div>
-                                    </div>
-                                </form>
-
+                                    <input type="text" id="searchInput" class="form-control form-control-lg"
+                                        placeholder="O que procura?">
+                                </div>
                             </div>
-                        </div>
+                            <div class="col-md-4 mb-2 mb-md-0">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
+                                    </div>
+                                    <input type="text" id="locationInput" class="form-control form-control-lg"
+                                        placeholder="Cidade (ex: Lisboa)">
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="d-flex">
+                                    <button type="button" class="btn btn-primary btn-lg flex-grow-1 mr-2"
+                                        id="searchButton">Procurar</button>
+                                    <button type="button" class="btn btn-secondary btn-lg flex-grow-1"
+                                        id="clearButton">Limpar</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
+</section>
 
         <section class="py-5 bg-light text-center">
             <div class="container">
@@ -229,49 +226,49 @@
     <script src="script.js" defer></script>
 
     <footer class="main-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <img src="images_pta/logocuadrado.jpg" alt="Logo de PortugalApoia"
-                        style="height: 45px; margin-bottom: 15px;">
-                    <h4>PortugalApoia</h4>
-                    <p>A conectar a generosidade à necessidade.</p>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <h4>Navegação</h4>
-                    <ul class="list-unstyled">
-                        <li><a href="doações.html">Doações</a></li>
-                        <li><a href="empregos.html">Emprego</a></li>
-                        <li><a href="serviços.html">Serviços</a></li>
-                        <li><a href="habitação.html">Habitação</a></li>
-                        <li><a href="blog.html">Blog</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <h4>Siga-nos</h4>
-                    <div class="social-links">
-                        <a href="https://www.instagram.com/portugalapoia" target="_blank" rel="noopener noreferrer"
-                            aria-label="Instagram" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.facebook.com/share/14GXdGKfEgs/?mibextid=wwXIfr" target="_blank"
-                            rel="noopener noreferrer" aria-label="Facebook" class="social-link"><i
-                                class="fab fa-facebook-f"></i></a>
-                        <a href="https://www.linkedin.com/company/fidersucre/" target="_blank" rel="noopener noreferrer"
-                            aria-label="LinkedIn" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter"
-                            class="social-link"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <h4>Contacto</h4>
-                    <p>Um projeto desenvolvido e patrocinado pela <a href="mailto:hbo.consulting.pt@gmail.com">HBO
-                            Consulting</a>.</p>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <img src="images_pta/logocuadrado.jpg" alt="Logo de PortugalApoia"
+                    style="height: 45px; margin-bottom: 15px;">
+                <h4>PortugalApoia</h4>
+                <p>A conectar a generosidade à necessidade.</p>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h4>Navegação</h4>
+                <ul class="list-unstyled">
+                    <li><a href="doações.html">Doações</a></li>
+                    <li><a href="empregos.html">Emprego</a></li>
+                    <li><a href="serviços.html">Serviços</a></li>
+                    <li><a href="habitação.html">Habitação</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h4>Siga-nos</h4>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/portugalapoia" target="_blank" rel="noopener noreferrer"
+                        aria-label="Instagram" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/share/14GXdGKfEgs/?mibextid=wwXIfr" target="_blank"
+                        rel="noopener noreferrer" aria-label="Facebook" class="social-link"><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.linkedin.com/company/fidersucre/" target="_blank" rel="noopener noreferrer"
+                        aria-label="LinkedIn" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter"
+                        class="social-link"><i class="fab fa-twitter"></i></a>
                 </div>
             </div>
-            <div class="footer-bottom text-center pt-3 mt-3">
-                <p>&copy; 2025 PortugalApoia.com | <a href="politica-privacidade.html">Política de Privacidade</a></p>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <h4>Contacto</h4>
+                <p>Um projeto desenvolvido e patrocinado pela <a href="mailto:hbo.consulting.pt@gmail.com">HBO
+                        Consulting</a>.</p>
             </div>
         </div>
-    </footer>
+        <div class="footer-bottom text-center pt-3 mt-3">
+            <p>&copy; 2025 PortugalApoia.com | <a href="politica-privacidade.html">Política de Privacidade</a></p>
+        </div>
+    </div>
+</footer>
 
 </body>
 
