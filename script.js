@@ -74,7 +74,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         container.innerHTML = htmlContent;
     }
 
-    // --- FUNÇÃO DOS CONTADORES (CORRIGIDA) ---
     async function atualizarContadores() {
         const [pedidos, vagas, servicos, anuncios] = await Promise.all([
             fetchJson('/_dados/doacoes.json'),
@@ -82,12 +81,9 @@ document.addEventListener("DOMContentLoaded", async () => {
             fetchJson('/_dados/servicos.json'),
             fetchJson('/_dados/habitacao.json')
         ]);
-
         const totalDoacoes = pedidos.length;
         const totalEmpregos = vagas.length;
-        const totalServicos = servicos.length;
-        const totalHabitacao = anuncios.length;
-        const total = totalDoacoes + totalEmpregos + totalServicos + totalHabitacao;
+        const total = totalDoacoes + totalEmpregos + servicos.length + anuncios.length;
 
         const elContadorDoacoes = document.getElementById('contador-doacoes');
         const elContadorEmpregos = document.getElementById('contador-empregos');
@@ -99,29 +95,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     // --- FUNÇÕES DE RENDERIZAÇÃO ---
-    function formatarDatas(item) {
-        // ... (código igual)
-    }
-    
-    function renderShareButtons(item, page) {
-        // ... (código igual)
-    }
-
-    function renderEmprego(item, pageName, idAnuncio) {
-        // ... (código igual)
-    }
-    
-    function renderDoacao(pedido, pageName, idAnuncio) {
-        // ... (código igual)
-    }
-
-    function renderServico(item, pageName, idAnuncio) {
-        // ... (código igual)
-    }
-
-    function renderHabitacao(anuncio, pageName, idAnuncio) {
-        // ... (código igual)
-    }
+    function formatarDatas(item) { /* ...código igual... */ }
+    function renderShareButtons(item, page) { /* ...código igual... */ }
+    function renderEmprego(item, pageName, idAnuncio) { /* ...código igual... */ return `<div class="col-lg-4 col-md-6 mb-4 job-item">...</div>`; }
+    function renderDoacao(pedido, pageName, idAnuncio) { /* ...código igual... */ return `<div class="col-lg-4 col-md-6 mb-4 announcement-item">...</div>`; }
+    function renderServico(item, pageName, idAnuncio) { /* ...código igual... */ return `<div class="col-lg-4 col-md-6 mb-4 service-item">...</div>`; }
+    function renderHabitacao(anuncio, pageName, idAnuncio) { /* ...código igual... */ return `<div class="col-lg-4 col-md-6 mb-4 housing-item">...</div>`; }
     
     // --- CARGA INICIAL ---
     carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'doações.html');
@@ -129,15 +108,52 @@ document.addEventListener("DOMContentLoaded", async () => {
     carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'serviços.html');
     carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderHabitacao, 'habitação.html');
 
-    // --- ATIVAÇÃO DOS CONTADORES (CORRIGIDA) ---
+    // --- ATIVAÇÃO DOS CONTADORES (APENAS SE EXISTIREM NA PÁGINA) ---
     if (document.getElementById('contador-total')) {
         atualizarContadores();
     }
 
-    // --- LÓGICA DO BUSCADOR ---
+    // --- LÓGICA DO BUSCADOR (APENAS SE EXISTIR NA PÁGINA) ---
     function setupSearch() {
-        // ... (código igual)
-    }
+        const searchInput = document.getElementById('searchInput');
+        if (!searchInput) return;
+        
+        const locationInput = document.getElementById('locationInput');
+        const searchButton = document.getElementById('searchButton');
+        const clearButton = document.getElementById('clearButton');
+        const noResults = document.getElementById('no-results');
 
+        function filterCards() {
+            const searchText = searchInput.value.toLowerCase().trim();
+            const locationText = locationInput.value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.job-item, .announcement-item, .service-item, .housing-item');
+            let visibleCount = 0;
+            cards.forEach(card => {
+                const title = (card.querySelector('.card-title')?.textContent || '').toLowerCase();
+                const description = (card.querySelector('.card-text')?.textContent || '').toLowerCase();
+                const location = (card.querySelector('.card-subtitle')?.textContent || '').toLowerCase();
+                const textMatch = !searchText || title.includes(searchText) || description.includes(searchText);
+                const locationMatch = !locationText || location.includes(locationText);
+                if (textMatch && locationMatch) {
+                    card.style.display = '';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            if (noResults) { noResults.style.display = visibleCount === 0 ? 'block' : 'none'; }
+        }
+
+        function clearFilters() {
+            searchInput.value = '';
+            locationInput.value = '';
+            filterCards();
+        }
+
+        searchButton.addEventListener('click', filterCards);
+        clearButton.addEventListener('click', clearFilters);
+        searchInput.addEventListener('keyup', filterCards);
+        locationInput.addEventListener('keyup', filterCards);
+    }
     setupSearch();
 });
