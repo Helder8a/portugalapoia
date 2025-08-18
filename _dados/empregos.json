@@ -526,6 +526,15 @@
       "localizacao": "Maceira, Leiria",
       "descricao": "Servente de Limpeza",
       "contato": "926055887"
+    },
+    {
+      "data_publicacao": "2025-08-18",
+      "data_vencimento": "Invalid date",
+      "id": "54",
+      "titulo": "Ajudante Familiar",
+      "localizacao": "Lisboa",
+      "descricao": "Ajudante Familiar",
+      "contato": "939148024"
     }
   ]
 }
