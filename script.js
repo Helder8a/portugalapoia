@@ -132,11 +132,43 @@ document.addEventListener("DOMContentLoaded", async () => {
         return `<div class="col-lg-4 col-md-6 mb-4 housing-item"><div class="card h-100 shadow-sm" id="${anuncio.id}"><div class="card-number">${idAnuncio}</div><div class="card-body d-flex flex-column"><h5 class="card-title">${anuncio.titulo}</h5><h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${anuncio.localizacao}</h6><p class="card-text flex-grow-1">${anuncio.descricao}</p><div class="mt-auto"><p class="card-text small contact-info">${contatoHTML}</p></div></div><div class="card-footer d-flex justify-content-between align-items-center">${formatarDatas(anuncio)}${renderShareButtons(anuncio, pageName)}</div></div></div>`;
     }
     
+    // Función para actualizar los contadores del impacto en la comunidad
+    async function updateImpactCounters() {
+        const doacoes = await fetchJson('/_dados/doacoes.json');
+        const empregos = await fetchJson('/_dados/empregos.json');
+        const servicos = await fetchJson('/_dados/servicos.json');
+        const habitacao = await fetchJson('/_dados/habitacao.json');
+
+        const totalDoacoes = doacoes.length;
+        const totalEmpregos = empregos.length;
+        const totalServicos = servicos.length;
+        const totalHabitacao = habitacao.length;
+        const totalAnuncios = totalDoacoes + totalEmpregos + totalServicos + totalHabitacao;
+
+        const contadorDoacoesEl = document.getElementById('contador-doacoes');
+        if (contadorDoacoesEl) contadorDoacoesEl.textContent = `${totalDoacoes}+`;
+
+        const contadorEmpregosEl = document.getElementById('contador-empregos');
+        if (contadorEmpregosEl) contadorEmpregosEl.textContent = `${totalEmpregos}+`;
+        
+        const contadorServicosEl = document.getElementById('contador-servicos');
+        if (contadorServicosEl) contadorServicosEl.textContent = `${totalServicos}+`;
+        
+        const contadorHabitacaoEl = document.getElementById('contador-habitacao');
+        if (contadorHabitacaoEl) contadorHabitacaoEl.textContent = `${totalHabitacao}+`;
+        
+        const contadorTotalEl = document.getElementById('contador-total');
+        if (contadorTotalEl) contadorTotalEl.textContent = `${totalAnuncios}+`;
+    }
+
     // --- CARGA INICIAL ---
     carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'doações.html');
     carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'empregos.html');
     carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'serviços.html');
     carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderHabitacao, 'habitação.html');
+
+    // Llamada a la nueva función de contadores
+    updateImpactCounters();
 
     // --- LÓGICA DO BUSCADOR (CORRIGIDA) ---
     function setupSearch() {
