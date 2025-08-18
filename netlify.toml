@@ -1,3 +1,7 @@
+[build]
+  publish = "/"
+  command = ""
+
 # --- CÓDIGO FINAL Y CORRECTO para netlify.toml ---
 
 # Este bloque define la configuración general para TODAS las funciones.
