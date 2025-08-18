@@ -1,7 +1,7 @@
 {
   "servicos": [
     {
-      "data_vencimento": "Invalid date",
+      "data_vencimento": "2025-09-19",
       "valor_servico": "500€",
       "link_contato": "helderb8a@gmail.com",
       "descricao": "HTML, CCS, JavaScript.",
