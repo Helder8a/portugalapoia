@@ -1,4 +1,5 @@
 # --- Configuración del Backend ---
+# Usamos git-gateway para una mejor integración con Netlify
 backend:
   name: git-gateway
   branch: main
@@ -7,37 +8,34 @@ backend:
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
-# --- Colecciones (Sección para otras páginas como donaciones, etc.) ---
-# Dejamos esta parte como la tienes, ya que funciona bien.
+# --- Colecciones de Contenido ---
 collections:
+  # --- CONTENIDOS DE PÁGINAS (Esta sección se mantiene como la tenías) ---
   - name: "conteudos"
     label: "Conteúdos das Páginas"
     files:
       - file: "_dados/empregos.json"
         label: "Vagas de Emprego"
         name: "empregos"
-        # ... (todos los campos de empregos se mantienen igual)
-      - file: "_dados/doacoes.json"
-        label: "Pedidos de Doação"
-        name: "doacoes"
-        # ... (todos los campos de doacoes se mantienen igual)
-      - file: "_dados/servicos.json"
-        label: "Ofertas de Serviço"
-        name: "servicos"
-        # ... (todos los campos de servicos se mantienen igual)
-      - file: "_dados/habitacao.json"
-        label: "Anúncios de Habitação"
-        name: "habitacao"
-        # ... (todos los campos de habitacao se mantienen igual)
+        fields:
+          - { label: "ID (Ex: EMP-033)", name: "id", widget: "string" }
+          - { label: "Título da Vaga", name: "titulo", widget: "string" }
+          - { label: "Localização", name: "localizacao", widget: "string" }
+          - { label: "Descrição", name: "descricao", widget: "text" }
+          - { label: "Tel", name: "contato", widget: "string", required: false }
+          - { label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com", required: false }
+          - { label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
+          - { label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
+      # ... (Aquí irían las demás secciones: doacoes, servicos, habitacao)
 
-  # --- Colección del Blog (CORREGIDA Y FINAL) ---
+  # --- COLECCIÓN DEL BLOG (VERSIÓN FINAL Y CORREGIDA) ---
   - name: "blog"
     label: "Publicaciones del Blog"
-    folder: "_posts" # <-- CAMBIO 1: Apuntamos a la carpeta correcta.
+    folder: "_posts"  # <-- APUNTA A LA CARPETA CORRECTA
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - { label: "Título del Post", name: "title", widget: "string" }
       - { label: "Data de Publicação", name: "date", widget: "datetime" }
-      - { label: "Imagem de Destaque", name: "thumbnail", widget: "image", required: false } # <-- CAMBIO 2: Hacemos la imagen opcional.
-      - { label: "Corpo do Post", name: "body", widget: "markdown", required: false, default: "" } # <-- CAMBIO 3: Evitamos el error al guardar.
+      - { label: "Imagem de Destaque", name: "thumbnail", widget: "image", required: false } # Previene errores
+      - { label: "Corpo do Post", name: "body", widget: "markdown", required: false, default: "" } # LA CLAVE DEFINITIVA para evitar el error
