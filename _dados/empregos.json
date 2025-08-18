@@ -498,6 +498,16 @@
       "localizacao": "Rio Mau, Penafiel",
       "descricao": "rocuro empreiteiro para reconstrução de uma moradia antiga em Rio Mau, Penafiel.\nCasa de 150m2 em cave (lagar) + 150m2 de piso de habitação em cima.",
       "contato": "+351913096246 "
+    },
+    {
+      "data_publicacao": "2025-08-18",
+      "data_vencimento": "2025-09-18",
+      "id": "51",
+      "titulo": "Carpinteiro de Cofragem",
+      "localizacao": "Porto",
+      "contato": "910253940",
+      "link_contato": "bradolivre.pt@gmail.com",
+      "descricao": "Carpinteiro de Cofragem"
     }
   ]
 }
