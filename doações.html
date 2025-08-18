@@ -228,34 +228,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="script.js" defer></script>
 
-    <script>
-        function filterAnnouncements() {
-            const searchText = document.getElementById('searchInput').value.toLowerCase();
-            const locationText = document.getElementById('locationInput').value.toLowerCase();
-            const announcements = document.querySelectorAll('.announcement-item');
-
-            announcements.forEach(announcement => {
-                const title = announcement.querySelector('.card-title').textContent.toLowerCase();
-                const description = announcement.querySelector('.card-text').textContent.toLowerCase();
-                const location = announcement.querySelector('.card-subtitle').textContent.toLowerCase();
-
-                const textMatch = title.includes(searchText) || description.includes(searchText);
-                const locationMatch = location.includes(locationText);
-
-                if (textMatch && locationMatch) {
-                    announcement.style.display = '';
-                } else {
-                    announcement.style.display = 'none';
-                }
-            });
-        }
-
-        // Activa o filtro em tempo real enquanto o utilizador escreve
-        document.getElementById('searchInput').addEventListener('keyup', filterAnnouncements);
-        document.getElementById('locationInput').addEventListener('keyup', filterAnnouncements);
-    </script>
-
-
     <footer class="main-footer">
         <div class="container">
             <div class="row">
