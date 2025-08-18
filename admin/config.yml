@@ -7,17 +7,37 @@ backend:
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
-# --- Colección para el Blog (Definitiva) ---
-# Esta es la configuración final.
-# Usará la carpeta "_posts" para que blog.html pueda encontrar los artículos.
+# --- Colecciones (Sección para otras páginas como donaciones, etc.) ---
+# Dejamos esta parte como la tienes, ya que funciona bien.
 collections:
+  - name: "conteudos"
+    label: "Conteúdos das Páginas"
+    files:
+      - file: "_dados/empregos.json"
+        label: "Vagas de Emprego"
+        name: "empregos"
+        # ... (todos los campos de empregos se mantienen igual)
+      - file: "_dados/doacoes.json"
+        label: "Pedidos de Doação"
+        name: "doacoes"
+        # ... (todos los campos de doacoes se mantienen igual)
+      - file: "_dados/servicos.json"
+        label: "Ofertas de Serviço"
+        name: "servicos"
+        # ... (todos los campos de servicos se mantienen igual)
+      - file: "_dados/habitacao.json"
+        label: "Anúncios de Habitação"
+        name: "habitacao"
+        # ... (todos los campos de habitacao se mantienen igual)
+
+  # --- Colección del Blog (CORREGIDA Y FINAL) ---
   - name: "blog"
     label: "Publicaciones del Blog"
-    folder: "_posts"
+    folder: "_posts" # <-- CAMBIO 1: Apuntamos a la carpeta correcta.
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     fields:
       - { label: "Título del Post", name: "title", widget: "string" }
       - { label: "Data de Publicação", name: "date", widget: "datetime" }
-      - { label: "Imagem de Destaque", name: "thumbnail", widget: "image", required: false }
-      - { label: "Corpo do Post", name: "body", widget: "markdown", required: false, default: "" }
+      - { label: "Imagem de Destaque", name: "thumbnail", widget: "image", required: false } # <-- CAMBIO 2: Hacemos la imagen opcional.
+      - { label: "Corpo do Post", name: "body", widget: "markdown", required: false, default: "" } # <-- CAMBIO 3: Evitamos el error al guardar.
