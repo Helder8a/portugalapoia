@@ -1,13 +1,13 @@
-# --- Configuración del Backend ---
+# --- Backend ---
 backend:
   name: git-gateway
   branch: main
 
-# --- Dónde guardar las imágenes ---
+# --- Media ---
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
-# --- Colección para el Blog (CORREGIDA Y FINAL) ---
+# --- Colección del Blog ---
 collections:
   - name: "blog"
     label: "Publicaciones del Blog"
@@ -18,4 +18,4 @@ collections:
       - { label: "Título del Post", name: "title", widget: "string" }
       - { label: "Data de Publicação", name: "date", widget: "datetime" }
       - { label: "Imagem de Destaque", name: "thumbnail", widget: "image", required: false }
-      - { label: "Corpo do Post", name: "body", widget: "markdown", required: false, default: "" } # <-- CAMBIO CLAVE: Añadido 'default: ""'
+      - { label: "Corpo do Post", name: "body", widget: "markdown", required: false, default: "" } # <-- Esta línea es la clave para el futuro
