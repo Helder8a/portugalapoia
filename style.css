@@ -1342,10 +1342,10 @@ body.dark-theme .share-btn {
 /* --- AÑADE ESTAS NUEVAS REGLAS AL FINAL DE TU FICHERO style.css --- */
 
 /* Estilo para el número en la esquina de la tarjeta */
-card-number {
+.card-number {
     position: absolute;
     top: 10px;
-    right: 10px; /* Se cambió 'left' por 'right' */
+    right: 10px; /* La numeración ahora estará a la derecha */
     background-color: rgba(10, 61, 98, 0.85);
     color: #fff;
     min-width: 35px;
