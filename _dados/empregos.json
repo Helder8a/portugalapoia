@@ -517,6 +517,15 @@
       "localizacao": "Lisboa",
       "descricao": "Pedreiro e servente, Obra",
       "contato": "+351 925497405"
+    },
+    {
+      "data_publicacao": "2025-08-18",
+      "data_vencimento": "2025-09-18",
+      "id": "53",
+      "titulo": "Servente de Limpeza",
+      "localizacao": "Maceira, Leiria",
+      "descricao": "Servente de Limpeza",
+      "contato": "926055887"
     }
   ]
 }
