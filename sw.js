@@ -1,4 +1,4 @@
-const CACHE_NAME = 'portugalapoia-cache-v2';
+const CACHE_NAME = 'portugalapoia-cache-v3';
 // Lista de archivos esenciales para la app (la "App Shell")
 const urlsToCache = [
   '/',
