@@ -3,6 +3,7 @@ backend:
   name: github
   repo: Helder8a/portugalapoia
   branch: main
+  publish_mode: editorial_workflow # <-- ESTA ES LA LÍNEA CLAVE
 
 # --- Dónde guardar las imágenes que subas desde el panel ---
 media_folder: "images/uploads"
