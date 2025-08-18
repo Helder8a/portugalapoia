@@ -10,7 +10,6 @@
   <changefreq>daily</changefreq>
   <priority>1.00</priority>
 </url>
-
 <url>
   <loc>https://portugalapoia.com/doações.html</loc>
   <lastmod>2025-08-15</lastmod>
@@ -24,18 +23,17 @@
   <priority>0.90</priority>
 </url>
 <url>
-  <loc>https://portugalapoia.com/servicos.html</loc>
+  <loc>https://portugalapoia.com/serviços.html</loc>
   <lastmod>2025-08-15</lastmod>
   <changefreq>daily</changefreq>
   <priority>0.90</priority>
 </url>
 <url>
-  <loc>https://portugalapoia.com/habitacao.html</loc>
+  <loc>https://portugalapoia.com/habitação.html</loc>
   <lastmod>2025-08-15</lastmod>
   <changefreq>daily</changefreq>
   <priority>0.90</priority>
 </url>
-
 <url>
   <loc>https://portugalapoia.com/blog.html</loc>
   <lastmod>2025-08-15</lastmod>
@@ -48,12 +46,10 @@
   <changefreq>monthly</changefreq>
   <priority>0.70</priority>
 </url>
-
 <url>
   <loc>https://portugalapoia.com/politica-privacidade.html</loc>
   <lastmod>2025-08-15</lastmod>
   <changefreq>yearly</changefreq>
   <priority>0.50</priority>
 </url>
-
 </urlset>
