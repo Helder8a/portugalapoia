@@ -1,20 +1,16 @@
-# --- Configuración del Backend ---
 backend:
   name: github
   repo: Helder8a/portugalapoia
   branch: main
-  publish_mode: editorial_workflow # <-- ESTA ES LA LÍNEA CLAVE
+  publish_mode: editorial_workflow
 
-# --- Dónde guardar las imágenes que subas desde el panel ---
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
-# --- Colecciones de Contenido (Las secciones editables de tu web) ---
 collections:
   - name: "conteudos"
     label: "Conteúdos das Páginas"
     files:
-      # --- Editor para la página de Empleos ---
       - file: "_dados/empregos.json"
         label: "Vagas de Emprego"
         name: "empregos"
@@ -31,8 +27,6 @@ collections:
               - { label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com", required: false }
               - { label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
               - { label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
-
-      # --- Editor para la página de Donaciones ---
       - file: "_dados/doacoes.json"
         label: "Pedidos de Doação"
         name: "doacoes"
@@ -51,8 +45,6 @@ collections:
               - { label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com" }
               - { label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
               - { label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
-
-      # --- Editor para la página de Servicios  ---
       - file: "_dados/servicos.json"
         label: "Ofertas de Serviço"
         name: "servicos"
@@ -71,8 +63,6 @@ collections:
               - { label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com" }
               - { label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
               - { label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
-
-      # --- Editor para la página de Vivienda ---
       - file: "_dados/habitacao.json"
         label: "Anúncios de Habitação"
         name: "habitacao"
@@ -89,8 +79,6 @@ collections:
               - { label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com" }
               - { label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
               - { label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
-
-  # --- Colección separada para el Blog ---
   - name: "blog"
     label: "Blog"
     folder: "_blog"
@@ -99,5 +87,10 @@ collections:
     fields:
       - { label: "Título do Post", name: "title", widget: "string" }
       - { label: "Data de Publicação", name: "date", widget: "datetime" }
-      - { label: "Imagem de Destaque", name: "thumbnail", widget: "image" }
+      - { label: "Thumbnail (Imagem de Destaque)", name: "thumbnail", widget: "image" }
+      - label: "Categoría"
+        name: "category"
+        widget: "select"
+        options: ["empleo", "serviços", "habitação", "turismo", "estudos"]
+        default: "estudos"
       - { label: "Corpo do Post", name: "body", widget: "markdown" }
