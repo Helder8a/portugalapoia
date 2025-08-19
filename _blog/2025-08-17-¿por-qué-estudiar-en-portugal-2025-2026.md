@@ -1,6 +1,6 @@
 ---
-title: ¿Por Qué Estudiar en Portugal? (2025-2026)
-date: 2025-08-17
+title: ¿Por qué estudiar en Portugal? (2025-2026)
+date: 2025-08-16T23:00:00.000Z
 thumbnail: /images/uploads/blog_2025_08_19.webp
 category: estudos
 ---
