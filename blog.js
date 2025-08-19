@@ -6,6 +6,21 @@ const blogPosts = [
 
 let allPostsData = [];
 
+// Función de ayuda para parsear la fecha y evitar el error "Invalid Date"
+const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    if (!isNaN(date.getTime())) {
+        return date.toLocaleDateString('pt-PT', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+    // Si la fecha es inválida, intenta un formato de solo fecha
+    const parts = dateString.split('-');
+    if (parts.length === 3) {
+        const d = new Date(parts[0], parts[1] - 1, parts[2]);
+        return d.toLocaleDateString('pt-PT', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+    return 'Fecha Desconocida';
+};
+
 const renderPosts = (postsToRender) => {
     const postsContainer = document.getElementById('blog-full-content');
     postsContainer.innerHTML = '';
@@ -18,6 +33,7 @@ const renderPosts = (postsToRender) => {
     const htmlContent = postsToRender.map(post => {
         const metadata = post.metadata;
         const thumbnailHTML = metadata.thumbnail ? `<img src="${metadata.thumbnail}" class="card-img-top blog-post-image" alt="${metadata.title}">` : '';
+        const formattedDate = formatDate(metadata.date);
 
         return `
             <div class="col-lg-4 col-md-6 mb-4 d-flex">
@@ -25,7 +41,7 @@ const renderPosts = (postsToRender) => {
                     ${thumbnailHTML}
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">${metadata.title}</h5>
-                        <p class="card-text text-muted small"><i class="fas fa-calendar-alt"></i> ${new Date(metadata.date).toLocaleDateString()}</p>
+                        <p class="card-text text-muted small"><i class="fas fa-calendar-alt"></i> ${formattedDate}</p>
                         <p class="card-text">${post.content.substring(0, 150)}...</p>
                         <a href="post.html?slug=${post.slug}" class="btn btn-primary mt-auto">Ler mais</a>
                     </div>
