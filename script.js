@@ -132,69 +132,48 @@ document.addEventListener("DOMContentLoaded", async () => {
         return `<div class="col-lg-4 col-md-6 mb-4 housing-item"><div class="card h-100 shadow-sm" id="${anuncio.id}"><div class="card-body d-flex flex-column"><h5 class="card-title">${anuncio.titulo}</h5><h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${anuncio.localizacao}</h6><p class="card-text flex-grow-1">${anuncio.descricao}</p><div class="mt-auto"><p class="card-text small contact-info">${contatoHTML}</p></div></div><div class="card-footer d-flex justify-content-between align-items-center">${formatarDatas(anuncio)}</div>${renderShareButtons(anuncio, pageName)}</div></div>`;
     }
 
-    // Función para actualizar los contadores del impacto en la comunidad
     async function updateImpactCounters() {
         const doacoes = await fetchJson('/_dados/doacoes.json');
         const empregos = await fetchJson('/_dados/empregos.json');
         const servicos = await fetchJson('/_dados/servicos.json');
         const habitacao = await fetchJson('/_dados/habitacao.json');
-
         const totalDoacoes = doacoes.length;
         const totalEmpregos = empregos.length;
         const totalServicos = servicos.length;
         const totalHabitacao = habitacao.length;
         const totalAnuncios = totalDoacoes + totalEmpregos + totalServicos + totalHabitacao;
-
         const contadorDoacoesEl = document.getElementById('contador-doacoes');
         if (contadorDoacoesEl) contadorDoacoesEl.textContent = `${totalDoacoes}+`;
-
         const contadorEmpregosEl = document.getElementById('contador-empregos');
         if (contadorEmpregosEl) contadorEmpregosEl.textContent = `${totalEmpregos}+`;
-
         const contadorServicosEl = document.getElementById('contador-servicos');
         if (contadorServicosEl) contadorServicosEl.textContent = `${totalServicos}+`;
-
         const contadorHabitacaoEl = document.getElementById('contador-habitacao');
         if (contadorHabitacaoEl) contadorHabitacaoEl.textContent = `${totalHabitacao}+`;
-
         const contadorTotalEl = document.getElementById('contador-total');
         if (contadorTotalEl) contadorTotalEl.textContent = `${totalAnuncios}+`;
     }
 
-    // --- CARGA INICIAL ---
-    carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'doações.html');
-    carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'empregos.html');
-    carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'serviços.html');
-    carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderHabitacao, 'habitação.html');
-
-    // Llamada a la nueva función de contadores
-    updateImpactCounters();
-
-    // --- LÓGICA DO BUSCADOR (CORRIGIDA) ---
+    // --- LÓGICA DO BUSCADOR ---
     function setupSearch() {
         const searchInput = document.getElementById('searchInput');
         const locationInput = document.getElementById('locationInput');
         const searchButton = document.getElementById('searchButton');
         const clearButton = document.getElementById('clearButton');
         const noResults = document.getElementById('no-results');
-
-        if (!searchInput) {
-            return; // Sai da função se o buscador não existir nesta página
-        }
+        if (!searchInput) return;
 
         function filterCards() {
             const searchText = searchInput.value.toLowerCase().trim();
             const locationText = locationInput.value.toLowerCase().trim();
             const cards = document.querySelectorAll('.job-item, .announcement-item, .service-item, .housing-item');
             let visibleCount = 0;
-
             cards.forEach(card => {
                 const title = (card.querySelector('.card-title')?.textContent || '').toLowerCase();
                 const description = (card.querySelector('.card-text')?.textContent || '').toLowerCase();
                 const location = (card.querySelector('.card-subtitle')?.textContent || '').toLowerCase();
                 const textMatch = !searchText || title.includes(searchText) || description.includes(searchText);
                 const locationMatch = !locationText || location.includes(locationText);
-
                 if (textMatch && locationMatch) {
                     card.style.display = '';
                     visibleCount++;
@@ -202,10 +181,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     card.style.display = 'none';
                 }
             });
-
-            if (noResults) {
-                noResults.style.display = visibleCount === 0 ? 'block' : 'none';
-            }
+            if (noResults) noResults.style.display = visibleCount === 0 ? 'block' : 'none';
         }
 
         function clearFilters() {
@@ -220,81 +196,67 @@ document.addEventListener("DOMContentLoaded", async () => {
         locationInput.addEventListener('keyup', filterCards);
     }
 
-    setupSearch(); // Chama a função que configura o buscador
-});
-
-// --- LÓGICA PARA LA PÁGINA DEL BLOG CON CATEGORÍAS ---
-
-// Función para mostrar las publicaciones del blog
-function displayBlogPosts(posts) {
-    const grid = document.getElementById('blog-posts-grid');
-    const noResults = document.getElementById('no-results-blog');
-    if (!grid) return; // Si no estamos en la página del blog, no hacer nada
-
-    grid.innerHTML = ''; // Limpiar el grid
-
-    if (posts.length === 0) {
-        if(noResults) noResults.style.display = 'block';
-        return;
-    }
-    if(noResults) noResults.style.display = 'none';
-
-
-    posts.forEach(post => {
-        const postCard = document.createElement('div');
-        postCard.className = 'col-lg-4 col-md-6';
-        
-        // Convertir el cuerpo de markdown a HTML (simple conversión de saltos de línea)
-        const bodyHtml = post.corpo.replace(/\n/g, '<br>');
-
-        postCard.innerHTML = `
-            <div class="card blog-card shadow-sm">
-                ${post.imagem ? `<img src="${post.imagem}" class="card-img-top" alt="${post.titulo}">` : ''}
-                <div class="card-body">
-                    <span class="badge badge-primary badge-category mb-2">${post.categoria}</span>
-                    <h5 class="card-title">${post.titulo}</h5>
-                    <p class="card-text">${bodyHtml.substring(0, 100)}...</p>
-                    <p class="card-text"><small class="text-muted">Publicado em ${post.data}</small></p>
+    // --- LÓGICA PARA A PÁGINA DO BLOG ---
+    function displayBlogPosts(posts) {
+        const grid = document.getElementById('blog-posts-grid');
+        const noResults = document.getElementById('no-results-blog');
+        if (!grid) return;
+        grid.innerHTML = '';
+        if (posts.length === 0) {
+            if (noResults) noResults.style.display = 'block';
+            return;
+        }
+        if (noResults) noResults.style.display = 'none';
+        posts.forEach(post => {
+            const postCard = document.createElement('div');
+            postCard.className = 'col-lg-4 col-md-6';
+            const bodyHtml = post.corpo.replace(/\n/g, '<br>');
+            postCard.innerHTML = `
+                <div class="card blog-card shadow-sm h-100">
+                    ${post.imagem ? `<img src="${post.imagem}" class="card-img-top" alt="${post.titulo}">` : ''}
+                    <div class="card-body d-flex flex-column">
+                        <span class="badge badge-primary badge-category mb-2">${post.categoria}</span>
+                        <h5 class="card-title">${post.titulo}</h5>
+                        <p class="card-text flex-grow-1">${bodyHtml.substring(0, 120)}...</p>
+                        <p class="card-text mt-auto"><small class="text-muted">Publicado em ${new Date(post.data).toLocaleDateString('pt-PT')}</small></p>
                     </div>
-            </div>
-        `;
-        grid.appendChild(postCard);
-    });
-}
-
-// Función principal para cargar y filtrar las publicaciones del blog
-async function loadAndFilterBlogPosts() {
-    if (!document.getElementById('blog-posts-grid')) return; // Solo ejecutar en la página del blog
-
-    try {
-        const response = await fetch('_dados/blog.json');
-        const data = await response.json();
-        const allPosts = data.posts.sort((a, b) => new Date(b.data) - new Date(a.data)); // Ordenar por fecha
-
-        displayBlogPosts(allPosts); // Mostrar todos los posts al principio
-
-        const filterButtons = document.querySelectorAll('#category-filters button');
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                // Estilo de los botones
-                filterButtons.forEach(btn => btn.classList.replace('btn-primary', 'btn-secondary'));
-                button.classList.replace('btn-secondary', 'btn-primary');
-                
-                const category = button.getAttribute('data-category');
-                
-                if (category === 'all') {
-                    displayBlogPosts(allPosts);
-                } else {
-                    const filteredPosts = allPosts.filter(post => post.categoria === category);
-                    displayBlogPosts(filteredPosts);
-                }
-            });
+                </div>`;
+            grid.appendChild(postCard);
         });
-
-    } catch (error) {
-        console.error('Erro ao carregar as publicações do blog:', error);
     }
-}
 
-// Llamar a la función cuando el DOM esté cargado
-document.addEventListener('DOMContentLoaded', loadAndFilterBlogPosts);
+    async function loadAndFilterBlogPosts() {
+        if (!document.getElementById('blog-posts-grid')) return;
+        try {
+            const response = await fetch('_dados/blog.json');
+            const data = await response.json();
+            const allPosts = data.posts.sort((a, b) => new Date(b.data) - new Date(a.data));
+            displayBlogPosts(allPosts);
+            const filterButtons = document.querySelectorAll('#category-filters button');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    filterButtons.forEach(btn => btn.classList.replace('btn-primary', 'btn-secondary'));
+                    button.classList.replace('btn-secondary', 'btn-primary');
+                    const category = button.getAttribute('data-category');
+                    if (category === 'all') {
+                        displayBlogPosts(allPosts);
+                    } else {
+                        const filteredPosts = allPosts.filter(post => post.categoria === category);
+                        displayBlogPosts(filteredPosts);
+                    }
+                });
+            });
+        } catch (error) {
+            console.error('Erro ao carregar as publicações do blog:', error);
+        }
+    }
+
+    // --- CARGAS DE CONTEÚDO E INICIALIZAÇÃO ---
+    carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'doações.html');
+    carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'empregos.html');
+    carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'serviços.html');
+    carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderHabitacao, 'habitação.html');
+    updateImpactCounters();
+    setupSearch();
+    loadAndFilterBlogPosts(); // <- INICIA A LÓGICA DO BLOG
+});
