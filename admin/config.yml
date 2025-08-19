@@ -2,7 +2,7 @@ backend:
   name: github
   repo: Helder8a/portugalapoia
   branch: main
-  publish_mode: editorial_workflow
+  publish_mode: simple
 
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
