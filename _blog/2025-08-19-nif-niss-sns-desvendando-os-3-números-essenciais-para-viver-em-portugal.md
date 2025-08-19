@@ -14,7 +14,7 @@ seo:
 ---
 Mudar-se para um novo país é uma aventura cheia de emoções e... burocracia. Em Portugal, existem três "números mágicos" que são a chave para desbloquear a sua vida cívica, profissional e de saúde. Estamos a falar do NIF, do NISS e do número do SNS.
 
-Pode parecer confuso no início, mas não se preocupe! Neste guia, vamos desvendar cada um deles de forma simples e direta.
+Pode parecer confuso no início, mas não se preocupe! Neste guia, vamos desvendar cada um deles de forma simples e direta..
 
 ### 1. O NIF: A Sua Identidade Fiscal
 
