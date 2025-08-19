@@ -1,103 +1,101 @@
-# --- Configuración del Backend ---
 backend:
   name: github
-  repo: Helder8a/portugalapoia
+  repo: Helder8a/portugalapoia # Reemplaza con tu repo
   branch: main
-  publish_mode: editorial_workflow # <-- ESTA ES LA LÍNEA CLAVE
+  publish_mode: editorial_workflow
 
-# --- Dónde guardar las imágenes que subas desde el panel ---
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
-# --- Colecciones de Contenido (Las secciones editables de tu web) ---
+# Colecciones de Contenido (SECCIONES CORREGIDAS)
 collections:
-  - name: "conteudos"
-    label: "Conteúdos das Páginas"
+  - name: "doacoes"
+    label: "Pedidos de Doação"
     files:
-      # --- Editor para la página de Empleos ---
-      - file: "_dados/empregos.json"
-        label: "Vagas de Emprego"
-        name: "empregos"
-        fields:
-          - label: "Lista de Vagas"
-            name: "vagas"
-            widget: "list"
-            fields:
-              - { label: "ID (Ex: EMP-033)", name: "id", widget: "string" }
-              - { label: "Título da Vaga", name: "titulo", widget: "string" }
-              - { label: "Localização", name: "localizacao", widget: "string" }
-              - { label: "Descrição", name: "descricao", widget: "text" }
-              - { label: "Tel", name: "contato", widget: "string", required: false }
-              - { label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com", required: false }
-              - { label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
-              - { label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
-
-      # --- Editor para la página de Donaciones ---
       - file: "_dados/doacoes.json"
-        label: "Pedidos de Doação"
-        name: "doacoes"
+        label: "Lista de Pedidos"
+        name: "pedidos"
         fields:
-          - label: "Lista de Pedidos"
-            name: "pedidos"
-            widget: "list"
-            fields:
-              - { label: "ID (Ex: DOA-004)", name: "id", widget: "string" }
-              - { label: "Título do Pedido", name: "titulo", widget: "string" }
-              - { label: "Localização", name: "localizacao", widget: "string" }
-              - { label: "Descrição", name: "descricao", widget: "text" }
-              - { label: "É Urgente?", name: "urgente", widget: "boolean", default: false }
-              - { label: "Imagem (Opcional)", name: "imagem", widget: "image", required: false }
-              - { label: "Tel", name: "contato", widget: "string" }
-              - { label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com" }
-              - { label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
-              - { label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
+          - {label: Lista de Pedidos, name: pedidos, widget: list, fields: [
+              {label: ID (Ex: DOA-004), name: id, widget: string},
+              {label: "Título do Pedido", name: titulo, widget: string},
+              {label: Localização, name: localizacao, widget: string},
+              {label: Descrição, name: descricao, widget: text},
+              {label: "É Urgente?", name: urgente, widget: boolean, default: false},
+              {label: "Imagem (Opcional)", name: imagem, widget: image, required: false},
+              {label: Tel, name: contato, widget: string},
+              {label: Email, name: link_contato, widget: string, hint: "Coloque o email no formato mailto:exemplo@email.com"},
+              {label: "Data de Publicação", name: data_publicacao, widget: date, format: "YYYY-MM-DD", required: false},
+              {label: "Data de Vencimento", name: data_vencimento, widget: date, format: "YYYY-MM-DD", required: false}
+            ]}
 
-      # --- Editor para la página de Servicios  ---
+  - name: "empregos"
+    label: "Vagas de Emprego"
+    files:
+      - file: "_dados/empregos.json"
+        label: "Lista de Vagas"
+        name: "vagas"
+        fields:
+          - {label: "Lista de Vagas", name: vagas, widget: list, fields: [
+              {label: "ID (Ex: EMP-033)", name: id, widget: string},
+              {label: "Título da Vaga", name: titulo, widget: string},
+              {label: Localização, name: localizacao, widget: string},
+              {label: Descrição, name: descricao, widget: text},
+              {label: Tel, name: contato, widget: string, required: false},
+              {label: Email, name: link_contato, widget: string, hint: "Coloque o email no formato mailto:exemplo@email.com", required: false},
+              {label: "Data de Publicação", name: data_publicacao, widget: date, format: "YYYY-MM-DD", required: false},
+              {label: "Data de Vencimento", name: data_vencimento, widget: date, format: "YYYY-MM-DD", required: false}
+            ]}
+
+  - name: "servicos"
+    label: "Ofertas de Serviço"
+    files:
       - file: "_dados/servicos.json"
-        label: "Ofertas de Serviço"
+        label: "Lista de Serviços"
         name: "servicos"
         fields:
-          - label: "Lista de Serviços"
-            name: "servicos"
-            widget: "list"
-            fields:
-              - { label: "ID (Ex: SER-004)", name: "id", widget: "string" }
-              - { label: "Logo da Empresa (Opcional)", name: "logo_empresa", widget: "image", required: false }
-              - { label: "Título do Serviço", name: "titulo", widget: "string" }
-              - { label: "Valor do Serviço (Opcional)", name: "valor_servico", widget: "string", required: false, hint: "Ex: 50€, A combinar, Gratuito" }
-              - { label: "Localização", name: "localizacao", widget: "string" }
-              - { label: "Descrição", name: "descricao", widget: "text" }
-              - { label: "Tel", name: "contato", widget: "string" }
-              - { label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com" }
-              - { label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
-              - { label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
+          - {label: "Lista de Serviços", name: servicos, widget: list, fields: [
+              {label: "ID (Ex: SER-004)", name: id, widget: string},
+              {label: "Logo da Empresa (Opcional)", name: logo_empresa, widget: image, required: false},
+              {label: "Título do Serviço", name: titulo, widget: string},
+              {label: "Valor do Serviço (Opcional)", name: valor_servico, widget: string, required: false, hint: "Ex: 50€, A combinar, Gratuito"},
+              {label: Localização, name: localizacao, widget: string},
+              {label: Descrição, name: descricao, widget: text},
+              {label: Tel, name: contato, widget: string},
+              {label: Email, name: link_contato, widget: string, hint: "Coloque o email no formato mailto:exemplo@email.com"},
+              {label: "Data de Publicação", name: data_publicacao, widget: date, format: "YYYY-MM-DD", required: false},
+              {label: "Data de Vencimento", name: data_vencimento, widget: date, format: "YYYY-MM-DD", required: false}
+            ]}
 
-      # --- Editor para la página de Vivienda ---
+  - name: "habitacao"
+    label: "Anúncios de Habitação"
+    files:
       - file: "_dados/habitacao.json"
-        label: "Anúncios de Habitação"
-        name: "habitacao"
+        label: "Lista de Anúncios"
+        name: "anuncios"
         fields:
-          - label: "Lista de Anúncios"
-            name: "anuncios"
-            widget: "list"
-            fields:
-              - { label: "ID (Ex: HAB-007)", name: "id", widget: "string" }
-              - { label: "Título do Anúncio", name: "titulo", widget: "string" }
-              - { label: "Localização", name: "localizacao", widget: "string" }
-              - { label: "Descrição", name: "descricao", widget: "text" }
-              - { label: "Tel", name: "contato", widget: "string" }
-              - { label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com" }
-              - { label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
-              - { label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
+          - {label: "Lista de Anúncios", name: anuncios, widget: list, fields: [
+              {label: "ID (Ex: HAB-007)", name: id, widget: string},
+              {label: "Título do Anúncio", name: titulo, widget: string},
+              {label: Localização, name: localizacao, widget: string},
+              {label: Descrição, name: descricao, widget: text},
+              {label: Tel, name: contato, widget: string},
+              {label: Email, name: link_contato, widget: string, hint: "Coloque o email no formato mailto:exemplo@email.com"},
+              {label: "Data de Publicação", name: data_publicacao, widget: date, format: "YYYY-MM-DD", required: false},
+              {label: "Data de Vencimento", name: data_vencimento, widget: date, format: "YYYY-MM-DD", required: false}
+            ]}
 
-  # --- Colección separada para el Blog ---
   - name: "blog"
-    label: "Blog"
-    folder: "_blog"
-    create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    fields:
-      - { label: "Título do Post", name: "title", widget: "string" }
-      - { label: "Data de Publicação", name: "date", widget: "datetime" }
-      - { label: "Imagem de Destaque", name: "thumbnail", widget: "image" }
-      - { label: "Corpo do Post", name: "body", widget: "markdown" }
+    label: "Publicações do Blog"
+    files:
+      - file: "_dados/blog.json"
+        label: "Lista de Publicações"
+        name: "posts"
+        fields:
+          - {label: "Lista de Publicações", name: posts, widget: list, fields: [
+              {label: "Título da Publicação", name: titulo, widget: string},
+              {label: "Data de Publicação", name: data, widget: date, format: "YYYY-MM-DD"},
+              {label: "Imagem de Destaque", name: imagem, widget: image, required: false},
+              {label: Categoria, name: categoria, widget: select, options: ["Doações", "Emprego", "Serviços", "Habitação", "Turismo", "Educação"]},
+              {label: "Corpo da Publicação", name: corpo, widget: markdown}
+            ]}
