@@ -79,3 +79,16 @@ collections:
               - { label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com" }
               - { label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
               - { label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
+
+
+              - name: "blog"
+    label: "Posts do Blog"
+    folder: "_dados/posts"
+    create: true
+    fields:
+      - {label: "Título", name: "title", widget: "string", required: true}
+      - {label: "Autor", name: "author", widget: "string", required: true}
+      - {label: "Data de Publicação", name: "date", widget: "date", format: "YYYY-MM-DD", required: false}
+      - {label: "Conteúdo", name: "body", widget: "markdown", required: true}
+      - {label: "Imagem Principal", name: "image", widget: "image", required: false}
+      - {label: "Vídeo (Opcional)", name: "video_url", widget: "string", required: false, hint: "URL do vídeo do YouTube ou Vimeo"}
