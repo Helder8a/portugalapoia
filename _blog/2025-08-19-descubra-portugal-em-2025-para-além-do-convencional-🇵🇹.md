@@ -1,5 +1,5 @@
 ---
-title: "Descubra Portugal em 2025: Para Além do Convencional 🇵🇹"
+title: "Descubra Portugal em 2025: Para Além do Convencional"
 date: 2025-08-19T15:31:43.362Z
 thumbnail: /images/uploads/2025_09_19.webp
 category: turismo
