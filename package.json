@@ -1,11 +1,17 @@
+// package.json
+
 {
-  "name": "portugalapoia-functions",
+  "name": "portugalapoia",
   "version": "1.0.0",
-  "description": "Funciones para el sitio PortugalApoia",
+  "description": "Red de Apoyo en Portugal",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate-posts": "node generate-posts.js"
+  },
+  "author": "Helder Almeida",
+  "license": "ISC",
   "dependencies": {
-    "@octokit/rest": "^20.0.1",
-    "cloudinary": "^1.41.3",
-    "busboy": "^1.6.0",
-    "@sendgrid/mail": "^8.1.3"
+    "gray-matter": "^4.0.3"
   }
 }

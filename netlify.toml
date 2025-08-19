@@ -1,23 +1,11 @@
-# --- CÓDIGO FINAL Y CORRECTO para netlify.toml ---
+# netlify.toml
 
-# Este bloque define la configuración general para TODAS las funciones.
-# Solo puede aparecer UNA VEZ en todo el fichero.
-[functions]
-  directory = "netlify/functions/"
-  node_bundler = "esbuild"
+[build]
+  command = "npm install && npm run generate-posts"
+  publish = "."
 
-# Para programar una función específica, se hace de esta manera.
-# La siguiente línea ha sido comentada para desactivar la limpieza automática.
-# [functions.cleanup-expired]
-#   schedule = "0 3 * * *"
-
-# --- netlify.toml ---
-
-# (Conserva el resto de tu configuración [build], etc.)
-
-# Añade esta sección para el plugin del sitemap
+# Añade esta sección para el plugin del sitemap (mejora de SEO)
 [[plugins]]
   package = "@netlify/plugin-sitemap"
   [plugins.inputs]
-    # Opcional: Cambia la URL base a tu dominio final
-    baseUrl = "https://www.portugalapoia.com"
+    baseUrl = "https://www.portugalapoia.com" # Asegúrate de que este es tu dominio
