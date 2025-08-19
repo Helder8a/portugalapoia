@@ -1,62 +1,46 @@
 [
   {
     "id": 1,
-    "title": "Conectando Gerações: A Inclusão Digital para Idosos",
+    "title": "Conectando Gerações: A Importância da Inclusão Digital para Idosos",
     "author": "Equipa PortugalApoia",
     "date": "2025-08-10",
     "image": "images/img_portada.webp",
     "alt": "Mãos unidas em sinal de comunidade e apoio intergeracional",
-    "category": "Educação",
-    "badgeClass": "badge-info",
-    "excerpt": "Envelhecer num mundo digital pode ser um desafio, mas a tecnologia, quando usada como ponte, tem o poder de combater a solidão e fortalecer laços. A inclusão digital é abrir uma janela para o mundo.",
-    "content": "<h3>O Desafio da Solidão na Terceira Idade</h3><p>Em Portugal, como em muitos outros países, a solidão entre os idosos é uma preocupação crescente. O ritmo de vida acelerado e as famílias geograficamente dispersas fazem com que muitos idosos passem longos períodos sozinhos. Esta situação não afeta apenas o bem-estar emocional, mas também pode ter consequências graves para a saúde física e cognitiva.</p><p>No entanto, a era digital oferece ferramentas poderosas para mitigar este isolamento. Videochamadas com familiares, acesso a notícias, participação em grupos de interesse online ou simplesmente a possibilidade de fazer compras sem sair de casa são pequenas grandes revoluções que podem transformar o dia a dia de uma pessoa idosa.</p><h4>Iniciativas que Fazem a Diferença</h4><p>Felizmente, existem cada vez mais projetos focados em promover a literacia digital na terceira idade. Associações locais, juntas de freguesia e voluntários dedicam o seu tempo a ensinar competências básicas: como usar um smartphone, navegar na internet de forma segura ou comunicar através de aplicações como o WhatsApp ou o Skype.</p><p>Estas iniciativas não ensinam apenas a usar a tecnologia; criam também espaços de convívio e aprendizagem mútua, onde a partilha de experiências combate o isolamento e fortalece o sentimento de pertença a uma comunidade ativa e participativa.</p><h3>Como Pode Ajudar?</h3><p>A sua contribuição pode ser mais simples do que imagina:</p><ul><li><strong>Ofereça o seu tempo:</strong> Procure por associações na sua área que promovam a inclusão digital e ofereça-se como voluntário.</li><li><strong>Ajude um familiar ou vizinho:</strong> Dedique uma hora por semana para ensinar um idoso próximo a usar um telemóvel ou tablet. A paciência e o carinho são as ferramentas mais importantes.</li><li><strong>Doe equipamento:</strong> Um tablet ou smartphone antigo que já não usa pode ser uma porta de entrada para o mundo digital para alguém que não tem meios para o adquirir.</li></ul><p>Na PortugalApoia, acreditamos que a tecnologia deve servir para unir pessoas. Conectar gerações através do conhecimento digital é um dos investimentos mais valiosos que podemos fazer na nossa comunidade, garantindo que ninguém fica para trás.</p>"
-  },
-  {
-    "id": 5,
-    "title": "Novas Oportunidades de Aprendizagem para Jovens",
-    "author": "Equipa PortugalApoia",
-    "date": "2025-08-12",
-    "image": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2670&auto=format&fit=crop",
-    "alt": "Jovens a estudar",
-    "category": "Educação",
-    "badgeClass": "badge-info",
-    "excerpt": "A educação é a chave para o futuro. Descubra os novos programas e bolsas de estudo disponíveis para jovens em Portugal, e como podem moldar a próxima geração de líderes e inovadores.",
-    "content": "<p>Conteúdo completo sobre as novas oportunidades de aprendizagem para jovens...</p>"
-  },
-  {
-    "id": 4,
-    "title": "Descobrindo Portugal: Rotas de Turismo Solidário",
-    "author": "Equipa PortugalApoia",
-    "date": "2025-08-01",
-    "image": "https://images.unsplash.com/photo-1599059813005-11265ba4b4ce?q=80&w=2670&auto=format&fit=crop",
-    "alt": "Voluntariado e viagem",
-    "category": "Turismo",
-    "badgeClass": "badge-warning",
-    "excerpt": "Viajar pode ser mais do que apenas visitar novos lugares. Conheça projetos de turismo que permitem aos visitantes contribuir para as comunidades locais, transformando as suas férias numa experiência inesquecível.",
-    "content": "<p>Conteúdo completo sobre as rotas de turismo solidário...</p>"
-  },
-  {
-    "id": 3,
-    "title": "Guia Rápido para Encontrar Emprego em Portugal",
-    "author": "Equipa PortugalApoia",
-    "date": "2025-07-25",
-    "image": "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2832&auto-format&fit=crop",
-    "alt": "Oportunidades de Emprego",
-    "category": "Emprego",
+    "category": "Comunidade",
     "badgeClass": "badge-primary",
-    "excerpt": "Procurar emprego pode ser um desafio, mas com a estratégia certa, pode aumentar significativamente as suas chances de sucesso. Este guia oferece dicas práticas para o mercado de trabalho português.",
-    "content": "<p>Conteúdo completo sobre como encontrar emprego em Portugal...</p>"
+    "excerpt": "Envelhecer num mundo digital pode ser um desafio, mas a tecnologia, quando usada como ponte, tem o poder de combater a solidão e fortalecer laços. A inclusão digital dos idosos é mais do que ensinar a usar um smartphone; é abrir uma janela para o mundo."
   },
   {
     "id": 2,
-    "title": "Soluções de Vivenda: Onde Encontrar Apoio?",
+    "title": "Como a sua Doação pode Fazer a Diferença",
     "author": "Equipa PortugalApoia",
     "date": "2025-07-15",
     "image": "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=2670&auto=format&fit=crop",
-    "alt": "Chaves de uma casa",
-    "category": "Vivenda",
+    "alt": "Ajuda à comunidade",
+    "category": "Doações",
     "badgeClass": "badge-success",
-    "excerpt": "A procura de casa pode ser uma jornada complicada. Conheça as organizações e programas que oferecem apoio e soluções de habitação para famílias e indivíduos em Portugal. Achar uma casa ou manter a que temos é um dos maiores desafios para muitas famílias em Portugal.",
-    "content": "<p>Achar uma casa ou manter a que temos é um dos maiores desafios para muitas famílias em Portugal. Seja pela subida das rendas, pela dificuldade em conseguir um crédito à habitação ou pela necessidade de reabilitar uma casa antiga, a verdade é que o acesso a uma habitação digna pode ser um verdadeiro quebra-cabeças. Claro, aqui fica uma sugestão de conteúdo de boa qualidade para um blog, otimizado para SEO, sobre o tema.</p>"
+    "excerpt": "Para quem doa, pode ser apenas um casaco que já não serve. Mas para quem recebe, esse gesto pode significar o conforto num inverno rigoroso ou a dignidade de ter um lar mais completo."
+  },
+  {
+    "id": 3,
+    "title": "Guia Rápido para Encontrar Emprego",
+    "author": "Equipa PortugalApoia",
+    "date": "2025-07-25",
+    "image": "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2832&auto=format&fit=crop",
+    "alt": "Oportunidades de Emprego",
+    "category": "Emprego",
+    "badgeClass": "badge-info",
+    "excerpt": "Procurar emprego pode ser um desafio, mas com a estratégia certa, pode aumentar significativamente as suas chances de sucesso. Este guia oferece dicas práticas para quem procura uma nova oportunidade."
+  },
+  {
+    "id": 4,
+    "title": "Histórias de Voluntariado que Inspiram",
+    "author": "Equipa PortugalApoia",
+    "date": "2025-08-01",
+    "image": "https://images.unsplash.com/photo-1599059813005-11265ba4b4ce?q=80&w=2670&auto=format&fit=crop",
+    "alt": "Voluntariado",
+    "category": "Voluntariado",
+    "badgeClass": "badge-warning",
+    "excerpt": "O voluntariado é uma das forças mais transformadoras da nossa sociedade. É a prova de que a empatia, quando posta em ação, pode gerar ondas de mudança positiva que tocam inúmeras vidas."
   }
 ]
