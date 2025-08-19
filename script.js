@@ -57,6 +57,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
+    // --- LÓGICA DE RENDERIZAÇÃO DE CONTEÚDO (NOVA E MELHORADA) ---
     async function carregarConteudo(jsonPath, containerId, renderFunction, pageName) {
         const container = document.getElementById(containerId);
         if (!container) return;
@@ -68,28 +69,29 @@ document.addEventListener("DOMContentLoaded", async () => {
             return;
         }
 
-        const destacados = items.filter(item => item.destacado === true);
-        const normais = items.filter(item => !item.destacado);
+        // Ordena a lista: destacados primeiro, depois por data de publicação
+        items.sort((a, b) => {
+            if (a.destacado && !b.destacado) return -1;
+            if (!a.destacado && b.destacado) return 1;
+            return new Date(b.data_publicacao || 0) - new Date(a.data_publicacao || 0);
+        });
 
-        destacados.sort((a, b) => new Date(b.data_publicacao || 0) - new Date(a.data_publicacao || 0));
-        normais.sort((a, b) => new Date(b.data_publicacao || 0) - new Date(a.data_publicacao || 0));
+        const firstNormalIndex = items.findIndex(item => !item.destacado);
 
-        const htmlDestacados = destacados.map(item => renderFunction(item, pageName, item.id)).join('');
-        const htmlNormais = normais.map(item => renderFunction(item, pageName, item.id)).join('');
-
-        let htmlContent = '';
-        if (htmlDestacados) {
-            htmlContent += htmlDestacados;
-            if (htmlNormais) {
-                htmlContent += `<div class="col-12"><hr class="destacado-separator"></div>`;
+        let htmlContent = items.map((item, index) => {
+            let itemHtml = renderFunction(item, pageName, item.id);
+            // Insere o separador antes do primeiro anúncio normal, se houver destacados
+            if (firstNormalIndex > 0 && index === firstNormalIndex) {
+                const separatorHtml = `<div class="col-12"><hr class="destacado-separator"></div>`;
+                return separatorHtml + itemHtml;
             }
-        }
-        htmlContent += htmlNormais;
+            return itemHtml;
+        }).join('');
 
         container.innerHTML = htmlContent;
     }
 
-    // --- FUNÇÕES DE RENDERIZAÇÃO ---
+    // --- FUNÇÕES DE RENDERIZAÇÃO INDIVIDUAL ---
     function formatarDatas(item) {
         if (!item || !item.data_publicacao || !item.data_vencimento) {
             return `<div class="date-info">ID: ${item.id || 'N/A'}</div>`;
@@ -114,7 +116,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         return `<div class="share-buttons"><small class="share-label">Partilhar:</small><a href="https://api.whatsapp.com/send?text=${encodedText}%20${encodedUrl}" target="_blank" rel="noopener noreferrer" title="Partilhar no WhatsApp" class="share-btn whatsapp"><i class="fab fa-whatsapp"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}" target="_blank" rel="noopener noreferrer" title="Partilhar no Facebook" class="share-btn facebook"><i class="fab fa-facebook-f"></i></a></div>`;
     }
 
-    function renderEmprego(item, pageName, idAnuncio) {
+    function renderEmprego(item, pageName) {
         const jobPostingSchema = { "@context": "https://schema.org/", "@type": "JobPosting", "title": item.titulo, "description": (item.descricao || '').replace(/["\n\r]/g, ' ').trim(), "datePosted": item.data_publicacao, "validThrough": item.data_vencimento, "hiringOrganization": { "@type": "Organization", "name": "Empresa Anunciante (via PortugalApoia)" }, "jobLocation": { "@type": "Place", "address": { "@type": "PostalAddress", "addressLocality": item.localizacao, "addressCountry": "PT" } }, "employmentType": "FULL_TIME, PART_TIME" };
         let contatoHTML = '';
         if (item.contato) { contatoHTML += `<p class="card-text small mb-1"><strong>Tel:</strong> <a href="tel:${item.contato.replace(/[\s+()-]/g, '')}">${item.contato}</a></p>`; }
@@ -151,6 +153,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         return `<div class="col-lg-4 col-md-6 mb-4 housing-item"><div class="card h-100 shadow-sm" id="${anuncio.id}">${destaqueHTML}<div class="card-body d-flex flex-column"><h5 class="card-title">${anuncio.titulo}</h5><h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${anuncio.localizacao}</h6><p class="card-text flex-grow-1">${anuncio.descricao}</p><div class="mt-auto"><p class="card-text small contact-info">${contatoHTML}</p></div></div><div class="card-footer d-flex justify-content-between align-items-center">${formatarDatas(anuncio)}${renderShareButtons(anuncio, pageName)}</div></div></div>`;
     }
 
+    // --- FUNÇÃO PARA ATUALIZAR CONTADORES ---
     async function updateImpactCounters() {
         const doacoes = await fetchJson('/_dados/doacoes.json');
         const empregos = await fetchJson('/_dados/empregos.json');
@@ -164,7 +167,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById('contador-total')?.textContent = `${totalAnuncios}+`;
     }
 
-    // --- CARGA INICIAL ---
+    // --- CARGA INICIAL DE CONTEÚDO ---
     carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'doações.html');
     carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'empregos.html');
     carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'serviços.html');
