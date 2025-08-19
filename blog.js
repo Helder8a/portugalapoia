@@ -39,7 +39,7 @@ const renderBlogPosts = async () => {
                     }
                 });
 
-                // AÑADIDO: Comprueba si existe una imagen de miniatura y la añade.
+                // Este es el código AÑADIDO para renderizar la imagen
                 const thumbnailHTML = metadata.thumbnail ? `<img src="${metadata.thumbnail}" class="img-fluid rounded mb-4" alt="${metadata.title}">` : '';
 
                 const postHTML = `
