@@ -224,9 +224,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 // --- LÓGICA PARA CARREGAR E GERIR O BLOG ---
-
 document.addEventListener('DOMContentLoaded', () => {
-    // Verifica se estamos na página do blog antes de executar qualquer coisa
     if (document.getElementById('blog-grid-placeholder')) {
         setupBlogPage();
     }
@@ -235,7 +233,6 @@ document.addEventListener('DOMContentLoaded', () => {
 async function setupBlogPage() {
     const placeholders = {
         featured: document.getElementById('featured-post-placeholder'),
-        featuredContainer: document.getElementById('featured-post-container'),
         grid: document.getElementById('blog-grid-placeholder'),
         filters: document.getElementById('category-filters-placeholder'),
         noResults: document.getElementById('no-results-placeholder'),
@@ -243,7 +240,7 @@ async function setupBlogPage() {
     };
 
     try {
-        const response = await fetch('_dados/blog.json');
+        const response = await fetch('/_dados/blog.json');
         if (!response.ok) throw new Error(`Erro ao carregar dados: ${response.status}`);
         
         let allPosts = await response.json();
@@ -260,17 +257,13 @@ async function setupBlogPage() {
             }
             const formattedDate = new Date(post.date).toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' });
             placeholders.featured.innerHTML = `
-                <article class="featured-post">
-                    <div class="row align-items-center">
-                        <div class="col-lg-6 mb-4 mb-lg-0"><img class="img-fluid rounded" src="${post.image}" alt="${post.alt}"></div>
-                        <div class="col-lg-6">
-                            <div class="featured-post-content">
-                                <span class="badge ${post.badgeClass} mb-2">${post.category}</span>
-                                <h2 class="mb-3">${post.title}</h2>
-                                <p class="post-meta text-muted">Por ${post.author} | ${formattedDate}</p>
-                                <p class="excerpt d-none d-md-block">${post.excerpt}</p>
-                            </div>
-                        </div>
+                <article class="blog-post-full">
+                    <img class="img-fluid rounded mb-4" src="${post.image}" alt="${post.alt}">
+                    <span class="badge ${post.badgeClass} mb-2">${post.category}</span>
+                    <h2>${post.title}</h2>
+                    <p class="text-muted">Por ${post.author} | ${formattedDate}</p>
+                    <div id="blog-full-content">
+                        ${post.content || post.excerpt}
                     </div>
                 </article>`;
         };
@@ -291,6 +284,7 @@ async function setupBlogPage() {
                             <div class="card-body d-flex flex-column">
                                 <span class="badge ${post.badgeClass} mb-2 align-self-start">${post.category}</span>
                                 <h5 class="card-title">${post.title}</h5>
+                                <p class="card-text">${post.excerpt}</p>
                                 <p class="card-text text-muted small mt-auto">Por ${post.author} | ${formattedDate}</p>
                             </div>
                         </article>
@@ -308,13 +302,9 @@ async function setupBlogPage() {
         // Função Principal de Filtro
         const updateVisiblePosts = () => {
             let filteredPosts = allPosts;
-
-            // Filtra por categoria
             if (currentCategory !== 'Todas') {
                 filteredPosts = filteredPosts.filter(p => p.category === currentCategory);
             }
-
-            // Filtra por termo de busca
             if (currentSearchTerm) {
                 const term = currentSearchTerm.toLowerCase();
                 filteredPosts = filteredPosts.filter(p => 
@@ -322,15 +312,14 @@ async function setupBlogPage() {
                     p.excerpt.toLowerCase().includes(term)
                 );
             }
-
-            // Lógica de visualização
-            if (currentCategory !== 'Todas' || currentSearchTerm) {
-                placeholders.featuredContainer.style.display = 'none'; // Esconde o post destacado
-                displayGridPosts(filteredPosts);
-            } else {
-                placeholders.featuredContainer.style.display = 'block'; // Mostra o post destacado
+            displayGridPosts(filteredPosts);
+            if (filteredPosts.length > 0 && !currentSearchTerm && currentCategory === 'Todas') {
                 displayFeaturedPost(filteredPosts[0]);
-                displayGridPosts(filteredPosts);
+            } else if (filteredPosts.length > 0) {
+                displayFeaturedPost(filteredPosts[0]);
+            }
+             else {
+                placeholders.featured.innerHTML = '';
             }
         };
 
@@ -356,9 +345,6 @@ async function setupBlogPage() {
                 const post = allPosts.find(p => p.id == postId);
                 if (post) {
                     displayFeaturedPost(post);
-                    if (currentCategory !== 'Todas' || currentSearchTerm) {
-                       placeholders.featuredContainer.style.display = 'block';
-                    }
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
             }
