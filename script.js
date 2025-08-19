@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
-    // --- LÓGICA DE RENDERIZAÇÃO DE CONTEÚDO (NOVA E MELHORADA) ---
+    // --- LÓGICA DE RENDERIZAÇÃO DE CONTEÚDO (VERSÃO CORRIGIDA E ESTÁVEL) ---
     async function carregarConteudo(jsonPath, containerId, renderFunction, pageName) {
         const container = document.getElementById(containerId);
         if (!container) return;
@@ -69,29 +69,36 @@ document.addEventListener("DOMContentLoaded", async () => {
             return;
         }
 
-        // Ordena a lista: destacados primeiro, depois por data de publicação
-        items.sort((a, b) => {
-            if (a.destacado && !b.destacado) return -1;
-            if (!a.destacado && b.destacado) return 1;
-            return new Date(b.data_publicacao || 0) - new Date(a.data_publicacao || 0);
-        });
+        // 1. Separar itens destacados dos normais
+        const destacados = items.filter(item => item.destacado);
+        const normais = items.filter(item => !item.destacado);
 
-        const firstNormalIndex = items.findIndex(item => !item.destacado);
+        // 2. Ordenar cada grupo por data de publicação
+        const sortByDate = (a, b) => new Date(b.data_publicacao || 0) - new Date(a.data_publicacao || 0);
+        destacados.sort(sortByDate);
+        normais.sort(sortByDate);
 
-        let htmlContent = items.map((item, index) => {
-            let itemHtml = renderFunction(item, pageName, item.id);
-            // Insere o separador antes do primeiro anúncio normal, se houver destacados
-            if (firstNormalIndex > 0 && index === firstNormalIndex) {
-                const separatorHtml = `<div class="col-12"><hr class="destacado-separator"></div>`;
-                return separatorHtml + itemHtml;
+        // 3. Gerar o HTML para cada grupo
+        const htmlDestacados = destacados.map(item => renderFunction(item, pageName)).join('');
+        const htmlNormais = normais.map(item => renderFunction(item, pageName)).join('');
+
+        // 4. Construir o HTML final de forma segura
+        let finalHtml = '';
+        if (htmlDestacados) {
+            finalHtml += htmlDestacados;
+            // Adicionar separador apenas se houver ambos os tipos de anúncios
+            if (htmlNormais) {
+                finalHtml += `<div class="col-12"><hr class="destacado-separator"></div>`;
             }
-            return itemHtml;
-        }).join('');
+        }
+        finalHtml += htmlNormais;
 
-        container.innerHTML = htmlContent;
+        // 5. Inserir o HTML no DOM uma única vez
+        container.innerHTML = finalHtml;
     }
 
-    // --- FUNÇÕES DE RENDERIZAÇÃO INDIVIDUAL ---
+
+    // --- FUNÇÕES DE RENDERIZAÇÃO ---
     function formatarDatas(item) {
         if (!item || !item.data_publicacao || !item.data_vencimento) {
             return `<div class="date-info">ID: ${item.id || 'N/A'}</div>`;
@@ -153,7 +160,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         return `<div class="col-lg-4 col-md-6 mb-4 housing-item"><div class="card h-100 shadow-sm" id="${anuncio.id}">${destaqueHTML}<div class="card-body d-flex flex-column"><h5 class="card-title">${anuncio.titulo}</h5><h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${anuncio.localizacao}</h6><p class="card-text flex-grow-1">${anuncio.descricao}</p><div class="mt-auto"><p class="card-text small contact-info">${contatoHTML}</p></div></div><div class="card-footer d-flex justify-content-between align-items-center">${formatarDatas(anuncio)}${renderShareButtons(anuncio, pageName)}</div></div></div>`;
     }
 
-    // --- FUNÇÃO PARA ATUALIZAR CONTADORES ---
     async function updateImpactCounters() {
         const doacoes = await fetchJson('/_dados/doacoes.json');
         const empregos = await fetchJson('/_dados/empregos.json');
@@ -167,7 +173,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById('contador-total')?.textContent = `${totalAnuncios}+`;
     }
 
-    // --- CARGA INICIAL DE CONTEÚDO ---
+    // --- CARGA INICIAL ---
     carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'doações.html');
     carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'empregos.html');
     carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'serviços.html');
