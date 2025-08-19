@@ -489,6 +489,16 @@
       "localizacao": "Torres Vedras",
       "data_publicacao": "2025-08-18",
       "data_vencimento": "2025-08-18"
+    },
+    {
+      "data_publicacao": "2025-08-19",
+      "data_vencimento": "Invalid date",
+      "id": "50",
+      "descricao": "Motorista de Ligeiros e Motorista de Pesados, com experiência, para \nSe está interessado na oferta, ",
+      "titulo": "Motorista de Ligeiros e Motorista de Pesados",
+      "localizacao": "Vila Nova de Gaia.",
+      "link_contato": "recrutamento.porto@triangulu.pt",
+      "contato": "914 978 499."
     }
   ]
 }
