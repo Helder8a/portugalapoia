@@ -1,70 +1,100 @@
 // URLs de tus posts de blog en la carpeta _blog.
-// Asegúrate de actualizar esta lista cada vez que publiques un nuevo post.
 const blogPosts = [
   '2025-08-17-¿por-qué-estudiar-en-portugal-2025-2026.md',
-  // Aquí es donde debes agregar el nombre del archivo de tu nuevo post
-  '2025-08-19-nombre-de-tu-nuevo-post.md',
+  // Asegúrate de agregar el nombre de cada archivo de post que crees aquí.
 ];
 
-// Función para renderizar el contenido del blog
-const renderBlogPosts = async () => {
+let allPostsData = [];
+
+const renderPosts = (postsToRender) => {
     const postsContainer = document.getElementById('blog-full-content');
-    if (!postsContainer) {
-        console.error('El elemento "blog-full-content" no fue encontrado.');
+    postsContainer.innerHTML = '';
+
+    if (postsToRender.length === 0) {
+        postsContainer.innerHTML = '<p class="text-center w-100">Nenhuma publicação encontrada para esta categoria.</p>';
         return;
     }
-    postsContainer.innerHTML = ''; // Limpiar el contenido existente
 
-    // Cargar la librería Marked.js
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/marked/marked.min.js';
-    script.onload = async () => {
-        const postsPromises = blogPosts.map(async (filename) => {
-            try {
-                const response = await fetch(`./_blog/${filename}`);
-                if (!response.ok) {
-                    console.error(`Error al cargar el archivo ${filename}: ${response.statusText}`);
-                    return '';
-                }
-                const text = await response.text();
-                const parts = text.split('---');
-                const frontmatter = parts[1];
-                const content = parts.slice(2).join('---').trim();
+    const htmlContent = postsToRender.map(post => {
+        const metadata = post.metadata;
+        const thumbnailHTML = metadata.thumbnail ? `<img src="${metadata.thumbnail}" class="card-img-top blog-post-image" alt="${metadata.title}">` : '';
 
-                const metadata = {};
-                frontmatter.split('\n').filter(line => line.trim() !== '').forEach(line => {
-                    const [key, value] = line.split(':');
-                    if (key && value) {
-                        metadata[key.trim()] = value.trim().replace(/"/g, '');
-                    }
-                });
+        return `
+            <div class="col-lg-4 col-md-6 mb-4 d-flex">
+                <div class="card blog-card flex-grow-1">
+                    ${thumbnailHTML}
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">${metadata.title}</h5>
+                        <p class="card-text text-muted small"><i class="fas fa-calendar-alt"></i> ${new Date(metadata.date).toLocaleDateString()}</p>
+                        <p class="card-text">${post.content.substring(0, 150)}...</p>
+                        <a href="post.html?slug=${post.slug}" class="btn btn-primary mt-auto">Ler mais</a>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
 
-                // Este es el código AÑADIDO para renderizar la imagen
-                const thumbnailHTML = metadata.thumbnail ? `<img src="${metadata.thumbnail}" class="img-fluid rounded mb-4" alt="${metadata.title}">` : '';
-
-                const postHTML = `
-                    <article class="blog-post-full">
-                        ${thumbnailHTML}
-                        <h2>${metadata.title}</h2>
-                        <p class="text-muted">Fecha de publicación: ${new Date(metadata.date).toLocaleDateString()}</p>
-                        <hr class="blog-separator">
-                        <div class="blog-content">
-                            ${marked.parse(content)}
-                        </div>
-                    </article>
-                `;
-                return postHTML;
-            } catch (error) {
-                console.error(`No se pudo renderizar el post ${filename}:`, error);
-                return '';
-            }
-        });
-
-        const renderedPosts = await Promise.all(postsPromises);
-        postsContainer.innerHTML = renderedPosts.join('');
-    };
-    document.head.appendChild(script);
+    postsContainer.innerHTML = htmlContent;
 };
 
-// Se asegura de que el DOM esté completamente cargado antes de renderizar
-document.addEventListener('DOMContentLoaded', renderBlogPosts);
+const filterPostsByCategory = (category) => {
+    let filteredPosts = allPostsData;
+    if (category !== 'all') {
+        filteredPosts = allPostsData.filter(post => post.metadata.category === category);
+    }
+    renderPosts(filteredPosts);
+};
+
+const fetchAllPosts = async () => {
+    const promises = blogPosts.map(async (filename) => {
+        try {
+            const response = await fetch(`./_blog/${filename}`);
+            const text = await response.text();
+            const parts = text.split('---');
+            const frontmatter = parts[1];
+            const content = parts.slice(2).join('---').trim();
+
+            const metadata = {};
+            frontmatter.split('\n').filter(line => line.trim() !== '').forEach(line => {
+                const [key, value] = line.split(':');
+                if (key && value) {
+                    metadata[key.trim()] = value.trim().replace(/"/g, '');
+                }
+            });
+
+            return {
+                slug: filename.replace('.md', ''),
+                metadata,
+                content
+            };
+        } catch (error) {
+            console.error(`Error al cargar el post ${filename}:`, error);
+            return null;
+        }
+    });
+
+    const posts = await Promise.all(promises);
+    allPostsData = posts.filter(post => post !== null).sort((a, b) => new Date(b.metadata.date) - new Date(a.metadata.date));
+
+    renderPosts(allPostsData);
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/marked/marked.min.js';
+    script.onload = () => {
+        fetchAllPosts();
+    };
+    document.head.appendChild(script);
+
+    const categoryButtons = document.querySelectorAll('.btn-category');
+    categoryButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            categoryButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            
+            const category = button.dataset.category;
+            filterPostsByCategory(category);
+        });
+    });
+});
