@@ -38,13 +38,13 @@ collections:
               - { label: "ID (Ex: DOA-004)", name: "id", widget: "string" }
               - { label: "Título do Pedido", name: "titulo", widget: "string" }
               - { label: "Localização", name: "localizacao", widget: "string" }
-              - { label: "Descrição", name: "descricao", widget: "text" }
+              - { label: "Descripción", name: "descripcion", widget: "text" }
               - { label: "É Urgente?", name: "urgente", widget: "boolean", default: false }
               - { label: "Imagem (Opcional)", name: "imagem", widget: "image", required: false }
               - { label: "Tel", name: "contato", widget: "string" }
               - { label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com" }
-              - { label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
-              - { label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
+              - { label: "Data de Publicación", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
+              - { label: "Data de Vencimiento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
       - file: "_dados/servicos.json"
         label: "Ofertas de Serviço"
         name: "servicos"
@@ -61,8 +61,8 @@ collections:
               - { label: "Descrição", name: "descricao", widget: "text" }
               - { label: "Tel", name: "contato", widget: "string" }
               - { label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com" }
-              - { label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
-              - { label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
+              - { label: "Data de Publicación", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
+              - { label: "Data de Vencimiento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
       - file: "_dados/habitacao.json"
         label: "Anúncios de Habitação"
         name: "habitacao"
@@ -74,14 +74,12 @@ collections:
               - { label: "ID (Ex: HAB-007)", name: "id", widget: "string" }
               - { label: "Título do Anúncio", name: "titulo", widget: "string" }
               - { label: "Localização", name: "localizacao", widget: "string" }
-              - { label: "Descrição", name: "descricao", widget: "text" }
+              - { label: "Descripción", name: "descripcion", widget: "text" }
               - { label: "Tel", name: "contato", widget: "string" }
               - { label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com" }
-              - { label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
-              - { label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
-
-
-              - name: "blog"
+              - { label: "Data de Publicación", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
+              - { label: "Data de Vencimiento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
+  - name: "blog"
     label: "Posts do Blog"
     folder: "_dados/posts"
     create: true
