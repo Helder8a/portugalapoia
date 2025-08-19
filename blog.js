@@ -2,7 +2,7 @@
 // Asegúrate de actualizar esta lista cada vez que publiques un nuevo post.
 const blogPosts = [
   '2025-08-17-¿por-qué-estudiar-en-portugal-2025-2026.md',
-  // Aquí es donde debes agregar tu nuevo archivo de post
+  // Aquí es donde debes agregar el nombre del archivo de tu nuevo post
   '2025-08-19-nombre-de-tu-nuevo-post.md',
 ];
 
@@ -39,8 +39,12 @@ const renderBlogPosts = async () => {
                     }
                 });
 
+                // AÑADIDO: Comprueba si existe una imagen de miniatura y la añade.
+                const thumbnailHTML = metadata.thumbnail ? `<img src="${metadata.thumbnail}" class="img-fluid rounded mb-4" alt="${metadata.title}">` : '';
+
                 const postHTML = `
                     <article class="blog-post-full">
+                        ${thumbnailHTML}
                         <h2>${metadata.title}</h2>
                         <p class="text-muted">Fecha de publicación: ${new Date(metadata.date).toLocaleDateString()}</p>
                         <hr class="blog-separator">
