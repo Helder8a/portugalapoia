@@ -68,33 +68,26 @@ document.addEventListener("DOMContentLoaded", async () => {
             return;
         }
 
-        // 1. SEPARAR DESTACADOS DE NORMAIS
         const destacados = items.filter(item => item.destacado === true);
         const normais = items.filter(item => !item.destacado);
 
-        // 2. ORDENAR CADA GRUPO POR DATA
         destacados.sort((a, b) => new Date(b.data_publicacao || 0) - new Date(a.data_publicacao || 0));
         normais.sort((a, b) => new Date(b.data_publicacao || 0) - new Date(a.data_publicacao || 0));
 
-        // 3. GERAR O HTML
         const htmlDestacados = destacados.map(item => renderFunction(item, pageName, item.id)).join('');
         const htmlNormais = normais.map(item => renderFunction(item, pageName, item.id)).join('');
 
         let htmlContent = '';
-
         if (htmlDestacados) {
             htmlContent += htmlDestacados;
-            // 4. ADICIONAR SEPARADOR SE HOUVER AMBOS OS TIPOS
             if (htmlNormais) {
                 htmlContent += `<div class="col-12"><hr class="destacado-separator"></div>`;
             }
         }
-
         htmlContent += htmlNormais;
 
         container.innerHTML = htmlContent;
     }
-
 
     // --- FUNÇÕES DE RENDERIZAÇÃO ---
     function formatarDatas(item) {
@@ -126,9 +119,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         let contatoHTML = '';
         if (item.contato) { contatoHTML += `<p class="card-text small mb-1"><strong>Tel:</strong> <a href="tel:${item.contato.replace(/[\s+()-]/g, '')}">${item.contato}</a></p>`; }
         if (item.link_contato && item.link_contato.includes('@')) { const emailLink = item.link_contato.startsWith('mailto:') ? item.link_contato : `mailto:${item.link_contato}`; contatoHTML += `<p class="card-text small"><strong>Email:</strong> <a href="${emailLink}">${item.link_contato.replace('mailto:', '')}</a></p>`; }
-        
         const destaqueHTML = item.destacado ? '<div class="card-destacado-icon" title="Anúncio Destacado"><i class="fas fa-star"></i></div>' : '';
-
         return `<div class="col-lg-4 col-md-6 mb-4 job-item"><div class="card h-100 shadow-sm" id="${item.id}">${destaqueHTML}<div class="card-body d-flex flex-column"><h5 class="card-title">${item.titulo || 'Sem Título'}</h5><h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${item.localizacao || 'N/A'}</h6><p class="card-text flex-grow-1">${item.descricao || 'Sem Descrição'}</p><div class="mt-auto">${contatoHTML}</div></div><div class="card-footer d-flex justify-content-between align-items-center"><div class="date-info">${formatarDatas(item)}</div>${renderShareButtons(item, pageName)}</div></div></div><script type="application/ld+json">${JSON.stringify(jobPostingSchema)}</script>`;
     }
 
@@ -138,9 +129,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const imagemHTML = pedido.imagem ? `<img loading="lazy" src="${pedido.imagem}" class="d-block w-100" alt="${pedido.titulo}" style="height: 200px; object-fit: cover;">` : '<div class="image-placeholder">SEM IMAGEM</div>';
         let contatoHTML = '';
         if (pedido.contato) { contatoHTML = `<p class="card-text small"><strong>Tel:</strong> <a href="tel:${pedido.contato.replace(/[\s+()-]/g, '')}">${pedido.contato}</a></p>`; }
-        
         const destaqueHTML = pedido.destacado ? '<div class="card-destacado-icon" title="Anúncio Destacado"><i class="fas fa-star"></i></div>' : '';
-
         return `<div class="col-lg-4 col-md-6 mb-4 announcement-item"><div class="card h-100 shadow-sm" id="${pedido.id}">${destaqueHTML}${badgeUrgente}${imagemHTML}<div class="card-body d-flex flex-column"><h5 class="card-title">${pedido.titulo}</h5><h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${pedido.localizacao}</h6><p class="card-text flex-grow-1">${pedido.descricao}</p><div class="mt-auto">${contatoHTML}<a href="mailto:${pedido.link_contato}" class="btn btn-primary btn-block">Contactar por Email</a></div></div><div class="card-footer d-flex justify-content-between align-items-center"><div class="date-info">${formatarDatas(pedido)}</div>${renderShareButtons(pedido, pageName)}</div></div></div><script type="application/ld+json">${JSON.stringify(productSchema)}</script>`;
     }
 
@@ -150,9 +139,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         let contatoIconsHTML = '<small class="contact-label">Contacto:</small>';
         if (item.contato) { contatoIconsHTML += `<a href="https://wa.me/${item.contato.replace(/[\s+()-]/g, '')}" target="_blank" class="contact-icon" title="Contactar por WhatsApp"><i class="fab fa-whatsapp"></i></a>`; }
         if (item.link_contato && item.link_contato.includes('@')) { const emailLink = item.link_contato.startsWith('mailto:') ? item.link_contato : `mailto:${item.link_contato}`; contatoIconsHTML += `<a href="${emailLink}" class="contact-icon" title="Contactar por Email"><i class="fas fa-envelope"></i></a>`; }
-        
         const destaqueHTML = item.destacado ? '<div class="card-destacado-icon" title="Anúncio Destacado"><i class="fas fa-star"></i></div>' : '';
-
         return `<div class="col-lg-4 col-md-6 mb-4 service-item"><div class="card h-100 shadow-sm position-relative" id="${item.id}">${destaqueHTML}${logoHTML}${precoHTML}<div class="card-body d-flex flex-column"><h5 class="card-title mt-4">${item.titulo}</h5><h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${item.localizacao}</h6><p class="card-text flex-grow-1">${item.descricao}</p><div class="mt-auto card-contact-icons">${contatoIconsHTML}</div></div><div class="card-footer d-flex justify-content-between align-items-center">${formatarDatas(item)}${renderShareButtons(item, pageName)}</div></div></div>`;
     }
 
@@ -160,10 +147,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         let contatoHTML = '';
         if (anuncio.contato) { contatoHTML += `<strong>Tel:</strong> <a href="tel:${anuncio.contato.replace(/[\s+()-]/g, '')}">${anuncio.contato}</a><br>`; }
         if (anuncio.link_contato && anuncio.link_contato.includes('@')) { const emailLink = anuncio.link_contato.startsWith('mailto:') ? anuncio.link_contato : `mailto:${anuncio.link_contato}`; const emailText = emailLink.replace('mailto:', ''); contatoHTML += `<strong>Email:</strong> <a href="${emailLink}">${emailText}</a>`; }
-        
         const destaqueHTML = anuncio.destacado ? '<div class="card-destacado-icon" title="Anúncio Destacado"><i class="fas fa-star"></i></div>' : '';
-
-        return `<div class="col-lg-4 col-md-6 mb-4 housing-item"><div class="card h-100 shadow-sm" id="${anuncio.id}">${destaqueHTML}<div class="card-body d-flex flex-column"><h5 class="card-title">${anuncio.titulo}</h5><h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${anuncio.localizacao}</h6><p class="card-text flex-grow-1">${anuncio.descricao}</p><div class="mt-auto"><p class="card-text small contact-info">${contatoHTML}</p></div></div><div class="card-footer d-flex justify-content-between align-items-center">${formatarDatas(anuncio)}</div>${renderShareButtons(anuncio, pageName)}</div></div>`;
+        return `<div class="col-lg-4 col-md-6 mb-4 housing-item"><div class="card h-100 shadow-sm" id="${anuncio.id}">${destaqueHTML}<div class="card-body d-flex flex-column"><h5 class="card-title">${anuncio.titulo}</h5><h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${anuncio.localizacao}</h6><p class="card-text flex-grow-1">${anuncio.descricao}</p><div class="mt-auto"><p class="card-text small contact-info">${contatoHTML}</p></div></div><div class="card-footer d-flex justify-content-between align-items-center">${formatarDatas(anuncio)}${renderShareButtons(anuncio, pageName)}</div></div></div>`;
     }
 
     async function updateImpactCounters() {
@@ -171,17 +156,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         const empregos = await fetchJson('/_dados/empregos.json');
         const servicos = await fetchJson('/_dados/servicos.json');
         const habitacao = await fetchJson('/_dados/habitacao.json');
-
-        const totalDoacoes = doacoes.length;
-        const totalEmpregos = empregos.length;
-        const totalServicos = servicos.length;
-        const totalHabitacao = habitacao.length;
-        const totalAnuncios = totalDoacoes + totalEmpregos + totalServicos + totalHabitacao;
-
-        document.getElementById('contador-doacoes')?.textContent = `${totalDoacoes}+`;
-        document.getElementById('contador-empregos')?.textContent = `${totalEmpregos}+`;
-        document.getElementById('contador-servicos')?.textContent = `${totalServicos}+`;
-        document.getElementById('contador-habitacao')?.textContent = `${totalHabitacao}+`;
+        const totalAnuncios = doacoes.length + empregos.length + servicos.length + habitacao.length;
+        document.getElementById('contador-doacoes')?.textContent = `${doacoes.length}+`;
+        document.getElementById('contador-empregos')?.textContent = `${empregos.length}+`;
+        document.getElementById('contador-servicos')?.textContent = `${servicos.length}+`;
+        document.getElementById('contador-habitacao')?.textContent = `${habitacao.length}+`;
         document.getElementById('contador-total')?.textContent = `${totalAnuncios}+`;
     }
 
@@ -190,14 +169,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'empregos.html');
     carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'serviços.html');
     carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderHabitacao, 'habitação.html');
-
     updateImpactCounters();
 
     // --- LÓGICA DO BUSCADOR ---
     function setupSearch() {
         const searchInput = document.getElementById('searchInput');
         if (!searchInput) return;
-
         const locationInput = document.getElementById('locationInput');
         const searchButton = document.getElementById('searchButton');
         const clearButton = document.getElementById('clearButton');
@@ -208,14 +185,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             const locationText = locationInput.value.toLowerCase().trim();
             const cards = document.querySelectorAll('.job-item, .announcement-item, .service-item, .housing-item');
             let visibleCount = 0;
-
             cards.forEach(card => {
                 const title = (card.querySelector('.card-title')?.textContent || '').toLowerCase();
                 const description = (card.querySelector('.card-text')?.textContent || '').toLowerCase();
                 const location = (card.querySelector('.card-subtitle')?.textContent || '').toLowerCase();
                 const textMatch = !searchText || title.includes(searchText) || description.includes(searchText);
                 const locationMatch = !locationText || location.includes(locationText);
-
                 if (textMatch && locationMatch) {
                     card.style.display = '';
                     visibleCount++;
@@ -223,7 +198,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                     card.style.display = 'none';
                 }
             });
-
             if (noResults) {
                 noResults.style.display = visibleCount === 0 ? 'block' : 'none';
             }
