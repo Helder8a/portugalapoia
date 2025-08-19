@@ -222,3 +222,79 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     setupSearch(); // Chama a função que configura o buscador
 });
+
+// --- LÓGICA PARA LA PÁGINA DEL BLOG CON CATEGORÍAS ---
+
+// Función para mostrar las publicaciones del blog
+function displayBlogPosts(posts) {
+    const grid = document.getElementById('blog-posts-grid');
+    const noResults = document.getElementById('no-results-blog');
+    if (!grid) return; // Si no estamos en la página del blog, no hacer nada
+
+    grid.innerHTML = ''; // Limpiar el grid
+
+    if (posts.length === 0) {
+        if(noResults) noResults.style.display = 'block';
+        return;
+    }
+    if(noResults) noResults.style.display = 'none';
+
+
+    posts.forEach(post => {
+        const postCard = document.createElement('div');
+        postCard.className = 'col-lg-4 col-md-6';
+        
+        // Convertir el cuerpo de markdown a HTML (simple conversión de saltos de línea)
+        const bodyHtml = post.corpo.replace(/\n/g, '<br>');
+
+        postCard.innerHTML = `
+            <div class="card blog-card shadow-sm">
+                ${post.imagem ? `<img src="${post.imagem}" class="card-img-top" alt="${post.titulo}">` : ''}
+                <div class="card-body">
+                    <span class="badge badge-primary badge-category mb-2">${post.categoria}</span>
+                    <h5 class="card-title">${post.titulo}</h5>
+                    <p class="card-text">${bodyHtml.substring(0, 100)}...</p>
+                    <p class="card-text"><small class="text-muted">Publicado em ${post.data}</small></p>
+                    </div>
+            </div>
+        `;
+        grid.appendChild(postCard);
+    });
+}
+
+// Función principal para cargar y filtrar las publicaciones del blog
+async function loadAndFilterBlogPosts() {
+    if (!document.getElementById('blog-posts-grid')) return; // Solo ejecutar en la página del blog
+
+    try {
+        const response = await fetch('_dados/blog.json');
+        const data = await response.json();
+        const allPosts = data.posts.sort((a, b) => new Date(b.data) - new Date(a.data)); // Ordenar por fecha
+
+        displayBlogPosts(allPosts); // Mostrar todos los posts al principio
+
+        const filterButtons = document.querySelectorAll('#category-filters button');
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Estilo de los botones
+                filterButtons.forEach(btn => btn.classList.replace('btn-primary', 'btn-secondary'));
+                button.classList.replace('btn-secondary', 'btn-primary');
+                
+                const category = button.getAttribute('data-category');
+                
+                if (category === 'all') {
+                    displayBlogPosts(allPosts);
+                } else {
+                    const filteredPosts = allPosts.filter(post => post.categoria === category);
+                    displayBlogPosts(filteredPosts);
+                }
+            });
+        });
+
+    } catch (error) {
+        console.error('Erro ao carregar as publicações do blog:', error);
+    }
+}
+
+// Llamar a la función cuando el DOM esté cargado
+document.addEventListener('DOMContentLoaded', loadAndFilterBlogPosts);
