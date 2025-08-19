@@ -1,16 +1,5 @@
 [
   {
-    "id": 5,
-    "title": "Novas Oportunidades de Aprendizagem para Jovens",
-    "author": "Equipa PortugalApoia",
-    "date": "2025-08-12",
-    "image": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2670&auto=format&fit=crop",
-    "alt": "Jovens a estudar",
-    "category": "Educação",
-    "badgeClass": "badge-info",
-    "excerpt": "A educação é a chave para o futuro. Descubra os novos programas e bolsas de estudo disponíveis para jovens em Portugal, e como podem moldar a próxima geração de líderes e inovadores."
-  },
-  {
     "id": 1,
     "title": "Conectando Gerações: A Inclusão Digital para Idosos",
     "author": "Equipa PortugalApoia",
@@ -19,9 +8,22 @@
     "alt": "Mãos unidas em sinal de comunidade e apoio intergeracional",
     "category": "Educação",
     "badgeClass": "badge-info",
-    "excerpt": "Envelhecer num mundo digital pode ser um desafio, mas a tecnologia, quando usada como ponte, tem o poder de combater a solidão e fortalecer laços. A inclusão digital é abrir uma janela para o mundo."
+    "excerpt": "Envelhecer num mundo digital pode ser um desafio, mas a tecnologia, quando usada como ponte, tem o poder de combater a solidão e fortalecer laços. A inclusão digital é abrir uma janela para o mundo.",
+    "content": "<h3>O Desafio da Solidão na Terceira Idade</h3><p>Em Portugal, como em muitos outros países, a solidão entre os idosos é uma preocupação crescente. O ritmo de vida acelerado e as famílias geograficamente dispersas fazem com que muitos idosos passem longos períodos sozinhos. Esta situação não afeta apenas o bem-estar emocional, mas também pode ter consequências graves para a saúde física e cognitiva.</p><p>No entanto, a era digital oferece ferramentas poderosas para mitigar este isolamento. Videochamadas com familiares, acesso a notícias, participação em grupos de interesse online ou simplesmente a possibilidade de fazer compras sem sair de casa são pequenas grandes revoluções que podem transformar o dia a dia de uma pessoa idosa.</p><h4>Iniciativas que Fazem a Diferença</h4><p>Felizmente, existem cada vez mais projetos focados em promover a literacia digital na terceira idade. Associações locais, juntas de freguesia e voluntários dedicam o seu tempo a ensinar competências básicas: como usar um smartphone, navegar na internet de forma segura ou comunicar através de aplicações como o WhatsApp ou o Skype.</p><p>Estas iniciativas não ensinam apenas a usar a tecnologia; criam também espaços de convívio e aprendizagem mútua, onde a partilha de experiências combate o isolamento e fortalece o sentimento de pertença a uma comunidade ativa e participativa.</p><h3>Como Pode Ajudar?</h3><p>A sua contribuição pode ser mais simples do que imagina:</p><ul><li><strong>Ofereça o seu tempo:</strong> Procure por associações na sua área que promovam a inclusão digital e ofereça-se como voluntário.</li><li><strong>Ajude um familiar ou vizinho:</strong> Dedique uma hora por semana para ensinar um idoso próximo a usar um telemóvel ou tablet. A paciência e o carinho são as ferramentas mais importantes.</li><li><strong>Doe equipamento:</strong> Um tablet ou smartphone antigo que já não usa pode ser uma porta de entrada para o mundo digital para alguém que não tem meios para o adquirir.</li></ul><p>Na PortugalApoia, acreditamos que a tecnologia deve servir para unir pessoas. Conectar gerações através do conhecimento digital é um dos investimentos mais valiosos que podemos fazer na nossa comunidade, garantindo que ninguém fica para trás.</p>"
   },
-    {
+  {
+    "id": 5,
+    "title": "Novas Oportunidades de Aprendizagem para Jovens",
+    "author": "Equipa PortugalApoia",
+    "date": "2025-08-12",
+    "image": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2670&auto=format&fit=crop",
+    "alt": "Jovens a estudar",
+    "category": "Educação",
+    "badgeClass": "badge-info",
+    "excerpt": "A educação é a chave para o futuro. Descubra os novos programas e bolsas de estudo disponíveis para jovens em Portugal, e como podem moldar a próxima geração de líderes e inovadores.",
+    "content": "<p>Conteúdo completo sobre as novas oportunidades de aprendizagem para jovens...</p>"
+  },
+  {
     "id": 4,
     "title": "Descobrindo Portugal: Rotas de Turismo Solidário",
     "author": "Equipa PortugalApoia",
@@ -30,7 +32,8 @@
     "alt": "Voluntariado e viagem",
     "category": "Turismo",
     "badgeClass": "badge-warning",
-    "excerpt": "Viajar pode ser mais do que apenas visitar novos lugares. Conheça projetos de turismo que permitem aos visitantes contribuir para as comunidades locais, transformando as suas férias numa experiência inesquecível."
+    "excerpt": "Viajar pode ser mais do que apenas visitar novos lugares. Conheça projetos de turismo que permitem aos visitantes contribuir para as comunidades locais, transformando as suas férias numa experiência inesquecível.",
+    "content": "<p>Conteúdo completo sobre as rotas de turismo solidário...</p>"
   },
   {
     "id": 3,
@@ -41,7 +44,8 @@
     "alt": "Oportunidades de Emprego",
     "category": "Emprego",
     "badgeClass": "badge-primary",
-    "excerpt": "Procurar emprego pode ser um desafio, mas com a estratégia certa, pode aumentar significativamente as suas chances de sucesso. Este guia oferece dicas práticas para o mercado de trabalho português."
+    "excerpt": "Procurar emprego pode ser um desafio, mas com a estratégia certa, pode aumentar significativamente as suas chances de sucesso. Este guia oferece dicas práticas para o mercado de trabalho português.",
+    "content": "<p>Conteúdo completo sobre como encontrar emprego em Portugal...</p>"
   },
   {
     "id": 2,
@@ -52,10 +56,7 @@
     "alt": "Chaves de uma casa",
     "category": "Vivenda",
     "badgeClass": "badge-success",
-    "excerpt": "A procura de casa pode ser uma jornada complicada. Conheça as organizações e programas que oferecem apoio e soluções de habitação para famílias e indivíduos em Portugal. Achar uma casa ou manter a que temos é um dos maiores desafios para muitas famílias em Portugal. Seja pela subida das rendas, pela dificuldade em conseguir um crédito à habitação ou pela necessidade de reabilitar uma casa antiga, a verdade é que o acesso a uma habitação digna pode ser um verdadeiro quebra-cabeças. Claro, aqui fica uma sugestão de conteúdo de boa qualidade para um blog, otimizado para SEO, sobre o tema "Soluções de Vivenda: Onde Encontrar Apoio em Portugal?".
-
-Soluções de Habitação em Portugal: Onde Encontrar o Apoio Certo para Si
-Achar uma casa ou manter a que temos é um dos maiores desafios para muitas famílias em Portugal. Seja pela subida das rendas, pela dificuldade em conseguir um crédito à habitação ou pela necessidade de reabilitar uma casa antiga, a verdade é que o acesso a uma habitação digna pode ser um verdadeiro quebra-cabeças. 🧩
-Felizmente, não está sozinho. Existem várias soluções e apoios disponíveis, desde programas governamentais a iniciativas de associações locais. Este guia completo vai ajudá-lo a navegar pelas opções e a encontrar o apoio de que precisa."
+    "excerpt": "A procura de casa pode ser uma jornada complicada. Conheça as organizações e programas que oferecem apoio e soluções de habitação para famílias e indivíduos em Portugal. Achar uma casa ou manter a que temos é um dos maiores desafios para muitas famílias em Portugal.",
+    "content": "<p>Achar uma casa ou manter a que temos é um dos maiores desafios para muitas famílias em Portugal. Seja pela subida das rendas, pela dificuldade em conseguir um crédito à habitação ou pela necessidade de reabilitar uma casa antiga, a verdade é que o acesso a uma habitação digna pode ser um verdadeiro quebra-cabeças. Claro, aqui fica uma sugestão de conteúdo de boa qualidade para um blog, otimizado para SEO, sobre o tema.</p>"
   }
 ]

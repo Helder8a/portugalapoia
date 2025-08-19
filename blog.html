@@ -97,53 +97,49 @@
         </nav>
     </header>
 
-
     <main>
-    <section class="page-header page-header-blog text-center text-white">
-        <div class="container">
-            <h1 class="page-title">Nosso Blog</h1>
-            <p class="lead">Artigos, histórias de sucesso e notícias sobre a nossa comunidade.</p>
-        </div>
-    </section>
-
-    <section class="blog-section py-5">
-        <div class="container">
-
-            <div class="row mb-5 align-items-center">
-                <div class="col-lg-8 mb-3 mb-lg-0">
-                    <div id="category-filters-placeholder" class="blog-filters"></div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="search-container">
-                        <i class="fas fa-search search-icon"></i>
-                        <input type="text" id="blog-search-input" class="form-control" placeholder="Buscar no blog...">
-                    </div>
-                </div>
+        <section class="page-header page-header-blog text-center text-white">
+            <div class="container">
+                <h1 class="page-title">Nosso Blog</h1>
+                <p class="lead">Artigos, histórias de sucesso e notícias sobre a nossa comunidade.</p>
             </div>
-            <div id="featured-post-container">
-                <div id="featured-post-placeholder">
-                    <div class="text-center">
-                        <div class="spinner-border text-primary" role="status">
-                            <span class="sr-only">A carregar...</span>
+        </section>
+
+        <section class="blog-section py-5">
+            <div class="container">
+                <div id="featured-post-container" class="mb-5">
+                    <div id="featured-post-placeholder">
+                        <div class="text-center">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="sr-only">A carregar...</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <hr class="my-5" id="featured-post-separator">
-            </div>
 
-            <div id="blog-grid-placeholder" class="row">
+                <hr class="my-5">
+
+                <div class="row mb-5 align-items-center">
+                    <div class="col-lg-8 mb-3 mb-lg-0">
+                        <div id="category-filters-placeholder" class="blog-filters"></div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="search-container">
+                            <i class="fas fa-search search-icon"></i>
+                            <input type="text" id="blog-search-input" class="form-control" placeholder="Buscar no blog...">
+                        </div>
+                    </div>
                 </div>
-            
-            <div id="no-results-placeholder" class="text-center py-5" style="display: none;">
-                <h2>Nenhum artigo encontrado</h2>
-                <p class="lead text-muted">Tente ajustar a sua busca ou filtros.</p>
+
+                <div id="blog-grid-placeholder" class="row"></div>
+                
+                <div id="no-results-placeholder" class="text-center py-5" style="display: none;">
+                    <h2>Nenhum artigo encontrado</h2>
+                    <p class="lead text-muted">Tente ajustar a sua busca ou filtros.</p>
+                </div>
             </div>
-
-        </div>
-    </section>
-</main>
-
-
+        </section>
+    </main>
 
     <button id="scrollTopBtn" title="Voltar ao topo"><i class="fas fa-arrow-up"></i></button>
 
@@ -189,6 +185,5 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="script.js" defer></script>
-
 </body>
 </html>
