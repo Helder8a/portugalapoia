@@ -10,3 +10,20 @@
 # La siguiente línea ha sido comentada para desactivar la limpieza automática.
 # [functions.cleanup-expired]
 #   schedule = "0 3 * * *"
+
+[[plugins]]
+package = "@netlify/plugin-sitemap"
+
+[plugins.inputs]
+# Este plugin ayuda a generar un sitemap, pero no es esencial para el blog.
+
+[[plugins]]
+package = "netlify-cms-json-collections"
+
+[plugins.inputs]
+collections = [
+  {
+    name = "blog",
+    path = "/blog/index.json"
+  }
+]

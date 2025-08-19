@@ -222,3 +222,62 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     setupSearch(); // Chama a função que configura o buscador
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Si la página es blog.html, carga dinámicamente el contenido
+    if (window.location.pathname.includes('blog.html')) {
+        fetchBlogPosts();
+    }
+});
+
+function fetchBlogPosts() {
+    // La URL de su archivo JSON generado por Netlify CMS
+    const blogPostsUrl = '/blog/index.json';
+
+    fetch(blogPostsUrl)
+        .then(response => {
+            if (!response.ok) {
+                // Maneja el caso en que el archivo no se encuentre
+                console.error('No se pudo encontrar el archivo de publicaciones del blog.');
+                return [];
+            }
+            return response.json();
+        })
+        .then(posts => {
+            if (posts && posts.length > 0) {
+                renderBlogPosts(posts);
+            } else {
+                // Muestra un mensaje si no hay publicaciones
+                document.getElementById('blog-posts-container').innerHTML = '<p>Aún no hay publicaciones en el blog.</p>';
+            }
+        })
+        .catch(error => console.error('Error al cargar las publicaciones del blog:', error));
+}
+
+function renderBlogPosts(posts) {
+    const container = document.getElementById('blog-posts-container');
+    container.innerHTML = ''; // Limpia el contenido actual
+
+    posts.forEach(post => {
+        const postElement = document.createElement('div');
+        postElement.classList.add('blog-post-full', 'mb-5');
+
+        // Formato de la fecha
+        const date = new Date(post.date);
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const formattedDate = date.toLocaleDateString('pt-PT', options);
+        
+        // Crea el HTML para una sola publicación
+        postElement.innerHTML = `
+            <div class="blog-post-full mb-5">
+                <h2 class="mt-4">${post.title}</h2>
+                <p class="text-muted">Por ${post.author} | Publicado em ${formattedDate}</p>
+                <img class="img-fluid rounded my-3" src="${post.image}" alt="${post.imageAlt || 'Imagen de la publicación del blog'}">
+                <p class="lead">${post.description}</p>
+                <p>${post.body}</p>
+            </div>
+            <hr class="my-5">
+        `;
+        container.appendChild(postElement);
+    });
+}
