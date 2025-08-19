@@ -526,6 +526,16 @@
       "titulo": "Costureira",
       "localizacao": "Fátima, Ourém.",
       "contato": "926199042"
+    },
+    {
+      "data_publicacao": "2025-08-19",
+      "data_vencimento": "2025-09-19",
+      "id": "54",
+      "descricao": "Empregado/a Lavandaria\n",
+      "titulo": "Empregado/a Lavandaria",
+      "localizacao": "Albufeira",
+      "contato": "+351 913 874 829",
+      "link_contato": " recrutamentosul@daccord.pt"
     }
   ]
 }
