@@ -517,6 +517,15 @@
       "titulo": "CARPINTEIROS DE COFRAGEM",
       "contato": "913 188 824 ",
       "localizacao": "Lisboa"
+    },
+    {
+      "data_publicacao": "2025-08-19",
+      "data_vencimento": "2025-09-19",
+      "id": "53",
+      "descricao": "Procura costureira para fazer uniformes, roupas sob medidas, arranjos ",
+      "titulo": "Costureira",
+      "localizacao": "Fátima, Ourém.",
+      "contato": "926199042"
     }
   ]
 }
