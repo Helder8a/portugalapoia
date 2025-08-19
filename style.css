@@ -1377,3 +1377,181 @@ body.dark-theme .share-btn {
     z-index: 2;
 }
 
+/* --- ESTILOS ADICIONALES PARA EL NUEVO BLOG --- */
+
+/* Estilo general de la sección del blog */
+.blog-section {
+    background-color: var(--color-background-light);
+}
+
+/* Artículo Destacado */
+.featured-post {
+    background-color: var(--color-background);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease-in-out;
+}
+
+.featured-post img {
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease;
+}
+
+.featured-post a:hover img {
+    transform: scale(1.03);
+}
+
+.featured-post-content h2 a {
+    color: var(--color-primary);
+}
+
+.featured-post-content h2 a:hover {
+    color: var(--color-accent);
+}
+
+body.dark-theme .featured-post {
+    background-color: var(--color-background);
+}
+
+body.dark-theme .featured-post-content h2 a {
+    color: #f1f1f1;
+}
+
+/* Tarjetas de Blog (Blog Cards) */
+.blog-card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    overflow: hidden; /* Asegura que la imagen no se salga de los bordes redondeados */
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blog-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, .12);
+}
+
+.blog-card .card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.blog-card .card-body {
+    padding: 1.5rem;
+}
+
+.blog-card .card-title a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.blog-card .card-title a:hover {
+    color: var(--color-accent);
+}
+
+.blog-card .badge {
+    font-weight: 600;
+    padding: 0.4em 0.8em;
+}
+
+.blog-card .btn-link {
+    color: var(--color-accent);
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.blog-card .btn-link:hover {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.blog-card .btn-link i {
+    transition: transform 0.3s;
+}
+
+.blog-card .btn-link:hover i {
+    transform: translateX(4px);
+}
+
+/* Modo Oscuro para las tarjetas */
+body.dark-theme .blog-card {
+    background-color: var(--color-background);
+    border-color: var(--color-border);
+}
+
+body.dark-theme .blog-card .card-title a {
+    color: #f1f1f1;
+}
+
+/* Insignias de Bootstrap con colores personalizados */
+.badge-primary { background-color: var(--color-primary); }
+.badge-success { background-color: var(--color-success); }
+.badge-info { background-color: #17a2b8; } /* Color por defecto de Bootstrap para info */
+.badge-warning { background-color: #ffc107; color: #212529; } /* Color por defecto de Bootstrap para warning */
+
+/* --- ESTILOS PARA FILTROS E BUSCA DO BLOG --- */
+
+.search-container {
+    position: relative;
+}
+
+.search-container .search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    z-index: 3;
+}
+
+#blog-search-input {
+    padding-left: 40px;
+    border-radius: 50px;
+    height: 48px;
+}
+
+.blog-filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.blog-filters .filter-btn {
+    border: 1px solid var(--color-border);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    padding: 10px 20px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.blog-filters .filter-btn:hover {
+    background-color: var(--color-border);
+    border-color: var(--color-accent);
+}
+
+.blog-filters .filter-btn.active {
+    background-color: var(--color-primary);
+    color: #fff;
+    border-color: var(--color-primary);
+}
+
+/* Modo escuro */
+body.dark-theme .blog-filters .filter-btn {
+    background-color: var(--color-background-light);
+    color: var(--color-text);
+    border-color: var(--color-border);
+}
+
+body.dark-theme .blog-filters .filter-btn.active {
+    background-color: var(--color-accent);
+    color: var(--color-background);
+    border-color: var(--color-accent);
+}

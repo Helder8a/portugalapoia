@@ -222,3 +222,154 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     setupSearch(); // Chama a função que configura o buscador
 });
+
+// --- LÓGICA PARA CARREGAR E GERIR O BLOG ---
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Verifica se estamos na página do blog antes de executar qualquer coisa
+    if (document.getElementById('blog-grid-placeholder')) {
+        setupBlogPage();
+    }
+});
+
+async function setupBlogPage() {
+    const placeholders = {
+        featured: document.getElementById('featured-post-placeholder'),
+        featuredContainer: document.getElementById('featured-post-container'),
+        grid: document.getElementById('blog-grid-placeholder'),
+        filters: document.getElementById('category-filters-placeholder'),
+        noResults: document.getElementById('no-results-placeholder'),
+        searchInput: document.getElementById('blog-search-input')
+    };
+
+    try {
+        const response = await fetch('_dados/blog.json');
+        if (!response.ok) throw new Error(`Erro ao carregar dados: ${response.status}`);
+        
+        let allPosts = await response.json();
+        allPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        let currentCategory = 'Todas';
+        let currentSearchTerm = '';
+
+        // Funções de Renderização
+        const displayFeaturedPost = (post) => {
+            if (!post) {
+                placeholders.featured.innerHTML = '';
+                return;
+            }
+            const formattedDate = new Date(post.date).toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' });
+            placeholders.featured.innerHTML = `
+                <article class="featured-post">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 mb-4 mb-lg-0"><img class="img-fluid rounded" src="${post.image}" alt="${post.alt}"></div>
+                        <div class="col-lg-6">
+                            <div class="featured-post-content">
+                                <span class="badge ${post.badgeClass} mb-2">${post.category}</span>
+                                <h2 class="mb-3">${post.title}</h2>
+                                <p class="post-meta text-muted">Por ${post.author} | ${formattedDate}</p>
+                                <p class="excerpt d-none d-md-block">${post.excerpt}</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>`;
+        };
+
+        const displayGridPosts = (posts) => {
+            placeholders.grid.innerHTML = '';
+            if (posts.length === 0) {
+                placeholders.noResults.style.display = 'block';
+                return;
+            }
+            placeholders.noResults.style.display = 'none';
+            posts.forEach(post => {
+                const formattedDate = new Date(post.date).toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' });
+                placeholders.grid.innerHTML += `
+                    <div class="col-lg-4 col-md-6 mb-4 blog-card-wrapper" data-post-id="${post.id}" style="cursor: pointer;">
+                        <article class="card blog-card h-100">
+                            <img class="card-img-top" src="${post.image}" alt="${post.alt}">
+                            <div class="card-body d-flex flex-column">
+                                <span class="badge ${post.badgeClass} mb-2 align-self-start">${post.category}</span>
+                                <h5 class="card-title">${post.title}</h5>
+                                <p class="card-text text-muted small mt-auto">Por ${post.author} | ${formattedDate}</p>
+                            </div>
+                        </article>
+                    </div>`;
+            });
+        };
+
+        const displayCategoryFilters = () => {
+            const categories = ['Todas', ...new Set(allPosts.map(p => p.category))];
+            placeholders.filters.innerHTML = categories.map(cat => 
+                `<button class="filter-btn ${cat === 'Todas' ? 'active' : ''}" data-category="${cat}">${cat}</button>`
+            ).join('');
+        };
+        
+        // Função Principal de Filtro
+        const updateVisiblePosts = () => {
+            let filteredPosts = allPosts;
+
+            // Filtra por categoria
+            if (currentCategory !== 'Todas') {
+                filteredPosts = filteredPosts.filter(p => p.category === currentCategory);
+            }
+
+            // Filtra por termo de busca
+            if (currentSearchTerm) {
+                const term = currentSearchTerm.toLowerCase();
+                filteredPosts = filteredPosts.filter(p => 
+                    p.title.toLowerCase().includes(term) || 
+                    p.excerpt.toLowerCase().includes(term)
+                );
+            }
+
+            // Lógica de visualização
+            if (currentCategory !== 'Todas' || currentSearchTerm) {
+                placeholders.featuredContainer.style.display = 'none'; // Esconde o post destacado
+                displayGridPosts(filteredPosts);
+            } else {
+                placeholders.featuredContainer.style.display = 'block'; // Mostra o post destacado
+                displayFeaturedPost(filteredPosts[0]);
+                displayGridPosts(filteredPosts);
+            }
+        };
+
+        // Adicionar Listeners
+        placeholders.filters.addEventListener('click', (e) => {
+            if (e.target.classList.contains('filter-btn')) {
+                placeholders.filters.querySelector('.active').classList.remove('active');
+                e.target.classList.add('active');
+                currentCategory = e.target.dataset.category;
+                updateVisiblePosts();
+            }
+        });
+
+        placeholders.searchInput.addEventListener('input', (e) => {
+            currentSearchTerm = e.target.value;
+            updateVisiblePosts();
+        });
+        
+        placeholders.grid.addEventListener('click', (e) => {
+            const card = e.target.closest('.blog-card-wrapper');
+            if (card) {
+                const postId = card.dataset.postId;
+                const post = allPosts.find(p => p.id == postId);
+                if (post) {
+                    displayFeaturedPost(post);
+                    if (currentCategory !== 'Todas' || currentSearchTerm) {
+                       placeholders.featuredContainer.style.display = 'block';
+                    }
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            }
+        });
+
+        // Inicialização
+        displayCategoryFilters();
+        updateVisiblePosts();
+
+    } catch (error) {
+        console.error("Não foi possível carregar o blog:", error);
+        placeholders.featured.innerHTML = `<div class="alert alert-danger">Não foi possível carregar os artigos. Tente novamente mais tarde.</div>`;
+    }
+}

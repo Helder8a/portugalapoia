@@ -1,0 +1,57 @@
+[
+  {
+    "id": 5,
+    "title": "Novas Oportunidades de Aprendizagem para Jovens",
+    "author": "Equipa PortugalApoia",
+    "date": "2025-08-12",
+    "image": "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2670&auto=format&fit=crop",
+    "alt": "Jovens a estudar",
+    "category": "Educação",
+    "badgeClass": "badge-info",
+    "excerpt": "A educação é a chave para o futuro. Descubra os novos programas e bolsas de estudo disponíveis para jovens em Portugal, e como podem moldar a próxima geração de líderes e inovadores."
+  },
+  {
+    "id": 1,
+    "title": "Conectando Gerações: A Inclusão Digital para Idosos",
+    "author": "Equipa PortugalApoia",
+    "date": "2025-08-10",
+    "image": "images/img_portada.webp",
+    "alt": "Mãos unidas em sinal de comunidade e apoio intergeracional",
+    "category": "Educação",
+    "badgeClass": "badge-info",
+    "excerpt": "Envelhecer num mundo digital pode ser um desafio, mas a tecnologia, quando usada como ponte, tem o poder de combater a solidão e fortalecer laços. A inclusão digital é abrir uma janela para o mundo."
+  },
+    {
+    "id": 4,
+    "title": "Descobrindo Portugal: Rotas de Turismo Solidário",
+    "author": "Equipa PortugalApoia",
+    "date": "2025-08-01",
+    "image": "https://images.unsplash.com/photo-1599059813005-11265ba4b4ce?q=80&w=2670&auto=format&fit=crop",
+    "alt": "Voluntariado e viagem",
+    "category": "Turismo",
+    "badgeClass": "badge-warning",
+    "excerpt": "Viajar pode ser mais do que apenas visitar novos lugares. Conheça projetos de turismo que permitem aos visitantes contribuir para as comunidades locais, transformando as suas férias numa experiência inesquecível."
+  },
+  {
+    "id": 3,
+    "title": "Guia Rápido para Encontrar Emprego em Portugal",
+    "author": "Equipa PortugalApoia",
+    "date": "2025-07-25",
+    "image": "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=2832&auto-format&fit=crop",
+    "alt": "Oportunidades de Emprego",
+    "category": "Emprego",
+    "badgeClass": "badge-primary",
+    "excerpt": "Procurar emprego pode ser um desafio, mas com a estratégia certa, pode aumentar significativamente as suas chances de sucesso. Este guia oferece dicas práticas para o mercado de trabalho português."
+  },
+  {
+    "id": 2,
+    "title": "Soluções de Vivenda: Onde Encontrar Apoio?",
+    "author": "Equipa PortugalApoia",
+    "date": "2025-07-15",
+    "image": "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=2670&auto=format&fit=crop",
+    "alt": "Chaves de uma casa",
+    "category": "Vivenda",
+    "badgeClass": "badge-success",
+    "excerpt": "A procura de casa pode ser uma jornada complicada. Conheça as organizações e programas que oferecem apoio e soluções de habitação para famílias e indivíduos em Portugal."
+  }
+]
