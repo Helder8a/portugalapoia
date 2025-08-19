@@ -1,5 +1,3 @@
-# --- CÓDIGO FINAL Y CORRECTO para netlify.toml ---
-
 # Este bloque define la configuración general para TODAS las funciones.
 # Solo puede aparecer UNA VEZ en todo el fichero.
 [functions]
