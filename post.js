@@ -2,6 +2,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     const params = new URLSearchParams(window.location.search);
     const slug = params.get('slug');
     
+    // Función de ayuda para formatear la fecha
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        if (!isNaN(date.getTime())) {
+            return date.toLocaleDateString('pt-PT', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+        const parts = dateString.split('-');
+        if (parts.length === 3) {
+            const d = new Date(parts[0], parts[1] - 1, parts[2]);
+            return d.toLocaleDateString('pt-PT', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+        return 'Fecha Desconocida';
+    };
+
     if (slug) {
         try {
             const markedScript = document.createElement('script');
@@ -27,12 +41,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
 
                 const thumbnailHTML = metadata.thumbnail ? `<img src="${metadata.thumbnail}" class="img-fluid rounded mb-4" alt="${metadata.title}">` : '';
+                const formattedDate = formatDate(metadata.date);
 
                 const postHTML = `
                     <article class="blog-post-full">
                         ${thumbnailHTML}
                         <h1 class="mb-3">${metadata.title}</h1>
-                        <p class="text-muted"><i class="fas fa-calendar-alt"></i> ${new Date(metadata.date).toLocaleDateString()}</p>
+                        <p class="text-muted"><i class="fas fa-calendar-alt"></i> ${formattedDate}</p>
                         <hr class="blog-separator">
                         <div class="blog-content">
                             ${marked.parse(content)}

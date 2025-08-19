@@ -6,7 +6,7 @@ const blogPosts = [
 
 let allPostsData = [];
 
-// Función de ayuda para parsear la fecha y evitar el error "Invalid Date"
+// Función de ayuda para formatear la fecha y evitar el error "Invalid Date"
 const formatDate = (dateString) => {
     const date = new Date(dateString);
     if (!isNaN(date.getTime())) {
