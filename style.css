@@ -1398,3 +1398,13 @@ body.dark-theme .share-btn {
     display: flex;
     justify-content: center;
 }
+
+.blog-post-card .card-body .small {
+    font-size: 0.85em;
+    color: #6c757d;
+    margin-bottom: 1rem;
+}
+
+body.dark-theme .blog-post-card .card-body .small {
+    color: #aaa;
+}

@@ -22,237 +22,243 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Avaliador Urbano PRO | Avaliação de Imóveis e Relatórios</title>
     <meta name="description"
-        content="Software de avaliação imobiliária para profissionais. Gere relatórios completos com o método Fito-Corvini, análise de rentabilidade, SWOT e registo fotográfico. Ideal para peritos e consultores.">
+        content="Software de avaliação imobiliária para profissionais em Portugal. Gere relatórios completos com o método Fito-Corvini, análise de rentabilidade e SWOT.">
     <meta name="keywords"
         content="avaliação de imóveis, avaliador imobiliário, Fito-Corvini, método comparativo, custo de reposição, relatório de avaliação, perito avaliador, software imobiliário, análise de rentabilidade, Portugal">
-
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://portugalapoia.com/app_avaliadorurbano.html">
+    <link rel="canonical" href="https://portugalapoia.com/app_avaliadorurbano.html">
     <meta property="og:title" content="Avaliador Urbano PRO | Avaliação de Imóveis e Relatórios">
     <meta property="og:description"
         content="Software de avaliação imobiliária para profissionais. Gere relatórios completos com o método Fito-Corvini, análise de rentabilidade e SWOT.">
     <meta property="og:image" content="https://portugalapoia.com/images/img_portada.webp">
+</head>
 
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://portugalapoia.com/app_avaliadorurbano.html">
-    <meta property="twitter:title" content="Avaliador Urbano PRO | Avaliação de Imóveis e Relatórios">
-    <meta property="twitter:description"
-        content="Software de avaliação imobiliária para profissionais. Gere relatórios completos com o método Fito-Corvini, análise de rentabilidade e SWOT.">
-    <meta property="twitter:image" content="https://portugalapoia.com/images/img_portada.webp">
+<link rel="canonical" href="https://portugalapoia.com/app_avaliadorurbano.html">
 
-    <link rel="canonical" href="https://portugalapoia.com/app_avaliadorurbano.html">
+<link rel="apple-touch-icon" href="images_pta/logofavicon.ico">
+<link rel="icon" href="images_pta/logofavicon.ico" type="image/png">
 
-    <link rel="apple-touch-icon" href="images_pta/logofavicon.ico">
-    <link rel="icon" href="images_pta/logofavicon.ico" type="image/png">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" media="print"
+    onload="this.media='all'">
+<noscript>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500&display=swap">
+</noscript>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" media="print"
-        onload="this.media='all'">
-    <noscript>
-        <link rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500&display=swap">
-    </noscript>
+<!-- modificar version v= cada vez que se modifique css start-->
+<link rel="stylesheet" href="style.css?v=9">
+<!-- modificar version v= cada vez que se modifique css end-->
 
-    <!-- modificar version v= cada vez que se modifique css start-->
-    <link rel="stylesheet" href="style.css?v=9">
-    <!-- modificar version v= cada vez que se modifique css end-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</noscript>
+<link rel="stylesheet" href="avaliador-urbano-style.css" media="print" onload="this.media='all'">
+<noscript>
+    <link rel="stylesheet" href="avaliador-urbano-style.css">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    </noscript>
-    <link rel="stylesheet" href="avaliador-urbano-style.css" media="print" onload="this.media='all'">
-    <noscript>
-        <link rel="stylesheet" href="avaliador-urbano-style.css">
-
-    </noscript>
+</noscript>
 
 
-    <style>
-        .annual-costs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-        }
+<style>
+    .annual-costs-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+    }
 
-        .total-costs-display {
-            background-color: #e9ecef;
-            border-radius: var(--border-radius-main);
-            padding: 10px 15px;
-            text-align: right;
-            font-size: 1.1rem;
-            font-weight: bold;
-            margin-top: 15px;
-        }
+    .total-costs-display {
+        background-color: #e9ecef;
+        border-radius: var(--border-radius-main);
+        padding: 10px 15px;
+        text-align: right;
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin-top: 15px;
+    }
 
-        body.dark-theme .total-costs-display {
-            background-color: #343a40;
-        }
+    body.dark-theme .total-costs-display {
+        background-color: #343a40;
+    }
 
+    .transport-item {
+        display: grid;
+        grid-template-columns: auto 1fr 1fr 100px;
+        gap: 15px;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #eee;
+    }
+
+    .transport-item:last-child {
+        border-bottom: none;
+    }
+
+    .transport-item .icon-label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 600;
+    }
+
+    .transport-item i {
+        font-size: 1.5rem;
+        color: var(--primary-color);
+    }
+
+    .location-upload-grid {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+    .location-upload-box {
+        flex: 1;
+        text-align: center;
+    }
+
+    .location-arrow {
+        font-size: 2.5rem;
+        color: var(--border-color);
+    }
+
+    .image-upload-box {
+        border: 2px dashed var(--border-color);
+        border-radius: var(--border-radius-main);
+        padding: 1rem;
+        cursor: pointer;
+        min-height: 200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: border-color 0.3s, background-color 0.3s;
+    }
+
+    .image-upload-box:hover {
+        border-color: var(--primary-color);
+        background-color: #f8f9fa;
+    }
+
+    .image-upload-box i {
+        font-size: 2.5rem;
+        color: #adb5bd;
+        margin-bottom: 0.5rem;
+    }
+
+    .image-upload-box img {
+        max-width: 100%;
+        max-height: 150px;
+        border-radius: var(--border-radius-main);
+    }
+
+    @media (max-width: 768px) {
         .transport-item {
-            display: grid;
-            grid-template-columns: auto 1fr 1fr 100px;
-            gap: 15px;
-            align-items: center;
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #eee;
-        }
-
-        .transport-item:last-child {
-            border-bottom: none;
-        }
-
-        .transport-item .icon-label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 600;
-        }
-
-        .transport-item i {
-            font-size: 1.5rem;
-            color: var(--primary-color);
+            grid-template-columns: 1fr;
         }
 
         .location-upload-grid {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-        }
-
-        .location-upload-box {
-            flex: 1;
-            text-align: center;
+            flex-direction: column;
         }
 
         .location-arrow {
-            font-size: 2.5rem;
-            color: var(--border-color);
+            transform: rotate(90deg);
+        }
+    }
+
+    @media print {
+        @page {
+            size: A4;
+            margin: 1.5cm;
         }
 
-        .image-upload-box {
-            border: 2px dashed var(--border-color);
-            border-radius: var(--border-radius-main);
-            padding: 1rem;
-            cursor: pointer;
-            min-height: 200px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: border-color 0.3s, background-color 0.3s;
+        body,
+        .avaliador-urbano-container,
+        .modal-content {
+            background-color: #fff !important;
+            box-shadow: none !important;
+            border: none !important;
+            color: #000 !important;
         }
 
-        .image-upload-box:hover {
-            border-color: var(--primary-color);
-            background-color: #f8f9fa;
+        .modal-header,
+        .modal-footer,
+        .main-header,
+        main>section:first-of-type,
+        form,
+        footer {
+            display: none !important;
         }
 
-        .image-upload-box i {
-            font-size: 2.5rem;
-            color: #adb5bd;
-            margin-bottom: 0.5rem;
+        .modal {
+            position: static !important;
+            display: block !important;
+            overflow: visible !important;
         }
 
-        .image-upload-box img {
+        .modal-dialog {
+            max-width: 100% !important;
+            margin: 0 !important;
+        }
+
+        .modal-body {
+            padding: 0 !important;
+        }
+
+        .report-page {
+            page-break-after: always;
+        }
+
+        .report-page:last-child {
+            page-break-after: auto;
+        }
+
+        .report-section,
+        .photo-block {
+            page-break-inside: avoid;
+        }
+
+        .photo-report-section {
+            page-break-before: always;
+        }
+
+        .photo-block {
+            width: 100%;
+            margin-bottom: 1cm;
+        }
+
+        .photo-block img {
             max-width: 100%;
-            max-height: 150px;
-            border-radius: var(--border-radius-main);
+            max-height: 20cm;
+            border: 1px solid #ccc;
         }
 
-        @media (max-width: 768px) {
-            .transport-item {
-                grid-template-columns: 1fr;
-            }
-
-            .location-upload-grid {
-                flex-direction: column;
-            }
-
-            .location-arrow {
-                transform: rotate(90deg);
-            }
+        .chart-container {
+            width: 100% !important;
+            max-width: 18cm !important;
+            height: auto !important;
+            margin: 20px auto;
         }
 
-        @media print {
-            @page {
-                size: A4;
-                margin: 1.5cm;
-            }
-
-            body,
-            .avaliador-urbano-container,
-            .modal-content {
-                background-color: #fff !important;
-                box-shadow: none !important;
-                border: none !important;
-                color: #000 !important;
-            }
-
-            .modal-header,
-            .modal-footer,
-            .main-header,
-            main>section:first-of-type,
-            form,
-            footer {
-                display: none !important;
-            }
-
-            .modal {
-                position: static !important;
-                display: block !important;
-                overflow: visible !important;
-            }
-
-            .modal-dialog {
-                max-width: 100% !important;
-                margin: 0 !important;
-            }
-
-            .modal-body {
-                padding: 0 !important;
-            }
-
-            .report-page {
-                page-break-after: always;
-            }
-
-            .report-page:last-child {
-                page-break-after: auto;
-            }
-
-            .report-section,
-            .photo-block {
-                page-break-inside: avoid;
-            }
-
-            .photo-report-section {
-                page-break-before: always;
-            }
-
-            .photo-block {
-                width: 100%;
-                margin-bottom: 1cm;
-            }
-
-            .photo-block img {
-                max-width: 100%;
-                max-height: 20cm;
-                border: 1px solid #ccc;
-            }
-
-            .chart-container {
-                width: 100% !important;
-                max-width: 18cm !important;
-                height: auto !important;
-                margin: 20px auto;
-            }
-
-            canvas {
-                max-width: 100% !important;
-            }
+        canvas {
+            max-width: 100% !important;
         }
-    </style>
+    }
+</style>
 </head>
+
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/68a5e36d427c8119275e97fe/1j3400ord';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
 
 <body>
     <div id="preloader"><img src="images_pta/logocuadrado.jpg" alt="A carregar..." class="spinner"></div>
