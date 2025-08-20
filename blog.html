@@ -72,16 +72,39 @@
             height: 200px;
             object-fit: cover;
         }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+        }
         .gallery-item img {
             width: 100%;
             height: 250px;
             object-fit: cover;
-            border-radius: 8px;
             transition: transform 0.3s, filter 0.3s;
         }
-        .gallery-item img:hover {
+        .gallery-item:hover img {
             transform: scale(1.05);
             filter: brightness(1.1);
+        }
+        .gallery-item .caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .gallery-item .caption h5 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        .gallery-item .caption p {
+            margin: 0;
+            font-size: 0.8rem;
         }
         .full-content {
             display: none;
@@ -201,14 +224,32 @@
                         <div class="col-12 tab-pane" data-category="galeria">
                             <h2 class="section-title text-center mb-4">Galeria de Portugal</h2>
                             <div class="row">
-                                <div class="col-lg-4 col-md-6 mb-4 gallery-item">
-                                    <img src="images/uploads/blog_2025_08_19.webp" alt="Jovens em biblioteca">
+                                <div class="col-lg-4 col-md-6 mb-4">
+                                    <div class="gallery-item">
+                                        <img src="images/uploads/blog_2025_08_19.webp" alt="Jovens em biblioteca">
+                                        <div class="caption">
+                                            <h5>Encontro de Voluntários</h5>
+                                            <p>19 de Agosto de 2025</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-lg-4 col-md-6 mb-4 gallery-item">
-                                     <img src="images/uploads/2025_09_19.webp" alt="Turista a tirar foto">
+                                <div class="col-lg-4 col-md-6 mb-4">
+                                     <div class="gallery-item">
+                                        <img src="images/uploads/2025_09_19.webp" alt="Turista a tirar foto">
+                                        <div class="caption">
+                                            <h5>Descobrindo a Cidade</h5>
+                                            <p>19 de Setembro de 2025</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-lg-4 col-md-6 mb-4 gallery-item">
-                                     <img src="images/img_portada.webp" alt="Mãos unidas em círculo">
+                                <div class="col-lg-4 col-md-6 mb-4">
+                                     <div class="gallery-item">
+                                        <img src="images/img_portada.webp" alt="Mãos unidas em círculo">
+                                        <div class="caption">
+                                            <h5>União da Comunidade</h5>
+                                            <p>15 de Agosto de 2025</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
