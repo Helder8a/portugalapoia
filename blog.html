@@ -113,11 +113,40 @@
             object-fit: cover;
         }
 
+        .full-content {
+            display: none;
+            margin-top: 1rem;
+        }
+
+        /* --- ESTILOS PARA VISTA EXPANDIDA (SOLO DESKTOP) --- */
+        @media (min-width: 992px) {
+            .blog-post-card.expanded {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+
+            .blog-post-card.expanded .card-img-top {
+                width: 300px;
+                height: auto;
+                object-fit: contain;
+                margin-right: 1.5rem;
+            }
+
+            .blog-post-card.expanded .card-body {
+                flex: 1;
+            }
+        }
+        
+        /* --- ESTILOS MEJORADOS PARA LA GALERÍA --- */
+        #gallery-section {
+            display: none; /* Oculta por defecto */
+        }
+        
         .gallery-item {
             position: relative;
             overflow: hidden;
             border-radius: 8px;
-            aspect-ratio: 4 / 3;
+            aspect-ratio: 4 / 3; /* Proporción para móviles */
         }
 
         .gallery-item img {
@@ -154,44 +183,32 @@
             font-size: 0.8rem;
         }
 
-        .full-content {
-            display: none;
-            margin-top: 1rem;
-        }
-
-        /* --- ESTILOS PARA VISTA EXPANDIDA (SOLO DESKTOP) --- */
-        @media (min-width: 992px) {
-            .blog-post-card.expanded {
-                flex-direction: row;
-                align-items: flex-start;
+        /* Estilos para galería en Desktops */
+        @media (min-width: 768px) {
+            .gallery-item {
+                aspect-ratio: 16 / 9; /* Proporción panorámica para pantallas grandes */
             }
-
-            .blog-post-card.expanded .card-img-top {
-                width: 300px;
-                height: auto;
-                object-fit: contain;
-                margin-right: 1.5rem;
+            .gallery-item .caption h5 {
+                font-size: 1.2rem;
             }
-
-            .blog-post-card.expanded .card-body {
-                flex: 1;
+             .gallery-item .caption p {
+                font-size: 0.9rem;
             }
         }
     </style>
 </head>
 
 <script type="text/javascript">
-    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-    (function () {
-        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-        s1.async = true;
-        s1.src = 'https://embed.tawk.to/68a5e36d427c8119275e97fe/1j3400ord';
-        s1.charset = 'UTF-8';
-        s1.setAttribute('crossorigin', '*');
-        s0.parentNode.insertBefore(s1, s0);
-    })();
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/68a5e36d427c8119275e97fe/1j3400ord';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
 </script>
-
 <body>
     <div id="preloader"><img src="images_pta/logocuadrado.jpg" alt="A carregar..." class="spinner"></div>
 
@@ -251,9 +268,9 @@
         <section class="py-5">
             <div class="container">
                 <div id="blog-content">
-                    <div class="row">
+                    <div id="posts-section" class="row">
 
-                        <div class="col-lg-4 col-md-6 mb-4 tab-pane" data-category="all Emprego">
+                        <div class="col-lg-4 col-md-6 mb-4 tab-pane" data-category="all emprego">
                             <div class="blog-post-card">
                                 <img class="card-img-top" src="images_galery_blog/Praçadocomérciolisboa2.webp"
                                     alt="Lisboa">
@@ -434,81 +451,80 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-12 tab-pane" data-category="galeria">
-                            <h2 class="section-title text-center mb-4">Galería de Portugal</h2>
-                            <div class="row">
-                                <div class="col-lg-4 col-md-6 mb-4">
-                                    <div class="gallery-item">
-                                        <img src="images_galery_blog/Praçadocomérciolisboa3.webp"
-                                            alt="Praça do Comércio, Lisboa">
-                                        <div class="caption">
-                                            <h5>Praça do Comércio, Lisboa</h5>
-                                            <p>19 de Agosto de 2025</p>
-                                        </div>
-                                    </div>
+                    </div>
+                    
+                    <div id="gallery-section" class="row">
+                        <div class="col-12"><h2 class="section-title text-center mb-4">Galería de Portugal</h2></div>
+                        <div class="col-lg-6 col-md-6 mb-4">
+                            <div class="gallery-item">
+                                <img src="images_galery_blog/Praçadocomérciolisboa3.webp"
+                                    alt="Praça do Comércio, Lisboa">
+                                <div class="caption">
+                                    <h5>Praça do Comércio, Lisboa</h5>
+                                    <p>19 de Agosto de 2025</p>
                                 </div>
-                                <div class="col-lg-4 col-md-6 mb-4">
-                                    <div class="gallery-item">
-                                        <img src="images_galery_blog/Praçadocomérciolisboa2.webp"
-                                            alt="Estátua na Praça do Comércio">
-                                        <div class="caption">
-                                            <h5>Praça do Comércio, Lisboa</h5>
-                                            <p>18 de Agosto de 2025</p>
-                                        </div>
-                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 mb-4">
+                            <div class="gallery-item">
+                                <img src="images_galery_blog/Praçadocomérciolisboa2.webp"
+                                    alt="Estátua na Praça do Comércio">
+                                <div class="caption">
+                                    <h5>Praça do Comércio, Lisboa</h5>
+                                    <p>18 de Agosto de 2025</p>
                                 </div>
-                                <div class="col-lg-4 col-md-6 mb-4">
-                                    <div class="gallery-item">
-                                        <img src="images_galery_blog/Praçadocomérciolisboa1.webp"
-                                            alt="Vista da Praça do Comércio">
-                                        <div class="caption">
-                                            <h5>Praça do Comércio, Lisboa</h5>
-                                            <p>16 de Setembro de 2025</p>
-                                        </div>
-                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 mb-4">
+                            <div class="gallery-item">
+                                <img src="images_galery_blog/Praçadocomérciolisboa1.webp"
+                                    alt="Vista da Praça do Comércio">
+                                <div class="caption">
+                                    <h5>Praça do Comércio, Lisboa</h5>
+                                    <p>16 de Setembro de 2025</p>
                                 </div>
-                                <div class="col-lg-4 col-md-6 mb-4">
-                                    <div class="gallery-item">
-                                        <img src="images_galery_blog/avenidainfantesantoLisboa1.webp"
-                                            alt="Avenida Infante Santo">
-                                        <div class="caption">
-                                            <h5>Avenida Infante Santo</h5>
-                                            <p>15 de Agosto de 2025</p>
-                                        </div>
-                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 mb-4">
+                            <div class="gallery-item">
+                                <img src="images_galery_blog/avenidainfantesantoLisboa1.webp"
+                                    alt="Avenida Infante Santo">
+                                <div class="caption">
+                                    <h5>Avenida Infante Santo</h5>
+                                    <p>15 de Agosto de 2025</p>
                                 </div>
-                                <div class="col-lg-4 col-md-6 mb-4">
-                                    <div class="gallery-item">
-                                        <img src="images_galery_blog/avenidainfantesantoLisboa2.webp"
-                                            alt="Jacarandás na Avenida Infante Santo">
-                                        <div class="caption">
-                                            <h5>Avenida Infante Santo</h5>
-                                            <p>14 de Agosto de 2025</p>
-                                        </div>
-                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 mb-4">
+                            <div class="gallery-item">
+                                <img src="images_galery_blog/avenidainfantesantoLisboa2.webp"
+                                    alt="Jacarandás na Avenida Infante Santo">
+                                <div class="caption">
+                                    <h5>Avenida Infante Santo</h5>
+                                    <p>14 de Agosto de 2025</p>
                                 </div>
-                                <div class="col-lg-4 col-md-6 mb-4">
-                                    <div class="gallery-item">
-                                        <img src="images_galery_blog/miradourodealfama1.webp" alt="Miradouro de Alfama">
-                                        <div class="caption">
-                                            <h5>Miradouro Alfama</h5>
-                                            <p>13 de Agosto de 2025</p>
-                                        </div>
-                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 mb-4">
+                            <div class="gallery-item">
+                                <img src="images_galery_blog/miradourodealfama1.webp" alt="Miradouro de Alfama">
+                                <div class="caption">
+                                    <h5>Miradouro Alfama</h5>
+                                    <p>13 de Agosto de 2025</p>
                                 </div>
-                                <div class="col-lg-4 col-md-6 mb-4">
-                                    <div class="gallery-item">
-                                        <img src="images_galery_blog/arcoaugustalisboa1.webp" alt="Arco da Rua Augusta">
-                                        <div class="caption">
-                                            <h5>Arco da Rua Augusta</h5>
-                                            <p>12 de Agosto de 2025</p>
-                                        </div>
-                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 mb-4">
+                            <div class="gallery-item">
+                                <img src="images_galery_blog/arcoaugustalisboa1.webp" alt="Arco da Rua Augusta">
+                                <div class="caption">
+                                    <h5>Arco da Rua Augusta</h5>
+                                    <p>12 de Agosto de 2025</p>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </section>
@@ -516,37 +532,7 @@
 
     <button id="scrollTopBtn" title="Voltar ao topo"><i class="fas fa-arrow-up"></i></button>
 
-    <footer class="main-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <h4>PortugalApoia</h4>
-                    <p>A conectar a generosidade à necessidade.</p>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <h4>Navegação</h4>
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a class="nav-link" href="doacoes.html">Doações</a></li>
-                        <li class="nav-item"><a class="nav-link" href="empregos.html">Emprego</a></li>
-                        <li class="nav-item"><a class="nav-link" href="servicos.html">Serviços</a></li>
-                        <li class="nav-item"><a class="nav-link" href="habitação.html">Habitação</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <h4>Siga-nos</h4><a href="https://www.instagram.com/portugalapoia" target="_blank"
-                        rel="noopener noreferrer" class="social-link">Instagram</a>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <h4>Contacto</h4>
-                    <p>Um projeto desenvolvido e patrocinado pela <a href="mailto:hbo.consulting.pt@gmail.com">HBO
-                            Consulting</a>.</p>
-                </div>
-            </div>
-            <div class="footer-bottom text-center pt-3 mt-3">
-                <p>&copy; 2025 PortugalApoia.com | <a href="politica-privacidade.html">Política de Privacidade</a></p>
-            </div>
-        </div>
-    </footer>
+    habitação.html
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
@@ -557,6 +543,9 @@
             const blogRow = document.querySelector('#blog-content .row');
             const readMoreButtons = document.querySelectorAll('.read-more-btn');
             const isDesktop = window.matchMedia('(min-width: 992px)');
+            
+            const postsSection = document.getElementById('posts-section');
+            const gallerySection = document.getElementById('gallery-section');
 
             readMoreButtons.forEach(button => {
                 button.addEventListener('click', function () {
@@ -611,7 +600,7 @@
 
             // Funcionalidade das abas de categoria
             const navLinks = document.querySelectorAll('.blog-nav .nav-link');
-            const tabPanes = document.querySelectorAll('#blog-content .tab-pane');
+            const tabPanes = document.querySelectorAll('#posts-section .tab-pane');
 
             navLinks.forEach(link => {
                 link.addEventListener('click', function (event) {
@@ -626,31 +615,36 @@
                     this.classList.add('active');
 
                     const targetCategory = this.getAttribute('data-target');
+                    
+                    if (targetCategory === 'galeria') {
+                        postsSection.style.display = 'none';
+                        gallerySection.style.display = 'flex'; // Usamos flex para que las columnas del row funcionen
+                    } else {
+                        postsSection.style.display = 'flex';
+                        gallerySection.style.display = 'none';
 
-                    tabPanes.forEach(pane => {
-                        const paneCategories = pane.getAttribute('data-category').split(' ');
+                        tabPanes.forEach(pane => {
+                            const paneCategories = pane.getAttribute('data-category').split(' ');
+                            
+                            pane.classList.remove('col-lg-12');
+                            pane.classList.add('col-lg-4', 'col-md-6');
+                            pane.querySelector('.blog-post-card').classList.remove('expanded');
+                            pane.querySelector('.full-content').style.display = 'none';
+                            pane.querySelector('.read-more-btn').textContent = 'Ler Mais';
 
-                        pane.classList.remove('col-lg-12');
-                        pane.classList.add('col-lg-4', 'col-md-6');
-                        pane.querySelector('.blog-post-card').classList.remove('expanded');
-                        pane.querySelector('.full-content').style.display = 'none';
-                        pane.querySelector('.read-more-btn').textContent = 'Ler Mais';
-
-                        if (paneCategories.includes(targetCategory)) {
-                            pane.style.display = 'block';
-                        } else {
-                            pane.style.display = 'none';
-                        }
-                    });
+                            if (paneCategories.includes(targetCategory)) {
+                                pane.style.display = 'block';
+                            } else {
+                                pane.style.display = 'none';
+                            }
+                        });
+                    }
                 });
             });
         });
     </script>
 </body>
 
-<!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PQ2Q63GR" height="0" width="0"
         style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-
 </html>
