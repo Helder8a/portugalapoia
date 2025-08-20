@@ -158,22 +158,39 @@
             display: none;
             margin-top: 1rem;
         }
+
+        /* --- ESTILOS PARA VISTA EXPANDIDA (SOLO DESKTOP) --- */
+        @media (min-width: 992px) {
+            .blog-post-card.expanded {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+
+            .blog-post-card.expanded .card-img-top {
+                width: 300px;
+                height: auto;
+                object-fit: contain;
+                margin-right: 1.5rem;
+            }
+
+            .blog-post-card.expanded .card-body {
+                flex: 1;
+            }
+        }
     </style>
 </head>
 
-<!--Start of Tawk.to Script-->
 <script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/68a5e36d427c8119275e97fe/1j3400ord';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
+    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    (function () {
+        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/68a5e36d427c8119275e97fe/1j3400ord';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
+    })();
 </script>
-<!--End of Tawk.to Script-->
 
 <body>
     <div id="preloader"><img src="images_pta/logocuadrado.jpg" alt="A carregar..." class="spinner"></div>
@@ -236,7 +253,6 @@ s0.parentNode.insertBefore(s1,s0);
                 <div id="blog-content">
                     <div class="row">
 
-                        <!-- Ultima Noticia Publicada-->
                         <div class="col-lg-4 col-md-6 mb-4 tab-pane" data-category="all Emprego">
                             <div class="blog-post-card">
                                 <img class="card-img-top" src="images_galery_blog/Praçadocomérciolisboa2.webp"
@@ -419,8 +435,6 @@ s0.parentNode.insertBefore(s1,s0);
                             </div>
                         </div>
 
-                        <!-- Galery Start-->
-                        <!-- Ultima Imagen Publicada-->
                         <div class="col-12 tab-pane" data-category="galeria">
                             <h2 class="section-title text-center mb-4">Galería de Portugal</h2>
                             <div class="row">
@@ -540,16 +554,58 @@ s0.parentNode.insertBefore(s1,s0);
     <script src="script.js" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Funcionalidade do botão "Ler Mais"
+            const blogRow = document.querySelector('#blog-content .row');
             const readMoreButtons = document.querySelectorAll('.read-more-btn');
+            const isDesktop = window.matchMedia('(min-width: 992px)');
+
             readMoreButtons.forEach(button => {
                 button.addEventListener('click', function () {
-                    const cardBody = this.closest('.card-body');
-                    const fullContent = cardBody.querySelector('.full-content');
+                    const card = this.closest('.blog-post-card');
+                    const fullContent = card.querySelector('.full-content');
+                    const postContainer = this.closest('.tab-pane');
+                    const allPostContainers = blogRow.querySelectorAll('.tab-pane');
 
-                    const isVisible = fullContent.style.display === 'block';
-                    fullContent.style.display = isVisible ? 'none' : 'block';
-                    this.textContent = isVisible ? 'Ler Mais' : 'Ler Menos';
+                    const isExpanded = postContainer.classList.contains('col-lg-12');
+
+                    if (isDesktop.matches) {
+                        if (isExpanded) {
+                            // Colapsar
+                            fullContent.style.display = 'none';
+                            this.textContent = 'Ler Mais';
+                            postContainer.classList.remove('col-lg-12');
+                            postContainer.classList.add('col-lg-4', 'col-md-6');
+                            card.classList.remove('expanded');
+
+                            // Mostrar todos los posts de la categoría activa
+                            const activeCategory = document.querySelector('.blog-nav .nav-link.active').getAttribute('data-target');
+                            allPostContainers.forEach(p => {
+                                const paneCategories = p.getAttribute('data-category').split(' ');
+                                if (paneCategories.includes(activeCategory)) {
+                                    p.style.display = 'block';
+                                }
+                            });
+
+                        } else {
+                            // Expandir
+                            allPostContainers.forEach(p => {
+                                if (p !== postContainer) {
+                                    p.style.display = 'none';
+                                }
+                            });
+
+                            fullContent.style.display = 'block';
+                            this.textContent = 'Ler Menos';
+                            postContainer.classList.remove('col-lg-4', 'col-md-6');
+                            postContainer.classList.add('col-lg-12');
+                            card.classList.add('expanded');
+                            postContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    } else {
+                        // Comportamiento móvil original
+                        const isVisible = fullContent.style.display === 'block';
+                        fullContent.style.display = isVisible ? 'none' : 'block';
+                        this.textContent = isVisible ? 'Ler Mais' : 'Ler Menos';
+                    }
                 });
             });
 
@@ -561,6 +617,11 @@ s0.parentNode.insertBefore(s1,s0);
                 link.addEventListener('click', function (event) {
                     event.preventDefault();
 
+                    const expandedPostContainer = blogRow.querySelector('.col-lg-12');
+                    if (expandedPostContainer) {
+                        expandedPostContainer.querySelector('.read-more-btn').click();
+                    }
+
                     navLinks.forEach(nav => nav.classList.remove('active'));
                     this.classList.add('active');
 
@@ -568,6 +629,13 @@ s0.parentNode.insertBefore(s1,s0);
 
                     tabPanes.forEach(pane => {
                         const paneCategories = pane.getAttribute('data-category').split(' ');
+
+                        pane.classList.remove('col-lg-12');
+                        pane.classList.add('col-lg-4', 'col-md-6');
+                        pane.querySelector('.blog-post-card').classList.remove('expanded');
+                        pane.querySelector('.full-content').style.display = 'none';
+                        pane.querySelector('.read-more-btn').textContent = 'Ler Mais';
+
                         if (paneCategories.includes(targetCategory)) {
                             pane.style.display = 'block';
                         } else {
