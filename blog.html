@@ -37,6 +37,9 @@
             background-color: #f8f9fa;
             padding: 0.5rem 0;
             border-bottom: 1px solid #dee2e6;
+            position: sticky;
+            top: 70px; /* Adjust based on your header height */
+            z-index: 1020;
         }
         .blog-nav .nav-link {
             color: #0A3D62;
@@ -64,6 +67,7 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column;
+            position: relative;
         }
         .blog-post-card .card-text {
             flex-grow: 1;
@@ -71,6 +75,32 @@
         .blog-post-card .card-img-top {
             height: 200px;
             object-fit: cover;
+        }
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .category-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: bold;
         }
         .gallery-item {
             position: relative;
@@ -115,6 +145,12 @@
         }
         .tab-pane.active {
             display: block;
+        }
+        .sidebar-widget {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 2rem;
         }
     </style>
 </head>
@@ -173,50 +209,58 @@
 
         <section class="py-5">
             <div class="container">
-                <div id="blog-content">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 mb-4 tab-pane active" data-category="all emprego">
-                            <div class="blog-post-card">
-                                <img class="card-img-top" src="images/uploads/blog_2025_08_19.webp" alt="Pessoa a preparar-se para uma entrevista de emprego">
-                                <div class="card-body">
-                                    <h5 class="card-title">Guia Rápido para Encontrar Emprego</h5>
-                                    <p class="card-text">Procurar emprego pode ser um desafio, mas com a estratégia certa, pode aumentar significativamente as suas chances de sucesso.</p>
-                                    <div class="full-content">
-                                        <p><strong>1. Otimize o seu Currículo (CV):</strong> O seu CV é a sua primeira impressão. Certifique-se de que está atualizado, livre de erros e, mais importante, adaptado à vaga a que se candidata. Destaque as competências e experiências mais relevantes para a função. Utilize palavras-chave da descrição da vaga para passar pelos filtros automáticos de seleção.</p>
-                                        <p><strong>2. Prepare-se para a Entrevista:</strong> A preparação é a chave para uma entrevista bem-sucedida. Pesquise sobre a empresa, os seus valores e projetos recentes. Prepare respostas para perguntas comuns ("Fale-me sobre si", "Quais são os seus pontos fortes e fracos?") e pense em perguntas inteligentes para fazer ao entrevistador. Isto demonstra interesse, proatividade e que fez o seu trabalho de casa.</p>
-                                        <p><strong>3. Networking é Fundamental:</strong> Participe em feiras de emprego, eventos da sua área e mantenha o seu perfil de LinkedIn atualizado. Muitas vagas são preenchidas através de contactos. Não hesite em informar a sua rede de que está à procura de uma nova oportunidade.</p>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div id="blog-content">
+                            <div class="row">
+                                <div class="col-md-6 mb-4 tab-pane active" data-category="all emprego">
+                                    <div class="blog-post-card">
+                                        <img class="card-img-top" src="images/uploads/blog_2025_08_19.webp" alt="Pessoa a preparar-se para uma entrevista de emprego">
+                                        <div class="card-body">
+                                            <span class="category-badge">Emprego</span>
+                                            <h5 class="card-title">Guia Rápido para Encontrar Emprego</h5>
+                                            <p class="card-text">Procurar emprego pode ser um desafio, mas com a estratégia certa, pode aumentar significativamente as suas chances de sucesso.</p>
+                                            <div class="full-content">
+                                                <p><strong>1. Otimize o seu Currículo (CV):</strong> O seu CV é a sua primeira impressão. Certifique-se de que está atualizado, livre de erros e, mais importante, adaptado à vaga a que se candidata. Destaque as competências e experiências mais relevantes para a função. Utilize palavras-chave da descrição da vaga para passar pelos filtros automáticos de seleção.</p>
+                                                <p><strong>2. Prepare-se para a Entrevista:</strong> A preparação é a chave. Pesquise sobre a empresa, os seus valores e projetos recentes. Prepare respostas para perguntas comuns ("Fale-me sobre si", "Quais são os seus pontos fortes e fracos?") e pense em perguntas inteligentes para fazer ao entrevistador. Isto demonstra interesse e proatividade.</p>
+                                            </div>
+                                            <button class="btn btn-outline-primary read-more-btn mt-auto">Ler Mais</button>
+                                        </div>
                                     </div>
-                                    <button class="btn btn-outline-primary read-more-btn">Ler Mais</button>
                                 </div>
-                            </div>
-                        </div>
 
-                        <div class="col-lg-4 col-md-6 mb-4 tab-pane active" data-category="all habitacao">
-                            <div class="blog-post-card">
-                                <img class="card-img-top" src="images/uploads/2025_09_19.webp" alt="Chaves de uma casa sobre uma planta">
-                                <div class="card-body">
-                                    <h5 class="card-title">Dicas para Arrendar Casa em Portugal</h5>
-                                    <p class="card-text">O mercado de arrendamento pode ser competitivo. Conheça algumas dicas para facilitar a sua procura pela casa ideal.</p>
-                                    <div class="full-content">
-                                        <p>Encontrar uma casa para arrendar em Portugal exige paciência e preparação. Comece por definir um orçamento claro, incluindo não só a renda, mas também as despesas (água, luz, gás, internet). Utilize portais imobiliários, mas não descarte o poder das redes sociais e do passa-a-palavra.</p>
-                                        <p>Quando visitar um imóvel, esteja atento a pormenores como a exposição solar, o estado das janelas, sinais de humidade e a eficiência energética. Prepare um dossier com os seus documentos (identificação, contrato de trabalho, últimos recibos de vencimento) para mostrar que é um inquilino fiável e agilizar o processo.</p>
+                                <div class="col-md-6 mb-4 tab-pane active" data-category="all habitacao">
+                                    <div class="blog-post-card">
+                                        <img class="card-img-top" src="images/uploads/2025_09_19.webp" alt="Chaves de uma casa sobre uma planta">
+                                        <div class="card-body">
+                                             <span class="category-badge">Habitação</span>
+                                            <h5 class="card-title">Dicas para Arrendar Casa em Portugal</h5>
+                                            <p class="card-text">O mercado de arrendamento pode ser competitivo. Conheça algumas dicas para facilitar a sua procura pela casa ideal.</p>
+                                            <div class="full-content">
+                                                <p>Encontrar uma casa para arrendar em Portugal exige paciência e preparação. Comece por definir um orçamento claro, incluindo não só a renda, mas também as despesas (água, luz, gás, internet). Utilize portais imobiliários, mas não descarte o poder das redes sociais e do passa-a-palavra.</p>
+                                                <p>Quando visitar um imóvel, esteja atento a pormenores como a exposição solar, o estado das janelas, sinais de humidade e a eficiência energética. Prepare um dossier com os seus documentos para agilizar o processo.</p>
+                                            </div>
+                                            <button class="btn btn-outline-primary read-more-btn mt-auto">Ler Mais</button>
+                                        </div>
                                     </div>
-                                    <button class="btn btn-outline-primary read-more-btn">Ler Mais</button>
                                 </div>
-                            </div>
-                        </div>
-
-                         <div class="col-lg-4 col-md-6 mb-4 tab-pane active" data-category="all saude">
-                            <div class="blog-post-card">
-                                <img class="card-img-top" src="images/uploads/sillarueda.webp" alt="Médica a usar um computador portátil">
-                                <div class="card-body">
-                                    <h5 class="card-title">Navegar no Serviço Nacional de Saúde (SNS)</h5>
-                                    <p class="card-text">O SNS é um pilar do estado social português. Saiba como tirar o máximo partido dos seus direitos e serviços de saúde.</p>
-                                    <div class="full-content">
-                                        <p>Para aceder ao SNS, o primeiro passo é inscrever-se no centro de saúde da sua área de residência para obter o seu número de utente. Com este número, terá acesso a um médico de família, que será o seu ponto de contacto primário para a maioria das suas necessidades de saúde, desde consultas de rotina a pedidos de exames e encaminhamento para especialistas.</p>
-                                        <p>Utilize o portal SNS 24 para marcar consultas, renovar receitas médicas e aceder ao seu boletim de vacinas digital. Em caso de doença súbita não urgente, a linha SNS 24 (808 24 24 24) é um recurso valioso para obter aconselhamento médico por telefone, evitando deslocações desnecessárias às urgências.</p>
+                                
+                                 <div class="col-md-6 mb-4 tab-pane active" data-category="all saude">
+                                    <div class="blog-post-card">
+                                        <div class="video-container">
+                                            <iframe src="https://www.youtube.com/embed/gXWXKjR-qII?si=c1oM59n5S7-H_0Kd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                        </div>
+                                        <div class="card-body">
+                                             <span class="category-badge">Saúde</span>
+                                            <h5 class="card-title">SNS: Acesso à Saúde em Portugal</h5>
+                                            <p class="card-text">O SNS é um pilar do estado social português. Saiba como tirar o máximo partido dos seus direitos e serviços de saúde.</p>
+                                            <div class="full-content">
+                                                <p>Para aceder ao SNS, o primeiro passo é inscrever-se no centro de saúde da sua área de residência para obter o seu número de utente. Com este número, terá acesso a um médico de família, que será o seu ponto de contacto primário para a maioria das suas necessidades de saúde.</p>
+                                                <p>Utilize o portal SNS 24 para marcar consultas, renovar receitas médicas e aceder ao seu boletim de vacinas digital. A linha SNS 24 (808 24 24 24) é um recurso valioso para obter aconselhamento médico por telefone.</p>
+                                            </div>
+                                            <button class="btn btn-outline-primary read-more-btn mt-auto">Ler Mais</button>
+                                        </div>
                                     </div>
-                                    <button class="btn btn-outline-primary read-more-btn">Ler Mais</button>
                                 </div>
                             </div>
                         </div>
@@ -254,6 +298,32 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <aside class="col-lg-4">
+                        <div class="sidebar-widget">
+                            <h5 class="mb-3">Pesquisar no Blog</h5>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Escreva aqui...">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sidebar-widget">
+                            <h5 class="mb-3">Sobre Nós</h5>
+                            <p>PortugalApoia é uma plataforma solidária dedicada a conectar a generosidade à necessidade em todo o país. Acreditamos no poder da comunidade.</p>
+                        </div>
+                        
+                        <div class="sidebar-widget">
+                            <h5 class="mb-3">Artigos Recentes</h5>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><a href="#">Guia Rápido para Encontrar Emprego</a></li>
+                                <li class="mb-2"><a href="#">Dicas para Arrendar Casa em Portugal</a></li>
+                                <li><a href="#">SNS: Acesso à Saúde em Portugal</a></li>
+                            </ul>
+                        </div>
+                    </aside>
                 </div>
             </div>
         </section>
