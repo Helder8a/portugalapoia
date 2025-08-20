@@ -52,10 +52,21 @@
             border-radius: 8px;
             overflow: hidden;
             transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%; 
+            display: flex;
+            flex-direction: column;
         }
         .blog-post-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .blog-post-card .card-body {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .blog-post-card .card-text {
+            flex-grow: 1;
         }
         .blog-post-card .card-img-top {
             height: 200px;
@@ -143,7 +154,7 @@
                     <div class="row">
                         <div class="col-lg-4 col-md-6 mb-4 tab-pane active" data-category="all emprego">
                             <div class="blog-post-card">
-                                <img class="card-img-top" src="https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=2670&auto=format&fit=crop" alt="Pessoa a preparar-se para uma entrevista de emprego">
+                                <img class="card-img-top" src="images/uploads/blog_2025_08_19.webp" alt="Pessoa a preparar-se para uma entrevista de emprego">
                                 <div class="card-body">
                                     <h5 class="card-title">Guia Rápido para Encontrar Emprego</h5>
                                     <p class="card-text">Procurar emprego pode ser um desafio, mas com a estratégia certa, pode aumentar significativamente as suas chances de sucesso.</p>
@@ -159,7 +170,7 @@
 
                         <div class="col-lg-4 col-md-6 mb-4 tab-pane active" data-category="all habitacao">
                             <div class="blog-post-card">
-                                <img class="card-img-top" src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=2670&auto=format&fit=crop" alt="Chaves de uma casa sobre uma planta">
+                                <img class="card-img-top" src="images/uploads/2025_09_19.webp" alt="Chaves de uma casa sobre uma planta">
                                 <div class="card-body">
                                     <h5 class="card-title">Dicas para Arrendar Casa em Portugal</h5>
                                     <p class="card-text">O mercado de arrendamento pode ser competitivo. Conheça algumas dicas para facilitar a sua procura pela casa ideal.</p>
@@ -174,7 +185,7 @@
 
                          <div class="col-lg-4 col-md-6 mb-4 tab-pane active" data-category="all saude">
                             <div class="blog-post-card">
-                                <img class="card-img-top" src="https://images.unsplash.com/photo-1576091160550-2173dba9996a?q=80&w=2670&auto=format&fit=crop" alt="Médica a usar um computador portátil">
+                                <img class="card-img-top" src="images/uploads/sillarueda.webp" alt="Médica a usar um computador portátil">
                                 <div class="card-body">
                                     <h5 class="card-title">Navegar no Serviço Nacional de Saúde (SNS)</h5>
                                     <p class="card-text">O SNS é um pilar do estado social português. Saiba como tirar o máximo partido dos seus direitos e serviços de saúde.</p>
@@ -191,13 +202,13 @@
                             <h2 class="section-title text-center mb-4">Galeria de Portugal</h2>
                             <div class="row">
                                 <div class="col-lg-4 col-md-6 mb-4 gallery-item">
-                                    <img src="https://images.unsplash.com/photo-1555881400-69a238407f85?q=80&w=2574&auto=format&fit=crop" alt="Elétrico amarelo nas ruas de Lisboa">
+                                    <img src="images/uploads/blog_2025_08_19.webp" alt="Jovens em biblioteca">
                                 </div>
                                 <div class="col-lg-4 col-md-6 mb-4 gallery-item">
-                                     <img src="https://images.unsplash.com/photo-1583564918237-3a131b0a5a04?q=80&w=2574&auto=format&fit=crop" alt="Vista do rio Douro e da ponte Dom Luís I no Porto">
+                                     <img src="images/uploads/2025_09_19.webp" alt="Turista a tirar foto">
                                 </div>
                                 <div class="col-lg-4 col-md-6 mb-4 gallery-item">
-                                     <img src="https://images.unsplash.com/photo-1547153723-625d023a1a9f?q=80&w=2574&auto=format&fit=crop" alt="Grutas de Benagil no Algarve">
+                                     <img src="images/img_portada.webp" alt="Mãos unidas em círculo">
                                 </div>
                             </div>
                         </div>
