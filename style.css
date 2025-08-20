@@ -1377,3 +1377,20 @@ body.dark-theme .share-btn {
     z-index: 2;
 }
 
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    /* Nuevo: Establece una relación de aspecto para todos los contenedores */
+    aspect-ratio: 4 / 3; /* Puedes ajustar esto a 16/9, 1/1, etc., según tu preferencia */
+    width: 100%;
+    height: 100%;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%; /* La imagen ocupará el 100% del contenedor padre */
+    object-fit: cover; /* Recorta la imagen para que llene el espacio sin deformarse */
+    transition: transform 0.3s, filter 0.3s;
+}
+
