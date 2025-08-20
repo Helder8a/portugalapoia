@@ -610,6 +610,15 @@
       "localizacao": "Aveiro",
       "contato": "911 074 385",
       "descricao": "Soldador TIG Tubista"
+    },
+    {
+      "data_publicacao": "2025-08-20",
+      "data_vencimento": "2025-09-20",
+      "id": "63",
+      "titulo": "Electricista",
+      "localizacao": "Lisboa",
+      "descricao": "Electricista-Torres Novas",
+      "link_contato": "jobs@latayin.com"
     }
   ]
 }
