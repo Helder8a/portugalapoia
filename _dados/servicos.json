@@ -1,7 +1,7 @@
 {
   "servicos": [
     {
-      "data_vencimento": "2025-09-19",
+      "data_vencimento": "2025-12-31",
       "valor_servico": "500€",
       "link_contato": "helderb8a@gmail.com",
       "descricao": "HTML, CCS, JavaScript.",
@@ -19,7 +19,7 @@
       "contato": "+1 5873417019",
       "link_contato": "helderb8a@gmail.com",
       "data_publicacao": "2025-08-17",
-      "data_vencimento": "2025-09-19"
+      "data_vencimento": "2025-12-31"
     },
     {
       "id": "3",
@@ -29,11 +29,11 @@
       "contato": "+357 3166169422",
       "link_contato": "Técnico de Eletricidade",
       "data_publicacao": "2025-08-17",
-      "data_vencimento": "Invalid date"
+      "data_vencimento": "2025-12-31"
     },
     {
       "data_publicacao": "2025-08-19",
-      "data_vencimento": "2025-09-19",
+      "data_vencimento": "2025-12-31",
       "id": "4",
       "titulo": "Mudancas, Ecomendas",
       "localizacao": "Lisboa",
