@@ -2,7 +2,6 @@
 <html lang="pt-PT">
 
 <head>
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VG454Y1YV4"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -11,11 +10,8 @@
         gtag('config', 'G-VG454Y1YV4');
     </script>
 
-    <!-- Google adsense monetizar Strar-->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3196299619563199"
+    <script async src="https://pagead2.googletagmanager.com/pagead/js/adsbygoogle.js?client=ca-pub-3196299619563199"
         crossorigin="anonymous"></script>
-    <!-- Google adsense monetizar end-->
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Histórias de Solidariedade e Dicas | Blog PortugalApoia</title>
@@ -58,6 +54,50 @@
     <link rel="manifest" href="manifest.json">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+        .blog-nav {
+            background-color: #f8f9fa;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .blog-nav .nav-link {
+            color: #0A3D62;
+            font-weight: 600;
+        }
+
+        .blog-nav .nav-link.active {
+            color: #F57C00;
+        }
+
+        .blog-post-card {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .blog-post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .blog-post-card .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.3s, filter 0.3s;
+        }
+        .gallery-item img:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+    </style>
 </head>
 
 
@@ -117,150 +157,69 @@
             </div>
         </section>
 
+        <nav class="nav blog-nav justify-content-center">
+            <a class="nav-link active" href="#">Todos</a>
+            <a class="nav-link" href="#">Emprego</a>
+            <a class="nav-link" href="#">Habitação</a>
+            <a class="nav-link" href="#">Saúde</a>
+            <a class="nav-link" href="#">Turismo</a>
+            <a class="nav-link" href="#">Educação</a>
+        </nav>
+
         <section class="py-5">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-8 mx-auto" id="blog-full-content">
-
-                        <div class="blog-post-full mb-5">
-                            <h2 class="mt-4">Jovens em Ação: 5 Formas de Começar a Fazer Voluntariado e Deixar a sua
-                                Marca</h2>
-                            <p class="text-muted">Por Equipa PortugalApoia | Publicado em 05 de Agosto, 2025</p>
-                            <img class="img-fluid rounded my-3"
-                                src="https://images.unsplash.com/photo-1618477388954-7852f32655ec?q=80&w=2564&auto=format&fit=crop"
-                                alt="Jovens voluntários a trabalhar juntos">
-                            <p class="lead">A vontade de ajudar é uma força poderosa, especialmente entre os jovens. Se
-                                sentes esse apelo, mas não sabes por onde começar, este guia é para ti. O voluntariado é
-                                uma via de dois sentidos: ajudas a comunidade e, ao mesmo tempo, desenvolves
-                                competências valiosas.</p>
-                            <h5>1. Voluntariado Ambiental</h5>
-                            <p>Participa em ações de limpeza de praias, reflorestação ou sensibilização ambiental. É uma
-                                forma fantástica de cuidar do planeta e desfrutar da natureza.</p>
-                            <h5>2. Apoio a Animais</h5>
-                            <p>Os abrigos de animais precisam sempre de ajuda para passear cães, limpar instalações ou
-                                simplesmente dar carinho aos animais. Se gostas de animais, esta é uma causa
-                                gratificante.</p>
-                            <h5>3. Ajuda a Idosos</h5>
-                            <p>Faz companhia, ajuda nas compras ou ensina competências digitais a um idoso da tua
-                                comunidade. O combate à solidão na terceira idade é um dos maiores desafios da nossa
-                                sociedade.</p>
-                            <h5>4. Participa em Eventos</h5>
-                            <p>Festivais, corridas de solidariedade e outros eventos comunitários dependem de
-                                voluntários para tudo funcionar. É uma forma divertida de conhecer pessoas e apoiar uma
-                                causa.</p>
-                            <h5>5. Voluntariado Online</h5>
-                            <p>Se tens pouco tempo, podes ajudar a partir de casa. Traduzir textos para uma ONG, gerir
-                                redes sociais de uma causa ou dar apoio escolar online são apenas algumas das opções.
-                            </p>
-                            <p>O mais importante é encontrar uma causa que te apaixone. Começa pequeno, mas começa. A
-                                tua energia e o teu tempo são recursos incrivelmente valiosos. Vai em frente e deixa a
-                                tua marca no mundo!</p>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="blog-post-card">
+                            <img class="card-img-top" src="https://images.unsplash.com/photo-1542831371-29b0f74f9408?q=80&w=2670&auto=format&fit=crop" alt="Oportunidades de Emprego">
+                            <div class="card-body">
+                                <h5 class="card-title">Guia Rápido para Encontrar Emprego</h5>
+                                <p class="card-text">Procurar emprego pode ser um desafio, mas com a estratégia certa, pode aumentar significativamente as suas chances de sucesso.</p>
+                                <a href="#" class="btn btn-outline-primary">Ler Mais</a>
+                            </div>
                         </div>
-                        <hr class="my-5">
-
-                        <div class="blog-post-full mb-5">
-                            <h2 class="mt-4">O Coração da Comunidade: Como o Banco Alimentar de Lisboa Está a Mudar
-                                Vidas</h2>
-                            <p class="text-muted">Por Equipa PortugalApoia | Publicado em 08 de Agosto, 2025</p>
-                            <img class="img-fluid rounded my-3"
-                                src="https://images.unsplash.com/photo-1593113598332-cd288d649433?q=80&w=2670&auto=format&fit=crop"
-                                alt="Voluntários a organizar alimentos">
-                            <p class="lead">Nos bastidores da cidade, longe dos holofotes, existe uma máquina de
-                                solidariedade que trabalha incansavelmente: o Banco Alimentar Contra a Fome. É aqui que
-                                a generosidade se torna tangível, transformando-se em refeições na mesa de milhares de
-                                famílias.</p>
-                            <p>O processo é uma coreografia de boa vontade. Começa com as doações de supermercados,
-                                produtores e cidadãos anónimos. Segue-se o trabalho meticuloso de centenas de
-                                voluntários, que separam, organizam e embalam os alimentos. Finalmente, a rede de
-                                instituições parceiras garante que a ajuda chega a quem realmente precisa.</p>
-                            <p>Cada quilo de arroz, cada litro de leite, conta uma história de esperança. É a história
-                                de uma mãe que consegue dar um pequeno-almoço nutritivo aos seus filhos, ou de um idoso
-                                que não precisa de escolher entre pagar a renda e comer. O Banco Alimentar não distribui
-                                apenas comida; distribui dignidade.</p>
+                    </div>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="blog-post-card">
+                             <img class="card-img-top" src="https://images.unsplash.com/photo-1549405406-8d1976ec4831?q=80&w=2670&auto=format&fit=crop" alt="Ajuda à comunidade">
+                             <div class="card-body">
+                                 <h5 class="card-title">Como a sua Doação pode Fazer a Diferença</h5>
+                                 <p class="card-text">Para quem doa, pode ser apenas um casaco que já não serve ou um móvel que está a mais. Mas para quem recebe, esse gesto pode significar muito.</p>
+                                 <a href="#" class="btn btn-outline-primary">Ler Mais</a>
+                             </div>
                         </div>
-                        <hr class="my-5">
-
-                        <div class="blog-post-full mb-5">
-                            <h2 class="mt-4">Conectando Gerações: A Importância da Inclusão Digital para Idosos</h2>
-                            <p class="text-muted">Por Equipa PortugalApoia | Publicado em 10 de Agosto, 2025</p>
-                            <img class="img-fluid rounded my-3"
-                                src="https://images.unsplash.com/photo-1576766125535-b04e15715957?q=80&w=2670&auto=format&fit=crop"
-                                alt="Idoso a usar um tablet">
-                            <p class="lead">Envelhecer num mundo digital pode ser um desafio, mas a tecnologia, quando
-                                usada como ponte, tem o poder de combater a solidão e fortalecer laços. A inclusão
-                                digital dos idosos é mais do que ensinar a usar um smartphone; é abrir uma janela para o
-                                mundo.</p>
-                            <p>A capacidade de fazer uma videochamada com um neto que vive longe, aceder a notícias, ou
-                                simplesmente participar em grupos online sobre os seus interesses, pode ter um impacto
-                                profundo na saúde mental e no bem-estar da população sénior. Reduz o isolamento, promove
-                                a autonomia e estimula a mente.</p>
-                            <p>Em Portugal, várias associações e juntas de freguesia já promovem workshops de literacia
-                                digital. Estas iniciativas são essenciais, mas o apoio da família e de voluntários é
-                                igualmente crucial. Um jovem que ensina um avô a usar uma aplicação está a oferecer mais
-                                do que conhecimento técnico; está a partilhar tempo de qualidade e a criar memórias.</p>
+                    </div>
+                     <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="blog-post-card">
+                            <img class="card-img-top" src="https://images.unsplash.com/photo-1510978931494-b153926e843c?q=80&w=2670&auto=format&fit=crop" alt="Voluntariado">
+                             <div class="card-body">
+                                <h5 class="card-title">Histórias de Voluntariado que Inspiram</h5>
+                                <p class="card-text">O voluntariado é uma das forças mais transformadoras da nossa sociedade. É a prova de que a empatia, quando posta em ação, pode gerar ondas de mudança positiva.</p>
+                                <a href="#" class="btn btn-outline-primary">Ler Mais</a>
+                             </div>
                         </div>
-                        <hr class="my-5">
-
-                        <div class="blog-post-full mb-5">
-                            <h2 class="mt-4">Como a sua Doação pode Fazer a Diferença</h2>
-                            <p class="text-muted">Por Equipa PortugalApoia | Publicado em 15 de Julho, 2025</p>
-                            <img class="img-fluid rounded my-3"
-                                src="https://images.unsplash.com/photo-1549405406-8d1976ec4831?q=80&w=2670&auto=format&fit=crop"
-                                alt="Ajuda à comunidade">
-                            <p class="lead">Para quem doa, pode ser apenas um casaco que já não serve ou um móvel que
-                                está a mais. Mas para quem recebe, esse gesto pode significar o conforto num inverno
-                                rigoroso ou a dignidade de ter um lar mais completo. As doações de artigos são um pilar
-                                da economia circular e da solidariedade, transformando o que já não nos é útil em algo
-                                essencial para outra pessoa.</p>
-                            <p>Cada artigo doado conta uma história. Uma cadeira de rodas, por exemplo, não é apenas um
-                                objeto; é a liberdade de movimento para um idoso. Roupas de bebé são mais do que tecido;
-                                são o calor e a segurança para um recém-nascido. Livros escolares representam a
-                                oportunidade de um futuro melhor para uma criança.</p>
-                        </div>
-                        <hr class="my-5">
-
-                        <div class="blog-post-full mb-5">
-                            <h2 class="mt-4">Guia Rápido para Encontrar Emprego</h2>
-                            <p class="text-muted">Por Equipa PortugalApoia | Publicado em 25 de Julho, 2025</p>
-                            <img class="img-fluid rounded my-3"
-                                src="https://images.unsplash.com/photo-1542831371-29b0f74f9408?q=80&w=2670&auto=format&fit=crop"
-                                alt="Oportunidades de Emprego">
-                            <p class="lead">Procurar emprego pode ser um desafio, mas com a estratégia certa, pode
-                                aumentar significativamente as suas chances de sucesso. Este guia oferece dicas práticas
-                                para quem procura uma nova oportunidade no mercado de trabalho português.</p>
-                            <h5>1. Otimize o seu Currículo (CV)</h5>
-                            <p>O seu CV é a sua primeira impressão. Certifique-se de que está atualizado, livre de erros
-                                e, mais importante, adaptado à vaga a que se candidata. Destaque as competências e
-                                experiências mais relevantes para a função. Utilize palavras-chave da descrição da vaga.
-                            </p>
-                            <h5>2. Prepare-se para a Entrevista</h5>
-                            <p>A preparação é a chave para uma entrevista bem-sucedida. Pesquise sobre a empresa,
-                                prepare respostas para perguntas comuns ("Fale-me sobre si", "Quais são os seus pontos
-                                fortes?") e pense em perguntas inteligentes para fazer ao entrevistador. Isto demonstra
-                                interesse e proatividade.</p>
-                        </div>
-                        <hr class="my-5">
-
-                        <div class="blog-post-full mb-5">
-                            <h2 class="mt-4">Histórias de Voluntariado que Inspiram</h2>
-                            <p class="text-muted">Por Equipa PortugalApoia | Publicado em 01 de Agosto, 2025</p>
-                            <img class="img-fluid rounded my-3"
-                                src="https://images.unsplash.com/photo-1510978931494-b153926e843c?q=80&w=2670&auto=format&fit=crop"
-                                alt="Voluntariado">
-                            <p class="lead">O voluntariado é uma das forças mais transformadoras da nossa sociedade. É a
-                                prova de que a empatia, quando posta em ação, pode gerar ondas de mudança positiva que
-                                tocam inúmeras vidas. Em PortugalApoia, testemunhamos diariamente o poder destes gestos
-                                altruístas.</p>
-                            <p>Conhecemos a história de Sofia, uma estudante universitária do Porto que dedica as suas
-                                tardes de sábado a ajudar na distribuição de alimentos. "Comecei por curiosidade, mas
-                                rapidamente percebi o impacto real que estava a ter", conta-nos. "Ver o sorriso de uma
-                                família ao receber um cabaz de compras não tem preço."</p>
-                        </div>
-
                     </div>
                 </div>
             </div>
         </section>
+
+        <section class="py-5 bg-light">
+            <div class="container">
+                <h2 class="section-title text-center">Galeria de Imagens</h2>
+                 <div class="row mt-4">
+                    <div class="col-lg-4 col-md-6 mb-4 gallery-item">
+                        <img src="images/uploads/blog_2025_08_19.webp" alt="Galeria de Imagens 1">
+                    </div>
+                     <div class="col-lg-4 col-md-6 mb-4 gallery-item">
+                        <img src="images/uploads/2025_09_19.webp" alt="Galeria de Imagens 2">
+                    </div>
+                     <div class="col-lg-4 col-md-6 mb-4 gallery-item">
+                        <img src="images/uploads/ropabebe.webp" alt="Galeria de Imagens 3">
+                    </div>
+                 </div>
+            </div>
+        </section>
+
     </main>
 
     <button id="scrollTopBtn" title="Voltar ao topo"><i class="fas fa-arrow-up"></i></button>
@@ -342,9 +301,6 @@
         document.getElementById('locationInput').addEventListener('keyup', filterAnnouncements);
     </script>
 </body>
-<!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PQ2Q63GR" height="0" width="0"
         style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-
 </html>
