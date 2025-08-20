@@ -1381,16 +1381,20 @@ body.dark-theme .share-btn {
     position: relative;
     overflow: hidden;
     border-radius: 8px;
-    /* Nuevo: Establece una relación de aspecto para todos los contenedores */
-    aspect-ratio: 4 / 3; /* Puedes ajustar esto a 16/9, 1/1, etc., según tu preferencia */
-    width: 100%;
-    height: 100%;
+    /* Mantenemos la altura consistente con una relación de aspecto */
+    aspect-ratio: 4 / 3;
 }
 
 .gallery-item img {
     width: 100%;
-    height: 100%; /* La imagen ocupará el 100% del contenedor padre */
-    object-fit: cover; /* Recorta la imagen para que llene el espacio sin deformarse */
+    height: 100%;
+    /* 'object-fit: cover' es la clave para rellenar el espacio sin deformar */
+    object-fit: cover;
     transition: transform 0.3s, filter 0.3s;
 }
 
+/* Opcional: Para asegurar que el contenedor de la columna se comporte correctamente */
+.col-lg-4.col-md-6.mb-4 {
+    display: flex;
+    justify-content: center;
+}
