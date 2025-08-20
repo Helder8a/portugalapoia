@@ -2,9 +2,28 @@
 <html lang="pt-PT">
 
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VG454Y1YV4"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-VG454Y1YV4');
+    </script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3196299619563199"
+        crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Histórias de Solidariedade e Dicas | Blog PortugalApoia</title>
+    <meta name="description"
+        content="Inspire-se com as nossas histórias de sucesso, guias de voluntariado, dicas para encontrar emprego e artigos sobre o impacto da solidariedade em Portugal.">
+    <meta name="keywords"
+        content="blog solidariedade, voluntariado portugal, notícias comunidade, inclusão digital, causas sociais, histórias de sucesso">
+    <link rel="apple-touch-icon" href="/images_pta/logofavicon.ico">
+    <link rel="canonical" href="https://portugalapoia.com/blog.html">
+    <meta property="og:title" content="Histórias de Solidariedade e Dicas | Blog PortugalApoia">
+    <meta property="og:description"
+        content="Inspire-se com as nossas histórias de sucesso, guias de voluntariado e artigos sobre o impacto da solidariedade.">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet"
@@ -14,14 +33,10 @@
     <link rel="icon" href="images_pta/logofavicon.ico" type="image/png">
     <link rel="manifest" href="manifest.json">
     <style>
-        /* Estilos generales del blog */
         .blog-nav {
             background-color: #f8f9fa;
             padding: 0.5rem 0;
             border-bottom: 1px solid #dee2e6;
-            position: sticky;
-            top: 70px; /* Ajusta según la altura de tu cabecera */
-            z-index: 1020;
         }
         .blog-nav .nav-link {
             color: #0A3D62;
@@ -32,34 +47,6 @@
             color: #F57C00;
             border-bottom: 2px solid #F57C00;
         }
-
-        /* Estilos para el artículo destacado */
-        .featured-post-wrapper {
-            background-color: #f8f9fa;
-            border: 1px solid #dee2e6;
-            padding: 2rem;
-            border-radius: 8px;
-            margin-bottom: 3rem;
-        }
-        .featured-post-wrapper .featured-post-image {
-            width: 100%;
-            height: 400px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 1.5rem;
-        }
-        .featured-badge {
-            display: inline-block;
-            background-color: #F57C00;
-            color: white;
-            padding: 5px 15px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            margin-bottom: 1rem;
-        }
-
-        /* Estilos para las tarjetas de artículos normales */
         .blog-post-card {
             border: 1px solid #dee2e6;
             border-radius: 8px;
@@ -77,7 +64,6 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            position: relative;
         }
         .blog-post-card .card-text {
             flex-grow: 1;
@@ -86,8 +72,6 @@
             height: 200px;
             object-fit: cover;
         }
-
-        /* Estilos de la galería y otros elementos */
         .gallery-item {
             position: relative;
             overflow: hidden;
@@ -113,16 +97,24 @@
             padding: 10px;
             text-align: center;
         }
-        .gallery-item .caption h5 { margin: 0; font-size: 1rem; font-weight: bold; }
-        .gallery-item .caption p { margin: 0; font-size: 0.8rem; }
-        .full-content { display: none; margin-top: 1rem; }
-        .tab-pane { display: none; }
-        .tab-pane.active { display: block; }
-        .sidebar-widget {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 2rem;
+        .gallery-item .caption h5 {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        .gallery-item .caption p {
+            margin: 0;
+            font-size: 0.8rem;
+        }
+        .full-content {
+            display: none;
+            margin-top: 1rem;
+        }
+        .tab-pane {
+            display: none;
+        }
+        .tab-pane.active {
+            display: block;
         }
     </style>
 </head>
@@ -174,63 +166,57 @@
             <a class="nav-link" data-toggle="tab" data-target="emprego">Emprego</a>
             <a class="nav-link" data-toggle="tab" data-target="habitacao">Habitação</a>
             <a class="nav-link" data-toggle="tab" data-target="saude">Saúde</a>
+            <a class="nav-link" data-toggle="tab" data-target="turismo">Turismo</a>
+            <a class="nav-link" data-toggle="tab" data-target="educacao">Educação</a>
             <a class="nav-link" data-toggle="tab" data-target="galeria">Galería</a>
         </nav>
 
         <section class="py-5">
             <div class="container">
-                <div class="row">
-                    <div class="col-lg-8">
-                        
-                        <div id="featured-post-container">
+                <div id="blog-content">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 mb-4 tab-pane active" data-category="all emprego">
+                            <div class="blog-post-card">
+                                <img class="card-img-top" src="images/uploads/blog_2025_08_19.webp" alt="Pessoa a preparar-se para uma entrevista de emprego">
+                                <div class="card-body">
+                                    <h5 class="card-title">Guia Rápido para Encontrar Emprego</h5>
+                                    <p class="card-text">Procurar emprego pode ser um desafio, mas com a estratégia certa, pode aumentar significativamente as suas chances de sucesso.</p>
+                                    <div class="full-content">
+                                        <p><strong>1. Otimize o seu Currículo (CV):</strong> O seu CV é a sua primeira impressão. Certifique-se de que está atualizado, livre de erros e, mais importante, adaptado à vaga a que se candidata. Destaque as competências e experiências mais relevantes para a função. Utilize palavras-chave da descrição da vaga para passar pelos filtros automáticos de seleção.</p>
+                                        <p><strong>2. Prepare-se para a Entrevista:</strong> A preparação é a chave para uma entrevista bem-sucedida. Pesquise sobre a empresa, os seus valores e projetos recentes. Prepare respostas para perguntas comuns ("Fale-me sobre si", "Quais são os seus pontos fortes e fracos?") e pense em perguntas inteligentes para fazer ao entrevistador. Isto demonstra interesse, proatividade e que fez o seu trabalho de casa.</p>
+                                        <p><strong>3. Networking é Fundamental:</strong> Participe em feiras de emprego, eventos da sua área e mantenha o seu perfil de LinkedIn atualizado. Muitas vagas são preenchidas através de contactos. Não hesite em informar a sua rede de que está à procura de uma nova oportunidade.</p>
+                                    </div>
+                                    <button class="btn btn-outline-primary read-more-btn">Ler Mais</button>
+                                </div>
                             </div>
-                        
-                        <div id="blog-content">
-                            <div class="row">
-                                <div class="col-md-6 mb-4 tab-pane active destacado" data-category="all emprego">
-                                    <div class="blog-post-card">
-                                        <img class="card-img-top" src="images/uploads/blog_2025_08_19.webp" alt="Pessoa a preparar-se para uma entrevista de emprego">
-                                        <div class="card-body">
-                                            <span class="featured-badge">Artigo em Destaque</span>
-                                            <h5 class="card-title">Guia Rápido para Encontrar Emprego</h5>
-                                            <p class="card-text">Procurar emprego pode ser um desafio, mas com a estratégia certa, pode aumentar significativamente as suas chances de sucesso.</p>
-                                            <div class="full-content">
-                                                <p><strong>1. Otimize o seu Currículo (CV):</strong> O seu CV é a sua primeira impressão. Certifique-se de que está atualizado, livre de erros e, mais importante, adaptado à vaga a que se candidata.</p>
-                                                <p><strong>2. Prepare-se para a Entrevista:</strong> A preparação é a chave. Pesquise sobre a empresa, prepare respostas para perguntas comuns e pense em perguntas inteligentes para fazer ao entrevistador.</p>
-                                            </div>
-                                            <button class="btn btn-outline-primary read-more-btn mt-auto">Ler Mais</button>
-                                        </div>
-                                    </div>
-                                </div>
+                        </div>
 
-                                <div class="col-md-6 mb-4 tab-pane active" data-category="all habitacao">
-                                    <div class="blog-post-card">
-                                        <img class="card-img-top" src="images/uploads/2025_09_19.webp" alt="Chaves de uma casa sobre uma planta">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Dicas para Arrendar Casa em Portugal</h5>
-                                            <p class="card-text">O mercado de arrendamento pode ser competitivo. Conheça algumas dicas para facilitar a sua procura pela casa ideal.</p>
-                                            <div class="full-content">
-                                                <p>Encontrar uma casa para arrendar em Portugal exige paciência e preparação. Comece por definir um orçamento claro, incluindo não só a renda, mas também as despesas (água, luz, gás, internet).</p>
-                                            </div>
-                                            <button class="btn btn-outline-primary read-more-btn mt-auto">Ler Mais</button>
-                                        </div>
+                        <div class="col-lg-4 col-md-6 mb-4 tab-pane active" data-category="all habitacao">
+                            <div class="blog-post-card">
+                                <img class="card-img-top" src="images/uploads/2025_09_19.webp" alt="Chaves de uma casa sobre uma planta">
+                                <div class="card-body">
+                                    <h5 class="card-title">Dicas para Arrendar Casa em Portugal</h5>
+                                    <p class="card-text">O mercado de arrendamento pode ser competitivo. Conheça algumas dicas para facilitar a sua procura pela casa ideal.</p>
+                                    <div class="full-content">
+                                        <p>Encontrar uma casa para arrendar em Portugal exige paciência e preparação. Comece por definir um orçamento claro, incluindo não só a renda, mas também as despesas (água, luz, gás, internet). Utilize portais imobiliários, mas não descarte o poder das redes sociais e do passa-a-palavra.</p>
+                                        <p>Quando visitar um imóvel, esteja atento a pormenores como a exposição solar, o estado das janelas, sinais de humidade e a eficiência energética. Prepare um dossier com os seus documentos (identificação, contrato de trabalho, últimos recibos de vencimento) para mostrar que é um inquilino fiável e agilizar o processo.</p>
                                     </div>
+                                    <button class="btn btn-outline-primary read-more-btn">Ler Mais</button>
                                 </div>
-                                
-                                 <div class="col-md-6 mb-4 tab-pane active" data-category="all saude">
-                                    <div class="blog-post-card">
-                                        <div class="video-container">
-                                            <iframe src="https://www.youtube.com/embed/gXWXKjR-qII?si=c1oM59n5S7-H_0Kd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                        </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">SNS: Acesso à Saúde em Portugal</h5>
-                                            <p class="card-text">O SNS é um pilar do estado social português. Saiba como tirar o máximo partido dos seus direitos e serviços de saúde.</p>
-                                            <div class="full-content">
-                                                <p>Para aceder ao SNS, o primeiro passo é inscrever-se no centro de saúde da sua área de residência para obter o seu número de utente.</p>
-                                            </div>
-                                            <button class="btn btn-outline-primary read-more-btn mt-auto">Ler Mais</button>
-                                        </div>
+                            </div>
+                        </div>
+
+                         <div class="col-lg-4 col-md-6 mb-4 tab-pane active" data-category="all saude">
+                            <div class="blog-post-card">
+                                <img class="card-img-top" src="images/uploads/sillarueda.webp" alt="Médica a usar um computador portátil">
+                                <div class="card-body">
+                                    <h5 class="card-title">Navegar no Serviço Nacional de Saúde (SNS)</h5>
+                                    <p class="card-text">O SNS é um pilar do estado social português. Saiba como tirar o máximo partido dos seus direitos e serviços de saúde.</p>
+                                    <div class="full-content">
+                                        <p>Para aceder ao SNS, o primeiro passo é inscrever-se no centro de saúde da sua área de residência para obter o seu número de utente. Com este número, terá acesso a um médico de família, que será o seu ponto de contacto primário para a maioria das suas necessidades de saúde, desde consultas de rotina a pedidos de exames e encaminhamento para especialistas.</p>
+                                        <p>Utilize o portal SNS 24 para marcar consultas, renovar receitas médicas e aceder ao seu boletim de vacinas digital. Em caso de doença súbita não urgente, a linha SNS 24 (808 24 24 24) é um recurso valioso para obter aconselhamento médico por telefone, evitando deslocações desnecessárias às urgências.</p>
                                     </div>
+                                    <button class="btn btn-outline-primary read-more-btn">Ler Mais</button>
                                 </div>
                             </div>
                         </div>
@@ -241,50 +227,33 @@
                                 <div class="col-lg-4 col-md-6 mb-4">
                                     <div class="gallery-item">
                                         <img src="images/uploads/blog_2025_08_19.webp" alt="Jovens em biblioteca">
-                                        <div class="caption"><h5>Encontro de Voluntários</h5><p>19 de Agosto de 2025</p></div>
+                                        <div class="caption">
+                                            <h5>Encontro de Voluntários</h5>
+                                            <p>19 de Agosto de 2025</p>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-6 mb-4">
                                      <div class="gallery-item">
                                         <img src="images/uploads/2025_09_19.webp" alt="Turista a tirar foto">
-                                        <div class="caption"><h5>Descobrindo a Cidade</h5><p>19 de Setembro de 2025</p></div>
+                                        <div class="caption">
+                                            <h5>Descobrindo a Cidade</h5>
+                                            <p>19 de Setembro de 2025</p>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-6 mb-4">
                                      <div class="gallery-item">
                                         <img src="images/img_portada.webp" alt="Mãos unidas em círculo">
-                                        <div class="caption"><h5>União da Comunidade</h5><p>15 de Agosto de 2025</p></div>
+                                        <div class="caption">
+                                            <h5>União da Comunidade</h5>
+                                            <p>15 de Agosto de 2025</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
-                    <aside class="col-lg-4">
-                        <div class="sidebar-widget">
-                            <h5 class="mb-3">Pesquisar no Blog</h5>
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Escreva aqui...">
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" type="button"><i class="fas fa-search"></i></button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="sidebar-widget">
-                            <h5 class="mb-3">Sobre Nós</h5>
-                            <p>PortugalApoia é uma plataforma solidária dedicada a conectar a generosidade à necessidade em todo o país. Acreditamos no poder da comunidade.</p>
-                        </div>
-                        
-                        <div class="sidebar-widget">
-                            <h5 class="mb-3">Artigos Recentes</h5>
-                            <ul class="list-unstyled">
-                                <li class="mb-2"><a href="#">Guia Rápido para Encontrar Emprego</a></li>
-                                <li class="mb-2"><a href="#">Dicas para Arrendar Casa em Portugal</a></li>
-                                <li><a href="#">SNS: Acesso à Saúde em Portugal</a></li>
-                            </ul>
-                        </div>
-                    </aside>
                 </div>
             </div>
         </section>
@@ -293,7 +262,36 @@
     <button id="scrollTopBtn" title="Voltar ao topo"><i class="fas fa-arrow-up"></i></button>
 
     <footer class="main-footer">
-        </footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h4>PortugalApoia</h4>
+                    <p>A conectar a generosidade à necessidade.</p>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h4>Navegação</h4>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link" href="doacoes.html">Doações</a></li>
+                        <li class="nav-item"><a class="nav-link" href="empregos.html">Emprego</a></li>
+                        <li class="nav-item"><a class="nav-link" href="servicos.html">Serviços</a></li>
+                        <li class="nav-item"><a class="nav-link" href="habitação.html">Habitação</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h4>Siga-nos</h4><a href="https://www.instagram.com/portugalapoia" target="_blank"
+                        rel="noopener noreferrer" class="social-link">Instagram</a>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h4>Contacto</h4>
+                    <p>Um projeto desenvolvido e patrocinado pela <a href="mailto:hbo.consulting.pt@gmail.com">HBO
+                            Consulting</a>.</p>
+                </div>
+            </div>
+            <div class="footer-bottom text-center pt-3 mt-3">
+                <p>&copy; 2025 PortugalApoia.com | <a href="politica-privacidade.html">Política de Privacidade</a></p>
+            </div>
+        </div>
+    </footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
@@ -301,36 +299,22 @@
     <script src="script.js" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Funcionalidade do botão "Ler Mais"
             const readMoreButtons = document.querySelectorAll('.read-more-btn');
             readMoreButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     const cardBody = this.closest('.card-body');
                     const fullContent = cardBody.querySelector('.full-content');
+                    
                     const isVisible = fullContent.style.display === 'block';
                     fullContent.style.display = isVisible ? 'none' : 'block';
                     this.textContent = isVisible ? 'Ler Mais' : 'Ler Menos';
                 });
             });
 
+            // Funcionalidade das abas de categoria
             const navLinks = document.querySelectorAll('.blog-nav .nav-link');
             const tabPanes = document.querySelectorAll('#blog-content .tab-pane');
-            const featuredContainer = document.getElementById('featured-post-container');
-            const featuredPostOriginal = document.querySelector('.destacado');
-
-            if (featuredPostOriginal) {
-                const featuredClone = featuredPostOriginal.cloneNode(true);
-                // Clonar y transformar para el formato destacado
-                const featuredHTML = `
-                <div class="featured-post-wrapper">
-                     <span class="featured-badge">Artigo em Destaque</span>
-                     <img src="${featuredClone.querySelector('img').src}" alt="${featuredClone.querySelector('h5').textContent}" class="featured-post-image">
-                     <h2>${featuredClone.querySelector('h5').textContent}</h2>
-                     <p class="lead">${featuredClone.querySelector('p').textContent}</p>
-                     <div class="full-content" style="display: block;">${featuredClone.querySelector('.full-content').innerHTML}</div>
-                </div>`;
-                featuredContainer.innerHTML = featuredHTML;
-                featuredPostOriginal.style.display = 'none'; // Ocultar el original de la lista
-            }
 
             navLinks.forEach(link => {
                 link.addEventListener('click', function(event) {
@@ -341,19 +325,8 @@
                     
                     const targetCategory = this.getAttribute('data-target');
                     
-                    if (featuredContainer) {
-                         const featuredCategory = featuredPostOriginal ? featuredPostOriginal.getAttribute('data-category').split(' ') : [];
-                         featuredContainer.style.display = (targetCategory === 'all' || featuredCategory.includes(targetCategory)) ? 'block' : 'none';
-                    }
-                    
                     tabPanes.forEach(pane => {
                         const paneCategories = pane.getAttribute('data-category').split(' ');
-                        
-                        if (pane.classList.contains('destacado')) {
-                            pane.style.display = 'none';
-                            return;
-                        }
-
                         if (paneCategories.includes(targetCategory)) {
                             pane.style.display = 'block';
                         } else {
