@@ -1,0 +1,91 @@
+backend:
+  name: github
+  repo: Helder8a/portugalapoia
+  branch: main
+  publish_mode: editorial_workflow
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "conteudos"
+    label: "Conteúdos das Páginas"
+    files:
+      - file: "_dados/empregos.json"
+        label: "Vagas de Emprego"
+        name: "empregos"
+        fields:
+          - {label: "Lista de Vagas", name: "vagas", widget: "list", fields: [
+              {label: "ID (Ex: EMP-033)", name: "id", widget: "string"},
+              {label: "Título da Vaga", name: "titulo", widget: "string"},
+              {label: "Localização", name: "localizacao", widget: "string"},
+              {label: "Descrição", name: "descricao", widget: "text"},
+              {label: "Tel", name: "contato", widget: "string", required: false},
+              {label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com", required: false},
+              {label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false},
+              {label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false}
+            ]}
+      - file: "_dados/doacoes.json"
+        label: "Pedidos de Doação"
+        name: "doacoes"
+        fields:
+          - {label: "Lista de Pedidos", name: "pedidos", widget: "list", fields: [
+              {label: "ID (Ex: DOA-004)", name: "id", widget: "string"},
+              {label: "Título do Pedido", name: "titulo", widget: "string"},
+              {label: "Localização", name: "localizacao", widget: "string"},
+              {label: "Descrição", name: "descricao", widget: "text"},
+              {label: "É Urgente?", name: "urgente", widget: "boolean", default: false},
+              {label: "Imagem (Opcional)", name: "imagem", widget: "image", required: false},
+              {label: "Tel", name: "contato", widget: "string"},
+              {label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com"},
+              {label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false},
+              {label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false}
+            ]}
+      - file: "_dados/servicos.json"
+        label: "Ofertas de Serviço"
+        name: "servicos"
+        fields:
+          - {label: "Lista de Serviços", name: "servicos", widget: "list", fields: [
+              {label: "ID (Ex: SER-004)", name: "id", widget: "string"},
+              {label: "Logo da Empresa (Opcional)", name: "logo_empresa", widget: "image", required: false},
+              {label: "Título do Serviço", name: "titulo", widget: "string"},
+              {label: "Valor do Serviço (Opcional)", name: "valor_servico", widget: "string", required: false, hint: "Ex: 50€, A combinar, Gratuito"},
+              {label: "Localização", name: "localizacao", widget: "string"},
+              {label: "Descrição", name: "descricao", widget: "text"},
+              {label: "Tel", name: "contato", widget: "string"},
+              {label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com"},
+              {label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false},
+              {label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false}
+            ]}
+      - file: "_dados/habitacao.json"
+        label: "Anúncios de Habitação"
+        name: "habitacao"
+        fields:
+          - {label: "Lista de Anúncios", name: "anuncios", widget: "list", fields: [
+              {label: "ID (Ex: HAB-007)", name: "id", widget: "string"},
+              {label: "Título do Anúncio", name: "titulo", widget: "string"},
+              {label: "Valor do Anúncio", name: "valor_anuncio", widget: "string", required: false, hint: "Ex: 450€/mês"},
+              {label: "Localização", name: "localizacao", widget: "string"},
+              {label: "Descrição", name: "descricao", widget: "text"},
+              {label: "Imagens do Imóvel", name: "imagens", widget: "list", required: false, fields: [
+                {label: "Imagem", name: "imagem_url", widget: "image"}
+              ]},
+              {label: "Tel", name: "contato", widget: "string", required: false},
+              {label: "Email", name: "link_contato", widget: "string", required: false},
+              {label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false},
+              {label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false}
+            ]}
+      # --- ESTA ES LA SECCIÓN QUE AHORA SÍ VA A APARECER ---
+      - file: "_dados/homepage.json"
+        label: "Conteúdo da Página Principal"
+        name: "homepage"
+        fields:
+          - {label: "Título Principal", name: "hero_title", widget: "string"}
+          - {label: "Subtítulo", name: "hero_subtitle", widget: "string"}
+          - label: "Textos dos Contadores de Impacto"
+            name: "impact_counters"
+            widget: "object"
+            fields:
+              - {label: "Texto para Doações", name: "doacoes_text", widget: "string"}
+              - {label: "Texto para Emprego", name: "emprego_text", widget: "string"}
+              - {label: "Texto para Total de Anúncios", name: "total_text", widget: "string"}

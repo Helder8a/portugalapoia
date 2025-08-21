@@ -1,0 +1,19 @@
+{
+  "anuncios": [
+    {
+      "id": "1",
+      "titulo": "Quarto",
+      "localizacao": "Lisboa, Portela",
+      "descricao": "Quarto com casa de banho privativa",
+      "valor_anuncio": "450€/mês",
+      "imagens": [
+        "/images_habitação/quarto_portela_1.webp",
+        "/images_habitação/quarto_portela_2.webp"
+      ],
+      "contato": "+351 913415847",
+      "link_contato": "+351 913415847",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-09-18"
+    }
+  ]
+}

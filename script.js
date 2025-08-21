@@ -60,193 +60,172 @@ document.addEventListener("DOMContentLoaded", async () => {
     async function carregarConteudo(jsonPath, containerId, renderFunction, pageName) {
         const container = document.getElementById(containerId);
         if (!container) return;
+
         const items = await fetchJson(jsonPath);
+
         if (!items || items.length === 0) {
             container.innerHTML = `<p class="col-12 text-center lead text-muted mt-5">De momento, não há anúncios publicados nesta secção.</p>`;
             return;
         }
+
         items.sort((a, b) => new Date(b.data_publicacao || 0) - new Date(a.data_publicacao || 0));
+
         const htmlContent = items.map(item => renderFunction(item, pageName, item.id)).join('');
         container.innerHTML = htmlContent;
     }
 
-    // --- FUNCIONES DE RENDERIZADO MEJORADAS ---
+    // --- FUNÇÕES DE RENDERIZAÇÃO ---
+    // (Aquí van todas tus funciones renderEmprego, renderDoacao, etc. que ya estaban bien)
     function formatarDatas(item) {
-        if (!item || !item.data_publicacao) {
+        if (!item || !item.data_publicacao || !item.data_vencimento) {
             return `<div class="date-info">ID: ${item.id || 'N/A'}</div>`;
         }
         const dataPublicacao = new Date(item.data_publicacao);
-        const pubFormatada = dataPublicacao.toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' });
-        
-        if (!item.data_vencimento) {
-            return `<div class="date-info">Publicado: ${pubFormatada}</div>`;
-        }
-
         const dataVencimento = new Date(item.data_vencimento);
         const hoje = new Date();
         hoje.setHours(0, 0, 0, 0);
+        const pubFormatada = dataPublicacao.toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        const vencFormatada = dataVencimento.toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' });
         const isVencido = dataVencimento < hoje;
         const classeVencido = isVencido ? 'vencido' : '';
-        const textoVencido = isVencido ? ' (Vencido)' : '';
-
-        return `<div class="date-info ${classeVencido}">Publicado: ${pubFormatada}${textoVencido}</div>`;
+        const textoVencido = isVencido ? '(Vencido)' : '';
+        return `<div class="date-info">Publicado: ${pubFormatada} <br> <span class="${classeVencido}">Vencimento: ${vencFormatada} ${textoVencido}</span></div>`;
     }
 
-    function renderEmprego(item, pageName) {
-        const linkAnuncio = `empregos.html#${item.id}`;
-        return `
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="announcement-card">
-                <div class="card-img-container">
-                    <div class="image-placeholder">EMPREGO</div>
-                    <span class="card-category-badge">Emprego</span>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">${item.titulo || 'Sem Título'}</h5>
-                    <h6 class="card-location"><i class="fas fa-map-marker-alt mr-2"></i>${item.localizacao || 'N/A'}</h6>
-                    <p class="card-description">${item.descricao || 'Sem Descrição'}</p>
-                </div>
-                <div class="card-footer">
-                    ${formatarDatas(item)}
-                    <a href="${linkAnuncio}" class="btn btn-sm btn-outline-primary">Ver Mais</a>
-                </div>
-            </div>
-        </div>`;
+    function renderShareButtons(item, page) {
+        const url = `https://portugalapoia.com/${page}#${item.id}`;
+        const text = `Vi este anúncio em PortugalApoia e lembrei-me de ti: "${item.titulo}"`;
+        const encodedUrl = encodeURIComponent(url);
+        const encodedText = encodeURIComponent(text);
+        return `<div class="share-buttons"><small class="share-label">Partilhar:</small><a href="https://api.whatsapp.com/send?text=${encodedText}%20${encodedUrl}" target="_blank" rel="noopener noreferrer" title="Partilhar no WhatsApp" class="share-btn whatsapp"><i class="fab fa-whatsapp"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}" target="_blank" rel="noopener noreferrer" title="Partilhar no Facebook" class="share-btn facebook"><i class="fab fa-facebook-f"></i></a></div>`;
+    }
+
+    function renderEmprego(item, pageName, idAnuncio) {
+        const jobPostingSchema = { "@context": "https://schema.org/", "@type": "JobPosting", "title": item.titulo, "description": (item.descricao || '').replace(/["\n\r]/g, ' ').trim(), "datePosted": item.data_publicacao, "validThrough": item.data_vencimento, "hiringOrganization": { "@type": "Organization", "name": "Empresa Anunciante (via PortugalApoia)" }, "jobLocation": { "@type": "Place", "address": { "@type": "PostalAddress", "addressLocality": item.localizacao, "addressCountry": "PT" } }, "employmentType": "FULL_TIME, PART_TIME" };
+        let contatoHTML = '';
+        if (item.contato) { contatoHTML += `<p class="card-text small mb-1"><strong>Tel:</strong> <a href="tel:${item.contato.replace(/[\s+()-]/g, '')}">${item.contato}</a></p>`; }
+        if (item.link_contato && item.link_contato.includes('@')) { const emailLink = item.link_contato.startsWith('mailto:') ? item.link_contato : `mailto:${item.link_contato}`; contatoHTML += `<p class="card-text small"><strong>Email:</strong> <a href="${emailLink}">${item.link_contato.replace('mailto:', '')}</a></p>`; }
+        return `<div class="col-lg-4 col-md-6 mb-4 job-item"><div class="card h-100 shadow-sm" id="${item.id}"><div class="card-body d-flex flex-column"><h5 class="card-title">${item.titulo || 'Sem Título'}</h5><h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${item.localizacao || 'N/A'}</h6><p class="card-text flex-grow-1">${item.descricao || 'Sem Descrição'}</p><div class="mt-auto">${contatoHTML}</div></div><div class="card-footer d-flex justify-content-between align-items-center"><div class="date-info">${formatarDatas(item)}</div>${renderShareButtons(item, pageName)}</div></div></div><script type="application/ld+json">${JSON.stringify(jobPostingSchema)}</script>`;
     }
 
     function renderDoacao(pedido, pageName) {
-        const linkAnuncio = `doações.html#${pedido.id}`;
-        const imagemHTML = pedido.imagem ? `<img loading="lazy" src="${pedido.imagem}" alt="${pedido.titulo}">` : '<div class="image-placeholder">DOAÇÃO</div>';
-        
-        return `
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="announcement-card">
-                <div class="card-img-container">
-                    ${imagemHTML}
-                    <span class="card-category-badge">Doação</span>
-                    ${pedido.urgente ? '<span class="badge badge-danger position-absolute" style="top: 12px; left: 12px;">Urgente</span>' : ''}
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">${pedido.titulo}</h5>
-                    <h6 class="card-location"><i class="fas fa-map-marker-alt mr-2"></i>${pedido.localizacao}</h6>
-                    <p class="card-description">${pedido.descricao}</p>
-                </div>
-                <div class="card-footer">
-                    ${formatarDatas(pedido)}
-                    <a href="${linkAnuncio}" class="btn btn-sm btn-primary">Ver Mais</a>
-                </div>
-            </div>
-        </div>`;
+        const productSchema = { "@context": "https://schema.org/", "@type": "Product", "name": pedido.titulo, "description": pedido.descricao, "image": pedido.imagem ? `https://portugalapoia.com${pedido.imagem}` : `https://portugalapoia.com/images/img_portada.webp`, "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR", "availability": "https://schema.org/InStock" }, "itemCondition": "https://schema.org/UsedCondition" };
+        const badgeUrgente = pedido.urgente ? '<span class="badge badge-danger position-absolute" style="top: 10px; right: 10px; z-index: 2;">Urgente</span>' : '';
+        const imagemHTML = pedido.imagem ? `<img loading="lazy" src="${pedido.imagem}" class="d-block w-100" alt="${pedido.titulo}" style="height: 200px; object-fit: cover;">` : '<div class="image-placeholder">SEM IMAGEM</div>';
+        let contatoHTML = '';
+        if (pedido.contato) { contatoHTML = `<p class="card-text small"><strong>Tel:</strong> <a href="tel:${pedido.contato.replace(/[\s+()-]/g, '')}">${pedido.contato}</a></p>`; }
+        return `<div class="col-lg-4 col-md-6 mb-4 announcement-item"><div class="card h-100 shadow-sm" id="${pedido.id}">${badgeUrgente}${imagemHTML}<div class="card-body d-flex flex-column"><h5 class="card-title">${pedido.titulo}</h5><h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${pedido.localizacao}</h6><p class="card-text flex-grow-1">${pedido.descricao}</p><div class="mt-auto">${contatoHTML}<a href="mailto:${pedido.link_contato}" class="btn btn-primary btn-block">Contactar por Email</a></div></div><div class="card-footer d-flex justify-content-between align-items-center"><div class="date-info">${formatarDatas(pedido)}</div>${renderShareButtons(pedido, pageName)}</div></div></div><script type="application/ld+json">${JSON.stringify(productSchema)}</script>`;
     }
 
     function renderServico(item, pageName) {
-        const linkAnuncio = `serviços.html#${item.id}`;
-        const imagemHTML = item.logo_empresa ? `<img loading="lazy" src="${item.logo_empresa}" alt="Logo">` : '<div class="image-placeholder">SERVIÇO</div>';
-
-        return `
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="announcement-card">
-                <div class="card-img-container">
-                    ${imagemHTML}
-                    <span class="card-category-badge">Serviço</span>
-                    ${item.valor_servico ? `<div class="card-price">${item.valor_servico}</div>` : ''}
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">${item.titulo}</h5>
-                    <h6 class="card-location"><i class="fas fa-map-marker-alt mr-2"></i>${item.localizacao}</h6>
-                    <p class="card-description">${item.descricao}</p>
-                </div>
-                <div class="card-footer">
-                    ${formatarDatas(item)}
-                    <a href="${linkAnuncio}" class="btn btn-sm btn-outline-primary">Ver Mais</a>
-                </div>
-            </div>
-        </div>`;
+        const logoHTML = item.logo_empresa ? `<div class="service-card-logo"><img src="${item.logo_empresa}" alt="Logo"></div>` : '';
+        const precoHTML = item.valor_servico ? `<div class="card-price">${item.valor_servico}</div>` : '';
+        let contatoIconsHTML = '<small class="contact-label">Contacto:</small>';
+        if (item.contato) { contatoIconsHTML += `<a href="https://wa.me/${item.contato.replace(/[\s+()-]/g, '')}" target="_blank" class="contact-icon" title="Contactar por WhatsApp"><i class="fab fa-whatsapp"></i></a>`; }
+        if (item.link_contato && item.link_contato.includes('@')) { const emailLink = item.link_contato.startsWith('mailto:') ? item.link_contato : `mailto:${item.link_contato}`; contatoIconsHTML += `<a href="${emailLink}" class="contact-icon" title="Contactar por Email"><i class="fas fa-envelope"></i></a>`; }
+        return `<div class="col-lg-4 col-md-6 mb-4 service-item"><div class="card h-100 shadow-sm position-relative" id="${item.id}">${logoHTML}${precoHTML}<div class="card-body d-flex flex-column"><h5 class="card-title mt-4">${item.titulo}</h5><h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${item.localizacao}</h6><p class="card-text flex-grow-1">${item.descricao}</p><div class="mt-auto card-contact-icons">${contatoIconsHTML}</div></div><div class="card-footer d-flex justify-content-between align-items-center">${formatarDatas(item)}${renderShareButtons(item, pageName)}</div></div></div>`;
     }
 
     function renderHabitacao(anuncio, pageName) {
-        const linkAnuncio = `habitação.html#${anuncio.id}`;
-        let imagemHTML = '<div class="image-placeholder">HABITAÇÃO</div>';
+        const precoHTML = anuncio.valor_anuncio ? `<div class="card-price">${anuncio.valor_anuncio}</div>` : '';
+
+        let imagensHTML = '';
         if (anuncio.imagens && anuncio.imagens.length > 0) {
-            imagemHTML = `<img loading="lazy" src="${anuncio.imagens[0].imagem_url || anuncio.imagens[0]}" alt="${anuncio.titulo}">`;
+            if (anuncio.imagens.length > 1) {
+                const carouselId = `carousel-${anuncio.id}`;
+                const indicators = anuncio.imagens.map((_, index) =>
+                    `<li data-target="#${carouselId}" data-slide-to="${index}" class="${index === 0 ? 'active' : ''}"></li>`
+                ).join('');
+                const items = anuncio.imagens.map((img, index) => `
+                <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                    <img src="${img.imagem_url || img}" class="d-block w-100" alt="${anuncio.titulo}" style="height: 200px; object-fit: cover;">
+                </div>
+            `).join('');
+
+                imagensHTML = `
+                <div id="${carouselId}" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">${indicators}</ol>
+                    <div class="carousel-inner">${items}</div>
+                    <a class="carousel-control-prev" href="#${carouselId}" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#${carouselId}" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span>
+                    </a>
+                </div>`;
+            } else {
+                imagensHTML = `<img loading="lazy" src="${anuncio.imagens[0].imagem_url || anuncio.imagens[0]}" class="d-block w-100" alt="${anuncio.titulo}" style="height: 200px; object-fit: cover;">`;
+            }
+        } else {
+            imagensHTML = '<div class="image-placeholder">SEM IMAGEM</div>';
         }
 
-        return `
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="announcement-card">
-                <div class="card-img-container">
-                    ${imagemHTML}
-                    <span class="card-category-badge">Habitação</span>
-                    ${anuncio.valor_anuncio ? `<div class="card-price">${anuncio.valor_anuncio}</div>` : ''}
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">${anuncio.titulo}</h5>
-                    <h6 class="card-location"><i class="fas fa-map-marker-alt mr-2"></i>${anuncio.localizacao}</h6>
-                    <p class="card-description">${anuncio.descricao}</p>
-                </div>
-                <div class="card-footer">
-                    ${formatarDatas(anuncio)}
-                    <a href="${linkAnuncio}" class="btn btn-sm btn-outline-primary">Ver Mais</a>
-                </div>
-            </div>
-        </div>`;
-    }
+        let contatoHTML = '';
+        if (anuncio.contato) {
+            contatoHTML += `<strong>Tel:</strong> <a href="tel:${anuncio.contato.replace(/[\s+()-]/g, '')}">${anuncio.contato}</a><br>`;
+        }
+        if (anuncio.link_contato && anuncio.link_contato.includes('@')) {
+            const emailLink = anuncio.link_contato.startsWith('mailto:') ? anuncio.link_contato : `mailto:${anuncio.link_contato}`;
+            const emailText = emailLink.replace('mailto:', '');
+            contatoHTML += `<strong>Email:</strong> <a href="${emailLink}">${emailText}</a>`;
+        }
 
-    // --- FUNCIONES PARA LA PÁGINA PRINCIPAL ---
+        return `<div class="col-lg-4 col-md-6 mb-4 housing-item">
+                <div class="card h-100 shadow-sm position-relative" id="${anuncio.id}">
+                    ${precoHTML}
+                    ${imagensHTML}
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">${anuncio.titulo}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${anuncio.localizacao}</h6>
+                        <p class="card-text flex-grow-1">${anuncio.descricao}</p>
+                        <div class="mt-auto">
+                            <p class="card-text small contact-info">${contatoHTML}</p>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        ${formatarDatas(anuncio)}
+                        ${renderShareButtons(anuncio, pageName)}
+                    </div>
+                </div>
+            </div>`;
+    }
+    
+    // --- NUEVA FUNCIÓN PARA LA PÁGINA PRINCIPAL ---
     async function loadHomepageContent() {
         try {
             const response = await fetch('/_dados/homepage.json?t=' + new Date().getTime());
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const data = await response.json();
+
             const heroTitle = document.getElementById('hero-title');
-            if (heroTitle) heroTitle.textContent = data.hero_title;
             const heroSubtitle = document.getElementById('hero-subtitle');
+            if (heroTitle) heroTitle.textContent = data.hero_title;
             if (heroSubtitle) heroSubtitle.textContent = data.hero_subtitle;
+
             const doacoesText = document.getElementById('doacoes-text');
-            if (doacoesText) doacoesText.textContent = data.impact_counters.doacoes_text;
             const empregosText = document.getElementById('empregos-text');
-            if (empregosText) empregosText.textContent = data.impact_counters.emprego_text;
             const totalText = document.getElementById('total-text');
+            if (doacoesText) doacoesText.textContent = data.impact_counters.doacoes_text;
+            if (empregosText) empregosText.textContent = data.impact_counters.emprego_text;
             if (totalText) totalText.textContent = data.impact_counters.total_text;
+
         } catch (error) {
             console.error("Erro ao carregar o conteúdo da página principal:", error);
+            document.getElementById('hero-title').textContent = 'Bem-vindo ao Portugal Apoia';
+            document.getElementById('hero-subtitle').textContent = 'A sua plataforma de apoio comunitário.';
         }
     }
     
+    // Función para actualizar los contadores del impacto en la comunidad
     async function updateImpactCounters() {
         const doacoes = await fetchJson('/_dados/doacoes.json');
         const empregos = await fetchJson('/_dados/empregos.json');
         const servicos = await fetchJson('/_dados/servicos.json');
         const habitacao = await fetchJson('/_dados/habitacao.json');
+
         document.getElementById('contador-doacoes').textContent = `${doacoes.length}+`;
         document.getElementById('contador-empregos').textContent = `${empregos.length}+`;
         document.getElementById('contador-total').textContent = `${doacoes.length + empregos.length + servicos.length + habitacao.length}+`;
-    }
-
-    async function loadLatestAnnouncements() {
-        const container = document.getElementById('latest-announcements-grid');
-        if (!container) return;
-        const doacoes = (await fetchJson('/_dados/doacoes.json')).map(item => ({ ...item, type: 'doacao' }));
-        const empregos = (await fetchJson('/_dados/empregos.json')).map(item => ({ ...item, type: 'emprego' }));
-        const servicos = (await fetchJson('/_dados/servicos.json')).map(item => ({ ...item, type: 'servico' }));
-        const habitacao = (await fetchJson('/_dados/habitacao.json')).map(item => ({ ...item, type: 'habitacao' }));
-        const allAnnouncements = [...doacoes, ...empregos, ...servicos, ...habitacao];
-        allAnnouncements.sort((a, b) => new Date(b.data_publicacao) - new Date(a.data_publicacao));
-        const latest = allAnnouncements.slice(0, 6);
-        if (latest.length === 0) {
-            container.innerHTML = '<p class="col-12 text-center lead text-muted">Ainda não há anúncios publicados.</p>';
-            return;
-        }
-        const htmlContent = latest.map(item => {
-            switch (item.type) {
-                case 'doacao': return renderDoacao(item, 'doações.html');
-                case 'emprego': return renderEmprego(item, 'empregos.html');
-                case 'servico': return renderServico(item, 'serviços.html');
-                case 'habitacao': return renderHabitacao(item, 'habitação.html');
-                default: return '';
-            }
-        }).join('');
-        container.innerHTML = htmlContent;
     }
 
     // --- CARGA INICIAL Y LLAMADAS A FUNCIONES ---
@@ -255,20 +234,61 @@ document.addEventListener("DOMContentLoaded", async () => {
     carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'serviços.html');
     carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderHabitacao, 'habitação.html');
     
+    // Llamada a las funciones de contadores y contenido de la home
+    updateImpactCounters();
     if (document.body.classList.contains('home')) {
-        updateImpactCounters();
         loadHomepageContent();
-        loadLatestAnnouncements();
     }
 
     // --- LÓGICA DO BUSCADOR ---
-    // (Tu código del buscador se mantiene aquí)
+    function setupSearch() {
+        const searchInput = document.getElementById('searchInput');
+        if (!searchInput) return; 
+
+        const locationInput = document.getElementById('locationInput');
+        const searchButton = document.getElementById('searchButton');
+        const clearButton = document.getElementById('clearButton');
+        const noResults = document.getElementById('no-results');
+
+        function filterCards() {
+            const searchText = searchInput.value.toLowerCase().trim();
+            const locationText = locationInput.value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.job-item, .announcement-item, .service-item, .housing-item');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const title = (card.querySelector('.card-title')?.textContent || '').toLowerCase();
+                const description = (card.querySelector('.card-text')?.textContent || '').toLowerCase();
+                const location = (card.querySelector('.card-subtitle')?.textContent || '').toLowerCase();
+                const textMatch = !searchText || title.includes(searchText) || description.includes(searchText);
+                const locationMatch = !locationText || location.includes(locationText);
+
+                if (textMatch && locationMatch) {
+                    card.style.display = '';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            if (noResults) {
+                noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+            }
+        }
+
+        function clearFilters() {
+            searchInput.value = '';
+            locationInput.value = '';
+            filterCards();
+        }
+
+        searchButton.addEventListener('click', filterCards);
+        clearButton.addEventListener('click', clearFilters);
+        searchInput.addEventListener('keyup', filterCards);
+        locationInput.addEventListener('keyup', filterCards);
+    }
+
+    setupSearch();
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-    const images = document.querySelectorAll('img');
-    images.forEach(image => {
-        image.addEventListener('contextmenu', (e) => e.preventDefault());
-        image.addEventListener('dragstart', (e) => e.preventDefault());
-    });
-});
+document.addEventListener

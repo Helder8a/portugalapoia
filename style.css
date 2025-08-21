@@ -1,112 +1,1411 @@
-/* (Aquí va todo el contenido de tu style.css que ya tenías) */
-/* ... */
-
-/* ================================================================== */
-/* --- SECCIÓN DE REDISEÑO DE TARJETAS DE ANUNCIOS (NUEVO CÓDIGO) --- */
-/* ================================================================== */
-
-/* Contenedor principal de la tarjeta */
-.announcement-card {
-    display: flex;
-    flex-direction: column;
+/* --- CÓDIGO COMPLETO Y CORREGIDO PARA style.css --- */
+#hero::before,
+#preloader {
+    width: 100%;
     height: 100%;
-    background-color: var(--color-background);
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius);
-    box-shadow: var(--shadow);
-    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
-    overflow: hidden;
+    left: 0
 }
 
-.announcement-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, .15);
+#preloader,
+#scrollTopBtn {
+    position: fixed;
+    display: flex
+}
+
+.card .card-title,
+.category-link-card h3,
+.hero-title,
+.image-placeholder,
+.logo,
+.main-footer h4,
+.navbar .navbar-nav .nav-link,
+.page-header .page-title,
+.section-title {
+    font-family: var(--font-headings)
+}
+
+.slider,
+.slider.round {
+    top: 0;
+    right: 0
+}
+
+#scrollTopBtn,
+.accordion .card-header,
+.slider,
+.slider.round {
+    cursor: pointer
+}
+
+body.dark-theme {
+    --color-text: #e0e0e0;
+    --color-text-light: #121212;
+    --color-background: #1e1e1e;
+    --color-background-light: #121212;
+    --color-border: #444;
+    --shadow: 0 5px 15px rgba(0, 0, 0, .2)
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--color-text);
+    background-color: var(--color-background-light);
+    line-height: 1.7;
+    font-size: 16px;
+    font-family: Roboto, sans-serif;
+    color: var(--color-text);
+    background-color: var(--color-background-light);
+    transition: background-color .3s, color .3s
+}
+
+.main-header {
+    background-color: var(--color-background);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    transition: .3s ease-in-out
+}
+
+.main-header.nav-sticky {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .1)
+}
+
+.navbar {
+    padding: .8rem 1rem
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--color-primary) !important
+}
+
+.publish-btn,
+body.dark-theme .logo {
+    color: #fff !important
+}
+
+.navbar .navbar-nav .nav-link {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    padding: .5rem 1rem;
+    transition: color .3s;
+    color: var(--color-text)
+}
+
+body.dark-theme .navbar .navbar-nav .nav-link {
+    color: #ccc
+}
+
+.info-icon:hover,
+.main-footer h4,
+.page-header .page-title,
+.solutions-icon:hover,
+body.dark-theme .navbar .navbar-nav .nav-link.active,
+body.dark-theme .navbar .navbar-nav .nav-link:hover {
+    color: var(--color-donation)
+}
+
+.navbar-toggler {
+    border-color: rgba(0, 0, 0, .1);
+    background-color: var(--color-primary)
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e")
+}
+
+.publish-btn {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+    border-radius: 50px;
+    padding: 8px 20px !important;
+    margin-left: 15px;
+    transition: .3s
+}
+
+.publish-btn:hover {
+    background-color: #00663a;
+    border-color: #00663a;
+    transform: translateY(-2px)
+}
+
+#hero {
+    position: relative;
+    min-height: 80vh;
+    background: url('images/img_portada.webp') center center/cover no-repeat;
+    color: #fff;
+    padding: 60px 0
+}
+
+#hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    background: linear-gradient(to top, rgba(10, 61, 98, .8), rgba(10, 61, 98, .4));
+    z-index: 1
+}
+
+#hero .container {
+    position: relative;
+    z-index: 2
+}
+
+.hero-title {
+    font-size: 3.2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, .5)
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    max-width: 650px;
+    margin: 0 auto 2.5rem
+}
+
+.hero-buttons .btn {
+    margin: 5px 10px;
+    padding: 14px 32px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 50px;
+    border-width: 2px
+}
+
+.hero-buttons .btn-primary,
+.publish-btn {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent)
+}
+
+.hero-buttons .btn-secondary {
+    background-color: transparent;
+    border-color: #fff;
+    color: #fff
+}
+
+#progressBar,
+.section-title::after,
+input:checked+.slider,
+input:checked+.slider.round {
+    background-color: var(--color-accent)
+}
+
+.section-title {
+    color: var(--color-primary);
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 15px
+}
+
+.slider,
+.slider-icon,
+.slider:before {
+    position: absolute
+}
+
+.page-header .lead,
+body.dark-theme .card .card-title,
+body.dark-theme .category-link-card h3,
+body.dark-theme .section-title {
+    color: #f1f1f1
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    margin: 15px auto 0;
+    border-radius: 2px
+}
+
+.slider.round:before,
+.slider:before {
+    content: "";
+    height: 18px;
+    width: 18px;
+    bottom: 3px
+}
+
+.page-header {
+    background: linear-gradient(rgba(10, 61, 98, .9), rgba(10, 61, 98, .9)) 0 0/cover, url(images/img_portada.webp) center center/cover no-repeat
+}
+
+.card,
+.category-link-card {
+    background-color: var(--color-background)
+}
+
+.page-header-index,
+.page-header-jobs {
+    background-size: cover;
+    background-position: center
+}
+
+.page-header .page-title {
+    color: var(--color-donation);
+    font-size: 2.8rem
+}
+
+#levelText,
+#scrollTopBtn,
+.blog-post-full h2,
+.card .card-title,
+.category-link-card h3,
+.solutions-icon,
+a:hover,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--color-primary)
+}
+
+.card {
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow);
+    transition: transform .3s, box-shadow .3s, border-color .3s
+}
+
+.card:hover {
+    transform: translateY(-8px) scale(1.02); /* <-- AÑADE scale(1.02) */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, .15) !important;
     border-color: var(--color-accent);
 }
 
-/* Contenedor de la imagen */
-.announcement-card .card-img-container {
-    position: relative;
-    height: 180px;
+.category-link-card,
+.category-link-card:hover {
+    color: var(--color-text);
+    text-decoration: none
 }
 
-.announcement-card .card-img-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.category-icon,
+.main-footer a:hover,
+.navbar .navbar-nav .nav-link.active,
+.navbar .navbar-nav .nav-link:hover,
+.results-sidebar #totalScore,
+a {
+    color: var(--color-accent);
+    color: var(--color-accent)
 }
 
-/* Etiqueta de categoría (Doação, Emprego, etc.) */
-.announcement-card .card-category-badge {
-    position: absolute;
-    top: 12px;
-    right: -1px;
-    background-color: var(--color-primary);
-    color: #fff;
-    padding: 4px 12px;
-    border-radius: 15px 0 0 15px;
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    box-shadow: -2px 2px 5px rgba(0,0,0,0.1);
-}
-
-/* Cuerpo de la tarjeta */
-.announcement-card .card-body {
+.category-link-card {
+    border-radius: var(--border-radius);
+    padding: 30px;
+    text-align: center;
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
-    padding: 1rem 1.2rem;
+    align-items: center;
+    height: 100%
 }
 
-.announcement-card .card-title {
-    font-family: var(--font-headings);
+.category-icon {
+    font-size: 50px;
+    margin-bottom: 15px
+}
+
+.category-link-card h3 {
+    font-size: 1.4rem;
+    margin-top: 0;
+    margin-bottom: 10px
+}
+
+.main-footer {
+    padding: 50px 0 20px
+}
+
+.main-footer h4 {
+    margin-bottom: 15px;
+    color: var(--color-donation)
+}
+
+.blog-post-full .text-muted,
+.blog-post-full h2,
+.blog-post-full h5,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: Inter, sans-serif
+}
+
+.main-footer a:hover {
+    text-decoration: none
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, .1)
+}
+
+.footer-bottom p {
+    font-size: .85em;
+    color: rgba(255, 255, 255, .8)
+}
+
+#preloader {
+    top: 0;
+    background-color: #fff;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity .5s, visibility .5s
+}
+
+#preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none
+}
+
+#preloader .spinner {
+    width: 80px;
+    height: auto;
+    animation: 2s ease-in-out infinite pulse;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+#scrollTopBtn {
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--color-donation);
+    border: none;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
     font-size: 1.2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .2);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .4s, visibility .4s, transform .4s
+}
+
+#scrollTopBtn.visible {
+    opacity: 1;
+    visibility: visible
+}
+
+#scrollTopBtn:hover {
+    transform: scale(1.1)
+}
+
+.slider {
+    background-color: #ccc;
+    bottom: 0;
+    left: 0;
+    transition: .4s;
+    border-radius: 34px
+}
+
+.slider:before {
+    background-color: #fff;
+    left: 4px;
+    transition: .4s;
+    border-radius: 50%
+}
+
+input:checked+.slider.round:before,
+input:checked+.slider:before {
+    transform: translateX(26px)
+}
+
+.slider-icon {
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+    font-size: 12px
+}
+
+.fa-sun,
+.slider.round .fa-sun {
+    left: 5px
+}
+
+.fa-moon,
+.slider.round .fa-moon {
+    right: 5px
+}
+
+.page-header-jobs {
+    background-image: url('https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2670&auto=format&fit=crop');
+    position: relative
+}
+
+.page-header-blog::before,
+.page-header-doacoes::before,
+.page-header-habitacao::before,
+.page-header-index::before,
+.page-header-jobs::before,
+.page-header-publicar::before,
+.page-header-servicos::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10, 61, 98, .7)
+}
+
+.page-header .container,
+.page-header-blog .container,
+.page-header-doacoes .container,
+.page-header-habitacao .container,
+.page-header-index .container,
+.page-header-jobs .container,
+.page-header-publicar .container,
+.page-header-servicos .container {
+    position: relative;
+    z-index: 1
+}
+
+body.dark-theme .page-header-blog::before,
+body.dark-theme .page-header-doacoes::before,
+body.dark-theme .page-header-habitacao::before,
+body.dark-theme .page-header-index::before,
+body.dark-theme .page-header-jobs::before,
+body.dark-theme .page-header-publicar::before,
+body.dark-theme .page-header-servicos::before {
+    background-color: rgba(116, 185, 255, .3)
+}
+
+.page-header-blog,
+.page-header-doacoes,
+.page-header-habitacao,
+.page-header-publicar,
+.page-header-servicos {
+    background-size: cover;
+    background-position: center;
+    position: relative
+}
+
+.page-header-index {
+    background-image: url('https://images.unsplash.com/photo-1549405406-8d1976ec4831?q=80&w=2670&auto=format&fit=crop');
+    position: relative
+}
+
+.announcement-card img,
+.blog-post .card-img-top,
+.housing-item .card-img-top,
+.service-item .card-img-top {
+    height: 160px;
+    object-fit: cover;
+    width: 100%
+}
+
+.image-placeholder {
+    height: 160px;
+    background: linear-gradient(135deg, var(--color-primary) 0, var(--color-accent) 100%);
+    color: #fff;
+    font-size: 1.8rem;
     font-weight: 700;
-    color: var(--color-primary);
-    margin-bottom: 0.5rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-height: 48px;
+    text-transform: uppercase;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    line-height: 1.2;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, .2)
 }
 
-.announcement-card .card-location {
-    font-size: 0.9rem;
-    color: var(--color-text-muted);
-    margin-bottom: 1rem;
+.blog-post-full {
+    background-color: #fff;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 2.5rem;
+    margin-bottom: 3.5rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, .05)
 }
 
-.announcement-card .card-description {
-    font-size: 0.95rem;
-    flex-grow: 1;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    min-height: 60px;
+.blog-post-full h2 {
+    font-weight: 800;
+    font-size: 2.7rem;
+    line-height: 1.25;
+    color: #1a3b5c;
+    margin-bottom: .5rem
 }
 
-/* Pie de la tarjeta */
-.announcement-card .card-footer {
+.blog-post-full .text-muted {
+    font-style: italic;
+    font-size: .9rem;
+    color: #6c757d !important;
+    display: block;
+    margin-bottom: 2rem
+}
+
+.blog-post-full .img-fluid {
+    border-radius: 8px;
+    margin-bottom: 2rem
+}
+
+.blog-post-full .lead {
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: #495057;
+    margin-top: 2rem
+}
+
+.blog-post-full p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #343a40;
+    margin-bottom: 1.5rem
+}
+
+#levelText,
+.blog-post-full h5 {
+    font-size: 1.5rem;
+    font-weight: 700
+}
+
+.blog-post-full h5 {
+    color: #1a3b5c;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem
+}
+
+.blog-post-full blockquote {
+    border-left: 4px solid #00834b;
+    padding-left: 1.5rem;
+    margin: 2.5rem 0;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: #5a6268
+}
+
+hr.blog-separator {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, .1), rgba(0, 0, 0, 0));
+    margin: 4rem 0
+}
+
+.page-header {
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    color: #fff;
+    padding: 80px 0
+}
+
+.page-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10, 61, 98, .75);
+    z-index: 0
+}
+
+.page-header-doacoes {
+    background-image: url('https://images.unsplash.com/photo-1593113598332-cd288d649433?q=80&w=2670&auto=format&fit=crop')
+}
+
+.page-header-empregos {
+    background-image: url('https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=2670&auto=format&fit=crop')
+}
+
+.page-header-servicos {
+    background-image: url('https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2670&auto=format&fit=crop')
+}
+
+.page-header-habitacao {
+    background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=2670&auto=format&fit=crop')
+}
+
+.page-header-blog {
+    background-image: url('https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=2670&auto=format&fit=crop')
+}
+
+.page-header-publicar {
+    background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2670&auto=format&fit=crop')
+}
+
+body.dark-theme {
+    --color-text: #e0e0e0;
+    --color-text-light: #121212;
+    --color-background: #1e1e1e;
+    --color-background-light: #121212;
+    --color-border: #444;
+    --shadow: 0 5px 15px rgba(0, 0, 0, .2);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700
+}
+
+.main-header {
+    background-color: var(--color-background);
+    border-bottom: 1px solid var(--color-border)
+}
+
+.logo {
+    color: var(--color-primary) !important
+}
+
+.page-header {
+    background-color: var(--color-primary)
+}
+
+.blog-post-full,
+.card {
+    background-color: var(--color-background);
+    border-color: var(--color-border);
+    box-shadow: var(--shadow)
+}
+
+.card .card-subtitle {
+    color: var(--color-text-muted)
+}
+
+.card .card-footer {
     background-color: transparent;
-    border-top: 1px solid var(--color-border);
-    padding: 0.75rem 1.2rem;
+    border-top: 1px solid var(--color-border)
+}
+
+.form-control,
+.form-control:focus {
+    background-color: var(--color-background);
+    color: var(--color-text)
+}
+
+.form-control,
+.input-group-text {
+    border-color: var(--color-border)
+}
+
+body.dark-theme .form-control::placeholder {
+    color: #888
+}
+
+.input-group-text {
+    background-color: var(--color-background-light);
+    color: var(--color-text-muted)
+}
+
+#blog-full-content {
+    font-family: Roboto, sans-serif
+}
+
+.blog-post-full .text-muted {
+    color: var(--color-text-muted) !important
+}
+
+.blog-post-full blockquote {
+    border-left-color: var(--color-donation);
+    color: var(--color-text-muted)
+}
+
+.main-footer {
+    background-color: #08314e;
+    color: #ccc
+}
+
+body.dark-theme .main-footer {
+    background-color: #000
+}
+
+.main-footer a {
+    transition: color .3s;
+    color: #fff
+}
+
+.evaluator-main-content h3,
+.reviews-title {
+    color: var(--color-primary);
+    font-family: var(--font-headings)
+}
+
+.icon-group,
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center
+}
+
+.theme-switch {
+    display: inline-block;
+    height: 24px;
+    position: relative;
+    width: 50px
+}
+
+.theme-switch input {
+    display: none
+}
+
+.slider.round {
+    background-color: #ccc;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    transition: .4s;
+    border-radius: 34px
+}
+
+.slider.round:before {
+    background-color: #fff;
+    position: absolute;
+    left: 4px;
+    bottom: 4px;
+    transition: .4s;
+    border-radius: 50%
+}
+
+.slider.round .fa-moon,
+.slider.round .fa-sun {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: #fff;
+    opacity: 0;
+    transition: opacity .3s
+}
+
+body.dark-theme .slider.round .fa-moon,
+body:not(.dark-theme) .slider.round .fa-sun {
+    opacity: 1
+}
+
+.evaluator-main-content {
+    background-color: var(--color-background);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 2.5rem;
+    margin-top: -80px;
+    position: relative;
+    z-index: 2
+}
+
+.accordion .card-header,
+.results-sidebar {
+    background-color: var(--color-background-light)
+}
+
+.evaluator-main-content h3 {
+    margin-bottom: 1.5rem
+}
+
+.results-sidebar {
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-border);
+    position: sticky;
+    top: 100px
+}
+
+.results-sidebar #totalScore {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1
+}
+
+.progress-bar-container {
+    background-color: var(--color-border);
+    border-radius: 50px;
+    height: 10px;
+    margin-bottom: 1.5rem;
+    overflow: hidden
+}
+
+.comment:not(:last-child),
+.reviews-title {
+    margin-bottom: .75rem
+}
+
+#progressBar {
+    height: 100%;
+    border-radius: 50px;
+    width: 0%;
+    transition: width .5s ease-in-out
+}
+
+.reviews-section {
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border)
+}
+
+.reviews-title {
+    font-size: 1rem;
+    font-weight: 600
+}
+
+.comment {
+    font-size: .85rem;
+    line-height: 1.5
+}
+
+.comment-author {
+    margin-bottom: .1rem
+}
+
+.comment-author .stars {
+    color: #fdbe33;
+    font-size: 1.1rem;
+    vertical-align: middle
+}
+
+.comment-text {
+    margin: 0;
+    color: var(--color-text-muted)
+}
+
+.impact-card {
+    background-color: var(--color-background);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    transition: transform .3s, box-shadow .3s;
+    height: 100%
+}
+
+.impact-card:hover {
+    transform: translateY(-10px)
+}
+
+.impact-icon {
+    font-size: 3rem;
+    color: var(--color-accent);
+    margin-bottom: 1rem
+}
+
+.impact-number {
+    font-family: var(--font-headings);
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: var(--color-primary);
+    line-height: 1.2
+}
+
+.impact-text {
+    font-size: 1.1rem;
+    color: var(--color-text-muted)
+}
+
+@media (max-width:991.98px) {
+    .navbar-collapse {
+        margin-top: 15px
+    }
+
+    .publish-btn {
+        margin-left: 0;
+        margin-top: 10px;
+        width: 100%
+    }
+
+    .evaluator-main-content {
+        margin-top: 0;
+        padding: 1.5rem
+    }
+
+    .results-sidebar {
+        position: static;
+        top: auto
+    }
+
+    .form-row .form-group.col-md-6 {
+        flex: 0 0 100%;
+        max-width: 100%
+    }
+}
+
+@media (max-width:767.98px) {
+    .page-header .page-title {
+        font-size: 2.2rem
+    }
+
+    .results-sidebar #totalScore {
+        font-size: 2.8rem
+    }
+
+    .results-sidebar #levelText {
+        font-size: 2rem
+    }
+
+    .project-management-controls .input-group {
+        flex-direction: column
+    }
+
+    .project-management-controls .input-group select {
+        margin-bottom: .5rem;
+        border-radius: .25rem !important
+    }
+
+    .project-management-controls .input-group-append {
+        width: 100%
+    }
+
+    .project-management-controls .input-group-append .btn {
+        width: 50%
+    }
+}
+
+.area-label {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: auto;
+    width: 100%
 }
 
-.announcement-card .date-info {
+.info-icon,
+.solutions-icon {
+    color: var(--color-accent);
+    cursor: pointer;
+    margin-left: 15px;
+    font-size: 1.2rem;
+    transition: color .3s
+}
+
+.solution-card {
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    margin-bottom: 1rem
+}
+
+.solution-card:last-child {
+    margin-bottom: 0
+}
+
+.solution-card h5 {
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: .5rem
+}
+
+.solution-manufacturer {
+    font-size: .9rem;
+    color: var(--color-text-muted)
+}
+
+.page-header .page-title,
+.hero-title {
+    font-size: 2.8rem;
+}
+
+@media (max-width: 767.98px) {
+
+    .page-header .page-title,
+    .hero-title {
+        font-size: 2.2rem;
+    }
+}
+
+/* Asegura que el texto del logo se encoja en móviles. */
+.brand-text-responsive {
+    /* Define un tamaño de fuente fluido entre 0.8rem (mínimo) y 1.25rem (máximo) */
+    font-size: clamp(0.8rem, 3.5vw, 1.25rem) !important;
+    font-weight: 700;
+    color: var(--color-primary);
+    /* Usa el color primario que ya tienes definido */
+    white-space: nowrap;
+    /* Evita que el nombre se parta en dos líneas */
+    line-height: 1;
+    /* Ayuda a la alineación vertical */
+    transition: font-size 0.2s ease-in-out;
+    /* Una transición suave */
+}
+
+/* Fuerza el color del logo a blanco en modo oscuro */
+body.dark-theme .brand-text-responsive {
+    color: #fff !important;
+}
+
+
+/* ======================================================= */
+/* ARCHIVO CSS: estilos.css                              */
+/* Contiene la clase reutilizable para la marca de agua  */
+/* ======================================================= */
+
+/* * Clase reutilizable para añadir una marca de agua a cualquier elemento.
+ * El elemento que lleve esta clase debe tener un color de fondo definido.
+*/
+.con-marca-de-agua {
+    position: relative;
+    /* Obligatorio para que la marca de agua funcione */
+    overflow: hidden;
+    /* Recomendado para evitar desbordamientos */
+}
+
+/*
+ * Usamos el pseudo-elemento ::before para generar la marca de agua
+ * desde CSS, sin necesidad de añadir una <img> en el HTML.
+*/
+.con-marca-de-agua::before {
+    content: '';
+    /* Requerido para que se muestre */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    /* ----- CONFIGURACIÓN DE TU LOGO ----- */
+    /* IMPORTANTE: Coloca la URL de tu logo aquí */
+    background-image: url('images_pta/logocuadrado.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    /* ------------------------------------ */
+
+    /* ----- EFECTO Y TAMAÑO RESPONSIVO ----- */
+    opacity: 0.06;
+    /* La transparencia de la marca de agua */
+    background-size: 280px;
+    /* Tamaño inicial para móviles */
+    transition: background-size 0.3s ease;
+    /* Transición suave */
+    z-index: 1;
+    /* Lo pone en la capa de atrás */
+    pointer-events: none;
+    /* Evita que interfiera con los clics */
+}
+
+/*
+ * Esta regla es importante: asegura que cualquier contenido
+ * DIRECTO dentro del elemento con la marca de agua, se ponga por encima.
+*/
+.con-marca-de-agua>* {
+    position: relative;
+    z-index: 2;
+}
+
+/* ----- MEDIA QUERY PARA HACERLO RESPONSIVO ----- */
+@media (min-width: 768px) {
+    .con-marca-de-agua::before {
+        /* Hacemos la marca de agua más grande en pantallas de tablet o escritorio */
+        background-size: 450px;
+    }
+}
+
+/* Corrección específica para dispositivos móviles */
+@media (max-width: 767.98px) {
+    .brand-text-responsive {
+        font-size: 1.0rem !important;
+    }
+}
+
+/* Estilos para los iconos de redes sociales en el footer */
+.social-links a i {
+    /* <-- Le decimos que afecte directamente al icono <i> */
+    font-size: 22px;
+    /* Mantenemos tu tamaño perfecto */
+    transition: color 0.3s ease-in-out;
+}
+
+.social-links a {
+    /* Mantenemos el espaciado en el enlace */
+    margin-right: 18px;
+    color: #ccc;
+}
+
+.social-links a:last-child {
+    margin-right: 0;
+    /* Elimina el margen del último icono */
+}
+
+.social-links a:hover {
+    color: #fff;
+    /* Color del icono al pasar el ratón */
+    text-decoration: none;
+}
+
+/* PALETA DE COLORES ÚNICA Y CORREGIDA */
+:root {
+    --color-primary: #0A3D62;
+    /* Azul Oscuro */
+    --color-secondary: #2196F3;
+    /* Azul Medio */
+    --color-accent: #F57C00; /* Naranja Vibrante y Accesible */
+    --color-donation: #F57C00; /* Naranja Vibrante y Accesible */
+    --color-success: #28A745;
+    /* Verde */
+    /* Verde */
+    --font-headings: 'Inter', sans-serif;
+    --font-body: 'Roboto', sans-serif;
+    --border-radius: 8px;
+    --color-text: #343a40;
+    --color-text-light: #fff;
+    --color-background: #FFF8E1;
+    --color-background-light: #f8f9fa;
+    --color-border: #dee2e6;
+    --shadow: 0 5px 15px rgba(0, 0, 0, .07);
+}
+
+body.dark-theme {
+    --color-text: #e0e0e0;
+    --color-text-light: #121212;
+    --color-background: #2F240C;
+    --color-background-light: #121212;
+    --color-border: #444;
+    --shadow: 0 5px 15px rgba(0, 0, 0, .2);
+    --color-donation: #FDBE33;
+    /* Mantenemos el amarillo en tema oscuro */
+}
+
+/* --- ESTILOS MEJORADOS PARA TARJETAS DE SERVICIOS --- */
+
+/* Contenedor para los detalles de contacto en texto */
+.contact-details {
+    margin-bottom: 1rem; /* Espacio entre el texto y los iconos */
+    font-size: 0.9rem; /* Tamaño de fuente para el texto de contacto */
+}
+
+/* Párrafos dentro de los detalles de contacto */
+.contact-details .contact-text {
+    margin-bottom: 0.5rem; /* Espacio entre número y email */
+    display: flex;
+    align-items: center;
+}
+
+/* Iconos junto al texto de contacto */
+.contact-details .contact-text i {
+    color: var(--color-accent); /* Usa el color de acento de tu web */
+    width: 20px; /* Alineación de los iconos */
+}
+
+/* Contenedor principal de los iconos grandes */
+.card-contact-icons {
+    text-align: right; /* Alinea los iconos a la derecha */
+    margin-top: -10px; /* Ajuste para acercar los iconos a la descripción */
+}
+
+/* Enlaces de los iconos (WhatsApp y Email) */
+.card-contact-icons a.contact-icon {
+    display: inline-block;
+    margin-left: 15px; /* Aumenta la separación entre iconos */
+    color: var(--color-secondary);
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+/* Iconos dentro de los enlaces */
+.card-contact-icons a.contact-icon i {
+    font-size: 2rem; /* Aumenta significativamente el tamaño de los iconos */
+}
+
+/* Efecto hover para los iconos */
+.card-contact-icons a.contact-icon:hover {
+    transform: scale(1.15); /* Agrandar al pasar el ratón */
+    color: var(--color-primary);
+}
+
+/* Estilos específicos para el logo en la tarjeta de servicio */
+.service-card-logo {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: -25px;
+    right: 15px;
+    background-color: var(--color-background);
+    border-radius: 50%;
+    padding: 5px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.service-card-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Estilo para el precio */
+.card-price {
+    position: absolute;
+    top: 15px;
+    left: -10px;
+    background-color: var(--color-accent);
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 0 25px 25px 0;
+    font-weight: 700;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.15);
+}
+
+/* Estilo para anuncios vencidos */
+.card-footer .vencido {
+  color: #DC3545 !important; /* Rojo de Bootstrap */
+  font-weight: bold;
+}
+
+/* --- ESTILOS PARA LOS BOTONES DE PARTILHAR --- */
+
+.share-buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espacio entre el texto y los iconos */
+}
+
+.share-label {
+    font-size: 0.8rem;
+    color: #6c757d; /* Color de texto secundario */
+    margin-right: 4px;
+    white-space: nowrap; /* Evita que el texto se parta en dos líneas */
+}
+
+.share-btn {
+    font-size: 1.2rem; /* Tamaño de los iconos */
+    color: #6c757d;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.share-btn:hover {
+    transform: scale(1.2); /* Efecto de zoom al pasar el ratón */
+}
+
+.share-btn.whatsapp:hover {
+    color: #25D366; /* Cor do WhatsApp */
+}
+
+.share-btn.facebook:hover {
+    color: #1877F2; /* Cor do Facebook */
+}
+
+/* Estilo para el modo oscuro */
+body.dark-theme .share-label,
+body.dark-theme .share-btn {
+    color: #aaa;
+}
+
+/* --- ESTILOS MEJORADOS PARA ICONOS DE CONTACTO Y PARTILHA --- */
+
+/* Contenedor principal de los iconos de contacto en la tarjeta de servicio */
+.card-contact-icons {
+    display: flex; /* Usa flexbox para alinear fácilmente */
+    justify-content: flex-end; /* Alinea los ítems a la derecha */
+    align-items: center; /* Centra verticalmente */
+    gap: 10px; /* Espacio entre el texto y los iconos */
+}
+
+/* Etiqueta de texto "Contacto:" */
+.contact-label {
+    font-size: 0.8rem;
+    color: var(--color-text-muted); /* Color de texto secundario */
+    font-weight: bold;
+}
+
+/* Enlaces de los iconos (WhatsApp y Email) */
+.card-contact-icons a.contact-icon {
+    display: inline-block;
+    color: var(--color-secondary);
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+/* Iconos dentro de los enlaces */
+.card-contact-icons a.contact-icon i {
+    font-size: 1.8rem; /* Tamaño de los iconos de contacto */
+}
+
+/* Efecto hover para los iconos de contacto */
+.card-contact-icons a.contact-icon:hover {
+    transform: scale(1.15);
+    color: var(--color-primary);
+}
+
+/* --- AÑADE ESTAS NUEVAS REGLAS AL FINAL DE TU FICHERO style.css --- */
+
+/* Estilo para el número en la esquina de la tarjeta */
+
+/* Estilo para el texto de la fecha de publicación y vencimiento */
+.date-info {
     font-size: 0.8rem;
     color: #6c757d;
 }
 
-.announcement-card .date-info .vencido {
-    color: #DC3545 !important;
-    font-weight: bold;
+/* Estilo para el texto de vencimiento cuando el anuncio está caducado */
+.date-info .vencido {
+  color: #DC3545 !important; /* Rojo de Bootstrap */
+  font-weight: bold;
 }
+
+/* --- AÑADE O SUSTITUYE ESTA REGLA EN TU FICHERO style.css --- */
+
+.card-number {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(10, 61, 98, 0.85);
+    color: #fff;
+    min-width: 35px; /* Usa min-width para que se adapte al contenido */
+    height: 35px;
+    padding: 0 8px; /* Añade padding horizontal */
+    border-radius: 20px; /* Forma de píldora para que se vea bien con texto */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-family: var(--font-headings);
+    font-size: 0.9rem; /* Fuente ligeramente más pequeña para IDs largos */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 2;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    /* Mantenemos la altura consistente con una relación de aspecto */
+    aspect-ratio: 4 / 3;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    /* 'object-fit: cover' es la clave para rellenar el espacio sin deformar */
+    object-fit: cover;
+    transition: transform 0.3s, filter 0.3s;
+}
+
+/* Opcional: Para asegurar que el contenedor de la columna se comporte correctamente */
+.col-lg-4.col-md-6.mb-4 {
+    display: flex;
+    justify-content: center;
+}
+
+.blog-post-card .card-body .small {
+    font-size: 0.85em;
+    color: #6c757d;
+    margin-bottom: 1rem;
+}
+
+body.dark-theme .blog-post-card .card-body .small {
+    color: #aaa;
+}
+
