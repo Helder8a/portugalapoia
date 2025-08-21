@@ -68,14 +68,13 @@ document.addEventListener("DOMContentLoaded", async () => {
             return;
         }
 
-        items.sort((a, b) => new Date(b.data_publicacao || 0) - new Date(a.data_publicacao || 0));
+        items.sort((a, b) => new Date(b.data_publicacao || b.date || 0) - new Date(a.data_publicacao || a.date || 0));
 
         const htmlContent = items.map(item => renderFunction(item, pageName, item.id)).join('');
         container.innerHTML = htmlContent;
     }
 
     // --- FUNÇÕES DE RENDERIZAÇÃO ---
-    // (Aquí van todas tus funciones renderEmprego, renderDoacao, etc. que ya estaban bien)
     function formatarDatas(item) {
         if (!item || !item.data_publicacao || !item.data_vencimento) {
             return `<div class="date-info">ID: ${item.id || 'N/A'}</div>`;
@@ -90,6 +89,32 @@ document.addEventListener("DOMContentLoaded", async () => {
         const classeVencido = isVencido ? 'vencido' : '';
         const textoVencido = isVencido ? '(Vencido)' : '';
         return `<div class="date-info">Publicado: ${pubFormatada} <br> <span class="${classeVencido}">Vencimento: ${vencFormatada} ${textoVencido}</span></div>`;
+    }
+    
+    function renderBlogPost(post) {
+        const postDate = new Date(post.date);
+        const formattedDate = postDate.toLocaleDateString('pt-PT', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
+    
+        return `
+            <div class="col-lg-4 col-md-6 mb-4 tab-pane" data-category="all ${post.category}">
+                <div class="blog-post-card">
+                    <img class="card-img-top" src="${post.image}" alt="${post.title}">
+                    <div class="card-body">
+                        <h5 class="card-title">${post.title}</h5>
+                        <p class="text-muted small">Publicado em: ${formattedDate}</p>
+                        <p class="card-text">${post.summary}</p>
+                        <div class="full-content">
+                            <p>${post.body.replace(/\n/g, '</p><p>')}</p>
+                        </div>
+                        <button class="btn btn-outline-primary read-more-btn mt-auto">Ler Mais</button>
+                    </div>
+                </div>
+            </div>
+        `;
     }
 
     function renderShareButtons(item, page) {
@@ -233,7 +258,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'empregos.html');
     carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'serviços.html');
     carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderHabitacao, 'habitação.html');
-    
+    carregarConteudo('/_dados/blog.json', 'posts-section', renderBlogPost, 'blog.html');
+
     // Llamada a las funciones de contadores y contenido de la home
     updateImpactCounters();
     if (document.body.classList.contains('home')) {
@@ -290,5 +316,3 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     setupSearch();
 });
-
-document.addEventListener
