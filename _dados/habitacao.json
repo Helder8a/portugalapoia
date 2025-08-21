@@ -1,34 +1,47 @@
 {
   "anuncios": [
     {
-      "id": "1",
+      "data_vencimento": "2025-08-17",
+      "link_contato": "helderb8a@gmail.com",
+      "valor_anuncio": "520",
       "descricao": "Quarto com casa de banho privativa",
-      "titulo": "Quarto",
-      "localizacao": "Lisboa, Portela",
       "contato": "+351 913415847",
-      "link_contato": "helderb8a@gmail.com",
+      "localizacao": "Lisboa, Portela",
       "data_publicacao": "2025-08-17",
-      "data_vencimento": "2025-08-17"
+      "titulo": "Quarto",
+      "id": "1"
     },
     {
-      "data_publicacao": "2025-08-21",
+      "imagens": [
+        {
+          "imagem_url": "/images/uploads/2025_05_21.2.avif"
+        }
+      ],
       "data_vencimento": "2025-09-30",
-      "id": "2",
-      "titulo": "Habitación individual en un piso de 4 habitaciones",
-      "localizacao": "Alcantara",
-      "descricao": "Habitación individual, Piso de 4 habitaciones, 1 baño, 1 persona, 125m²",
       "link_contato": "helderb8a@gmail.com",
-      "contato": "helderb8a@gmail.com"
+      "valor_anuncio": "600",
+      "descricao": "Habitación individual, Piso de 4 habitaciones, 1 baño, 1 persona, 125m²",
+      "contato": "helderb8a@gmail.com",
+      "localizacao": "Alcantara",
+      "data_publicacao": "2025-08-21",
+      "titulo": "Habitación individual en un piso de 4 habitaciones",
+      "id": "2"
     },
     {
-      "data_publicacao": "2025-08-21",
+      "imagens": [
+        {
+          "imagem_url": "/images/uploads/2025_05_21.3.avif"
+        }
+      ],
       "data_vencimento": "2025-08-30",
-      "id": "3",
-      "titulo": "Habitación doble en un piso de 3 habitaciones",
-      "localizacao": "Portela",
-      "descricao": "Habitación doble en un piso de 3 habitaciones",
       "link_contato": "helderb8a@gmail.com",
-      "contato": "helderb8a@gmail.com"
+      "valor_anuncio": "550",
+      "descricao": "Habitación doble en un piso de 3 habitaciones",
+      "contato": "helderb8a@gmail.com",
+      "localizacao": "Portela",
+      "data_publicacao": "2025-08-21",
+      "titulo": "Habitación doble en un piso de 3 habitaciones",
+      "id": "3"
     }
   ]
 }
