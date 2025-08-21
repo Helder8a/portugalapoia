@@ -19,6 +19,16 @@
       "descricao": "Habitación individual, Piso de 4 habitaciones, 1 baño, 1 persona, 125m²",
       "link_contato": "helderb8a@gmail.com",
       "contato": "helderb8a@gmail.com"
+    },
+    {
+      "data_publicacao": "2025-08-21",
+      "data_vencimento": "2025-08-30",
+      "id": "3",
+      "titulo": "Habitación doble en un piso de 3 habitaciones",
+      "localizacao": "Portela",
+      "descricao": "Habitación doble en un piso de 3 habitaciones",
+      "link_contato": "helderb8a@gmail.com",
+      "contato": "helderb8a@gmail.com"
     }
   ]
 }
