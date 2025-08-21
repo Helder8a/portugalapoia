@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const htmlContent = items.map(item => renderFunction(item, pageName, item.id)).join('');
         container.innerHTML = htmlContent;
-        
+
         // Ativar funcionalidades específicas da página após o carregamento
         if (pageName === 'blog.html') {
             setupBlogFunctionality();
@@ -95,7 +95,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         const textoVencido = isVencido ? '(Vencido)' : '';
         return `<div class="date-info">Publicado: ${pubFormatada} <br> <span class="${classeVencido}">Vencimento: ${vencFormatada} ${textoVencido}</span></div>`;
     }
-    
+
+    // ... (código existente) ...
+
     function renderBlogPost(post) {
         const postDate = new Date(post.date);
         const formattedDate = postDate.toLocaleDateString('pt-PT', {
@@ -103,24 +105,27 @@ document.addEventListener("DOMContentLoaded", async () => {
             month: 'long',
             year: 'numeric'
         });
-    
+
         return `
-            <div class="col-lg-4 col-md-6 mb-4 blog-post-item" data-category="${post.category}">
-                <div class="blog-post-card">
-                    <img class="card-img-top" src="${post.image}" alt="${post.title}">
-                    <div class="card-body">
-                        <h5 class="card-title">${post.title}</h5>
-                        <p class="text-muted small">Publicado em: ${formattedDate}</p>
-                        <p class="card-text summary-content">${post.summary}</p>
-                        <div class="full-content" style="display: none;">
-                            <p>${post.body.replace(/\n/g, '</p><p>')}</p>
-                        </div>
-                        <button class="btn btn-outline-primary read-more-btn mt-auto">Ler Mais</button>
+        <div class="col-lg-4 col-md-6 mb-4 blog-post-item" data-category="${post.category}">
+            <div class="blog-post-card">
+                <div class="card-number">${post.id}</div>
+                <img class="card-img-top" src="${post.image}" alt="${post.title}">
+                <div class="card-body">
+                    <h5 class="card-title">${post.title}</h5>
+                    <p class="text-muted small">Publicado em: ${formattedDate}</p>
+                    <p class="card-text summary-content">${post.summary}</p>
+                    <div class="full-content" style="display: none;">
+                        <p>${post.body.replace(/\n/g, '</p><p>')}</p>
                     </div>
+                    <button class="btn btn-outline-primary read-more-btn mt-auto">Ler Mais</button>
                 </div>
             </div>
-        `;
+        </div>
+    `;
     }
+
+    // ... (código existente) ...
 
     function renderShareButtons(item, page) {
         const url = `https://portugalapoia.com/${page}#${item.id}`;
@@ -134,7 +139,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     function renderDoacao(pedido, pageName) { /* ... (código existente) ... */ }
     function renderServico(item, pageName) { /* ... (código existente) ... */ }
     function renderHabitacao(anuncio, pageName) { /* ... (código existente) ... */ }
-    
+
     // --- FUNCIONALIDADES ESPECÍFICAS ---
 
     function setupBlogFunctionality() {
@@ -205,3 +210,4 @@ document.addEventListener("DOMContentLoaded", async () => {
     function setupSearch() { /* ... (código existente) ... */ }
     setupSearch();
 });
+
