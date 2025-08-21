@@ -73,9 +73,16 @@ collections:
             fields:
               - { label: "ID (Ex: HAB-007)", name: "id", widget: "string" }
               - { label: "Título do Anúncio", name: "titulo", widget: "string" }
+              - { label: "Valor do Anúncio", name: "valor_anuncio", widget: "string", required: false, hint: "Ex: 450€/mês" }
               - { label: "Localização", name: "localizacao", widget: "string" }
               - { label: "Descrição", name: "descricao", widget: "text" }
-              - { label: "Tel", name: "contato", widget: "string" }
-              - { label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com" }
+              - label: "Imagens do Imóvel"
+                name: "imagens"
+                widget: "list"
+                required: false
+                fields: # <-- ESTA ES LA CORRECCIÓN
+                  - { label: "Imagem", name: "imagem_url", widget: "image" }
+              - { label: "Tel", name: "contato", widget: "string", required: false }
+              - { label: "Email", name: "link_contato", widget: "string", required: false }
               - { label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false }
               - { label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false }
