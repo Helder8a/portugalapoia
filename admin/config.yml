@@ -8,26 +8,28 @@ media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
 collections:
-  - name: "blog"
-    label: "Blog"
-    file: "_dados/blog.json" # <-- CORRECCIÓN: Apuntamos al archivo exacto
-    fields:
-      - name: "posts" # <-- Le decimos que edite la lista llamada "posts" dentro del archivo
-        label: "Publicações do Blog"
-        widget: "list"
-        fields:
-          - {label: "Título", name: "title", widget: "string"}
-          - {label: "Data de Publicação", name: "date", widget: "datetime"}
-          - {label: "Imagem de Destaque", name: "image", widget: "image"}
-          - label: "Categoria"
-            name: "category"
-            widget: "select"
-            options: ["saude", "turismo", "educacao", "habitacao", "emprego"]
-          - {label: "Resumo", name: "summary", widget: "text"}
-          - {label: "Corpo do Artigo (aceita vídeos)", name: "body", widget: "markdown"}
   - name: "conteudos"
     label: "Conteúdos das Páginas"
     files:
+      # --- ESTA ES LA SECCIÓN AÑADIDA Y CORREGIDA ---
+      - file: "_dados/blog.json"
+        label: "Publicações do Blog"
+        name: "blog"
+        fields:
+          - name: "posts"
+            label: "Artigos do Blog"
+            widget: "list"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Data de Publicação", name: "date", widget: "datetime"}
+              - {label: "Imagem de Destaque", name: "image", widget: "image"}
+              - label: "Categoria"
+                name: "category"
+                widget: "select"
+                options: ["saude", "turismo", "educacao", "habitacao", "emprego"]
+              - {label: "Resumo", name: "summary", widget: "text"}
+              - {label: "Corpo do Artigo (aceita vídeos)", name: "body", widget: "markdown"}
+      # --- EL RESTO DE TUS ARCHIVOS PERMANECE IGUAL ---
       - file: "_dados/empregos.json"
         label: "Vagas de Emprego"
         name: "empregos"
