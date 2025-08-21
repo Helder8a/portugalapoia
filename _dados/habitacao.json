@@ -1,47 +1,19 @@
 {
   "anuncios": [
     {
-      "data_vencimento": "2025-09-30",
-      "link_contato": "helderb8a@gmail.com",
-      "valor_anuncio": "520",
-      "descricao": "Quarto com casa de banho privativa",
-      "contato": "+351 911972787",
-      "localizacao": "Lisboa, Portela",
-      "data_publicacao": "2025-08-17",
+      "id": "1",
       "titulo": "Quarto",
-      "id": "1"
-    },
-    {
+      "localizacao": "Lisboa, Portela",
+      "descricao": "Quarto com casa de banho privativa",
+      "valor_anuncio": "450€/mês",
       "imagens": [
-        {
-          "imagem_url": "/images/uploads/2025_05_21.2.avif"
-        }
+        "/images_habitação/quarto_portela_1.webp",
+        "/images_habitação/quarto_portela_2.webp"
       ],
-      "data_vencimento": "2025-09-30",
-      "link_contato": "helderb8a@gmail.com",
-      "valor_anuncio": "600",
-      "descricao": "Habitación individual, Piso de 4 habitaciones, 1 baño, 1 persona, 125m²",
-      "contato": "911972787",
-      "localizacao": "Alcantara",
-      "data_publicacao": "2025-08-21",
-      "titulo": "Habitación individual en un piso de 4 habitaciones",
-      "id": "2"
-    },
-    {
-      "imagens": [
-        {
-          "imagem_url": "/images/uploads/2025_05_21.3.avif"
-        }
-      ],
-      "data_vencimento": "2025-08-30",
-      "link_contato": "helderb8a@gmail.com",
-      "valor_anuncio": "550",
-      "descricao": "Habitación doble en un piso de 3 habitaciones",
-      "contato": "+351911372787",
-      "localizacao": "Portela",
-      "data_publicacao": "2025-08-21",
-      "titulo": "Habitación doble en un piso de 3 habitaciones",
-      "id": "3"
+      "contato": "+351 913415847",
+      "link_contato": "+351 913415847",
+      "data_publicacao": "2025-08-17",
+      "data_vencimento": "2025-09-18"
     }
   ]
 }
