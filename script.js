@@ -61,6 +61,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         const container = document.getElementById(containerId);
         if (!container) return;
 
+        // Verifica que la función para renderizar exista antes de continuar
+        if (typeof renderFunction !== 'function') {
+            console.error(`A função para renderizar a secção "${containerId}" não foi encontrada.`);
+            return;
+        }
+
         const items = await fetchJson(jsonPath);
 
         if (!items || items.length === 0) {
@@ -72,78 +78,50 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const htmlContent = items.map(item => renderFunction(item, pageName, item.id)).join('');
         container.innerHTML = htmlContent;
-
-        // Ativar funcionalidades específicas da página após o carregamento
+        
         if (pageName === 'blog.html') {
             setupBlogFunctionality();
         }
     }
 
     // --- FUNÇÕES DE RENDERIZAÇÃO ---
-    function formatarDatas(item) {
-        if (!item || !item.data_publicacao || !item.data_vencimento) {
-            return `<div class="date-info">ID: ${item.id || 'N/A'}</div>`;
-        }
-        const dataPublicacao = new Date(item.data_publicacao);
-        const dataVencimento = new Date(item.data_vencimento);
-        const hoje = new Date();
-        hoje.setHours(0, 0, 0, 0);
-        const pubFormatada = dataPublicacao.toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' });
-        const vencFormatada = dataVencimento.toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' });
-        const isVencido = dataVencimento < hoje;
-        const classeVencido = isVencido ? 'vencido' : '';
-        const textoVencido = isVencido ? '(Vencido)' : '';
-        return `<div class="date-info">Publicado: ${pubFormatada} <br> <span class="${classeVencido}">Vencimento: ${vencFormatada} ${textoVencido}</span></div>`;
-    }
-
-    // ... (código existente) ...
-
+    
+    // **NOVO**: Função de renderização para o Blog (com o ID incluído)
     function renderBlogPost(post) {
         const postDate = new Date(post.date);
         const formattedDate = postDate.toLocaleDateString('pt-PT', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric'
+            day: 'numeric', month: 'long', year: 'numeric'
         });
-
+    
         return `
-        <div class="col-lg-4 col-md-6 mb-4 blog-post-item" data-category="${post.category}">
-            <div class="blog-post-card">
-                <div class="card-number">${post.id}</div>
-                <img class="card-img-top" src="${post.image}" alt="${post.title}">
-                <div class="card-body">
-                    <h5 class="card-title">${post.title}</h5>
-                    <p class="text-muted small">Publicado em: ${formattedDate}</p>
-                    <p class="card-text summary-content">${post.summary}</p>
-                    <div class="full-content" style="display: none;">
-                        <p>${post.body.replace(/\n/g, '</p><p>')}</p>
+            <div class="col-lg-4 col-md-6 mb-4 blog-post-item" data-category="${post.category}">
+                <div class="blog-post-card">
+                    <div class="card-number">${post.id || ''}</div>
+                    <img class="card-img-top" src="${post.image}" alt="${post.title}">
+                    <div class="card-body">
+                        <h5 class="card-title">${post.title}</h5>
+                        <p class="text-muted small">Publicado em: ${formattedDate}</p>
+                        <p class="card-text summary-content">${post.summary}</p>
+                        <div class="full-content" style="display: none;">
+                            <p>${post.body.replace(/\n/g, '</p><p>')}</p>
+                        </div>
+                        <button class="btn btn-outline-primary read-more-btn mt-auto">Ler Mais</button>
                     </div>
-                    <button class="btn btn-outline-primary read-more-btn mt-auto">Ler Mais</button>
                 </div>
             </div>
-        </div>
-    `;
+        `;
     }
 
-    // ... (código existente) ...
+    // **IMPORTANTE**: Funções de placeholder para evitar erros.
+    // Substitua estas por suas funções de renderização reais se as tiver.
+    function renderDoacao(item) { return `<div class="col-12"><p>Item de doação: ${item.titulo}</p></div>`; }
+    function renderEmprego(item) { return `<div class="col-12"><p>Vaga de emprego: ${item.titulo}</p></div>`; }
+    function renderServico(item) { return `<div class="col-12"><p>Serviço: ${item.titulo}</p></div>`; }
+    function renderHabitacao(item) { return `<div class="col-12"><p>Anúncio de habitação: ${item.titulo}</p></div>`; }
 
-    function renderShareButtons(item, page) {
-        const url = `https://portugalapoia.com/${page}#${item.id}`;
-        const text = `Vi este anúncio em PortugalApoia e lembrei-me de ti: "${item.titulo}"`;
-        const encodedUrl = encodeURIComponent(url);
-        const encodedText = encodeURIComponent(text);
-        return `<div class="share-buttons"><small class="share-label">Partilhar:</small><a href="https://api.whatsapp.com/send?text=${encodedText}%20${encodedUrl}" target="_blank" rel="noopener noreferrer" title="Partilhar no WhatsApp" class="share-btn whatsapp"><i class="fab fa-whatsapp"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}" target="_blank" rel="noopener noreferrer" title="Partilhar no Facebook" class="share-btn facebook"><i class="fab fa-facebook-f"></i></a></div>`;
-    }
-
-    function renderEmprego(item, pageName, idAnuncio) { /* ... (código existente) ... */ }
-    function renderDoacao(pedido, pageName) { /* ... (código existente) ... */ }
-    function renderServico(item, pageName) { /* ... (código existente) ... */ }
-    function renderHabitacao(anuncio, pageName) { /* ... (código existente) ... */ }
 
     // --- FUNCIONALIDADES ESPECÍFICAS ---
-
     function setupBlogFunctionality() {
-        // Lógica dos botões "Ler Mais"
         const readMoreButtons = document.querySelectorAll('.read-more-btn');
         readMoreButtons.forEach(button => {
             button.addEventListener('click', (e) => {
@@ -157,7 +135,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             });
         });
 
-        // Lógica da Navegação por Tabs (Categorias)
         const navLinks = document.querySelectorAll('.blog-nav .nav-link');
         const postsSection = document.getElementById('posts-section');
         const gallerySection = document.getElementById('gallery-section');
@@ -165,19 +142,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-
-                // Atualiza a classe 'active'
                 navLinks.forEach(nav => nav.classList.remove('active'));
                 e.target.classList.add('active');
 
                 const targetCategory = e.target.getAttribute('data-target');
 
                 if (targetCategory === 'galeria') {
-                    postsSection.style.display = 'none';
-                    gallerySection.style.display = 'flex'; // Usamos flex por ser 'row'
+                    if (postsSection) postsSection.style.display = 'none';
+                    if (gallerySection) gallerySection.style.display = 'flex';
                 } else {
-                    gallerySection.style.display = 'none';
-                    postsSection.style.display = 'flex';
+                    if (gallerySection) gallerySection.style.display = 'none';
+                    if (postsSection) postsSection.style.display = 'flex';
 
                     const allPosts = document.querySelectorAll('.blog-post-item');
                     allPosts.forEach(post => {
@@ -192,22 +167,21 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    async function loadHomepageContent() { /* ... (código existente) ... */ }
-    async function updateImpactCounters() { /* ... (código existente) ... */ }
-
-    // --- CARGA INICIAL Y LLAMADAS A FUNCIONES ---
-    carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'doações.html');
-    carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'empregos.html');
-    carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'serviços.html');
-    carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderHabitacao, 'habitação.html');
-    carregarConteudo('/_dados/blog.json', 'posts-section', renderBlogPost, 'blog.html');
-
-    updateImpactCounters();
-    if (document.body.classList.contains('home')) {
-        loadHomepageContent();
+    // --- CARGA INICIAL E CHAMADAS A FUNÇÕES ---
+    if (document.getElementById('announcements-grid')) {
+        carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'doações.html');
+    }
+    if (document.getElementById('jobs-grid')) {
+        carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'empregos.html');
+    }
+    if (document.getElementById('services-grid')) {
+        carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'serviços.html');
+    }
+    if (document.getElementById('housing-grid')) {
+        carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderHabitacao, 'habitação.html');
+    }
+    if (document.getElementById('posts-section')) {
+        carregarConteudo('/_dados/blog.json', 'posts-section', renderBlogPost, 'blog.html');
     }
 
-    function setupSearch() { /* ... (código existente) ... */ }
-    setupSearch();
 });
-
