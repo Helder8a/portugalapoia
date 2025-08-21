@@ -222,3 +222,39 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     setupSearch(); // Chama a função que configura o buscador
 });
+
+/* ============================================================== */
+/* === Script para añadir automáticamente la marca de agua     === */
+/* ============================================================== */
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Selecciona el área principal donde se encuentran las imágenes de tu blog.
+  // Puedes cambiar 'main' por un selector más específico si es necesario,
+  // como por ejemplo '#mi-seccion-de-blog' o '.post-content'.
+  const blogContent = document.querySelector('main');
+
+  if (blogContent) {
+    // Encuentra todas las imágenes dentro de esa área
+    const images = blogContent.querySelectorAll('img');
+
+    images.forEach(img => {
+      // Evita añadir la marca de agua a imágenes muy pequeñas o iconos
+      if (img.clientWidth > 150 && img.clientHeight > 150) {
+
+        // Revisa si la imagen ya está envuelta para no hacerlo dos veces
+        if (!img.parentElement.classList.contains('contenedor-imagen-blog')) {
+
+          // Crea el div que actuará como contenedor
+          const wrapper = document.createElement('div');
+          wrapper.classList.add('contenedor-imagen-blog');
+
+          // Inserta el nuevo contenedor justo antes de la imagen en el DOM
+          img.parentNode.insertBefore(wrapper, img);
+
+          // Mueve la imagen para que quede dentro del nuevo contenedor
+          wrapper.appendChild(img);
+        }
+      }
+    });
+  }
+});
