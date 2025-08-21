@@ -1,6 +1,47 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    // --- GESTORES GENERALES (PRELOADER, SCROLL, TEMA OSCURO) ---
-    // (Tu código existente para preloader, scroll y tema oscuro se mantiene aquí)
+    // --- GESTOR DE PRELOADER, SCROLL Y TEMA OSCURO ---
+    const preloader = document.getElementById("preloader");
+    if (preloader) {
+        window.addEventListener("load", () => preloader.classList.add("hidden"));
+        setTimeout(() => preloader.classList.add("hidden"), 1500);
+    }
+
+    const scrollTopBtn = document.getElementById("scrollTopBtn");
+    if (scrollTopBtn) {
+        window.onscroll = () => {
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                scrollTopBtn.classList.add("visible");
+            } else {
+                scrollTopBtn.classList.remove("visible");
+            }
+        };
+        scrollTopBtn.addEventListener("click", e => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    }
+
+    const themeToggle = document.getElementById("theme-toggle");
+    if (themeToggle) {
+        const body = document.body;
+        const setTheme = (theme) => {
+            if (theme === "dark") {
+                body.classList.add("dark-theme");
+                themeToggle.checked = true;
+            } else {
+                body.classList.remove("dark-theme");
+                themeToggle.checked = false;
+            }
+        };
+        const savedTheme = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (savedTheme) { setTheme(savedTheme); } else if (prefersDark) { setTheme("dark"); }
+        themeToggle.addEventListener("change", () => {
+            const newTheme = themeToggle.checked ? "dark" : "light";
+            localStorage.setItem("theme", newTheme);
+            setTheme(newTheme);
+        });
+    }
 
     // --- LÓGICA DE DATOS ---
     async function fetchJson(url) {
@@ -19,22 +60,96 @@ document.addEventListener("DOMContentLoaded", async () => {
     async function carregarConteudo(jsonPath, containerId, renderFunction, pageName) {
         const container = document.getElementById(containerId);
         if (!container) return;
+
         const items = await fetchJson(jsonPath);
+
         if (!items || items.length === 0) {
             container.innerHTML = `<p class="col-12 text-center lead text-muted mt-5">De momento, não há anúncios publicados nesta secção.</p>`;
             return;
         }
+
         items.sort((a, b) => new Date(b.data_publicacao || 0) - new Date(a.data_publicacao || 0));
+
         const htmlContent = items.map(item => renderFunction(item, pageName, item.id)).join('');
         container.innerHTML = htmlContent;
     }
 
-    // --- FUNÇÕES DE RENDERIZAÇÃO (Tus funciones renderEmprego, renderDoacao, etc. se mantienen aquí) ---
+    // --- FUNÇÕES DE RENDERIZAÇÃO ---
+    function formatarDatas(item) {
+        if (!item || !item.data_publicacao || !item.data_vencimento) {
+            return `<div class="date-info">ID: ${item.id || 'N/A'}</div>`;
+        }
+        const dataPublicacao = new Date(item.data_publicacao);
+        const dataVencimento = new Date(item.data_vencimento);
+        const hoje = new Date();
+        hoje.setHours(0, 0, 0, 0);
+        const pubFormatada = dataPublicacao.toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        const vencFormatada = dataVencimento.toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        const isVencido = dataVencimento < hoje;
+        const classeVencido = isVencido ? 'vencido' : '';
+        const textoVencido = isVencido ? '(Vencido)' : '';
+        return `<div class="date-info">Publicado: ${pubFormatada} <br> <span class="${classeVencido}">Vencimento: ${vencFormatada} ${textoVencido}</span></div>`;
+    }
 
-    // (renderEmprego, renderDoacao, renderServico, renderHabitacao, etc.)
-    // ...
+    function renderShareButtons(item, page) {
+        const url = `https://portugalapoia.com/${page}#${item.id}`;
+        const text = `Vi este anúncio em PortugalApoia e lembrei-me de ti: "${item.titulo}"`;
+        const encodedUrl = encodeURIComponent(url);
+        const encodedText = encodeURIComponent(text);
+        return `<div class="share-buttons"><small class="share-label">Partilhar:</small><a href="https://api.whatsapp.com/send?text=${encodedText}%20${encodedUrl}" target="_blank" rel="noopener noreferrer" title="Partilhar no WhatsApp" class="share-btn whatsapp"><i class="fab fa-whatsapp"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}" target="_blank" rel="noopener noreferrer" title="Partilhar no Facebook" class="share-btn facebook"><i class="fab fa-facebook-f"></i></a></div>`;
+    }
 
-    // --- FUNCIÓN PARA CONTENIDO DE LA PÁGINA PRINCIPAL (ya la teníamos) ---
+    function renderEmprego(item, pageName, idAnuncio) {
+        const jobPostingSchema = { "@context": "https://schema.org/", "@type": "JobPosting", "title": item.titulo, "description": (item.descricao || '').replace(/["\n\r]/g, ' ').trim(), "datePosted": item.data_publicacao, "validThrough": item.data_vencimento, "hiringOrganization": { "@type": "Organization", "name": "Empresa Anunciante (via PortugalApoia)" }, "jobLocation": { "@type": "Place", "address": { "@type": "PostalAddress", "addressLocality": item.localizacao, "addressCountry": "PT" } }, "employmentType": "FULL_TIME, PART_TIME" };
+        let contatoHTML = '';
+        if (item.contato) { contatoHTML += `<p class="card-text small mb-1"><strong>Tel:</strong> <a href="tel:${item.contato.replace(/[\s+()-]/g, '')}">${item.contato}</a></p>`; }
+        if (item.link_contato && item.link_contato.includes('@')) { const emailLink = item.link_contato.startsWith('mailto:') ? item.link_contato : `mailto:${item.link_contato}`; contatoHTML += `<p class="card-text small"><strong>Email:</strong> <a href="${emailLink}">${item.link_contato.replace('mailto:', '')}</a></p>`; }
+        return `<div class="col-lg-4 col-md-6 mb-4 job-item"><div class="card h-100 shadow-sm" id="${item.id}"><div class="card-body d-flex flex-column"><h5 class="card-title">${item.titulo || 'Sem Título'}</h5><h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${item.localizacao || 'N/A'}</h6><p class="card-text flex-grow-1">${item.descricao || 'Sem Descrição'}</p><div class="mt-auto">${contatoHTML}</div></div><div class="card-footer d-flex justify-content-between align-items-center"><div class="date-info">${formatarDatas(item)}</div>${renderShareButtons(item, pageName)}</div></div></div><script type="application/ld+json">${JSON.stringify(jobPostingSchema)}</script>`;
+    }
+
+    function renderDoacao(pedido, pageName) {
+        const productSchema = { "@context": "https://schema.org/", "@type": "Product", "name": pedido.titulo, "description": pedido.descricao, "image": pedido.imagem ? `https://portugalapoia.com${pedido.imagem}` : `https://portugalapoia.com/images/img_portada.webp`, "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR", "availability": "https://schema.org/InStock" }, "itemCondition": "https://schema.org/UsedCondition" };
+        const badgeUrgente = pedido.urgente ? '<span class="badge badge-danger position-absolute" style="top: 10px; right: 10px; z-index: 2;">Urgente</span>' : '';
+        const imagemHTML = pedido.imagem ? `<img loading="lazy" src="${pedido.imagem}" class="d-block w-100" alt="${pedido.titulo}" style="height: 200px; object-fit: cover;">` : '<div class="image-placeholder">SEM IMAGEM</div>';
+        let contatoHTML = '';
+        if (pedido.contato) { contatoHTML = `<p class="card-text small"><strong>Tel:</strong> <a href="tel:${pedido.contato.replace(/[\s+()-]/g, '')}">${pedido.contato}</a></p>`; }
+        return `<div class="col-lg-4 col-md-6 mb-4 announcement-item"><div class="card h-100 shadow-sm" id="${pedido.id}">${badgeUrgente}${imagemHTML}<div class="card-body d-flex flex-column"><h5 class="card-title">${pedido.titulo}</h5><h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${pedido.localizacao}</h6><p class="card-text flex-grow-1">${pedido.descricao}</p><div class="mt-auto">${contatoHTML}<a href="mailto:${pedido.link_contato}" class="btn btn-primary btn-block">Contactar por Email</a></div></div><div class="card-footer d-flex justify-content-between align-items-center"><div class="date-info">${formatarDatas(pedido)}</div>${renderShareButtons(pedido, pageName)}</div></div></div><script type="application/ld+json">${JSON.stringify(productSchema)}</script>`;
+    }
+
+    function renderServico(item, pageName) {
+        const logoHTML = item.logo_empresa ? `<div class="service-card-logo"><img src="${item.logo_empresa}" alt="Logo"></div>` : '';
+        const precoHTML = item.valor_servico ? `<div class="card-price">${item.valor_servico}</div>` : '';
+        let contatoIconsHTML = '<small class="contact-label">Contacto:</small>';
+        if (item.contato) { contatoIconsHTML += `<a href="https://wa.me/${item.contato.replace(/[\s+()-]/g, '')}" target="_blank" class="contact-icon" title="Contactar por WhatsApp"><i class="fab fa-whatsapp"></i></a>`; }
+        if (item.link_contato && item.link_contato.includes('@')) { const emailLink = item.link_contato.startsWith('mailto:') ? item.link_contato : `mailto:${item.link_contato}`; contatoIconsHTML += `<a href="${emailLink}" class="contact-icon" title="Contactar por Email"><i class="fas fa-envelope"></i></a>`; }
+        return `<div class="col-lg-4 col-md-6 mb-4 service-item"><div class="card h-100 shadow-sm position-relative" id="${item.id}">${logoHTML}${precoHTML}<div class="card-body d-flex flex-column"><h5 class="card-title mt-4">${item.titulo}</h5><h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${item.localizacao}</h6><p class="card-text flex-grow-1">${item.descricao}</p><div class="mt-auto card-contact-icons">${contatoIconsHTML}</div></div><div class="card-footer d-flex justify-content-between align-items-center">${formatarDatas(item)}${renderShareButtons(item, pageName)}</div></div></div>`;
+    }
+
+    function renderHabitacao(anuncio, pageName) {
+        const precoHTML = anuncio.valor_anuncio ? `<div class="card-price">${anuncio.valor_anuncio}</div>` : '';
+        let imagensHTML = '';
+        if (anuncio.imagens && anuncio.imagens.length > 0) {
+            if (anuncio.imagens.length > 1) {
+                const carouselId = `carousel-${anuncio.id}`;
+                const indicators = anuncio.imagens.map((_, index) => `<li data-target="#${carouselId}" data-slide-to="${index}" class="${index === 0 ? 'active' : ''}"></li>`).join('');
+                const items = anuncio.imagens.map((img, index) => `<div class="carousel-item ${index === 0 ? 'active' : ''}"><img src="${img.imagem_url || img}" class="d-block w-100" alt="${anuncio.titulo}" style="height: 200px; object-fit: cover;"></div>`).join('');
+                imagensHTML = `<div id="${carouselId}" class="carousel slide" data-ride="carousel"><ol class="carousel-indicators">${indicators}</ol><div class="carousel-inner">${items}</div><a class="carousel-control-prev" href="#${carouselId}" role="button" data-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next" href="#${carouselId}" role="button" data-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span></a></div>`;
+            } else {
+                imagensHTML = `<img loading="lazy" src="${anuncio.imagens[0].imagem_url || anuncio.imagens[0]}" class="d-block w-100" alt="${anuncio.titulo}" style="height: 200px; object-fit: cover;">`;
+            }
+        } else {
+            imagensHTML = '<div class="image-placeholder">SEM IMAGEM</div>';
+        }
+        let contatoHTML = '';
+        if (anuncio.contato) { contatoHTML += `<strong>Tel:</strong> <a href="tel:${anuncio.contato.replace(/[\s+()-]/g, '')}">${anuncio.contato}</a><br>`; }
+        if (anuncio.link_contato && anuncio.link_contato.includes('@')) {
+            const emailLink = anuncio.link_contato.startsWith('mailto:') ? anuncio.link_contato : `mailto:${anuncio.link_contato}`;
+            contatoHTML += `<strong>Email:</strong> <a href="${emailLink}">${emailLink.replace('mailto:', '')}</a>`;
+        }
+        return `<div class="col-lg-4 col-md-6 mb-4 housing-item"><div class="card h-100 shadow-sm position-relative" id="${anuncio.id}">${precoHTML}${imagensHTML}<div class="card-body d-flex flex-column"><h5 class="card-title">${anuncio.titulo}</h5><h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${anuncio.localizacao}</h6><p class="card-text flex-grow-1">${anuncio.descricao}</p><div class="mt-auto"><p class="card-text small contact-info">${contatoHTML}</p></div></div><div class="card-footer d-flex justify-content-between align-items-center">${formatarDatas(anuncio)}${renderShareButtons(anuncio, pageName)}</div></div></div>`;
+    }
+
+    // --- FUNCIÓN PARA CONTENIDO DE LA PÁGINA PRINCIPAL ---
     async function loadHomepageContent() {
         try {
             const response = await fetch('/_dados/homepage.json?t=' + new Date().getTime());
@@ -55,7 +170,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
-    // --- FUNCIÓN PARA CONTADORES DE IMPACTO (ya la teníamos) ---
+    // --- FUNCIÓN PARA CONTADORES DE IMPACTO ---
     async function updateImpactCounters() {
         const doacoes = await fetchJson('/_dados/doacoes.json');
         const empregos = await fetchJson('/_dados/empregos.json');
@@ -66,32 +181,21 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById('contador-total').textContent = `${doacoes.length + empregos.length + servicos.length + habitacao.length}+`;
     }
 
-    // --- NUEVA FUNCIÓN PARA CARGAR LOS ÚLTIMOS ANÚNCIOS ---
+    // --- FUNCIÓN PARA CARGAR LOS ÚLTIMOS ANÚNCIOS ---
     async function loadLatestAnnouncements() {
         const container = document.getElementById('latest-announcements-grid');
         if (!container) return;
-
-        // 1. Cargar datos de todas las categorías
         const doacoes = (await fetchJson('/_dados/doacoes.json')).map(item => ({ ...item, type: 'doacao' }));
         const empregos = (await fetchJson('/_dados/empregos.json')).map(item => ({ ...item, type: 'emprego' }));
         const servicos = (await fetchJson('/_dados/servicos.json')).map(item => ({ ...item, type: 'servico' }));
         const habitacao = (await fetchJson('/_dados/habitacao.json')).map(item => ({ ...item, type: 'habitacao' }));
-
-        // 2. Juntar todos los anuncios en un solo array
         const allAnnouncements = [...doacoes, ...empregos, ...servicos, ...habitacao];
-
-        // 3. Ordenar por fecha de publicación (los más nuevos primero)
         allAnnouncements.sort((a, b) => new Date(b.data_publicacao) - new Date(a.data_publicacao));
-
-        // 4. Coger solo los 6 más recientes
         const latest = allAnnouncements.slice(0, 6);
-
         if (latest.length === 0) {
             container.innerHTML = '<p class="col-12 text-center lead text-muted">Ainda não há anúncios publicados.</p>';
             return;
         }
-
-        // 5. Renderizar cada anuncio con su función correspondiente
         const htmlContent = latest.map(item => {
             switch (item.type) {
                 case 'doacao': return renderDoacao(item, 'doações.html');
@@ -101,10 +205,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                 default: return '';
             }
         }).join('');
-
         container.innerHTML = htmlContent;
     }
-
 
     // --- CARGA INICIAL Y LLAMADAS A FUNCIONES ---
     carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'doações.html');
@@ -112,15 +214,59 @@ document.addEventListener("DOMContentLoaded", async () => {
     carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'serviços.html');
     carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderHabitacao, 'habitação.html');
 
-    // Llamadas específicas para la página principal
     if (document.body.classList.contains('home')) {
         updateImpactCounters();
         loadHomepageContent();
-        loadLatestAnnouncements(); // <-- Llamamos a la nueva función aquí
+        loadLatestAnnouncements();
     }
 
     // --- LÓGICA DO BUSCADOR ---
-    // (Tu código del buscador se mantiene aquí)
+    function setupSearch() {
+        const searchInput = document.getElementById('searchInput');
+        if (!searchInput) return;
+        const locationInput = document.getElementById('locationInput');
+        const searchButton = document.getElementById('searchButton');
+        const clearButton = document.getElementById('clearButton');
+        const noResults = document.getElementById('no-results');
+        function filterCards() {
+            const searchText = searchInput.value.toLowerCase().trim();
+            const locationText = locationInput.value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.job-item, .announcement-item, .service-item, .housing-item');
+            let visibleCount = 0;
+            cards.forEach(card => {
+                const title = (card.querySelector('.card-title')?.textContent || '').toLowerCase();
+                const description = (card.querySelector('.card-text')?.textContent || '').toLowerCase();
+                const location = (card.querySelector('.card-subtitle')?.textContent || '').toLowerCase();
+                const textMatch = !searchText || title.includes(searchText) || description.includes(searchText);
+                const locationMatch = !locationText || location.includes(locationText);
+                if (textMatch && locationMatch) {
+                    card.style.display = '';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            if (noResults) {
+                noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+            }
+        }
+        function clearFilters() {
+            searchInput.value = '';
+            locationInput.value = '';
+            filterCards();
+        }
+        searchButton.addEventListener('click', filterCards);
+        clearButton.addEventListener('click', clearFilters);
+        searchInput.addEventListener('keyup', filterCards);
+        locationInput.addEventListener('keyup', filterCards);
+    }
+    setupSearch();
 });
 
-// Nota: Asegúrate de tener todas tus funciones de renderizado (renderDoacao, renderEmprego, etc.) en este archivo para que la nueva función `loadLatestAnnouncements` pueda llamarlas.
+document.addEventListener('DOMContentLoaded', function () {
+    const images = document.querySelectorAll('img');
+    images.forEach(image => {
+        image.addEventListener('contextmenu', (e) => e.preventDefault());
+        image.addEventListener('dragstart', (e) => e.preventDefault());
+    });
+});
