@@ -1409,3 +1409,73 @@ body.dark-theme .blog-post-card .card-body .small {
     color: #aaa;
 }
 
+/* --- ESTILOS PARA LAS NUEVAS SECCIONES DE LA PÁGINA PRINCIPAL --- */
+
+/* Estilo para la tarjeta de enlace de categoría */
+.category-link-card {
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    padding: 30px 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--color-text);
+    text-decoration: none;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+
+.category-link-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow);
+    border-color: var(--color-accent);
+    text-decoration: none;
+    color: var(--color-primary);
+}
+
+/* Icono dentro de la tarjeta de categoría */
+.category-link-card .category-icon {
+    font-size: 3rem;
+    color: var(--color-accent);
+    margin-bottom: 1rem;
+    transition: transform 0.3s;
+}
+
+.category-link-card:hover .category-icon {
+    transform: scale(1.1);
+}
+
+.category-link-card h3 {
+    font-family: var(--font-headings);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-primary);
+}
+
+.category-link-card p {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+}
+
+/* Título de las secciones */
+.section-title {
+    color: var(--color-primary);
+    font-family: var(--font-headings);
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background-color: var(--color-accent);
+    margin: 15px auto 0;
+    border-radius: 2px;
+}
