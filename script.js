@@ -61,7 +61,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         const container = document.getElementById(containerId);
         if (!container) return;
 
-        // Verifica que la función para renderizar exista antes de continuar
         if (typeof renderFunction !== 'function') {
             console.error(`A função para renderizar a secção "${containerId}" não foi encontrada.`);
             return;
@@ -85,8 +84,31 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     // --- FUNÇÕES DE RENDERIZAÇÃO ---
-    
-    // **NOVO**: Função de renderização para o Blog (com o ID incluído)
+
+    function formatarDatas(item) {
+        if (!item || !item.data_publicacao || !item.data_vencimento) {
+            return `<div class="date-info">ID: ${item.id || 'N/A'}</div>`;
+        }
+        const dataPublicacao = new Date(item.data_publicacao);
+        const dataVencimento = new Date(item.data_vencimento);
+        const hoje = new Date();
+        hoje.setHours(0, 0, 0, 0);
+        const pubFormatada = dataPublicacao.toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        const vencFormatada = dataVencimento.toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        const isVencido = dataVencimento < hoje;
+        const classeVencido = isVencido ? 'vencido' : '';
+        const textoVencido = isVencido ? '(Vencido)' : '';
+        return `<div class="date-info">Publicado: ${pubFormatada} <br> <span class="${classeVencido}">Vencimento: ${vencFormatada} ${textoVencido}</span></div>`;
+    }
+
+    function renderShareButtons(item, page) {
+        const url = `https://portugalapoia.com/${page}#${item.id}`;
+        const text = `Vi este anúncio em PortugalApoia e lembrei-me de ti: "${item.titulo}"`;
+        const encodedUrl = encodeURIComponent(url);
+        const encodedText = encodeURIComponent(text);
+        return `<div class="share-buttons"><small class="share-label">Partilhar:</small><a href="https://api.whatsapp.com/send?text=${encodedText}%20${encodedUrl}" target="_blank" rel="noopener noreferrer" title="Partilhar no WhatsApp" class="share-btn whatsapp"><i class="fab fa-whatsapp"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}" target="_blank" rel="noopener noreferrer" title="Partilhar no Facebook" class="share-btn facebook"><i class="fab fa-facebook-f"></i></a></div>`;
+    }
+
     function renderBlogPost(post) {
         const postDate = new Date(post.date);
         const formattedDate = postDate.toLocaleDateString('pt-PT', {
@@ -95,7 +117,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     
         return `
             <div class="col-lg-4 col-md-6 mb-4 blog-post-item" data-category="${post.category}">
-                <div class="blog-post-card">
+                <div class="blog-post-card card">
                     <div class="card-number">${post.id || ''}</div>
                     <img class="card-img-top" src="${post.image}" alt="${post.title}">
                     <div class="card-body">
@@ -111,14 +133,83 @@ document.addEventListener("DOMContentLoaded", async () => {
             </div>
         `;
     }
+    
+    function renderDoacao(pedido, pageName) {
+        const imagemHTML = pedido.imagem ? `<img src="${pedido.imagem}" class="card-img-top" alt="${pedido.titulo}">` : `<div class="image-placeholder">${pedido.titulo}</div>`;
+        return `
+            <div class="col-lg-4 col-md-6 mb-4 announcement-item" id="${pedido.id}">
+                <div class="card h-100 announcement-card">
+                    ${imagemHTML}
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">${pedido.titulo}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${pedido.localizacao}</h6>
+                        <p class="card-text flex-grow-1">${pedido.descricao}</p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        ${formatarDatas(pedido)}
+                        ${renderShareButtons(pedido, pageName)}
+                    </div>
+                </div>
+            </div>`;
+    }
 
-    // **IMPORTANTE**: Funções de placeholder para evitar erros.
-    // Substitua estas por suas funções de renderização reais se as tiver.
-    function renderDoacao(item) { return `<div class="col-12"><p>Item de doação: ${item.titulo}</p></div>`; }
-    function renderEmprego(item) { return `<div class="col-12"><p>Vaga de emprego: ${item.titulo}</p></div>`; }
-    function renderServico(item) { return `<div class="col-12"><p>Serviço: ${item.titulo}</p></div>`; }
-    function renderHabitacao(item) { return `<div class="col-12"><p>Anúncio de habitação: ${item.titulo}</p></div>`; }
+    function renderEmprego(item, pageName) {
+        return `
+            <div class="col-lg-4 col-md-6 mb-4 job-item" id="${item.id}">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">${item.titulo}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${item.localizacao}</h6>
+                        <p class="card-text flex-grow-1">${item.descricao.substring(0, 150)}...</p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        ${formatarDatas(item)}
+                        ${renderShareButtons(item, pageName)}
+                    </div>
+                </div>
+            </div>`;
+    }
 
+    function renderServico(item, pageName) {
+        const logoHTML = item.logo_empresa ? `<div class="service-card-logo"><img src="${item.logo_empresa}" alt="Logo"></div>` : '';
+        const precoHTML = item.valor_servico ? `<div class="card-price">${item.valor_servico}</div>` : '';
+        return `
+            <div class="col-lg-4 col-md-6 mb-4 service-item" id="${item.id}">
+                <div class="card h-100">
+                    <div class="card-body d-flex flex-column">
+                        ${logoHTML}
+                        ${precoHTML}
+                        <h5 class="card-title mt-4">${item.titulo}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${item.localizacao}</h6>
+                        <p class="card-text flex-grow-1">${item.descricao}</p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                         ${formatarDatas(item)}
+                        ${renderShareButtons(item, pageName)}
+                    </div>
+                </div>
+            </div>`;
+    }
+
+    function renderHabitacao(anuncio, pageName) {
+        const imagemHTML = anuncio.imagens && anuncio.imagens.length > 0 ? `<img src="${anuncio.imagens[0]}" class="card-img-top" alt="${anuncio.titulo}">` : `<div class="image-placeholder">${anuncio.titulo}</div>`;
+        return `
+            <div class="col-lg-4 col-md-6 mb-4 housing-item" id="${anuncio.id}">
+                <div class="card h-100">
+                    ${imagemHTML}
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">${anuncio.titulo}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${anuncio.localizacao}</h6>
+                        <p class="card-text flex-grow-1">${anuncio.descricao}</p>
+                        <p class="h5 text-right font-weight-bold mt-2">${anuncio.valor_anuncio}</p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        ${formatarDatas(anuncio)}
+                        ${renderShareButtons(anuncio, pageName)}
+                    </div>
+                </div>
+            </div>`;
+    }
 
     // --- FUNCIONALIDADES ESPECÍFICAS ---
     function setupBlogFunctionality() {
@@ -128,7 +219,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const card = e.target.closest('.blog-post-card');
                 const summary = card.querySelector('.summary-content');
                 const fullContent = card.querySelector('.full-content');
-
                 summary.style.display = 'none';
                 fullContent.style.display = 'block';
                 e.target.style.display = 'none';
@@ -167,7 +257,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // --- CARGA INICIAL E CHAMADAS A FUNÇÕES ---
+    // --- CARGA INICIAL ---
     if (document.getElementById('announcements-grid')) {
         carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'doações.html');
     }
@@ -183,5 +273,4 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (document.getElementById('posts-section')) {
         carregarConteudo('/_dados/blog.json', 'posts-section', renderBlogPost, 'blog.html');
     }
-
 });
