@@ -291,10 +291,4 @@ document.addEventListener("DOMContentLoaded", async () => {
     setupSearch();
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-    const images = document.querySelectorAll('img');
-    images.forEach(image => {
-        image.addEventListener('contextmenu', (e) => e.preventDefault());
-        image.addEventListener('dragstart', (e) => e.preventDefault());
-    });
-});
+document.addEventListener
