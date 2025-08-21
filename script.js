@@ -126,10 +126,71 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     function renderHabitacao(anuncio, pageName) {
+        const precoHTML = anuncio.valor_anuncio ? `<div class="card-price">${anuncio.valor_anuncio}</div>` : '';
+
+        let imagensHTML = '';
+        // Verifica se existe o campo imagens e se não está vazio
+        if (anuncio.imagens && anuncio.imagens.length > 0) {
+            if (anuncio.imagens.length > 1) {
+                // Se houver mais de uma imagem, cria um carrusel
+                const carouselId = `carousel-${anuncio.id}`;
+                const indicators = anuncio.imagens.map((_, index) =>
+                    `<li data-target="#${carouselId}" data-slide-to="${index}" class="${index === 0 ? 'active' : ''}"></li>`
+                ).join('');
+                const items = anuncio.imagens.map((img, index) => `
+                <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                    <img src="${img.imagem_url || img}" class="d-block w-100" alt="${anuncio.titulo}" style="height: 200px; object-fit: cover;">
+                </div>
+            `).join('');
+
+                imagensHTML = `
+                <div id="${carouselId}" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">${indicators}</ol>
+                    <div class="carousel-inner">${items}</div>
+                    <a class="carousel-control-prev" href="#${carouselId}" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#${carouselId}" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span>
+                    </a>
+                </div>`;
+            } else {
+                // Se houver apenas uma imagem
+                imagensHTML = `<img loading="lazy" src="${anuncio.imagens[0].imagem_url || anuncio.imagens[0]}" class="d-block w-100" alt="${anuncio.titulo}" style="height: 200px; object-fit: cover;">`;
+            }
+        } else {
+            // Se não houver imagens, mostra um placeholder
+            imagensHTML = '<div class="image-placeholder">SEM IMAGEM</div>';
+        }
+
         let contatoHTML = '';
-        if (anuncio.contato) { contatoHTML += `<strong>Tel:</strong> <a href="tel:${anuncio.contato.replace(/[\s+()-]/g, '')}">${anuncio.contato}</a><br>`; }
-        if (anuncio.link_contato && anuncio.link_contato.includes('@')) { const emailLink = anuncio.link_contato.startsWith('mailto:') ? anuncio.link_contato : `mailto:${anuncio.link_contato}`; const emailText = emailLink.replace('mailto:', ''); contatoHTML += `<strong>Email:</strong> <a href="${emailLink}">${emailText}</a>`; }
-        return `<div class="col-lg-4 col-md-6 mb-4 housing-item"><div class="card h-100 shadow-sm" id="${anuncio.id}"><div class="card-body d-flex flex-column"><h5 class="card-title">${anuncio.titulo}</h5><h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${anuncio.localizacao}</h6><p class="card-text flex-grow-1">${anuncio.descricao}</p><div class="mt-auto"><p class="card-text small contact-info">${contatoHTML}</p></div></div><div class="card-footer d-flex justify-content-between align-items-center">${formatarDatas(anuncio)}</div>${renderShareButtons(anuncio, pageName)}</div></div>`;
+        if (anuncio.contato) {
+            contatoHTML += `<strong>Tel:</strong> <a href="tel:${anuncio.contato.replace(/[\s+()-]/g, '')}">${anuncio.contato}</a><br>`;
+        }
+        if (anuncio.link_contato && anuncio.link_contato.includes('@')) {
+            const emailLink = anuncio.link_contato.startsWith('mailto:') ? anuncio.link_contato : `mailto:${anuncio.link_contato}`;
+            const emailText = emailLink.replace('mailto:', '');
+            contatoHTML += `<strong>Email:</strong> <a href="${emailLink}">${emailText}</a>`;
+        }
+
+        return `<div class="col-lg-4 col-md-6 mb-4 housing-item">
+                <div class="card h-100 shadow-sm position-relative" id="${anuncio.id}">
+                    ${precoHTML}
+                    ${imagensHTML}
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">${anuncio.titulo}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${anuncio.localizacao}</h6>
+                        <p class="card-text flex-grow-1">${anuncio.descricao}</p>
+                        <div class="mt-auto">
+                            <p class="card-text small contact-info">${contatoHTML}</p>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        ${formatarDatas(anuncio)}
+                        ${renderShareButtons(anuncio, pageName)}
+                    </div>
+                </div>
+            </div>`;
     }
 
     // Función para actualizar los contadores del impacto en la comunidad
@@ -227,19 +288,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 /* === Código para Bloquear Descarga de Imágenes         === */
 /* ========================================================= */
 
-document.addEventListener('DOMContentLoaded', function() {
-  // Selecciona todas las imágenes de la página
-  const images = document.querySelectorAll('img');
+document.addEventListener('DOMContentLoaded', function () {
+    // Selecciona todas las imágenes de la página
+    const images = document.querySelectorAll('img');
 
-  images.forEach(image => {
-    // Bloquear el menú del clic derecho sobre la imagen
-    image.addEventListener('contextmenu', (e) => {
-      e.preventDefault();
-    });
+    images.forEach(image => {
+        // Bloquear el menú del clic derecho sobre la imagen
+        image.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
 
-    // Bloquear la acción de arrastrar la imagen
-    image.addEventListener('dragstart', (e) => {
-      e.preventDefault();
+        // Bloquear la acción de arrastrar la imagen
+        image.addEventListener('dragstart', (e) => {
+            e.preventDefault();
+        });
     });
-  });
 });
