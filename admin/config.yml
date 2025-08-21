@@ -1,25 +1,29 @@
 backend:
   name: github
-  repo: Helder8a/portugalapoia
+  repo: Helder8a/portugalapoia # Reemplaza con tu usuario/repositorio si es diferente
   branch: main
   publish_mode: editorial_workflow
 
+# Habilitamos la subida de imágenes y vídeos
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
 collections:
-  - name: "blog" # Nueva colección para el blog
+  - name: "blog"
     label: "Blog"
-    folder: "_dados/blog"
+    folder: "_dados/blog" # Carpeta donde se guardarán los artículos
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Nombre del archivo para nuevas entradas
     fields:
       - {label: "Título", name: "title", widget: "string"}
       - {label: "Data de Publicação", name: "date", widget: "datetime"}
       - {label: "Imagem de Destaque", name: "image", widget: "image"}
-      - {label: "Categoria", name: "category", widget: "select", options: ["saude", "turismo", "educacao", "habitacao", "emprego"]}
+      - label: "Categoria"
+        name: "category"
+        widget: "select"
+        options: ["saude", "turismo", "educacao", "habitacao", "emprego"]
       - {label: "Resumo", name: "summary", widget: "text"}
-      - {label: "Corpo do Artigo", name: "body", widget: "markdown"}
+      - {label: "Corpo do Artigo (aceita vídeos)", name: "body", widget: "markdown"}
   - name: "conteudos"
     label: "Conteúdos das Páginas"
     files:
@@ -87,7 +91,6 @@ collections:
               {label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false},
               {label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false}
             ]}
-      # --- ESTA ES LA SECCIÓN QUE AHORA SÍ VA A APARECER ---
       - file: "_dados/homepage.json"
         label: "Conteúdo da Página Principal"
         name: "homepage"
