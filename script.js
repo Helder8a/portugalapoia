@@ -223,3 +223,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     setupSearch(); // Chama a função que configura o buscador
 });
 
+/* ========================================================= */
+/* === Código para Bloquear Descarga de Imágenes         === */
+/* ========================================================= */
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Selecciona todas las imágenes de la página
+  const images = document.querySelectorAll('img');
+
+  images.forEach(image => {
+    // Bloquear el menú del clic derecho sobre la imagen
+    image.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+    });
+
+    // Bloquear la acción de arrastrar la imagen
+    image.addEventListener('dragstart', (e) => {
+      e.preventDefault();
+    });
+  });
+});
