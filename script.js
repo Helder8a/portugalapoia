@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // --- LÓGICA DE DADOS ---
+    // --- LÓGICA DE DATOS ---
     async function fetchJson(url) {
         try {
             const response = await fetch(`${url}?t=${new Date().getTime()}`);
@@ -75,6 +75,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     // --- FUNÇÕES DE RENDERIZAÇÃO ---
+    // (Aquí van todas tus funciones renderEmprego, renderDoacao, etc. que ya estaban bien)
     function formatarDatas(item) {
         if (!item || !item.data_publicacao || !item.data_vencimento) {
             return `<div class="date-info">ID: ${item.id || 'N/A'}</div>`;
@@ -129,10 +130,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         const precoHTML = anuncio.valor_anuncio ? `<div class="card-price">${anuncio.valor_anuncio}</div>` : '';
 
         let imagensHTML = '';
-        // Verifica se existe o campo imagens e se não está vazio
         if (anuncio.imagens && anuncio.imagens.length > 0) {
             if (anuncio.imagens.length > 1) {
-                // Se houver mais de uma imagem, cria um carrusel
                 const carouselId = `carousel-${anuncio.id}`;
                 const indicators = anuncio.imagens.map((_, index) =>
                     `<li data-target="#${carouselId}" data-slide-to="${index}" class="${index === 0 ? 'active' : ''}"></li>`
@@ -155,11 +154,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                     </a>
                 </div>`;
             } else {
-                // Se houver apenas uma imagem
                 imagensHTML = `<img loading="lazy" src="${anuncio.imagens[0].imagem_url || anuncio.imagens[0]}" class="d-block w-100" alt="${anuncio.titulo}" style="height: 200px; object-fit: cover;">`;
             }
         } else {
-            // Se não houver imagens, mostra um placeholder
             imagensHTML = '<div class="image-placeholder">SEM IMAGEM</div>';
         }
 
@@ -192,7 +189,33 @@ document.addEventListener("DOMContentLoaded", async () => {
                 </div>
             </div>`;
     }
+    
+    // --- NUEVA FUNCIÓN PARA LA PÁGINA PRINCIPAL ---
+    async function loadHomepageContent() {
+        try {
+            const response = await fetch('/_dados/homepage.json?t=' + new Date().getTime());
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            const data = await response.json();
 
+            const heroTitle = document.getElementById('hero-title');
+            const heroSubtitle = document.getElementById('hero-subtitle');
+            if (heroTitle) heroTitle.textContent = data.hero_title;
+            if (heroSubtitle) heroSubtitle.textContent = data.hero_subtitle;
+
+            const doacoesText = document.getElementById('doacoes-text');
+            const empregosText = document.getElementById('empregos-text');
+            const totalText = document.getElementById('total-text');
+            if (doacoesText) doacoesText.textContent = data.impact_counters.doacoes_text;
+            if (empregosText) empregosText.textContent = data.impact_counters.emprego_text;
+            if (totalText) totalText.textContent = data.impact_counters.total_text;
+
+        } catch (error) {
+            console.error("Erro ao carregar o conteúdo da página principal:", error);
+            document.getElementById('hero-title').textContent = 'Bem-vindo ao Portugal Apoia';
+            document.getElementById('hero-subtitle').textContent = 'A sua plataforma de apoio comunitário.';
+        }
+    }
+    
     // Función para actualizar los contadores del impacto en la comunidad
     async function updateImpactCounters() {
         const doacoes = await fetchJson('/_dados/doacoes.json');
@@ -200,48 +223,32 @@ document.addEventListener("DOMContentLoaded", async () => {
         const servicos = await fetchJson('/_dados/servicos.json');
         const habitacao = await fetchJson('/_dados/habitacao.json');
 
-        const totalDoacoes = doacoes.length;
-        const totalEmpregos = empregos.length;
-        const totalServicos = servicos.length;
-        const totalHabitacao = habitacao.length;
-        const totalAnuncios = totalDoacoes + totalEmpregos + totalServicos + totalHabitacao;
-
-        const contadorDoacoesEl = document.getElementById('contador-doacoes');
-        if (contadorDoacoesEl) contadorDoacoesEl.textContent = `${totalDoacoes}+`;
-
-        const contadorEmpregosEl = document.getElementById('contador-empregos');
-        if (contadorEmpregosEl) contadorEmpregosEl.textContent = `${totalEmpregos}+`;
-
-        const contadorServicosEl = document.getElementById('contador-servicos');
-        if (contadorServicosEl) contadorServicosEl.textContent = `${totalServicos}+`;
-
-        const contadorHabitacaoEl = document.getElementById('contador-habitacao');
-        if (contadorHabitacaoEl) contadorHabitacaoEl.textContent = `${totalHabitacao}+`;
-
-        const contadorTotalEl = document.getElementById('contador-total');
-        if (contadorTotalEl) contadorTotalEl.textContent = `${totalAnuncios}+`;
+        document.getElementById('contador-doacoes').textContent = `${doacoes.length}+`;
+        document.getElementById('contador-empregos').textContent = `${empregos.length}+`;
+        document.getElementById('contador-total').textContent = `${doacoes.length + empregos.length + servicos.length + habitacao.length}+`;
     }
 
-    // --- CARGA INICIAL ---
+    // --- CARGA INICIAL Y LLAMADAS A FUNCIONES ---
     carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'doações.html');
     carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'empregos.html');
     carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'serviços.html');
     carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderHabitacao, 'habitação.html');
-
-    // Llamada a la nueva función de contadores
+    
+    // Llamada a las funciones de contadores y contenido de la home
     updateImpactCounters();
+    if (document.body.classList.contains('home')) {
+        loadHomepageContent();
+    }
 
-    // --- LÓGICA DO BUSCADOR (CORRIGIDA) ---
+    // --- LÓGICA DO BUSCADOR ---
     function setupSearch() {
         const searchInput = document.getElementById('searchInput');
+        if (!searchInput) return; 
+
         const locationInput = document.getElementById('locationInput');
         const searchButton = document.getElementById('searchButton');
         const clearButton = document.getElementById('clearButton');
         const noResults = document.getElementById('no-results');
-
-        if (!searchInput) {
-            return; // Sai da função se o buscador não existir nesta página
-        }
 
         function filterCards() {
             const searchText = searchInput.value.toLowerCase().trim();
@@ -281,26 +288,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         locationInput.addEventListener('keyup', filterCards);
     }
 
-    setupSearch(); // Chama a função que configura o buscador
+    setupSearch();
 });
 
-/* ========================================================= */
-/* === Código para Bloquear Descarga de Imágenes         === */
-/* ========================================================= */
-
 document.addEventListener('DOMContentLoaded', function () {
-    // Selecciona todas las imágenes de la página
     const images = document.querySelectorAll('img');
-
     images.forEach(image => {
-        // Bloquear el menú del clic derecho sobre la imagen
-        image.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
-        });
-
-        // Bloquear la acción de arrastrar la imagen
-        image.addEventListener('dragstart', (e) => {
-            e.preventDefault();
-        });
+        image.addEventListener('contextmenu', (e) => e.preventDefault());
+        image.addEventListener('dragstart', (e) => e.preventDefault());
     });
 });
