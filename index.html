@@ -278,29 +278,80 @@
 
 <!--Start of Tawk.to Script-->
 <script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/68a5e36d427c8119275e97fe/1j3400ord';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
+    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    (function () {
+        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/68a5e36d427c8119275e97fe/1j3400ord';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
+    })();
 </script>
 <!--End of Tawk.to Script-->
 
 <body class="home">
     <div id="preloader"><img src="images_pta/logocuadrado.jpg" alt="A carregar..." class="spinner"></div>
 
-    <header class="main-header">
-        </header>
+    <header class="main-header"></header>
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand logo" href="index.html" style="display: inline-flex; align-items: center;">
+                <img src="images_pta/logocuadrado.jpg" alt="Logo PortugalApoia"
+                    style="height: 35px; margin-right: 10px;">
+                <span class="brand-text-responsive">PortugalApoia</span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="main-nav">
+
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="doações.html">Doações</a></li>
+                    <li class="nav-item"><a class="nav-link" href="empregos.html">Emprego</a></li>
+                    <li class="nav-item"><a class="nav-link" href="serviços.html">Serviços</a></li>
+                    <li class="nav-item dropdown active"><a class="nav-link" href="habitação.html">Habitação</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownWebApp" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Apps
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownWebApp">
+                            <a class="dropdown-item" href="app_evaluadorsustentable.html">Avaliador Sustentável
+                                PRO</a>
+                            <a class="dropdown-item" href="app_avaliadorurbano.html">Avaliador de Imóveis
+                                Urbanos</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link btn btn-primary publish-btn"
+                            href="publicar.html">Publicar</a></li>
+                </ul>
+
+                <div class="theme-switch-wrapper nav-item ml-lg-3">
+                    <label class="theme-switch" for="theme-toggle">
+                        <input type="checkbox" id="theme-toggle" />
+                        <div class="slider round">
+                            <i class="fas fa-sun slider-icon"></i>
+                            <i class="fas fa-moon slider-icon"></i>
+                        </div>
+                    </label>
+                </div>
+
+            </div>
+        </div>
+    </nav>
 
     <main>
         <section id="hero" class="d-flex align-items-center text-center page-header-index">
             <div class="container">
                 <h1 class="hero-title" id="hero-title">A comunidade que nos une.</h1>
-                <p class="hero-subtitle" id="hero-subtitle">Sua plataforma para doações, emprego, serviços e moradia em Portugal.</p>
+                <p class="hero-subtitle" id="hero-subtitle">Sua plataforma para doações, emprego, serviços e moradia em
+                    Portugal.</p>
                 <div class="hero-buttons">
                     <a href="doações.html" class="btn btn-primary btn-lg">Ver Pedidos de Artigos</a>
                     <a href="empregos.html" class="btn btn-secondary btn-lg">Ver Vagas de Emprego</a>
@@ -309,11 +360,11 @@ s0.parentNode.insertBefore(s1,s0);
         </section>
 
         <section class="py-5">
-            </section>
+        </section>
 
         <section id="impacto" class="py-5 bg-light">
             <div class="container text-center">
-                 <h2 class="mb-4">O Nosso Impacto</h2>
+                <h2 class="mb-4">O Nosso Impacto</h2>
                 <div class="row">
                     <div class="col-md-4 mb-4">
                         <div class="card impact-card h-100 shadow-sm">
@@ -347,7 +398,7 @@ s0.parentNode.insertBefore(s1,s0);
         </section>
 
         <section id="quick-access-categories" class="py-5 bg-light">
-           </section>
+        </section>
     </main>
 
     <button id="scrollTopBtn" title="Voltar ao topo"><i class="fas fa-arrow-up"></i></button>
