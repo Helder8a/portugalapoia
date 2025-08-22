@@ -64,7 +64,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         const items = await fetchJson(jsonPath);
 
         if (!items || items.length === 0) {
-            container.innerHTML = `<p class="col-12 text-center lead text-muted mt-5">De momento, não há publicações nesta secção.</p>`;
+            if (containerId !== 'gallery-section') { // Não mostrar mensagem para a galeria
+                container.innerHTML = `<p class="col-12 text-center lead text-muted mt-5">De momento, não há publicações nesta secção.</p>`;
+            }
             return;
         }
 
@@ -128,6 +130,24 @@ document.addEventListener("DOMContentLoaded", async () => {
         const encodedUrl = encodeURIComponent(url);
         const encodedText = encodeURIComponent(text);
         return `<div class="share-buttons"><small class="share-label">Partilhar:</small><a href="https://api.whatsapp.com/send?text=${encodedText}%20${encodedUrl}" target="_blank" rel="noopener noreferrer" title="Partilhar no WhatsApp" class="share-btn whatsapp"><i class="fab fa-whatsapp"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}" target="_blank" rel="noopener noreferrer" title="Partilhar no Facebook" class="share-btn facebook"><i class="fab fa-facebook-f"></i></a></div>`;
+    }
+    
+    // --- NOVA FUNÇÃO PARA RENDERIZAR A GALERIA ---
+    function renderGalleryItem(item) {
+        const itemDate = new Date(item.date);
+        const formattedDate = itemDate.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' });
+        return `
+            <div class="col-lg-6 col-md-12 mb-4">
+                <div class="gallery-item">
+                    <img src="${item.image}" alt="${item.title}">
+                    <div class="caption">
+                        <h5>${item.title}</h5>
+                        <p>${item.caption}</p>
+                        <small class="text-white-50">${formattedDate}</small>
+                    </div>
+                </div>
+            </div>
+        `;
     }
 
     function renderEmprego(item, pageName, idAnuncio) { 
@@ -296,6 +316,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'serviços.html');
     carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderHabitacao, 'habitação.html');
     carregarConteudo('/_dados/blog.json', 'posts-section', renderBlogPost, 'blog.html');
+    carregarConteudo('/_dados/galeria.json', 'gallery-section', renderGalleryItem, 'blog.html');
+
 
     updateImpactCounters();
     if (document.body.classList.contains('home')) {
