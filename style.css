@@ -1601,3 +1601,13 @@ body.dark-theme .blog-post-card .card-body .small {
     font-family: var(--font-headings);
     font-size: 2.2rem;
 }
+
+/* --- Correção de Cor para o Header da Página Sobre Nós --- */
+
+.hero-sobre .page-title {
+    color: var(--color-donation); /* Aplica a cor amarela/laranja do tema */
+}
+
+.hero-sobre .lead {
+    color: #fff; /* Garante que o subtítulo permaneça branco */
+}
