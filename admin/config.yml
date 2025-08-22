@@ -11,7 +11,6 @@ collections:
   - name: "conteudos"
     label: "Conteúdos das Páginas"
     files:
-      # --- ESTA ES LA SECCIÓN AÑADIDA Y CORREGIDA ---
       - file: "_dados/blog.json"
         label: "Publicações do Blog"
         name: "blog"
@@ -29,7 +28,21 @@ collections:
                 options: ["saude", "turismo", "educacao", "habitacao", "emprego"]
               - {label: "Resumo", name: "summary", widget: "text"}
               - {label: "Corpo do Artigo (aceita vídeos)", name: "body", widget: "markdown"}
-      # --- EL RESTO DE TUS ARCHIVOS PERMANECE IGUAL ---
+      
+      # --- SECÇÃO DA GALERIA ADICIONADA ---
+      - file: "_dados/galeria.json"
+        label: "Galeria de Imagens do Blog"
+        name: "galeria"
+        fields:
+          - name: "imagens"
+            label: "Imagens da Galeria"
+            widget: "list"
+            fields:
+              - {label: "Título da Imagem", name: "title", widget: "string"}
+              - {label: "Data", name: "date", widget: "datetime"}
+              - {label: "Ficheiro da Imagem", name: "image", widget: "image"}
+              - {label: "Legenda", name: "caption", widget: "string", hint: "Uma descrição curta para a imagem."}
+      # --- O RESTO DOS SEUS ARQUIVOS PERMANECE IGUAL ---
       - file: "_dados/empregos.json"
         label: "Vagas de Emprego"
         name: "empregos"
