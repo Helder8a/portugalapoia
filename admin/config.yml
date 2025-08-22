@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: Helder8a/portugalapoia # Asegúrate de que este sea tu usuario/repositorio
+  repo: Helder8a/portugalapoia 
   branch: main
   publish_mode: editorial_workflow
 
@@ -11,9 +11,11 @@ collections:
   - name: "conteudos"
     label: "Conteúdos das Páginas"
     files:
+      # --- ESTRUTURA DO BLOG CORRIGIDA ---
       - file: "_dados/blog.json"
         label: "Publicações do Blog"
         name: "blog"
+        widget: "object" # Alterado de 'list' para 'object'
         fields:
           - name: "posts"
             label: "Artigos do Blog"
@@ -28,11 +30,12 @@ collections:
                 options: ["saude", "turismo", "educacao", "habitacao", "emprego"]
               - {label: "Resumo", name: "summary", widget: "text"}
               - {label: "Corpo do Artigo (aceita vídeos)", name: "body", widget: "markdown"}
-      
-      # --- SECÇÃO DA GALERIA ADICIONADA ---
+              
+      # --- ESTRUTURA DA GALERIA CORRIGIDA ---
       - file: "_dados/galeria.json"
         label: "Galeria de Imagens do Blog"
         name: "galeria"
+        widget: "object" # Alterado de 'list' para 'object'
         fields:
           - name: "imagens"
             label: "Imagens da Galeria"
@@ -42,7 +45,8 @@ collections:
               - {label: "Data", name: "date", widget: "datetime"}
               - {label: "Ficheiro da Imagem", name: "image", widget: "image"}
               - {label: "Legenda", name: "caption", widget: "string", hint: "Uma descrição curta para a imagem."}
-      # --- O RESTO DOS SEUS ARQUIVOS PERMANECE IGUAL ---
+
+      # --- O RESTO DOS ARQUIVOS PERMANECE IGUAL ---
       - file: "_dados/empregos.json"
         label: "Vagas de Emprego"
         name: "empregos"
