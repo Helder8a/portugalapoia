@@ -275,7 +275,8 @@ h6 {
 }
 
 .card:hover {
-    transform: translateY(-8px) scale(1.02); /* <-- AÑADE scale(1.02) */
+    transform: translateY(-8px) scale(1.02);
+    /* <-- AÑADE scale(1.02) */
     box-shadow: 0 12px 24px rgba(0, 0, 0, .15) !important;
     border-color: var(--color-accent);
 }
@@ -1150,8 +1151,10 @@ body.dark-theme .brand-text-responsive {
     /* Azul Oscuro */
     --color-secondary: #2196F3;
     /* Azul Medio */
-    --color-accent: #F57C00; /* Naranja Vibrante y Accesible */
-    --color-donation: #F57C00; /* Naranja Vibrante y Accesible */
+    --color-accent: #F57C00;
+    /* Naranja Vibrante y Accesible */
+    --color-donation: #F57C00;
+    /* Naranja Vibrante y Accesible */
     --color-success: #28A745;
     /* Verde */
     /* Verde */
@@ -1181,45 +1184,55 @@ body.dark-theme {
 
 /* Contenedor para los detalles de contacto en texto */
 .contact-details {
-    margin-bottom: 1rem; /* Espacio entre el texto y los iconos */
-    font-size: 0.9rem; /* Tamaño de fuente para el texto de contacto */
+    margin-bottom: 1rem;
+    /* Espacio entre el texto y los iconos */
+    font-size: 0.9rem;
+    /* Tamaño de fuente para el texto de contacto */
 }
 
 /* Párrafos dentro de los detalles de contacto */
 .contact-details .contact-text {
-    margin-bottom: 0.5rem; /* Espacio entre número y email */
+    margin-bottom: 0.5rem;
+    /* Espacio entre número y email */
     display: flex;
     align-items: center;
 }
 
 /* Iconos junto al texto de contacto */
 .contact-details .contact-text i {
-    color: var(--color-accent); /* Usa el color de acento de tu web */
-    width: 20px; /* Alineación de los iconos */
+    color: var(--color-accent);
+    /* Usa el color de acento de tu web */
+    width: 20px;
+    /* Alineación de los iconos */
 }
 
 /* Contenedor principal de los iconos grandes */
 .card-contact-icons {
-    text-align: right; /* Alinea los iconos a la derecha */
-    margin-top: -10px; /* Ajuste para acercar los iconos a la descripción */
+    text-align: right;
+    /* Alinea los iconos a la derecha */
+    margin-top: -10px;
+    /* Ajuste para acercar los iconos a la descripción */
 }
 
 /* Enlaces de los iconos (WhatsApp y Email) */
 .card-contact-icons a.contact-icon {
     display: inline-block;
-    margin-left: 15px; /* Aumenta la separación entre iconos */
+    margin-left: 15px;
+    /* Aumenta la separación entre iconos */
     color: var(--color-secondary);
     transition: transform 0.2s ease, color 0.2s ease;
 }
 
 /* Iconos dentro de los enlaces */
 .card-contact-icons a.contact-icon i {
-    font-size: 2rem; /* Aumenta significativamente el tamaño de los iconos */
+    font-size: 2rem;
+    /* Aumenta significativamente el tamaño de los iconos */
 }
 
 /* Efecto hover para los iconos */
 .card-contact-icons a.contact-icon:hover {
-    transform: scale(1.15); /* Agrandar al pasar el ratón */
+    transform: scale(1.15);
+    /* Agrandar al pasar el ratón */
     color: var(--color-primary);
 }
 
@@ -1233,7 +1246,7 @@ body.dark-theme {
     background-color: var(--color-background);
     border-radius: 50%;
     padding: 5px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1256,13 +1269,14 @@ body.dark-theme {
     padding: 5px 15px;
     border-radius: 0 25px 25px 0;
     font-weight: 700;
-    box-shadow: 2px 2px 8px rgba(0,0,0,0.15);
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 /* Estilo para anuncios vencidos */
 .card-footer .vencido {
-  color: #DC3545 !important; /* Rojo de Bootstrap */
-  font-weight: bold;
+    color: #DC3545 !important;
+    /* Rojo de Bootstrap */
+    font-weight: bold;
 }
 
 /* --- ESTILOS PARA LOS BOTONES DE PARTILHAR --- */
@@ -1270,32 +1284,39 @@ body.dark-theme {
 .share-buttons {
     display: flex;
     align-items: center;
-    gap: 8px; /* Espacio entre el texto y los iconos */
+    gap: 8px;
+    /* Espacio entre el texto y los iconos */
 }
 
 .share-label {
     font-size: 0.8rem;
-    color: #6c757d; /* Color de texto secundario */
+    color: #6c757d;
+    /* Color de texto secundario */
     margin-right: 4px;
-    white-space: nowrap; /* Evita que el texto se parta en dos líneas */
+    white-space: nowrap;
+    /* Evita que el texto se parta en dos líneas */
 }
 
 .share-btn {
-    font-size: 1.2rem; /* Tamaño de los iconos */
+    font-size: 1.2rem;
+    /* Tamaño de los iconos */
     color: #6c757d;
     transition: color 0.3s, transform 0.3s;
 }
 
 .share-btn:hover {
-    transform: scale(1.2); /* Efecto de zoom al pasar el ratón */
+    transform: scale(1.2);
+    /* Efecto de zoom al pasar el ratón */
 }
 
 .share-btn.whatsapp:hover {
-    color: #25D366; /* Cor do WhatsApp */
+    color: #25D366;
+    /* Cor do WhatsApp */
 }
 
 .share-btn.facebook:hover {
-    color: #1877F2; /* Cor do Facebook */
+    color: #1877F2;
+    /* Cor do Facebook */
 }
 
 /* Estilo para el modo oscuro */
@@ -1308,16 +1329,21 @@ body.dark-theme .share-btn {
 
 /* Contenedor principal de los iconos de contacto en la tarjeta de servicio */
 .card-contact-icons {
-    display: flex; /* Usa flexbox para alinear fácilmente */
-    justify-content: flex-end; /* Alinea los ítems a la derecha */
-    align-items: center; /* Centra verticalmente */
-    gap: 10px; /* Espacio entre el texto y los iconos */
+    display: flex;
+    /* Usa flexbox para alinear fácilmente */
+    justify-content: flex-end;
+    /* Alinea los ítems a la derecha */
+    align-items: center;
+    /* Centra verticalmente */
+    gap: 10px;
+    /* Espacio entre el texto y los iconos */
 }
 
 /* Etiqueta de texto "Contacto:" */
 .contact-label {
     font-size: 0.8rem;
-    color: var(--color-text-muted); /* Color de texto secundario */
+    color: var(--color-text-muted);
+    /* Color de texto secundario */
     font-weight: bold;
 }
 
@@ -1330,7 +1356,8 @@ body.dark-theme .share-btn {
 
 /* Iconos dentro de los enlaces */
 .card-contact-icons a.contact-icon i {
-    font-size: 1.8rem; /* Tamaño de los iconos de contacto */
+    font-size: 1.8rem;
+    /* Tamaño de los iconos de contacto */
 }
 
 /* Efecto hover para los iconos de contacto */
@@ -1351,8 +1378,9 @@ body.dark-theme .share-btn {
 
 /* Estilo para el texto de vencimiento cuando el anuncio está caducado */
 .date-info .vencido {
-  color: #DC3545 !important; /* Rojo de Bootstrap */
-  font-weight: bold;
+    color: #DC3545 !important;
+    /* Rojo de Bootstrap */
+    font-weight: bold;
 }
 
 /* --- AÑADE O SUSTITUYE ESTA REGLA EN TU FICHERO style.css --- */
@@ -1363,17 +1391,21 @@ body.dark-theme .share-btn {
     left: 10px;
     background-color: rgba(10, 61, 98, 0.85);
     color: #fff;
-    min-width: 35px; /* Usa min-width para que se adapte al contenido */
+    min-width: 35px;
+    /* Usa min-width para que se adapte al contenido */
     height: 35px;
-    padding: 0 8px; /* Añade padding horizontal */
-    border-radius: 20px; /* Forma de píldora para que se vea bien con texto */
+    padding: 0 8px;
+    /* Añade padding horizontal */
+    border-radius: 20px;
+    /* Forma de píldora para que se vea bien con texto */
     display: flex;
     justify-content: center;
     align-items: center;
     font-weight: bold;
     font-family: var(--font-headings);
-    font-size: 0.9rem; /* Fuente ligeramente más pequeña para IDs largos */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    font-size: 0.9rem;
+    /* Fuente ligeramente más pequeña para IDs largos */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     z-index: 2;
 }
 
@@ -1414,9 +1446,11 @@ body.dark-theme .blog-post-card .card-body .small {
 .gallery-item {
     position: relative;
     overflow: hidden;
-    border-radius: 12px; /* Bordas mais arredondadas */
+    border-radius: 12px;
+    /* Bordas mais arredondadas */
     aspect-ratio: 16 / 10;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1); /* Sombra mais pronunciada */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    /* Sombra mais pronunciada */
 }
 
 .gallery-item img {
@@ -1427,7 +1461,8 @@ body.dark-theme .blog-post-card .card-body .small {
 }
 
 .gallery-item:hover img {
-    transform: scale(1.08); /* Efeito de zoom mais notável */
+    transform: scale(1.08);
+    /* Efeito de zoom mais notável */
     filter: brightness(0.9);
 }
 
@@ -1436,17 +1471,20 @@ body.dark-theme .blog-post-card .card-body .small {
     bottom: 0;
     left: 0;
     width: 100%;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0)); /* Gradiente mais escuro */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0));
+    /* Gradiente mais escuro */
     color: white;
     padding: 25px 20px 20px;
     text-align: left;
-    transform: translateY(100%); /* Começa escondida */
+    transform: translateY(100%);
+    /* Começa escondida */
     transition: transform 0.4s ease-in-out;
     box-sizing: border-box;
 }
 
 .gallery-item:hover .caption {
-    transform: translateY(0); /* Mostra ao passar o rato */
+    transform: translateY(0);
+    /* Mostra ao passar o rato */
 }
 
 .gallery-item .caption h5 {
@@ -1467,3 +1505,99 @@ body.dark-theme .blog-post-card .card-body .small {
     opacity: 0.8;
 }
 
+/* =================================================== */
+/* --- ESTILOS PARA A PÁGINA 'SOBRE NÓS' --- */
+/* =================================================== */
+
+/* --- Bloco 1: Hero Section --- */
+.hero-sobre {
+    position: relative;
+    background: url('images/img_portada.webp') center center/cover no-repeat;
+    min-height: 60vh;
+    padding: 60px 0;
+}
+
+.hero-sobre::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(10, 61, 98, .85), rgba(10, 61, 98, .6));
+    z-index: 1;
+}
+
+.hero-sobre .container {
+    position: relative;
+    z-index: 2;
+}
+
+/* --- Bloco 2: Missão --- */
+.mission-block .section-title {
+    text-align: left;
+}
+
+.mission-block .section-title::after {
+    margin-left: 0;
+}
+
+.mission-icon {
+    font-size: 10rem;
+    color: var(--color-primary);
+    opacity: 0.1;
+}
+
+/* --- Bloco 3: Pilares/Valores --- */
+.pillars-section {
+    background-color: var(--color-background-light);
+}
+
+.pillar-card {
+    padding: 2rem 1.5rem;
+    height: 100%;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.pillar-icon {
+    font-size: 3.5rem;
+    color: var(--color-accent);
+    margin-bottom: 1.5rem;
+}
+
+.pillar-card h4 {
+    font-family: var(--font-headings);
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+}
+
+/* --- Bloco 4: História --- */
+.history-block .section-title {
+    text-align: left;
+}
+
+.history-block .section-title::after {
+    margin-left: 0;
+}
+
+.history-logo {
+    max-width: 250px;
+    opacity: 0.8;
+}
+
+.history-block .blockquote {
+    border-left: 4px solid var(--color-accent);
+    padding-left: 1.5rem;
+    font-style: italic;
+    color: #6c757d;
+}
+
+/* --- Bloco 5: Call to Action --- */
+.cta-sobre {
+    background-color: var(--color-primary);
+}
+
+.cta-sobre h2 {
+    font-family: var(--font-headings);
+    font-size: 2.2rem;
+}
