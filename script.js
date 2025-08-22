@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <img class="card-img-top" src="${post.image}" alt="${post.title}">
                     <div class="card-body">
                         <h5 class="card-title">${post.title}</h5>
-                        <p class="text-muted small">Publicado em: ${formattedDate} | ID: ${post.id}</p>
+                        <p class="text-muted small">Publicado em: ${formattedDate}</p>
                         <p class="card-text summary-content">${post.summary}</p>
                         <div class="full-content" style="display: none;">
                             <p>${post.body.replace(/\n/g, '</p><p>')}</p>
