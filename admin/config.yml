@@ -15,7 +15,7 @@ collections:
       - file: "_dados/blog.json"
         label: "Publicações do Blog"
         name: "blog"
-        widget: "object" # Alterado de 'list' para 'object'
+        widget: "object"
         fields:
           - name: "posts"
             label: "Artigos do Blog"
@@ -35,7 +35,7 @@ collections:
       - file: "_dados/galeria.json"
         label: "Galeria de Imagens do Blog"
         name: "galeria"
-        widget: "object" # Alterado de 'list' para 'object'
+        widget: "object"
         fields:
           - name: "imagens"
             label: "Imagens da Galeria"
@@ -46,10 +46,11 @@ collections:
               - {label: "Ficheiro da Imagem", name: "image", widget: "image"}
               - {label: "Legenda", name: "caption", widget: "string", hint: "Uma descrição curta para a imagem."}
 
-      # --- O RESTO DOS ARQUIVOS PERMANECE IGUAL ---
+      # --- ESTRUTURA DE EMPREGOS CORRIGIDA ---
       - file: "_dados/empregos.json"
         label: "Vagas de Emprego"
         name: "empregos"
+        widget: "object"
         fields:
           - {label: "Lista de Vagas", name: "vagas", widget: "list", fields: [
               {label: "ID (Ex: EMP-033)", name: "id", widget: "string"},
@@ -61,9 +62,12 @@ collections:
               {label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false},
               {label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false}
             ]}
+
+      # --- ESTRUTURA DE DOAÇÕES CORRIGIDA ---
       - file: "_dados/doacoes.json"
         label: "Pedidos de Doação"
         name: "doacoes"
+        widget: "object"
         fields:
           - {label: "Lista de Pedidos", name: "pedidos", widget: "list", fields: [
               {label: "ID (Ex: DOA-004)", name: "id", widget: "string"},
@@ -77,9 +81,12 @@ collections:
               {label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false},
               {label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false}
             ]}
+
+      # --- ESTRUTURA DE SERVIÇOS CORRIGIDA ---
       - file: "_dados/servicos.json"
         label: "Ofertas de Serviço"
         name: "servicos"
+        widget: "object"
         fields:
           - {label: "Lista de Serviços", name: "servicos", widget: "list", fields: [
               {label: "ID (Ex: SER-004)", name: "id", widget: "string"},
@@ -93,9 +100,12 @@ collections:
               {label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false},
               {label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false}
             ]}
+
+      # --- ESTRUTURA DE HABITAÇÃO CORRIGIDA E IMAGENS OPCIONAIS ---
       - file: "_dados/habitacao.json"
         label: "Anúncios de Habitação"
         name: "habitacao"
+        widget: "object"
         fields:
           - {label: "Lista de Anúncios", name: "anuncios", widget: "list", fields: [
               {label: "ID (Ex: HAB-007)", name: "id", widget: "string"},
@@ -111,6 +121,8 @@ collections:
               {label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false},
               {label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false}
             ]}
+      
+      # --- CONTEÚDO DA PÁGINA PRINCIPAL ---
       - file: "_dados/homepage.json"
         label: "Conteúdo da Página Principal"
         name: "homepage"
