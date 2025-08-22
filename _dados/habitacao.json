@@ -1,23 +1,20 @@
 {
   "anuncios": [
     {
-      "id": "HAB-001",
-      "titulo": "Quarto Individual em Lisboa",
-      "valor_anuncio": "450€/mês",
-      "localizacao": "Lisboa",
-      "descricao": "Quarto mobilado com serventia de cozinha e casa de banho. Despesas incluídas.",
       "imagens": [
         {
-          "imagem_url": "/images/uploads/habitacao20250802.avif"
-        },
-        {
-          "imagem_url": "/images/uploads/habitacao20250807.avif"
+          "imagem_url": "/images/uploads/2025_05_21.2.avif"
         }
       ],
-      "contato": "912345678",
+      "data_vencimento": "2025-09-01",
       "link_contato": "mailto:email@exemplo.com",
+      "valor_anuncio": "450€/mês",
+      "descricao": "Quarto mobilado com serventia de cozinha e casa de banho. Despesas incluídas.",
+      "contato": "912345678",
+      "localizacao": "Lisboa",
       "data_publicacao": "2025-08-01",
-      "data_vencimento": "2025-09-01"
+      "titulo": "Quarto Individual em Lisboa",
+      "id": "HAB-001"
     }
   ]
 }
