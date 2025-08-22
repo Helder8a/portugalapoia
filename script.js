@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         `;
     }
     function renderHabitacao(anuncio, pageName) { 
-        const imagemHTML = anuncio.imagens && anuncio.imagens.length > 0 ? `<img src="${anuncio.imagens[0]}" class="card-img-top" alt="${anuncio.titulo}">` : `<div class="image-placeholder">${anuncio.titulo}</div>`;
+        const imagemHTML = anuncio.imagens && anuncio.imagens.length > 0 && anuncio.imagens[0].imagem_url ? `<img src="${anuncio.imagens[0].imagem_url}" class="card-img-top" alt="${anuncio.titulo}">` : `<div class="image-placeholder">${anuncio.titulo}</div>`;
         const precoHTML = anuncio.valor_anuncio ? `<div class="card-price">${anuncio.valor_anuncio}</div>` : '';
         
         return `

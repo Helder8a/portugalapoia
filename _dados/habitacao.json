@@ -1,19 +1,23 @@
 {
   "anuncios": [
     {
-      "id": "1",
-      "titulo": "Quarto",
-      "localizacao": "Lisboa, Portela",
-      "descricao": "Quarto com casa de banho privativa",
+      "id": "HAB-001",
+      "titulo": "Quarto Individual em Lisboa",
       "valor_anuncio": "450€/mês",
+      "localizacao": "Lisboa",
+      "descricao": "Quarto mobilado com serventia de cozinha e casa de banho. Despesas incluídas.",
       "imagens": [
-        "/images_habitação/quarto_portela_1.webp",
-        "/images_habitação/quarto_portela_2.webp"
+        {
+          "imagem_url": "/images/uploads/habitacao20250802.avif"
+        },
+        {
+          "imagem_url": "/images/uploads/habitacao20250807.avif"
+        }
       ],
-      "contato": "+351 913415847",
-      "link_contato": "+351 913415847",
-      "data_publicacao": "2025-08-17",
-      "data_vencimento": "2025-09-18"
+      "contato": "912345678",
+      "link_contato": "mailto:email@exemplo.com",
+      "data_publicacao": "2025-08-01",
+      "data_vencimento": "2025-09-01"
     }
   ]
 }
