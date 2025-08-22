@@ -7,8 +7,14 @@
   
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   
+  <script>
+    // Limpar a configuração em cache para forçar o recarregamento
+    if (window.localStorage) {
+      window.localStorage.removeItem('netlify-cms-config-session');
+    }
+  </script>
 </head>
 <body>
-  <script src="https://unpkg.com/netlify-cms@2.10.192/dist/netlify-cms.js"></script>
+  <script src="https://unpkg.com/netlify-cms@^2.10.192/dist/netlify-cms.js"></script>
 </body>
 </html>
