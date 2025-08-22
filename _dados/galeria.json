@@ -1,0 +1,28 @@
+{
+  "imagens": [
+    {
+      "title": "Praça do Comércio, Lisboa",
+      "date": "2025-08-20T10:00:00.000Z",
+      "image": "/images/uploads/saude20250801.avif",
+      "caption": "Um dia de sol na icónica praça de Lisboa."
+    },
+    {
+      "title": "Ruela com Jacarandás",
+      "date": "2025-08-19T10:00:00.000Z",
+      "image": "/images/uploads/educacao20250806.avif",
+      "caption": "As cores de Lisboa na primavera."
+    },
+    {
+      "title": "Alfama, Lisboa",
+      "date": "2025-08-18T12:00:00.000Z",
+      "image": "/images/uploads/habitacao20250807.avif",
+      "caption": "Vistas sobre o bairro histórico de Alfama e o rio Tejo."
+    },
+    {
+      "title": "Elétrico 28",
+      "date": "2025-08-17T15:00:00.000Z",
+      "image": "/images/uploads/emprego20250803.avif",
+      "caption": "O famoso elétrico amarelo a percorrer as ruas de Lisboa."
+    }
+  ]
+}
