@@ -1,1 +1,75 @@
-const CACHE_NAME = "portugalapoia-cache-v2", urlsToCache = ["/", "/index.html", "/empregos.html", "/doa\xe7\xf5es.html", "/servi\xe7os.html", "/habita\xe7\xe3o.html", "/offline.html", "/style.css", "/script.js", "/images_pta/logocuadrado.jpg"]; self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE_NAME).then(e => (console.log("Cache abierto"), e.addAll(urlsToCache)))) }), self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(e => Promise.all(e.map(e => { if (e !== CACHE_NAME) return caches.delete(e) })))) }), self.addEventListener("fetch", e => { e.respondWith(caches.match(e.request).then(t => t || fetch(e.request).then(t => { if (!t || 200 !== t.status || "basic" !== t.type) return t; let a = t.clone(); return caches.open(CACHE_NAME).then(t => { t.put(e.request, a) }), t })).catch(() => caches.match("/offline.html"))) });
+const CACHE_NAME = 'portugalapoia-cache-v2';
+// Lista de archivos esenciales para la app (la "App Shell")
+const urlsToCache = [
+  '/',
+  '/index.html',
+  '/empregos.html',
+  '/doações.html',
+  '/serviços.html',
+  '/habitação.html',
+  '/offline.html',
+  '/style.css',
+  '/script.js',
+  '/images_pta/logocuadrado.jpg'
+];
+
+// 1. Evento de Instalación: Se guarda el "App Shell" en caché
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        console.log('Cache abierto');
+        return cache.addAll(urlsToCache);
+      })
+  );
+});
+
+// 2. Evento de Activación: Limpia cachés antiguos
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheName !== CACHE_NAME) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
+});
+
+// 3. Evento Fetch: Decide cómo responder a las peticiones (Cache-First, luego Network)
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        // Si la respuesta está en la caché, la devolvemos
+        if (response) {
+          return response;
+        }
+
+        // Si no, la buscamos en la red
+        return fetch(event.request).then(
+          networkResponse => {
+            // Y si la respuesta es válida, la guardamos en caché para el futuro
+            if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
+              return networkResponse;
+            }
+
+            const responseToCache = networkResponse.clone();
+            caches.open(CACHE_NAME)
+              .then(cache => {
+                cache.put(event.request, responseToCache);
+              });
+
+            return networkResponse;
+          }
+        );
+      })
+      .catch(() => {
+        // Si todo falla (sin caché y sin red), mostramos la página offline
+        return caches.match('/offline.html');
+      })
+  );
+});
