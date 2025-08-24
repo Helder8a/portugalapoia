@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const items = await fetchJson(jsonPath);
 
         if (!items || items.length === 0) {
-            if (containerId !== 'gallery-section') { // Não mostrar mensagem para a galeria
+            if (containerId !== 'gallery-section') {
                 container.innerHTML = `<p class="col-12 text-center lead text-muted mt-5">De momento, não há publicações nesta secção.</p>`;
             }
             return;
@@ -74,7 +74,40 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const htmlContent = items.map(item => renderFunction(item, pageName, item.id)).join('');
         container.innerHTML = htmlContent;
-        
+
+        // ***** CÓDIGO AÑADIDO PARA EL SCHEMA *****
+        // Después de renderizar, añadimos los datos estructurados si es la página de empleos
+        if (pageName === 'empregos.html') {
+            items.forEach(item => {
+                const schema = {
+                    "@context": "https://schema.org/",
+                    "@type": "JobPosting",
+                    "title": item.titulo,
+                    "description": item.descricao,
+                    "datePosted": item.data_publicacao,
+                    "validThrough": item.data_vencimento || '',
+                    "employmentType": "FULL_TIME",
+                    "hiringOrganization": {
+                        "@type": "Organization",
+                        "name": "Empresa (Confidencial)" // El JSON no tiene nombre de empresa, ponemos un placeholder
+                    },
+                    "jobLocation": {
+                        "@type": "Place",
+                        "address": {
+                            "@type": "PostalAddress",
+                            "addressLocality": item.localizacao,
+                            "addressCountry": "PT"
+                        }
+                    }
+                };
+
+                const script = document.createElement('script');
+                script.type = 'application/ld+json';
+                script.textContent = JSON.stringify(schema);
+                document.head.appendChild(script);
+            });
+        }
+
         // Ativar funcionalidades específicas da página após o carregamento
         if (pageName === 'blog.html') {
             setupBlogFunctionality();
@@ -97,7 +130,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const textoVencido = isVencido ? '(Vencido)' : '';
         return `<div class="date-info">Publicado: ${pubFormatada} <br> <span class="${classeVencido}">Vencimento: ${vencFormatada} ${textoVencido}</span></div>`;
     }
-    
+
     function renderBlogPost(post) {
         const postDate = new Date(post.date);
         const formattedDate = postDate.toLocaleDateString('pt-PT', {
@@ -105,7 +138,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             month: 'long',
             year: 'numeric'
         });
-    
+
         return `
             <div class="col-lg-4 col-md-6 mb-4 blog-post-item" data-category="${post.category}">
                 <div class="blog-post-card">
@@ -131,8 +164,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const encodedText = encodeURIComponent(text);
         return `<div class="share-buttons"><small class="share-label">Partilhar:</small><a href="https://api.whatsapp.com/send?text=${encodedText}%20${encodedUrl}" target="_blank" rel="noopener noreferrer" title="Partilhar no WhatsApp" class="share-btn whatsapp"><i class="fab fa-whatsapp"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}" target="_blank" rel="noopener noreferrer" title="Partilhar no Facebook" class="share-btn facebook"><i class="fab fa-facebook-f"></i></a></div>`;
     }
-    
-    // --- NOVA FUNÇÃO PARA RENDERIZAR A GALERIA ---
+
     function renderGalleryItem(item) {
         const itemDate = new Date(item.date);
         const formattedDate = itemDate.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -150,7 +182,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         `;
     }
 
-    function renderEmprego(item, pageName, idAnuncio) { 
+    function renderEmprego(item, pageName, idAnuncio) {
         return `
         <div class="col-md-4 mb-4">
             <div class="card h-100">
@@ -167,7 +199,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         </div>
         `;
     }
-    function renderDoacao(pedido, pageName) { 
+    function renderDoacao(pedido, pageName) {
         const imagemHTML = pedido.imagem ? `<img src="${pedido.imagem}" class="card-img-top" alt="${pedido.titulo}">` : `<div class="image-placeholder">${pedido.titulo}</div>`;
         return `
         <div class="col-md-4 mb-4">
@@ -185,8 +217,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             </div>
         </div>
         `;
-     }
-    function renderServico(item, pageName) { 
+    }
+    function renderServico(item, pageName) {
         const logoHTML = item.logo_empresa ? `<div class="service-card-logo"><img src="${item.logo_empresa}" alt="Logo"></div>` : '';
         const precoHTML = item.valor_servico ? `<div class="card-price">${item.valor_servico}</div>` : '';
 
@@ -208,10 +240,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         </div>
         `;
     }
-    function renderHabitacao(anuncio, pageName) { 
+    function renderHabitacao(anuncio, pageName) {
         const imagemHTML = anuncio.imagens && anuncio.imagens.length > 0 && anuncio.imagens[0].imagem_url ? `<img src="${anuncio.imagens[0].imagem_url}" class="card-img-top" alt="${anuncio.titulo}">` : `<div class="image-placeholder">${anuncio.titulo}</div>`;
         const precoHTML = anuncio.valor_anuncio ? `<div class="card-price">${anuncio.valor_anuncio}</div>` : '';
-        
+
         return `
         <div class="col-md-4 mb-4">
             <div class="card h-100">
@@ -230,7 +262,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         </div>
         `;
     }
-    
+
     // --- FUNCIONALIDADES ESPECÍFICAS ---
 
     function setupBlogFunctionality() {
@@ -293,17 +325,17 @@ document.addEventListener("DOMContentLoaded", async () => {
             document.getElementById('total-text').textContent = homeData.impact_counters.total_text || "Total de Anúncios";
         }
     }
-    
+
     async function updateImpactCounters() {
         const doacoes = await fetchJson('/_dados/doacoes.json');
         const empregos = await fetchJson('/_dados/empregos.json');
         const servicos = await fetchJson('/_dados/servicos.json');
-    
+
         const totalDoacoes = doacoes.length;
         const totalEmpregos = empregos.length;
         const totalServicos = servicos.length;
         const totalGeral = totalDoacoes + totalEmpregos + totalServicos;
-    
+
         document.getElementById('contador-doacoes').textContent = `${totalDoacoes}+`;
         document.getElementById('contador-empregos').textContent = `${totalEmpregos}+`;
         document.getElementById('contador-total').textContent = `${totalGeral}+`;
@@ -324,7 +356,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         loadHomepageContent();
     }
 
-    function setupSearch() { 
+    function setupSearch() {
         const searchButton = document.getElementById('searchButton');
         const clearButton = document.getElementById('clearButton');
         const searchInput = document.getElementById('searchInput');
@@ -366,6 +398,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         if (searchButton) searchButton.addEventListener('click', filter);
         if (clearButton) clearButton.addEventListener('click', clear);
-     }
+    }
     setupSearch();
 });
