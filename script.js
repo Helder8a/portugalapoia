@@ -1,109 +1,187 @@
-// Contenido para blog_script.js
-
-document.addEventListener('DOMContentLoaded', () => {
-    const blogPage = document.querySelector('.blog-content');
-    if (!blogPage) return; // Si no es la página del blog, no hace nada
-
-    const featuredContainer = document.getElementById('featured-post-section');
-    const postsContainer = document.getElementById('posts-section');
-    const galleryContainer = document.getElementById('gallery-section');
-    const filterLinks = document.querySelectorAll('.filter-link');
-    const allPostsTitle = Array.from(document.querySelectorAll('h2.section-title span')).find(el => el.textContent.includes('Todas as Publicações'));
-
-    if (!featuredContainer || !postsContainer || !galleryContainer || !filterLinks.length) {
-        console.error('Falta uno o más elementos clave en el HTML del blog.');
-        return;
+document.addEventListener('DOMContentLoaded', function () {
+    // Preloader
+    var preloader = document.getElementById('preloader');
+    if (preloader) {
+        window.onload = function () {
+            preloader.style.display = 'none';
+        };
     }
 
-    let allPosts = [];
-
-    const fetchData = async (url) => {
-        try {
-            const response = await fetch(`${url}?t=${new Date().getTime()}`);
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            return await response.json();
-        } catch (error) {
-            console.error(`Falha ao carregar ${url}:`, error);
-            return null;
+    // Botón de volver arriba
+    var scrollTopBtn = document.getElementById("scrollTopBtn");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            scrollTopBtn.style.display = "block";
+        } else {
+            scrollTopBtn.style.display = "none";
         }
     };
+    scrollTopBtn.addEventListener("click", function () {
+        document.body.scrollTop = 0; // Para Safari
+        document.documentElement.scrollTop = 0; // Para Chrome, Firefox, IE y Opera
+    });
 
-    const createPostCardHTML = (post) => {
-        const postDate = new Date(post.date).toLocaleDateString("pt-PT", { day: "numeric", month: "long", year: "numeric" });
-        return `
-            <div class="card-body">
-                <p class="post-category">${post.category}</p>
-                <h5 class="card-title">${post.title}</h5>
-                <p class="card-meta">Publicado em: ${postDate}</p>
-                <p class="card-text">${post.summary}</p>
-                <a href="#" class="btn btn-outline-primary read-more-btn mt-auto">Ler Artigo Completo</a>
-            </div>`;
-    };
+    // Menú hamburguesa
+    var navbarToggler = document.querySelector('.navbar-toggler');
+    var navbarCollapse = document.querySelector('.navbar-collapse');
+    navbarToggler.addEventListener('click', function () {
+        navbarCollapse.classList.toggle('show');
+    });
 
-    const updateView = (filter = 'all') => {
-        const isGallery = filter === 'galeria';
-
-        galleryContainer.style.display = isGallery ? 'flex' : 'none';
-        postsContainer.style.display = isGallery ? 'none' : 'flex';
-        if (allPostsTitle) allPostsTitle.parentElement.style.display = isGallery ? 'none' : 'block';
-
-        const featuredPost = allPosts.length > 0 ? allPosts[0] : null;
-        if (featuredPost) {
-            const showFeatured = !isGallery && (filter === 'all' || featuredPost.category.toLowerCase() === filter);
-            featuredContainer.style.display = showFeatured ? 'block' : 'none';
+    // Cerrar menú al hacer clic fuera
+    document.addEventListener('click', function (event) {
+        if (!navbarCollapse.contains(event.target) && !navbarToggler.contains(event.target)) {
+            navbarCollapse.classList.remove('show');
         }
+    });
 
-        document.querySelectorAll('.blog-post-item').forEach(item => {
-            item.style.display = (filter === 'all' || item.dataset.category === filter) ? 'block' : 'none';
-        });
-    };
-
-    const initializeBlog = async () => {
-        const blogData = await fetchData('/_dados/blog.json');
-        const galleryData = await fetchData('/_dados/galeria.json');
-
-        if (blogData && blogData.posts) {
-            allPosts = blogData.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-            if (allPosts.length > 0) {
-                const featured = allPosts[0];
-                featuredContainer.innerHTML = `
-                    <div class="blog-post-card" data-category="${featured.category.toLowerCase()}">
-                        <div class="card-img-wrapper"><img class="card-img-top" src="${featured.image}" alt="${featured.title}"></div>
-                        ${createPostCardHTML(featured)}
-                    </div>`;
+    // Cerrar menú al seleccionar una opción
+    document.querySelectorAll('.navbar-nav a').forEach(function(link) {
+        link.addEventListener('click', function() {
+            if (navbarCollapse.classList.contains('show')) {
+                navbarCollapse.classList.remove('show');
             }
-
-            postsContainer.innerHTML = allPosts.slice(1).map(post => `
-                <div class="col-lg-4 col-md-6 mb-4 blog-post-item" data-category="${post.category.toLowerCase()}">
-                    <div class="blog-post-card">
-                        <img class="card-img-top" src="${post.image}" alt="${post.title}">
-                        ${createPostCardHTML(post)}
-                    </div>
-                </div>`).join('');
-        }
-
-        if (galleryData && galleryData.imagens) {
-            galleryContainer.innerHTML = galleryData.imagens.map(item => `
-                <div class="col-lg-6 mb-4">
-                    <div class="gallery-item">
-                        <img src="${item.image}" alt="${item.title}">
-                        <div class="caption"><h5>${item.title}</h5><p>${new Date(item.date).toLocaleDateString("pt-PT")}</p></div>
-                    </div>
-                </div>`).join('');
-        }
-
-        updateView('all');
-    };
-
-    filterLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            filterLinks.forEach(l => l.classList.remove('active'));
-            e.currentTarget.classList.add('active');
-            updateView(e.currentTarget.dataset.target.toLowerCase());
         });
     });
 
-    initializeBlog();
+    // Función para cargar datos JSON
+    function carregarDados(url, callback) {
+        fetch(url)
+            .then(response => response.json())
+            .then(data => callback(data))
+            .catch(error => console.error('Erro ao carregar dados:', error));
+    }
+
+    // Página de Empregos
+    if (document.getElementById('job-listings')) {
+        let empregos = [];
+        const campoDeBusca = document.getElementById('job-search');
+        const filtroDeLocalizacao = document.getElementById('location-filter');
+        
+        function exibirEmpregos(lista) {
+            const container = document.getElementById('job-listings');
+            container.innerHTML = '';
+            const empregosAExibir = lista.length > 0 ? lista : empregos;
+            empregosAExibir.forEach(job => {
+                const jobCard = `
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card job-card h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">${job.title}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">${job.company} - ${job.location}</h6>
+                                <p class="card-text">${job.description}</p>
+                                <a href="${job.link}" class="btn btn-primary" target="_blank">Candidatar-se</a>
+                            </div>
+                        </div>
+                    </div>`;
+                container.innerHTML += jobCard;
+            });
+        }
+        
+        campoDeBusca.addEventListener('input', () => {
+            const termoBuscado = campoDeBusca.value.toLowerCase();
+            const localizacaoBuscada = filtroDeLocalizacao.value.toLowerCase();
+            const empregosFiltrados = empregos.filter(job => 
+                (job.title.toLowerCase().includes(termoBuscado) || job.company.toLowerCase().includes(termoBuscado)) &&
+                job.location.toLowerCase().includes(localizacaoBuscada)
+            );
+            exibirEmpregos(empregosFiltrados);
+        });
+
+        filtroDeLocalizacao.addEventListener('input', () => {
+             const termoBuscado = campoDeBusca.value.toLowerCase();
+            const localizacaoBuscada = filtroDeLocalizacao.value.toLowerCase();
+            const empregosFiltrados = empregos.filter(job => 
+                (job.title.toLowerCase().includes(termoBuscado) || job.company.toLowerCase().includes(termoBuscado)) &&
+                job.location.toLowerCase().includes(localizacaoBuscada)
+            );
+            exibirEmpregos(empregosFiltrados);
+        });
+
+        carregarDados('/_dados/empregos.json?t=' + new Date().getTime(), data => {
+            empregos = data.jobs;
+            exibirEmpregos(empregos);
+        });
+    }
+
+    // Página de Habitação
+    if (document.getElementById('housing-listings')) {
+        carregarDados('/_dados/habitacao.json?t=' + new Date().getTime(), data => {
+            const container = document.getElementById('housing-listings');
+            const listings = data.habitacao.map(item => `
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card housing-card h-100">
+                        <img src="${item.image}" class="card-img-top" alt="Foto de ${item.title}">
+                        <div class="card-body">
+                            <h5 class="card-title">${item.title}</h5>
+                            <p class="card-text">${item.description}</p>
+                            <p class="card-text"><small class="text-muted">Localização: ${item.location}</small></p>
+                            <p class="card-text"><strong>Preço:</strong> ${item.price} €</p>
+                            <a href="https://www.facebook.com/messages/t/100088998513364" class="btn btn-primary" target="_blank">Contactar</a>
+                        </div>
+                    </div>
+                </div>`).join('');
+            container.innerHTML = listings;
+        });
+    }
+
+    // Página de Doações
+    if (document.getElementById('donations-listings')) {
+        carregarDados('/_dados/doacoes.json?t=' + new Date().getTime(), data => {
+            const container = document.getElementById('donations-listings');
+            const listings = data.doacoes.map(item => `
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card donation-card h-100">
+                        <img src="${item.image}" class="card-img-top" alt="Foto de ${item.title}">
+                        <div class="card-body">
+                            <h5 class="card-title">${item.title}</h5>
+                            <p class="card-text">${item.description}</p>
+                            <p class="card-text"><small class="text-muted">Localização: ${item.location}</small></p>
+                             <a href="https://www.facebook.com/messages/t/100088998513364" class="btn btn-primary" target="_blank">Contactar</a>
+                        </div>
+                    </div>
+                </div>`).join('');
+            container.innerHTML = listings;
+        });
+    }
+    
+    // Página de Serviços
+    if (document.getElementById('services-listings')) {
+        carregarDados('/_dados/servicos.json?t=' + new Date().getTime(), data => {
+            const container = document.getElementById('services-listings');
+            const listings = data.servicos.map(item => `
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card service-card h-100">
+                        <img src="${item.image}" class="card-img-top" alt="Foto de ${item.title}">
+                        <div class="card-body">
+                            <h5 class="card-title">${item.title}</h5>
+                            <p class="card-text">${item.description}</p>
+                            <p class="card-text"><small class="text-muted">Área de atuação: ${item.area}</small></p>
+                             <a href="https://www.facebook.com/messages/t/100088998513364" class="btn btn-primary" target="_blank">Contactar</a>
+                        </div>
+                    </div>
+                </div>`).join('');
+            container.innerHTML = listings;
+        });
+    }
+
+    // Página do Blog
+    if (document.getElementById('blog-posts')) {
+        carregarDados('/_dados/blog.json?t=' + new Date().getTime(), data => {
+            const container = document.getElementById('blog-posts');
+            const posts = data.posts.map(post => `
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card blog-card h-100">
+                        <img src="${post.image}" class="card-img-top" alt="${post.title}">
+                        <div class="card-body">
+                            <h5 class="card-title">${post.title}</h5>
+                             <p class="card-text"><small class="text-muted">${new Date(post.date).toLocaleDateString()}</small></p>
+                            <p class="card-text">${post.summary}</p>
+                            <a href="#" class="btn btn-link">Ler mais</a>
+                        </div>
+                    </div>
+                </div>`).join('');
+            container.innerHTML = posts;
+        });
+    }
 });
