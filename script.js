@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // --- FUNCIÓN PARA OBTENER DATOS JSON ---
+    // --- FUNCIÓN PARA CARGAR DATOS JSON ---
     async function fetchJsonData(url) {
         try {
             const response = await fetch(`${url}?t=${new Date().getTime()}`);
@@ -8,13 +8,13 @@ document.addEventListener("DOMContentLoaded", () => {
             const key = Object.keys(data)[0];
             return Array.isArray(data[key]) ? data[key] : [];
         } catch (error) {
-            console.error(`Error processing JSON from ${url}:`, error);
+            console.error(`Error loading data from ${url}:`, error);
             return [];
         }
     }
 
-    // --- FUNCIÓN PARA RENDERIZAR LOS POSTS DEL BLOG ---
-    async function renderBlogPosts() {
+    // --- FUNCIÓN PARA CREAR Y MOSTRAR LOS POSTS DEL BLOG ---
+    async function displayBlogPosts() {
         const container = document.getElementById("posts-section");
         if (!container) return;
 
@@ -23,11 +23,11 @@ document.addEventListener("DOMContentLoaded", () => {
             container.innerHTML = '<p class="col-12 text-center lead text-muted mt-5">De momento, não há publicações nesta secção.</p>';
             return;
         }
-        
-        posts.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
 
-        const template = (item) => {
-            const postDate = new Date(item.date).toLocaleDateString("pt-PT", { day: "numeric", month: "long", year: "numeric" });
+        posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        const postTemplate = (item) => {
+            const postDate = new Date(item.date).toLocaleString("pt-PT", { day: "numeric", month: "long", year: "numeric" });
             return `
                 <div class="col-lg-4 col-md-6 mb-4 blog-post-item" data-category="${item.category}">
                     <div class="blog-post-card">
@@ -47,58 +47,63 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
                 </div>`;
         };
-
-        container.innerHTML = posts.map(template).join("");
+        container.innerHTML = posts.map(postTemplate).join("");
     }
-
-    // --- LÓGICA DE INTERACTIVIDAD DEL BLOG ---
-    function initializeBlogLogic() {
-        const blogContainer = document.getElementById('blog-content');
-        if (!blogContainer) return;
-
-        const postsSection = document.getElementById('posts-section');
-        const gallerySection = document.getElementById('gallery-section');
+    
+    // --- LÓGICA DE INTERACTIVIDAD (EVENT DELEGATION) ---
+    function initializeInteractions() {
+        const body = document.body;
         const blogNav = document.querySelector('.blog-nav');
 
-        // Función para cerrar cualquier modal que esté abierta
-        const closeExpandedPost = () => {
-            const expandedCard = document.querySelector('.blog-post-card.expanded');
-            if (expandedCard) {
-                expandedCard.classList.remove('expanded');
-            }
-            document.body.classList.remove('modal-open');
-        };
-
-        // Manejador de clics para toda el área del blog (posts y galería)
-        blogContainer.addEventListener('click', (event) => {
+        // Escucha clics en todo el cuerpo del documento
+        body.addEventListener('click', (event) => {
             const readMoreBtn = event.target.closest('.read-more-btn');
             const closeBtn = event.target.closest('.close-btn');
-            const navLink = event.target.closest('.nav-link');
 
-            // Si se hace clic en "Ler Mais"
+            // Si el clic fue en un botón "Ler Mais"
             if (readMoreBtn) {
                 event.preventDefault();
                 const card = readMoreBtn.closest('.blog-post-card');
-                card.classList.add('expanded');
-                document.body.classList.add('modal-open');
+                if (card) {
+                    body.classList.add('modal-open');
+                    card.classList.add('expanded');
+                }
             }
 
-            // Si se hace clic en el botón de cerrar
+            // Si el clic fue en un botón de cerrar
             if (closeBtn) {
                 event.preventDefault();
-                closeExpandedPost();
+                const card = closeBtn.closest('.blog-post-card');
+                if (card) {
+                    body.classList.remove('modal-open');
+                    card.classList.remove('expanded');
+                }
             }
+        });
+        
+        // Lógica para los filtros de categoría
+        if (blogNav) {
+            const postsSection = document.getElementById('posts-section');
+            const gallerySection = document.getElementById('gallery-section');
 
-            // Si se hace clic en un filtro de categoría
-            if (navLink) {
+            blogNav.addEventListener('click', (event) => {
+                const navLink = event.target.closest('.nav-link');
+                if (!navLink) return;
+                
                 event.preventDefault();
-                closeExpandedPost();
+                
+                // Cierra cualquier ventana modal abierta al cambiar de filtro
+                const expandedCard = document.querySelector('.blog-post-card.expanded');
+                if(expandedCard) {
+                    body.classList.remove('modal-open');
+                    expandedCard.classList.remove('expanded');
+                }
 
                 blogNav.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
                 navLink.classList.add('active');
                 
                 const category = navLink.getAttribute('data-target');
-
+                
                 if (category === 'galeria') {
                     postsSection.style.display = 'none';
                     gallerySection.style.display = 'flex';
@@ -106,17 +111,16 @@ document.addEventListener("DOMContentLoaded", () => {
                     postsSection.style.display = 'flex';
                     gallerySection.style.display = 'none';
                     document.querySelectorAll('.blog-post-item').forEach(post => {
-                        const postCategory = post.getAttribute('data-category');
-                        post.style.display = (category === 'all' || postCategory === category) ? 'block' : 'none';
+                        post.style.display = (category === 'all' || post.dataset.category === category) ? 'block' : 'none';
                     });
                 }
-            }
-        });
+            });
+        }
     }
 
     // --- INICIALIZACIÓN ---
-    // Renderiza los posts y LUEGO inicializa la lógica de clics
-    renderBlogPosts().then(() => {
-        initializeBlogLogic();
-    });
+    // Primero, muestra los posts del blog.
+    // Luego, activa toda la interactividad de la página.
+    displayBlogPosts();
+    initializeInteractions();
 });
