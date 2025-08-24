@@ -1495,3 +1495,27 @@ body.modal-open::after {
     background-color: rgba(0, 0, 0, 0.6);
     z-index: 1040;
 }
+
+/* --- CORRECCIÓN PROFESIONAL PARA MODAL DEL BLOG --- */
+
+.blog-post-card {
+    /* ... tus estilos existentes ... */
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Estado inicial de la ventana modal antes de abrirse */
+.blog-post-card.expanded {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Añade una transición suave al fondo oscuro */
+body.modal-open::after {
+    transition: opacity 0.3s ease;
+    opacity: 1;
+}
+
+body:not(.modal-open)::after {
+    opacity: 0;
+    pointer-events: none;
+}
