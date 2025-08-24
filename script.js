@@ -1,157 +1,179 @@
 document.addEventListener("DOMContentLoaded", () => {
     // --- PRELOADER ---
-    const e = document.getElementById("preloader");
-    e && (window.onload = () => {
-        e.style.display = "none"
-    });
+    const preloader = document.getElementById("preloader");
+    if (preloader) {
+        window.onload = () => {
+            preloader.style.display = "none";
+        };
+    }
 
     // --- BOTÓN SCROLL TOP ---
-    const t = document.getElementById("scrollTopBtn");
-    window.onscroll = () => {
-        document.body.scrollTop > 20 || document.documentElement.scrollTop > 20 ? t.style.display = "block" : t.style.display = "none"
-    };
-    t.addEventListener("click", () => {
-        document.body.scrollTop = 0, document.documentElement.scrollTop = 0
-    });
+    const scrollTopBtn = document.getElementById("scrollTopBtn");
+    if (scrollTopBtn) {
+        window.onscroll = () => {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                scrollTopBtn.style.display = "block";
+            } else {
+                scrollTopBtn.style.display = "none";
+            }
+        };
+        scrollTopBtn.addEventListener("click", () => {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        });
+    }
 
-    // --- MENÚ HAMBURGUESA ---
-    const n = document.querySelector(".navbar-toggler"),
-        o = document.querySelector(".navbar-collapse");
-    n.addEventListener("click", () => {
-        o.classList.toggle("show")
-    });
+    // --- MENÚ HAMBURGUESA (Móvil) ---
+    const navbarToggler = document.querySelector(".navbar-toggler");
+    const navbarCollapse = document.querySelector(".navbar-collapse");
+    if (navbarToggler && navbarCollapse) {
+        navbarToggler.addEventListener("click", () => {
+            navbarCollapse.classList.toggle("show");
+        });
 
-    // --- CERRAR MENÚ AL HACER CLIC FUERA ---
-    document.addEventListener("click", e => {
-        !o.contains(e.target) && !n.contains(e.target) && o.classList.remove("show")
-    });
+        document.addEventListener("click", (event) => {
+            if (!navbarCollapse.contains(event.target) && !navbarToggler.contains(event.target)) {
+                navbarCollapse.classList.remove("show");
+            }
+        });
 
-    // --- CERRAR MENÚ AL SELECCIONAR UNA OPCIÓN ---
-    document.querySelectorAll(".navbar-nav a").forEach(e => {
-        e.addEventListener("click", () => {
-            o.classList.contains("show") && o.classList.remove("show")
-        })
-    });
+        document.querySelectorAll(".navbar-nav a").forEach(link => {
+            link.addEventListener("click", () => {
+                if (navbarCollapse.classList.contains("show")) {
+                    navbarCollapse.classList.remove("show");
+                }
+            });
+        });
+    }
 
-    const a = (e, t) => {
-        fetch(e).then(e => e.json()).then(e => t(e)).catch(e => console.error("Erro ao carregar dados:", e))
+    // --- FUNCIÓN HELPER PARA CARGAR DATOS JSON ---
+    const fetchData = async (url) => {
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return await response.json();
+        } catch (error) {
+            console.error("Erro ao carregar dados:", error);
+            return null;
+        }
     };
 
     // --- LÓGICA PARA LA PÁGINA DE EMPLEO ---
-    const d = document.getElementById("job-listings");
-    if (d) {
-        let e = [];
-        const t = document.getElementById("job-search"),
-            n = document.getElementById("location-filter");
+    const jobListings = document.getElementById("job-listings");
+    if (jobListings) {
+        let allJobs = [];
+        const jobSearch = document.getElementById("job-search");
+        const locationFilter = document.getElementById("location-filter");
 
-        function o(o) {
-            d.innerHTML = "", (o.length > 0 ? o : e).forEach(e => {
-                const t = document.createElement("div");
-                t.className = "col-lg-4 col-md-6 mb-4", t.innerHTML = `
+        const renderJobs = (jobs) => {
+            jobListings.innerHTML = jobs.map(job => `
+                <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card job-card h-100">
                         <div class="card-body">
-                            <h5 class="card-title">${e.title}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">${e.company} - ${e.location}</h6>
-                            <p class="card-text">${e.description}</p>
-                            <a href="${e.link}" class="btn btn-primary" target="_blank">Candidatar-se</a>
+                            <h5 class="card-title">${job.title}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">${job.company} - ${job.location}</h6>
+                            <p class="card-text">${job.description}</p>
+                            <a href="${job.link}" class="btn btn-primary" target="_blank">Candidatar-se</a>
                         </div>
-                    </div>`, d.appendChild(t)
-            })
+                    </div>
+                </div>
+            `).join('');
+        };
+
+        const filterJobs = () => {
+            const searchTerm = jobSearch.value.toLowerCase();
+            const locationTerm = locationFilter.value.toLowerCase();
+            const filteredJobs = allJobs.filter(job =>
+                (job.title.toLowerCase().includes(searchTerm) || job.company.toLowerCase().includes(searchTerm)) &&
+                job.location.toLowerCase().includes(locationTerm)
+            );
+            renderJobs(filteredJobs);
+        };
+
+        jobSearch.addEventListener("input", filterJobs);
+        locationFilter.addEventListener("input", filterJobs);
+
+        fetchData(`/_dados/empregos.json?t=${new Date().getTime()}`).then(data => {
+            if (data && data.jobs) {
+                allJobs = data.jobs;
+                renderJobs(allJobs);
+            }
+        });
+    }
+
+    // --- LÓGICA GENÉRICA PARA OTRAS PÁGINAS (Vivienda, Donaciones, Servicios) ---
+    const setupListingPage = async (containerId, jsonFile, cardGenerator) => {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        const data = await fetchData(`/_dados/${jsonFile}?t=${new Date().getTime()}`);
+        if (data) {
+            const items = data[Object.keys(data)[0]]; // Accede a la primera propiedad del JSON
+            container.innerHTML = items.map(cardGenerator).join('');
         }
-        t.addEventListener("input", () => {
-            const a = t.value.toLowerCase(),
-                d = n.value.toLowerCase(),
-                i = e.filter(e => (e.title.toLowerCase().includes(a) || e.company.toLowerCase().includes(a)) && e.location.toLowerCase().includes(d));
-            o(i)
-        }), n.addEventListener("input", () => {
-            const a = t.value.toLowerCase(),
-                d = n.value.toLowerCase(),
-                i = e.filter(e => (e.title.toLowerCase().includes(a) || e.company.toLowerCase().includes(a)) && e.location.toLowerCase().includes(d));
-            o(i)
-        }), a("/_dados/empregos.json?t=" + (new Date).getTime(), t => {
-            e = t.jobs, o(e)
-        })
-    }
+    };
 
-    // --- LÓGICA PARA LA PÁGINA DE VIVIENDA ---
-    if (document.getElementById("housing-listings")) {
-        a("/_dados/habitacao.json?t=" + (new Date).getTime(), e => {
-            const t = document.getElementById("housing-listings"),
-                n = e.habitacao.map(e => `
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card housing-card h-100">
-                        <img src="${e.image}" class="card-img-top" alt="Foto de ${e.title}">
-                        <div class="card-body">
-                            <h5 class="card-title">${e.title}</h5>
-                            <p class="card-text">${e.description}</p>
-                            <p class="card-text"><small class="text-muted">Localização: ${e.location}</small></p>
-                            <p class="card-text"><strong>Preço:</strong> ${e.price} €</p>
-                            <a href="https://www.facebook.com/messages/t/100088998513364" class="btn btn-primary" target="_blank">Contactar</a>
-                        </div>
-                    </div>
-                </div>`).join("");
-            t.innerHTML = n
-        })
-    }
+    setupListingPage("housing-listings", "habitacao.json", item => `
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card housing-card h-100">
+                <img src="${item.image}" class="card-img-top" alt="Foto de ${item.title}">
+                <div class="card-body">
+                    <h5 class="card-title">${item.title}</h5>
+                    <p class="card-text">${item.description}</p>
+                    <p class="card-text"><small class="text-muted">Localização: ${item.location}</small></p>
+                    <p class="card-text"><strong>Preço:</strong> ${item.price} €</p>
+                    <a href="https://www.facebook.com/messages/t/100088998513364" class="btn btn-primary" target="_blank">Contactar</a>
+                </div>
+            </div>
+        </div>
+    `);
 
-    // --- LÓGICA PARA LA PÁGINA DE DONACIONES ---
-    if (document.getElementById("donations-listings")) {
-        a("/_dados/doacoes.json?t=" + (new Date).getTime(), e => {
-            const t = document.getElementById("donations-listings"),
-                n = e.doacoes.map(e => `
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card donation-card h-100">
-                        <img src="${e.image}" class="card-img-top" alt="Foto de ${e.title}">
-                        <div class="card-body">
-                            <h5 class="card-title">${e.title}</h5>
-                            <p class="card-text">${e.description}</p>
-                            <p class="card-text"><small class="text-muted">Localização: ${e.location}</small></p>
-                             <a href="https://www.facebook.com/messages/t/100088998513364" class="btn btn-primary" target="_blank">Contactar</a>
-                        </div>
-                    </div>
-                </div>`).join("");
-            t.innerHTML = n
-        })
-    }
-    
-    // --- LÓGICA PARA LA PÁGINA DE SERVICIOS ---
-    if (document.getElementById("services-listings")) {
-        a("/_dados/servicos.json?t=" + (new Date).getTime(), e => {
-            const t = document.getElementById("services-listings"),
-                n = e.servicos.map(e => `
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card service-card h-100">
-                        <img src="${e.image}" class="card-img-top" alt="Foto de ${e.title}">
-                        <div class="card-body">
-                            <h5 class="card-title">${e.title}</h5>
-                            <p class="card-text">${e.description}</p>
-                            <p class="card-text"><small class="text-muted">Área de atuação: ${e.area}</small></p>
-                             <a href="https://www.facebook.com/messages/t/100088998513364" class="btn btn-primary" target="_blank">Contactar</a>
-                        </div>
-                    </div>
-                </div>`).join("");
-            t.innerHTML = n
-        })
-    }
+    setupListingPage("donations-listings", "doacoes.json", item => `
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card donation-card h-100">
+                <img src="${item.image}" class="card-img-top" alt="Foto de ${item.title}">
+                <div class="card-body">
+                    <h5 class="card-title">${item.title}</h5>
+                    <p class="card-text">${item.description}</p>
+                    <p class="card-text"><small class="text-muted">Localização: ${item.location}</small></p>
+                    <a href="https://www.facebook.com/messages/t/100088998513364" class="btn btn-primary" target="_blank">Contactar</a>
+                </div>
+            </div>
+        </div>
+    `);
+
+    setupListingPage("services-listings", "servicos.json", item => `
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card service-card h-100">
+                <img src="${item.image}" class="card-img-top" alt="Foto de ${item.title}">
+                <div class="card-body">
+                    <h5 class="card-title">${item.title}</h5>
+                    <p class="card-text">${item.description}</p>
+                    <p class="card-text"><small class="text-muted">Área de atuação: ${item.area}</small></p>
+                    <a href="https://www.facebook.com/messages/t/100088998513364" class="btn btn-primary" target="_blank">Contactar</a>
+                </div>
+            </div>
+        </div>
+    `);
+
 
     // =====================================================================
-    // --- NUEVA LÓGICA PROFESIONAL PARA LA PÁGINA DEL BLOG ---
+    // --- LÓGICA MEJORADA Y CORREGIDA PARA LA PÁGINA DEL BLOG ---
     // =====================================================================
-    if (document.getElementById('posts-section')) {
-        const postsContainer = document.getElementById('posts-section');
+    const blogContent = document.querySelector(".blog-content");
+    if (blogContent) {
         const featuredContainer = document.getElementById('featured-post-section');
+        const postsContainer = document.getElementById('posts-section');
         const galleryContainer = document.getElementById('gallery-section');
         const filterLinks = document.querySelectorAll('.filter-link');
-        const featuredTitle = document.querySelector('#featured-post-section .section-title span');
-        const allPostsTitle = document.querySelector('#posts-section + .section-title span');
+        const allPostsTitle = document.querySelector('h2.section-title:last-of-type');
 
 
-        // Función para crear el contenido HTML de una tarjeta de post (sin la imagen)
-        function createPostCardContent(post) {
-            const postDate = new Date(post.date).toLocaleString("pt-PT", {
-                day: "numeric",
-                month: "long",
-                year: "numeric"
+        const createPostCardHTML = (post) => {
+            const postDate = new Date(post.date).toLocaleDateString("pt-PT", {
+                day: "numeric", month: "long", year: "numeric"
             });
             return `
                 <div class="card-body">
@@ -159,56 +181,40 @@ document.addEventListener("DOMContentLoaded", () => {
                     <h5 class="card-title">${post.title}</h5>
                     <p class="card-meta">Publicado em: ${postDate}</p>
                     <p class="card-text">${post.summary}</p>
-                    <a href="#" class="btn btn-outline-primary read-more-btn mt-auto">Ler Artigo Completo</a>
+                    <a href="#" class="btn btn-outline-primary read-more-btn">Ler Artigo Completo</a>
                 </div>
             `;
-        }
+        };
 
-        // Cargar posts del blog
-        a("/_dados/blog.json?t=" + new Date().getTime(), data => {
-            const posts = data.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-            // 1. Mostrar el post destacado si existe
+        const renderBlog = (posts) => {
+            // Renderiza el artículo destacado
             if (posts.length > 0) {
                 const featuredPost = posts[0];
                 featuredContainer.innerHTML = `
-                    <h2 class="section-title"><span>Última Publicação</span></h2>
-                    <div class="blog-post-card" data-category="${featuredPost.category}">
+                    <div class="blog-post-card" data-category="${featuredPost.category.toLowerCase()}">
                         <div class="card-img-wrapper">
-                             <img class="card-img-top" src="${featuredPost.image}" alt="${featuredPost.title}">
+                            <img class="card-img-top" src="${featuredPost.image}" alt="${featuredPost.title}">
                         </div>
-                        ${createPostCardContent(featuredPost)}
-                    </div>
-                `;
-                featuredContainer.style.display = 'block';
+                        ${createPostCardHTML(featuredPost)}
+                    </div>`;
             } else {
                  featuredContainer.style.display = 'none';
             }
 
-            // 2. Mostrar el resto de los posts
-            const otherPosts = posts.slice(1);
-            if(otherPosts.length > 0){
-                 postsContainer.innerHTML = otherPosts.map(post => `
-                    <div class="col-lg-4 col-md-6 mb-4 blog-post-item" data-category="${post.category}">
-                        <div class="blog-post-card">
-                             <img class="card-img-top" src="${post.image}" alt="${post.title}">
-                             ${createPostCardContent(post)}
-                        </div>
+            // Renderiza el resto de artículos
+            postsContainer.innerHTML = posts.slice(1).map(post => `
+                <div class="col-lg-4 col-md-6 mb-4 blog-post-item" data-category="${post.category.toLowerCase()}">
+                    <div class="blog-post-card">
+                        <img class="card-img-top" src="${post.image}" alt="${post.title}">
+                        ${createPostCardHTML(post)}
                     </div>
-                `).join('');
-            } else {
-                // Si no hay otros posts, ocultar el contenedor y su título
-                postsContainer.style.display = 'none';
-                if(document.querySelector('h2.section-title span:contains("Todas as Publicações")')) {
-                    document.querySelector('h2.section-title span:contains("Todas as Publicações")').parentElement.style.display = 'none';
-                }
-            }
-        });
+                </div>
+            `).join('');
+        };
         
-         // Cargar galería
-        a("/_dados/galeria.json?t=" + new Date().getTime(), data => {
-            galleryContainer.innerHTML = data.imagens.map(item => `
-                <div class="col-lg-6 mb-4">
+        const renderGallery = (images) => {
+            galleryContainer.innerHTML = images.map(item => `
+                 <div class="col-lg-6 mb-4">
                     <div class="gallery-item">
                         <img src="${item.image}" alt="${item.title}">
                         <div class="caption">
@@ -218,36 +224,55 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
                 </div>
             `).join('');
+        };
+        
+        const handleFilterClick = (e) => {
+            e.preventDefault();
+            const activeFilter = e.currentTarget;
+            const targetCategory = activeFilter.dataset.target.toLowerCase();
+
+            // Actualiza el estado activo del filtro
+            filterLinks.forEach(link => link.classList.remove('active'));
+            activeFilter.classList.add('active');
+
+            // Muestra u oculta las secciones principales
+            const isGallery = targetCategory === 'galeria';
+            featuredContainer.style.display = isGallery ? 'none' : 'block';
+            postsContainer.style.display = isGallery ? 'none' : 'flex';
+            galleryContainer.style.display = isGallery ? 'flex' : 'none';
+            allPostsTitle.style.display = isGallery ? 'none' : 'block';
+
+            if (!isGallery) {
+                // Filtra el artículo destacado
+                 const featuredCard = featuredContainer.querySelector('.blog-post-card');
+                 if(featuredCard){
+                    const featuredCategory = featuredCard.dataset.category;
+                    featuredContainer.style.display = (targetCategory === 'all' || featuredCategory === targetCategory) ? 'block' : 'none';
+                 }
+
+                // Filtra la lista de artículos
+                document.querySelectorAll('.blog-post-item').forEach(item => {
+                    const itemCategory = item.dataset.category;
+                    item.style.display = (targetCategory === 'all' || itemCategory === targetCategory) ? 'block' : 'none';
+                });
+            }
+        };
+
+        // Carga inicial de datos
+        Promise.all([
+            fetchData(`/_dados/blog.json?t=${new Date().getTime()}`),
+            fetchData(`/_dados/galeria.json?t=${new Date().getTime()}`)
+        ]).then(([blogData, galleryData]) => {
+            if (blogData && blogData.posts) {
+                const sortedPosts = blogData.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+                renderBlog(sortedPosts);
+            }
+            if(galleryData && galleryData.imagens){
+                renderGallery(galleryData.imagens);
+            }
         });
 
-        // Lógica de los filtros
-        filterLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                filterLinks.forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
-
-                const target = link.getAttribute('data-target');
-                const allPostsSectionTitle = document.querySelector('.section-title:not(:first-of-type)');
-
-                // Controlar visibilidad de las secciones
-                featuredContainer.style.display = (target === 'all' || target === 'galeria') ? 'block' : 'none';
-                postsContainer.style.display = (target !== 'galeria') ? 'flex' : 'none';
-                galleryContainer.style.display = (target === 'galeria') ? 'flex' : 'none';
-                if(allPostsSectionTitle) allPostsSectionTitle.style.display = (target !== 'galeria') ? 'block' : 'none';
-                
-
-                if (target !== 'galeria') {
-                     document.querySelectorAll('.blog-post-item').forEach(item => {
-                        item.style.display = (target === 'all' || item.dataset.category === target) ? 'block' : 'none';
-                    });
-                     // Ocultar el destacado si no pertenece a la categoría filtrada (y no es 'todos')
-                     const featuredCard = featuredContainer.querySelector('.blog-post-card');
-                     if(featuredCard) {
-                         featuredContainer.style.display = (target === 'all' || featuredCard.dataset.category === target) ? 'block' : 'none';
-                     }
-                }
-            });
-        });
+        // Añade el evento a cada link de filtro
+        filterLinks.forEach(link => link.addEventListener('click', handleFilterClick));
     }
 });
