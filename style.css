@@ -1404,3 +1404,14 @@ body.dark-theme .share-label {
 .hero-sobre .lead {
     color: #fff
 }
+
+/* style.css */
+
+/* --- Transición Suave para Lazy Loading --- */
+.card-image {
+    transition: opacity 0.4s ease-in-out;
+    opacity: 0.5; /* Opacidad inicial del placeholder */
+}
+.card-image.loaded {
+    opacity: 1;
+}
