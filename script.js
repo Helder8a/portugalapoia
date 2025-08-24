@@ -41,7 +41,9 @@ document.addEventListener("DOMContentLoaded", (async () => {
         if (!c || 0 === c.length) return void("gallery-section" !== e && (s.innerHTML = '<p class="col-12 text-center lead text-muted mt-5">De momento, não há publicações nesta secção.</p>'));
         c.sort(((t, e) => new Date(e.data_publicacao || e.date || 0) - new Date(t.data_publicacao || t.date || 0)));
         const d = c.map((t => a(t, o, t.id))).join("");
-        s.innerHTML = d, "empregos.html" === o && c.forEach((t => {
+        s.innerHTML = d;
+        "blog.html" === o && inicializarLogicaBlog();
+        "empregos.html" === o && c.forEach((t => {
             const e = {
                 "@context": "https://schema.org/",
                 "@type": "JobPosting",
@@ -109,8 +111,7 @@ document.addEventListener("DOMContentLoaded", (async () => {
                     ${c(t,e)}
                 </div>
             </div>
-        </div>
-        `
+        </div>`
     }), "doações.html"), o("/_dados/empregos.json", "jobs-grid", (function(t, e, a) {
         return `
         <div class="col-md-4 mb-4">
@@ -125,8 +126,7 @@ document.addEventListener("DOMContentLoaded", (async () => {
                     ${c(t,e)}
                 </div>
             </div>
-        </div>
-        `
+        </div>`
     }), "empregos.html"), o("/_dados/servicos.json", "services-grid", (function(t, e) {
         const a = t.logo_empresa ? `<div class="service-card-logo"><img src="${t.logo_empresa}" alt="Logo"></div>` : "";
         return `
@@ -144,8 +144,7 @@ document.addEventListener("DOMContentLoaded", (async () => {
                     ${c(t,e)}
                 </div>
             </div>
-        </div>
-        `
+        </div>`
     }), "serviços.html"), o("/_dados/habitacao.json", "housing-grid", (function(t, e) {
         return `
         <div class="col-md-4 mb-4">
@@ -162,8 +161,7 @@ document.addEventListener("DOMContentLoaded", (async () => {
                     ${c(t,e)}
                 </div>
             </div>
-        </div>
-        `
+        </div>`
     }), "habitação.html"), o("/_dados/blog.json", "posts-section", (function(t) {
         const e = new Date(t.date).toLocaleDateString("pt-PT", {
             day: "numeric",
@@ -187,8 +185,7 @@ document.addEventListener("DOMContentLoaded", (async () => {
                     </div>
                     <button class="btn btn-light close-btn" aria-label="Fechar">&times;</button>
                 </div>
-            </div>
-        `
+            </div>`
     }), "blog.html"), o("/_dados/galeria.json", "gallery-section", (function(t) {
         const e = new Date(t.date).toLocaleDateString("pt-PT", {
             day: "numeric",
@@ -205,18 +202,17 @@ document.addEventListener("DOMContentLoaded", (async () => {
                         <small class="text-white-50">${e}</small>
                     </div>
                 </div>
-            </div>
-        `
+            </div>`
     }), "blog.html");
 
-    // --- LÓGICA UNIFICADA PARA O BLOG E GALERIA ---
-    if (document.querySelector('.page-header-blog')) {
+    function inicializarLogicaBlog() {
         const blogContent = document.getElementById('blog-content');
+        if (!blogContent) return; 
+        
         const postsSection = document.getElementById('posts-section');
         const gallerySection = document.getElementById('gallery-section');
-        const blogNavLinks = document.querySelectorAll('.blog-nav .nav-link');
+        const blogNav = document.querySelector('.blog-nav');
 
-        // Função para fechar qualquer post expandido
         const closeExpandedPost = () => {
             const currentlyExpanded = document.querySelector('.blog-post-card.expanded');
             if (currentlyExpanded) {
@@ -225,7 +221,6 @@ document.addEventListener("DOMContentLoaded", (async () => {
             document.body.classList.remove('modal-open');
         };
 
-        // Lógica para ABRIR e FECHAR posts
         blogContent.addEventListener('click', function(event) {
             const readMoreBtn = event.target.closest('.read-more-btn');
             const closeBtn = event.target.closest('.close-btn');
@@ -233,7 +228,7 @@ document.addEventListener("DOMContentLoaded", (async () => {
             if (readMoreBtn) {
                 event.preventDefault();
                 const card = readMoreBtn.closest('.blog-post-card');
-                closeExpandedPost(); // Fecha outros antes de abrir um novo
+                closeExpandedPost();
                 card.classList.add('expanded');
                 document.body.classList.add('modal-open');
             }
@@ -244,73 +239,34 @@ document.addEventListener("DOMContentLoaded", (async () => {
             }
         });
 
-        // Lógica para FILTRAR categorias
-        blogNavLinks.forEach(link => {
-            link.addEventListener('click', function(event) {
-                event.preventDefault();
-                closeExpandedPost(); // Garante que nenhum post esteja aberto ao mudar de categoria
+        blogNav.addEventListener('click', function(event) {
+            const navLink = event.target.closest('.nav-link');
+            if (!navLink) return;
 
-                blogNavLinks.forEach(l => l.classList.remove('active'));
-                this.classList.add('active');
-                const category = this.getAttribute('data-target');
+            event.preventDefault();
+            closeExpandedPost();
 
-                if (category === 'galeria') {
-                    postsSection.style.display = 'none';
-                    gallerySection.style.display = 'flex';
-                } else {
-                    postsSection.style.display = 'flex';
-                    gallerySection.style.display = 'none';
-                    document.querySelectorAll('.blog-post-item').forEach(post => {
-                        // Importante: Usamos classes para controlar visibilidade em vez de display direto para evitar conflitos
-                        if (category === 'all' || post.dataset.category === category) {
-                            post.classList.remove('d-none');
-                        } else {
-                            post.classList.add('d-none');
-                        }
-                    });
-                }
-            });
+            blogNav.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            navLink.classList.add('active');
+            const category = navLink.getAttribute('data-target');
+
+            if (category === 'galeria') {
+                postsSection.style.display = 'none';
+                gallerySection.style.display = 'flex';
+            } else {
+                postsSection.style.display = 'flex';
+                gallerySection.style.display = 'none';
+                document.querySelectorAll('.blog-post-item').forEach(post => {
+                    if (category === 'all' || post.dataset.category === category) {
+                        post.style.display = 'block';
+                    } else {
+                        post.style.display = 'none';
+                    }
+                });
+            }
         });
     }
-
 
     async function() {
         const t = await n("/_dados/doacoes.json"),
             e = await n("/_dados/empregos.json"),
-            a = await n("/_dados/servicos.json"),
-            o = t.length,
-            s = e.length,
-            c = o + s + a.length;
-        document.getElementById("contador-doacoes").textContent = `${o}+`, document.getElementById("contador-empregos").textContent = `${s}+`, document.getElementById("contador-total").textContent = `${c}+`
-    }(), document.body.classList.contains("home") && async function() {
-        const t = await n("/_dados/homepage.json");
-        t && (document.getElementById("hero-title").textContent = t.hero_title || "Bem-vindo ao Portugal Apoia", document.getElementById("hero-subtitle").textContent = t.hero_subtitle || "A sua plataforma de apoio comunitário para encontrar e oferecer ajuda.", document.getElementById("doacoes-text").textContent = t.impact_counters.doacoes_text || "Doações Realizadas", document.getElementById("empregos-text").textContent = t.impact_counters.emprego_text || "Empregos Publicados", document.getElementById("total-text").textContent = t.impact_counters.total_text || "Total de Anúncios")
-    }(),
-    function() {
-        const t = document.getElementById("searchButton"),
-            e = document.getElementById("clearButton"),
-            a = document.getElementById("searchInput"),
-            n = document.getElementById("locationInput"),
-            o = document.getElementById("no-results"),
-            s = document.querySelector('.row[id$="-grid"]')?.id,
-            c = s ? document.getElementById(s) : null;
-        if (!c) return;
-        function d() {
-            const t = a.value.toLowerCase(),
-                e = n.value.toLowerCase(),
-                s = c.querySelectorAll(".col-md-4");
-            let d = !1;
-            s.forEach((a => {
-                const n = a.querySelector(".card-title").textContent.toLowerCase(),
-                    o = a.querySelector(".card-subtitle").textContent.toLowerCase(),
-                    s = a.querySelector(".card-text").textContent.toLowerCase(),
-                    c = n.includes(t) || s.includes(t),
-                    l = o.includes(e);
-                c && l ? (a.style.display = "", d = !0) : a.style.display = "none"
-            })), o.style.display = d ? "none" : "block"
-        }
-        t && t.addEventListener("click", d), e && e.addEventListener("click", (function() {
-            a.value = "", n.value = "", d()
-        }))
-    }();
-}));
