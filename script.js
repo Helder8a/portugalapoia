@@ -57,59 +57,64 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
-    let allBlogPosts = [];
-    let currentIndex = 0;
-    const initialPostsToShow = 6;
-    let currentFilter = 'all';
+    async function carregarConteudo(jsonPath, containerId, renderFunction, pageName) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
 
-    // Nueva función para renderizar posts con paginación
-    function renderPosts(posts, container) {
-        const postsToRender = posts.slice(currentIndex, currentIndex + initialPostsToShow);
-        const htmlContent = postsToRender.map(renderBlogPost).join('');
-        container.insertAdjacentHTML('beforeend', htmlContent);
-        currentIndex += initialPostsToShow;
+        const items = await fetchJson(jsonPath);
 
-        const loadMoreContainer = document.getElementById('load-more-container');
-        if (loadMoreContainer) {
-            loadMoreContainer.style.display = (currentIndex < posts.length) ? 'block' : 'none';
+        if (!items || items.length === 0) {
+            if (containerId !== 'gallery-section') {
+                container.innerHTML = `<p class="col-12 text-center lead text-muted mt-5">De momento, não há publicações nesta secção.</p>`;
+            }
+            return;
+        }
+
+        items.sort((a, b) => new Date(b.data_publicacao || b.date || 0) - new Date(a.data_publicacao || a.date || 0));
+
+        const htmlContent = items.map(item => renderFunction(item, pageName, item.id)).join('');
+        container.innerHTML = htmlContent;
+
+        // ***** CÓDIGO AÑADIDO PARA EL SCHEMA *****
+        // Después de renderizar, añadimos los datos estructurados si es la página de empleos
+        if (pageName === 'empregos.html') {
+            items.forEach(item => {
+                const schema = {
+                    "@context": "https://schema.org/",
+                    "@type": "JobPosting",
+                    "title": item.titulo,
+                    "description": item.descricao,
+                    "datePosted": item.data_publicacao,
+                    "validThrough": item.data_vencimento || '',
+                    "employmentType": "FULL_TIME",
+                    "hiringOrganization": {
+                        "@type": "Organization",
+                        "name": "Empresa (Confidencial)" // El JSON no tiene nombre de empresa, ponemos un placeholder
+                    },
+                    "jobLocation": {
+                        "@type": "Place",
+                        "address": {
+                            "@type": "PostalAddress",
+                            "addressLocality": item.localizacao,
+                            "addressCountry": "PT"
+                        }
+                    }
+                };
+
+                const script = document.createElement('script');
+                script.type = 'application/ld+json';
+                script.textContent = JSON.stringify(schema);
+                document.head.appendChild(script);
+            });
+        }
+
+        // Ativar funcionalidades específicas da página após o carregamento
+        if (pageName === 'blog.html') {
+            setupBlogFunctionality();
         }
     }
 
-    // Nueva función para cargar el blog y la galería
-    async function loadBlogAndGallery() {
-        const postsSection = document.getElementById('posts-section');
-        const gallerySection = document.getElementById('gallery-section');
-        const loadMoreBtn = document.getElementById('load-more-btn');
-
-        if (!postsSection || !gallerySection) return;
-
-        allBlogPosts = await fetchJson('/_dados/blog.json');
-        const galleryItems = await fetchJson('/_dados/galeria.json');
-
-        // Renderizar Galería (si aplica)
-        const galleryHtml = galleryItems.map(renderGalleryItem).join('');
-        gallerySection.innerHTML = `<div class="col-12"><h2 class="section-title text-center mb-4">Galeria de Portugal</h2></div>` + galleryHtml;
-        gallerySection.style.display = 'none';
-
-        // Lógica de carga del blog
-        const filteredPosts = (currentFilter === 'all')
-            ? allBlogPosts
-            : allBlogPosts.filter(post => post.category === currentFilter);
-
-        postsSection.innerHTML = '';
-        currentIndex = 0;
-        renderPosts(filteredPosts, postsSection);
-
-        if (loadMoreBtn) {
-            const loadMoreListener = () => {
-                renderPosts(filteredPosts, postsSection);
-            };
-            loadMoreBtn.removeEventListener('click', loadMoreListener); // Evitar duplicados
-            loadMoreBtn.addEventListener('click', loadMoreListener);
-        }
-    }
-
-    // --- FUNCIONES DE RENDERIZAÇÃO ---
+    // --- FUNÇÕES DE RENDERIZAÇÃO ---
     function formatarDatas(item) {
         if (!item || !item.data_publicacao || !item.data_vencimento) {
             return `<div class="date-info">ID: ${item.id || 'N/A'}</div>`;
@@ -137,7 +142,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         return `
             <div class="col-lg-4 col-md-6 mb-4 blog-post-item" data-category="${post.category}">
                 <div class="blog-post-card">
-                    <img class="card-img-top" src="${post.image}" alt="${post.title}" loading="lazy">
+                    <img class="card-img-top" src="${post.image}" alt="${post.title}">
                     <div class="card-body">
                         <h5 class="card-title">${post.title}</h5>
                         <p class="text-muted small">Publicado em: ${formattedDate}</p>
@@ -166,7 +171,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         return `
             <div class="col-lg-6 col-md-12 mb-4">
                 <div class="gallery-item">
-                    <img src="${item.image}" alt="${item.title}" loading="lazy">
+                    <img src="${item.image}" alt="${item.title}">
                     <div class="caption">
                         <h5>${item.title}</h5>
                         <p>${item.caption}</p>
@@ -195,7 +200,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         `;
     }
     function renderDoacao(pedido, pageName) {
-        const imagemHTML = pedido.imagem ? `<img src="${pedido.imagem}" class="card-img-top" alt="${pedido.titulo}" loading="lazy">` : `<div class="image-placeholder">${pedido.titulo}</div>`;
+        const imagemHTML = pedido.imagem ? `<img src="${pedido.imagem}" class="card-img-top" alt="${pedido.titulo}">` : `<div class="image-placeholder">${pedido.titulo}</div>`;
         return `
         <div class="col-md-4 mb-4">
             <div class="card h-100">
@@ -214,7 +219,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         `;
     }
     function renderServico(item, pageName) {
-        const logoHTML = item.logo_empresa ? `<div class="service-card-logo"><img src="${item.logo_empresa}" alt="Logo" loading="lazy"></div>` : '';
+        const logoHTML = item.logo_empresa ? `<div class="service-card-logo"><img src="${item.logo_empresa}" alt="Logo"></div>` : '';
         const precoHTML = item.valor_servico ? `<div class="card-price">${item.valor_servico}</div>` : '';
 
         return `
@@ -236,7 +241,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         `;
     }
     function renderHabitacao(anuncio, pageName) {
-        const imagemHTML = anuncio.imagens && anuncio.imagens.length > 0 && anuncio.imagens[0].imagem_url ? `<img src="${anuncio.imagens[0].imagem_url}" class="card-img-top" alt="${anuncio.titulo}" loading="lazy">` : `<div class="image-placeholder">${anuncio.titulo}</div>`;
+        const imagemHTML = anuncio.imagens && anuncio.imagens.length > 0 && anuncio.imagens[0].imagem_url ? `<img src="${anuncio.imagens[0].imagem_url}" class="card-img-top" alt="${anuncio.titulo}">` : `<div class="image-placeholder">${anuncio.titulo}</div>`;
         const precoHTML = anuncio.valor_anuncio ? `<div class="card-price">${anuncio.valor_anuncio}</div>` : '';
 
         return `
@@ -259,29 +264,32 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     // --- FUNCIONALIDADES ESPECÍFICAS ---
+
     function setupBlogFunctionality() {
-        const postsSection = document.getElementById('posts-section');
-        const gallerySection = document.getElementById('gallery-section');
-        const loadMoreContainer = document.getElementById('load-more-container');
-        
-        // Lógica para mostrar/esconder o conteúdo completo
-        postsSection.addEventListener('click', (e) => {
-            if (e.target.classList.contains('read-more-btn')) {
+        // Lógica dos botões "Ler Mais"
+        const readMoreButtons = document.querySelectorAll('.read-more-btn');
+        readMoreButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
                 const card = e.target.closest('.blog-post-card');
                 const summary = card.querySelector('.summary-content');
                 const fullContent = card.querySelector('.full-content');
+
                 summary.style.display = 'none';
                 fullContent.style.display = 'block';
                 e.target.style.display = 'none';
-            }
+            });
         });
 
         // Lógica da Navegação por Tabs (Categorias)
         const navLinks = document.querySelectorAll('.blog-nav .nav-link');
+        const postsSection = document.getElementById('posts-section');
+        const gallerySection = document.getElementById('gallery-section');
+
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
 
+                // Atualiza a classe 'active'
                 navLinks.forEach(nav => nav.classList.remove('active'));
                 e.target.classList.add('active');
 
@@ -289,35 +297,22 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 if (targetCategory === 'galeria') {
                     postsSection.style.display = 'none';
-                    gallerySection.style.display = 'flex';
-                    if (loadMoreContainer) loadMoreContainer.style.display = 'none';
+                    gallerySection.style.display = 'flex'; // Usamos flex por ser 'row'
                 } else {
                     gallerySection.style.display = 'none';
                     postsSection.style.display = 'flex';
-                    currentFilter = targetCategory;
-                    loadBlogAndGallery();
+
+                    const allPosts = document.querySelectorAll('.blog-post-item');
+                    allPosts.forEach(post => {
+                        if (targetCategory === 'all' || post.dataset.category === targetCategory) {
+                            post.style.display = 'block';
+                        } else {
+                            post.style.display = 'none';
+                        }
+                    });
                 }
             });
         });
-    }
-
-    async function carregarConteudo(jsonPath, containerId, renderFunction, pageName) {
-        const container = document.getElementById(containerId);
-        if (!container) return;
-
-        const items = await fetchJson(jsonPath);
-
-        if (!items || items.length === 0) {
-            if (containerId !== 'gallery-section') {
-                container.innerHTML = `<p class="col-12 text-center lead text-muted mt-5">De momento, não há publicações nesta secção.</p>`;
-            }
-            return;
-        }
-
-        items.sort((a, b) => new Date(b.data_publicacao || b.date || 0) - new Date(a.data_publicacao || a.date || 0));
-        
-        const htmlContent = items.map(item => renderFunction(item, pageName, item.id)).join('');
-        container.innerHTML = htmlContent;
     }
 
     async function loadHomepageContent() {
@@ -346,12 +341,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById('contador-total').textContent = `${totalGeral}+`;
     }
 
+
     // --- CARGA INICIAL Y LLAMADAS A FUNCIONES ---
     carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'doações.html');
     carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'empregos.html');
     carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'serviços.html');
     carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderHabitacao, 'habitação.html');
-    loadBlogAndGallery();
+    carregarConteudo('/_dados/blog.json', 'posts-section', renderBlogPost, 'blog.html');
+    carregarConteudo('/_dados/galeria.json', 'gallery-section', renderGalleryItem, 'blog.html');
+
 
     updateImpactCounters();
     if (document.body.classList.contains('home')) {
@@ -364,10 +362,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         const searchInput = document.getElementById('searchInput');
         const locationInput = document.getElementById('locationInput');
         const noResults = document.getElementById('no-results');
-        const gridId = document.querySelector('.row[id$="-grid"]')?.id;
+        const gridId = document.querySelector('.row[id$="-grid"]').id;
         const grid = document.getElementById(gridId);
-
-        if (!grid) return;
 
         function filter() {
             const searchTerm = searchInput.value.toLowerCase();
