@@ -1,320 +1,404 @@
-<!DOCTYPE html>
-<html lang="pt-PT">
+document.addEventListener("DOMContentLoaded", async () => {
+    // --- GESTOR DE PRELOADER, SCROLL Y TEMA OSCURO ---
+    const preloader = document.getElementById("preloader");
+    if (preloader) {
+        window.addEventListener("load", () => preloader.classList.add("hidden"));
+        setTimeout(() => preloader.classList.add("hidden"), 1500);
+    }
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Blog PortugalApoia | Histórias de Solidariedade e Dicas Comunitárias</title>
-
-    <meta name="description"
-        content="Inspire-se no blog da PortugalApoia. Encontre histórias de sucesso, guias de voluntariado, dicas para emprego e artigos sobre o impacto da solidariedade em Portugal.">
-
-    <meta name="keywords"
-        content="blog solidariedade, voluntariado portugal, notícias comunidade, inclusão digital, causas sociais, histórias de sucesso">
-
-    <link rel="canonical" href="https://portugalapoia.com/blog.html">
-
-    <meta property="og:title" content="Blog PortugalApoia | Histórias de Solidariedade e Dicas Comunitárias">
-    <meta property="og:description"
-        content="Inspire-se com histórias de sucesso, guias de voluntariado e dicas sobre o impacto da solidariedade em Portugal.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://portugalapoia.com/blog.html">
-    <meta property="og:image" content="https://portugalapoia.com/images/img_portada.webp">
-
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Blog PortugalApoia | Histórias de Solidariedade e Dicas Comunitárias">
-    <meta name="twitter:description"
-        content="Inspire-se com histórias de sucesso, guias de voluntariado e dicas sobre o impacto da solidariedade em Portugal.">
-    <meta name="twitter:image" content="https://portugalapoia.com/images/img_portada.webp">
-
-    <link rel="apple-touch-icon" href="/images_pta/logofavicon.ico">
-    <link rel="icon" href="images_pta/logofavicon.ico" type="image/png">
-    <link rel="manifest" href="manifest.json">
-
-    <script>(function (w, d, s, l, i) {
-            w[l] = w[l] || []; w[l].push({
-                'gtm.start':
-                    new Date().getTime(), event: 'gtm.js'
-            }); var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-PQ2Q63GR');</script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3196299619563199"
-        crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" media="print"
-        onload="this.media='all'">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Roboto:wght@400;500&display=swap">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="avaliador-urbano-style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css">
-
-    <style>
-        .blog-nav {
-            background-color: #f8f9fa;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .blog-nav .nav-link {
-            color: #0A3D62;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .blog-nav .nav-link.active {
-            color: #F57C00;
-            border-bottom: 2px solid #F57C00;
-        }
-
-        .blog-post-card {
-            border: 1px solid #dee2e6;
-            border-radius: 8px;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .blog-post-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .blog-post-card .card-body {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .blog-post-card .card-text {
-            flex-grow: 1;
-        }
-
-        .blog-post-card .card-img-top {
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .full-content {
-            display: none;
-            margin-top: 1rem;
-        }
-
-        /* --- ESTILOS PARA VISTA EXPANDIDA (SOLO DESKTOP) --- */
-        @media (min-width: 992px) {
-            .blog-post-card.expanded {
-                flex-direction: row;
-                align-items: flex-start;
+    const scrollTopBtn = document.getElementById("scrollTopBtn");
+    if (scrollTopBtn) {
+        window.onscroll = () => {
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                scrollTopBtn.classList.add("visible");
+            } else {
+                scrollTopBtn.classList.remove("visible");
             }
+        };
+        scrollTopBtn.addEventListener("click", e => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    }
 
-            .blog-post-card.expanded .card-img-top {
-                width: 300px;
-                height: auto;
-                object-fit: contain;
-                margin-right: 1.5rem;
+    const themeToggle = document.getElementById("theme-toggle");
+    if (themeToggle) {
+        const body = document.body;
+        const setTheme = (theme) => {
+            if (theme === "dark") {
+                body.classList.add("dark-theme");
+                themeToggle.checked = true;
+            } else {
+                body.classList.remove("dark-theme");
+                themeToggle.checked = false;
             }
+        };
+        const savedTheme = localStorage.getItem("theme");
+        const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (savedTheme) { setTheme(savedTheme); } else if (prefersDark) { setTheme("dark"); }
+        themeToggle.addEventListener("change", () => {
+            const newTheme = themeToggle.checked ? "dark" : "light";
+            localStorage.setItem("theme", newTheme);
+            setTheme(newTheme);
+        });
+    }
 
-            .blog-post-card.expanded .card-body {
-                flex: 1;
+    // --- LÓGICA DE DATOS ---
+    async function fetchJson(url) {
+        try {
+            const response = await fetch(`${url}?t=${new Date().getTime()}`);
+            if (!response.ok) return [];
+            const data = await response.json();
+            const key = Object.keys(data)[0];
+            return Array.isArray(data[key]) ? data[key] : [];
+        } catch (error) {
+            console.error(`Erro ao processar JSON de ${url}:`, error);
+            return [];
+        }
+    }
+
+    async function carregarConteudo(jsonPath, containerId, renderFunction, pageName) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        const items = await fetchJson(jsonPath);
+
+        if (!items || items.length === 0) {
+            if (containerId !== 'gallery-section') {
+                container.innerHTML = `<p class="col-12 text-center lead text-muted mt-5">De momento, não há publicações nesta secção.</p>`;
             }
+            return;
         }
 
-        /* --- ESTILOS MEJORADOS PARA LA GALERÍA --- */
-        #gallery-section {
-            display: none;
-            /* Oculta por defecto */
+        items.sort((a, b) => new Date(b.data_publicacao || b.date || 0) - new Date(a.data_publicacao || a.date || 0));
+
+        const htmlContent = items.map(item => renderFunction(item, pageName, item.id)).join('');
+        container.innerHTML = htmlContent;
+
+        // ***** CÓDIGO AÑADIDO PARA EL SCHEMA *****
+        // Después de renderizar, añadimos los datos estructurados si es la página de empleos
+        if (pageName === 'empregos.html') {
+            items.forEach(item => {
+                const schema = {
+                    "@context": "https://schema.org/",
+                    "@type": "JobPosting",
+                    "title": item.titulo,
+                    "description": item.descricao,
+                    "datePosted": item.data_publicacao,
+                    "validThrough": item.data_vencimento || '',
+                    "employmentType": "FULL_TIME",
+                    "hiringOrganization": {
+                        "@type": "Organization",
+                        "name": "Empresa (Confidencial)" // El JSON no tiene nombre de empresa, ponemos un placeholder
+                    },
+                    "jobLocation": {
+                        "@type": "Place",
+                        "address": {
+                            "@type": "PostalAddress",
+                            "addressLocality": item.localizacao,
+                            "addressCountry": "PT"
+                        }
+                    }
+                };
+
+                const script = document.createElement('script');
+                script.type = 'application/ld+json';
+                script.textContent = JSON.stringify(schema);
+                document.head.appendChild(script);
+            });
         }
 
-        .gallery-item {
-            position: relative;
-            overflow: hidden;
-            border-radius: 8px;
-            aspect-ratio: 4 / 3;
-            /* Proporción para móviles */
+        // Ativar funcionalidades específicas da página após o carregamento
+        if (pageName === 'blog.html') {
+            setupBlogFunctionality();
         }
+    }
 
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s, filter 0.3s;
+    // --- FUNÇÕES DE RENDERIZAÇÃO ---
+    function formatarDatas(item) {
+        if (!item || !item.data_publicacao || !item.data_vencimento) {
+            return `<div class="date-info">ID: ${item.id || 'N/A'}</div>`;
         }
+        const dataPublicacao = new Date(item.data_publicacao);
+        const dataVencimento = new Date(item.data_vencimento);
+        const hoje = new Date();
+        hoje.setHours(0, 0, 0, 0);
+        const pubFormatada = dataPublicacao.toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        const vencFormatada = dataVencimento.toLocaleDateString('pt-PT', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        const isVencido = dataVencimento < hoje;
+        const classeVencido = isVencido ? 'vencido' : '';
+        const textoVencido = isVencido ? '(Vencido)' : '';
+        return `<div class="date-info">Publicado: ${pubFormatada} <br> <span class="${classeVencido}">Vencimento: ${vencFormatada} ${textoVencido}</span></div>`;
+    }
 
-        .gallery-item:hover img {
-            transform: scale(1.05);
-            filter: brightness(1.1);
-        }
+    function renderBlogPost(post) {
+        const postDate = new Date(post.date);
+        const formattedDate = postDate.toLocaleDateString('pt-PT', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
 
-        .gallery-item .caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            color: white;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .gallery-item .caption h5 {
-            margin: 0;
-            font-size: 1rem;
-            font-weight: bold;
-        }
-
-        .gallery-item .caption p {
-            margin: 0;
-            font-size: 0.8rem;
-        }
-
-        /* Estilos para galería en Desktops */
-        @media (min-width: 768px) {
-            .gallery-item {
-                aspect-ratio: 16 / 9;
-                /* Proporción panorámica para pantallas grandes */
-            }
-
-            .gallery-item .caption h5 {
-                font-size: 1.2rem;
-            }
-
-            .gallery-item .caption p {
-                font-size: 0.9rem;
-            }
-        }
-    </style>
-</head>
-
-<body>
-    <div id="preloader"><img src="images_pta/logocuadrado.jpg" alt="A carregar..." class="spinner"></div>
-
-    <header class="main-header">
-        <nav class="navbar navbar-expand-lg">
-            <div class="container">
-                <a class="navbar-brand logo" href="index.html" style="display: inline-flex; align-items: center;">
-                    <img src="images_pta/logocuadrado.jpg" alt="Logo PortugalApoia"
-                        style="height: 35px; margin-right: 10px;">
-                    <span class="brand-text-responsive">PortugalApoia</span>
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="main-nav">
-                    <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a class="nav-link" href="sobre-nos.html">Sobre Nós</a></li>
-                    <li class="nav-item"><a class="nav-link" href="doações.html">Doações</a></li>
-                    <li class="nav-item"><a class="nav-link" href="empregos.html">Emprego</a></li>
-                    <li class="nav-item"><a class="nav-link" href="serviços.html">Serviços</a></li>
-                    <li class="nav-item dropdown active"><a class="nav-link" href="habitação.html">Habitação</a></li>
-                    <li class="nav-item">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownWebApp" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Apps
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownWebApp">
-                            <a class="dropdown-item" href="app_evaluadorsustentable.html">Avaliador Sustentável
-                                PRO</a>
-                            <a class="dropdown-item" href="app_avaliadorurbano.html">Avaliador de Imóveis
-                                Urbanos</a>
+        return `
+            <div class="col-lg-4 col-md-6 mb-4 blog-post-item" data-category="${post.category}">
+                <div class="blog-post-card">
+                    <img class="card-img-top" src="${post.image}" alt="${post.title}" loading="lazy">
+                    <div class="card-body">
+                        <h5 class="card-title">${post.title}</h5>
+                        <p class="text-muted small">Publicado em: ${formattedDate}</p>
+                        <p class="card-text summary-content">${post.summary}</p>
+                        <div class="full-content" style="display: none;">
+                            <p>${post.body.replace(/\n/g, '</p><p>')}</p>
                         </div>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-                    <li class="nav-item"><a class="nav-link btn btn-primary publish-btn"
-                            href="publicar.html">Publicar</a></li>
-                </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-
-    <main>
-        <section class="page-header page-header-blog text-center text-white">
-            <div class="container">
-                <h1 class="page-title">Blog e Notícias</h1>
-                <p class="lead">Artigos, histórias de sucesso e notícias sobre a nossa comunidade.</p>
-            </div>
-        </section>
-
-        <nav class="nav blog-nav justify-content-center">
-            <a class="nav-link active" data-toggle="tab" data-target="all">Todos</a>
-            <a class="nav-link" data-toggle="tab" data-target="emprego">Emprego</a>
-            <a class="nav-link" data-toggle="tab" data-target="habitacao">Habitação</a>
-            <a class="nav-link" data-toggle="tab" data-target="saude">Saúde</a>
-            <a class="nav-link" data-toggle="tab" data-target="turismo">Turismo</a>
-            <a class="nav-link" data-toggle="tab" data-target="educacao">Educação</a>
-            <a class="nav-link" data-toggle="tab" data-target="galeria">Galeria</a>
-        </nav>
-
-        <section class="py-5">
-            <div class="container">
-                <div id="blog-content">
-                    <div id="posts-section" class="row">
-                        </div>
-                    <div id="gallery-section" class="row">
-                        </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <button id="scrollTopBtn" title="Voltar ao topo"><i class="fas fa-arrow-up"></i></button>
-
-    <footer class="main-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <img src="images_pta/logocuadrado.jpg" alt="Logo de PortugalApoia"
-                        style="height: 45px; margin-bottom: 15px;">
-                    <h4>PortugalApoia</h4>
-                    <p>A conectar a generosidade à necessidade.</p>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <h4>Navegação</h4>
-                    <ul class="list-unstyled">
-                        <li><a href="doações.html">Doações</a></li>
-                        <li><a href="empregos.html">Emprego</a></li>
-                        <li><a href="serviços.html">Serviços</a></li>
-                        <li><a href="habitação.html">Habitação</a></li>
-                        <li><a href="blog.html">Blog</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <h4>Siga-nos</h4>
-                    <div class="social-links">
-                        <a href="https://www.instagram.com/portugalapoia" target="_blank" rel="noopener noreferrer"
-                            aria-label="Instagram" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.facebook.com/share/14GXdGKfEgs/?mibextid=wwXIfr" target="_blank"
-                            rel="noopener noreferrer" aria-label="Facebook" class="social-link"><i
-                                class="fab fa-facebook-f"></i></a>
-                        <a href="https://www.linkedin.com/company/fidersucre/" target="_blank" rel="noopener noreferrer"
-                            aria-label="LinkedIn" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter"
-                            class="social-link"><i class="fab fa-twitter"></i></a>
+                        <button class="btn btn-outline-primary read-more-btn mt-auto">Ler Mais</button>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6 mb-4">
-                    <h4>Contacto</h4>
-                    <p>Um projeto desenvolvido e patrocinado pela <a href="mailto:hbo.consulting.pt@gmail.com">HBO
-                            Consulting</a>.</p>
+            </div>
+        `;
+    }
+
+    function renderShareButtons(item, page) {
+        const url = `https://portugalapoia.com/${page}#${item.id}`;
+        const text = `Vi este anúncio em PortugalApoia e lembrei-me de ti: "${item.titulo}"`;
+        const encodedUrl = encodeURIComponent(url);
+        const encodedText = encodeURIComponent(text);
+        return `<div class="share-buttons"><small class="share-label">Partilhar:</small><a href="https://api.whatsapp.com/send?text=${encodedText}%20${encodedUrl}" target="_blank" rel="noopener noreferrer" title="Partilhar no WhatsApp" class="share-btn whatsapp"><i class="fab fa-whatsapp"></i></a><a href="https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}" target="_blank" rel="noopener noreferrer" title="Partilhar no Facebook" class="share-btn facebook"><i class="fab fa-facebook-f"></i></a></div>`;
+    }
+
+    function renderGalleryItem(item) {
+        const itemDate = new Date(item.date);
+        const formattedDate = itemDate.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' });
+        return `
+            <div class="col-lg-6 col-md-12 mb-4">
+                <div class="gallery-item">
+                    <img src="${item.image}" alt="${item.title}">
+                    <div class="caption">
+                        <h5>${item.title}</h5>
+                        <p>${item.caption}</p>
+                        <small class="text-white-50">${formattedDate}</small>
+                    </div>
                 </div>
             </div>
-            <div class="footer-bottom text-center pt-3 mt-3">
-                <p>&copy; 2025 PortugalApoia.com | <a href="politica-privacidade.html">Política de Privacidade</a> | <a
-                        href="termos-de-servico.html">Termos de Serviço</a></p>
+        `;
+    }
+
+    function renderEmprego(item, pageName, idAnuncio) {
+        return `
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">${item.titulo}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">${item.localizacao}</h6>
+                    <p class="card-text">${item.descricao}</p>
+                </div>
+                <div class="card-footer">
+                    ${formatarDatas(item)}
+                    ${renderShareButtons(item, pageName)}
+                </div>
             </div>
         </div>
-    </footer>
+        `;
+    }
+    function renderDoacao(pedido, pageName) {
+        const imagemHTML = pedido.imagem ? `<img src="${pedido.imagem}" class="card-img-top" alt="${pedido.titulo}">` : `<div class="image-placeholder">${pedido.titulo}</div>`;
+        return `
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                ${imagemHTML}
+                <div class="card-body">
+                    <h5 class="card-title">${pedido.titulo}</h5>
+                    <p class="card-text">${pedido.descricao}</p>
+                </div>
+                <div class="card-footer">
+                    ${formatarDatas(pedido)}
+                    ${renderShareButtons(pedido, pageName)}
+                </div>
+            </div>
+        </div>
+        `;
+    }
+    function renderServico(item, pageName) {
+        const logoHTML = item.logo_empresa ? `<div class="service-card-logo"><img src="${item.logo_empresa}" alt="Logo"></div>` : '';
+        const precoHTML = item.valor_servico ? `<div class="card-price">${item.valor_servico}</div>` : '';
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
-    <script src="script.js" defer></script>
+        return `
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                ${precoHTML}
+                <div class="card-body">
+                    ${logoHTML}
+                    <h5 class="card-title">${item.titulo}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">${item.localizacao}</h6>
+                    <p class="card-text">${item.descricao}</p>
+                </div>
+                <div class="card-footer">
+                    ${formatarDatas(item)}
+                    ${renderShareButtons(item, pageName)}
+                </div>
+            </div>
+        </div>
+        `;
+    }
+    function renderHabitacao(anuncio, pageName) {
+        const imagemHTML = anuncio.imagens && anuncio.imagens.length > 0 && anuncio.imagens[0].imagem_url ? `<img class="card-img-top" src="${anuncio.imagens[0].imagem_url}" alt="${anuncio.titulo}" loading="lazy">` : `<div class="image-placeholder">${anuncio.titulo}</div>`;
+        const precoHTML = anuncio.valor_anuncio ? `<div class="card-price">${anuncio.valor_anuncio}</div>` : '';
 
-</body>
+        return `
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                ${imagemHTML}
+                ${precoHTML}
+                <div class="card-body">
+                    <h5 class="card-title">${anuncio.titulo}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">${anuncio.localizacao}</h6>
+                    <p class="card-text">${anuncio.descricao}</p>
+                </div>
+                <div class="card-footer">
+                    ${formatarDatas(anuncio)}
+                    ${renderShareButtons(anuncio, pageName)}
+                </div>
+            </div>
+        </div>
+        `;
+    }
 
-</html>
+    // --- FUNCIONALIDADES ESPECÍFICAS ---
+
+    function setupBlogFunctionality() {
+        // Lógica dos botões "Ler Mais"
+        const readMoreButtons = document.querySelectorAll('.read-more-btn');
+        readMoreButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const card = e.target.closest('.blog-post-card');
+                const summary = card.querySelector('.summary-content');
+                const fullContent = card.querySelector('.full-content');
+
+                summary.style.display = 'none';
+                fullContent.style.display = 'block';
+                e.target.style.display = 'none';
+            });
+        });
+
+        // Lógica da Navegação por Tabs (Categorias)
+        const navLinks = document.querySelectorAll('.blog-nav .nav-link');
+        const postsSection = document.getElementById('posts-section');
+        const gallerySection = document.getElementById('gallery-section');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                // Atualiza a classe 'active'
+                navLinks.forEach(nav => nav.classList.remove('active'));
+                e.target.classList.add('active');
+
+                const targetCategory = e.target.getAttribute('data-target');
+
+                if (targetCategory === 'galeria') {
+                    postsSection.style.display = 'none';
+                    gallerySection.style.display = 'flex'; // Usamos flex por ser 'row'
+                } else {
+                    gallerySection.style.display = 'none';
+                    postsSection.style.display = 'flex';
+
+                    const allPosts = document.querySelectorAll('.blog-post-item');
+                    allPosts.forEach(post => {
+                        if (targetCategory === 'all' || post.dataset.category === targetCategory) {
+                            post.style.display = 'block';
+                        } else {
+                            post.style.display = 'none';
+                        }
+                    });
+                }
+            });
+        });
+    }
+
+    async function loadHomepageContent() {
+        const homeData = await fetchJson('/_dados/homepage.json');
+        if (homeData) {
+            document.getElementById('hero-title').textContent = homeData.hero_title || "Bem-vindo ao Portugal Apoia";
+            document.getElementById('hero-subtitle').textContent = homeData.hero_subtitle || "A sua plataforma de apoio comunitário para encontrar e oferecer ajuda.";
+            document.getElementById('doacoes-text').textContent = homeData.impact_counters.doacoes_text || "Doações Realizadas";
+            document.getElementById('empregos-text').textContent = homeData.impact_counters.emprego_text || "Empregos Publicados";
+            document.getElementById('total-text').textContent = homeData.impact_counters.total_text || "Total de Anúncios";
+        }
+    }
+
+    async function updateImpactCounters() {
+        const doacoes = await fetchJson('/_dados/doacoes.json');
+        const empregos = await fetchJson('/_dados/empregos.json');
+        const servicos = await fetchJson('/_dados/servicos.json');
+        const habitacao = await fetchJson('/_dados/habitacao.json');
+
+        const totalDoacoes = doacoes.length;
+        const totalEmpregos = empregos.length;
+        const totalServicos = servicos.length;
+        const totalHabitacao = habitacao.length;
+        const totalGeral = totalDoacoes + totalEmpregos + totalServicos + totalHabitacao;
+
+        document.getElementById('contador-doacoes').textContent = `${totalDoacoes}+`;
+        document.getElementById('contador-empregos').textContent = `${totalEmpregos}+`;
+        document.getElementById('contador-total').textContent = `${totalGeral}+`;
+    }
+
+
+    // --- CARGA INICIAL Y LLAMADAS A FUNCIONES ---
+    carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'doações.html');
+    carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'empregos.html');
+    carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'serviços.html');
+    carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderHabitacao, 'habitação.html');
+    carregarConteudo('/_dados/blog.json', 'posts-section', renderBlogPost, 'blog.html');
+    carregarConteudo('/_dados/galeria.json', 'gallery-section', renderGalleryItem, 'blog.html');
+
+
+    updateImpactCounters();
+    if (document.body.classList.contains('home')) {
+        loadHomepageContent();
+    }
+
+    function setupSearch() {
+        const searchButton = document.getElementById('searchButton');
+        const clearButton = document.getElementById('clearButton');
+        const searchInput = document.getElementById('searchInput');
+        const locationInput = document.getElementById('locationInput');
+        const noResults = document.getElementById('no-results');
+        const gridId = document.querySelector('.row[id$="-grid"]').id;
+        const grid = document.getElementById(gridId);
+
+        function filter() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const locationTerm = locationInput.value.toLowerCase();
+            const items = grid.querySelectorAll('.col-md-4');
+            let found = false;
+
+            items.forEach(item => {
+                const title = item.querySelector('.card-title').textContent.toLowerCase();
+                const location = item.querySelector('.card-subtitle').textContent.toLowerCase();
+                const description = item.querySelector('.card-text').textContent.toLowerCase();
+
+                const textMatch = title.includes(searchTerm) || description.includes(searchTerm);
+                const locationMatch = location.includes(locationTerm);
+
+                if (textMatch && locationMatch) {
+                    item.style.display = '';
+                    found = true;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            noResults.style.display = found ? 'none' : 'block';
+        }
+
+        function clear() {
+            searchInput.value = '';
+            locationInput.value = '';
+            filter();
+        }
+
+        if (searchButton) searchButton.addEventListener('click', filter);
+        if (clearButton) clearButton.addEventListener('click', clear);
+    }
+    setupSearch();
+});
