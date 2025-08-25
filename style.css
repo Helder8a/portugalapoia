@@ -277,7 +277,6 @@ h6 {
 
 .card:hover {
     transform: translateY(-8px) scale(1.02);
-    /* <-- AÑADE scale(1.02) */
     box-shadow: 0 12px 24px rgba(0, 0, 0, .15) !important;
     border-color: var(--color-accent);
 }
@@ -1028,137 +1027,84 @@ body:not(.dark-theme) .slider.round .fa-sun {
     }
 }
 
-/* Asegura que el texto del logo se encoja en móviles. */
 .brand-text-responsive {
-    /* Define un tamaño de fuente fluido entre 0.8rem (mínimo) y 1.25rem (máximo) */
     font-size: clamp(0.8rem, 3.5vw, 1.25rem) !important;
     font-weight: 700;
     color: var(--color-primary);
-    /* Usa el color primario que ya tienes definido */
     white-space: nowrap;
-    /* Evita que el nombre se parta en dos líneas */
     line-height: 1;
-    /* Ayuda a la alineación vertical */
     transition: font-size 0.2s ease-in-out;
-    /* Una transición suave */
 }
 
-/* Fuerza el color del logo a blanco en modo oscuro */
 body.dark-theme .brand-text-responsive {
     color: #fff !important;
 }
 
 
-/* ======================================================= */
-/* ARCHIVO CSS: estilos.css                              */
-/* Contiene la clase reutilizable para la marca de agua  */
-/* ======================================================= */
-
-/* * Clase reutilizable para añadir una marca de agua a cualquier elemento.
- * El elemento que lleve esta clase debe tener un color de fondo definido.
-*/
 .con-marca-de-agua {
     position: relative;
-    /* Obligatorio para que la marca de agua funcione */
     overflow: hidden;
-    /* Recomendado para evitar desbordamientos */
 }
 
-/*
- * Usamos el pseudo-elemento ::before para generar la marca de agua
- * desde CSS, sin necesidad de añadir una <img> en el HTML.
-*/
 .con-marca-de-agua::before {
     content: '';
-    /* Requerido para que se muestre */
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-
-    /* ----- CONFIGURACIÓN DE TU LOGO ----- */
-    /* IMPORTANTE: Coloca la URL de tu logo aquí */
     background-image: url('images_pta/logocuadrado.jpg');
     background-repeat: no-repeat;
     background-position: center;
-    /* ------------------------------------ */
-
-    /* ----- EFECTO Y TAMAÑO RESPONSIVO ----- */
     opacity: 0.06;
-    /* La transparencia de la marca de agua */
     background-size: 280px;
-    /* Tamaño inicial para móviles */
     transition: background-size 0.3s ease;
-    /* Transición suave */
     z-index: 1;
-    /* Lo pone en la capa de atrás */
     pointer-events: none;
-    /* Evita que interfiera con los clics */
 }
 
-/*
- * Esta regla es importante: asegura que cualquier contenido
- * DIRECTO dentro del elemento con la marca de agua, se ponga por encima.
-*/
 .con-marca-de-agua>* {
     position: relative;
     z-index: 2;
 }
 
-/* ----- MEDIA QUERY PARA HACERLO RESPONSIVO ----- */
 @media (min-width: 768px) {
     .con-marca-de-agua::before {
-        /* Hacemos la marca de agua más grande en pantallas de tablet o escritorio */
         background-size: 450px;
     }
 }
 
-/* Corrección específica para dispositivos móviles */
 @media (max-width: 767.98px) {
     .brand-text-responsive {
         font-size: 1.0rem !important;
     }
 }
 
-/* Estilos para los iconos de redes sociales en el footer */
 .social-links a i {
-    /* <-- Le decimos que afecte directamente al icono <i> */
     font-size: 22px;
-    /* Mantenemos tu tamaño perfecto */
     transition: color 0.3s ease-in-out;
 }
 
 .social-links a {
-    /* Mantenemos el espaciado en el enlace */
     margin-right: 18px;
     color: #ccc;
 }
 
 .social-links a:last-child {
     margin-right: 0;
-    /* Elimina el margen del último icono */
 }
 
 .social-links a:hover {
     color: #fff;
-    /* Color del icono al pasar el ratón */
     text-decoration: none;
 }
 
-/* PALETA DE COLORES ÚNICA Y CORREGIDA */
 :root {
     --color-primary: #0A3D62;
-    /* Azul Oscuro */
     --color-secondary: #2196F3;
-    /* Azul Medio */
     --color-accent: #F57C00;
-    /* Naranja Vibrante y Accesible */
     --color-donation: #F57C00;
-    /* Naranja Vibrante y Accesible */
     --color-success: #28A745;
-    /* Verde */
-    /* Verde */
     --font-headings: 'Inter', sans-serif;
     --font-body: 'Roboto', sans-serif;
     --border-radius: 8px;
@@ -1178,66 +1124,45 @@ body.dark-theme {
     --color-border: #444;
     --shadow: 0 5px 15px rgba(0, 0, 0, .2);
     --color-donation: #FDBE33;
-    /* Mantenemos el amarillo en tema oscuro */
 }
 
-/* --- ESTILOS MEJORADOS PARA TARJETAS DE SERVICIOS --- */
-
-/* Contenedor para los detalles de contacto en texto */
 .contact-details {
     margin-bottom: 1rem;
-    /* Espacio entre el texto y los iconos */
     font-size: 0.9rem;
-    /* Tamaño de fuente para el texto de contacto */
 }
 
-/* Párrafos dentro de los detalles de contacto */
 .contact-details .contact-text {
     margin-bottom: 0.5rem;
-    /* Espacio entre número y email */
     display: flex;
     align-items: center;
 }
 
-/* Iconos junto al texto de contacto */
 .contact-details .contact-text i {
     color: var(--color-accent);
-    /* Usa el color de acento de tu web */
     width: 20px;
-    /* Alineación de los iconos */
 }
 
-/* Contenedor principal de los iconos grandes */
 .card-contact-icons {
     text-align: right;
-    /* Alinea los iconos a la derecha */
     margin-top: -10px;
-    /* Ajuste para acercar los iconos a la descripción */
 }
 
-/* Enlaces de los iconos (WhatsApp y Email) */
 .card-contact-icons a.contact-icon {
     display: inline-block;
     margin-left: 15px;
-    /* Aumenta la separación entre iconos */
     color: var(--color-secondary);
     transition: transform 0.2s ease, color 0.2s ease;
 }
 
-/* Iconos dentro de los enlaces */
 .card-contact-icons a.contact-icon i {
     font-size: 2rem;
-    /* Aumenta significativamente el tamaño de los iconos */
 }
 
-/* Efecto hover para los iconos */
 .card-contact-icons a.contact-icon:hover {
     transform: scale(1.15);
-    /* Agrandar al pasar el ratón */
     color: var(--color-primary);
 }
 
-/* Estilos específicos para el logo en la tarjeta de servicio */
 .service-card-logo {
     width: 80px;
     height: 80px;
@@ -1260,7 +1185,6 @@ body.dark-theme {
     object-fit: contain;
 }
 
-/* Estilo para el precio */
 .card-price {
     position: absolute;
     top: 15px;
@@ -1273,118 +1197,84 @@ body.dark-theme {
     box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Estilo para anuncios vencidos */
 .card-footer .vencido {
     color: #DC3545 !important;
-    /* Rojo de Bootstrap */
     font-weight: bold;
 }
-
-/* --- ESTILOS PARA LOS BOTONES DE PARTILHAR --- */
 
 .share-buttons {
     display: flex;
     align-items: center;
     gap: 8px;
-    /* Espacio entre el texto y los iconos */
 }
 
 .share-label {
     font-size: 0.8rem;
     color: #6c757d;
-    /* Color de texto secundario */
     margin-right: 4px;
     white-space: nowrap;
-    /* Evita que el texto se parta en dos líneas */
 }
 
 .share-btn {
     font-size: 1.2rem;
-    /* Tamaño de los iconos */
     color: #6c757d;
     transition: color 0.3s, transform 0.3s;
 }
 
 .share-btn:hover {
     transform: scale(1.2);
-    /* Efecto de zoom al pasar el ratón */
 }
 
 .share-btn.whatsapp:hover {
     color: #25D366;
-    /* Cor do WhatsApp */
 }
 
 .share-btn.facebook:hover {
     color: #1877F2;
-    /* Cor do Facebook */
 }
 
-/* Estilo para el modo oscuro */
 body.dark-theme .share-label,
 body.dark-theme .share-btn {
     color: #aaa;
 }
 
-/* --- ESTILOS MEJORADOS PARA ICONOS DE CONTACTO Y PARTILHA --- */
-
-/* Contenedor principal de los iconos de contacto en la tarjeta de servicio */
 .card-contact-icons {
     display: flex;
-    /* Usa flexbox para alinear fácilmente */
     justify-content: flex-end;
-    /* Alinea los ítems a la derecha */
     align-items: center;
-    /* Centra verticalmente */
     gap: 10px;
-    /* Espacio entre el texto y los iconos */
 }
 
-/* Etiqueta de texto "Contacto:" */
 .contact-label {
     font-size: 0.8rem;
     color: var(--color-text-muted);
-    /* Color de texto secundario */
     font-weight: bold;
 }
 
-/* Enlaces de los iconos (WhatsApp y Email) */
 .card-contact-icons a.contact-icon {
     display: inline-block;
     color: var(--color-secondary);
     transition: transform 0.2s ease, color 0.2s ease;
 }
 
-/* Iconos dentro de los enlaces */
 .card-contact-icons a.contact-icon i {
     font-size: 1.8rem;
-    /* Tamaño de los iconos de contacto */
 }
 
-/* Efecto hover para los iconos de contacto */
 .card-contact-icons a.contact-icon:hover {
     transform: scale(1.15);
     color: var(--color-primary);
 }
 
-/* --- AÑADE ESTAS NUEVAS REGLAS AL FINAL DE TU FICHERO style.css --- */
-
-/* Estilo para el número en la esquina de la tarjeta */
-
-/* Estilo para el texto de la fecha de publicación y vencimiento */
 .date-info {
     font-size: 0.8rem;
     color: #6c757d;
 }
 
-/* Estilo para el texto de vencimiento cuando el anuncio está caducado */
 .date-info .vencido {
     color: #DC3545 !important;
-    /* Rojo de Bootstrap */
     font-weight: bold;
 }
-
-/* --- AÑADE O SUSTITUYE ESTA REGLA EN TU FICHERO style.css --- */
 
 .card-number {
     position: absolute;
@@ -1393,19 +1283,15 @@ body.dark-theme .share-btn {
     background-color: rgba(10, 61, 98, 0.85);
     color: #fff;
     min-width: 35px;
-    /* Usa min-width para que se adapte al contenido */
     height: 35px;
     padding: 0 8px;
-    /* Añade padding horizontal */
     border-radius: 20px;
-    /* Forma de píldora para que se vea bien con texto */
     display: flex;
     justify-content: center;
     align-items: center;
     font-weight: bold;
     font-family: var(--font-headings);
     font-size: 0.9rem;
-    /* Fuente ligeramente más pequeña para IDs largos */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     z-index: 2;
 }
@@ -1414,19 +1300,16 @@ body.dark-theme .share-btn {
     position: relative;
     overflow: hidden;
     border-radius: 8px;
-    /* Mantenemos la altura consistente con una relación de aspecto */
     aspect-ratio: 4 / 3;
 }
 
 .gallery-item img {
     width: 100%;
     height: 100%;
-    /* 'object-fit: cover' es la clave para rellenar el espacio sin deformar */
     object-fit: cover;
     transition: transform 0.3s, filter 0.3s;
 }
 
-/* Opcional: Para asegurar que el contenedor de la columna se comporte correctamente */
 .col-lg-4.col-md-6.mb-4 {
     display: flex;
     justify-content: center;
@@ -1442,16 +1325,12 @@ body.dark-theme .blog-post-card .card-body .small {
     color: #aaa;
 }
 
-/* --- ESTILOS PROFISSIONAIS PARA A GALERIA --- */
-
 .gallery-item {
     position: relative;
     overflow: hidden;
     border-radius: 12px;
-    /* Bordas mais arredondadas */
     aspect-ratio: 16 / 10;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    /* Sombra mais pronunciada */
 }
 
 .gallery-item img {
@@ -1463,7 +1342,6 @@ body.dark-theme .blog-post-card .card-body .small {
 
 .gallery-item:hover img {
     transform: scale(1.08);
-    /* Efeito de zoom mais notável */
     filter: brightness(0.9);
 }
 
@@ -1473,19 +1351,16 @@ body.dark-theme .blog-post-card .card-body .small {
     left: 0;
     width: 100%;
     background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0));
-    /* Gradiente mais escuro */
     color: white;
     padding: 25px 20px 20px;
     text-align: left;
     transform: translateY(100%);
-    /* Começa escondida */
     transition: transform 0.4s ease-in-out;
     box-sizing: border-box;
 }
 
 .gallery-item:hover .caption {
     transform: translateY(0);
-    /* Mostra ao passar o rato */
 }
 
 .gallery-item .caption h5 {
@@ -1506,11 +1381,6 @@ body.dark-theme .blog-post-card .card-body .small {
     opacity: 0.8;
 }
 
-/* =================================================== */
-/* --- ESTILOS PARA A PÁGINA 'SOBRE NÓS' --- */
-/* =================================================== */
-
-/* --- Bloco 1: Hero Section --- */
 .hero-sobre {
     position: relative;
     background: url('images/imgendexportugalapioa.avif') center center/cover no-repeat;
@@ -1534,7 +1404,6 @@ body.dark-theme .blog-post-card .card-body .small {
     z-index: 2;
 }
 
-/* --- Bloco 2: Missão --- */
 .mission-block .section-title {
     text-align: left;
 }
@@ -1549,7 +1418,6 @@ body.dark-theme .blog-post-card .card-body .small {
     opacity: 0.1;
 }
 
-/* --- Bloco 3: Pilares/Valores --- */
 .pillars-section {
     background-color: var(--color-background-light);
 }
@@ -1572,7 +1440,6 @@ body.dark-theme .blog-post-card .card-body .small {
     margin-bottom: 1rem;
 }
 
-/* --- Bloco 4: História --- */
 .history-block .section-title {
     text-align: left;
 }
@@ -1593,7 +1460,6 @@ body.dark-theme .blog-post-card .card-body .small {
     color: #6c757d;
 }
 
-/* --- Bloco 5: Call to Action --- */
 .cta-sobre {
     background-color: var(--color-primary);
 }
@@ -1603,87 +1469,21 @@ body.dark-theme .blog-post-card .card-body .small {
     font-size: 2.2rem;
 }
 
-/* --- Correção de Cor para o Header da Página Sobre Nós --- */
-
 .hero-sobre .page-title {
-    color: var(--color-donation); /* Aplica a cor amarela/laranja do tema */
+    color: var(--color-donation);
 }
 
 .hero-sobre .lead {
-    color: #fff; /* Garante que o subtítulo permaneça branco */
+    color: #fff;
 }
 
 /* ==========================================================================
-   CORRECCIÓN PARA LA CUADRÍCULA DEL BLOG
+   SOLUCIÓN FINAL Y DEFINITIVA PARA LA CUADRÍCULA DEL BLOG
    ========================================================================== */
 @media (min-width: 768px) {
-    .card-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 20px;
-    }
-}
-
-/* ==========================================================================
-   Botón Cargar Más
-   ========================================================================== */
-
-#load-more-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 20px 0;
-}
-
-.cta-button {
-    background-color: #0044cc; /* Color principal de tu sitio */
-    color: white;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    display: none; /* Oculto por defecto, se mostrará con JS si es necesario */
-}
-
-.cta-button:hover {
-    background-color: #0055e6; /* Un tono más claro para el hover */
-}
-
-.cta-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
-/* ==========================================================================
-   Botón Cargar Más
-   ========================================================================== */
-
-#load-more-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 20px 0;
-}
-
-.cta-button {
-    background-color: #0044cc; /* Color principal de tu sitio */
-    color: white;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    display: none; /* Oculto por defecto, se mostrará con JS si es necesario */
-}
-
-.cta-button:hover {
-    background-color: #0055e6; /* Un tono más claro para el hover */
-}
-
-.cta-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+  #blog-posts.card-container {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
+    gap: 20px !important;
+  }
 }
