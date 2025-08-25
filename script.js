@@ -263,7 +263,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const postsSection = document.getElementById('posts-section');
         const gallerySection = document.getElementById('gallery-section');
         const loadMoreContainer = document.getElementById('load-more-container');
-
+        
         // Lógica para mostrar/esconder o conteúdo completo
         postsSection.addEventListener('click', (e) => {
             if (e.target.classList.contains('read-more-btn')) {
@@ -315,7 +315,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         items.sort((a, b) => new Date(b.data_publicacao || b.date || 0) - new Date(a.data_publicacao || a.date || 0));
-
+        
         const htmlContent = items.map(item => renderFunction(item, pageName, item.id)).join('');
         container.innerHTML = htmlContent;
     }
