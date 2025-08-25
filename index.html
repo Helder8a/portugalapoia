@@ -1,264 +1,450 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-PT">
 
 <head>
-    <meta charset="utf-8">
-    <title>PortugalApoia | Doações, Emprego e Ajuda Comunitária</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="plataforma solidária, doações, emprego, serviços, habitação, portugal" name="keywords">
-    <meta content="Plataforma solidária em Portugal para publicar e encontrar anúncios de doações de artigos, vagas de emprego, serviços locais e ofertas de habitação." name="description">
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-PQ2Q63GR');</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3196299619563199"
+        crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PortugalApoia | Doações, Emprego e Ajuda Comunitária em Portugal</title>
+    <meta name="description"
+        content="Plataforma solidária em Portugal para publicar e encontrar anúncios de doações de artigos, vagas de emprego, serviços locais e ofertas de habitação. Junte-se à nossa comunidade e ajude.">
+    <meta name="keywords"
+        content="ajuda comunitária, doações Portugal, emprego Portugal, serviços locais, habitação social, voluntariado, solidariedade">
+    <meta name="robots" content="index, follow">
 
-    <link href="img/favicon.ico" rel="icon">
+    <meta property="og:title" content="PortugalApoia | A comunidade que nos une.">
+    <meta property="og:description"
+        content="Plataforma solidária para doações, emprego, serviços e habitação em Portugal. Encontre ajuda ou ofereça a sua.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://portugalapoia.com/index.html">
+    <meta property="og:image" content="https://portugalapoia.com/images/img_portada.webp">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap" rel="stylesheet">
-    
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PortugalApoia | A comunidade que nos une.">
+    <meta name="twitter:description"
+        content="Plataforma solidária para doações, emprego, serviços e habitação em Portugal. Encontre ajuda ou ofereça a sua.">
+    <meta name="twitter:image" content="https://portugalapoia.com/images/img_portada.webp">
 
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="canonical" href="https://portugalapoia.com/index.html">
 
-    <link href="css/style.css" rel="stylesheet">
+    <link rel="apple-touch-icon" href="images_pta/logofavicon.ico">
+    <link rel="icon" href="images_pta/logofavicon.ico" type="image/png">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" media="print"
+        onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500&display=swap">
+    </noscript>
+
+    <link rel="stylesheet" href="style.css?v=9">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    </noscript>
+    <link rel="stylesheet" href="avaliador-urbano-style.css" media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="avaliador-urbano-style.css">
+
+    </noscript>
+
+    <meta name="theme-color" content="#0A3D62">
+
+    <style>
+        /* --- Correção Específica para o Título do Hero --- */
+        #hero .hero-title {
+            color: #fff !important;
+        }
+
+        /* --- Estilos para o Banner e Modal de Cookies --- */
+        .cpra-font {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        #cpra-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #2c3e50;
+            color: white;
+            padding: 16px;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.4);
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            z-index: 9998;
+            flex-wrap: wrap;
+        }
+
+        #cpra-banner p {
+            margin: 0;
+            flex-grow: 1;
+            min-width: 100%;
+            text-align: center;
+        }
+
+        #cpra-banner .cpra-banner-buttons {
+            display: flex;
+            gap: 12px;
+            flex-shrink: 0;
+            width: 100%;
+            justify-content: center;
+        }
+
+        #cpra-banner button {
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+            flex-grow: 1;
+        }
+
+        #cpra-banner #accept-cookies {
+            background-color: #27ae60;
+            color: white;
+        }
+
+        #cpra-banner #accept-cookies:hover {
+            background-color: #2ecc71;
+        }
+
+        #cpra-banner #manage-prefs {
+            background-color: #ecf0f1;
+            color: #2c3e50;
+        }
+
+        #cpra-banner #manage-prefs:hover {
+            background-color: #bdc3c7;
+        }
+
+        @media (min-width: 768px) {
+            #cpra-banner {
+                flex-wrap: nowrap;
+                padding: 16px 24px;
+            }
+
+            #cpra-banner p {
+                min-width: auto;
+                text-align: left;
+            }
+
+            #cpra-banner .cpra-banner-buttons {
+                width: auto;
+            }
+
+            #cpra-banner button {
+                flex-grow: 0;
+            }
+        }
+
+        #cpra-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        #cpra-modal-overlay.visible {
+            display: flex;
+        }
+
+        #cpra-modal-content {
+            background: white;
+            padding: 24px 32px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 550px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            color: #333;
+        }
+
+        #cpra-close-button {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #7f8c8d;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        #cpra-close-button:hover {
+            color: #34495e;
+        }
+
+        #cpra-modal-content h2 {
+            color: #34495e;
+        }
+
+        #cpra-modal-content a {
+            color: #3498db;
+        }
+
+        .cpra-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        #save-prefs {
+            background-color: #3498db;
+            color: white;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 5px;
+            padding: 12px 20px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 28px;
+            flex-shrink: 0;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #bdc3c7;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: #27ae60;
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(22px);
+        }
+    </style>
 </head>
 
-<body>
-    <div class="container-xxl bg-white p-0">
-        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-                <span class="sr-only">A carregar...</span>
-            </div>
-        </div>
-        <div class="container-fluid nav-bar bg-transparent">
-            <nav class="navbar navbar-expand-lg bg-white navbar-light py-0 px-4">
-                <a href="index.html" class="navbar-brand d-flex align-items-center text-center">
-                    <div class="icon p-2 me-2">
-                        <img class="img-fluid" src="img/icon-deal.png" alt="Icon" style="width: 30px; height: 30px;">
-                    </div>
-                    <h1 class="m-0 text-primary">PortugalApoia</h1>
+<script type="text/javascript">
+    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    (function () {
+        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/68a5e36d427c8119275e97fe/1j3400ord';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
+    })();
+</script>
+<body class="home">
+    <div id="preloader"><img src="images_pta/logocuadrado.jpg" alt="A carregar..." class="spinner"></div>
+
+    <header class="main-header">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand logo" href="index.html" style="display: inline-flex; align-items: center;">
+                    <img src="images_pta/logocuadrado.jpg" alt="Logo PortugalApoia"
+                        style="height: 35px; margin-right: 10px;">
+                    <span class="brand-text-responsive">PortugalApoia</span>
                 </a>
-                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav"
+                    aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <div class="navbar-nav ms-auto">
-                        <a href="index.html" class="nav-item nav-link active">Início</a>
-                        <a href="doacoes.html" class="nav-item nav-link">Doações</a>
-                        <a href="empregos.html" class="nav-item nav-link">Emprego</a>
-                        <a href="servicos.html" class="nav-item nav-link">Serviços</a>
-                        <a href="habitacao.html" class="nav-item nav-link">Habitação</a>
-                        <a href="contact.html" class="nav-item nav-link">Contato</a>
-                    </div>
-                    <a href="publicar.html" class="btn btn-primary px-3 d-none d-lg-flex">Publicar Anúncio Grátis</a>
-                </div>
-            </nav>
-        </div>
-        <div class="container-fluid header bg-white p-0">
-            <div class="row g-0 align-items-center flex-column-reverse flex-md-row">
-                <div class="col-md-6 p-5 mt-lg-5">
-                    <h1 class="display-5 animated fadeIn mb-4">A <span class="text-primary">Comunidade</span> Que Nos Une</h1>
-                    <p class="animated fadeIn mb-4 pb-2">Sua plataforma para doações, emprego, serviços e moradia em Portugal. Conectando a generosidade à necessidade.</p>
-                    <a href="#categorias" class="btn btn-primary py-3 px-5 me-3 animated fadeIn">Explorar Anúncios</a>
-                </div>
-                <div class="col-md-6 animated fadeIn">
-                    <div class="owl-carousel header-carousel">
-                        <div class="owl-carousel-item">
-                            <img class="img-fluid" src="img/carousel-1.jpg" alt="">
-                        </div>
-                        <div class="owl-carousel-item">
-                            <img class="img-fluid" src="img/carousel-2.jpg" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
-            <div class="container">
-                <div class="row g-2">
-                    <div class="col-md-10">
-                        <div class="row g-2">
-                            <div class="col-md-8">
-                                <input type="text" class="form-control border-0 py-3" placeholder="O que você precisa? (ex: 'doação de berço', 'vaga de TI', etc.)">
-                            </div>
-                            <div class="col-md-4">
-                                <select class="form-select border-0 py-3">
-                                    <option selected>Todas as Categorias</option>
-                                    <option value="1">Doações</option>
-                                    <option value="2">Emprego</option>
-                                    <option value="3">Serviços</option>
-                                    <option value="4">Habitação</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-dark border-0 w-100 py-3">Buscar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container-xxl py-5" id="categorias">
-            <div class="container">
-                <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
-                    <h1 class="mb-3">Explore as Nossas Categorias</h1>
-                    <p>É simples: explore os anúncios, encontre o que precisa ou uma causa que lhe interesse e contacte diretamente a pessoa. Sem intermediários.</p>
-                </div>
-                <div class="row g-4">
-                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="doacoes.html">
-                            <div class="rounded p-4">
-                                <div class="icon mb-3">
-                                    <img class="img-fluid" src="img/icon-apartment.png" alt="Doação">
-                                </div>
-                                <h6>Doação de Artigos</h6>
-                                <span>Ajude ou peça apoio</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="empregos.html">
-                            <div class="rounded p-4">
-                                <div class="icon mb-3">
-                                    <img class="img-fluid" src="img/icon-villa.png" alt="Emprego">
-                                </div>
-                                <h6>Emprego</h6>
-                                <span>Encontre oportunidades</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="servicos.html">
-                            <div class="rounded p-4">
-                                <div class="icon mb-3">
-                                    <img class="img-fluid" src="img/icon-house.png" alt="Serviços">
-                                </div>
-                                <h6>Serviços</h6>
-                                <span>Ofereça ou procure</span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
-                        <a class="cat-item d-block bg-light text-center rounded p-3" href="habitacao.html">
-                            <div class="rounded p-4">
-                                <div class="icon mb-3">
-                                    <img class="img-fluid" src="img/icon-housing.png" alt="Habitação">
-                                </div>
-                                <h6>Habitação</h6>
-                                <span>Descubra um novo lar</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container-xxl py-5">
-            <div class="container">
-                <div class="row g-5 align-items-center">
-                    <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
-                        <div class="about-img position-relative overflow-hidden p-5 pe-0">
-                            <img class="img-fluid w-100" src="img/about.jpg">
-                        </div>
-                    </div>
-                    <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                        <h1 class="mb-4">Como Funciona a Nossa Comunidade?</h1>
-                        <p class="mb-4">A nossa plataforma foi criada para ser um ponto de encontro entre a generosidade e a necessidade em Portugal. Acreditamos no poder da comunidade para criar um impacto positivo.</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Explore anúncios de doações, vagas, serviços e habitação.</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Contacte diretamente a pessoa, sem intermediários.</p>
-                        <p><i class="fa fa-check text-primary me-3"></i>Se precisar de ajuda, publique o seu próprio anúncio gratuitamente.</p>
-                        <a class="btn btn-primary py-3 px-5 mt-3" href="sobre-nos.html">Saber Mais</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container-xxl py-5">
-            <div class="container">
-                <div class="bg-light rounded p-3">
-                    <div class="bg-white rounded p-4" style="border: 1px dashed rgba(0, 185, 142, .3)">
-                        <div class="row g-5 align-items-center">
-                            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
-                                <img class="img-fluid rounded w-100" src="img/call-to-action.jpg" alt="">
-                            </div>
-                            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                                <div class="mb-4">
-                                    <h1 class="mb-3">Tem Algo Para Doar ou Precisa de Ajuda?</h1>
-                                    <p>Junte-se à nossa comunidade e faça a diferença. Publique o seu anúncio gratuitamente e conecte-se com pessoas em todo Portugal.</p>
-                                </div>
-                                <a href="publicar.html" class="btn btn-primary py-3 px-4 me-2"><i class="fa fa-plus me-2"></i>Publicar Anúncio</a>
-                                <a href="contact.html" class="btn btn-dark py-3 px-4"><i class="fa fa-info-circle me-2"></i>Como Funciona</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
-            <div class="container py-5">
-                <div class="row g-5">
-                    <div class="col-lg-3 col-md-6">
-                        <h5 class="text-white mb-4">Contacto</h5>
-                        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Lisboa, Portugal</p>
-                        <p class="mb-2"><i class="fa fa-envelope me-3"></i>contato@portugalapoia.com</p>
-                        <div class="d-flex pt-2">
-                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
-                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <h5 class="text-white mb-4">Links Rápidos</h5>
-                        <a class="btn btn-link text-white-50" href="sobre-nos.html">Sobre Nós</a>
-                        <a class="btn btn-link text-white-50" href="contact.html">Contacte-nos</a>
-                        <a class="btn btn-link text-white-50" href="politica-privacidade.html">Política de Privacidade</a>
-                        <a class="btn btn-link text-white-50" href="termos-de-servico.html">Termos e Condições</a>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                         <h5 class="text-white mb-4">PortugalApoia</h5>
-                        <p>Um projeto desenvolvido e patrocinado pela HBO Consulting.</p>
-                    </div>
-                    <div class="col-lg-3 col-md-6">
-                        <h5 class="text-white mb-4">Newsletter</h5>
-                        <p>Receba as novidades da nossa comunidade diretamente no seu email.</p>
-                        <div class="position-relative mx-auto" style="max-width: 400px;">
-                            <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="O seu email">
-                            <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">Subscrever</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="container">
-                <div class="copyright">
-                    <div class="row">
-                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                            © <a class="border-bottom" href="#">PortugalApoia.com</a>, Todos os Direitos Reservados. 
-							Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
-                        </div>
-                        <div class="col-md-6 text-center text-md-end">
-                            <div class="footer-menu">
-                                <a href="">Início</a>
-                                <a href="">Cookies</a>
-                                <a href="">Ajuda</a>
-                                <a href="">FAQs</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-    </div>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+                <div class="collapse navbar-collapse" id="main-nav">
 
-    <script src="js/main.js"></script>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link" href="sobre-nos.html">Sobre Nós</a></li>
+                        <li class="nav-item"><a class="nav-link" href="doações.html">Doações</a></li>
+                        <li class="nav-item"><a class="nav-link" href="empregos.html">Emprego</a></li>
+                        <li class="nav-item"><a class="nav-link" href="serviços.html">Serviços</a></li>
+                        <li class="nav-item dropdown active"><a class="nav-link" href="habitação.html">Habitação</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownWebApp" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Apps
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownWebApp">
+                                <a class="dropdown-item" href="app_evaluadorsustentable.html">Avaliador Sustentável
+                                    PRO</a>
+                                <a class="dropdown-item" href="app_avaliadorurbano.html">Avaliador de Imóveis
+                                    Urbanos</a>
+                            </div>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link btn btn-primary publish-btn"
+                                href="publicar.html">Publicar</a></li>
+                    </ul>
+
+                    <div class="theme-switch-wrapper nav-item ml-lg-3">
+                        <label class="theme-switch" for="theme-toggle">
+                            <input type="checkbox" id="theme-toggle" />
+                            <div class="slider round">
+                                <i class="fas fa-sun slider-icon"></i>
+                                <i class="fas fa-moon slider-icon"></i>
+                            </div>
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="d-flex align-items-center text-center page-header-index">
+            <div class="container">
+                <h1 class="hero-title" id="hero-title">A comunidade que nos une.</h1>
+                <p class="hero-subtitle" id="hero-subtitle">Sua plataforma para doações, emprego, serviços e moradia em
+                    Portugal.</p>
+                <div class="hero-buttons">
+                    <a href="doações.html" class="btn btn-primary btn-lg">Ver Pedidos de Artigos</a>
+                    <a href="empregos.html" class="btn btn-secondary btn-lg">Ver Vagas de Emprego</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-5">
+        </section>
+
+        <section id="impacto" class="py-5 bg-light">
+            <div class="container text-center">
+                <h2 class="mb-4">O Nosso Impacto</h2>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card impact-card h-100 shadow-sm">
+                            <div class="card-body">
+                                <div class="impact-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                                <div class="impact-number" id="contador-doacoes">0</div>
+                                <p class="impact-text" id="doacoes-text"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card impact-card h-100 shadow-sm">
+                            <div class="card-body">
+                                <div class="impact-icon"><i class="fas fa-briefcase"></i></div>
+                                <div class="impact-number" id="contador-empregos">0</div>
+                                <p class="impact-text" id="empregos-text"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card impact-card h-100 shadow-sm">
+                            <div class="card-body">
+                                <div class="impact-icon"><i class="fas fa-bullhorn"></i></div>
+                                <div class="impact-number" id="contador-total">0</div>
+                                <p class="impact-text" id="total-text"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="quick-access-categories" class="py-5 bg-light">
+        </section>
+    </main>
+
+    <button id="scrollTopBtn" title="Voltar ao topo"><i class="fas fa-arrow-up"></i></button>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <img src="images_pta/logocuadrado.jpg" alt="Logo de PortugalApoia"
+                        style="height: 45px; margin-bottom: 15px;">
+                    <h4>PortugalApoia</h4>
+                    <p>A conectar a generosidade à necessidade.</p>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h4>Navegação</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="doações.html">Doações</a></li>
+                        <li><a href="empregos.html">Emprego</a></li>
+                        <li><a href="serviços.html">Serviços</a></li>
+                        <li><a href="habitação.html">Habitação</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h4>Siga-nos</h4>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/portugalapoia" target="_blank" rel="noopener noreferrer"
+                            aria-label="Instagram" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/share/14GXdGKfEgs/?mibextid=wwXIfr" target="_blank"
+                            rel="noopener noreferrer" aria-label="Facebook" class="social-link"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.linkedin.com/company/fidersucre/" target="_blank" rel="noopener noreferrer"
+                            aria-label="LinkedIn" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter"
+                            class="social-link"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h4>Contacto</h4>
+                    <p>Um projeto desenvolvido e patrocinado pela <a href="mailto:hbo.consulting.pt@gmail.com">HBO
+                            Consulting</a>.</p>
+                </div>
+            </div>
+            <div class="footer-bottom text-center pt-3 mt-3">
+                <p>&copy; 2025 PortugalApoia.com | <a href="politica-privacidade.html">Política de Privacidade</a> | <a
+                        href="termos-de-servico.html">Termos de Serviço</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="script.js" defer></script>
 </body>
 
+
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PQ2Q63GR" height="0" width="0"
+        style="display:none;visibility:hidden"></iframe></noscript>
 </html>
