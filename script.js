@@ -106,12 +106,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 script.textContent = JSON.stringify(schema);
                 document.head.appendChild(script);
             });
-        }
-
-        // Ativar funcionalidades específicas da página após o carregamento
-        if (pageName === 'blog.html') {
-            setupBlogFunctionality();
-        }
     }
 
     // --- FUNÇÕES DE RENDERIZAÇÃO ---
@@ -129,32 +123,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         const classeVencido = isVencido ? 'vencido' : '';
         const textoVencido = isVencido ? '(Vencido)' : '';
         return `<div class="date-info">Publicado: ${pubFormatada} <br> <span class="${classeVencido}">Vencimento: ${vencFormatada} ${textoVencido}</span></div>`;
-    }
-
-    function renderBlogPost(post) {
-        const postDate = new Date(post.date);
-        const formattedDate = postDate.toLocaleDateString('pt-PT', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric'
-        });
-
-        return `
-            <div class="col-lg-4 col-md-6 mb-4 blog-post-item" data-category="${post.category}">
-                <div class="blog-post-card">
-                    <img class="card-img-top" src="..." alt="..." loading="lazy" decoding="async">
-                    <div class="card-body">
-                        <h5 class="card-title">${post.title}</h5>
-                        <p class="text-muted small">Publicado em: ${formattedDate}</p>
-                        <p class="card-text summary-content">${post.summary}</p>
-                        <div class="full-content" style="display: none;">
-                            <p>${post.body.replace(/\n/g, '</p><p>')}</p>
-                        </div>
-                        <button class="btn btn-outline-primary read-more-btn mt-auto">Ler Mais</button>
-                    </div>
-                </div>
-            </div>
-        `;
     }
 
     function renderShareButtons(item, page) {
@@ -265,55 +233,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // --- FUNCIONALIDADES ESPECÍFICAS ---
 
-    function setupBlogFunctionality() {
-        // Lógica dos botões "Ler Mais"
-        const readMoreButtons = document.querySelectorAll('.read-more-btn');
-        readMoreButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                const card = e.target.closest('.blog-post-card');
-                const summary = card.querySelector('.summary-content');
-                const fullContent = card.querySelector('.full-content');
-
-                summary.style.display = 'none';
-                fullContent.style.display = 'block';
-                e.target.style.display = 'none';
-            });
-        });
-
-        // Lógica da Navegação por Tabs (Categorias)
-        const navLinks = document.querySelectorAll('.blog-nav .nav-link');
-        const postsSection = document.getElementById('posts-section');
-        const gallerySection = document.getElementById('gallery-section');
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-
-                // Atualiza a classe 'active'
-                navLinks.forEach(nav => nav.classList.remove('active'));
-                e.target.classList.add('active');
-
-                const targetCategory = e.target.getAttribute('data-target');
-
-                if (targetCategory === 'galeria') {
-                    postsSection.style.display = 'none';
-                    gallerySection.style.display = 'flex'; // Usamos flex por ser 'row'
-                } else {
-                    gallerySection.style.display = 'none';
-                    postsSection.style.display = 'flex';
-
-                    const allPosts = document.querySelectorAll('.blog-post-item');
-                    allPosts.forEach(post => {
-                        if (targetCategory === 'all' || post.dataset.category === targetCategory) {
-                            post.style.display = 'block';
-                        } else {
-                            post.style.display = 'none';
-                        }
-                    });
-                }
-            });
-        });
-    }
+        
 
     async function loadHomepageContent() {
         const homeData = await fetchJson('/_dados/homepage.json');
@@ -347,8 +267,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'empregos.html');
     carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'serviços.html');
     carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderHabitacao, 'habitação.html');
-    carregarConteudo('/_dados/blog.json', 'posts-section', renderBlogPost, 'blog.html');
-    carregarConteudo('/_dados/galeria.json', 'gallery-section', renderGalleryItem, 'blog.html');
 
 
     updateImpactCounters();
