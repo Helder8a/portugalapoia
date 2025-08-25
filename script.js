@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         return `
             <div class="col-lg-4 col-md-6 mb-4 blog-post-item" data-category="${post.category}">
                 <div class="blog-post-card">
-                    <img class="card-img-top" src="${post.image}" alt="${post.title}" loading="lazy">
+                    <img class="card-img-top" src="${post.image}" alt="${post.title}">
                     <div class="card-body">
                         <h5 class="card-title">${post.title}</h5>
                         <p class="text-muted small">Publicado em: ${formattedDate}</p>
