@@ -5,30 +5,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const blogPostsContainer = document.getElementById('blog-posts');
     const categoryFilterContainer = document.getElementById('category-filter');
 
-    // 2. Si no encontramos el contenedor de posts, significa que no estamos en la página del blog,
-    //    así que detenemos el script para no causar errores.
+    // 2. Si no estamos en la página del blog, detenemos el script.
     if (!blogPostsContainer) {
         return;
     }
 
-    // 3. Esta variable guardará todos los artículos del blog una vez que los descarguemos.
+    // 3. Esta variable guardará todos los artículos.
     let allPosts = [];
 
-    // 4. Esta función se conecta a tu fichero _dados/blog.json y descarga la lista de artículos.
+    // 4. Esta función descarga la lista de artículos desde tu fichero JSON.
     async function fetchBlogPosts() {
         try {
+            // Se conecta al fichero JSON correcto
             const response = await fetch('/_dados/blog.json');
             if (!response.ok) {
                 throw new Error(`Error al cargar el archivo JSON: ${response.status}`);
             }
-            allPosts = await response.json();
+            const data = await response.json();
+            
+            // ***** LA CORRECCIÓN CLAVE ESTÁ AQUÍ *****
+            // Accedemos a la lista "posts" que está DENTRO del objeto JSON
+            allPosts = data.posts; 
             
             // Ordenamos los artículos para que los más nuevos aparezcan primero.
             allPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
             
-            // Una vez descargados y ordenados, los mostramos en pantalla.
+            // Mostramos los artículos en pantalla.
             displayPosts(allPosts);
-            // Y creamos los botones para filtrar por categoría.
+            // Creamos los botones para filtrar.
             createCategoryFilters(allPosts);
             
         } catch (error) {
@@ -37,22 +41,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 5. Esta función toma una lista de artículos y los dibuja en la pantalla.
+    // 5. Esta función dibuja los artículos en la pantalla (esta parte ya estaba bien).
     function displayPosts(postsToDisplay) {
         let htmlContent = '';
         if (postsToDisplay.length === 0) {
             htmlContent = '<p class="col-12 text-center">No se encontraron artículos.</p>';
         } else {
             postsToDisplay.forEach(post => {
+                // Generamos el HTML de la tarjeta del artículo
                 htmlContent += `
-                    <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="col-lg-4 col-md-6 mb-4 blog-post-item" data-category="${post.category}">
                         <div class="card h-100 shadow-sm blog-post-card">
                             
                             <img class="card-img-top" src="${post.image}" alt="${post.title}" loading="lazy" decoding="async">
+                            
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">${post.title}</h5>
                                 <p class="card-text text-muted">${post.summary}</p>
-                                <a href="${post.link}" class="btn btn-primary mt-auto">Ler mais</a>
+                                <a href="${post.link || '#'}" class="btn btn-primary mt-auto">Ler mais</a>
                             </div>
                             <div class="card-footer bg-transparent border-top-0">
                                 <small class="text-muted">Publicado em ${new Date(post.date).toLocaleDateString()}</small>
@@ -65,38 +71,38 @@ document.addEventListener('DOMContentLoaded', () => {
         blogPostsContainer.innerHTML = htmlContent;
     }
 
-    // 6. Esta función crea los botones de filtro de forma automática.
+    // 6. Esta función crea los botones de filtro automáticamente.
     function createCategoryFilters(posts) {
-        // Obtenemos una lista de categorías únicas, sin repetir.
+        if (!categoryFilterContainer) return;
         const categories = ['Todas', ...new Set(posts.map(post => post.category))];
-        
-        // Creamos un botón por cada categoría.
         categoryFilterContainer.innerHTML = categories.map(category => 
             `<button class="btn btn-outline-secondary m-1" data-category="${category}">${category}</button>`
         ).join('');
-
-        // Hacemos que el botón "Todas" aparezca activo por defecto.
-        categoryFilterContainer.querySelector('button').classList.add('active');
+        const firstButton = categoryFilterContainer.querySelector('button');
+        if (firstButton) {
+            firstButton.classList.add('active');
+        }
     }
 
-    // 7. Esta función se encarga de filtrar los posts cuando haces clic en un botón.
-    categoryFilterContainer.addEventListener('click', (event) => {
-        if (event.target.tagName === 'BUTTON') {
-            const selectedCategory = event.target.dataset.category;
+    // 7. Esta función se encarga de filtrar los posts.
+    if (categoryFilterContainer) {
+        categoryFilterContainer.addEventListener('click', (event) => {
+            if (event.target.tagName === 'BUTTON') {
+                const selectedCategory = event.target.dataset.category;
+                
+                categoryFilterContainer.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+                event.target.classList.add('active');
 
-            // Quitamos la clase "active" de todos los botones y se la ponemos solo al que fue clickeado.
-            categoryFilterContainer.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-
-            if (selectedCategory === 'Todas') {
-                displayPosts(allPosts);
-            } else {
-                const filteredPosts = allPosts.filter(post => post.category === selectedCategory);
-                displayPosts(filteredPosts);
+                if (selectedCategory === 'Todas') {
+                    displayPosts(allPosts);
+                } else {
+                    const filteredPosts = allPosts.filter(post => post.category === selectedCategory);
+                    displayPosts(filteredPosts);
+                }
             }
-        }
-    });
+        });
+    }
 
-    // 8. Finalmente, llamamos a la función inicial para que todo comience.
+    // 8. Llamamos a la función inicial para que todo comience.
     fetchBlogPosts();
 });
