@@ -139,10 +139,23 @@ document.addEventListener("DOMContentLoaded", async () => {
             year: 'numeric'
         });
 
+        // AQUI ESTÁ A CORREÇÃO MAIS IMPORTANTE: Adicionando srcset para otimização
+        // Usamos a mesma imagem, mas o navegador pode escolher o tamanho certo.
+        // Adicionamos um sufixo (_small, _medium) para simular diferentes tamanhos.
+        const imageSrcset = `
+            ${post.image.replace('.avif', '_small.avif')} 480w,
+            ${post.image.replace('.avif', '_medium.avif')} 800w,
+            ${post.image} 1200w
+        `;
+        const imageSizes = '(max-width: 600px) 480px, (max-width: 1000px) 800px, 1200px';
+
         return `
             <div class="col-lg-4 col-md-6 mb-4 blog-post-item" data-category="${post.category}">
                 <div class="blog-post-card">
-                    <img class="card-img-top" src="${post.image}" alt="${post.title}" loading="lazy">
+                    <img class="card-img-top" src="${post.image}" alt="${post.title}" 
+                         srcset="${imageSrcset.trim()}" 
+                         sizes="${imageSizes}" 
+                         loading="lazy">
                     <div class="card-body">
                         <h5 class="card-title">${post.title}</h5>
                         <p class="text-muted small">Publicado em: ${formattedDate}</p>
@@ -168,10 +181,21 @@ document.addEventListener("DOMContentLoaded", async () => {
     function renderGalleryItem(item) {
         const itemDate = new Date(item.date);
         const formattedDate = itemDate.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' });
+        // Adicionando srcset para otimização da galeria também
+        const imageSrcset = `
+            ${item.image.replace('.avif', '_small.avif')} 480w,
+            ${item.image.replace('.avif', '_medium.avif')} 800w,
+            ${item.image} 1200w
+        `;
+        const imageSizes = '(max-width: 600px) 480px, (max-width: 1000px) 800px, 1200px';
+
         return `
             <div class="col-lg-6 col-md-12 mb-4">
                 <div class="gallery-item">
-                    <img src="${item.image}" alt="${item.title}">
+                    <img src="${item.image}" alt="${item.title}"
+                         srcset="${imageSrcset.trim()}"
+                         sizes="${imageSizes}"
+                         loading="lazy">
                     <div class="caption">
                         <h5>${item.title}</h5>
                         <p>${item.caption}</p>
