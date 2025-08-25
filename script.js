@@ -72,33 +72,39 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         items.sort((a, b) => new Date(b.data_publicacao || b.date || 0) - new Date(a.data_publicacao || a.date || 0));
 
-        // Modificación para paginación
-        const initialPostsToShow = 6;
-        let currentIndex = 0;
+        // Lógica de paginação para o blog
+        if (pageName === 'blog.html' && containerId === 'posts-section') {
+            const initialPostsToShow = 6;
+            let currentIndex = 0;
 
-        function renderNextPosts() {
-            const postsToRender = items.slice(currentIndex, currentIndex + initialPostsToShow);
-            const htmlContent = postsToRender.map(item => renderFunction(item, pageName, item.id)).join('');
-            container.insertAdjacentHTML('beforeend', htmlContent);
-            currentIndex += initialPostsToShow;
+            function renderNextPosts() {
+                const postsToRender = items.slice(currentIndex, currentIndex + initialPostsToShow);
+                const htmlContent = postsToRender.map(item => renderFunction(item)).join('');
+                container.insertAdjacentHTML('beforeend', htmlContent);
+                currentIndex += initialPostsToShow;
 
-            // Ocultar botón si no hay más posts
-            if (currentIndex >= items.length) {
-                document.getElementById('load-more-container').style.display = 'none';
+                const loadMoreContainer = document.getElementById('load-more-container');
+                if (loadMoreContainer) {
+                    if (currentIndex >= items.length) {
+                        loadMoreContainer.style.display = 'none';
+                    } else {
+                        loadMoreContainer.style.display = 'block';
+                    }
+                }
             }
+
+            renderNextPosts();
+
+            const loadMoreBtn = document.getElementById('load-more-btn');
+            if (loadMoreBtn) {
+                loadMoreBtn.addEventListener('click', renderNextPosts);
+            }
+        } else {
+            // Carga completa para outras páginas
+            const htmlContent = items.map(item => renderFunction(item, pageName, item.id)).join('');
+            container.innerHTML = htmlContent;
         }
-
-        renderNextPosts();
-
-        const loadMoreBtn = document.getElementById('load-more-btn');
-        if (loadMoreBtn) {
-            loadMoreBtn.addEventListener('click', renderNextPosts);
-        }
-
-        // ***** CÓDIGO AÑADIDO PARA EL SCHEMA *****
-        // ... (El código del schema se mantiene igual)
-        // No se requieren cambios en este bloque, ya que el JSON ya lo tenemos completo
-
+        
         // Ativar funcionalidades específicas da página após o carregamento
         if (pageName === 'blog.html') {
             setupBlogFunctionality();
@@ -131,21 +137,21 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
 
         return `
-    <div class="col-lg-4 col-md-6 mb-4 blog-post-item" data-category="${post.category}">
-      <div class="blog-post-card">
-        <img class="card-img-top" src="${post.image}" alt="${post.title}" loading="lazy">
-        <div class="card-body">
-          <h5 class="card-title">${post.title}</h5>
-          <p class="text-muted small">Publicado em: ${formattedDate}</p>
-          <p class="card-text summary-content">${post.summary}</p>
-          <div class="full-content" style="display: none;">
-            <p>${post.body.replace(/\n/g, '</p><p>')}</p>
-          </div>
-          <button class="btn btn-outline-primary read-more-btn mt-auto">Ler Mais</button>
-        </div>
-      </div>
-    </div>
-  `;
+            <div class="col-lg-4 col-md-6 mb-4 blog-post-item" data-category="${post.category}">
+                <div class="blog-post-card">
+                    <img class="card-img-top" src="${post.image}" alt="${post.title}" loading="lazy">
+                    <div class="card-body">
+                        <h5 class="card-title">${post.title}</h5>
+                        <p class="text-muted small">Publicado em: ${formattedDate}</p>
+                        <p class="card-text summary-content">${post.summary}</p>
+                        <div class="full-content" style="display: none;">
+                            <p>${post.body.replace(/\n/g, '</p><p>')}</p>
+                        </div>
+                        <button class="btn btn-outline-primary read-more-btn mt-auto">Ler Mais</button>
+                    </div>
+                </div>
+            </div>
+        `;
     }
 
     function renderShareButtons(item, page) {
@@ -162,7 +168,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         return `
             <div class="col-lg-6 col-md-12 mb-4">
                 <div class="gallery-item">
-                    <img src="${item.image}" alt="${item.title}">
+                    <img src="${item.image}" alt="${item.title}" loading="lazy">
                     <div class="caption">
                         <h5>${item.title}</h5>
                         <p>${item.caption}</p>
@@ -191,7 +197,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         `;
     }
     function renderDoacao(pedido, pageName) {
-        const imagemHTML = pedido.imagem ? `<img src="${pedido.imagem}" class="card-img-top" alt="${pedido.titulo}">` : `<div class="image-placeholder">${pedido.titulo}</div>`;
+        const imagemHTML = pedido.imagem ? `<img src="${pedido.imagem}" class="card-img-top" alt="${pedido.titulo}" loading="lazy">` : `<div class="image-placeholder">${pedido.titulo}</div>`;
         return `
         <div class="col-md-4 mb-4">
             <div class="card h-100">
@@ -210,7 +216,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         `;
     }
     function renderServico(item, pageName) {
-        const logoHTML = item.logo_empresa ? `<div class="service-card-logo"><img src="${item.logo_empresa}" alt="Logo"></div>` : '';
+        const logoHTML = item.logo_empresa ? `<div class="service-card-logo"><img src="${item.logo_empresa}" alt="Logo" loading="lazy"></div>` : '';
         const precoHTML = item.valor_servico ? `<div class="card-price">${item.valor_servico}</div>` : '';
 
         return `
@@ -232,7 +238,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         `;
     }
     function renderHabitacao(anuncio, pageName) {
-        const imagemHTML = anuncio.imagens && anuncio.imagens.length > 0 && anuncio.imagens[0].imagem_url ? `<img src="${anuncio.imagens[0].imagem_url}" class="card-img-top" alt="${anuncio.titulo}">` : `<div class="image-placeholder">${anuncio.titulo}</div>`;
+        const imagemHTML = anuncio.imagens && anuncio.imagens.length > 0 && anuncio.imagens[0].imagem_url ? `<img src="${anuncio.imagens[0].imagem_url}" class="card-img-top" alt="${anuncio.titulo}" loading="lazy">` : `<div class="image-placeholder">${anuncio.titulo}</div>`;
         const precoHTML = anuncio.valor_anuncio ? `<div class="card-price">${anuncio.valor_anuncio}</div>` : '';
 
         return `
@@ -275,6 +281,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const navLinks = document.querySelectorAll('.blog-nav .nav-link');
         const postsSection = document.getElementById('posts-section');
         const gallerySection = document.getElementById('gallery-section');
+        const loadMoreContainer = document.getElementById('load-more-container');
 
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
@@ -289,9 +296,11 @@ document.addEventListener("DOMContentLoaded", async () => {
                 if (targetCategory === 'galeria') {
                     postsSection.style.display = 'none';
                     gallerySection.style.display = 'flex'; // Usamos flex por ser 'row'
+                    if (loadMoreContainer) loadMoreContainer.style.display = 'none';
                 } else {
                     gallerySection.style.display = 'none';
                     postsSection.style.display = 'flex';
+                    if (loadMoreContainer) loadMoreContainer.style.display = 'block';
 
                     const allPosts = document.querySelectorAll('.blog-post-item');
                     allPosts.forEach(post => {
@@ -332,7 +341,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById('contador-total').textContent = `${totalGeral}+`;
     }
 
-
     // --- CARGA INICIAL Y LLAMADAS A FUNCIONES ---
     carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'doações.html');
     carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'empregos.html');
@@ -353,8 +361,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         const searchInput = document.getElementById('searchInput');
         const locationInput = document.getElementById('locationInput');
         const noResults = document.getElementById('no-results');
-        const gridId = document.querySelector('.row[id$="-grid"]').id;
+        const gridId = document.querySelector('.row[id$="-grid"]')?.id;
         const grid = document.getElementById(gridId);
+
+        if (!grid) return;
 
         function filter() {
             const searchTerm = searchInput.value.toLowerCase();
