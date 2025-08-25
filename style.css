@@ -1612,3 +1612,67 @@ body.dark-theme .blog-post-card .card-body .small {
 .hero-sobre .lead {
     color: #fff; /* Garante que o subtítulo permaneça branco */
 }
+
+/* ==========================================================================
+   Botón Cargar Más
+   ========================================================================== */
+
+#load-more-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.cta-button {
+    background-color: #0044cc; /* Color principal de tu sitio */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: none; /* Oculto por defecto, se mostrará con JS si es necesario */
+}
+
+.cta-button:hover {
+    background-color: #0055e6; /* Un tono más claro para el hover */
+}
+
+.cta-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* ==========================================================================
+   Botón Cargar Más
+   ========================================================================== */
+
+#load-more-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.cta-button {
+    background-color: #0044cc; /* Color principal de tu sitio */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: none; /* Oculto por defecto, se mostrará con JS si es necesario */
+}
+
+.cta-button:hover {
+    background-color: #0055e6; /* Un tono más claro para el hover */
+}
+
+.cta-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
