@@ -316,28 +316,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             });
         });
     }
-    
-    // --- CARGA ESPECÍFICA DEL BLOG ---
-    const blogPostsContainer = document.getElementById('blog-posts-container');
-    if (blogPostsContainer) {
-        try {
-            const blogResponse = await fetch('/_dados/blog.json');
-            if (!blogResponse.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const blogData = await blogResponse.json();
-            const blogPosts = blogData.posts;
-
-            blogPosts.forEach(post => {
-                const postElement = document.createElement('div');
-                postElement.innerHTML = renderBlogPost(post);
-                blogPostsContainer.appendChild(postElement.firstChild);
-            });
-            setupBlogFunctionality();
-        } catch (error) {
-            console.error('Error fetching blog posts:', error);
-        }
-    }
 
     async function loadHomepageContent() {
         const homeData = await fetchJson('/_dados/homepage.json');
@@ -365,12 +343,37 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById('contador-total').textContent = `${totalGeral}+`;
     }
 
-
     // --- CARGA INICIAL Y LLAMADAS A FUNCIONES ---
     carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'doações.html');
     carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'empregos.html');
     carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'serviços.html');
     carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderHabitacao, 'habitação.html');
+
+    // ** Lógica corregida para la carga del blog **
+    const blogPostsContainer = document.getElementById('posts-section');
+    if (blogPostsContainer) {
+        try {
+            const blogResponse = await fetch('/_dados/blog.json');
+            if (!blogResponse.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const blogData = await blogResponse.json();
+            const blogPosts = blogData.posts;
+            blogPosts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.innerHTML = renderBlogPost(post);
+                blogPostsContainer.appendChild(postElement.firstChild);
+            });
+            setupBlogFunctionality();
+            
+            // Aseguramos que solo la sección de posts sea visible al cargar
+            document.getElementById('posts-section').style.display = 'flex';
+            document.getElementById('gallery-section').style.display = 'none';
+        } catch (error) {
+            console.error('Error fetching blog posts:', error);
+        }
+    }
+
     carregarConteudo('/_dados/galeria.json', 'gallery-section', renderGalleryItem, 'blog.html');
 
     updateImpactCounters();
