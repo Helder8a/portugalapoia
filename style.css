@@ -1,4 +1,7 @@
-/* --- CÓDIGO COMPLETO Y CORREGIDO PARA style.css --- */
+body.dark-theme {
+    --shadow: 0 5px 15px rgba(0, 0, 0, .2)
+}
+
 #hero::before,
 #preloader {
     width: 100%;
@@ -35,15 +38,6 @@
 .slider,
 .slider.round {
     cursor: pointer
-}
-
-body.dark-theme {
-    --color-text: #e0e0e0;
-    --color-text-light: #121212;
-    --color-background: #1e1e1e;
-    --color-background-light: #121212;
-    --color-border: #444;
-    --shadow: 0 5px 15px rgba(0, 0, 0, .2)
 }
 
 body {
@@ -83,6 +77,7 @@ body {
 }
 
 .publish-btn,
+body.dark-theme .brand-text-responsive,
 body.dark-theme .logo {
     color: #fff !important
 }
@@ -100,6 +95,7 @@ body.dark-theme .navbar .navbar-nav .nav-link {
     color: #ccc
 }
 
+.hero-sobre .page-title,
 .info-icon:hover,
 .main-footer h4,
 .page-header .page-title,
@@ -149,13 +145,14 @@ body.dark-theme .navbar .navbar-nav .nav-link:hover {
     z-index: 1
 }
 
-#hero .container {
+#hero .container,
+.con-marca-de-agua>*,
+.hero-sobre .container {
     position: relative;
     z-index: 2
 }
 
 .hero-title {
-    font-size: 3.2rem;
     font-weight: 700;
     margin-bottom: 1rem;
     text-shadow: 0 2px 4px rgba(0, 0, 0, .5)
@@ -248,11 +245,6 @@ body.dark-theme .section-title {
     background-position: center
 }
 
-.page-header .page-title {
-    color: var(--color-donation);
-    font-size: 2.8rem
-}
-
 #levelText,
 #scrollTopBtn,
 .blog-post-full h2,
@@ -277,9 +269,8 @@ h6 {
 
 .card:hover {
     transform: translateY(-8px) scale(1.02);
-    /* <-- AÑADE scale(1.02) */
     box-shadow: 0 12px 24px rgba(0, 0, 0, .15) !important;
-    border-color: var(--color-accent);
+    border-color: var(--color-accent)
 }
 
 .category-link-card,
@@ -340,6 +331,13 @@ h6 {
     font-family: Inter, sans-serif
 }
 
+.card-number,
+.cta-sobre h2,
+.impact-number,
+.pillar-card h4 {
+    font-family: var(--font-headings)
+}
+
 .main-footer a:hover {
     text-decoration: none
 }
@@ -371,23 +369,20 @@ h6 {
 #preloader .spinner {
     width: 80px;
     height: auto;
-    animation: 2s ease-in-out infinite pulse;
+    animation: 2s ease-in-out infinite pulse
 }
 
 @keyframes pulse {
-    0% {
+
+    0%,
+    100% {
         transform: scale(1);
-        opacity: 1;
+        opacity: 1
     }
 
     50% {
         transform: scale(1.1);
-        opacity: 0.8;
-    }
-
-    100% {
-        transform: scale(1);
-        opacity: 1;
+        opacity: .8
     }
 }
 
@@ -658,8 +653,7 @@ body.dark-theme {
     --color-text-light: #121212;
     --color-background: #1e1e1e;
     --color-background-light: #121212;
-    --color-border: #444;
-    --shadow: 0 5px 15px rgba(0, 0, 0, .2);
+    --color-border: #444
 }
 
 h1,
@@ -680,6 +674,7 @@ h6 {
     color: var(--color-primary) !important
 }
 
+.cta-sobre,
 .page-header {
     background-color: var(--color-primary)
 }
@@ -815,6 +810,7 @@ body:not(.dark-theme) .slider.round .fa-sun {
 }
 
 .accordion .card-header,
+.pillars-section,
 .results-sidebar {
     background-color: var(--color-background-light)
 }
@@ -843,6 +839,11 @@ body:not(.dark-theme) .slider.round .fa-sun {
     height: 10px;
     margin-bottom: 1.5rem;
     overflow: hidden
+}
+
+.impact-card,
+.service-card-logo {
+    background-color: var(--color-background)
 }
 
 .comment:not(:last-child),
@@ -888,7 +889,6 @@ body:not(.dark-theme) .slider.round .fa-sun {
 }
 
 .impact-card {
-    background-color: var(--color-background);
     padding: 2rem;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
@@ -907,7 +907,6 @@ body:not(.dark-theme) .slider.round .fa-sun {
 }
 
 .impact-number {
-    font-family: var(--font-headings);
     font-size: 2.8rem;
     font-weight: 800;
     color: var(--color-primary);
@@ -1015,150 +1014,85 @@ body:not(.dark-theme) .slider.round .fa-sun {
     color: var(--color-text-muted)
 }
 
-.page-header .page-title,
-.hero-title {
-    font-size: 2.8rem;
+.hero-title,
+.page-header .page-title {
+    font-size: 2.8rem
 }
 
-@media (max-width: 767.98px) {
-
-    .page-header .page-title,
-    .hero-title {
-        font-size: 2.2rem;
-    }
-}
-
-/* Asegura que el texto del logo se encoja en móviles. */
 .brand-text-responsive {
-    /* Define un tamaño de fuente fluido entre 0.8rem (mínimo) y 1.25rem (máximo) */
-    font-size: clamp(0.8rem, 3.5vw, 1.25rem) !important;
+    font-size: clamp(.8rem, 3.5vw, 1.25rem) !important;
     font-weight: 700;
     color: var(--color-primary);
-    /* Usa el color primario que ya tienes definido */
     white-space: nowrap;
-    /* Evita que el nombre se parta en dos líneas */
     line-height: 1;
-    /* Ayuda a la alineación vertical */
-    transition: font-size 0.2s ease-in-out;
-    /* Una transición suave */
+    transition: font-size .2s ease-in-out
 }
 
-/* Fuerza el color del logo a blanco en modo oscuro */
-body.dark-theme .brand-text-responsive {
-    color: #fff !important;
-}
-
-
-/* ======================================================= */
-/* ARCHIVO CSS: estilos.css                              */
-/* Contiene la clase reutilizable para la marca de agua  */
-/* ======================================================= */
-
-/* * Clase reutilizable para añadir una marca de agua a cualquier elemento.
- * El elemento que lleve esta clase debe tener un color de fondo definido.
-*/
 .con-marca-de-agua {
     position: relative;
-    /* Obligatorio para que la marca de agua funcione */
-    overflow: hidden;
-    /* Recomendado para evitar desbordamientos */
+    overflow: hidden
 }
 
-/*
- * Usamos el pseudo-elemento ::before para generar la marca de agua
- * desde CSS, sin necesidad de añadir una <img> en el HTML.
-*/
 .con-marca-de-agua::before {
     content: '';
-    /* Requerido para que se muestre */
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-
-    /* ----- CONFIGURACIÓN DE TU LOGO ----- */
-    /* IMPORTANTE: Coloca la URL de tu logo aquí */
     background-image: url('images_pta/logocuadrado.jpg');
     background-repeat: no-repeat;
     background-position: center;
-    /* ------------------------------------ */
-
-    /* ----- EFECTO Y TAMAÑO RESPONSIVO ----- */
-    opacity: 0.06;
-    /* La transparencia de la marca de agua */
+    opacity: .06;
     background-size: 280px;
-    /* Tamaño inicial para móviles */
-    transition: background-size 0.3s ease;
-    /* Transición suave */
+    transition: background-size .3s;
     z-index: 1;
-    /* Lo pone en la capa de atrás */
-    pointer-events: none;
-    /* Evita que interfiera con los clics */
+    pointer-events: none
 }
 
-/*
- * Esta regla es importante: asegura que cualquier contenido
- * DIRECTO dentro del elemento con la marca de agua, se ponga por encima.
-*/
-.con-marca-de-agua>* {
-    position: relative;
-    z-index: 2;
-}
-
-/* ----- MEDIA QUERY PARA HACERLO RESPONSIVO ----- */
-@media (min-width: 768px) {
+@media (min-width:768px) {
     .con-marca-de-agua::before {
-        /* Hacemos la marca de agua más grande en pantallas de tablet o escritorio */
-        background-size: 450px;
+        background-size: 450px
     }
 }
 
-/* Corrección específica para dispositivos móviles */
-@media (max-width: 767.98px) {
+@media (max-width:767.98px) {
+
+    .hero-title,
+    .page-header .page-title {
+        font-size: 2.2rem
+    }
+
     .brand-text-responsive {
-        font-size: 1.0rem !important;
+        font-size: 1rem !important
     }
 }
 
-/* Estilos para los iconos de redes sociales en el footer */
 .social-links a i {
-    /* <-- Le decimos que afecte directamente al icono <i> */
     font-size: 22px;
-    /* Mantenemos tu tamaño perfecto */
-    transition: color 0.3s ease-in-out;
+    transition: color .3s ease-in-out
 }
 
 .social-links a {
-    /* Mantenemos el espaciado en el enlace */
     margin-right: 18px;
-    color: #ccc;
+    color: #ccc
 }
 
 .social-links a:last-child {
-    margin-right: 0;
-    /* Elimina el margen del último icono */
+    margin-right: 0
 }
 
 .social-links a:hover {
     color: #fff;
-    /* Color del icono al pasar el ratón */
-    text-decoration: none;
+    text-decoration: none
 }
 
-/* PALETA DE COLORES ÚNICA Y CORREGIDA */
 :root {
     --color-primary: #0A3D62;
-    /* Azul Oscuro */
     --color-secondary: #2196F3;
-    /* Azul Medio */
     --color-accent: #F57C00;
-    /* Naranja Vibrante y Accesible */
     --color-donation: #F57C00;
-    /* Naranja Vibrante y Accesible */
     --color-success: #28A745;
-    /* Verde */
-    /* Verde */
     --font-headings: 'Inter', sans-serif;
     --font-body: 'Roboto', sans-serif;
     --border-radius: 8px;
@@ -1167,7 +1101,7 @@ body.dark-theme .brand-text-responsive {
     --color-background: #FFF8E1;
     --color-background-light: #f8f9fa;
     --color-border: #dee2e6;
-    --shadow: 0 5px 15px rgba(0, 0, 0, .07);
+    --shadow: 0 5px 15px rgba(0, 0, 0, .07)
 }
 
 body.dark-theme {
@@ -1176,91 +1110,55 @@ body.dark-theme {
     --color-background: #2F240C;
     --color-background-light: #121212;
     --color-border: #444;
-    --shadow: 0 5px 15px rgba(0, 0, 0, .2);
-    --color-donation: #FDBE33;
-    /* Mantenemos el amarillo en tema oscuro */
+    --color-donation: #FDBE33
 }
 
-/* --- ESTILOS MEJORADOS PARA TARJETAS DE SERVICIOS --- */
-
-/* Contenedor para los detalles de contacto en texto */
 .contact-details {
     margin-bottom: 1rem;
-    /* Espacio entre el texto y los iconos */
-    font-size: 0.9rem;
-    /* Tamaño de fuente para el texto de contacto */
+    font-size: .9rem
 }
 
-/* Párrafos dentro de los detalles de contacto */
 .contact-details .contact-text {
-    margin-bottom: 0.5rem;
-    /* Espacio entre número y email */
+    margin-bottom: .5rem;
     display: flex;
-    align-items: center;
+    align-items: center
 }
 
-/* Iconos junto al texto de contacto */
+.card-number,
+.service-card-logo {
+    justify-content: center;
+    display: flex;
+    position: absolute
+}
+
 .contact-details .contact-text i {
     color: var(--color-accent);
-    /* Usa el color de acento de tu web */
-    width: 20px;
-    /* Alineación de los iconos */
+    width: 20px
 }
 
-/* Contenedor principal de los iconos grandes */
-.card-contact-icons {
-    text-align: right;
-    /* Alinea los iconos a la derecha */
-    margin-top: -10px;
-    /* Ajuste para acercar los iconos a la descripción */
-}
-
-/* Enlaces de los iconos (WhatsApp y Email) */
 .card-contact-icons a.contact-icon {
-    display: inline-block;
     margin-left: 15px;
-    /* Aumenta la separación entre iconos */
-    color: var(--color-secondary);
-    transition: transform 0.2s ease, color 0.2s ease;
+    color: var(--color-secondary)
 }
 
-/* Iconos dentro de los enlaces */
-.card-contact-icons a.contact-icon i {
-    font-size: 2rem;
-    /* Aumenta significativamente el tamaño de los iconos */
-}
-
-/* Efecto hover para los iconos */
-.card-contact-icons a.contact-icon:hover {
-    transform: scale(1.15);
-    /* Agrandar al pasar el ratón */
-    color: var(--color-primary);
-}
-
-/* Estilos específicos para el logo en la tarjeta de servicio */
 .service-card-logo {
     width: 80px;
     height: 80px;
-    position: absolute;
     top: -25px;
     right: 15px;
-    background-color: var(--color-background);
     border-radius: 50%;
     padding: 5px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .1);
     align-items: center;
-    overflow: hidden;
+    overflow: hidden
 }
 
 .service-card-logo img {
     max-width: 100%;
     max-height: 100%;
-    object-fit: contain;
+    object-fit: contain
 }
 
-/* Estilo para el precio */
 .card-price {
     position: absolute;
     top: 15px;
@@ -1270,201 +1168,134 @@ body.dark-theme {
     padding: 5px 15px;
     border-radius: 0 25px 25px 0;
     font-weight: 700;
-    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, .15)
 }
 
-/* Estilo para anuncios vencidos */
-.card-footer .vencido {
-    color: #DC3545 !important;
-    /* Rojo de Bootstrap */
-    font-weight: bold;
+.card-footer .vencido,
+.date-info .vencido {
+    color: #dc3545 !important;
+    font-weight: 700
 }
-
-/* --- ESTILOS PARA LOS BOTONES DE PARTILHAR --- */
 
 .share-buttons {
     display: flex;
     align-items: center;
-    gap: 8px;
-    /* Espacio entre el texto y los iconos */
+    gap: 8px
 }
 
 .share-label {
-    font-size: 0.8rem;
+    font-size: .8rem;
     color: #6c757d;
-    /* Color de texto secundario */
     margin-right: 4px;
-    white-space: nowrap;
-    /* Evita que el texto se parta en dos líneas */
+    white-space: nowrap
 }
 
 .share-btn {
     font-size: 1.2rem;
-    /* Tamaño de los iconos */
     color: #6c757d;
-    transition: color 0.3s, transform 0.3s;
+    transition: color .3s, transform .3s
 }
 
 .share-btn:hover {
-    transform: scale(1.2);
-    /* Efecto de zoom al pasar el ratón */
+    transform: scale(1.2)
 }
 
 .share-btn.whatsapp:hover {
-    color: #25D366;
-    /* Cor do WhatsApp */
+    color: #25d366
 }
 
 .share-btn.facebook:hover {
-    color: #1877F2;
-    /* Cor do Facebook */
+    color: #1877f2
 }
 
-/* Estilo para el modo oscuro */
-body.dark-theme .share-label,
-body.dark-theme .share-btn {
-    color: #aaa;
+body.dark-theme .blog-post-card .card-body .small,
+body.dark-theme .share-btn,
+body.dark-theme .share-label {
+    color: #aaa
 }
 
-/* --- ESTILOS MEJORADOS PARA ICONOS DE CONTACTO Y PARTILHA --- */
-
-/* Contenedor principal de los iconos de contacto en la tarjeta de servicio */
 .card-contact-icons {
+    text-align: right;
+    margin-top: -10px;
     display: flex;
-    /* Usa flexbox para alinear fácilmente */
     justify-content: flex-end;
-    /* Alinea los ítems a la derecha */
     align-items: center;
-    /* Centra verticalmente */
-    gap: 10px;
-    /* Espacio entre el texto y los iconos */
+    gap: 10px
 }
 
-/* Etiqueta de texto "Contacto:" */
 .contact-label {
-    font-size: 0.8rem;
+    font-size: .8rem;
     color: var(--color-text-muted);
-    /* Color de texto secundario */
-    font-weight: bold;
+    font-weight: 700
 }
 
-/* Enlaces de los iconos (WhatsApp y Email) */
 .card-contact-icons a.contact-icon {
     display: inline-block;
     color: var(--color-secondary);
-    transition: transform 0.2s ease, color 0.2s ease;
+    transition: transform .2s, color .2s
 }
 
-/* Iconos dentro de los enlaces */
 .card-contact-icons a.contact-icon i {
-    font-size: 1.8rem;
-    /* Tamaño de los iconos de contacto */
+    font-size: 1.8rem
 }
 
-/* Efecto hover para los iconos de contacto */
 .card-contact-icons a.contact-icon:hover {
     transform: scale(1.15);
-    color: var(--color-primary);
+    color: var(--color-primary)
 }
 
-/* --- AÑADE ESTAS NUEVAS REGLAS AL FINAL DE TU FICHERO style.css --- */
-
-/* Estilo para el número en la esquina de la tarjeta */
-
-/* Estilo para el texto de la fecha de publicación y vencimiento */
 .date-info {
-    font-size: 0.8rem;
-    color: #6c757d;
+    font-size: .8rem;
+    color: #6c757d
 }
-
-/* Estilo para el texto de vencimiento cuando el anuncio está caducado */
-.date-info .vencido {
-    color: #DC3545 !important;
-    /* Rojo de Bootstrap */
-    font-weight: bold;
-}
-
-/* --- AÑADE O SUSTITUYE ESTA REGLA EN TU FICHERO style.css --- */
 
 .card-number {
-    position: absolute;
     top: 10px;
     left: 10px;
-    background-color: rgba(10, 61, 98, 0.85);
+    background-color: rgba(10, 61, 98, .85);
     color: #fff;
     min-width: 35px;
-    /* Usa min-width para que se adapte al contenido */
     height: 35px;
     padding: 0 8px;
-    /* Añade padding horizontal */
     border-radius: 20px;
-    /* Forma de píldora para que se vea bien con texto */
-    display: flex;
-    justify-content: center;
     align-items: center;
-    font-weight: bold;
-    font-family: var(--font-headings);
-    font-size: 0.9rem;
-    /* Fuente ligeramente más pequeña para IDs largos */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    z-index: 2;
+    font-weight: 700;
+    font-size: .9rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+    z-index: 2
 }
 
 .gallery-item {
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
-    /* Mantenemos la altura consistente con una relación de aspecto */
-    aspect-ratio: 4 / 3;
-}
-
-.gallery-item img {
-    width: 100%;
-    height: 100%;
-    /* 'object-fit: cover' es la clave para rellenar el espacio sin deformar */
-    object-fit: cover;
-    transition: transform 0.3s, filter 0.3s;
-}
-
-/* Opcional: Para asegurar que el contenedor de la columna se comporte correctamente */
-.col-lg-4.col-md-6.mb-4 {
-    display: flex;
-    justify-content: center;
-}
-
-.blog-post-card .card-body .small {
-    font-size: 0.85em;
-    color: #6c757d;
-    margin-bottom: 1rem;
-}
-
-body.dark-theme .blog-post-card .card-body .small {
-    color: #aaa;
-}
-
-/* --- ESTILOS PROFISSIONAIS PARA A GALERIA --- */
-
-.gallery-item {
+    aspect-ratio: 4/3;
     position: relative;
     overflow: hidden;
     border-radius: 12px;
-    /* Bordas mais arredondadas */
-    aspect-ratio: 16 / 10;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    /* Sombra mais pronunciada */
+    aspect-ratio: 16/10;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, .1)
 }
 
 .gallery-item img {
+    object-fit: cover;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.4s ease-in-out, filter 0.4s ease-in-out;
+    transition: transform .4s ease-in-out, filter .4s ease-in-out
+}
+
+.col-lg-4.col-md-6.mb-4 {
+    display: flex;
+    justify-content: center
+}
+
+.blog-post-card .card-body .small {
+    font-size: .85em;
+    color: #6c757d;
+    margin-bottom: 1rem
 }
 
 .gallery-item:hover img {
     transform: scale(1.08);
-    /* Efeito de zoom mais notável */
-    filter: brightness(0.9);
+    filter: brightness(.9)
 }
 
 .gallery-item .caption {
@@ -1472,50 +1303,42 @@ body.dark-theme .blog-post-card .card-body .small {
     bottom: 0;
     left: 0;
     width: 100%;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0));
-    /* Gradiente mais escuro */
-    color: white;
+    background: linear-gradient(to top, rgba(0, 0, 0, .85), rgba(0, 0, 0, 0));
+    color: #fff;
     padding: 25px 20px 20px;
     text-align: left;
     transform: translateY(100%);
-    /* Começa escondida */
-    transition: transform 0.4s ease-in-out;
-    box-sizing: border-box;
+    transition: transform .4s ease-in-out;
+    box-sizing: border-box
 }
 
 .gallery-item:hover .caption {
-    transform: translateY(0);
-    /* Mostra ao passar o rato */
+    transform: translateY(0)
 }
 
 .gallery-item .caption h5 {
-    margin: 0 0 5px 0;
+    margin: 0 0 5px;
     font-size: 1.25rem;
     font-weight: 700;
-    color: #fff;
+    color: #fff
 }
 
 .gallery-item .caption p {
-    margin: 0 0 8px 0;
-    font-size: 0.95rem;
-    color: #f0f0f0;
+    margin: 0 0 8px;
+    font-size: .95rem;
+    color: #f0f0f0
 }
 
 .gallery-item .caption small {
-    font-size: 0.8rem;
-    opacity: 0.8;
+    font-size: .8rem;
+    opacity: .8
 }
 
-/* =================================================== */
-/* --- ESTILOS PARA A PÁGINA 'SOBRE NÓS' --- */
-/* =================================================== */
-
-/* --- Bloco 1: Hero Section --- */
 .hero-sobre {
     position: relative;
     background: url('images/imgendexportugalapioa.avif') center center/cover no-repeat;
     min-height: 60vh;
-    padding: 60px 0;
+    padding: 60px 0
 }
 
 .hero-sobre::before {
@@ -1526,89 +1349,58 @@ body.dark-theme .blog-post-card .card-body .small {
     width: 100%;
     height: 100%;
     background: linear-gradient(to top, rgba(10, 61, 98, .85), rgba(10, 61, 98, .6));
-    z-index: 1;
+    z-index: 1
 }
 
-.hero-sobre .container {
-    position: relative;
-    z-index: 2;
-}
-
-/* --- Bloco 2: Missão --- */
+.history-block .section-title,
 .mission-block .section-title {
-    text-align: left;
+    text-align: left
 }
 
+.history-block .section-title::after,
 .mission-block .section-title::after {
-    margin-left: 0;
+    margin-left: 0
 }
 
 .mission-icon {
     font-size: 10rem;
     color: var(--color-primary);
-    opacity: 0.1;
-}
-
-/* --- Bloco 3: Pilares/Valores --- */
-.pillars-section {
-    background-color: var(--color-background-light);
+    opacity: .1
 }
 
 .pillar-card {
     padding: 2rem 1.5rem;
     height: 100%;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: transform .3s, box-shadow .3s
 }
 
 .pillar-icon {
     font-size: 3.5rem;
     color: var(--color-accent);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.5rem
 }
 
 .pillar-card h4 {
-    font-family: var(--font-headings);
     color: var(--color-primary);
-    margin-bottom: 1rem;
-}
-
-/* --- Bloco 4: História --- */
-.history-block .section-title {
-    text-align: left;
-}
-
-.history-block .section-title::after {
-    margin-left: 0;
+    margin-bottom: 1rem
 }
 
 .history-logo {
     max-width: 250px;
-    opacity: 0.8;
+    opacity: .8
 }
 
 .history-block .blockquote {
     border-left: 4px solid var(--color-accent);
     padding-left: 1.5rem;
     font-style: italic;
-    color: #6c757d;
-}
-
-/* --- Bloco 5: Call to Action --- */
-.cta-sobre {
-    background-color: var(--color-primary);
+    color: #6c757d
 }
 
 .cta-sobre h2 {
-    font-family: var(--font-headings);
-    font-size: 2.2rem;
-}
-
-/* --- Correção de Cor para o Header da Página Sobre Nós --- */
-
-.hero-sobre .page-title {
-    color: var(--color-donation); /* Aplica a cor amarela/laranja do tema */
+    font-size: 2.2rem
 }
 
 .hero-sobre .lead {
-    color: #fff; /* Garante que o subtítulo permaneça branco */
+    color: #fff
 }
