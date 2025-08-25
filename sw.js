@@ -1,4 +1,4 @@
-const CACHE_NAME = 'portugalapoia-cache-v2';
+const CACHE_NAME = 'portugalapoia-cache-v4'; // Actualizamos la versión para forzar la actualización en los navegadores
 // Lista de archivos esenciales para la app (la "App Shell")
 const urlsToCache = [
   '/',
@@ -7,9 +7,11 @@ const urlsToCache = [
   '/doações.html',
   '/serviços.html',
   '/habitação.html',
+  '/blog.html',
   '/offline.html',
   '/style.css',
   '/script.js',
+  '/manifest.json',
   '/images_pta/logocuadrado.jpg'
 ];
 
@@ -21,6 +23,9 @@ self.addEventListener('install', event => {
         console.log('Cache abierto');
         return cache.addAll(urlsToCache);
       })
+      .catch(error => {
+        console.error('Error al abrir la cache o añadir archivos:', error);
+      })
   );
 });
 
@@ -31,6 +36,7 @@ self.addEventListener('activate', event => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (cacheName !== CACHE_NAME) {
+            console.log('Eliminando cache antiguo:', cacheName);
             return caches.delete(cacheName);
           }
         })
