@@ -57,61 +57,59 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
-    async function carregarConteudo(jsonPath, containerId, renderFunction, pageName) {
-        const container = document.getElementById(containerId);
-        if (!container) return;
+    let allBlogPosts = [];
+    let currentIndex = 0;
+    const initialPostsToShow = 6;
+    let currentFilter = 'all';
 
-        const items = await fetchJson(jsonPath);
+    // Nueva función para renderizar posts con paginación
+    function renderPosts(posts, container) {
+        const postsToRender = posts.slice(currentIndex, currentIndex + initialPostsToShow);
+        const htmlContent = postsToRender.map(renderBlogPost).join('');
+        container.insertAdjacentHTML('beforeend', htmlContent);
+        currentIndex += initialPostsToShow;
 
-        if (!items || items.length === 0) {
-            if (containerId !== 'gallery-section') {
-                container.innerHTML = `<p class="col-12 text-center lead text-muted mt-5">De momento, não há publicações nesta secção.</p>`;
-            }
-            return;
-        }
-
-        items.sort((a, b) => new Date(b.data_publicacao || b.date || 0) - new Date(a.data_publicacao || a.date || 0));
-
-        // Lógica de paginação para o blog
-        if (pageName === 'blog.html' && containerId === 'posts-section') {
-            const initialPostsToShow = 6;
-            let currentIndex = 0;
-
-            function renderNextPosts() {
-                const postsToRender = items.slice(currentIndex, currentIndex + initialPostsToShow);
-                const htmlContent = postsToRender.map(item => renderFunction(item)).join('');
-                container.insertAdjacentHTML('beforeend', htmlContent);
-                currentIndex += initialPostsToShow;
-
-                const loadMoreContainer = document.getElementById('load-more-container');
-                if (loadMoreContainer) {
-                    if (currentIndex >= items.length) {
-                        loadMoreContainer.style.display = 'none';
-                    } else {
-                        loadMoreContainer.style.display = 'block';
-                    }
-                }
-            }
-
-            renderNextPosts();
-
-            const loadMoreBtn = document.getElementById('load-more-btn');
-            if (loadMoreBtn) {
-                loadMoreBtn.addEventListener('click', renderNextPosts);
-            }
-        } else {
-            // Carga completa para outras páginas
-            const htmlContent = items.map(item => renderFunction(item, pageName, item.id)).join('');
-            container.innerHTML = htmlContent;
-        }
-        
-        // Ativar funcionalidades específicas da página após o carregamento
-        if (pageName === 'blog.html') {
-            setupBlogFunctionality();
+        const loadMoreContainer = document.getElementById('load-more-container');
+        if (loadMoreContainer) {
+            loadMoreContainer.style.display = (currentIndex < posts.length) ? 'block' : 'none';
         }
     }
 
-    // --- FUNÇÕES DE RENDERIZAÇÃO ---
+    // Nueva función para cargar el blog y la galería
+    async function loadBlogAndGallery() {
+        const postsSection = document.getElementById('posts-section');
+        const gallerySection = document.getElementById('gallery-section');
+        const loadMoreBtn = document.getElementById('load-more-btn');
+
+        if (!postsSection || !gallerySection) return;
+
+        allBlogPosts = await fetchJson('/_dados/blog.json');
+        const galleryItems = await fetchJson('/_dados/galeria.json');
+
+        // Renderizar Galería (si aplica)
+        const galleryHtml = galleryItems.map(renderGalleryItem).join('');
+        gallerySection.innerHTML = `<div class="col-12"><h2 class="section-title text-center mb-4">Galeria de Portugal</h2></div>` + galleryHtml;
+        gallerySection.style.display = 'none';
+
+        // Lógica de carga del blog
+        const filteredPosts = (currentFilter === 'all') 
+            ? allBlogPosts
+            : allBlogPosts.filter(post => post.category === currentFilter);
+
+        postsSection.innerHTML = '';
+        currentIndex = 0;
+        renderPosts(filteredPosts, postsSection);
+
+        if (loadMoreBtn) {
+            const loadMoreListener = () => {
+                renderPosts(filteredPosts, postsSection);
+            };
+            loadMoreBtn.removeEventListener('click', loadMoreListener); // Evitar duplicados
+            loadMoreBtn.addEventListener('click', loadMoreListener);
+        }
+    }
+
+    // --- FUNCIONES DE RENDERIZAÇÃO ---
     function formatarDatas(item) {
         if (!item || !item.data_publicacao || !item.data_vencimento) {
             return `<div class="date-info">ID: ${item.id || 'N/A'}</div>`;
@@ -261,58 +259,62 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     // --- FUNCIONALIDADES ESPECÍFICAS ---
-
     function setupBlogFunctionality() {
-        // Lógica dos botões "Ler Mais"
+        const postsSection = document.getElementById('posts-section');
+        const gallerySection = document.getElementById('gallery-section');
+        const loadMoreContainer = document.getElementById('load-more-container');
         const readMoreButtons = document.querySelectorAll('.read-more-btn');
+
         readMoreButtons.forEach(button => {
             button.addEventListener('click', (e) => {
                 const card = e.target.closest('.blog-post-card');
                 const summary = card.querySelector('.summary-content');
                 const fullContent = card.querySelector('.full-content');
-
                 summary.style.display = 'none';
                 fullContent.style.display = 'block';
                 e.target.style.display = 'none';
             });
         });
 
-        // Lógica da Navegação por Tabs (Categorias)
         const navLinks = document.querySelectorAll('.blog-nav .nav-link');
-        const postsSection = document.getElementById('posts-section');
-        const gallerySection = document.getElementById('gallery-section');
-        const loadMoreContainer = document.getElementById('load-more-container');
-
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-
-                // Atualiza a classe 'active'
                 navLinks.forEach(nav => nav.classList.remove('active'));
                 e.target.classList.add('active');
-
+                
                 const targetCategory = e.target.getAttribute('data-target');
-
                 if (targetCategory === 'galeria') {
                     postsSection.style.display = 'none';
-                    gallerySection.style.display = 'flex'; // Usamos flex por ser 'row'
+                    gallerySection.style.display = 'flex';
                     if (loadMoreContainer) loadMoreContainer.style.display = 'none';
                 } else {
                     gallerySection.style.display = 'none';
                     postsSection.style.display = 'flex';
-                    if (loadMoreContainer) loadMoreContainer.style.display = 'block';
-
-                    const allPosts = document.querySelectorAll('.blog-post-item');
-                    allPosts.forEach(post => {
-                        if (targetCategory === 'all' || post.dataset.category === targetCategory) {
-                            post.style.display = 'block';
-                        } else {
-                            post.style.display = 'none';
-                        }
-                    });
+                    currentFilter = targetCategory;
+                    loadBlogAndGallery(); // Vuelve a cargar y filtrar
                 }
             });
         });
+    }
+
+    async function carregarConteudo(jsonPath, containerId, renderFunction, pageName) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        const items = await fetchJson(jsonPath);
+
+        if (!items || items.length === 0) {
+            if (containerId !== 'gallery-section') {
+                container.innerHTML = `<p class="col-12 text-center lead text-muted mt-5">De momento, não há publicações nesta secção.</p>`;
+            }
+            return;
+        }
+
+        items.sort((a, b) => new Date(b.data_publicacao || b.date || 0) - new Date(a.data_publicacao || a.date || 0));
+        
+        const htmlContent = items.map(item => renderFunction(item, pageName, item.id)).join('');
+        container.innerHTML = htmlContent;
     }
 
     async function loadHomepageContent() {
@@ -346,9 +348,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'empregos.html');
     carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'serviços.html');
     carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderHabitacao, 'habitação.html');
-    carregarConteudo('/_dados/blog.json', 'posts-section', renderBlogPost, 'blog.html');
-    carregarConteudo('/_dados/galeria.json', 'gallery-section', renderGalleryItem, 'blog.html');
-
+    loadBlogAndGallery();
 
     updateImpactCounters();
     if (document.body.classList.contains('home')) {
