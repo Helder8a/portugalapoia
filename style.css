@@ -1,115 +1,222 @@
 /* =================================================================
-   HOJA DE ESTILOS CSS EXCLUSIVA PARA EL AVALIADOR URBANO
+   HOJA DE ESTILOS PRINCIPAL PARA PORTUGAL APOIA
    ================================================================= */
 
-/* -----------------------------------------------------------------
-   1. Variables de Color y Tipografía
-   ----------------------------------------------------------------- */
+/* --- 1. VARIABLES DE COLOR Y TIPOGRAFÍA --- */
 :root {
-    --primary-color: #005A9C;
-    --secondary-color: #007BFF;
-    --accent-color: #FFA500;
-    --background-color: #F8F9FA;
-    --section-bg-color: #FFFFFF;
-    --text-color: #343A40;
-    --label-color: #495057;
-    --border-color: #DEE2E6;
-    --success-color: #28A745;
-    --error-color: #DC3545;
-    --font-primary: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --color-primary: #0A3D62;
+    --color-secondary: #005A9C;
+    --color-accent: #F57C00; /* Naranja para CTA y elementos activos */
+    --color-success: #28A745;
+    --color-text: #343A40;
+    --color-background: #FFFFFF;
+    --color-background-light: #F8F9FA;
+    --color-border: #E2E6EA;
+    --color-shadow: rgba(0, 0, 0, 0.07);
+
+    /* Tema Oscuro */
+    --dark-primary: #1E1E1E;
+    --dark-background: #121212;
+    --dark-text: #E0E0E0;
+    --dark-text-muted: #B0B0B0;
+    --dark-border: #444444;
+
+    --font-headings: 'Inter', sans-serif;
+    --font-body: 'Roboto', sans-serif;
     --border-radius-main: 8px;
-
-    /* Variables para modo oscuro */
-    --dark-primary-color: #1e1e1e;
-    --dark-background-color: #121212;
-    --dark-section-bg-color: #1e1e1e;
-    --dark-text-color: #e0e0e0;
-    --dark-label-color: #b0b0b0;
-    --dark-border-color: #444;
 }
 
-/* -----------------------------------------------------------------
-   2. Estilos Generales y Secciones del Formulario
-   ----------------------------------------------------------------- */
-.avaliador-urbano-container {
-    font-family: var(--font-primary);
-    background-color: var(--background-color);
-    color: var(--text-color);
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    border-radius: var(--border-radius-main);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+/* --- 2. ESTILOS GENERALES Y TEMA OSCURO --- */
+body {
+    font-family: var(--font-body);
+    color: var(--color-text);
+    background-color: var(--color-background);
+    line-height: 1.7;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-body.dark-theme .avaliador-urbano-container {
-    background-color: var(--dark-section-bg-color);
-    color: var(--dark-text-color);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+body.dark-theme {
+    color: var(--dark-text);
+    background-color: var(--dark-background);
 }
 
-.form-section {
-    background-color: var(--section-bg-color);
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-main);
-    padding: 25px 30px;
-    margin-bottom: 30px;
-    transition: background-color 0.3s, border-color 0.3s;
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headings);
+    color: var(--color-primary);
+    font-weight: 700;
 }
 
-body.dark-theme .form-section {
-    background-color: var(--dark-primary-color);
-    border-color: var(--dark-border-color);
+body.dark-theme h1, body.dark-theme h2, body.dark-theme h3, body.dark-theme h4, body.dark-theme h5, body.dark-theme h6 {
+    color: var(--dark-text);
 }
 
-.form-section h3 {
-    font-size: 22px;
-    color: var(--primary-color);
-    margin-top: 0;
-    margin-bottom: 25px;
+.section-title {
+    font-size: 2.5rem;
+    position: relative;
     padding-bottom: 15px;
-    border-bottom: 2px solid var(--secondary-color);
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background-color: var(--color-accent);
+    margin: 15px auto 0;
+    border-radius: 2px;
+}
+
+/* --- 3. NAVEGACIÓN Y ENCABEZADO --- */
+.main-header {
+    background-color: var(--color-background);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s;
+}
+
+body.dark-theme .main-header {
+    background-color: var(--dark-background);
+    border-bottom-color: var(--dark-border);
+}
+
+.navbar-brand {
+    font-weight: 800;
+    color: var(--color-primary) !important;
+}
+
+.navbar .nav-link {
+    font-weight: 600;
+    color: var(--color-text);
     transition: color 0.3s;
 }
 
-body.dark-theme .form-section h3 {
-    color: var(--dark-text-color);
-}
-/* Estilos omitidos para brevedad, solo se muestran los cambios principales de color */
-.total-costs-display {
-    background-color: var(--background-color);
-    border-radius: var(--border-radius-main);
-    padding: 10px 15px;
-    text-align: right;
-    font-size: 1.1rem;
-    font-weight: bold;
-    margin-top: 15px;
+.navbar .nav-link:hover, .navbar .nav-link.active {
+    color: var(--color-accent);
 }
 
-body.dark-theme .total-costs-display {
-    background-color: var(--dark-primary-color);
+body.dark-theme .navbar .nav-link {
+    color: var(--dark-text);
 }
 
-.image-upload-box:hover {
-    border-color: var(--primary-color);
-    background-color: #f8f9fa;
+body.dark-theme .navbar .nav-link:hover, body.dark-theme .navbar .nav-link.active {
+    color: var(--color-accent);
 }
 
-body.dark-theme .image-upload-box:hover {
-    background-color: #2c2c2c;
+.publish-btn {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #fff !important;
+    border-radius: 50px;
+    padding: 8px 20px;
+    margin-left: 15px;
+    transition: all 0.3s;
 }
 
-.submit-button {
-    background-color: var(--accent-color);
-    color: #fff;
-}
-
-.submit-button:hover {
-    background-color: #E69500;
+.publish-btn:hover {
+    background-color: #e06d00;
     transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(255, 165, 0, 0.4);
+    box-shadow: 0 4px 10px rgba(245, 124, 0, 0.4);
+}
+
+/* --- 4. SECCIONES DE PÁGINA Y CARTAS (CARDS) --- */
+.page-header {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    padding: 80px 0;
+    text-align: center;
+}
+
+.page-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10, 61, 98, 0.7);
+    z-index: 1;
+}
+
+.page-header .container {
+    position: relative;
+    z-index: 2;
+}
+
+.page-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--color-accent);
+}
+
+.card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-main);
+    background-color: var(--color-background);
+    box-shadow: 0 4px 12px var(--color-shadow);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+body.dark-theme .card {
+    background-color: var(--dark-primary);
+    border-color: var(--dark-border);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme .card-footer {
+    background-color: var(--dark-primary);
+    border-top-color: var(--dark-border);
+}
+
+.card-title {
+    color: var(--color-primary);
+    font-weight: 700;
+}
+
+body.dark-theme .card-title {
+    color: var(--dark-text);
+}
+
+.image-placeholder {
+    height: 160px;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    color: #fff;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* --- 5. FOOTER Y UTILIDADES --- */
+.main-footer {
+    background-color: var(--color-primary);
+    color: #fff;
+    padding: 40px 0;
+}
+
+.main-footer h4 {
+    color: #fff;
+    border-bottom: 2px solid var(--color-accent);
+    padding-bottom: 8px;
+}
+
+.main-footer a {
+    color: #fff;
+    transition: color 0.3s;
+}
+
+.main-footer a:hover {
+    color: var(--color-accent);
+    text-decoration: none;
 }
