@@ -1,4 +1,4 @@
-const CACHE_NAME = 'portugalapoia-cache-v4'; // Actualizamos la versión para forzar la actualización en los navegadores
+const CACHE_NAME = 'portugalapoia-cache-v5'; // Actualizamos la versión para forzar la actualización en los navegadores
 // Lista de archivos esenciales para la app (la "App Shell")
 const urlsToCache = [
   '/',

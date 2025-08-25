@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         gallerySection.style.display = 'none';
 
         // Lógica de carga del blog
-        const filteredPosts = (currentFilter === 'all') 
+        const filteredPosts = (currentFilter === 'all')
             ? allBlogPosts
             : allBlogPosts.filter(post => post.category === currentFilter);
 
@@ -263,27 +263,30 @@ document.addEventListener("DOMContentLoaded", async () => {
         const postsSection = document.getElementById('posts-section');
         const gallerySection = document.getElementById('gallery-section');
         const loadMoreContainer = document.getElementById('load-more-container');
-        const readMoreButtons = document.querySelectorAll('.read-more-btn');
 
-        readMoreButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
+        // Lógica para mostrar/esconder o conteúdo completo
+        postsSection.addEventListener('click', (e) => {
+            if (e.target.classList.contains('read-more-btn')) {
                 const card = e.target.closest('.blog-post-card');
                 const summary = card.querySelector('.summary-content');
                 const fullContent = card.querySelector('.full-content');
                 summary.style.display = 'none';
                 fullContent.style.display = 'block';
                 e.target.style.display = 'none';
-            });
+            }
         });
 
+        // Lógica da Navegação por Tabs (Categorias)
         const navLinks = document.querySelectorAll('.blog-nav .nav-link');
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
+
                 navLinks.forEach(nav => nav.classList.remove('active'));
                 e.target.classList.add('active');
-                
+
                 const targetCategory = e.target.getAttribute('data-target');
+
                 if (targetCategory === 'galeria') {
                     postsSection.style.display = 'none';
                     gallerySection.style.display = 'flex';
@@ -292,7 +295,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     gallerySection.style.display = 'none';
                     postsSection.style.display = 'flex';
                     currentFilter = targetCategory;
-                    loadBlogAndGallery(); // Vuelve a cargar y filtrar
+                    loadBlogAndGallery();
                 }
             });
         });
@@ -312,7 +315,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         items.sort((a, b) => new Date(b.data_publicacao || b.date || 0) - new Date(a.data_publicacao || a.date || 0));
-        
+
         const htmlContent = items.map(item => renderFunction(item, pageName, item.id)).join('');
         container.innerHTML = htmlContent;
     }
