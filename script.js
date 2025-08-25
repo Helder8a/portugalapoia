@@ -139,12 +139,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             year: 'numeric'
         });
 
-        const imageUrl = post.image;
-        // Solo incluimos lazy loading para evitar conflictos con srcset
         return `
             <div class="col-lg-4 col-md-6 mb-4 blog-post-item" data-category="${post.category}">
                 <div class="blog-post-card">
-                    <img class="card-img-top" src="${imageUrl}" alt="${post.title}" loading="lazy">
+                    <img class="card-img-top" src="${post.image}" alt="${post.title}">
                     <div class="card-body">
                         <h5 class="card-title">${post.title}</h5>
                         <p class="text-muted small">Publicado em: ${formattedDate}</p>
@@ -343,38 +341,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById('contador-total').textContent = `${totalGeral}+`;
     }
 
+
     // --- CARGA INICIAL Y LLAMADAS A FUNCIONES ---
     carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'doações.html');
     carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'empregos.html');
     carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'serviços.html');
     carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderHabitacao, 'habitação.html');
-
-    // ** Lógica corregida para la carga del blog **
-    const blogPostsContainer = document.getElementById('posts-section');
-    if (blogPostsContainer) {
-        try {
-            const blogResponse = await fetch('/_dados/blog.json');
-            if (!blogResponse.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const blogData = await blogResponse.json();
-            const blogPosts = blogData.posts;
-            blogPosts.forEach(post => {
-                const postElement = document.createElement('div');
-                postElement.innerHTML = renderBlogPost(post);
-                blogPostsContainer.appendChild(postElement.firstChild);
-            });
-            setupBlogFunctionality();
-            
-            // Aseguramos que solo la sección de posts sea visible al cargar
-            document.getElementById('posts-section').style.display = 'flex';
-            document.getElementById('gallery-section').style.display = 'none';
-        } catch (error) {
-            console.error('Error fetching blog posts:', error);
-        }
-    }
-
+    carregarConteudo('/_dados/blog.json', 'posts-section', renderBlogPost, 'blog.html');
     carregarConteudo('/_dados/galeria.json', 'gallery-section', renderGalleryItem, 'blog.html');
+
 
     updateImpactCounters();
     if (document.body.classList.contains('home')) {
