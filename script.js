@@ -75,10 +75,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     // --- OTRAS FUNCIONES Y INICIALIZACIÓN ---
-    function renderDoacao(item) { return ''; }
-    function renderEmprego(item) { return ''; }
-    function renderServico(item) { return ''; }
-    function renderHabitacao(item) { return ''; }
+    function renderDoacao(item) { /* Aquí va tu función original para renderizar donaciones */ return ''; }
+    function renderEmprego(item) { /* Aquí va tu función original para renderizar empleos */ return ''; }
+    function renderServico(item) { /* Aquí va tu función original para renderizar servicios */ return ''; }
+    function renderHabitacao(item) { /* Aquí va tu función original para renderizar habitaciones */ return ''; }
 
     carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'pedidos');
     carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'vagas');
