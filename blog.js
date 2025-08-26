@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     function calcularTempoLeitura(texto) {
-        const palavrasPorMinuto = 200; // Média de leitura
+        const palavrasPorMinuto = 200;
         const numeroDePalavras = texto.split(/\s+/).length;
         const tempo = Math.ceil(numeroDePalavras / palavrasPorMinuto);
         return tempo > 1 ? `${tempo} min de leitura` : `${tempo} min de leitura`;
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const tempoLeitura = calcularTempoLeitura(post.body);
         
         return `
-        <div class="col-12 blog-post-item" data-category="${post.category}">
+        <div class="col-12 blog-post-item" data-category="${post.category}" data-search-terms="${post.title.toLowerCase()} ${post.category.toLowerCase()} ${post.summary.toLowerCase()}">
             <div class="blog-post-card">
                 <img class="card-img-top lazy" data-src="${post.image}" alt="${post.title}">
                 <div class="card-body">
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return `<div class="col-lg-6 col-md-12 mb-4"><div class="gallery-item"><a href="${item.image}" data-lightbox="gallery" data-title="${item.title} - ${item.caption}"><img class="lazy" data-src="${item.image}" alt="${item.title}"></a></div></div>`;
     }
 
-    function setupBlogFunctionality() {
+    function setupBlogFunctionality(allPostsData) {
         const readMoreButtons = document.querySelectorAll('.read-more-btn');
         readMoreButtons.forEach(button => {
             button.addEventListener('click', (e) => {
@@ -56,6 +56,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
         });
+
+        const blogCategories = document.getElementById('blog-categories');
+        const uniqueCategories = ['all', ...new Set(allPostsData.map(post => post.category))];
+        blogCategories.innerHTML = uniqueCategories.map(cat => `<a class="nav-link" data-target="${cat}">${cat.charAt(0).toUpperCase() + cat.slice(1)}</a>`).join('');
+        blogCategories.querySelector('[data-target="all"]').classList.add('active');
 
         const navLinks = document.querySelectorAll('.blog-nav .nav-link');
         const postsSection = document.getElementById('posts-section');
@@ -90,20 +95,38 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
         }, {
-            threshold: 0.2 // Se activa cuando el 20% del elemento es visible
+            threshold: 0.2
         });
 
         document.querySelectorAll('.blog-post-item').forEach(item => {
             observer.observe(item);
         });
+
+        const searchInput = document.getElementById('blog-search');
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const allPosts = document.querySelectorAll('.blog-post-item');
+            
+            allPosts.forEach(post => {
+                const searchTerms = post.dataset.searchTerms;
+                if (searchTerms.includes(searchTerm)) {
+                    post.style.display = 'block';
+                } else {
+                    post.style.display = 'none';
+                }
+            });
+        });
     }
 
     async function carregarBlog() {
+        const postsData = await window.carregarConteudo('/_dados/blog.json');
+
         await Promise.all([
             window.carregarConteudo('/_dados/blog.json', 'posts-section', renderBlogPost, 'posts'),
             window.carregarConteudo('/_dados/galeria.json', 'gallery-section', renderGalleryItem, 'imagens')
         ]);
-        setupBlogFunctionality();
+        
+        setupBlogFunctionality(postsData.posts);
     }
 
     onScriptReady(() => {
