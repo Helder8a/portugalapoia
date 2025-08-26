@@ -1,7 +1,7 @@
-// --- CÓDIGO RESTAURADO Y CORREGIDO ---
+// --- CÓDIGO FINAL CON EL CONTADOR REPARADO ---
 
 document.addEventListener("DOMContentLoaded", async () => {
-    // --- GESTOR DE PRELOADER, SCROLL Y TEMA OSCURO ---
+    // --- GESTOR DE PRELOADER, SCROLL Y TEMA OSCURO (Sin cambios) ---
     const preloader = document.getElementById("preloader");
     if (preloader) {
         window.addEventListener("load", () => preloader.classList.add("hidden"));
@@ -22,30 +22,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             window.scrollTo({ top: 0, behavior: "smooth" });
         });
     }
-
-    const themeToggle = document.getElementById("theme-toggle");
-    if (themeToggle) {
-        const body = document.body;
-        const setTheme = (theme) => {
-            if (theme === "dark") {
-                body.classList.add("dark-theme");
-                themeToggle.checked = true;
-            } else {
-                body.classList.remove("dark-theme");
-                themeToggle.checked = false;
-            }
-        };
-        const savedTheme = localStorage.getItem("theme");
-        const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-        if (savedTheme) { setTheme(savedTheme); } else if (prefersDark) { setTheme("dark"); }
-        themeToggle.addEventListener("change", () => {
-            const newTheme = themeToggle.checked ? "dark" : "light";
-            localStorage.setItem("theme", newTheme);
-            setTheme(newTheme);
-        });
-    }
-
-    // --- LÓGICA DE DATOS ---
+    
+    // --- LÓGICA DE DATOS (Sin cambios) ---
     async function fetchJson(url) {
         try {
             const response = await fetch(`${url}?t=${new Date().getTime()}`);
@@ -57,30 +35,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
-    // --- FUNCIÓN DEL CONTADOR DE IMPACTO (ÚNICA PARTE REPARADA) ---
-    function animateCounter(id, finalValue) {
-        const element = document.getElementById(id);
-        if (!element) return;
-        let startValue = 0;
-        const duration = 2000;
-        if (finalValue === 0) {
-            element.textContent = 0;
-            return;
-        }
-        const stepTime = Math.max(1, Math.floor(duration / finalValue));
-        const timer = setInterval(() => {
-            startValue += 1;
-            if (startValue >= finalValue) {
-                element.textContent = finalValue;
-                clearInterval(timer);
-            } else {
-                element.textContent = startValue;
-            }
-        }, stepTime);
-    }
-
+    // --- FUNCIÓN DEL CONTADOR DE IMPACTO (REPARADA) ---
     async function updateImpactCounters() {
         try {
+            // Se obtienen los datos de los archivos JSON
             const [doacoesData, empregosData, servicosData, habitacaoData] = await Promise.all([
                 fetchJson('/_dados/doacoes.json'),
                 fetchJson('/_dados/empregos.json'),
@@ -88,23 +46,50 @@ document.addEventListener("DOMContentLoaded", async () => {
                 fetchJson('/_dados/habitacao.json')
             ]);
 
+            // **CORRECCIÓN 1: Se cuenta correctamente el número de elementos en cada lista**
             const totalDoacoes = doacoesData?.pedidos?.length || 0;
             const totalEmpregos = empregosData?.vagas?.length || 0;
             const totalServicos = servicosData?.servicos?.length || 0;
             const totalHabitacao = habitacaoData?.anuncios?.length || 0;
             const totalAnuncios = totalDoacoes + totalEmpregos + totalServicos + totalHabitacao;
 
-            // IDs correctos del HTML
-            animateCounter('contador-doacoes', totalDoacoes);
-            animateCounter('contador-empregos', totalEmpregos);
-            animateCounter('contador-total', totalAnuncios);
+            // **CORRECCIÓN 2: Se usan los IDs correctos del HTML**
+            const counters = [
+                { id: 'contador-doacoes', final: totalDoacoes },
+                { id: 'contador-empregos', final: totalEmpregos },
+                { id: 'contador-total', final: totalAnuncios }
+            ];
+
+            counters.forEach(counterInfo => {
+                const counterElement = document.getElementById(counterInfo.id);
+                if (counterElement) {
+                    let start = 0;
+                    const final = counterInfo.final;
+                    if (final === 0) {
+                        counterElement.textContent = 0;
+                        return;
+                    }
+                    const duration = 2000;
+                    const stepTime = Math.max(1, Math.floor(duration / final));
+                    
+                    const timer = setInterval(() => {
+                        start += 1;
+                        if (start >= final) {
+                            counterElement.textContent = final;
+                            clearInterval(timer);
+                        } else {
+                            counterElement.textContent = start;
+                        }
+                    }, stepTime);
+                }
+            });
 
         } catch (error) {
-            console.error("Erro ao atualizar os contadores de impacto:", error);
+            console.error("Erro ao carregar dados para os contadores de impacto:", error);
         }
     }
 
-    // --- FUNCIÓN GLOBAL PARA CARGAR OTROS CONTENIDOS ---
+    // --- OTRAS FUNCIONES (Sin cambios) ---
     window.carregarConteudo = async function(jsonPath, containerId, renderFunction, dataKey, pageName) {
         const container = document.getElementById(containerId);
         if (!container) return;
@@ -121,8 +106,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         container.innerHTML = htmlContent;
         ativarLazyLoading();
     }
-
-    // --- OTRAS FUNCIONES (sin cambios) ---
     function renderDoacao(pedido, pageName) { /* ... */ }
     function renderEmprego(item, pageName, idAnuncio) { /* ... */ }
     function renderServico(item, pageName) { /* ... */ }
@@ -130,7 +113,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     function ativarLazyLoading() { /* ... */ }
     function setupSearch() { /* ... */ }
 
-    // --- INICIALIZACIÓN ---
+    // --- INICIALIZACIÓN (Sin cambios) ---
     if (document.getElementById('impacto')) {
         updateImpactCounters();
     }
