@@ -86,3 +86,126 @@
     padding: 10px;
     text-align: center;
 }
+
+/* Estilos para blog.css */
+.blog-nav {
+    background-color: #f8f9fa;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.blog-nav .nav-link {
+    color: #0A3D62;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    padding-bottom: 5px;
+    transition: color 0.3s;
+}
+
+.blog-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: #F57C00;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: width 0.3s ease-in-out;
+}
+
+.blog-nav .nav-link.active::after,
+.blog-nav .nav-link:hover::after {
+    width: 100%;
+}
+
+/* Efecto de carga (Fade In) */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.blog-post-item {
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+
+/* Estilo para las tarjetas del blog */
+.blog-post-card {
+    border: 1px solid #e0e0e0; /* Borde más suave */
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    margin-bottom: 3rem;
+    background-color: #fff;
+    transform: perspective(1000px) rotateX(0deg); /* Efecto 3D inicial */
+}
+
+.blog-post-card:hover {
+    transform: perspective(1000px) rotateX(3deg); /* Efecto 3D en hover */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Sombra más pronunciada */
+}
+
+.blog-post-card .card-body {
+    padding: 2.5rem;
+}
+
+.blog-post-card .card-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.blog-post-card .card-img-top {
+    height: 350px;
+    object-fit: cover;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.full-content {
+    display: none;
+    margin-top: 1rem;
+}
+
+#gallery-section {
+    display: none;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    aspect-ratio: 16 / 9;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, .1);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s, filter 0.3s;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+.gallery-item .caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
