@@ -3,7 +3,7 @@
     background-color: #f8f9fa;
     padding: 0.5rem 0;
     border-bottom: 1px solid #dee2e6;
-    overflow-x: auto;
+    overflow-x: auto; /* Permite desplazamiento horizontal en móviles si hay muchos enlaces */
     white-space: nowrap;
 }
 
@@ -14,7 +14,7 @@
     position: relative;
     padding-bottom: 5px;
     transition: color 0.3s;
-    font-size: 1rem;
+    font-size: 1rem; /* Tamaño de fuente base */
 }
 
 .blog-nav .nav-link::after {
@@ -34,31 +34,20 @@
     width: 100%;
 }
 
-/* Estilos de la barra de búsqueda */
-#blog-search {
-    border-radius: 50px;
-    padding: 0.75rem 1.5rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-}
-
-.input-group-text {
-    background: #fff;
-    border-left: none;
-    border-top-right-radius: 50px;
-    border-bottom-right-radius: 50px;
-}
-
-
 /* Efecto de carga (Fade In) */
-.blog-post-item {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.blog-post-item.visible {
-    opacity: 1;
-    transform: translateY(0);
+.blog-post-item {
+    animation: fadeIn 0.8s ease-out forwards;
 }
 
 /* Estilo para las tarjetas del blog */
@@ -112,7 +101,7 @@
         font-size: 1.4rem;
     }
     .blog-post-card .card-img-top {
-        height: 200px;
+        height: 200px; /* Altura más pequeña para móviles */
     }
 }
 
