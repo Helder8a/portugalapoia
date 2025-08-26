@@ -38,20 +38,25 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- FUNCIÓN DEL CONTADOR DE IMPACTO (CORREGIDA) ---
     function animateCounter(id, finalValue) {
         const element = document.getElementById(id);
-        if (!element) return;
+        if (!element) {
+            console.error(`Elemento com ID "${id}" não encontrado para o contador.`);
+            return;
+        }
         let startValue = 0;
         const duration = 1500; // 1.5 segundos
-        const stepTime = Math.abs(Math.floor(duration / finalValue));
 
         if (finalValue === 0) {
             element.textContent = 0;
             return;
         }
+        
+        const stepTime = Math.abs(Math.floor(duration / finalValue));
 
         const timer = setInterval(() => {
             startValue += 1;
             element.textContent = startValue;
-            if (startValue === finalValue) {
+            if (startValue >= finalValue) {
+                element.textContent = finalValue;
                 clearInterval(timer);
             }
         }, stepTime < 1 ? 1 : stepTime);
@@ -66,7 +71,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 fetchJson('/_dados/habitacao.json')
             ]);
 
-            // Accede a la lista correcta dentro de cada archivo
             const totalDoacoes = doacoesData?.pedidos?.length || 0;
             const totalEmpregos = empregosData?.vagas?.length || 0;
             const totalServicos = servicosData?.servicos?.length || 0;
@@ -74,9 +78,10 @@ document.addEventListener("DOMContentLoaded", () => {
             
             const totalAnuncios = totalDoacoes + totalEmpregos + totalServicos + totalHabitacao;
 
-            animateCounter('doacoes-counter', totalDoacoes);
-            animateCounter('emprego-counter', totalEmpregos);
-            animateCounter('total-counter', totalAnuncios);
+            // Utiliza os IDs corretos do HTML
+            animateCounter('contador-doacoes', totalDoacoes);
+            animateCounter('contador-empregos', totalEmpregos);
+            animateCounter('contador-total', totalAnuncios);
 
         } catch (error) {
             console.error("Erro ao atualizar os contadores de impacto:", error);
@@ -105,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ativarLazyLoading();
     }
 
-    // --- FUNÇÕES DE RENDERIZAÇÃO ---
+    // --- FUNÇÕES DE RENDERIZAÇÃO (Mantidas como estavam) ---
     function renderDoacao(pedido, pageName) { /* ... (código sin cambios) ... */ }
     function renderEmprego(item, pageName, idAnuncio) { /* ... (código sin cambios) ... */ }
     function renderServico(item, pageName) { /* ... (código sin cambios) ... */ }
@@ -140,8 +145,9 @@ document.addEventListener("DOMContentLoaded", () => {
     carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'servicos', 'serviços.html');
     carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderHabitacao, 'anuncios', 'habitação.html');
 
-    // Ejecuta las funciones necesarias al cargar la página
-    if (document.getElementById('impact')) {
+    // --- EXECUÇÃO CORRIGIDA DO CONTADOR ---
+    // Verifica a existência da secção de impacto pelo ID correto
+    if (document.getElementById('impacto')) {
         updateImpactCounters();
     }
     setupSearch();
