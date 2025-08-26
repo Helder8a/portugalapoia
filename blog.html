@@ -18,7 +18,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-
     <link rel="stylesheet" href="blog.css">
 </head>
 
@@ -69,66 +68,22 @@
         </section>
 
         <section class="container blog-content">
-            <nav class="blog-nav">
-                <a class="nav-link active" data-target="all">Todos</a>
-                <a class="nav-link" data-target="emprego">Empleo</a>
-                <a class="nav-link" data-target="habitacao">Habitación</a>
-                <a class="nav-link" data-target="saude">Salud</a>
-                <a class="nav-link" data-target="turismo">Turismo</a>
-                <a class="nav-link" data-target="educacao">Educación</a>
+            <nav class="blog-nav" id="blog-nav-categories">
+                <a href="#" class="nav-link active" data-category="all">Todos</a>
+                <a href="#" class="nav-link" data-category="habitação">Habitación</a>
+                <a href="#" class="nav-link" data-category="turismo">Turismo</a>
+                <a href="#" class="nav-link" data-category="saude">Salud</a>
+                <a href="#" class="nav-link" data-category="emprego">Empleo</a>
+                <a href="#" class="nav-link" data-category="educacao">Educación</a>
             </nav>
             <div id="articles-grid" class="articles-grid">
-                
-                <article class="article-card" data-category="habitacion">
-                    <img src="/images/uploads/024.webp" alt="Precios de las casas en Portugal no dan tregua en 2025: Lisboa y Oporto con subidas por encima del 7%, Algarve lidera la presión en el mercado." class="article-img">
-                    <div class="article-content">
-                        <span class="category-tag">Habitación</span>
-                        <h3>Precios de las casas en Portugal no dan tregua en 2025: Lisboa y Oporto con subidas por encima del 7%, Algarve lidera la presión en el mercado.</h3>
-                        <p class="summary">Agosto de 2025 confirma la tendencia de subida continua de los precios de la vivienda en Portugal, agravando la crisis de acceso para familias de clase media y jóvenes.</p>
-                        <a href="#" class="read-more">Leer más &rarr;</a>
-                    </div>
-                </article>
-                
-                <article class="article-card" data-category="turismo">
-                    <img src="/images/uploads/023.webp" alt="Portugal atinge novos recordes no verão de 2025, mas sustentabilidade e excesso de confiança geram alerta no setor" class="article-img">
-                    <div class="article-content">
-                        <span class="category-tag">Turismo</span>
-                        <h3>Portugal alcanza nuevos récords en el verano de 2025, pero sustentabilidad y exceso de confianza generan alerta en el sector</h3>
-                        <p class="summary">Lisboa – Agosto de 2025. El sector del turismo en Portugal alcanzó cifras históricas este verano, superando las proyecciones más optimistas del principio del año y consolidando su posición como pilar de la economía nacional.</p>
-                        <a href="#" class="read-more">Leer más &rarr;</a>
-                    </div>
-                </article>
-                
-                <article class="article-card" data-category="saude">
-                    <img src="/images/uploads/022.webp" alt="Acesso a cuidados primários e saúde mental são os maiores desafios para os portugueses" class="article-img">
-                    <div class="article-content">
-                        <span class="category-tag">Salud</span>
-                        <h3>Acceso a cuidados primarios y salud mental son los mayores desafíos para los portugueses</h3>
-                        <p class="summary">Lisboa – El año 2025 arranca con el Servicio Nacional de Salud (SNS) bajo intensa presión, enfrentando desafíos críticos en el acceso a los cuidados de salud primarios y en la respuesta a las crecientes necesidades de salud mental de la población.</p>
-                        <a href="#" class="read-more">Leer más &rarr;</a>
-                    </div>
-                </article>
+                </div>
+        </section>
 
-                <article class="article-card" data-category="emprego">
-                    <img src="/images/uploads/021.webp" alt="Mercado de Trabalho em Portugal 2025: Setor Tecnológico e Turismo Impulsionam Criação de Emprego, Mas Salários Continuam a Ser o Principal Desafio" class="article-img">
-                    <div class="article-content">
-                        <span class="category-tag">Empleo</span>
-                        <h3>Mercado de Trabajo en Portugal 2025: Sector Tecnológico y Turismo Impulsan Creación de Empleo...</h3>
-                        <p class="summary">El mercado de trabajo en Portugal demuestra un dinamismo notable al inicio de 2025, impulsado por la continua expansión de los sectores de la tecnología y el turismo.</p>
-                        <a href="#" class="read-more">Leer más &rarr;</a>
-                    </div>
-                </article>
-                
-                <article class="article-card" data-category="educacao">
-                    <img src="/images/uploads/020.webp" alt="Educação em Portugal 2025: Governo Lança Plano Nacional de Emergência para Combater Abandono Escolar e Contratar 10 Mil Novos Professores" class="article-img">
-                    <div class="article-content">
-                        <span class="category-tag">Educación</span>
-                        <h3>Educación en Portugal 2025: Gobierno Lanza Plan Nacional de Emergencia...</h3>
-                        <p class="summary">El Gobierno portugués anunció esta semana en Lisboa un ambicioso Plan Nacional de Emergencia para la Educación, que entrará en vigor ya el próximo año lectivo. La medida surge como respuesta directa a los números alarmantes del abandono escolar precoz y a la grave crisis de falta de docentes que afecta al sistema de enseñanza.</p>
-                        <a href="#" class="read-more">Leer más &rarr;</a>
-                    </div>
-                </article>
-            </div>
+        <section class="container gallery-section">
+            <h2 class="section-title">Nuestra Galería</h2>
+            <div id="gallery-grid" class="gallery-grid">
+                </div>
         </section>
     </main>
 
@@ -173,6 +128,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="script.js" defer></script>
+    <script src="blog.js" defer></script>
 </body>
-
 </html>
