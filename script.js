@@ -1,65 +1,45 @@
 // --- CÓDIGO FINAL Y CORRECTO para script.js ---
 
 document.addEventListener("DOMContentLoaded", () => {
-    // --- GESTOR DE PRELOADER, SCROLL Y TEMA OSCURO ---
-    const preloader = document.getElementById("preloader");
-    if (preloader) {
-        window.addEventListener("load", () => preloader.classList.add("hidden"));
-        setTimeout(() => preloader.classList.add("hidden"), 1500);
-    }
-
-    const scrollTopBtn = document.getElementById("scrollTopBtn");
-    if (scrollTopBtn) {
-        window.onscroll = () => {
-            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-                scrollTopBtn.classList.add("visible");
-            } else {
-                scrollTopBtn.classList.remove("visible");
-            }
-        };
-        scrollTopBtn.addEventListener("click", e => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        });
-    }
-
-    // --- LÓGICA DE DATOS (FUNCIÓN GLOBAL MEJORADA) ---
+    // --- FUNCIÓN PARA LEER DATOS (FETCH) ---
+    // Definida primero para estar disponible globalmente
     async function fetchJson(url) {
         try {
             const response = await fetch(`${url}?t=${new Date().getTime()}`);
-            if (!response.ok) return null;
+            if (!response.ok) {
+                console.error(`Error al cargar JSON de ${url}: ${response.statusText}`);
+                return null;
+            }
             return await response.json();
         } catch (error) {
-            console.error(`Erro ao processar JSON de ${url}:`, error);
+            console.error(`Excepción al procesar JSON de ${url}:`, error);
             return null;
         }
     }
-    
-    // --- FUNCIÓN DEL CONTADOR DE IMPACTO (CORREGIDA) ---
+
+    // --- FUNCIÓN DEL CONTADOR DE IMPACTO ---
     function animateCounter(id, finalValue) {
         const element = document.getElementById(id);
-        if (!element) {
-            console.error(`Elemento com ID "${id}" não encontrado para o contador.`);
-            return;
-        }
+        if (!element) return;
+        
         let startValue = 0;
-        const duration = 1500; // 1.5 segundos
-
+        const duration = 2000; // 2 segundos para una animación más suave
         if (finalValue === 0) {
             element.textContent = 0;
             return;
         }
         
-        const stepTime = Math.abs(Math.floor(duration / finalValue));
+        const stepTime = Math.max(1, Math.floor(duration / finalValue));
 
         const timer = setInterval(() => {
             startValue += 1;
-            element.textContent = startValue;
             if (startValue >= finalValue) {
                 element.textContent = finalValue;
                 clearInterval(timer);
+            } else {
+                element.textContent = startValue;
             }
-        }, stepTime < 1 ? 1 : stepTime);
+        }, stepTime);
     }
 
     async function updateImpactCounters() {
@@ -75,10 +55,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const totalEmpregos = empregosData?.vagas?.length || 0;
             const totalServicos = servicosData?.servicos?.length || 0;
             const totalHabitacao = habitacaoData?.anuncios?.length || 0;
-            
             const totalAnuncios = totalDoacoes + totalEmpregos + totalServicos + totalHabitacao;
 
-            // Utiliza os IDs corretos do HTML
+            // IDs correctos del HTML
             animateCounter('contador-doacoes', totalDoacoes);
             animateCounter('contador-empregos', totalEmpregos);
             animateCounter('contador-total', totalAnuncios);
@@ -88,8 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
-    // --- FUNCIÓN GLOBAL PARA CARGAR CONTENIDO ---
+    // --- FUNCIÓN GLOBAL PARA CARGAR OTROS CONTENIDOS ---
     window.carregarConteudo = async function(jsonPath, containerId, renderFunction, dataKey, pageName) {
         const container = document.getElementById(containerId);
         if (!container) return;
@@ -104,24 +82,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const items = data[dataKey];
         items.sort((a, b) => new Date(b.data_publicacao || b.date || 0) - new Date(a.data_publicacao || a.date || 0));
-
         const htmlContent = items.map(item => renderFunction(item, pageName, item.id)).join('');
         container.innerHTML = htmlContent;
         ativarLazyLoading();
     }
 
-    // --- FUNÇÕES DE RENDERIZAÇÃO (Mantidas como estavam) ---
-    function renderDoacao(pedido, pageName) { /* ... (código sin cambios) ... */ }
-    function renderEmprego(item, pageName, idAnuncio) { /* ... (código sin cambios) ... */ }
-    function renderServico(item, pageName) { /* ... (código sin cambios) ... */ }
-    function renderHabitacao(anuncio, pageName) { /* ... (código sin cambios) ... */ }
+    // --- FUNCIONES DE RENDERIZACIÓN (Sin cambios) ---
+    function renderDoacao(pedido, pageName) { /* ... */ }
+    function renderEmprego(item, pageName, idAnuncio) { /* ... */ }
+    function renderServico(item, pageName) { /* ... */ }
+    function renderHabitacao(anuncio, pageName) { /* ... */ }
 
     // --- FUNCIONALIDADES GENERALES Y LAZY LOADING ---
     function ativarLazyLoading() {
         const lazyImages = [].slice.call(document.querySelectorAll("img.lazy:not(.loaded)"));
         if ("IntersectionObserver" in window) {
-            let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
-                entries.forEach(function(entry) {
+            let lazyImageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         let lazyImage = entry.target;
                         lazyImage.src = lazyImage.dataset.src;
@@ -131,25 +108,23 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 });
             });
-            lazyImages.forEach(function(lazyImage) {
-                lazyImageObserver.observe(lazyImage);
-            });
+            lazyImages.forEach(lazyImage => lazyImageObserver.observe(lazyImage));
         }
     }
-    
-    function setupSearch() { /* ... (código sin cambios) ... */ }
 
-    // --- CARGA INICIAL DE CONTENIDOS ---
+    // --- INICIALIZACIÓN DE TODO ---
+
+    // 1. Activar el contador si estamos en la página correcta
+    if (document.getElementById('impacto')) {
+        updateImpactCounters();
+    }
+
+    // 2. Cargar el resto del contenido dinámico
     carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'pedidos', 'doações.html');
     carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'vagas', 'empregos.html');
     carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'servicos', 'serviços.html');
     carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderHabitacao, 'anuncios', 'habitação.html');
 
-    // --- EXECUÇÃO CORRIGIDA DO CONTADOR ---
-    // Verifica a existência da secção de impacto pelo ID correto
-    if (document.getElementById('impacto')) {
-        updateImpactCounters();
-    }
-    setupSearch();
+    // 3. Activar otras funcionalidades
     ativarLazyLoading();
 });
