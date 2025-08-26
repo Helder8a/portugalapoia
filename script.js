@@ -1,35 +1,18 @@
 // --- CÓDIGO FINAL Y CORRECTO para script.js ---
 
 document.addEventListener("DOMContentLoaded", () => {
-    // --- GESTOR DE PRELOADER, SCROLL Y TEMA OSCURO ---
-    const preloader = document.getElementById("preloader");
-    if (preloader) {
-        window.addEventListener("load", () => preloader.classList.add("hidden"));
-    }
-
-    const scrollTopBtn = document.getElementById("scrollTopBtn");
-    if (scrollTopBtn) {
-        window.onscroll = () => {
-            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-                scrollTopBtn.classList.add("visible");
-            } else {
-                scrollTopBtn.classList.remove("visible");
-            }
-        };
-        scrollTopBtn.addEventListener("click", e => {
-            e.preventDefault();
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        });
-    }
-
     // --- FUNCIÓN PARA LEER DATOS (FETCH) ---
+    // Definida primero para estar disponible globalmente
     async function fetchJson(url) {
         try {
             const response = await fetch(`${url}?t=${new Date().getTime()}`);
-            if (!response.ok) return null;
+            if (!response.ok) {
+                console.error(`Error al cargar JSON de ${url}: ${response.statusText}`);
+                return null;
+            }
             return await response.json();
         } catch (error) {
-            console.error(`Error al cargar JSON de ${url}:`, error);
+            console.error(`Excepción al procesar JSON de ${url}:`, error);
             return null;
         }
     }
@@ -37,8 +20,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- FUNCIÓN DEL CONTADOR DE IMPACTO ---
     async function updateImpactCounters() {
         const animateCounter = (element, finalValue) => {
+            if (!element) return;
             let startValue = 0;
-            const duration = 2000; // 2 segundos
+            const duration = 2000;
             if (finalValue === 0) {
                 element.textContent = 0;
                 return;
@@ -119,21 +103,21 @@ document.addEventListener("DOMContentLoaded", () => {
         ativarLazyLoading();
     }
     
-    // --- FUNCIONES DE RENDERIZACIÓN (Sin cambios) ---
-    function renderDoacao(item) { /* ... Tu código original ... */ return ''; }
-    function renderEmprego(item) { /* ... Tu código original ... */ return ''; }
-    function renderServico(item) { /* ... Tu código original ... */ return ''; }
-    function renderHabitacao(item) { /* ... Tu código original ... */ return ''; }
+    // --- OTRAS FUNCIONES Y INICIALIZACIÓN ---
+    // (Aquí irían tus funciones renderDoacao, renderEmprego, etc. completas)
+    function renderDoacao(item) { return ''; }
+    function renderEmprego(item) { return ''; }
+    function renderServico(item) { return ''; }
+    function renderHabitacao(item) { return ''; }
 
-
-    // --- INICIALIZACIÓN DE TODO ---
     if (document.getElementById('impacto')) {
         updateImpactCounters();
     }
+    
     carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'pedidos');
     carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'vagas');
     carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'servicos');
     carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderHabitacao, 'anuncios');
     
-    ativarLazyLoading(); // Una llamada inicial por si hay imágenes estáticas
+    ativarLazyLoading();
 });
