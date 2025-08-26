@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const navLinks = document.querySelectorAll('.blog-nav .nav-link');
         const blogContentGrid = document.getElementById('blog-content-grid');
         const gallerySection = document.getElementById('gallery-section');
-        const postsSection = document.getElementById('posts-section'); // La sección principal de posts
+        const postsSection = document.getElementById('posts-section'); 
         
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
@@ -94,30 +94,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function carregarTudo() {
-        // Cargar los datos del blog
         const postsData = await window.carregarConteudo('/_dados/blog.json');
 
         if (postsData && postsData.posts && postsData.posts.length > 0) {
             const featuredPost = postsData.posts[0];
             const otherPosts = postsData.posts.slice(1);
 
-            // Renderizar el post destacado
             const featuredPostSection = document.getElementById('featured-post-section');
             if (featuredPostSection) {
                 featuredPostSection.innerHTML = renderFeaturedBlogPost(featuredPost);
             }
 
-            // Renderizar el resto de los posts en la cuadrícula
             const blogContentGrid = document.getElementById('blog-content-grid');
             if (blogContentGrid) {
                 blogContentGrid.innerHTML = otherPosts.map(renderBlogPost).join('');
             }
         }
         
-        // Cargar la galería
         await window.carregarConteudo('/_dados/galeria.json', 'gallery-section', renderGalleryItem);
 
-        // Configurar la funcionalidad después de que todo se ha cargado
         setupBlogFunctionality();
     }
 
