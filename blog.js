@@ -20,10 +20,10 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="col-lg-4 col-md-6 mb-4 blog-post-item" data-category="${post.category}">
                 <div class="blog-post-card">
                     <img class="card-img-top lazy" data-src="${post.image}" alt="${post.title}">
-                    <div class="card-body">
+                    <div class="card-body d-flex flex-column">
                         <h5 class="card-title">${post.title}</h5>
                         <p class="text-muted small">Publicado em: ${formattedDate}</p>
-                        <p class="card-text summary-content">${post.summary}</p>
+                        <p class="card-text summary-content flex-grow-1">${post.summary}</p>
                         <div class="full-content" style="display: none;">
                             <p>${post.body.replace(/\\n/g, '</p><p>')}</p>
                         </div>
