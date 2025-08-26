@@ -1,4 +1,4 @@
-// --- CÓDIGO FINAL Y CORRECTO para blog.js (Versión Revista) ---
+// --- CÓDIGO FINAL Y CORRECTO para blog.js (Versión de Columna Única) ---
 
 document.addEventListener("DOMContentLoaded", () => {
     function onScriptReady(callback) {
@@ -8,40 +8,22 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => onScriptReady(callback), 50);
         }
     }
-
-    function renderFeaturedBlogPost(post) {
-        const postDate = new Date(post.date);
-        const formattedDate = postDate.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' });
-        return `
-        <div class="featured-post-card d-flex flex-column flex-lg-row">
-            <img class="lazy card-img-top" data-src="${post.image}" alt="${post.title}">
-            <div class="card-body">
-                <h5 class="card-title">${post.title}</h5>
-                <p class="text-muted small">Publicado em: ${formattedDate}</p>
-                <p class="card-text summary-content">${post.summary}</p>
-                <div class="full-content" style="display: none;">
-                    <p>${post.body.replace(/\\n/g, '</p><p>')}</p>
-                </div>
-                <button class="btn btn-primary read-more-btn">Ler Mais</button>
-            </div>
-        </div>`;
-    }
-
+    
     function renderBlogPost(post) {
         const postDate = new Date(post.date);
         const formattedDate = postDate.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' });
         return `
-        <div class="col-lg-4 col-md-6 mb-4 blog-post-item" data-category="${post.category}">
+        <div class="col-12 blog-post-item" data-category="${post.category}">
             <div class="blog-post-card">
                 <img class="card-img-top lazy" data-src="${post.image}" alt="${post.title}">
-                <div class="card-body d-flex flex-column">
+                <div class="card-body">
                     <h5 class="card-title">${post.title}</h5>
                     <p class="text-muted small">Publicado em: ${formattedDate}</p>
-                    <p class="card-text summary-content flex-grow-1">${post.summary}</p>
+                    <p class="card-text summary-content">${post.summary}</p>
                     <div class="full-content" style="display: none;">
                         <p>${post.body.replace(/\\n/g, '</p><p>')}</p>
                     </div>
-                    <button class="btn btn-outline-primary read-more-btn mt-auto">Ler Mais</button>
+                    <button class="btn btn-outline-primary read-more-btn">Ler Mais</button>
                 </div>
             </div>
         </div>`;
@@ -55,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const readMoreButtons = document.querySelectorAll('.read-more-btn');
         readMoreButtons.forEach(button => {
             button.addEventListener('click', (e) => {
-                const card = e.target.closest('.blog-post-card, .featured-post-card');
+                const card = e.target.closest('.blog-post-card');
                 const summary = card.querySelector('.summary-content');
                 const fullContent = card.querySelector('.full-content');
                 if (summary && fullContent) {
@@ -67,10 +49,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         const navLinks = document.querySelectorAll('.blog-nav .nav-link');
-        const blogContentGrid = document.getElementById('blog-content-grid');
+        const postsSection = document.getElementById('posts-section');
         const gallerySection = document.getElementById('gallery-section');
-        const postsSection = document.getElementById('posts-section'); 
-        
+        const allPosts = postsSection.querySelectorAll('.blog-post-item');
+
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -84,7 +66,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else {
                     postsSection.style.display = 'flex';
                     gallerySection.style.display = 'none';
-                    const allPosts = document.querySelectorAll('.blog-post-item');
                     allPosts.forEach(post => {
                         post.style.display = (targetCategory === 'all' || post.dataset.category === targetCategory) ? 'block' : 'none';
                     });
@@ -93,30 +74,15 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    async function carregarTudo() {
-        const postsData = await window.carregarConteudo('/_dados/blog.json');
-
-        if (postsData && postsData.posts && postsData.posts.length > 0) {
-            const featuredPost = postsData.posts[0];
-            const otherPosts = postsData.posts.slice(1);
-
-            const featuredPostSection = document.getElementById('featured-post-section');
-            if (featuredPostSection) {
-                featuredPostSection.innerHTML = renderFeaturedBlogPost(featuredPost);
-            }
-
-            const blogContentGrid = document.getElementById('blog-content-grid');
-            if (blogContentGrid) {
-                blogContentGrid.innerHTML = otherPosts.map(renderBlogPost).join('');
-            }
-        }
-        
-        await window.carregarConteudo('/_dados/galeria.json', 'gallery-section', renderGalleryItem);
-
+    async function carregarBlog() {
+        await Promise.all([
+            window.carregarConteudo('/_dados/blog.json', 'posts-section', renderBlogPost, 'posts'),
+            window.carregarConteudo('/_dados/galeria.json', 'gallery-section', renderGalleryItem, 'imagens')
+        ]);
         setupBlogFunctionality();
     }
 
     onScriptReady(() => {
-        carregarTudo();
+        carregarBlog();
     });
 });
