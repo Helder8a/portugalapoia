@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         const blogCategories = document.getElementById('blog-categories');
-        const uniqueCategories = ['all', ...new Set(allPostsData.map(post => post.category))];
+        const uniqueCategories = ['all', 'galeria', ...new Set(allPostsData.map(post => post.category))].sort();
         blogCategories.innerHTML = uniqueCategories.map(cat => `<a class="nav-link" data-target="${cat}">${cat.charAt(0).toUpperCase() + cat.slice(1)}</a>`).join('');
         blogCategories.querySelector('[data-target="all"]').classList.add('active');
 
