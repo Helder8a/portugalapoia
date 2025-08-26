@@ -1,4 +1,4 @@
-// --- CÓDIGO FINAL, ESTABLE Y SIN CONTADOR ---
+// --- CÓDIGO FINAL, ESTABLE Y CON ANUNCIOS FUNCIONANDO ---
 
 document.addEventListener("DOMContentLoaded", () => {
     // --- GESTORES BÁSICOS (Preloader, Scroll, etc.) ---
@@ -49,9 +49,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     
-    // --- FUNCIONES PARA CREAR LAS TARJETAS DE ANUNCIOS ---
+    // --- FUNCIONES PARA CREAR LAS TARJETAS DE ANUNCIOS (RESTAURADAS) ---
     function renderDoacao(item) {
-        const hasContact = item.contato || item.link_contato;
         return `
         <div class="col-lg-4 col-md-6 mb-4 announcement-card" data-title="${item.titulo}" data-location="${item.localizacao}">
             <div class="card h-100">
@@ -60,10 +59,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">${item.titulo}</h5>
                     <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt"></i> ${item.localizacao}</h6>
-                    <p class="card-text">${item.descricao}</p>
+                    <p class="card-text flex-grow-1">${item.descricao}</p>
                     <div class="card-contact-icons mt-auto">
-                        ${item.link_contato ? `<a href="${item.link_contato}" class="contact-icon"><i class="fas fa-envelope"></i></a>` : ''}
-                        ${item.contato ? `<a href="tel:${item.contato}" class="contact-icon"><i class="fas fa-phone"></i></a>` : ''}
+                        ${item.link_contato ? `<a href="mailto:${item.link_contato}" class="contact-icon" title="Contactar por Email"><i class="fas fa-envelope"></i></a>` : ''}
+                        ${item.contato ? `<a href="tel:${item.contato}" class="contact-icon" title="Contactar por Telefone"><i class="fas fa-phone"></i></a>` : ''}
                     </div>
                 </div>
             </div>
@@ -78,10 +77,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">${item.titulo}</h5>
                     <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt"></i> ${item.localizacao}</h6>
-                    <p class="card-text">${item.descricao}</p>
+                    <p class="card-text flex-grow-1">${item.descricao}</p>
                     <div class="card-contact-icons mt-auto">
-                        ${item.link_contato ? `<a href="${item.link_contato}" class="contact-icon"><i class="fas fa-envelope"></i></a>` : ''}
-                        ${item.contato ? `<a href="tel:${item.contato}" class="contact-icon"><i class="fas fa-phone"></i></a>` : ''}
+                        ${item.link_contato ? `<a href="mailto:${item.link_contato}" class="contact-icon" title="Contactar por Email"><i class="fas fa-envelope"></i></a>` : ''}
+                        ${item.contato ? `<a href="tel:${item.contato}" class="contact-icon" title="Contactar por Telefone"><i class="fas fa-phone"></i></a>` : ''}
                     </div>
                 </div>
             </div>
@@ -93,14 +92,14 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="col-lg-4 col-md-6 mb-4 announcement-card" data-title="${item.titulo}" data-location="${item.localizacao}">
             <div class="card h-100">
                 <div class="card-number">${item.id || ''}</div>
-                ${item.logo_empresa ? `<div class="service-card-logo"><img src="${item.logo_empresa}" alt="Logo"></div>` : ''}
+                ${item.logo_empresa ? `<div class="service-card-logo"><img src="${item.logo_empresa}" class="lazy" data-src="${item.logo_empresa}" alt="Logo"></div>` : ''}
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">${item.titulo}</h5>
                     <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt"></i> ${item.localizacao}</h6>
-                    <p class="card-text">${item.descricao}</p>
+                    <p class="card-text flex-grow-1">${item.descricao}</p>
                     <div class="card-contact-icons mt-auto">
-                        ${item.link_contato ? `<a href="${item.link_contato}" class="contact-icon"><i class="fas fa-envelope"></i></a>` : ''}
-                        ${item.contato ? `<a href="tel:${item.contato}" class="contact-icon"><i class="fas fa-phone"></i></a>` : ''}
+                        ${item.link_contato ? `<a href="mailto:${item.link_contato}" class="contact-icon" title="Contactar por Email"><i class="fas fa-envelope"></i></a>` : ''}
+                        ${item.contato ? `<a href="tel:${item.contato}" class="contact-icon" title="Contactar por Telefone"><i class="fas fa-phone"></i></a>` : ''}
                     </div>
                 </div>
             </div>
@@ -116,10 +115,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">${item.titulo}</h5>
                     <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt"></i> ${item.localizacao}</h6>
-                    <p class="card-text">${item.descricao}</p>
+                    <p class="card-text flex-grow-1">${item.descricao}</p>
                     <div class="card-contact-icons mt-auto">
-                        ${item.link_contato ? `<a href="${item.link_contato}" class="contact-icon"><i class="fas fa-envelope"></i></a>` : ''}
-                        ${item.contato ? `<a href="tel:${item.contato}" class="contact-icon"><i class="fas fa-phone"></i></a>` : ''}
+                        ${item.link_contato ? `<a href="mailto:${item.link_contato}" class="contact-icon" title="Contactar por Email"><i class="fas fa-envelope"></i></a>` : ''}
+                        ${item.contato ? `<a href="tel:${item.contato}" class="contact-icon" title="Contactar por Telefone"><i class="fas fa-phone"></i></a>` : ''}
                     </div>
                 </div>
             </div>

@@ -6,12 +6,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (window.carregarConteudo) {
             callback();
         } else {
-            // Revisa cada 50ms si la función ya existe
             setTimeout(() => onScriptReady(callback), 50);
         }
     }
 
-    // Ejecuta el código del blog solo cuando script.js esté listo
     onScriptReady(() => {
         function renderBlogPost(post) {
             const postDate = new Date(post.date);
