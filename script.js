@@ -1,6 +1,6 @@
 // --- CÓDIGO FINAL Y CORRECTO para script.js ---
 
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", () => {
     // --- GESTOR DE PRELOADER, SCROLL Y TEMA OSCURO ---
     const preloader = document.getElementById("preloader");
     if (preloader) {
@@ -23,28 +23,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    const themeToggle = document.getElementById("theme-toggle");
-    if (themeToggle) {
-        const body = document.body;
-        const setTheme = (theme) => {
-            if (theme === "dark") {
-                body.classList.add("dark-theme");
-                themeToggle.checked = true;
-            } else {
-                body.classList.remove("dark-theme");
-                themeToggle.checked = false;
-            }
-        };
-        const savedTheme = localStorage.getItem("theme");
-        const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-        if (savedTheme) { setTheme(savedTheme); } else if (prefersDark) { setTheme("dark"); }
-        themeToggle.addEventListener("change", () => {
-            const newTheme = themeToggle.checked ? "dark" : "light";
-            localStorage.setItem("theme", newTheme);
-            setTheme(newTheme);
-        });
-    }
-
     // --- LÓGICA DE DATOS (FUNCIÓN GLOBAL MEJORADA) ---
     async function fetchJson(url) {
         try {
@@ -56,8 +34,57 @@ document.addEventListener("DOMContentLoaded", async () => {
             return null;
         }
     }
+    
+    // --- FUNCIÓN DEL CONTADOR DE IMPACTO (CORREGIDA) ---
+    function animateCounter(id, finalValue) {
+        const element = document.getElementById(id);
+        if (!element) return;
+        let startValue = 0;
+        const duration = 1500; // 1.5 segundos
+        const stepTime = Math.abs(Math.floor(duration / finalValue));
 
-    // A função agora aceita uma "dataKey" para saber o que procurar no JSON
+        if (finalValue === 0) {
+            element.textContent = 0;
+            return;
+        }
+
+        const timer = setInterval(() => {
+            startValue += 1;
+            element.textContent = startValue;
+            if (startValue === finalValue) {
+                clearInterval(timer);
+            }
+        }, stepTime < 1 ? 1 : stepTime);
+    }
+
+    async function updateImpactCounters() {
+        try {
+            const [doacoesData, empregosData, servicosData, habitacaoData] = await Promise.all([
+                fetchJson('/_dados/doacoes.json'),
+                fetchJson('/_dados/empregos.json'),
+                fetchJson('/_dados/servicos.json'),
+                fetchJson('/_dados/habitacao.json')
+            ]);
+
+            // Accede a la lista correcta dentro de cada archivo
+            const totalDoacoes = doacoesData?.pedidos?.length || 0;
+            const totalEmpregos = empregosData?.vagas?.length || 0;
+            const totalServicos = servicosData?.servicos?.length || 0;
+            const totalHabitacao = habitacaoData?.anuncios?.length || 0;
+            
+            const totalAnuncios = totalDoacoes + totalEmpregos + totalServicos + totalHabitacao;
+
+            animateCounter('doacoes-counter', totalDoacoes);
+            animateCounter('emprego-counter', totalEmpregos);
+            animateCounter('total-counter', totalAnuncios);
+
+        } catch (error) {
+            console.error("Erro ao atualizar os contadores de impacto:", error);
+        }
+    }
+
+
+    // --- FUNCIÓN GLOBAL PARA CARGAR CONTENIDO ---
     window.carregarConteudo = async function(jsonPath, containerId, renderFunction, dataKey, pageName) {
         const container = document.getElementById(containerId);
         if (!container) return;
@@ -75,17 +102,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         const htmlContent = items.map(item => renderFunction(item, pageName, item.id)).join('');
         container.innerHTML = htmlContent;
-
-        // Ativa o lazy loading para as novas imagens
         ativarLazyLoading();
     }
 
     // --- FUNÇÕES DE RENDERIZAÇÃO ---
-    // (As funções de renderDoacao, renderEmprego, etc. permanecem iguais)
-    function formatarDatas(item) { /* ... (código sin cambios) ... */ }
-    function renderShareButtons(item, page) { /* ... (código sin cambios) ... */ }
-    function renderEmprego(item, pageName, idAnuncio) { /* ... (código sin cambios) ... */ }
     function renderDoacao(pedido, pageName) { /* ... (código sin cambios) ... */ }
+    function renderEmprego(item, pageName, idAnuncio) { /* ... (código sin cambios) ... */ }
     function renderServico(item, pageName) { /* ... (código sin cambios) ... */ }
     function renderHabitacao(anuncio, pageName) { /* ... (código sin cambios) ... */ }
 
@@ -109,17 +131,19 @@ document.addEventListener("DOMContentLoaded", async () => {
             });
         }
     }
-
-    async function updateImpactCounters() { /* ... (código sin cambios) ... */ }
+    
     function setupSearch() { /* ... (código sin cambios) ... */ }
 
-    // --- CARGA INICIAL (COM A dataKey ESPECIFICADA) ---
+    // --- CARGA INICIAL DE CONTENIDOS ---
     carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'pedidos', 'doações.html');
     carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'vagas', 'empregos.html');
     carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'servicos', 'serviços.html');
     carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderHabitacao, 'anuncios', 'habitação.html');
 
-    updateImpactCounters();
+    // Ejecuta las funciones necesarias al cargar la página
+    if (document.getElementById('impact')) {
+        updateImpactCounters();
+    }
     setupSearch();
     ativarLazyLoading();
 });
