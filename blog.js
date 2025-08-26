@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="col-lg-6 col-md-12 mb-4">
             <div class="gallery-item">
                 <a href="${item.image}" data-lightbox="gallery" data-title="${item.title} - ${item.caption}">
-                    <img src="${item.image}" alt="${item.title}" loading="lazy">
+                    <img class="lazy" data-src="${item.image}" alt="${item.title}" loading="lazy">
                 </a>
                 <div class="caption">
                     <h5>${item.title}</h5>
@@ -93,12 +93,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- CÓDIGO CORREGIDO PARA CARGAR Y LUEGO ACTIVAR ---
     async function carregarTudo() {
         if (typeof carregarConteudo === 'function') {
-            // Espera que ambos os conteúdos sejam carregados
             await Promise.all([
-                carregarConteudo('/_dados/blog.json', 'posts-section', renderBlogPost, 'blog.html'),
-                carregarConteudo('/_dados/galeria.json', 'gallery-section', renderGalleryItem, 'blog.html')
+                // Indicamos la clave "posts" para el blog
+                carregarConteudo('/_dados/blog.json', 'posts-section', renderBlogPost, 'posts', 'blog.html'),
+                // Indicamos la clave "imagens" para la galería
+                carregarConteudo('/_dados/galeria.json', 'gallery-section', renderGalleryItem, 'imagens', 'blog.html')
             ]);
-            // Só depois de carregar, ativa a funcionalidade
             setupBlogFunctionality();
         } else {
             console.error("A função carregarConteudo não foi encontrada.");

@@ -45,41 +45,43 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // --- LÓGICA DE DATOS (FUNCIÓN GLOBAL) ---
+    // --- LÓGICA DE DATOS (FUNCIÓN GLOBAL MEJORADA) ---
     async function fetchJson(url) {
         try {
             const response = await fetch(`${url}?t=${new Date().getTime()}`);
-            if (!response.ok) return [];
-            const data = await response.json();
-            const key = Object.keys(data)[0];
-            return Array.isArray(data[key]) ? data[key] : [];
+            if (!response.ok) return null;
+            return await response.json();
         } catch (error) {
             console.error(`Erro ao processar JSON de ${url}:`, error);
-            return [];
+            return null;
         }
     }
-    
-    // Hacemos que carregarConteudo sea accesible globalmente
-    window.carregarConteudo = async function(jsonPath, containerId, renderFunction, pageName) {
+
+    // A função agora aceita uma "dataKey" para saber o que procurar no JSON
+    window.carregarConteudo = async function(jsonPath, containerId, renderFunction, dataKey, pageName) {
         const container = document.getElementById(containerId);
         if (!container) return;
 
-        const items = await fetchJson(jsonPath);
-
-        if (!items || items.length === 0) {
+        const data = await fetchJson(jsonPath);
+        if (!data || !data[dataKey]) {
             if (containerId !== 'gallery-section') {
-                container.innerHTML = `<p class="col-12 text-center lead text-muted mt-5">De momento, não há publicações nesta secção.</p>`;
+                 container.innerHTML = `<p class="col-12 text-center lead text-muted mt-5">De momento, não há publicações nesta secção.</p>`;
             }
             return;
         }
 
+        const items = data[dataKey];
         items.sort((a, b) => new Date(b.data_publicacao || b.date || 0) - new Date(a.data_publicacao || a.date || 0));
 
         const htmlContent = items.map(item => renderFunction(item, pageName, item.id)).join('');
         container.innerHTML = htmlContent;
+
+        // Ativa o lazy loading para as novas imagens
+        ativarLazyLoading();
     }
 
     // --- FUNÇÕES DE RENDERIZAÇÃO ---
+    // (As funções de renderDoacao, renderEmprego, etc. permanecem iguais)
     function formatarDatas(item) {
         if (!item || !item.data_publicacao || !item.data_vencimento) {
             return `<div class="date-info">ID: ${item.id || 'N/A'}</div>`;
@@ -109,62 +111,37 @@ document.addEventListener("DOMContentLoaded", async () => {
     function renderServico(item, pageName) { /* ... (código sin cambios) ... */ }
     function renderHabitacao(anuncio, pageName) { /* ... (código sin cambios) ... */ }
 
-    // --- FUNCIONALIDADES GENERALES ---
-    async function loadHomepageContent() { /* ... (código sin cambios) ... */ }
+    // --- FUNCIONALIDADES GENERALES Y LAZY LOADING ---
+    function ativarLazyLoading() {
+        const lazyImages = [].slice.call(document.querySelectorAll("img.lazy:not(.loaded)"));
+        if ("IntersectionObserver" in window) {
+            let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        let lazyImage = entry.target;
+                        lazyImage.src = lazyImage.dataset.src;
+                        lazyImage.classList.add("loaded");
+                        lazyImage.classList.remove("lazy");
+                        lazyImageObserver.unobserve(lazyImage);
+                    }
+                });
+            });
+            lazyImages.forEach(function(lazyImage) {
+                lazyImageObserver.observe(lazyImage);
+            });
+        }
+    }
+
     async function updateImpactCounters() { /* ... (código sin cambios) ... */ }
     function setupSearch() { /* ... (código sin cambios) ... */ }
 
-    // --- CARGA INICIAL Y LLAMADAS A FUNCIONES (EXCLUYENDO EL BLOG) ---
-    carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'doações.html');
-    carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'empregos.html');
-    carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'serviços.html');
-    carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderHabitacao, 'habitação.html');
+    // --- CARGA INICIAL (COM A dataKey ESPECIFICADA) ---
+    carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'pedidos', 'doações.html');
+    carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'vagas', 'empregos.html');
+    carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'servicos', 'serviços.html');
+    carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderHabitacao, 'anuncios', 'habitação.html');
 
     updateImpactCounters();
-    if (document.body.classList.contains('home')) {
-        loadHomepageContent();
-    }
     setupSearch();
-});
-
-document.addEventListener("DOMContentLoaded", function() {
-  const lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
-
-  if ("IntersectionObserver" in window) {
-    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          let lazyImage = entry.target;
-          lazyImage.src = lazyImage.dataset.src;
-          lazyImage.classList.remove("lazy");
-          lazyImageObserver.unobserve(lazyImage);
-        }
-      });
-    });
-
-    lazyImages.forEach(function(lazyImage) {
-      lazyImageObserver.observe(lazyImage);
-    });
-  } else {
-    // Fallback
-    let active = false;
-    const lazyLoad = function() {
-        if (active === false) {
-            active = true;
-            setTimeout(function() {
-                lazyImages.forEach(function(lazyImage) {
-                    if ((lazyImage.getBoundingClientRect().top <= window.innerHeight && lazyImage.getBoundingClientRect().bottom >= 0) && getComputedStyle(lazyImage).display !== "none") {
-                        lazyImage.src = lazyImage.dataset.src;
-                        lazyImage.classList.remove("lazy");
-                        lazyImages = lazyImages.filter(function(image) { return image !== lazyImage; });
-                    }
-                });
-                active = false;
-            }, 200);
-        }
-    };
-    document.addEventListener("scroll", lazyLoad);
-    window.addEventListener("resize", lazyLoad);
-    window.addEventListener("orientationchange", lazyLoad);
-  }
+    ativarLazyLoading();
 });
