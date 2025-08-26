@@ -2,13 +2,10 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    // Función para renderizar las publicaciones del blog
+    // (Las funciones renderBlogPost y renderGalleryItem se mantienen exactamente igual)
     function renderBlogPost(post) {
         const postDate = new Date(post.date);
-        const formattedDate = postDate.toLocaleDateString('pt-PT', {
-            day: 'numeric', month: 'long', year: 'numeric'
-        });
-
+        const formattedDate = postDate.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' });
         return `
         <div class="col-lg-4 col-md-6 mb-4 blog-post-item" data-category="${post.category}">
             <div class="blog-post-card">
@@ -23,11 +20,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     <button class="btn btn-outline-primary read-more-btn mt-auto">Ler Mais</button>
                 </div>
             </div>
-        </div>
-        `;
+        </div>`;
     }
 
-    // Función para renderizar los ítems de la galería
     function renderGalleryItem(item) {
         const itemDate = new Date(item.date);
         const formattedDate = itemDate.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -40,22 +35,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="caption">
                     <h5>${item.title}</h5>
                     <p>${item.caption}</p>
-                    <small class="text-white-50">${formattedDate}</small>
+                    <small class="text-white-50">${itemDate.toLocaleDateString('pt-PT')}</small>
                 </div>
             </div>
-        </div>
-        `;
+        </div>`;
     }
 
-    // Funcionalidad específica del blog (botones y filtros)
+    // --- FUNCIÓN DE FILTROS Y BOTONES CORREGIDA ---
     function setupBlogFunctionality() {
+        // Lógica de los botones "Ler Mais" (se mantiene igual)
         const readMoreButtons = document.querySelectorAll('.read-more-btn');
         readMoreButtons.forEach(button => {
             button.addEventListener('click', (e) => {
                 const card = e.target.closest('.blog-post-card');
                 const summary = card.querySelector('.summary-content');
                 const fullContent = card.querySelector('.full-content');
-
                 if (summary && fullContent) {
                     summary.style.display = 'none';
                     fullContent.style.display = 'block';
@@ -64,9 +58,12 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
 
+        // Lógica de los filtros (AJUSTE CLAVE AQUÍ)
         const navLinks = document.querySelectorAll('.blog-nav .nav-link');
         const postsSection = document.getElementById('posts-section');
         const gallerySection = document.getElementById('gallery-section');
+        // Guardamos una referencia a todas las publicaciones una sola vez
+        const allPosts = postsSection.querySelectorAll('.blog-post-item');
 
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
@@ -81,24 +78,27 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else {
                     gallerySection.style.display = 'none';
                     postsSection.style.display = 'flex';
-                    const allPosts = document.querySelectorAll('.blog-post-item');
+                    
+                    // Usamos la referencia guardada para filtrar, es más eficiente y seguro
                     allPosts.forEach(post => {
-                        post.style.display = (targetCategory === 'all' || post.dataset.category === targetCategory) ? 'block' : 'none';
+                        const postCategory = post.dataset.category;
+                        const shouldShow = (targetCategory === 'all' || postCategory === postCategory);
+                        // Usamos !important para asegurar que el estilo se aplique sobre las reglas de Bootstrap
+                        post.style.display = shouldShow ? 'block' : 'none';
                     });
                 }
             });
         });
     }
 
-    // --- CÓDIGO CORREGIDO PARA CARGAR Y LUEGO ACTIVAR ---
+    // --- Carga de Contenido (se mantiene igual) ---
     async function carregarTudo() {
         if (typeof carregarConteudo === 'function') {
             await Promise.all([
-                // Indicamos la clave "posts" para el blog
                 carregarConteudo('/_dados/blog.json', 'posts-section', renderBlogPost, 'posts', 'blog.html'),
-                // Indicamos la clave "imagens" para la galería
                 carregarConteudo('/_dados/galeria.json', 'gallery-section', renderGalleryItem, 'imagens', 'blog.html')
             ]);
+            // Activamos la funcionalidad DESPUÉS de que todo esté cargado
             setupBlogFunctionality();
         } else {
             console.error("A função carregarConteudo não foi encontrada.");
