@@ -210,7 +210,7 @@ body {
 }
 
 .section-title {
-    font-family: var(--font-serif);
+    font-family: 'Lora', serif;
     text-align: center;
     font-size: 2.5rem;
     color: var(--primary-color);

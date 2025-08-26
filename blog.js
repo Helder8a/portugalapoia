@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", async () => {
     const featuredArticleContainer = document.getElementById('featured-article-container');
     const articlesGrid = document.getElementById('articles-grid');
+    const galleryContainer = document.getElementById('gallery-container');
     const galleryGrid = document.getElementById('gallery-grid');
     const navLinks = document.querySelectorAll('#blog-nav-categories .nav-link');
     
@@ -75,7 +76,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         if (galleryData && galleryData.imagens) {
             galleryImages = galleryData.imagens;
-            // No renderizamos la galería aquí, la mostramos solo al hacer clic en el filtro
         } else {
             galleryGrid.innerHTML = '<p class="text-center">No se pudo cargar la galería.</p>';
         }
@@ -83,6 +83,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Lógica para renderizar los posts según la categoría
     function renderPosts(category) {
+        galleryContainer.style.display = 'none';
+        articlesGrid.style.display = 'grid';
+        featuredArticleContainer.style.display = 'block';
+
         featuredArticleContainer.innerHTML = '';
         articlesGrid.innerHTML = '';
         
@@ -91,11 +95,9 @@ document.addEventListener("DOMContentLoaded", async () => {
             : allPosts.filter(post => post.category.toLowerCase() === category.toLowerCase());
         
         if (postsToRender.length > 0) {
-            // Renderizar el artículo destacado (el más reciente)
             const featuredPost = postsToRender[0];
             featuredArticleContainer.innerHTML = renderFeaturedArticle(featuredPost);
 
-            // Renderizar el resto de artículos en la cuadrícula
             const otherPosts = postsToRender.slice(1);
             articlesGrid.innerHTML = otherPosts.map(renderArticleCard).join('');
         } else {
@@ -107,7 +109,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     function renderGallery() {
         articlesGrid.style.display = 'none';
         featuredArticleContainer.style.display = 'none';
-        galleryGrid.style.display = 'grid';
+        galleryContainer.style.display = 'block';
         galleryGrid.innerHTML = galleryImages.map(renderGalleryItem).join('');
     }
 
@@ -122,9 +124,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (targetCategory === 'galeria') {
                 renderGallery();
             } else {
-                articlesGrid.style.display = 'grid';
-                featuredArticleContainer.style.display = 'block';
-                galleryGrid.style.display = 'none';
                 renderPosts(targetCategory);
             }
         });
