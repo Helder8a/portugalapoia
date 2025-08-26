@@ -1,4 +1,4 @@
-// Contenido COMPLETO y CORRECTO para blog.js
+// --- CÓDIGO FINAL Y CORRECTO para blog.js ---
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -90,12 +90,20 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Llamadas para cargar contenido del blog y la galería
-    // Asume que la función carregarConteudo está en script.js y es accesible globalmente
-    if (typeof carregarConteudo === 'function') {
-        carregarConteudo('/_dados/blog.json', 'posts-section', renderBlogPost, 'blog.html');
-        carregarConteudo('/_dados/galeria.json', 'gallery-section', renderGalleryItem, 'blog.html');
-    } else {
-        console.error("La función carregarConteudo no está definida. Asegúrate de que script.js se carga antes de blog.js");
+    // --- CÓDIGO CORREGIDO PARA CARGAR Y LUEGO ACTIVAR ---
+    async function carregarTudo() {
+        if (typeof carregarConteudo === 'function') {
+            // Espera que ambos os conteúdos sejam carregados
+            await Promise.all([
+                carregarConteudo('/_dados/blog.json', 'posts-section', renderBlogPost, 'blog.html'),
+                carregarConteudo('/_dados/galeria.json', 'gallery-section', renderGalleryItem, 'blog.html')
+            ]);
+            // Só depois de carregar, ativa a funcionalidade
+            setupBlogFunctionality();
+        } else {
+            console.error("A função carregarConteudo não foi encontrada.");
+        }
     }
+
+    carregarTudo();
 });

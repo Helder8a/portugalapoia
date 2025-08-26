@@ -42,14 +42,46 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css">
     
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="blog.css"> <link rel="stylesheet" href="avaliador-urbano-style.css">
+    <link rel="stylesheet" href="blog.css">
+    <link rel="stylesheet" href="avaliador-urbano-style.css">
 </head>
 
 <body>
     <div id="preloader"><img src="images_pta/logocuadrado.jpg" alt="A carregar..." class="spinner"></div>
 
     <header class="main-header">
-        </header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand logo" href="index.html" style="display: inline-flex; align-items: center;">
+                    <img src="images_pta/logocuadrado.jpg" alt="Logo PortugalApoia"
+                        style="height: 35px; margin-right: 10px;">
+                    <span class="brand-text-responsive">PortugalApoia</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="main-nav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link" href="sobre-nos.html">Sobre Nós</a></li>
+                        <li class="nav-item"><a class="nav-link" href="doações.html">Doações</a></li>
+                        <li class="nav-item"><a class="nav-link" href="empregos.html">Emprego</a></li>
+                        <li class="nav-item"><a class="nav-link" href="serviços.html">Serviços</a></li>
+                        <li class="nav-item"><a class="nav-link" href="habitação.html">Habitação</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownWebApp" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Apps</a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownWebApp">
+                                <a class="dropdown-item" href="app_evaluadorsustentable.html">Avaliador Sustentável PRO</a>
+                                <a class="dropdown-item" href="app_avaliadorurbano.html">Avaliador de Imóveis Urbanos</a>
+                            </div>
+                        </li>
+                        <li class="nav-item active"><a class="nav-link" href="blog.html">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link btn btn-primary publish-btn" href="publicar.html">Publicar</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
 
     <main>
         <section class="page-header page-header-blog text-center text-white">
@@ -87,7 +119,41 @@
     <button id="scrollTopBtn" title="Voltar ao topo"><i class="fas fa-arrow-up"></i></button>
 
     <footer class="main-footer">
-       </footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <img src="images_pta/logocuadrado.jpg" alt="Logo de PortugalApoia" style="height: 45px; margin-bottom: 15px;">
+                    <h4>PortugalApoia</h4>
+                    <p>A conectar a generosidade à necessidade.</p>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h4>Navegação</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="doações.html">Doações</a></li>
+                        <li><a href="empregos.html">Emprego</a></li>
+                        <li><a href="serviços.html">Serviços</a></li>
+                        <li><a href="habitação.html">Habitação</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h4>Siga-nos</h4>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/portugalapoia" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/share/14GXdGKfEgs/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.linkedin.com/company/fidersucre/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <h4>Contacto</h4>
+                    <p>Um projeto desenvolvido e patrocinado pela <a href="mailto:hbo.consulting.pt@gmail.com">HBO Consulting</a>.</p>
+                </div>
+            </div>
+            <div class="footer-bottom text-center pt-3 mt-3">
+                <p>&copy; 2025 PortugalApoia.com | <a href="politica-privacidade.html">Política de Privacidade</a> | <a href="termos-de-servico.html">Termos de Serviço</a></p>
+            </div>
+        </div>
+    </footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
@@ -95,6 +161,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
 
     <script src="script.js" defer></script>
-    <script src="blog.js" defer></script> </body>
+    <script src="blog.js" defer></script> 
+</body>
 
 </html>
