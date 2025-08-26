@@ -86,3 +86,100 @@
     padding: 10px;
     text-align: center;
 }
+
+/* Nuevo estilo para el artículo destacado */
+.featured-post-card {
+    display: flex;
+    flex-direction: row;
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.featured-post-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.featured-post-card img {
+    width: 60%; /* La imagen ocupa más espacio */
+    height: auto;
+    object-fit: cover;
+}
+
+.featured-post-card .card-body {
+    width: 40%;
+    padding: 2.5rem;
+    background-color: var(--color-background);
+}
+
+.featured-post-card .card-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+@media (max-width: 991.98px) {
+    .featured-post-card {
+        flex-direction: column;
+    }
+    .featured-post-card img,
+    .featured-post-card .card-body {
+        width: 100%;
+    }
+}
+
+/* Estilos para las tarjetas de blog generales (sin destacar) */
+.blog-post-card {
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-background);
+}
+
+.blog-post-card:hover {
+    transform: none; /* Quitamos la animación para que solo el destacado la tenga */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra más sutil */
+}
+
+.blog-post-card .card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+}
+
+.blog-post-card .card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.blog-post-card .card-img-top {
+    height: 220px;
+    object-fit: cover;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 800; /* Más peso para un estilo de revista */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 25px;
+    position: relative;
+    padding-bottom: 15px;
+}
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background-color: var(--color-accent);
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
