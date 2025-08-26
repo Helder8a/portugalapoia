@@ -1,134 +1,88 @@
-document.addEventListener("DOMContentLoaded", async () => {
-    const featuredArticleContainer = document.getElementById('featured-article-container');
-    const articlesGrid = document.getElementById('articles-grid');
-    const galleryContainer = document.getElementById('gallery-container');
-    const galleryGrid = document.getElementById('gallery-grid');
-    const navLinks = document.querySelectorAll('#blog-nav-categories .nav-link');
-    
-    let allPosts = [];
-    let galleryImages = [];
+// --- CÓDIGO FINAL Y CORRECTO para blog.js ---
 
-    // Función para cargar los datos JSON
-    async function fetchData(url) {
-        try {
-            const response = await fetch(url);
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            return await response.json();
-        } catch (error) {
-            console.error(`Error fetching data from ${url}:`, error);
-            return null;
+document.addEventListener("DOMContentLoaded", () => {
+    function onScriptReady(callback) {
+        if (window.carregarConteudo) {
+            callback();
+        } else {
+            setTimeout(() => onScriptReady(callback), 50);
         }
     }
 
-    // Función para renderizar un artículo destacado
-    function renderFeaturedArticle(post) {
-        if (!post) return '';
-        return `
-            <article class="featured-article" data-category="${post.category.toLowerCase()}">
-                <img src="${post.image}" alt="${post.title}">
-                <div class="featured-content">
-                    <span class="category-tag">${post.category}</span>
-                    <h3>${post.title}</h3>
-                    <p class="summary">${post.summary}</p>
-                    <a href="#" class="read-more" onclick="alert('Ir a la página del artículo: ${post.title}')">Leer más &rarr;</a>
+    onScriptReady(() => {
+        function renderBlogPost(post) {
+            const postDate = new Date(post.date);
+            const formattedDate = postDate.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' });
+            return `
+            <div class="col-lg-4 col-md-6 mb-4 blog-post-item" data-category="${post.category}">
+                <div class="blog-post-card">
+                    <img class="card-img-top lazy" data-src="${post.image}" alt="${post.title}">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">${post.title}</h5>
+                        <p class="text-muted small">Publicado em: ${formattedDate}</p>
+                        <p class="card-text summary-content flex-grow-1">${post.summary}</p>
+                        <div class="full-content" style="display: none;">
+                            <p>${post.body.replace(/\\n/g, '</p><p>')}</p>
+                        </div>
+                        <button class="btn btn-outline-primary read-more-btn mt-auto">Ler Mais</button>
+                    </div>
                 </div>
-            </article>
-        `;
-    }
-
-    // Función para renderizar las tarjetas de los artículos
-    function renderArticleCard(post) {
-        return `
-            <article class="article-card" data-category="${post.category.toLowerCase()}">
-                <img src="${post.image}" alt="${post.title}" class="article-img">
-                <div class="article-content">
-                    <span class="category-tag">${post.category}</span>
-                    <h3>${post.title}</h3>
-                    <p class="summary">${post.summary}</p>
-                    <a href="#" class="read-more" onclick="alert('Ir a la página del artículo: ${post.title}')">Leer más &rarr;</a>
-                </div>
-            </article>
-        `;
-    }
-
-    // Función para renderizar los elementos de la galería
-    function renderGalleryItem(image) {
-        return `
-            <div class="gallery-item">
-                <a href="${image.image}" data-lightbox="gallery" data-title="${image.caption}">
-                    <img src="${image.image}" alt="${image.title}">
-                </a>
-            </div>
-        `;
-    }
-
-    // Función principal para cargar y mostrar todo el contenido
-    async function loadContent() {
-        const blogData = await fetchData('/_dados/blog.json');
-        const galleryData = await fetchData('/_dados/galeria.json');
-
-        if (blogData && blogData.posts) {
-            allPosts = blogData.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-            renderPosts('all');
-        } else {
-            articlesGrid.innerHTML = '<p class="text-center">No se pudieron cargar los artículos del blog.</p>';
+            </div>`;
         }
 
-        if (galleryData && galleryData.imagens) {
-            galleryImages = galleryData.imagens;
-        } else {
-            galleryGrid.innerHTML = '<p class="text-center">No se pudo cargar la galería.</p>';
+        function renderGalleryItem(item) {
+            return `<div class="col-lg-6 col-md-12 mb-4"><div class="gallery-item"><a href="${item.image}" data-lightbox="gallery" data-title="${item.title} - ${item.caption}"><img class="lazy" data-src="${item.image}" alt="${item.title}"></a></div></div>`;
         }
-    }
 
-    // Lógica para renderizar los posts según la categoría
-    function renderPosts(category) {
-        galleryContainer.style.display = 'none';
-        articlesGrid.style.display = 'grid';
-        featuredArticleContainer.style.display = 'block';
+        function setupBlogFunctionality() {
+            const readMoreButtons = document.querySelectorAll('.read-more-btn');
+            readMoreButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const card = e.target.closest('.blog-post-card');
+                    const summary = card.querySelector('.summary-content');
+                    const fullContent = card.querySelector('.full-content');
+                    if (summary && fullContent) {
+                        summary.style.display = 'none';
+                        fullContent.style.display = 'block';
+                        e.target.style.display = 'none';
+                    }
+                });
+            });
 
-        featuredArticleContainer.innerHTML = '';
-        articlesGrid.innerHTML = '';
-        
-        const postsToRender = category === 'all'
-            ? allPosts
-            : allPosts.filter(post => post.category.toLowerCase() === category.toLowerCase());
-        
-        if (postsToRender.length > 0) {
-            const featuredPost = postsToRender[0];
-            featuredArticleContainer.innerHTML = renderFeaturedArticle(featuredPost);
+            const navLinks = document.querySelectorAll('.blog-nav .nav-link');
+            const postsSection = document.getElementById('posts-section');
+            const gallerySection = document.getElementById('gallery-section');
+            const allPosts = postsSection.querySelectorAll('.blog-post-item');
 
-            const otherPosts = postsToRender.slice(1);
-            articlesGrid.innerHTML = otherPosts.map(renderArticleCard).join('');
-        } else {
-            articlesGrid.innerHTML = `<p class="text-center w-100">No hay artículos en la categoría "${category}".</p>`;
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    navLinks.forEach(nav => nav.classList.remove('active'));
+                    e.target.classList.add('active');
+                    const targetCategory = e.target.getAttribute('data-target');
+
+                    if (targetCategory === 'galeria') {
+                        postsSection.style.display = 'none';
+                        gallerySection.style.display = 'flex';
+                    } else {
+                        postsSection.style.display = 'flex';
+                        gallerySection.style.display = 'none';
+                        allPosts.forEach(post => {
+                            post.style.display = (targetCategory === 'all' || post.dataset.category === targetCategory) ? 'block' : 'none';
+                        });
+                    }
+                });
+            });
         }
-    }
 
-    // Lógica para renderizar la galería
-    function renderGallery() {
-        articlesGrid.style.display = 'none';
-        featuredArticleContainer.style.display = 'none';
-        galleryContainer.style.display = 'block';
-        galleryGrid.innerHTML = galleryImages.map(renderGalleryItem).join('');
-    }
+        async function carregarTudo() {
+            await Promise.all([
+                window.carregarConteudo('/_dados/blog.json', 'posts-section', renderBlogPost, 'posts'),
+                window.carregarConteudo('/_dados/galeria.json', 'gallery-section', renderGalleryItem, 'imagens')
+            ]);
+            setupBlogFunctionality();
+        }
 
-    // Manejar el clic en los filtros de categoría
-    navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            navLinks.forEach(nav => nav.classList.remove('active'));
-            link.classList.add('active');
-            
-            const targetCategory = link.dataset.category;
-            if (targetCategory === 'galeria') {
-                renderGallery();
-            } else {
-                renderPosts(targetCategory);
-            }
-        });
+        carregarTudo();
     });
-
-    // Iniciar la carga del contenido
-    loadContent();
 });
