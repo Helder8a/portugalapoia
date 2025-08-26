@@ -3,6 +3,8 @@
     background-color: #f8f9fa;
     padding: 0.5rem 0;
     border-bottom: 1px solid #dee2e6;
+    overflow-x: auto; /* Permite desplazamiento horizontal en móviles si hay muchos enlaces */
+    white-space: nowrap;
 }
 
 .blog-nav .nav-link {
@@ -12,6 +14,7 @@
     position: relative;
     padding-bottom: 5px;
     transition: color 0.3s;
+    font-size: 1rem; /* Tamaño de fuente base */
 }
 
 .blog-nav .nav-link::after {
@@ -52,14 +55,14 @@
     border: 1px solid #e0e0e0;
     border-radius: 12px;
     overflow: hidden;
-    transition: box-shadow 0.3s, transform 0.3s; /* Transición para un efecto más suave */
+    transition: box-shadow 0.3s, transform 0.3s;
     margin-bottom: 3rem;
     background-color: #fff;
 }
 
 .blog-post-card:hover {
-    transform: translateY(-5px); /* Un sutil efecto de elevación, mucho más ligero */
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); /* Sombra suave y limpia */
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
 .blog-post-card .card-body {
@@ -76,6 +79,37 @@
     height: 350px;
     object-fit: cover;
     border-bottom: 1px solid #e0e0e0;
+}
+
+/* MEDIA QUERIES PARA RESPONSIVIDAD */
+/* Teléfonos (menos de 768px) */
+@media (max-width: 767.98px) {
+    .page-title {
+        font-size: 2rem;
+    }
+    .lead {
+        font-size: 1rem;
+    }
+    .blog-nav .nav-link {
+        font-size: 0.9rem;
+        padding: 0.5rem 0.75rem;
+    }
+    .blog-post-card .card-body {
+        padding: 1.5rem;
+    }
+    .blog-post-card .card-title {
+        font-size: 1.4rem;
+    }
+    .blog-post-card .card-img-top {
+        height: 200px; /* Altura más pequeña para móviles */
+    }
+}
+
+/* Tablets (768px a 991px) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .blog-post-card .card-img-top {
+        height: 250px;
+    }
 }
 
 .full-content {
