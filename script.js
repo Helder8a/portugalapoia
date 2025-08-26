@@ -143,95 +143,11 @@ document.addEventListener("DOMContentLoaded", () => {
         ativarLazyLoading();
     }
     
-    // --- LÓGICA DE BÚSQUEDA ---
-    function handleCentralSearch() {
-        const form = document.getElementById('central-search-form');
-        if (form) {
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const term = document.getElementById('search-term').value;
-                const location = document.getElementById('search-location').value;
-                const categoryPage = document.getElementById('search-category').value;
-                const url = new URL(categoryPage, window.location.origin);
-                if (term) url.searchParams.append('term', term);
-                if (location) url.searchParams.append('location', location);
-                window.location.href = url.toString();
-            });
-        }
-    }
-
-    function setupPageSearch(containerId, formId, noResultsId) {
-        const form = document.getElementById(formId);
-        if (!form) return;
-        
-        const urlParams = new URLSearchParams(window.location.search);
-        const termParam = urlParams.get('term') || '';
-        const locationParam = urlParams.get('location') || '';
-        
-        const termInput = form.querySelector('input[id*="search-term"]');
-        const locationInput = form.querySelector('input[id*="search-location"]');
-        
-        if (termInput) termInput.value = termParam;
-        if (locationInput) locationInput.value = locationParam;
-
-        const filterItems = () => {
-            const currentTerm = termInput ? termInput.value.toLowerCase() : '';
-            const currentLocation = locationInput ? locationInput.value.toLowerCase() : '';
-            const items = document.querySelectorAll(`#${containerId} .announcement-card`);
-            const noResults = document.getElementById(noResultsId);
-            let visibleCount = 0;
-
-            items.forEach(item => {
-                const title = item.dataset.title.toLowerCase();
-                const loc = item.dataset.location.toLowerCase();
-                const termMatch = title.includes(currentTerm);
-                const locMatch = loc.includes(currentLocation);
-
-                if (termMatch && locMatch) {
-                    item.style.display = 'block';
-                    visibleCount++;
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-            if (noResults) noResults.style.display = visibleCount === 0 ? 'block' : 'none';
-        };
-
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            filterItems();
-        });
-
-        if (termParam || locationParam) {
-            setTimeout(filterItems, 500);
-        }
-    }
-
-    // --- INICIALIZACIÓN INTELIGENTE POR PÁGINA ---
+    // --- INICIALIZACIÓN DE LAS CARGAS ---
+    carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'pedidos');
+    carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'vagas');
+    carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'servicos');
+    carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderHabitacao, 'anuncios');
+    
     ativarLazyLoading();
-
-    if (document.body.classList.contains('home')) {
-        handleCentralSearch();
-        carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'pedidos');
-    }
-    else if (document.getElementById('search-form-doacoes')) {
-        carregarConteudo('/_dados/doacoes.json', 'announcements-grid', renderDoacao, 'pedidos').then(() => {
-            setupPageSearch('announcements-grid', 'search-form-doacoes', 'no-results-doacoes');
-        });
-    }
-    else if (document.getElementById('search-form-empregos')) {
-        carregarConteudo('/_dados/empregos.json', 'jobs-grid', renderEmprego, 'vagas').then(() => {
-            setupPageSearch('jobs-grid', 'search-form-empregos', 'no-results-empregos');
-        });
-    }
-    else if (document.getElementById('search-form-servicos')) {
-        carregarConteudo('/_dados/servicos.json', 'services-grid', renderServico, 'servicos').then(() => {
-            setupPageSearch('services-grid', 'search-form-servicos', 'no-results-servicos');
-        });
-    }
-    else if (document.getElementById('search-form-habitacao')) {
-        carregarConteudo('/_dados/habitacao.json', 'housing-grid', renderHabitacao, 'anuncios').then(() => {
-            setupPageSearch('housing-grid', 'search-form-habitacao', 'no-results-habitacao');
-        });
-    }
 });
