@@ -1,3 +1,10 @@
 {
-  "imagens": []
+  "imagens": [
+    {
+      "date": "2025-08-01T10:39:22.653Z",
+      "title": "Lisboa",
+      "image": "/images/uploads/01.webp",
+      "caption": "Lisboa"
+    }
+  ]
 }
