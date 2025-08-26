@@ -133,7 +133,7 @@ body.dark-theme .navbar .navbar-nav .nav-link:hover {
 #hero {
     position: relative;
     min-height: 80vh;
-    background: url('images/imgendexportugalapioa.avif') center center/cover no-repeat;
+    background: url('images/imgindex.avif') center center/cover no-repeat;
     color: #fff;
     padding: 60px 0
 }
@@ -232,7 +232,7 @@ body.dark-theme .section-title {
 }
 
 .page-header {
-    background: linear-gradient(rgba(10, 61, 98, .9), rgba(10, 61, 98, .9)) 0 0/cover, url(images/img_portada.webp) center center/cover no-repeat
+    background: linear-gradient(rgba(10, 61, 98, .9), rgba(10, 61, 98, .9)) 0 0/cover, url(images/imgenindexportugalapioa.avif) center center/cover no-repeat
 }
 
 .card,
@@ -1268,7 +1268,7 @@ body.dark-theme .share-label {
 
 .hero-sobre {
     position: relative;
-    background: url('images/imgenindexportugalapioa.avif') center center/cover no-repeat;
+    background: url('images/imgindex.avif') center center/cover no-repeat;
     min-height: 60vh;
     padding: 60px 0
 }
