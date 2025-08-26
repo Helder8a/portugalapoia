@@ -1355,3 +1355,28 @@ body.dark-theme .share-label {
         margin-right: 0 !important;
     }
 }
+
+/* --- Estilo para el número de tarjeta (Mejora solicitada) --- */
+.card {
+    position: relative; /* Necesario para posicionar el número de forma absoluta */
+    overflow: hidden; /* Asegura que el número no se salga si es muy grande */
+}
+
+.card-number {
+    position: absolute;
+    top: 5px; /* Ajusta la distancia desde arriba */
+    right: 10px; /* Ajusta la distancia desde la derecha */
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente para visibilidad */
+    color: white;
+    font-size: 0.7em; /* Muy pequeño */
+    padding: 2px 6px;
+    border-radius: 3px;
+    z-index: 10; /* Asegura que esté por encima de otros elementos */
+    opacity: 0.8; /* Ligeramente transparente para no dominar */
+}
+
+/* Opcional: Estilo al pasar el ratón para resaltar */
+.card:hover .card-number {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.7);
+}
