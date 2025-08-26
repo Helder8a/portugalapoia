@@ -9,16 +9,25 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     
+    function calcularTempoLeitura(texto) {
+        const palavrasPorMinuto = 200; // Média de leitura
+        const numeroDePalavras = texto.split(/\s+/).length;
+        const tempo = Math.ceil(numeroDePalavras / palavrasPorMinuto);
+        return tempo > 1 ? `${tempo} min de leitura` : `${tempo} min de leitura`;
+    }
+
     function renderBlogPost(post) {
         const postDate = new Date(post.date);
         const formattedDate = postDate.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' });
+        const tempoLeitura = calcularTempoLeitura(post.body);
+        
         return `
         <div class="col-12 blog-post-item" data-category="${post.category}">
             <div class="blog-post-card">
                 <img class="card-img-top lazy" data-src="${post.image}" alt="${post.title}">
                 <div class="card-body">
                     <h5 class="card-title">${post.title}</h5>
-                    <p class="text-muted small">Publicado em: ${formattedDate}</p>
+                    <p class="text-muted small">Publicado em: ${formattedDate} &bull; Tempo de Leitura: ${tempoLeitura}</p>
                     <p class="card-text summary-content">${post.summary}</p>
                     <div class="full-content" style="display: none;">
                         <p>${post.body.replace(/\\n/g, '</p><p>')}</p>
@@ -51,8 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const navLinks = document.querySelectorAll('.blog-nav .nav-link');
         const postsSection = document.getElementById('posts-section');
         const gallerySection = document.getElementById('gallery-section');
-        const allPosts = postsSection.querySelectorAll('.blog-post-item');
-
+        
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -60,6 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 e.target.classList.add('active');
                 const targetCategory = e.target.getAttribute('data-target');
 
+                const allPosts = document.querySelectorAll('.blog-post-item');
                 if (targetCategory === 'galeria') {
                     postsSection.style.display = 'none';
                     gallerySection.style.display = 'flex';
@@ -71,6 +80,21 @@ document.addEventListener("DOMContentLoaded", () => {
                     });
                 }
             });
+        });
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.2 // Se activa cuando el 20% del elemento es visible
+        });
+
+        document.querySelectorAll('.blog-post-item').forEach(item => {
+            observer.observe(item);
         });
     }
 
