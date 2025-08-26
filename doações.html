@@ -1,23 +1,48 @@
 <!DOCTYPE html>
 <html lang="pt-PT">
 <head>
-    </head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doação de Artigos em Portugal | PortugalApoia</title>
+    <meta name="description" content="Ajude quem mais precisa. Encontre aqui pedidos de ajuda de pessoas e famílias em Portugal. Doe artigos ou solicite ajuda de forma segura e fácil.">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
 <body>
     <div id="preloader"><img src="images_pta/logocuadrado.jpg" alt="A carregar..." class="spinner"></div>
     <header class="main-header">
         </header>
     <main>
-        <section class="page-header page-header-doacoes text-center">
+        <section class="page-header page-header-doacoes text-center text-white">
             <div class="container">
                 <h1 class="page-title">Doação de Artigos</h1>
                 <p class="lead">Ajude quem mais precisa. Encontre aqui pedidos de ajuda de pessoas e famílias em Portugal.</p>
             </div>
         </section>
         <section class="py-4 bg-light border-bottom">
-            </section>
+            <div class="container">
+                <form id="search-form-doacoes">
+                    <div class="row">
+                        <div class="col-md-6 mb-2 mb-md-0">
+                            <input type="text" id="search-term-doacoes" class="form-control" placeholder="O que procura? Ex: roupas, móveis...">
+                        </div>
+                        <div class="col-md-4 mb-2 mb-md-0">
+                            <input type="text" id="search-location-doacoes" class="form-control" placeholder="Onde? Ex: Lisboa, Porto...">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary btn-block">Procurar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
         <section class="py-5">
             <div class="container">
                 <div class="row" id="announcements-grid">
+                    </div>
+                <div class="col-12 text-center" id="no-results-doacoes" style="display: none;">
+                    <p class="lead text-muted mt-5">Nenhum pedido de doação encontrado com os critérios de pesquisa.</p>
                 </div>
             </div>
         </section>
@@ -25,6 +50,9 @@
     <button id="scrollTopBtn" title="Voltar ao topo"><i class="fas fa-arrow-up"></i></button>
     <footer class="main-footer">
         </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="script.js" defer></script>
 </body>
 </html>
