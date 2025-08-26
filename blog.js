@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         if (galleryData && galleryData.imagens) {
             galleryImages = galleryData.imagens;
-            renderGallery();
+            // No renderizamos la galería aquí, la mostramos solo al hacer clic en el filtro
         } else {
             galleryGrid.innerHTML = '<p class="text-center">No se pudo cargar la galería.</p>';
         }
