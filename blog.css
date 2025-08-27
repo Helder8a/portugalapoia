@@ -13,65 +13,6 @@ main { padding-top: 75px; }
 .page-header-blog .page-title { font-size: 2.8rem; }
 .page-header-blog .lead { font-size: 1.2rem; }
 
-/* --- Estilos para Artículo Destacado --- */
-#featured-post-section {
-    background-color: #eef3f6;
-}
-.featured-post {
-    display: flex;
-    align-items: center;
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
-    overflow: hidden;
-}
-.featured-post-image {
-    flex: 0 0 50%;
-}
-.featured-post-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    min-height: 400px;
-}
-.featured-post-content {
-    padding: 3rem;
-}
-.featured-post-content .badge {
-    background-color: #F57C00;
-    color: #fff;
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-}
-.featured-post-content h2 {
-    font-size: 2.5rem;
-    color: #1e374a;
-    line-height: 1.3;
-}
-.featured-post-content p {
-    font-size: 1.1rem;
-    color: #4a4a4a;
-}
-.featured-post-content .btn {
-    font-weight: bold;
-}
-@media (max-width: 991px) {
-    .featured-post {
-        flex-direction: column;
-    }
-    .featured-post-image {
-        width: 100%;
-        height: 250px;
-    }
-    .featured-post-content {
-        padding: 2rem;
-    }
-    .featured-post-content h2 {
-        font-size: 2rem;
-    }
-}
-
-
 .blog-nav {
     background-color: #f8f9fa;
     padding: 0.5rem 0;
@@ -88,8 +29,13 @@ main { padding-top: 75px; }
 }
 .blog-nav .nav-link.active, .blog-nav .nav-link:hover { color: #F57C00; }
 
-#blog-search-input { border-right: 0; }
-#blog-search-clear { border-left: 0; }
+/* --- NUEVO: Estilos para la Barra de Búsqueda --- */
+#blog-search-input {
+    border-right: 0;
+}
+#blog-search-clear {
+    border-left: 0;
+}
 
 .blog-post-card {
     background-color: #fff;
@@ -98,7 +44,6 @@ main { padding-top: 75px; }
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    scroll-margin-top: 150px; 
 }
 .blog-post-card:hover {
     transform: translateY(-8px);
@@ -157,6 +102,7 @@ main { padding-top: 75px; }
 .full-content strong { font-weight: 700; color: #1e374a; }
 .read-more-btn { display: block; margin: 1.5rem auto 0; }
 
+/* --- Estilos para Botones de Compartir --- */
 .social-share {
     margin-top: 2.5rem;
     padding-top: 1.5rem;
@@ -187,6 +133,7 @@ main { padding-top: 75px; }
 .social-share a[aria-label*="WhatsApp"] { background-color: #25d366; }
 .social-share a:hover { opacity: 0.9; }
 
+/* --- Estilos para Artículos Relacionados --- */
 .related-posts {
     margin-top: 3rem;
     padding-top: 2rem;
@@ -218,6 +165,7 @@ main { padding-top: 75px; }
     color: #343a40;
 }
 
+/* --- Estilos para la Galería (Sin Cambios) --- */
 .gallery-item {
     position: relative;
     overflow: hidden;
@@ -264,12 +212,4 @@ main { padding-top: 75px; }
 }
 .pagination .page-item.disabled .page-link {
     color: #6c757d;
-}
-
-/* --- NUEVO: Estilos para el botón de Volver --- */
-.back-to-blog {
-    display: block;
-    width: -moz-fit-content;
-    width: fit-content;
-    margin: 2rem auto 0;
 }
