@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog PortugalApoia | Histórias e Notícias</title>
+    <title>Blog e Galeria | PortugalApoia</title>
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -20,22 +20,23 @@
     <main class="blog-main-content">
         <section class="page-header page-header-blog text-center text-white">
             <div class="container">
-                <h1 class="page-title">Blog e Notícias</h1>
-                <p class="lead">Artigos, histórias de sucesso e notícias sobre a nossa comunidade.</p>
+                <h1 class="page-title">Blog e Galeria</h1>
+                <p class="lead">Navegue pelos nossos artigos ou explore os momentos da nossa comunidade.</p>
             </div>
         </section>
 
         <section class="blog-controls-section">
             <div class="container">
                 <nav class="nav blog-nav justify-content-center">
-                    <a class="nav-link active" href="#" data-target="all">Todos</a>
+                    <a class="nav-link active" href="#" data-target="all">Todos os Artigos</a>
                     <a class="nav-link" href="#" data-target="emprego">Emprego</a>
                     <a class="nav-link" href="#" data-target="habitacao">Habitação</a>
                     <a class="nav-link" href="#" data-target="saude">Saúde</a>
                     <a class="nav-link" href="#" data-target="turismo">Turismo</a>
                     <a class="nav-link" href="#" data-target="educacao">Educação</a>
+                    <a class="nav-link" href="#" data-target="galeria"><strong>Galeria</strong></a>
                 </nav>
-                <div class="row justify-content-center mt-4">
+                <div id="search-bar-wrapper" class="row justify-content-center mt-4">
                     <div class="col-md-8">
                         <div class="input-group">
                             <input type="text" id="blog-search-input" class="form-control form-control-lg" placeholder="Pesquisar artigos..." aria-label="Pesquisar artigos">
@@ -50,21 +51,21 @@
 
         <section class="container py-5">
             <div id="blog-list-view">
-                <div id="blog-posts-grid" class="row">
-                    </div>
+                <div id="blog-posts-grid" class="row"></div>
             </div>
             
-            <div id="blog-single-view" style="display: none;">
-                </div>
+            <div id="blog-single-view" style="display: none;"></div>
+
+            <div id="gallery-view" class="row" style="display: none;"></div>
 
             <div id="no-results-message" class="text-center py-5" style="display: none;">
-                <h3 class="text-muted">Nenhum artigo encontrado.</h3>
-                <p>Tente ajustar os seus filtros ou termos de pesquisa.</p>
+                <h3 class="text-muted">Nenhum resultado encontrado.</h3>
             </div>
         </section>
     </main>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
