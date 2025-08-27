@@ -19,12 +19,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const timePlaceholder = postElement.querySelector('.reading-time');
 
         if (content && timePlaceholder) {
-            const text = content.innerText || content.textContent;
-            const wordCount = text.trim().split(/\s+/).length;
+            const text = content.textContent || content.innerText; // Usar textContent para obtener solo el texto
+            const wordCount = text.trim().split(/\s+/).filter(word => word.length > 0).length;
             const wordsPerMinute = 225;
             const readingTime = Math.ceil(wordCount / wordsPerMinute);
             
-            // Añade un icono y el texto
             timePlaceholder.innerHTML = `<i class="fa-regular fa-clock"></i> ${readingTime} min de leitura`;
         }
     }
@@ -38,8 +37,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const postDate = new Date(post.date);
         const formattedDate = postDate.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' });
         
-        // La leyenda de la imagen usará el título del post si no hay una específica.
         const imageCaption = post.caption || `Ilustração para o artigo: ${post.title}`;
+        
+        // ======> INICIO DEL CAMBIO CLAVE <======
+        // Usamos la librería 'marked' para convertir el cuerpo del post de Markdown a HTML.
+        // Se usa `marked.parse()` que está disponible gracias al script que añadimos en blog.html.
+        // La opción `gfm: true` permite un markdown más flexible (como el de GitHub).
+        const processedBody = marked.parse(post.body || '', { gfm: true });
+        // ======> FIN DEL CAMBIO CLAVE <======
 
         return `
         <div class="col-12 blog-post-item" data-category="${post.category}">
@@ -62,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <p class="card-text summary-content">${post.summary}</p>
                     
                     <div class="full-content" style="display: none;">
-                        ${post.body.replace(/\\n/g, '</p><p>')}
+                        ${processedBody}
                     </div>
 
                     <button class="btn btn-outline-primary read-more-btn">Ler Mais</button>
@@ -71,23 +76,17 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>`;
     }
 
-    /**
-     * Genera el HTML para un ítem de la galería.
-     * @param {object} item - El objeto de la imagen de la galería.
-     * @returns {string} - La cadena de HTML para el ítem de la galería.
-     */
+    // El resto del archivo `blog.js` se mantiene exactamente igual que en la versión anterior.
+    // ... (incluir el resto de funciones: renderGalleryItem, setupBlogFunctionality, carregarBlog, etc.)
+
     function renderGalleryItem(item) {
         return `<div class="col-lg-6 col-md-12 mb-4"><div class="gallery-item"><a href="${item.image}" data-lightbox="gallery" data-title="${item.title} - ${item.caption}"><img class="lazy" data-src="${item.image}" alt="${item.title}"></a></div></div>`;
     }
 
-    /**
-     * Configura toda la interactividad del blog después de que el contenido se carga.
-     */
     function setupBlogFunctionality() {
         const postsSection = document.getElementById('posts-section');
         const allPosts = postsSection.querySelectorAll('.blog-post-item');
 
-        // 3. Calcular el tiempo de lectura para cada post cargado
         allPosts.forEach(post => {
             calculateReadingTime(post);
         });
@@ -130,21 +129,15 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    /**
-     * Carga el contenido del blog y la galería y luego inicializa la funcionalidad.
-     */
     async function carregarBlog() {
-        // Carga los posts y la galería en paralelo
         await Promise.all([
             window.carregarConteudo('/_dados/blog.json', 'posts-section', renderBlogPost, 'posts'),
             window.carregarConteudo('/_dados/galeria.json', 'gallery-section', renderGalleryItem, 'imagens')
         ]);
         
-        // Una vez que todo el contenido está en el DOM, se configura la funcionalidad
         setupBlogFunctionality();
     }
 
-    // Espera a que el script.js principal esté listo y luego carga el blog
     onScriptReady(() => {
         carregarBlog();
     });
