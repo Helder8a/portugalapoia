@@ -3,13 +3,13 @@
 // ==================================================================
 
 document.addEventListener("DOMContentLoaded", () => {
-    
+
     // Variables globales
     let allPostsData = [];
     let allPostElements = [];
     const postsPerPage = 5;
     let currentPage = 1;
-    const originalTitle = document.title; 
+    const originalTitle = document.title;
     const metaDescription = document.getElementById('meta-description');
     const originalDescription = metaDescription ? metaDescription.content : '';
 
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 fetch('/_dados/blog.json').then(res => res.json()),
                 fetch('/_dados/galeria.json').then(res => res.json())
             ]);
-            
+
             allPostsData = postsData.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
 
             // Renderizar Artículo Destacado (el más reciente)
@@ -34,12 +34,12 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             // Renderizar el resto de los posts
-            const regularPosts = allPostsData; // Usar todos los posts para la lista
+            const regularPosts = allPostsData.slice(1); // Todos menos el primero
             postsSection.innerHTML = regularPosts.map(renderBlogPost).join('');
             gallerySection.innerHTML = galeria.imagens.map(renderGalleryItem).join('');
 
             allPostElements = document.querySelectorAll('.blog-post-item');
-            
+
             setupBlogFunctionality();
             if (window.lightbox) window.lightbox.init();
 
@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
             .filter(post => post.category === currentPost.category && post.title !== currentPost.title)
             .slice(0, 3);
         if (related.length === 0) return '';
-        
+
         let relatedHTML = related.map(post => {
             const slug = post.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
             return `
@@ -172,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function getFilteredPosts() {
         const searchTerm = document.getElementById('blog-search-input').value.toLowerCase();
         const activeCategory = document.querySelector('.blog-nav .nav-link.active').getAttribute('data-target');
-        
+
         return Array.from(allPostElements).filter(post => {
             const categoryMatch = (activeCategory === 'all' || post.dataset.category === activeCategory);
             const searchMatch = (post.dataset.keywords.includes(searchTerm));
@@ -202,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const postData = allPostsData.find(p => p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') === slug);
         if (postElement && postData) {
             // Ocultar todo lo demás
-            allPostElements.forEach(p => p.style.display = 'none'); 
+            allPostElements.forEach(p => p.style.display = 'none');
             document.getElementById('featured-post-section').style.display = 'none';
             document.getElementById('pagination-container').style.display = 'none';
             document.querySelector('.search-section').style.display = 'none';
@@ -218,13 +218,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
             updateMetadata(postData);
             history.pushState(null, '', `#${slug}`);
-            
+
             setTimeout(() => {
                 postElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 100);
         }
     }
-    
+
     function showPostList() {
         document.getElementById('featured-post-section').style.display = 'block';
         document.getElementById('pagination-container').style.display = 'flex';
@@ -261,20 +261,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 window.location.hash = slug;
             }
         });
-        
+
         window.addEventListener('hashchange', checkUrlForPost, false);
-        
+
+        // El resto de los listeners (filtros, búsqueda) se mantienen igual...
         const navLinks = document.querySelectorAll('.blog-nav .nav-link');
         const postsSection = document.getElementById('posts-section');
         const gallerySection = document.getElementById('gallery-section');
-        
+
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 navLinks.forEach(nav => nav.classList.remove('active'));
                 e.target.classList.add('active');
                 const targetCategory = e.target.getAttribute('data-target');
-                
+
                 document.getElementById('blog-search-input').value = '';
 
                 if (targetCategory === 'galeria') {
