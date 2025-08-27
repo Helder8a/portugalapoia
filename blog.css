@@ -29,6 +29,14 @@ main { padding-top: 75px; }
 }
 .blog-nav .nav-link.active, .blog-nav .nav-link:hover { color: #F57C00; }
 
+/* --- NUEVO: Estilos para la Barra de Búsqueda --- */
+#blog-search-input {
+    border-right: 0;
+}
+#blog-search-clear {
+    border-left: 0;
+}
+
 .blog-post-card {
     background-color: #fff;
     border: none;
@@ -94,6 +102,7 @@ main { padding-top: 75px; }
 .full-content strong { font-weight: 700; color: #1e374a; }
 .read-more-btn { display: block; margin: 1.5rem auto 0; }
 
+/* --- Estilos para Botones de Compartir --- */
 .social-share {
     margin-top: 2.5rem;
     padding-top: 1.5rem;
@@ -124,6 +133,7 @@ main { padding-top: 75px; }
 .social-share a[aria-label*="WhatsApp"] { background-color: #25d366; }
 .social-share a:hover { opacity: 0.9; }
 
+/* --- Estilos para Artículos Relacionados --- */
 .related-posts {
     margin-top: 3rem;
     padding-top: 2rem;
@@ -155,6 +165,7 @@ main { padding-top: 75px; }
     color: #343a40;
 }
 
+/* --- Estilos para la Galería (Sin Cambios) --- */
 .gallery-item {
     position: relative;
     overflow: hidden;

@@ -4,12 +4,14 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     
+    // Variable global para almacenar todos los posts una vez cargados
     let allPosts = [];
+    let allPostsData = [];
 
+    // --- FUNCIÓN PRINCIPAL PARA INICIAR EL BLOG ---
     async function iniciarBlog() {
         const postsSection = document.getElementById('posts-section');
         const gallerySection = document.getElementById('gallery-section');
-
         if (!postsSection || !gallerySection) return;
 
         try {
@@ -18,11 +20,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 fetch('/_dados/galeria.json').then(res => res.json())
             ]);
             
-            allPosts = postsData.posts;
-
-            postsSection.innerHTML = allPosts.map(renderBlogPost).join('');
+            allPostsData = postsData.posts;
+            postsSection.innerHTML = allPostsData.map(renderBlogPost).join('');
             gallerySection.innerHTML = galeria.imagens.map(renderGalleryItem).join('');
 
+            // Guardar referencia a los elementos de post después de crearlos
+            allPosts = document.querySelectorAll('.blog-post-item');
+            
             setupBlogFunctionality();
             if (window.lightbox) window.lightbox.init();
 
@@ -32,14 +36,18 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // --- FUNCIONES PARA GENERAR HTML ---
     function renderBlogPost(post) {
         const postDate = new Date(post.date);
         const formattedDate = postDate.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' });
         const imageCaption = post.caption || `Ilustração para o artigo: ${post.title}`;
         const processedBody = marked.parse(post.body || '', { gfm: true });
 
+        // Añadimos data-keywords para la búsqueda
+        const keywords = `${post.title} ${post.summary} ${post.body}`.toLowerCase();
+
         return `
-        <div class="col-lg-8 offset-lg-2 col-md-12 blog-post-item" data-category="${post.category}">
+        <div class="col-lg-8 offset-lg-2 col-md-12 blog-post-item" data-category="${post.category}" data-keywords="${keywords}">
             <article class="blog-post-card">
                 <div class="card-body">
                     <header class="post-header">
@@ -86,18 +94,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function renderRelatedPosts(currentPost) {
-        const related = allPosts
+        const related = allPostsData
             .filter(post => post.category === currentPost.category && post.title !== currentPost.title)
             .slice(0, 3);
+
         if (related.length === 0) return '';
+
         let relatedHTML = related.map(post => `
             <div class="related-post-item">
-                <a href="javascript:void(0);" class="related-post-link" data-title="${post.title}">
+                <a href="javascript:void(0);" onclick="location.reload()">
                     <img src="${post.image}" alt="${post.title}" class="related-post-img">
                     <h4 class="related-post-title">${post.title}</h4>
                 </a>
             </div>
         `).join('');
+
         return `
             <div class="related-posts">
                 <h3>Artigos Relacionados</h3>
@@ -118,6 +129,8 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>`;
     }
 
+    // --- FUNCIONES DE UTILIDAD Y CONFIGURACIÓN DE EVENTOS ---
+
     function calculateReadingTime(postElement) {
         const content = postElement.querySelector('.full-content');
         const timePlaceholder = postElement.querySelector('.reading-time');
@@ -129,11 +142,36 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // NUEVO: Función para filtrar y mostrar posts
+    function filterAndShowPosts() {
+        const searchTerm = document.getElementById('blog-search-input').value.toLowerCase();
+        const activeCategory = document.querySelector('.blog-nav .nav-link.active').getAttribute('data-target');
+        const noResultsMessage = document.getElementById('no-results-message');
+        
+        let visiblePosts = 0;
+
+        allPosts.forEach(post => {
+            const categoryMatch = (activeCategory === 'all' || post.dataset.category === activeCategory);
+            const searchMatch = (post.dataset.keywords.includes(searchTerm));
+
+            if (categoryMatch && searchMatch) {
+                post.style.display = 'block';
+                visiblePosts++;
+            } else {
+                post.style.display = 'none';
+            }
+        });
+
+        noResultsMessage.style.display = visiblePosts === 0 ? 'block' : 'none';
+    }
+
     function setupBlogFunctionality() {
         document.querySelectorAll('img.lazy').forEach(img => {
             if (img.dataset.src) img.src = img.dataset.src;
         });
-        document.querySelectorAll('.blog-post-item').forEach(calculateReadingTime);
+        
+        allPosts.forEach(calculateReadingTime);
+
         document.querySelectorAll('.read-more-btn').forEach(button => {
             button.addEventListener('click', (e) => {
                 const cardBody = e.target.closest('.card-body');
@@ -146,25 +184,36 @@ document.addEventListener("DOMContentLoaded", () => {
         const navLinks = document.querySelectorAll('.blog-nav .nav-link');
         const postsSection = document.getElementById('posts-section');
         const gallerySection = document.getElementById('gallery-section');
+        
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 navLinks.forEach(nav => nav.classList.remove('active'));
                 e.target.classList.add('active');
                 const targetCategory = e.target.getAttribute('data-target');
+
                 if (targetCategory === 'galeria') {
                     postsSection.style.display = 'none';
                     gallerySection.style.display = 'flex';
                 } else {
                     postsSection.style.display = 'flex';
                     gallerySection.style.display = 'none';
-                    document.querySelectorAll('.blog-post-item').forEach(post => {
-                        post.style.display = (targetCategory === 'all' || post.dataset.category === targetCategory) ? 'block' : 'none';
-                    });
+                    filterAndShowPosts(); // Usar la nueva función de filtro
                 }
             });
         });
+
+        // NUEVO: Eventos para la barra de búsqueda
+        const searchInput = document.getElementById('blog-search-input');
+        const clearButton = document.getElementById('blog-search-clear');
+
+        searchInput.addEventListener('keyup', filterAndShowPosts);
+        clearButton.addEventListener('click', () => {
+            searchInput.value = '';
+            filterAndShowPosts();
+        });
     }
 
+    // --- INICIAR TODO ---
     iniciarBlog();
 });
