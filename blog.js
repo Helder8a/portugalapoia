@@ -105,8 +105,46 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>`;
     }
 
-    function createSocialShareLinks(postTitle, slug) { /* ... (sin cambios) ... */ }
-    function renderRelatedPosts(currentPost) { /* ... (sin cambios) ... */ }
+    function createSocialShareLinks(postTitle, slug) {
+        const postUrl = `${window.location.origin}${window.location.pathname}#${slug}`;
+        const encodedUrl = encodeURIComponent(postUrl);
+        const encodedTitle = encodeURIComponent(postTitle);
+        return `
+            <div class="social-share">
+                <strong>Compartilhar:</strong>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}" target="_blank" rel="noopener noreferrer" aria-label="Compartir en Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}" target="_blank" rel="noopener noreferrer" aria-label="Compartir en Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}&title=${encodedTitle}" target="_blank" rel="noopener noreferrer" aria-label="Compartir en LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://wa.me/?text=${encodedTitle}%20${encodedUrl}" target="_blank" rel="noopener noreferrer" aria-label="Compartir en WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        `;
+    }
+
+    function renderRelatedPosts(currentPost) {
+        const related = allPostsData
+            .filter(post => post.category === currentPost.category && post.title !== currentPost.title)
+            .slice(0, 3);
+        if (related.length === 0) return '';
+        
+        let relatedHTML = related.map(post => {
+            const slug = post.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+            return `
+            <div class="related-post-item">
+                <a href="#${slug}" class="related-post-link">
+                    <img src="${post.image}" alt="${post.title}" class="related-post-img">
+                    <h4 class="related-post-title">${post.title}</h4>
+                </a>
+            </div>
+        `}).join('');
+
+        return `
+            <div class="related-posts">
+                <h3>Artigos Relacionados</h3>
+                <div class="related-posts-grid">${relatedHTML}</div>
+            </div>
+        `;
+    }
+
     function renderGalleryItem(item) { /* ... (sin cambios) ... */ }
 
     // --- Lógica de Paginación y Filtros ---
@@ -147,18 +185,24 @@ document.addEventListener("DOMContentLoaded", () => {
         const noResultsMessage = document.getElementById('no-results-message');
         noResultsMessage.style.display = filteredPosts.length === 0 ? 'block' : 'none';
         
-        // CORREGIDO: El artículo destacado se oculta si no es el post más reciente de la categoría seleccionada
         const featuredPostData = allPostsData[0];
         const featuredSection = document.getElementById('featured-post-section');
         const activeCategory = document.querySelector('.blog-nav .nav-link.active').getAttribute('data-target');
+        const searchTerm = document.getElementById('blog-search-input').value.toLowerCase();
 
-        if (activeCategory === 'all' || activeCategory === featuredPostData.category) {
+        // Mostrar el destacado solo si no hay búsqueda y si la categoría coincide
+        if (searchTerm === '' && (activeCategory === 'all' || activeCategory === featuredPostData.category)) {
             featuredSection.style.display = 'block';
         } else {
             featuredSection.style.display = 'none';
         }
         
-        displayPage(1, filteredPosts);
+        // Excluir el post destacado de la lista principal si ya se está mostrando
+        const postsForList = (featuredSection.style.display === 'block') 
+            ? filteredPosts.filter(p => p.dataset.slug !== featuredPostData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''))
+            : filteredPosts;
+
+        displayPage(1, postsForList);
     }
 
     // --- FUNCIONES DE MEJORA (SEO y UX) ---
@@ -168,21 +212,20 @@ document.addEventListener("DOMContentLoaded", () => {
         const postElement = document.getElementById(slug);
         const postData = allPostsData.find(p => p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') === slug);
         if (postElement && postData) {
-            // Ocultar la lista y elementos de navegación
             document.getElementById('featured-post-section').style.display = 'none';
             document.getElementById('pagination-container').style.display = 'none';
             document.querySelector('.search-section').style.display = 'none';
             document.querySelector('.blog-nav').style.display = 'none';
+            document.getElementById('recent-posts').style.display = 'block'; // Asegurarse que la sección principal esté visible
             document.getElementById('recent-posts').querySelector('.section-title').style.display = 'none';
             allPostElements.forEach(p => p.style.display = 'none');
 
-            // Mostrar y expandir solo el post seleccionado
             postElement.style.display = 'block';
             const cardBody = postElement.querySelector('.card-body');
             cardBody.querySelector('.summary-content').style.display = 'none';
             cardBody.querySelector('.full-content').style.display = 'block';
             cardBody.querySelector('.read-more-btn').style.display = 'none';
-            cardBody.querySelector('.back-to-blog').style.display = 'block'; // Mostrar botón de volver
+            cardBody.querySelector('.back-to-blog').style.display = 'block';
 
             updateMetadata(postData);
             history.pushState(null, '', `#${slug}`);
@@ -192,18 +235,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     function showPostList() {
-        // Restaurar la vista de lista
         history.pushState("", originalTitle, window.location.pathname);
         document.title = originalTitle;
         if (metaDescription) metaDescription.content = originalDescription;
         
-        document.getElementById('featured-post-section').style.display = 'block';
         document.getElementById('pagination-container').style.display = 'flex';
         document.querySelector('.search-section').style.display = 'block';
         document.querySelector('.blog-nav').style.display = 'flex';
+        document.getElementById('recent-posts').style.display = 'block';
         document.getElementById('recent-posts').querySelector('.section-title').style.display = 'block';
         
-        // Restaurar el contenido de los posts a su estado resumido
         allPostElements.forEach(post => {
             const cardBody = post.querySelector('.card-body');
             cardBody.querySelector('.summary-content').style.display = 'block';
