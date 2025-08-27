@@ -1,15 +1,12 @@
 // ==================================================================
-// === CÓDIGO FINAL Y MEJORADO para blog.js (con Paginación + SEO) ===
+// === CÓDIGO FINAL Y MEJORADO para blog.js (con todas las mejoras) ===
 // ==================================================================
 
 document.addEventListener("DOMContentLoaded", () => {
     
-    // Variables globales
+    // Variable global para almacenar todos los posts una vez cargados
     let allPostsData = [];
-    let allPostElements = [];
-    const postsPerPage = 5;
-    let currentPage = 1;
-    const originalTitle = document.title; // Guardar el título original de la página
+    let allPosts = [];
 
     // --- FUNCIÓN PRINCIPAL PARA INICIAR EL BLOG ---
     async function iniciarBlog() {
@@ -23,18 +20,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 fetch('/_dados/galeria.json').then(res => res.json())
             ]);
             
-            allPostsData = postsData.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-
+            allPostsData = postsData.posts;
             postsSection.innerHTML = allPostsData.map(renderBlogPost).join('');
             gallerySection.innerHTML = galeria.imagens.map(renderGalleryItem).join('');
 
-            allPostElements = document.querySelectorAll('.blog-post-item');
+            // Guardar referencia a los elementos de post después de crearlos
+            allPosts = document.querySelectorAll('.blog-post-item');
             
             setupBlogFunctionality();
             if (window.lightbox) window.lightbox.init();
-
-            // Comprobar si hay un ancla en la URL al cargar
-            checkUrlForPost();
 
         } catch (error) {
             console.error("Falha ao carregar o conteúdo do blog:", error);
@@ -48,12 +42,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const formattedDate = postDate.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' });
         const imageCaption = post.caption || `Ilustração para o artigo: ${post.title}`;
         const processedBody = marked.parse(post.body || '', { gfm: true });
+
+        // Añadimos data-keywords para la búsqueda
         const keywords = `${post.title} ${post.summary} ${post.body}`.toLowerCase();
-        const slug = post.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 
         return `
-        <div class="col-lg-8 offset-lg-2 col-md-12 blog-post-item" data-category="${post.category}" data-keywords="${keywords}" data-slug="${slug}" style="display: none;">
-            <article class="blog-post-card" id="${slug}">
+        <div class="col-lg-8 offset-lg-2 col-md-12 blog-post-item" data-category="${post.category}" data-keywords="${keywords}">
+            <article class="blog-post-card">
                 <div class="card-body">
                     <header class="post-header">
                         <h1 class="card-title">${post.title}</h1>
@@ -63,24 +58,28 @@ document.addEventListener("DOMContentLoaded", () => {
                             <span class="reading-time"></span>
                         </div>
                     </header>
+                    
                     <figure class="post-image-container">
                         <img class="lazy" data-src="${post.image}" alt="${post.title}">
                         <figcaption>${imageCaption}</figcaption>
                     </figure>
+
                     <div class="summary-content card-text">${post.summary}</div>
+                    
                     <div class="full-content" style="display: none;">
                         ${processedBody}
-                        ${createSocialShareLinks(post.title, slug)}
+                        ${createSocialShareLinks(post.title)}
                         ${renderRelatedPosts(post)}
                     </div>
+                    
                     <button class="btn btn-outline-primary read-more-btn">Ler Mais</button>
                 </div>
             </article>
         </div>`;
     }
 
-    function createSocialShareLinks(postTitle, slug) {
-        const postUrl = `${window.location.origin}${window.location.pathname}#${slug}`; // URL con ancla
+    function createSocialShareLinks(postTitle) {
+        const postUrl = window.location.href;
         const encodedUrl = encodeURIComponent(postUrl);
         const encodedTitle = encodeURIComponent(postTitle);
         return `
@@ -98,19 +97,17 @@ document.addEventListener("DOMContentLoaded", () => {
         const related = allPostsData
             .filter(post => post.category === currentPost.category && post.title !== currentPost.title)
             .slice(0, 3);
+
         if (related.length === 0) return '';
-        
-        let relatedHTML = related.map(post => {
-            const slug = post.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-            // CORREGIDO: El enlace ahora apunta al ancla del post relacionado
-            return `
+
+        let relatedHTML = related.map(post => `
             <div class="related-post-item">
-                <a href="#${slug}" class="related-post-link">
+                <a href="javascript:void(0);" onclick="location.reload()">
                     <img src="${post.image}" alt="${post.title}" class="related-post-img">
                     <h4 class="related-post-title">${post.title}</h4>
                 </a>
             </div>
-        `}).join('');
+        `).join('');
 
         return `
             <div class="related-posts">
@@ -120,113 +117,73 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
     }
 
-    function renderGalleryItem(item) { /* ... (sin cambios) ... */ }
+    function renderGalleryItem(item) {
+        return `
+        <div class="col-md-6 mb-4 gallery-item-wrapper">
+            <div class="gallery-item">
+                <a href="${item.image}" data-lightbox="gallery" data-title="${item.title} - ${item.caption}">
+                    <img src="${item.image}" alt="${item.title}">
+                    <div class="caption">${item.title}</div>
+                </a>
+            </div>
+        </div>`;
+    }
 
-    // --- Lógica de Paginación y Filtros ---
-    function displayPage(page, posts) {
-        currentPage = page;
-        allPostElements.forEach(post => post.style.display = 'none');
-        const startIndex = (page - 1) * postsPerPage;
-        const endIndex = startIndex + postsPerPage;
-        const pagePosts = posts.slice(startIndex, endIndex);
-        pagePosts.forEach(post => post.style.display = 'block');
-        renderPaginationControls(posts.length, page);
-        // No hacer scroll al inicio si estamos mostrando un post específico
-        if (!window.location.hash) {
-            window.scrollTo({ top: document.getElementById('posts-section').offsetTop - 100, behavior: 'smooth' });
+    // --- FUNCIONES DE UTILIDAD Y CONFIGURACIÓN DE EVENTOS ---
+
+    function calculateReadingTime(postElement) {
+        const content = postElement.querySelector('.full-content');
+        const timePlaceholder = postElement.querySelector('.reading-time');
+        if (content && timePlaceholder) {
+            const text = content.textContent || content.innerText;
+            const wordCount = text.trim().split(/\s+/).filter(Boolean).length;
+            const readingTime = Math.ceil(wordCount / 225) || 1;
+            timePlaceholder.innerHTML = `<i class="fa-regular fa-clock"></i> ${readingTime} min de leitura`;
         }
     }
 
-    function renderPaginationControls(totalPosts, currentPage) { /* ... (sin cambios) ... */ }
-    function getFilteredPosts() { /* ... (sin cambios) ... */ }
-
+    // NUEVO: Función para filtrar y mostrar posts
     function filterAndShowPosts() {
-        // Limpiar el ancla y restaurar el título al filtrar
-        history.pushState("", document.title, window.location.pathname + window.location.search);
-        document.title = originalTitle;
-
-        const filteredPosts = getFilteredPosts();
+        const searchTerm = document.getElementById('blog-search-input').value.toLowerCase();
+        const activeCategory = document.querySelector('.blog-nav .nav-link.active').getAttribute('data-target');
         const noResultsMessage = document.getElementById('no-results-message');
-        noResultsMessage.style.display = filteredPosts.length === 0 ? 'block' : 'none';
-        displayPage(1, filteredPosts);
-    }
+        
+        let visiblePosts = 0;
 
-    // --- FUNCIONES DE MEJORA (SEO y UX) ---
-    function expandAndFocusPost(slug) {
-        const postElement = document.getElementById(slug);
-        if (postElement) {
-            const cardBody = postElement.querySelector('.card-body');
-            cardBody.querySelector('.summary-content').style.display = 'none';
-            cardBody.querySelector('.full-content').style.display = 'block';
-            cardBody.querySelector('.read-more-btn').style.display = 'none';
+        allPosts.forEach(post => {
+            const categoryMatch = (activeCategory === 'all' || post.dataset.category === activeCategory);
+            const searchMatch = (post.dataset.keywords.includes(searchTerm));
 
-            // Actualizar título y URL
-            const postTitle = postElement.querySelector('.card-title').textContent;
-            document.title = `${postTitle} | PortugalApoia Blog`;
-            history.pushState(null, '', `#${slug}`);
-            
-            // Hacer scroll hacia el post
-            setTimeout(() => {
-                postElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 100);
-        }
-    }
-
-    function checkUrlForPost() {
-        const slug = window.location.hash.substring(1);
-        if (slug) {
-            const postToExpand = document.querySelector(`.blog-post-item[data-slug='${slug}']`);
-            if (postToExpand) {
-                // Mostrar todos los posts temporalmente para encontrar el correcto
-                allPostElements.forEach(p => p.style.display = 'block');
-                expandAndFocusPost(slug);
-                // Ocultar los demás después de expandir
-                allPostElements.forEach(p => {
-                    if (p.dataset.slug !== slug) {
-                        p.style.display = 'none';
-                    }
-                });
-                document.getElementById('pagination-container').style.display = 'none'; // Ocultar paginación
+            if (categoryMatch && searchMatch) {
+                post.style.display = 'block';
+                visiblePosts++;
             } else {
-                 filterAndShowPosts(); // Si el ancla no es válida, mostrar la primera página
+                post.style.display = 'none';
             }
-        } else {
-            filterAndShowPosts(); // Mostrar la primera página si no hay ancla
-        }
+        });
+
+        noResultsMessage.style.display = visiblePosts === 0 ? 'block' : 'none';
     }
 
-    // --- Configuración de Eventos ---
     function setupBlogFunctionality() {
-        // Lazy loading y tiempo de lectura
-        document.querySelectorAll('img.lazy').forEach(img => { if (img.dataset.src) img.src = img.dataset.src; });
-        allPostElements.forEach(calculateReadingTime);
+        document.querySelectorAll('img.lazy').forEach(img => {
+            if (img.dataset.src) img.src = img.dataset.src;
+        });
+        
+        allPosts.forEach(calculateReadingTime);
 
-        // Botones "Leer más"
         document.querySelectorAll('.read-more-btn').forEach(button => {
             button.addEventListener('click', (e) => {
-                const post = e.target.closest('.blog-post-item');
-                expandAndFocusPost(post.dataset.slug);
+                const cardBody = e.target.closest('.card-body');
+                cardBody.querySelector('.summary-content').style.display = 'none';
+                cardBody.querySelector('.full-content').style.display = 'block';
+                e.target.style.display = 'none';
             });
         });
-        
-        // CORREGIDO: Eventos para los enlaces de "Artículos Relacionados"
-        document.body.addEventListener('click', function(e) {
-            const link = e.target.closest('.related-post-link');
-            if (link) {
-                e.preventDefault();
-                const slug = new URL(link.href).hash.substring(1);
-                window.location.hash = slug; // Esto dispara el evento 'hashchange'
-            }
-        });
 
-        // Evento para navegar con los botones "atrás/adelante" del navegador
-        window.addEventListener('hashchange', checkUrlForPost, false);
-        
-        // Filtros y Búsqueda
         const navLinks = document.querySelectorAll('.blog-nav .nav-link');
         const postsSection = document.getElementById('posts-section');
         const gallerySection = document.getElementById('gallery-section');
-        const paginationContainer = document.getElementById('pagination-container');
         
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
@@ -234,24 +191,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 navLinks.forEach(nav => nav.classList.remove('active'));
                 e.target.classList.add('active');
                 const targetCategory = e.target.getAttribute('data-target');
-                
-                document.getElementById('blog-search-input').value = ''; // Limpiar búsqueda al cambiar de categoría
 
                 if (targetCategory === 'galeria') {
                     postsSection.style.display = 'none';
-                    paginationContainer.style.display = 'none';
                     gallerySection.style.display = 'flex';
                 } else {
+                    postsSection.style.display = 'flex';
                     gallerySection.style.display = 'none';
-                    paginationContainer.style.display = 'flex';
-                    postsSection.style.display = 'block'; // Usar block para el contenedor
-                    filterAndShowPosts();
+                    filterAndShowPosts(); // Usar la nueva función de filtro
                 }
             });
         });
 
+        // NUEVO: Eventos para la barra de búsqueda
         const searchInput = document.getElementById('blog-search-input');
         const clearButton = document.getElementById('blog-search-clear');
+
         searchInput.addEventListener('keyup', filterAndShowPosts);
         clearButton.addEventListener('click', () => {
             searchInput.value = '';
@@ -259,5 +214,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // --- INICIAR TODO ---
     iniciarBlog();
 });
