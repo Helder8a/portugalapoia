@@ -3,13 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog PortugalApoia | Histórias de Solidariedade e Dicas Comunitárias</title>
+    <title>Blog PortugalApoia | Histórias e Notícias</title>
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
@@ -17,40 +15,9 @@
 </head>
 <body>
     <div id="preloader"><img src="images_pta/logocuadrado.jpg" alt="A carregar..." class="spinner"></div>
+    <header class="main-header"></header>
 
-    <header class="main-header">
-        <nav class="navbar navbar-expand-lg">
-            <div class="container">
-                <a class="navbar-brand logo" href="index.html" style="display: inline-flex; align-items: center;">
-                    <img src="images_pta/logocuadrado.jpg" alt="Logo PortugalApoia" style="height: 35px; margin-right: 10px;">
-                    <span class="brand-text-responsive">PortugalApoia</span>
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="main-nav">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a class="nav-link" href="sobre-nos.html">Sobre Nós</a></li>
-                        <li class="nav-item"><a class="nav-link" href="doações.html">Doações</a></li>
-                        <li class="nav-item"><a class="nav-link" href="empregos.html">Emprego</a></li>
-                        <li class="nav-item"><a class="nav-link" href="serviços.html">Serviços</a></li>
-                        <li class="nav-item"><a class="nav-link" href="habitação.html">Habitação</a></li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownWebApp" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Apps</a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownWebApp">
-                                <a class="dropdown-item" href="app_evaluadorsustentable.html">Avaliador Sustentável PRO</a>
-                                <a class="dropdown-item" href="app_avaliadorurbano.html">Avaliador de Imóveis Urbanos</a>
-                            </div>
-                        </li>
-                        <li class="nav-item active"><a class="nav-link" href="blog.html">Blog</a></li>
-                        <li class="nav-item"><a class="nav-link btn btn-primary publish-btn" href="publicar.html">Publicar</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    
-    <main>
+    <main class="blog-main-content">
         <section class="page-header page-header-blog text-center text-white">
             <div class="container">
                 <h1 class="page-title">Blog e Notícias</h1>
@@ -58,24 +25,22 @@
             </div>
         </section>
 
-        <nav class="nav blog-nav justify-content-center">
-            <a class="nav-link active" data-target="all">Todos</a>
-            <a class="nav-link" data-target="emprego">Emprego</a>
-            <a class="nav-link" data-target="habitacao">Habitação</a>
-            <a class="nav-link" data-target="saude">Saúde</a>
-            <a class="nav-link" data-target="turismo">Turismo</a>
-            <a class="nav-link" data-target="educacao">Educação</a>
-            <a class="nav-link" data-target="galeria">Galeria</a>
-        </nav>
-
-        <section class="search-section py-4 bg-light">
+        <section class="blog-controls-section">
             <div class="container">
-                <div class="row justify-content-center">
+                <nav class="nav blog-nav justify-content-center">
+                    <a class="nav-link active" href="#" data-target="all">Todos</a>
+                    <a class="nav-link" href="#" data-target="emprego">Emprego</a>
+                    <a class="nav-link" href="#" data-target="habitacao">Habitação</a>
+                    <a class="nav-link" href="#" data-target="saude">Saúde</a>
+                    <a class="nav-link" href="#" data-target="turismo">Turismo</a>
+                    <a class="nav-link" href="#" data-target="educacao">Educação</a>
+                </nav>
+                <div class="row justify-content-center mt-4">
                     <div class="col-md-8">
                         <div class="input-group">
-                            <input type="text" id="blog-search-input" class="form-control form-control-lg" placeholder="Pesquisar artigos por palavra-chave...">
+                            <input type="text" id="blog-search-input" class="form-control form-control-lg" placeholder="Pesquisar artigos..." aria-label="Pesquisar artigos">
                             <div class="input-group-append">
-                                <button class="btn btn-primary" type="button" id="blog-search-clear"><i class="fas fa-times"></i></button>
+                                <button class="btn btn-secondary" type="button" id="blog-search-clear" aria-label="Limpar pesquisa"><i class="fas fa-times"></i></button>
                             </div>
                         </div>
                     </div>
@@ -83,15 +48,18 @@
             </div>
         </section>
 
-        <section class="py-5">
-            <div class="container">
-                <div class="row" id="posts-section">
+        <section class="container py-5">
+            <div id="blog-list-view">
+                <div id="blog-posts-grid" class="row">
                     </div>
-                <div class="col-12 text-center" id="no-results-message" style="display: none;">
-                    <p class="lead text-muted mt-5">Nenhum artigo encontrado com os critérios de pesquisa.</p>
+            </div>
+            
+            <div id="blog-single-view" style="display: none;">
                 </div>
-                <div id="gallery-section" class="row" style="display: none;">
-                    </div>
+
+            <div id="no-results-message" class="text-center py-5" style="display: none;">
+                <h3 class="text-muted">Nenhum artigo encontrado.</h3>
+                <p>Tente ajustar os seus filtros ou termos de pesquisa.</p>
             </div>
         </section>
     </main>
@@ -99,7 +67,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     
     <script src="script.js" defer></script> 
