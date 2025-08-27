@@ -192,6 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Mostrar el destacado solo si no hay búsqueda y si la categoría coincide
         if (searchTerm === '' && (activeCategory === 'all' || activeCategory === featuredPostData.category)) {
+            featuredSection.innerHTML = renderFeaturedPost(featuredPostData); // Re-renderizar para añadir listener
             featuredSection.style.display = 'block';
         } else {
             featuredSection.style.display = 'none';
@@ -216,7 +217,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('pagination-container').style.display = 'none';
             document.querySelector('.search-section').style.display = 'none';
             document.querySelector('.blog-nav').style.display = 'none';
-            document.getElementById('recent-posts').style.display = 'block'; // Asegurarse que la sección principal esté visible
+            document.getElementById('recent-posts').style.display = 'block'; 
             document.getElementById('recent-posts').querySelector('.section-title').style.display = 'none';
             allPostElements.forEach(p => p.style.display = 'none');
 
