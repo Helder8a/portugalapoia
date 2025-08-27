@@ -27,20 +27,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const imageCaption = post.caption || `Ilustração para o artigo: ${post.title}`;
         const processedBody = marked.parse(post.body || '', { gfm: true });
 
-        // Estructura HTML robusta que funciona con Bootstrap
+        // ======> CAMBIO IMPORTANTE: Clase para una sola columna centrada <======
         return `
-        <div class="col-lg-6 col-md-12 blog-post-item" data-category="${post.category}">
+        <div class="col-lg-8 offset-lg-2 col-md-12 blog-post-item" data-category="${post.category}">
             <div class="blog-post-card">
-                
-                <div class="post-image-container">
-                    <img class="lazy" data-src="${post.image}" alt="${post.title}">
-                </div>
-                
                 <div class="card-body">
-                    <figure class="post-image-container-caption">
-                         <figcaption>${imageCaption}</figcaption>
-                    </figure>
-
                     <h5 class="card-title">${post.title}</h5>
                     
                     <div class="post-meta">
@@ -48,6 +39,11 @@ document.addEventListener("DOMContentLoaded", () => {
                         <span class="separator">|</span>
                         <span class="reading-time"></span>
                     </div>
+
+                    <figure class="post-image-container">
+                        <img class="lazy" data-src="${post.image}" alt="${post.title}">
+                        <figcaption>${imageCaption}</figcaption>
+                    </figure>
 
                     <p class="card-text summary-content">${post.summary}</p>
                     
