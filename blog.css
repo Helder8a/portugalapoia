@@ -1,104 +1,199 @@
 /* ================================================================== */
-/* ===       CÓDIGO FINAL CORREGIDO Y PROBADO para blog.css       === */
+/* === CÓDIGO MEJORADO para blog.css (UX Profesional + extras) === */
 /* ================================================================== */
 
+/* --- Variables de Diseño y Colores --- */
 :root {
-    --blog-color-primary: #0A3D62;
-    --blog-color-accent: #F57C00;
-    --blog-text-color: #343a40;
-    --blog-card-shadow: 0 5px 15px rgba(0,0,0,0.07);
-    --blog-border-radius: 12px;
+    --color-primario: #0A3D62; /* Azul oscuro para títulos y elementos principales */
+    --color-acento: #F57C00;   /* Naranja para enlaces, botones y acentos */
+    --color-texto-principal: #343a40; /* Gris oscuro para el cuerpo del texto */
+    --color-texto-secundario: #6c757d; /* Gris claro para metadatos */
+    --color-fondo: #ffffff;
+    --color-fondo-suave: #f8f9fa;
+    --borde-radio: 15px;
+    --sombra-tarjeta: 0 10px 30px rgba(0, 0, 0, 0.07);
+    --sombra-tarjeta-hover: 0 15px 40px rgba(0, 0, 0, 0.1);
+    --fuente-titulos: 'Source Sans Pro', sans-serif;
+    --fuente-cuerpo: 'Source Sans Pro', sans-serif;
 }
 
-.blog-main-content { padding-top: 75px; }
+main { 
+    padding-top: 75px; 
+}
+
+/* --- Encabezado de la Página del Blog --- */
 .page-header-blog {
-    background: linear-gradient(rgba(10, 61, 98, .85), rgba(10, 61, 98, .85)), url('images/imgindex.avif') center/cover no-repeat;
-    padding: 60px 0;
+    background: linear-gradient(rgba(10, 61, 98, .9), rgba(10, 61, 98, .9)), url('images/imgindex.avif') center center/cover no-repeat;
+    padding: 70px 0;
+    color: #fff;
     margin-top: -75px;
 }
+.page-header-blog .page-title { 
+    font-size: 2.5rem; /* Ligeramente reducido */
+    font-weight: 700;
+}
+.page-header-blog .lead { 
+    font-size: 1.15rem; 
+    opacity: 0.9;
+}
 
-.blog-controls-section {
-    background-color: #f8f9fa;
-    padding: 20px 0;
+/* --- Barra de Navegación de Categorías --- */
+.blog-nav {
+    background-color: var(--color-fondo-suave);
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--color-border);
     position: sticky;
-    top: 75px;
-    z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    top: 75px; 
+    z-index: 1020;
 }
-
-.blog-nav .nav-link { color: var(--blog-color-primary); font-weight: 600; }
-.blog-nav .nav-link.active, .blog-nav .nav-link:hover { color: var(--blog-color-accent); }
-
-/* --- DISEÑO DE TARJETAS DE ALTURA UNIFORME --- */
-.blog-post-card-wrapper {
-    display: flex; /* Permite que la tarjeta interior se estire */
-    padding: 0 15px;
-    margin-bottom: 30px; /* Espacio vertical entre filas */
-}
-.blog-post-card {
-    background: #fff;
-    border: none;
-    border-radius: var(--blog-border-radius);
-    box-shadow: var(--blog-card-shadow);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    width: 100%; /* Ocupa todo el espacio de la columna */
-    display: flex; /* Importante para la altura uniforme */
-    flex-direction: column;
+.blog-nav .nav-link {
+    color: var(--color-primario);
+    font-weight: 600;
     cursor: pointer;
+    padding: 0.6rem 1.2rem;
+    border-bottom: 3px solid transparent;
+    transition: color 0.3s ease, border-bottom-color 0.3s ease;
 }
-.blog-post-card:hover { transform: translateY(-5px); }
+.blog-nav .nav-link.active, .blog-nav .nav-link:hover { 
+    color: var(--color-acento);
+    border-bottom-color: var(--color-acento);
+}
 
-.blog-post-card .post-image-container {
-    aspect-ratio: 16 / 10;
+/* --- Barra de Búsqueda --- */
+.search-section .form-control-lg {
+    border-radius: 50px;
+    padding-left: 20px;
+}
+.search-section .btn {
+    border-radius: 50px;
+}
+
+/* --- Estilo de las Tarjetas de Publicación --- */
+.blog-post-card {
+    background-color: var(--color-fondo);
+    border: 1px solid var(--color-border);
+    border-radius: var(--borde-radio);
+    box-shadow: var(--sombra-tarjeta);
     overflow: hidden;
-    border-top-left-radius: var(--blog-border-radius);
-    border-top-right-radius: var(--blog-border-radius);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.blog-post-card img { width: 100%; height: 100%; object-fit: cover; }
-.blog-post-card .card-body {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1; /* Permite que el cuerpo de la tarjeta crezca */
+.blog-post-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--sombra-tarjeta-hover);
 }
-.blog-post-card .card-title { font-size: 1.3rem; font-weight: 700; color: var(--blog-color-primary); }
-.blog-post-card .card-text { flex-grow: 1; /* Empuja el botón "Leer más" hacia abajo */ }
+.blog-post-card .card-body { 
+    padding: 2rem; 
+}
 
-/* --- VISTA DE ARTÍCULO ÚNICO --- */
-#blog-single-view { max-width: 800px; margin: 0 auto; }
-.single-post-title { font-size: 2.5rem; color: var(--blog-color-primary); }
-.single-post-image { width: 100%; border-radius: var(--blog-border-radius); margin-bottom: 2rem; }
-.single-post-content { font-size: 1.1rem; line-height: 1.8; }
-.back-to-blog-btn { margin-bottom: 2rem; }
-
-/* --- ESTILOS DE LA GALERÍA --- */
-.gallery-item-wrapper {
-    padding: 15px;
+.blog-post-card .card-title {
+    font-family: var(--fuente-titulos);
+    font-weight: 700;
+    font-size: 1.8rem; /* Tamaño de título más refinado */
+    color: var(--color-primario);
+    text-align: center;
+    line-height: 1.3;
+    margin-bottom: 1rem;
 }
-.gallery-item {
-    position: relative;
+.card-text, .full-content {
+    font-family: var(--fuente-cuerpo);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--color-texto-principal);
+}
+
+.post-image-container {
+    margin: 1.5rem 0 2rem 0;
+    border-radius: 10px;
     overflow: hidden;
-    border-radius: var(--blog-border-radius);
-    box-shadow: var(--blog-card-shadow);
-    aspect-ratio: 1 / 1; /* Fuerza a que sean cuadrados */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    aspect-ratio: 16 / 9; 
 }
-.gallery-item img {
+.post-image-container img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    transition: transform 0.4s ease;
+    object-fit: cover; 
+    display: block;
+    transition: transform 0.4s ease-out;
 }
-.gallery-item:hover img {
+.blog-post-card:hover .post-image-container img { 
+    transform: scale(1.03); 
+}
+
+.post-meta {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    font-size: 0.9em;
+    color: var(--color-texto-secundario);
+    margin-bottom: 2rem;
+}
+
+.full-content h3 {
+    font-family: var(--fuente-titulos);
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--color-primario);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.read-more-btn { 
+    display: block; 
+    margin: 1.5rem auto 0; 
+    border-radius: 50px;
+    padding: 10px 25px;
+    font-weight: 600;
+    background-color: transparent;
+    border-color: var(--color-acento);
+    color: var(--color-acento);
+}
+.read-more-btn:hover {
+    background-color: var(--color-acento);
+    color: #fff;
+}
+
+/* --- Botones de Compartir y Artículos Relacionados --- */
+.social-share {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e9ecef;
+    text-align: center;
+}
+.social-share strong {
+    margin-right: 15px;
+    font-weight: 600;
+    color: var(--color-texto-principal);
+}
+.social-share a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 0 5px;
+    color: #fff;
+    background-color: var(--color-texto-secundario);
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.social-share a:hover { 
     transform: scale(1.1);
 }
-.gallery-item .caption {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-    color: white;
-    padding: 20px 15px 15px;
-    font-size: 1rem;
-    font-weight: bold;
+
+.social-share a[aria-label*="Facebook"] { background-color: #3b5998; }
+.social-share a[aria-label*="Twitter"] { background-color: #1da1f2; }
+.social-share a[aria-label*="LinkedIn"] { background-color: #0077b5; }
+.social-share a[aria-label*="WhatsApp"] { background-color: #25d366; }
+
+.related-posts {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e9ecef;
+}
+.related-posts h3 {
     text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    color: var(--color-primario);
 }
