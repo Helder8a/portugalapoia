@@ -1,39 +1,194 @@
-/* ... (Todo tu CSS existente se mantiene igual) ... */
+/* ================================================================== */
+/* === CÓDIGO FINAL Y CORREGIDO PARA blog.css === */
+/* ================================================================== */
 
-/* --- NUEVOS ESTILOS PARA EL CONTENIDO DEL POST --- */
-/* Estilos para el contenedor del contenido completo */
-.full-content {
-    display: none;
-    margin-top: 1rem;
-    color: #343a40; /* Un color de texto ligeramente más oscuro para mejor lectura */
+/* --- Estilos de Navegación del Blog --- */
+.blog-nav {
+    background-color: #f8f9fa;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #dee2e6;
+    overflow-x: auto;
+    white-space: nowrap;
 }
 
-/* El procesador de Markdown crea etiquetas <p>. Les damos un margen. */
-.full-content p {
-    margin-bottom: 1rem;
+.blog-nav .nav-link {
+    color: #0A3D62;
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    padding-bottom: 5px;
+    transition: color 0.3s;
+    font-size: 1rem;
 }
 
-/* Estilos para las negritas que vienen de Markdown (etiqueta <strong>) */
-.full-content strong {
-    font-weight: 700; /* Asegura que se aplique la negrita de 'Source Sans Pro' */
-    color: #0A3D62; /* Un color un poco más oscuro para resaltar */
+.blog-nav .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: #F57C00;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: width 0.3s ease-in-out;
 }
 
-/* Estilos para las cursivas (etiqueta <em>) */
-.full-content em {
-    font-style: italic;
+.blog-nav .nav-link.active::after,
+.blog-nav .nav-link:hover::after {
+    width: 100%;
 }
 
-/* Estilos para las listas */
-.full-content ul,
-.full-content ol {
-    margin-left: 20px;
-    margin-bottom: 1rem;
-    padding-left: 15px;
+/* --- Animación y Contenedor Principal del Post --- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.full-content li {
+.blog-post-item {
+    animation: fadeIn 0.8s ease-out forwards;
+    margin-bottom: 2rem; /* Añadimos espacio inferior aquí */
+}
+
+/* --- Tarjeta del Post (Card) --- */
+.blog-post-card {
+    display: flex; /* Usamos flexbox para la estructura interna */
+    flex-direction: column; /* Apila los elementos verticalmente */
+    height: 100%; /* Asegura que todas las tarjetas tengan la misma altura si están en una fila */
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: box-shadow 0.3s, transform 0.3s;
+    background-color: #fff;
+}
+
+.blog-post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.blog-post-card .card-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Permite que el cuerpo de la tarjeta crezca para llenar el espacio */
+}
+
+/* --- Tipografía (Fuente 'Source Sans Pro') --- */
+.blog-post-card .card-title {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 700;
+    font-size: 1.6rem;
     margin-bottom: 0.5rem;
+    color: #0A3D62;
 }
 
-/* ... (El resto de tus estilos .gallery-item, .page-header, etc., se mantienen) ... */
+.card-text, .full-content {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    font-size: 1.05rem;
+    color: #343a40;
+}
+
+/* --- Diseño Profesional de Imagen con Leyenda (CORREGIDO) --- */
+.post-image-container {
+    width: 100%; /* Ocupa el 100% del ancho de la tarjeta */
+    height: 250px; /* Altura fija para la imagen */
+    overflow: hidden; /* Oculta cualquier parte de la imagen que se desborde */
+    margin: 0;
+    padding: 0;
+}
+
+.post-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Escala la imagen para llenar el contenedor sin distorsionarla */
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.blog-post-card:hover .post-image-container img {
+    transform: scale(1.05);
+}
+
+.post-image-container figcaption {
+    padding: 8px 15px;
+    font-size: 0.85em;
+    font-style: italic;
+    color: #6c757d;
+    text-align: center;
+    background-color: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+    width: 100%;
+}
+
+/* --- Metadatos y Tiempo de Lectura --- */
+.post-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap; /* Permite que se ajuste en pantallas pequeñas */
+    gap: 10px;
+    font-size: 0.85em;
+    color: #6c757d;
+    margin-bottom: 1rem;
+}
+
+.post-meta .separator {
+    color: #ccc;
+}
+
+.post-meta .reading-time {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* --- Contenido Completo del Post (Renderizado de Markdown) --- */
+.full-content {
+    display: none; /* Oculto por defecto */
+}
+
+.full-content p { margin-bottom: 1rem; }
+.full-content strong { font-weight: 700; color: #0A3D62; }
+.full-content em { font-style: italic; }
+.full-content ul, .full-content ol { padding-left: 20px; margin-bottom: 1rem; }
+.full-content li { margin-bottom: 0.5rem; }
+
+/* --- Botón "Leer Más" --- */
+.read-more-btn {
+    margin-top: auto; /* Empuja el botón hacia el final de la tarjeta */
+    align-self: flex-start; /* Alinea el botón a la izquierda */
+}
+
+/* --- Galería --- */
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, .1);
+}
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+/* --- Media Queries --- */
+@media (max-width: 767.98px) {
+    .blog-post-card .card-title {
+        font-size: 1.4rem;
+    }
+    .post-image-container {
+        height: 200px;
+    }
+}
