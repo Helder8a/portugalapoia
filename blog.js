@@ -4,18 +4,13 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     
-    // Variable global para almacenar todos los posts una vez cargados
     let allPosts = [];
 
-    // --- FUNCIÓN PRINCIPAL PARA INICIAR EL BLOG ---
     async function iniciarBlog() {
         const postsSection = document.getElementById('posts-section');
         const gallerySection = document.getElementById('gallery-section');
 
-        if (!postsSection || !gallerySection) {
-            console.error("Error: No se encontraron los contenedores #posts-section o #gallery-section.");
-            return;
-        }
+        if (!postsSection || !gallerySection) return;
 
         try {
             const [postsData, galeria] = await Promise.all([
@@ -23,27 +18,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 fetch('/_dados/galeria.json').then(res => res.json())
             ]);
             
-            // Guardamos todos los posts para usarlos en "Artículos Relacionados"
             allPosts = postsData.posts;
 
             postsSection.innerHTML = allPosts.map(renderBlogPost).join('');
             gallerySection.innerHTML = galeria.imagens.map(renderGalleryItem).join('');
 
             setupBlogFunctionality();
-
-            if (window.lightbox) {
-                window.lightbox.init();
-            }
+            if (window.lightbox) window.lightbox.init();
 
         } catch (error) {
             console.error("Falha ao carregar o conteúdo do blog:", error);
-            postsSection.innerHTML = `<div class="col-12 text-center"><p class="text-danger">Não foi possível carregar as publicações. Por favor, tente novamente mais tarde.</p></div>`;
+            postsSection.innerHTML = `<div class="col-12 text-center"><p class="text-danger">Não foi possível carregar as publicações.</p></div>`;
         }
     }
 
-    // --- FUNCIONES PARA GENERAR HTML ---
-
-    // Genera el HTML para cada post del blog
     function renderBlogPost(post) {
         const postDate = new Date(post.date);
         const formattedDate = postDate.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -82,12 +70,10 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>`;
     }
 
-    // NUEVO: Genera los botones para compartir en redes sociales
     function createSocialShareLinks(postTitle) {
         const postUrl = window.location.href;
         const encodedUrl = encodeURIComponent(postUrl);
         const encodedTitle = encodeURIComponent(postTitle);
-
         return `
             <div class="social-share">
                 <strong>Compartilhar:</strong>
@@ -99,14 +85,11 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
     }
 
-    // NUEVO: Encuentra y genera el HTML para los artículos relacionados
     function renderRelatedPosts(currentPost) {
         const related = allPosts
             .filter(post => post.category === currentPost.category && post.title !== currentPost.title)
             .slice(0, 3);
-
         if (related.length === 0) return '';
-
         let relatedHTML = related.map(post => `
             <div class="related-post-item">
                 <a href="javascript:void(0);" class="related-post-link" data-title="${post.title}">
@@ -115,7 +98,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 </a>
             </div>
         `).join('');
-
         return `
             <div class="related-posts">
                 <h3>Artigos Relacionados</h3>
@@ -124,7 +106,6 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
     }
 
-    // Genera el HTML para cada item de la galería
     function renderGalleryItem(item) {
         return `
         <div class="col-md-6 mb-4 gallery-item-wrapper">
@@ -136,8 +117,6 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
         </div>`;
     }
-
-    // --- FUNCIONES DE UTILIDAD Y CONFIGURACIÓN DE EVENTOS ---
 
     function calculateReadingTime(postElement) {
         const content = postElement.querySelector('.full-content');
@@ -151,14 +130,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function setupBlogFunctionality() {
-        // Activar lazy loading
         document.querySelectorAll('img.lazy').forEach(img => {
             if (img.dataset.src) img.src = img.dataset.src;
         });
-        
         document.querySelectorAll('.blog-post-item').forEach(calculateReadingTime);
-
-        // Eventos para los botones "Leer más"
         document.querySelectorAll('.read-more-btn').forEach(button => {
             button.addEventListener('click', (e) => {
                 const cardBody = e.target.closest('.card-body');
@@ -168,18 +143,15 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
 
-        // Eventos para los filtros de categoría
         const navLinks = document.querySelectorAll('.blog-nav .nav-link');
         const postsSection = document.getElementById('posts-section');
         const gallerySection = document.getElementById('gallery-section');
-
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 navLinks.forEach(nav => nav.classList.remove('active'));
                 e.target.classList.add('active');
                 const targetCategory = e.target.getAttribute('data-target');
-
                 if (targetCategory === 'galeria') {
                     postsSection.style.display = 'none';
                     gallerySection.style.display = 'flex';
@@ -194,6 +166,5 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- INICIAR TODO ---
     iniciarBlog();
 });

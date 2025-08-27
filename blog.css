@@ -2,12 +2,8 @@
 /* === CÓDIGO FINAL Y MEJORADO para blog.css (UX Profesional + extras) === */
 /* ================================================================== */
 
-/* --- Espaciado para la Barra de Navegación Fija --- */
-main {
-    padding-top: 75px; 
-}
+main { padding-top: 75px; }
 
-/* --- Cabecera de la Página del Blog --- */
 .page-header-blog {
     background: linear-gradient(rgba(10, 61, 98, .9), rgba(10, 61, 98, .9)) 0 0/cover, url('images/imgindex.avif') center center/cover no-repeat;
     padding: 80px 0;
@@ -17,7 +13,6 @@ main {
 .page-header-blog .page-title { font-size: 2.8rem; }
 .page-header-blog .lead { font-size: 1.2rem; }
 
-/* --- Navegación de Categorías del Blog --- */
 .blog-nav {
     background-color: #f8f9fa;
     padding: 0.5rem 0;
@@ -32,11 +27,8 @@ main {
     cursor: pointer;
     padding: 0.5rem 1rem;
 }
-.blog-nav .nav-link.active, .blog-nav .nav-link:hover {
-    color: #F57C00;
-}
+.blog-nav .nav-link.active, .blog-nav .nav-link:hover { color: #F57C00; }
 
-/* --- Diseño de la Tarjeta del Post (Card) --- */
 .blog-post-card {
     background-color: #fff;
     border: none;
@@ -49,11 +41,8 @@ main {
     transform: translateY(-8px);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
 }
-.blog-post-card .card-body { 
-    padding: 2.5rem; 
-}
+.blog-post-card .card-body { padding: 2.5rem; }
 
-/* --- Tipografía Profesional del Post --- */
 .blog-post-card .card-title {
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: 700;
@@ -69,7 +58,6 @@ main {
     color: #4a4a4a;
 }
 
-/* --- Diseño UX de Imágenes del Blog --- */
 .post-image-container {
     margin: 2rem 0;
     border-radius: 12px;
@@ -84,9 +72,7 @@ main {
     display: block;
     transition: transform 0.4s ease-out;
 }
-.blog-post-card:hover .post-image-container img {
-    transform: scale(1.03);
-}
+.blog-post-card:hover .post-image-container img { transform: scale(1.03); }
 .post-image-container figcaption {
     padding: 12px 15px;
     font-size: 0.9em;
@@ -97,7 +83,6 @@ main {
     border-top: 1px solid #e9ecef;
 }
 
-/* --- Metadatos y Contenido --- */
 .post-meta {
     display: flex;
     justify-content: center;
@@ -109,7 +94,6 @@ main {
 .full-content strong { font-weight: 700; color: #1e374a; }
 .read-more-btn { display: block; margin: 1.5rem auto 0; }
 
-/* --- NUEVO: Estilos para Botones de Compartir --- */
 .social-share {
     margin-top: 2.5rem;
     padding-top: 1.5rem;
@@ -138,11 +122,8 @@ main {
 .social-share a[aria-label*="Twitter"] { background-color: #1da1f2; }
 .social-share a[aria-label*="LinkedIn"] { background-color: #0077b5; }
 .social-share a[aria-label*="WhatsApp"] { background-color: #25d366; }
-.social-share a:hover {
-    opacity: 0.9;
-}
+.social-share a:hover { opacity: 0.9; }
 
-/* --- NUEVO: Estilos para Artículos Relacionados --- */
 .related-posts {
     margin-top: 3rem;
     padding-top: 2rem;
@@ -159,11 +140,7 @@ main {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
 }
-.related-post-item a {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-}
+.related-post-item a { text-decoration: none; color: inherit; display: block; }
 .related-post-img {
     width: 100%;
     height: 120px;
@@ -178,7 +155,6 @@ main {
     color: #343a40;
 }
 
-/* --- Estilos para la Galería (Sin Cambios) --- */
 .gallery-item {
     position: relative;
     overflow: hidden;
@@ -208,6 +184,4 @@ main {
     transition: opacity 0.3s;
     opacity: 0;
 }
-.gallery-item:hover .caption {
-    opacity: 1;
-}
+.gallery-item:hover .caption { opacity: 1; }
