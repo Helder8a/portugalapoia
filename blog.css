@@ -1,27 +1,140 @@
 /* ================================================================== */
-/* === ESTILOS ADICIONALES PARA LA GALERÍA (Añadir al final) === */
+/* === CÓDIGO FINAL Y CORREGIDO para blog.css (Diseño UX Profesional) === */
 /* ================================================================== */
 
+/* --- Espaciado para la Barra de Navegación Fija --- */
+main {
+    padding-top: 75px; 
+}
+
+/* --- Cabecera de la Página del Blog --- */
+.page-header-blog {
+    background: linear-gradient(rgba(10, 61, 98, .9), rgba(10, 61, 98, .9)) 0 0/cover, url('images/imgindex.avif') center center/cover no-repeat;
+    padding: 80px 0;
+    color: #fff;
+    margin-top: -75px;
+}
+.page-header-blog .page-title { font-size: 2.8rem; }
+.page-header-blog .lead { font-size: 1.2rem; }
+
+/* --- Navegación de Categorías del Blog --- */
+.blog-nav {
+    background-color: #f8f9fa;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #dee2e6;
+    position: sticky;
+    top: 75px; 
+    z-index: 1020;
+}
+.blog-nav .nav-link {
+    color: #0A3D62;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+}
+.blog-nav .nav-link.active, .blog-nav .nav-link:hover {
+    color: #F57C00;
+}
+
+/* --- Diseño de la Tarjeta del Post (Card) --- */
+.blog-post-card {
+    background-color: #fff;
+    border: none;
+    border-radius: 15px; /* Bordes más suaves */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07); /* Sombra más sutil y profesional */
+    overflow: hidden; /* Asegura que la imagen no se salga de los bordes redondeados */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.blog-post-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+}
+.blog-post-card .card-body { 
+    padding: 2.5rem; 
+}
+
+/* --- Tipografía Profesional del Post --- */
+.blog-post-card .card-title {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 700;
+    font-size: 2.2rem;
+    color: #1e374a; /* Un negro azulado, más suave que el negro puro */
+    text-align: center;
+    line-height: 1.3;
+}
+.card-text, .full-content {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.8; /* Mayor espaciado entre líneas para facilitar la lectura */
+    color: #4a4a4a; /* Gris oscuro para el texto */
+}
+
+/* ======> INICIO DEL REDISEÑO UX DE IMÁGENES DEL BLOG <====== */
+
+.post-image-container {
+    margin: 2rem 0; /* Mayor espaciado vertical para que la imagen "respire" */
+    border-radius: 12px; /* Bordes redondeados para la imagen */
+    overflow: hidden; /* Esconde cualquier parte de la imagen que se salga */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    /* Define una proporción de aspecto cinematográfica (16:9) */
+    aspect-ratio: 16 / 9; 
+}
+
+.post-image-container img {
+    width: 100%;
+    height: 100%;
+    /* La imagen cubre todo el contenedor sin deformarse */
+    object-fit: cover; 
+    display: block;
+    transition: transform 0.4s ease-out;
+}
+
+.blog-post-card:hover .post-image-container img {
+    transform: scale(1.03); /* Efecto de zoom más sutil y elegante */
+}
+
+.post-image-container figcaption {
+    padding: 12px 15px;
+    font-size: 0.9em;
+    font-style: italic;
+    color: #6c757d;
+    text-align: center;
+    background-color: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+}
+/* ======> FIN DEL REDISEÑO UX DE IMÁGENES DEL BLOG <====== */
+
+
+/* --- Metadatos y Contenido --- */
+.post-meta {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    font-size: 0.9em;
+    color: #6c757d;
+    margin: 1rem 0 2rem 0;
+}
+.full-content strong { font-weight: 700; color: #1e374a; }
+.read-more-btn { display: block; margin: 1.5rem auto 0; }
+
+/* --- Estilos para la Galería (Sin Cambios) --- */
 .gallery-item {
     position: relative;
     overflow: hidden;
     border-radius: 8px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, .1);
-    height: 250px; /* Altura fija para todas las imágenes */
+    height: 250px;
 }
-
 .gallery-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s, filter 0.3s;
 }
-
 .gallery-item:hover img {
     transform: scale(1.05);
     filter: brightness(1.1);
 }
-
 .gallery-item .caption {
     position: absolute;
     bottom: 0;
@@ -32,9 +145,8 @@
     padding: 10px;
     text-align: center;
     transition: opacity 0.3s;
-    opacity: 0; /* Oculto por defecto */
+    opacity: 0;
 }
-
 .gallery-item:hover .caption {
-    opacity: 1; /* Aparece al pasar el ratón */
+    opacity: 1;
 }
