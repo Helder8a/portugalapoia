@@ -1,18 +1,35 @@
 /* ================================================================== */
-/* === CÓDIGO FINAL Y CORREGIDO para blog.css === */
+/* === CÓDIGO FINAL Y CORREGIDO para blog.css (Separado) === */
 /* ================================================================== */
 
-/* --- Estilos de Navegación del Blog --- */
+/* --- CORRECCIÓN CLAVE PARA LA BARRA DE NAVEGACIÓN --- */
+/* Añade un espaciado superior solo al contenido principal de la página del blog */
+main {
+    padding-top: 75px; /* Altura aproximada de tu header principal */
+}
+
+/* --- Estilos del Header específico del Blog --- */
+.page-header-blog {
+    background: linear-gradient(rgba(10, 61, 98, .9), rgba(10, 61, 98, .9)) 0 0/cover, url('images/imgindex.avif') center center/cover no-repeat;
+    padding: 80px 0;
+    color: #fff;
+    margin-top: -75px; /* Compensa el padding-top del main para que la imagen quede bien */
+}
+.page-header-blog .page-title { font-size: 2.8rem; }
+.page-header-blog .lead { font-size: 1.2rem; }
+
+
+/* --- Barra de Navegación del Blog (sticky) --- */
 .blog-nav {
     background-color: #f8f9fa;
     padding: 0.5rem 0;
     border-bottom: 1px solid #dee2e6;
     overflow-x: auto;
     white-space: nowrap;
-    position: relative; /* Asegura que no interfiera con el header */
-    z-index: 100; /* Un z-index menor que el del header */
+    position: sticky;
+    top: 75px; /* Se pega debajo del header principal al hacer scroll */
+    z-index: 1020;
 }
-
 .blog-nav .nav-link {
     color: #0A3D62;
     font-weight: 600;
@@ -20,157 +37,78 @@
     padding: 0.5rem 1rem;
     transition: color 0.3s;
 }
-
 .blog-nav .nav-link.active,
 .blog-nav .nav-link:hover {
     color: #F57C00;
 }
 
-/* --- Animación y Contenedor Principal del Post --- */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
 
+/* --- Estructura y Diseño de Posts (Una Columna) --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 .blog-post-item {
     animation: fadeIn 0.8s ease-out forwards;
-    margin-bottom: 3rem; /* Espacio entre cada post */
+    margin-bottom: 3rem;
 }
-
-/* --- Tarjeta del Post (Diseño de una columna) --- */
 .blog-post-card {
     border: 1px solid #e0e0e0;
     border-radius: 12px;
-    overflow: hidden;
-    transition: box-shadow 0.3s, transform 0.3s;
     background-color: #fff;
     box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: box-shadow 0.3s, transform 0.3s;
 }
-
 .blog-post-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
-
-.blog-post-card .card-body {
-    padding: 2.5rem;
-}
-
-@media (max-width: 767px) {
-    .blog-post-card .card-body {
-        padding: 1.5rem;
-    }
-}
+.blog-post-card .card-body { padding: 2.5rem; }
 
 
-/* --- Tipografía (Fuente 'Source Sans Pro') --- */
+/* --- Tipografía del Blog --- */
 .blog-post-card .card-title {
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: 700;
     font-size: 2.2rem;
-    margin-bottom: 0.75rem;
     color: #0A3D62;
     text-align: center;
 }
-
 .card-text, .full-content {
     font-family: 'Source Sans Pro', sans-serif;
-    font-weight: 400;
     line-height: 1.7;
     font-size: 1.1rem;
-    color: #343a40;
 }
 
-/* --- Diseño de Imagen (CORREGIDO PARA PC) --- */
+
+/* --- Imagen del Post --- */
 .post-image-container {
-    width: 100%;
-    max-height: 500px; /* Altura máxima para que no sea gigante en PC */
-    overflow: hidden;
-    margin: 0 0 1.5rem 0; /* Espacio debajo de la imagen */
+    max-height: 500px;
+    margin-bottom: 1.5rem;
     border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
-
 .post-image-container img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease;
 }
-
-.blog-post-card:hover .post-image-container img {
-    transform: scale(1.03);
-}
-
 .post-image-container figcaption {
-    padding: 10px 15px;
     font-size: 0.9em;
     font-style: italic;
     color: #6c757d;
     text-align: center;
-    background-color: #f8f9fa;
-    border-top: 1px solid #e9ecef;
+    padding: 10px 0;
 }
 
-/* --- Metadatos y Tiempo de Lectura --- */
+
+/* --- Metadatos y Contenido --- */
 .post-meta {
     display: flex;
-    justify-content: center; /* Centra los metadatos */
-    align-items: center;
-    flex-wrap: wrap;
+    justify-content: center;
     gap: 15px;
     font-size: 0.9em;
     color: #6c757d;
     margin-bottom: 2rem;
-    text-align: center;
 }
-
-.post-meta .separator {
-    color: #ccc;
-}
-
-.post-meta .reading-time {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-/* --- Contenido Completo del Post (Renderizado de Markdown) --- */
-.full-content {
-    display: none; /* Oculto por defecto */
-}
-.full-content p { margin-bottom: 1.2rem; }
-.full-content strong { font-weight: 700; color: #0A3D62; }
-.full-content em { font-style: italic; }
-.full-content ul, .full-content ol { padding-left: 25px; margin-bottom: 1.2rem; }
-.full-content li { margin-bottom: 0.6rem; }
-
-/* --- Botón "Leer Más" --- */
-.read-more-btn {
-    display: block; /* Ocupa su propia línea */
-    margin: 1.5rem auto 0; /* Centra el botón */
-}
-
-/* --- Galería --- */
-.gallery-item {
-    position: relative;
-    overflow: hidden;
-    border-radius: 8px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, .1);
-}
-.gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s;
-}
-.gallery-item:hover img {
-    transform: scale(1.05);
-}
+.full-content strong { font-weight: 700; }
+.read-more-btn { display: block; margin: 1.5rem auto 0; }
