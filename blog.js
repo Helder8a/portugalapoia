@@ -4,14 +4,16 @@
 
 document.addEventListener("DOMContentLoaded", () => {
     
+    // Variables globales
     let allPostsData = [];
     let allPostElements = [];
     const postsPerPage = 5;
     let currentPage = 1;
-    const originalTitle = document.title;
+    const originalTitle = document.title; 
     const metaDescription = document.getElementById('meta-description');
     const originalDescription = metaDescription ? metaDescription.content : '';
 
+    // --- FUNCIÓN PRINCIPAL PARA INICIAR EL BLOG ---
     async function iniciarBlog() {
         const postsSection = document.getElementById('posts-section');
         const gallerySection = document.getElementById('gallery-section');
@@ -32,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             // Renderizar el resto de los posts
-            const regularPosts = allPostsData.slice(1); // Todos menos el primero
+            const regularPosts = allPostsData; // Usar todos los posts para la lista
             postsSection.innerHTML = regularPosts.map(renderBlogPost).join('');
             gallerySection.innerHTML = galeria.imagens.map(renderGalleryItem).join('');
 
@@ -61,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     </a>
                 </div>
                 <div class="featured-post-content">
-                    <span class="badge badge-primary">Artigo em Destaque</span>
+                    <span class="badge">Artigo em Destaque</span>
                     <h2>${post.title}</h2>
                     <p>${post.summary}</p>
                     <a href="#${slug}" class="btn btn-primary featured-post-link">Ler Artigo Completo</a>
@@ -167,7 +169,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function renderPaginationControls(totalPosts, currentPage) { /* ... (sin cambios) ... */ }
-    function getFilteredPosts() { /* ... (sin cambios) ... */ }
+    function getFilteredPosts() {
+        const searchTerm = document.getElementById('blog-search-input').value.toLowerCase();
+        const activeCategory = document.querySelector('.blog-nav .nav-link.active').getAttribute('data-target');
+        
+        return Array.from(allPostElements).filter(post => {
+            const categoryMatch = (activeCategory === 'all' || post.dataset.category === activeCategory);
+            const searchMatch = (post.dataset.keywords.includes(searchTerm));
+            return categoryMatch && searchMatch;
+        });
+    }
 
     function filterAndShowPosts() {
         history.pushState("", document.title, window.location.pathname + window.location.search);
@@ -181,55 +192,54 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // --- FUNCIONES DE MEJORA (SEO y UX) ---
-    function updateMetadata(postElement) {
-        const postTitle = postElement.querySelector('.card-title').textContent;
-        const postSummary = postElement.querySelector('.summary-content').textContent;
-        document.title = `${postTitle} | PortugalApoia Blog`;
-        if (metaDescription) metaDescription.content = postSummary;
+    function updateMetadata(postData) {
+        document.title = `${postData.title} | PortugalApoia Blog`;
+        if (metaDescription) metaDescription.content = postData.summary;
     }
 
-    function expandAndFocusPost(slug) {
+    function showSinglePost(slug) {
         const postElement = document.getElementById(slug);
-        if (postElement) {
-            allPostElements.forEach(p => p.style.display = 'none'); // Ocultar todos
-            document.getElementById('featured-post-section').style.display = 'none'; // Ocultar destacado
-            postElement.style.display = 'block'; // Mostrar solo el actual
-            
+        const postData = allPostsData.find(p => p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') === slug);
+        if (postElement && postData) {
+            // Ocultar todo lo demás
+            allPostElements.forEach(p => p.style.display = 'none'); 
+            document.getElementById('featured-post-section').style.display = 'none';
+            document.getElementById('pagination-container').style.display = 'none';
+            document.querySelector('.search-section').style.display = 'none';
+            document.querySelector('.blog-nav').style.display = 'none';
+            document.querySelector('.section-title').style.display = 'none';
+
+            // Mostrar y expandir el post
+            postElement.style.display = 'block';
             const cardBody = postElement.querySelector('.card-body');
             cardBody.querySelector('.summary-content').style.display = 'none';
             cardBody.querySelector('.full-content').style.display = 'block';
             cardBody.querySelector('.read-more-btn').style.display = 'none';
 
-            updateMetadata(postElement);
+            updateMetadata(postData);
             history.pushState(null, '', `#${slug}`);
             
             setTimeout(() => {
                 postElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }, 100);
-
-            document.getElementById('pagination-container').style.display = 'none';
         }
+    }
+    
+    function showPostList() {
+        document.getElementById('featured-post-section').style.display = 'block';
+        document.getElementById('pagination-container').style.display = 'flex';
+        document.querySelector('.search-section').style.display = 'block';
+        document.querySelector('.blog-nav').style.display = 'flex';
+        document.querySelector('.section-title').style.display = 'block';
+        filterAndShowPosts();
     }
 
     function checkUrlForPost() {
         const slug = window.location.hash.substring(1);
         if (slug) {
-            const postData = allPostsData.find(p => p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') === slug);
-            if (postData) {
-                if (document.getElementById(slug)) { // Si es un post regular
-                     expandAndFocusPost(slug);
-                } else { // Si es el post destacado
-                    const featuredPostContainer = document.getElementById('featured-post-section');
-                    featuredPostContainer.innerHTML = renderBlogPost(postData); // Renderizarlo como un post normal
-                    allPostElements = document.querySelectorAll('.blog-post-item'); // Re-seleccionar
-                    expandAndFocusPost(slug);
-                }
-            } else {
-                 filterAndShowPosts();
-            }
+            showSinglePost(slug);
         } else {
-            document.getElementById('featured-post-section').style.display = 'block';
-            filterAndShowPosts();
+            showPostList();
         }
     }
 
@@ -254,17 +264,40 @@ document.addEventListener("DOMContentLoaded", () => {
         
         window.addEventListener('hashchange', checkUrlForPost, false);
         
-        // El resto de los listeners (filtros, búsqueda) se mantienen igual...
         const navLinks = document.querySelectorAll('.blog-nav .nav-link');
         const postsSection = document.getElementById('posts-section');
         const gallerySection = document.getElementById('gallery-section');
-        const paginationContainer = document.getElementById('pagination-container');
         
-        navLinks.forEach(link => { /* ... */ });
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                navLinks.forEach(nav => nav.classList.remove('active'));
+                e.target.classList.add('active');
+                const targetCategory = e.target.getAttribute('data-target');
+                
+                document.getElementById('blog-search-input').value = '';
+
+                if (targetCategory === 'galeria') {
+                    document.getElementById('featured-post-section').style.display = 'none';
+                    postsSection.style.display = 'none';
+                    document.getElementById('pagination-container').style.display = 'none';
+                    document.querySelector('.search-section').style.display = 'none';
+                    document.querySelector('.section-title').style.display = 'none';
+                    gallerySection.style.display = 'flex';
+                } else {
+                    gallerySection.style.display = 'none';
+                    showPostList();
+                }
+            });
+        });
+
         const searchInput = document.getElementById('blog-search-input');
         const clearButton = document.getElementById('blog-search-clear');
         searchInput.addEventListener('keyup', filterAndShowPosts);
-        clearButton.addEventListener('click', () => { /* ... */ });
+        clearButton.addEventListener('click', () => {
+            searchInput.value = '';
+            filterAndShowPosts();
+        });
     }
 
     iniciarBlog();
