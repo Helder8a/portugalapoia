@@ -1,12 +1,12 @@
 // ==================================================================
-// === CÓDIGO FINAL Y MEJORADO para blog.js (con todas las mejoras) ===
+// === CÓDIGO FINAL Y CORREGIDO para blog.js (Buscador Reparado) ===
 // ==================================================================
 
 document.addEventListener("DOMContentLoaded", () => {
     
-    // Variable global para almacenar todos los posts una vez cargados
-    let allPosts = [];
-    let allPostsData = [];
+    // Variables globales
+    let allPostsData = []; // Almacena los datos JSON de los posts
+    let allPostElements = []; // Almacena los elementos HTML de los posts
 
     // --- FUNCIÓN PRINCIPAL PARA INICIAR EL BLOG ---
     async function iniciarBlog() {
@@ -21,12 +21,15 @@ document.addEventListener("DOMContentLoaded", () => {
             ]);
             
             allPostsData = postsData.posts;
+
+            // Renderizar y añadir el HTML al DOM
             postsSection.innerHTML = allPostsData.map(renderBlogPost).join('');
             gallerySection.innerHTML = galeria.imagens.map(renderGalleryItem).join('');
 
-            // Guardar referencia a los elementos de post después de crearlos
-            allPosts = document.querySelectorAll('.blog-post-item');
+            // ======> CORRECCIÓN CLAVE: Obtener los elementos DESPUÉS de que existen en la página <======
+            allPostElements = document.querySelectorAll('.blog-post-item');
             
+            // Configurar toda la funcionalidad
             setupBlogFunctionality();
             if (window.lightbox) window.lightbox.init();
 
@@ -97,9 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const related = allPostsData
             .filter(post => post.category === currentPost.category && post.title !== currentPost.title)
             .slice(0, 3);
-
         if (related.length === 0) return '';
-
         let relatedHTML = related.map(post => `
             <div class="related-post-item">
                 <a href="javascript:void(0);" onclick="location.reload()">
@@ -108,7 +109,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 </a>
             </div>
         `).join('');
-
         return `
             <div class="related-posts">
                 <h3>Artigos Relacionados</h3>
@@ -142,15 +142,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // NUEVO: Función para filtrar y mostrar posts
+    // Función de filtro optimizada
     function filterAndShowPosts() {
         const searchTerm = document.getElementById('blog-search-input').value.toLowerCase();
         const activeCategory = document.querySelector('.blog-nav .nav-link.active').getAttribute('data-target');
         const noResultsMessage = document.getElementById('no-results-message');
-        
         let visiblePosts = 0;
 
-        allPosts.forEach(post => {
+        allPostElements.forEach(post => {
             const categoryMatch = (activeCategory === 'all' || post.dataset.category === activeCategory);
             const searchMatch = (post.dataset.keywords.includes(searchTerm));
 
@@ -161,7 +160,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 post.style.display = 'none';
             }
         });
-
         noResultsMessage.style.display = visiblePosts === 0 ? 'block' : 'none';
     }
 
@@ -170,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (img.dataset.src) img.src = img.dataset.src;
         });
         
-        allPosts.forEach(calculateReadingTime);
+        allPostElements.forEach(calculateReadingTime);
 
         document.querySelectorAll('.read-more-btn').forEach(button => {
             button.addEventListener('click', (e) => {
@@ -198,15 +196,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else {
                     postsSection.style.display = 'flex';
                     gallerySection.style.display = 'none';
-                    filterAndShowPosts(); // Usar la nueva función de filtro
+                    filterAndShowPosts();
                 }
             });
         });
 
-        // NUEVO: Eventos para la barra de búsqueda
+        // Eventos para la barra de búsqueda
         const searchInput = document.getElementById('blog-search-input');
         const clearButton = document.getElementById('blog-search-clear');
-
         searchInput.addEventListener('keyup', filterAndShowPosts);
         clearButton.addEventListener('click', () => {
             searchInput.value = '';
