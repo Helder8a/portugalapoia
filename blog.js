@@ -1,5 +1,5 @@
 // ==================================================================
-// === CÓDIGO FINAL Y CORREGIDO para blog.js (Robusto) ===
+// === CÓDIGO FINAL Y CORREGIDO para blog.js (Galería Reparada) ===
 // ==================================================================
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -14,18 +14,20 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            // Cargar posts y galería en paralelo para mayor eficiencia
             const [posts, galeria] = await Promise.all([
                 fetch('/_dados/blog.json').then(res => res.json()),
                 fetch('/_dados/galeria.json').then(res => res.json())
             ]);
 
-            // Renderizar el contenido en el HTML
             postsSection.innerHTML = posts.posts.map(renderBlogPost).join('');
             gallerySection.innerHTML = galeria.imagens.map(renderGalleryItem).join('');
 
-            // Configurar toda la interactividad (botones, filtros, etc.)
             setupBlogFunctionality();
+
+            // ======> CLAVE: RE-INICIALIZAR LIGHTBOX DESPUÉS DE CARGAR LAS IMÁGENES <======
+            if (window.lightbox) {
+                window.lightbox.init();
+            }
 
         } catch (error) {
             console.error("Falha ao carregar o conteúdo do blog:", error);
@@ -35,7 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- FUNCIONES AUXILIARES ---
 
-    // Calcula el tiempo de lectura
     function calculateReadingTime(postElement) {
         const content = postElement.querySelector('.full-content');
         const timePlaceholder = postElement.querySelector('.reading-time');
@@ -43,20 +44,17 @@ document.addEventListener("DOMContentLoaded", () => {
             const text = content.textContent || content.innerText;
             const wordCount = text.trim().split(/\s+/).filter(word => word.length > 0).length;
             const wordsPerMinute = 225;
-            const readingTime = Math.ceil(wordCount / wordsPerMinute) || 1; // Muestra al menos 1 min
+            const readingTime = Math.ceil(wordCount / wordsPerMinute) || 1;
             timePlaceholder.innerHTML = `<i class="fa-regular fa-clock"></i> ${readingTime} min de leitura`;
         }
     }
 
-    // Genera el HTML para cada post del blog
     function renderBlogPost(post) {
         const postDate = new Date(post.date);
         const formattedDate = postDate.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' });
         const imageCaption = post.caption || `Ilustração para o artigo: ${post.title}`;
-        // Usa la librería 'marked' para convertir el texto a HTML
         const processedBody = marked.parse(post.body || '', { gfm: true });
 
-        // Clase para una sola columna centrada: col-lg-8 offset-lg-2
         return `
         <div class="col-lg-8 offset-lg-2 col-md-12 blog-post-item" data-category="${post.category}">
             <div class="blog-post-card">
@@ -79,25 +77,30 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>`;
     }
 
-    // Genera el HTML para cada item de la galería
+    // ======> CORRECCIÓN EN LA FUNCIÓN DE LA GALERÍA <======
     function renderGalleryItem(item) {
-        return `<div class="col-lg-6 col-md-12 mb-4"><div class="gallery-item"><a href="${item.image}" data-lightbox="gallery" data-title="${item.title} - ${item.caption}"><img class="lazy" data-src="${item.image}" alt="${item.title}"></a></div></div>`;
+        // Se elimina la clase 'lazy' y se usa 'src' directamente para forzar la carga de la imagen
+        return `
+        <div class="col-md-6 mb-4 gallery-item-wrapper">
+            <div class="gallery-item">
+                <a href="${item.image}" data-lightbox="gallery" data-title="${item.title} - ${item.caption}">
+                    <img src="${item.image}" alt="${item.title}">
+                    <div class="caption">${item.title}</div>
+                </a>
+            </div>
+        </div>`;
     }
 
-    // Configura los eventos (clics en botones, filtros de categoría)
     function setupBlogFunctionality() {
-        const allPosts = document.querySelectorAll('.blog-post-item');
-        
-        // Calcular tiempo de lectura y lazy loading para cada post
-        allPosts.forEach(post => {
-            calculateReadingTime(post);
-            const img = post.querySelector('img.lazy');
-            if(img && img.dataset.src) {
+        // Activar lazy loading SOLO para los posts, no para la galería
+        document.querySelectorAll('.blog-post-item img.lazy').forEach(img => {
+            if (img.dataset.src) {
                 img.src = img.dataset.src;
             }
         });
+        
+        document.querySelectorAll('.blog-post-item').forEach(calculateReadingTime);
 
-        // Eventos para los botones "Leer más"
         document.querySelectorAll('.read-more-btn').forEach(button => {
             button.addEventListener('click', (e) => {
                 const cardBody = e.target.closest('.card-body');
@@ -107,7 +110,6 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
 
-        // Eventos para los filtros de categoría
         const navLinks = document.querySelectorAll('.blog-nav .nav-link');
         const postsSection = document.getElementById('posts-section');
         const gallerySection = document.getElementById('gallery-section');
@@ -125,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else {
                     postsSection.style.display = 'flex';
                     gallerySection.style.display = 'none';
-                    allPosts.forEach(post => {
+                    document.querySelectorAll('.blog-post-item').forEach(post => {
                         post.style.display = (targetCategory === 'all' || post.dataset.category === targetCategory) ? 'block' : 'none';
                     });
                 }
@@ -133,6 +135,5 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // --- INICIAR TODO ---
     iniciarBlog();
 });
