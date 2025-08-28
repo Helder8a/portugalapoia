@@ -224,44 +224,72 @@ document.addEventListener("DOMContentLoaded", () => {
     iniciarBlog();
 });
 
-// ... código existente dentro de iniciarBlog() ...
+// ...dentro de iniciarBlog(), después de que se renderiza todo el HTML...
 
-// --- CÓDIGO A AÑADIR: Lógica de Navegación Rápida ---
-const posts = document.querySelectorAll('.blog-post');
-if (posts.length > 1) {
-    const scrollUpBtn = document.getElementById('scrollUpBtn');
-    const scrollDownBtn = document.getElementById('scrollDownBtn');
-    let currentPostIndex = 0;
+// --- CÓDIGO A AÑADIR: Lógica de Scroll Robusta ---
 
-    const updateButtonState = () => {
-        const scrollThreshold = window.innerHeight * 0.4; // Umbral para detectar el post actual
-        
-        posts.forEach((post, index) => {
-            const postTop = post.getBoundingClientRect().top;
-            if (postTop < scrollThreshold && postTop > -post.offsetHeight + scrollThreshold) {
-                currentPostIndex = index;
-            }
-        });
+const postsNodeList = document.querySelectorAll('.blog-post');
+// Convertimos a Array para poder usar métodos como .findIndex()
+const posts = Array.from(postsNodeList); 
 
-        scrollUpBtn.disabled = (currentPostIndex === 0);
-        scrollDownBtn.disabled = (currentPostIndex === posts.length - 1);
-    };
+const scrollUpBtn = document.getElementById('scrollUpBtn');
+const scrollDownBtn = document.getElementById('scrollDownBtn');
+const scrollNavContainer = document.querySelector('.scroll-nav');
 
-    const scrollToPost = (index) => {
-        if (index >= 0 && index < posts.length) {
-            posts[index].scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-    };
-
-    scrollUpBtn.addEventListener('click', () => scrollToPost(currentPostIndex - 1));
-    scrollDownBtn.addEventListener('click', () => scrollToPost(currentPostIndex + 1));
-    window.addEventListener('scroll', updateButtonState);
-
-    updateButtonState(); // Estado inicial al cargar
-} else {
-    const scrollNavContainer = document.querySelector('.scroll-nav');
-    if (scrollNavContainer) {
-        scrollNavContainer.style.display = 'none';
-    }
+// Ocultamos los botones si no hay suficientes noticias para navegar
+if (posts.length <= 1) {
+    if (scrollNavContainer) scrollNavContainer.style.display = 'none';
+    return;
 }
+
+// Función para encontrar el índice del post que está más centrado en la pantalla
+const getActivePostIndex = () => {
+    const windowCenterY = window.scrollY + (window.innerHeight / 2);
+    let closestIndex = -1;
+    let minDistance = Infinity;
+
+    posts.forEach((post, index) => {
+        const postCenterY = post.offsetTop + (post.offsetHeight / 2);
+        const distance = Math.abs(windowCenterY - postCenterY);
+        if (distance < minDistance) {
+            minDistance = distance;
+            closestIndex = index;
+        }
+    });
+    return closestIndex;
+};
+
+// Actualiza qué botones están activos o desactivados
+const updateButtons = () => {
+    const currentIndex = getActivePostIndex();
+    if (currentIndex === -1) return;
+
+    scrollUpBtn.disabled = (currentIndex === 0);
+    scrollDownBtn.disabled = (currentIndex === posts.length - 1);
+};
+
+// Mueve la vista al post anterior
+scrollUpBtn.addEventListener('click', () => {
+    const currentIndex = getActivePostIndex();
+    const targetIndex = currentIndex - 1;
+    if (targetIndex >= 0) {
+        posts[targetIndex].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+});
+
+// Mueve la vista al post siguiente
+scrollDownBtn.addEventListener('click', () => {
+    const currentIndex = getActivePostIndex();
+    const targetIndex = currentIndex + 1;
+    if (targetIndex < posts.length) {
+        posts[targetIndex].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+});
+
+// Escuchamos el evento de scroll para actualizar los botones en tiempo real
+window.addEventListener('scroll', updateButtons);
+
+// Hacemos una llamada inicial para establecer el estado correcto al cargar la página
+updateButtons();
+
 // --- FIN DEL CÓDIGO A AÑADIR ---
