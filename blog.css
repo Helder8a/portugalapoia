@@ -1,50 +1,87 @@
 /* ==================================================================
-   === AJUSTE DE IMÁGENES DEL BLOG (DISEÑO UX/UI) ===
+   === DISEÑO AVANZADO DE GALERÍA DE IMÁGENES (UX/UI) ===
    ================================================================== */
 
-/* Contenedor principal de la imagen del post */
-.post-image-container {
-    margin-top: 1.5rem;
-    margin-bottom: 2rem;
-    overflow: hidden; /* Asegura que la imagen respete las esquinas redondeadas */
-    border-radius: 12px; /* Esquinas más suaves y modernas */
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07); /* Sombra sutil para dar profundidad */
-    position: relative; /* Necesario para posicionar la leyenda */
+/* Contenedor principal de la sección de la galería */
+#gallery-section {
+    display: grid;
+    /* Crea una cuadrícula adaptable: 2 columnas en móvil, 3 en tablet, 4 en escritorio */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem; /* Espacio entre las imágenes */
+    padding: 2rem 0;
 }
 
-/* La imagen en sí */
-.post-image-container img {
-    width: 100%; /* Ocupa todo el ancho de su contenedor */
-    height: auto; /* Mantiene la proporción original */
-    max-height: 480px; /* ALTURA MÁXIMA para evitar que sea demasiado grande */
-    object-fit: cover; /* Rellena el espacio sin deformar la imagen (puede recortar un poco) */
-    display: block; /* Elimina un pequeño espacio en blanco que a veces aparece debajo de las imágenes */
-    transition: transform 0.4s ease; /* Añade una transición suave para el efecto de zoom */
+/* Contenedor de cada item de la galería */
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    background-color: #f0f0f0; /* Color de fondo mientras carga la imagen */
 }
 
-/* Efecto de zoom sutil al pasar el ratón por la tarjeta del post */
-.blog-post-card:hover .post-image-container img {
-    transform: scale(1.03);
+.gallery-item:hover {
+    transform: scale(1.03); /* Efecto de elevación al pasar el ratón */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
 }
 
-/* Leyenda/caption de la imagen */
-.post-image-container figcaption {
+/* La imagen dentro del item */
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que la imagen cubra todo el espacio sin deformarse */
+    display: block;
+    transition: transform 0.4s ease-out; /* Transición para el efecto de zoom */
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1); /* Efecto de zoom sutil sobre la imagen */
+}
+
+/* La superposición (overlay) que contiene el texto */
+.gallery-item .caption-overlay {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent); /* Gradiente para mejorar la legibilidad del texto */
-    color: #ffffff;
-    padding: 25px 15px 15px; /* Espaciado interno */
-    font-size: 0.85rem;
-    text-align: center;
-    font-style: italic;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Alinea el texto en la parte inferior */
+    padding: 1.5rem;
     opacity: 0; /* Oculta por defecto */
-    transition: opacity 0.4s ease; /* Transición suave para mostrarla */
-    pointer-events: none; /* Evita que la leyenda interfiera con el ratón */
+    transition: opacity 0.4s ease-out;
+    box-sizing: border-box; /* Asegura que el padding no afecte el tamaño */
 }
 
-/* Muestra la leyenda cuando el usuario pasa el ratón sobre el contenedor de la imagen */
-.post-image-container:hover figcaption {
-    opacity: 1;
+.gallery-item:hover .caption-overlay {
+    opacity: 1; /* Muestra la superposición al pasar el ratón */
+}
+
+/* Título de la imagen en la galería */
+.gallery-item .caption-overlay .gallery-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+    transform: translateY(20px); /* Posición inicial para la animación */
+    transition: transform 0.4s ease-out 0.1s; /* Transición con un pequeño retraso */
+}
+
+/* Descripción de la imagen en la galería */
+.gallery-item .caption-overlay .gallery-caption {
+    font-size: 0.9rem;
+    margin: 0;
+    line-height: 1.4;
+    transform: translateY(20px);
+    transition: transform 0.4s ease-out 0.15s; /* Transición con un retraso mayor */
+}
+
+/* Animación del texto al mostrar la superposición */
+.gallery-item:hover .gallery-title,
+.gallery-item:hover .gallery-caption {
+    transform: translateY(0);
 }
