@@ -1,93 +1,77 @@
 /* ==================================================================
-   === VERSIÓN CORREGIDA Y MEJORADA - DISEÑO DE GALERÍA ===
+   === ESTILO DE GALERÍA DEFINITIVO Y PROFESIONAL (UX/UI) ===
    ================================================================== */
 
-/* Contenedor principal de la sección de la galería */
-#gallery-section {
-    padding: 2rem 0;
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 -15px; /* Compensa el padding de las columnas */
-}
-
-/* Contenedor para cada item de la galería (Wrapper) */
-.gallery-item-wrapper {
-    padding: 0 15px; /* Espaciado estilo columna de Bootstrap */
-    margin-bottom: 30px;
-    box-sizing: border-box;
-}
-
-/* El item interactivo de la galería */
+/* El enlace <a> que actúa como contenedor de cada item de la galería */
 .gallery-item {
     position: relative;
+    display: block; /* Fundamental para que ocupe todo el espacio de la columna */
     overflow: hidden;
     border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-    background-color: #f0f0f0;
-    display: block; /* Asegura que el enlace se comporte como un bloque */
-    height: 300px; /* Altura fija para consistencia en la cuadrícula */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    transition: all 0.35s ease;
+    height: 350px; /* Altura consistente para una cuadrícula perfecta */
+    background-color: #e9ecef; /* Color de fondo mientras carga la imagen */
 }
 
 .gallery-item:hover {
-    transform: translateY(-5px); /* Efecto de elevación más sutil */
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    transform: translateY(-8px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
 }
 
 /* La imagen dentro del item */
-.gallery-item img {
+.gallery-item-img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.4s ease-out;
+    object-fit: cover; /* La mejor técnica para imágenes consistentes */
+    transition: transform 0.5s ease;
 }
 
-.gallery-item:hover img {
-    transform: scale(1.1);
+.gallery-item:hover .gallery-item-img {
+    transform: scale(1.1); /* Sutil efecto de zoom al pasar el ratón */
 }
 
-/* La superposición (overlay) con el texto */
-.gallery-item .caption-overlay {
+/* La superposición (overlay) que aparece encima */
+.gallery-item-overlay {
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
-    color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 1.5rem;
+    background: linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, 0.9) 100%);
     opacity: 0;
-    transition: opacity 0.4s ease-out;
-    box-sizing: border-box;
+    transition: opacity 0.35s ease;
+    display: flex;
+    align-items: flex-end; /* Alinea el texto en la parte inferior */
 }
 
-.gallery-item:hover .caption-overlay {
+.gallery-item:hover .gallery-item-overlay {
     opacity: 1;
 }
 
-/* Título y descripción */
-.gallery-item .gallery-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin: 0 0 0.5rem 0;
-    transform: translateY(20px);
-    transition: transform 0.4s ease-out 0.1s;
+/* Contenedor del texto para un espaciado perfecto */
+.gallery-item-text {
+    padding: 1.5rem;
+    color: #ffffff;
+    width: 100%;
+    transform: translateY(15px);
+    transition: transform 0.35s ease;
 }
 
-.gallery-item .gallery-caption {
+.gallery-item:hover .gallery-item-text {
+    transform: translateY(0);
+}
+
+/* Título y descripción */
+.gallery-item-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 0 0 0.25rem 0;
+    color: #fff;
+}
+
+.gallery-item-caption {
     font-size: 0.9rem;
     margin: 0;
-    line-height: 1.4;
-    transform: translateY(20px);
-    transition: transform 0.4s ease-out 0.15s;
-}
-
-.gallery-item:hover .gallery-title,
-.gallery-item:hover .gallery-caption {
-    transform: translateY(0);
+    color: rgba(255, 255, 255, 0.9);
 }
