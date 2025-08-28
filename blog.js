@@ -224,3 +224,61 @@ document.addEventListener("DOMContentLoaded", () => {
     iniciarBlog();
 });
 
+// ...dentro de iniciarBlog(), después de la línea con gallerySection.innerHTML
+
+// --- CÓDIGO A AÑADIR: Lógica de Navegación Rápida ---
+
+const posts = document.querySelectorAll('.blog-post');
+const scrollUpBtn = document.getElementById('scrollUpBtn');
+const scrollDownBtn = document.getElementById('scrollDownBtn');
+const scrollNavContainer = document.querySelector('.scroll-nav');
+
+// Si no hay noticias, ocultamos los botones
+if (!posts || posts.length <= 1) {
+    if(scrollNavContainer) scrollNavContainer.style.display = 'none';
+    return; // No hace falta añadir la lógica si no hay noticias para navegar
+}
+
+let currentPostIndex = 0;
+
+// Función para actualizar el estado (activado/desactivado) de los botones
+const updateButtonState = () => {
+    // El offset de 5px ayuda a que el cálculo sea más preciso con el scroll suave
+    const scrollPosition = window.scrollY + 5; 
+    
+    posts.forEach((post, index) => {
+        if (scrollPosition >= post.offsetTop && scrollPosition < post.offsetTop + post.offsetHeight) {
+            currentPostIndex = index;
+        }
+    });
+
+    scrollUpBtn.disabled = currentPostIndex === 0;
+    scrollDownBtn.disabled = currentPostIndex === posts.length - 1;
+};
+
+// Función para desplazarse a una noticia
+const scrollToPost = (index) => {
+    if (index >= 0 && index < posts.length) {
+        posts[index].scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+};
+
+// Asignar eventos a los botones
+scrollUpBtn.addEventListener('click', () => {
+    scrollToPost(currentPostIndex - 1);
+});
+
+scrollDownBtn.addEventListener('click', () => {
+    scrollToPost(currentPostIndex + 1);
+});
+
+// Actualizar el estado de los botones mientras el usuario se desplaza
+window.addEventListener('scroll', updateButtonState);
+
+// Llamada inicial para establecer el estado correcto al cargar la página
+updateButtonState();
+
+// --- FIN DEL CÓDIGO A AÑADIR ---
