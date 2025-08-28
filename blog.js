@@ -22,6 +22,15 @@ document.addEventListener("DOMContentLoaded", () => {
             
             allPostsData = postsData.posts;
 
+            // Ordena os posts pela data, do mais recente para o mais antigo
+            allPostsData.sort((a, b) => new Date(b.date) - new Date(a.date));
+            // --- FIM DO CÓDIGO A AÑADIR ---
+
+            // Renderizar y añadir el HTML al DOM
+            postsSection.innerHTML = allPostsData.map(renderBlogPost).join('');
+            gallerySection.innerHTML = galeria.imagens.map(renderGalleryItem).join('');
+
+
             // Renderizar y añadir el HTML al DOM
             postsSection.innerHTML = allPostsData.map(renderBlogPost).join('');
             gallerySection.innerHTML = galeria.imagens.map(renderGalleryItem).join('');
@@ -214,3 +223,4 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- INICIAR TODO ---
     iniciarBlog();
 });
+
