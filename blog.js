@@ -1,251 +1,226 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // --- ELEMENTOS PRINCIPALES ---
-    const blogListContainer = document.querySelector('.blog-list-container');
-    const postContentDiv = document.getElementById('post-content');
+// ==================================================================
+// === CÓDIGO FINAL Y CORREGIDO para blog.js (Buscador Reparado) ===
+// ==================================================================
 
-    // Si no estamos en la página del blog, no hacemos nada más.
-    if (!blogListContainer && !postContentDiv) {
-        return;
-    }
-
-    // --- VARIABLES GLOBALES ---
-    let allPosts = [];
-
-    // --- LÓGICA PRINCIPAL ---
-    fetch('_dados/blog.json')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("HTTP error " + response.status);
-            }
-            return response.json();
-        })
-        .then(data => {
-            allPosts = data.sort((a, b) => new Date(b.date.split('/').reverse().join('-')) - new Date(a.date.split('/').reverse().join('-')));
-
-            const urlParams = new URLSearchParams(window.location.search);
-            const postId = urlParams.get('post');
-
-            if (postId && postContentDiv) {
-                const post = allPosts.find(p => p.id === postId);
-                if (post) {
-                    renderBlogPost(post);
-                } else {
-                    displayNotFound();
-                }
-            } else if (blogListContainer) {
-                renderBlogList(allPosts);
-            }
-        })
-        .catch(error => {
-            console.error('Error al cargar los datos del blog:', error);
-            if (blogListContainer) {
-                 blogListContainer.innerHTML = "<p>Ocurrió un error al cargar los artículos. Por favor, intente más tarde.</p>";
-            }
-        });
-
-    // --- FUNCIONES DE RENDERIZADO ---
-
-    /**
-     * Muestra la lista principal de artículos del blog.
-     */
-    function renderBlogList(posts) {
-        const postsContainer = document.getElementById('posts');
-        if (!postsContainer) return;
-        
-        postsContainer.innerHTML = posts.map(post => {
-            // Añadimos el campo image_alt o usamos el título como fallback
-            const imageAlt = post.image_alt || post.title; 
-            return `
-            <div class="post" data-category="${post.category}">
-                <img src="${post.image}" alt="${imageAlt}" class="post-image">
-                <div class="post-content">
-                    <h3 class="post-title" data-title="${post.title}">${post.title}</h3>
-                    <p class="post-meta">
-                        <i class="fas fa-calendar-alt"></i> ${post.date}
-                    </p>
-                    <p class="post-excerpt">${post.summary}</p>
-                    <a href="blog.html?post=${post.id}" class="read-more">Ler Mais</a>
-                </div>
-            </div>
-        `}).join('');
-        
-        setupFilters(); // Inicializar filtros después de renderizar
-    }
+document.addEventListener("DOMContentLoaded", () => {
     
-    /**
-     * Muestra un único artículo del blog y aplica todas las mejoras SEO.
-     */
-    function renderBlogPost(post) {
-        if (blogListContainer) blogListContainer.style.display = 'none';
-        postContentDiv.style.display = 'block';
+    // Variables globales
+    let allPostsData = []; // Almacena los datos JSON de los posts
+    let allPostElements = []; // Almacena los elementos HTML de los posts
 
-        const fullContent = marked.parse(post.content);
-        const imageAlt = post.image_alt || post.title;
+    // --- FUNCIÓN PRINCIPAL PARA INICIAR EL BLOG ---
+    async function iniciarBlog() {
+        const postsSection = document.getElementById('posts-section');
+        const gallerySection = document.getElementById('gallery-section');
+        if (!postsSection || !gallerySection) return;
 
-        // --- INICIO DE TODAS LAS MEJORAS SEO ---
-        
-        // 1. Título y Meta Descripción
-        document.title = `${post.title} | PortugalApoia Blog`;
-        updateMetaTag('name', 'description', post.summary);
-        
-        // 2. URL Canónica
-        const canonicalUrl = `${window.location.origin}${window.location.pathname}?post=${post.id}`;
-        updateLinkTag('rel', 'canonical', canonicalUrl);
-
-        // 3. Open Graph (para redes sociales)
-        updateMetaTag('property', 'og:title', post.title);
-        updateMetaTag('property', 'og:description', post.summary);
-        updateMetaTag('property', 'og:type', 'article');
-        updateMetaTag('property', 'og:url', canonicalUrl);
-        updateMetaTag('property', 'og:image', `${window.location.origin}/${post.image}`);
-        updateMetaTag('property', 'og:site_name', 'PortugalApoia');
-        
-        // 4. Schema Markup (Datos Estructurados para Google)
-        updateSchema(post, canonicalUrl);
-        
-        // --- FIN DE TODAS LAS MEJORAS SEO ---
-
-        postContentDiv.innerHTML = `
-            <h1>${post.title}</h1>
-            <p class="post-meta">
-                <i class="fas fa-user"></i> ${post.author} &nbsp;&nbsp;
-                <i class="fas fa-calendar-alt"></i> ${post.date}
-            </p>
-            <img src="${post.image}" alt="${imageAlt}" class="post-image-full">
-            <div class="full-content">${fullContent}</div>
-            <div class="social-share">${createSocialShareLinks(post)}</div>
-            <h3 class="related-title">Artigos Relacionados</h3>
-            <div id="related-posts"></div>
-            <a href="blog.html" class="back-to-blog"><i class="fas fa-arrow-left"></i> Voltar ao Blog</a>
-        `;
-        
-        renderRelatedPosts(post.category, post.id);
-    }
-    
-    /**
-     * Muestra un mensaje si el post no se encuentra.
-     */
-    function displayNotFound() {
-        if (blogListContainer) blogListContainer.style.display = 'none';
-        postContentDiv.innerHTML = '<h2>Artigo não encontrado</h2><p>O artigo que você está procurando não existe ou foi movido.</p><a href="blog.html" class="back-to-blog">Voltar ao Blog</a>';
-        postContentDiv.style.display = 'block';
-    }
-
-
-    // --- FUNCIONES DE SOPORTE Y SEO ---
-
-    /**
-     * Función genérica para crear o actualizar una metaetiqueta.
-     */
-    function updateMetaTag(attr, value, content) {
-        let element = document.querySelector(`meta[${attr}="${value}"]`);
-        if (!element) {
-            element = document.createElement('meta');
-            element.setAttribute(attr, value);
-            document.head.appendChild(element);
-        }
-        element.content = content;
-    }
-
-    /**
-     * Función genérica para crear o actualizar una etiqueta link.
-     */
-    function updateLinkTag(attr, value, href) {
-        let element = document.querySelector(`link[${attr}="${value}"]`);
-        if (!element) {
-            element = document.createElement('link');
-            element.setAttribute(attr, value);
-            document.head.appendChild(element);
-        }
-        element.href = href;
-    }
-
-    /**
-     * Crea o actualiza el script de Schema para el artículo.
-     */
-    function updateSchema(post, url) {
-        const oldSchema = document.getElementById('article-schema');
-        if (oldSchema) oldSchema.remove();
-
-        const schema = {
-            "@context": "https://schema.org",
-            "@type": "BlogPosting",
-            "mainEntityOfPage": { "@type": "WebPage", "@id": url },
-            "headline": post.title,
-            "image": `${window.location.origin}/${post.image}`,
-            "author": { "@type": "Person", "name": post.author },
-            "publisher": {
-                "@type": "Organization",
-                "name": "PortugalApoia",
-                "logo": { "@type": "ImageObject", "url": `${window.location.origin}/images_pta/logocuadrado.jpg` }
-            },
-            "datePublished": new Date(post.date.split('/').reverse().join('-')).toISOString(),
-            "description": post.summary
-        };
-
-        const schemaScript = document.createElement('script');
-        schemaScript.type = 'application/ld+json';
-        schemaScript.id = 'article-schema';
-        schemaScript.text = JSON.stringify(schema);
-        document.head.appendChild(schemaScript);
-    }
-
-    /**
-     * Configura los filtros de búsqueda y categoría.
-     */
-    function setupFilters() {
-        const searchInput = document.getElementById('search-input');
-        const categoryLinks = document.querySelectorAll('.category-link');
-
-        const filterAction = () => {
-            const searchTerm = searchInput.value.toLowerCase().trim();
-            const selectedCategory = document.querySelector('.category-link.active').dataset.category;
+        try {
+            const [postsData, galeria] = await Promise.all([
+                fetch('/_dados/blog.json').then(res => res.json()),
+                fetch('/_dados/galeria.json').then(res => res.json())
+            ]);
             
-            document.querySelectorAll('#posts .post').forEach(postElement => {
-                const title = postElement.querySelector('.post-title').textContent.toLowerCase();
-                const category = postElement.dataset.category;
+            allPostsData = postsData.posts;
 
-                const matchesSearch = title.includes(searchTerm);
-                const matchesCategory = selectedCategory === 'all' || category === selectedCategory;
+            // Ordena os posts pela data, do mais recente para o mais antigo
+            allPostsData.sort((a, b) => new Date(b.date) - new Date(a.date));
+            // --- FIM DO CÓDIGO A AÑADIR ---
 
-                postElement.style.display = (matchesSearch && matchesCategory) ? 'block' : 'none';
-            });
-        };
+            // Renderizar y añadir el HTML al DOM
+            postsSection.innerHTML = allPostsData.map(renderBlogPost).join('');
+            gallerySection.innerHTML = galeria.imagens.map(renderGalleryItem).join('');
 
-        searchInput.addEventListener('input', filterAction);
-        categoryLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                categoryLinks.forEach(l => l.classList.remove('active'));
-                this.classList.add('active');
-                filterAction();
-            });
-        });
+
+            // Renderizar y añadir el HTML al DOM
+            postsSection.innerHTML = allPostsData.map(renderBlogPost).join('');
+            gallerySection.innerHTML = galeria.imagens.map(renderGalleryItem).join('');
+
+            // ======> CORRECCIÓN CLAVE: Obtener los elementos DESPUÉS de que existen en la página <======
+            allPostElements = document.querySelectorAll('.blog-post-item');
+            
+            // Configurar toda la funcionalidad
+            setupBlogFunctionality();
+            if (window.lightbox) window.lightbox.init();
+
+        } catch (error) {
+            console.error("Falha ao carregar o conteúdo do blog:", error);
+            postsSection.innerHTML = `<div class="col-12 text-center"><p class="text-danger">Não foi possível carregar as publicações.</p></div>`;
+        }
     }
-    
-    function createSocialShareLinks(post) {
-        const url = `${window.location.origin}${window.location.pathname}?post=${post.id}`;
-        const text = `Confira este artigo: ${post.title}`;
+
+    // --- FUNCIONES PARA GENERAR HTML ---
+    function renderBlogPost(post) {
+        const postDate = new Date(post.date);
+        const formattedDate = postDate.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' });
+        const imageCaption = post.caption || `Ilustração para o artigo: ${post.title}`;
+        const processedBody = marked.parse(post.body || '', { gfm: true });
+
+        // Añadimos data-keywords para la búsqueda
+        const keywords = `${post.title} ${post.summary} ${post.body}`.toLowerCase();
+
         return `
-            <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}" target="_blank"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}" target="_blank"><i class="fab fa-twitter"></i></a>
-            <a href="https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=${encodeURIComponent(post.title)}&summary=${encodeURIComponent(post.summary)}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-            <a href="https://api.whatsapp.com/send?text=${encodeURIComponent(text + ' ' + url)}" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <div class="col-lg-8 offset-lg-2 col-md-12 blog-post-item" data-category="${post.category}" data-keywords="${keywords}">
+            <article class="blog-post-card">
+                <div class="card-body">
+                    <header class="post-header">
+                        <h1 class="card-title">${post.title}</h1>
+                        <div class="post-meta">
+                            <span>${formattedDate}</span>
+                            <span class="separator">|</span>
+                            <span class="reading-time"></span>
+                        </div>
+                    </header>
+                    
+                    <figure class="post-image-container">
+                        <img class="lazy" data-src="${post.image}" alt="${post.title}">
+                        <figcaption>${imageCaption}</figcaption>
+                    </figure>
+
+                    <div class="summary-content card-text">${post.summary}</div>
+                    
+                    <div class="full-content" style="display: none;">
+                        ${processedBody}
+                        ${createSocialShareLinks(post.title)}
+                        ${renderRelatedPosts(post)}
+                    </div>
+                    
+                    <button class="btn btn-outline-primary read-more-btn">Ler Mais</button>
+                </div>
+            </article>
+        </div>`;
+    }
+
+    function createSocialShareLinks(postTitle) {
+        const postUrl = window.location.href;
+        const encodedUrl = encodeURIComponent(postUrl);
+        const encodedTitle = encodeURIComponent(postTitle);
+        return `
+            <div class="social-share">
+                <strong>Compartilhar:</strong>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}" target="_blank" rel="noopener noreferrer" aria-label="Compartir en Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}" target="_blank" rel="noopener noreferrer" aria-label="Compartir en Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}&title=${encodedTitle}" target="_blank" rel="noopener noreferrer" aria-label="Compartir en LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://wa.me/?text=${encodedTitle}%20${encodedUrl}" target="_blank" rel="noopener noreferrer" aria-label="Compartir en WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            </div>
         `;
     }
 
-    function renderRelatedPosts(category, currentPostId) {
-        const relatedPostsDiv = document.getElementById('related-posts');
-        if (!relatedPostsDiv) return;
-        
-        const related = allPosts.filter(p => p.category === category && p.id !== currentPostId).slice(0, 3);
-        relatedPostsDiv.innerHTML = related.map(p => `
-            <div class="related-post">
-                <a href="blog.html?post=${p.id}">
-                    <img src="${p.image}" alt="${p.title}">
-                    <h4>${p.title}</h4>
+    function renderRelatedPosts(currentPost) {
+        const related = allPostsData
+            .filter(post => post.category === currentPost.category && post.title !== currentPost.title)
+            .slice(0, 3);
+        if (related.length === 0) return '';
+        let relatedHTML = related.map(post => `
+            <div class="related-post-item">
+                <a href="javascript:void(0);" onclick="location.reload()">
+                    <img src="${post.image}" alt="${post.title}" class="related-post-img">
+                    <h4 class="related-post-title">${post.title}</h4>
                 </a>
             </div>
         `).join('');
+        return `
+            <div class="related-posts">
+                <h3>Artigos Relacionados</h3>
+                <div class="related-posts-grid">${relatedHTML}</div>
+            </div>
+        `;
     }
+
+    function renderGalleryItem(item) {
+        return `
+        <div class="col-md-6 mb-4 gallery-item-wrapper">
+            <div class="gallery-item">
+                <a href="${item.image}" data-lightbox="gallery" data-title="${item.title} - ${item.caption}">
+                    <img src="${item.image}" alt="${item.title}">
+                    <div class="caption">${item.title}</div>
+                </a>
+            </div>
+        </div>`;
+    }
+
+    // --- FUNCIONES DE UTILIDAD Y CONFIGURACIÓN DE EVENTOS ---
+
+    function calculateReadingTime(postElement) {
+        const content = postElement.querySelector('.full-content');
+        const timePlaceholder = postElement.querySelector('.reading-time');
+        if (content && timePlaceholder) {
+            const text = content.textContent || content.innerText;
+            const wordCount = text.trim().split(/\s+/).filter(Boolean).length;
+            const readingTime = Math.ceil(wordCount / 225) || 1;
+            timePlaceholder.innerHTML = `<i class="fa-regular fa-clock"></i> ${readingTime} min de leitura`;
+        }
+    }
+
+    // Función de filtro optimizada
+    function filterAndShowPosts() {
+        const searchTerm = document.getElementById('blog-search-input').value.toLowerCase();
+        const activeCategory = document.querySelector('.blog-nav .nav-link.active').getAttribute('data-target');
+        const noResultsMessage = document.getElementById('no-results-message');
+        let visiblePosts = 0;
+
+        allPostElements.forEach(post => {
+            const categoryMatch = (activeCategory === 'all' || post.dataset.category === activeCategory);
+            const searchMatch = (post.dataset.keywords.includes(searchTerm));
+
+            if (categoryMatch && searchMatch) {
+                post.style.display = 'block';
+                visiblePosts++;
+            } else {
+                post.style.display = 'none';
+            }
+        });
+        noResultsMessage.style.display = visiblePosts === 0 ? 'block' : 'none';
+    }
+
+    function setupBlogFunctionality() {
+        document.querySelectorAll('img.lazy').forEach(img => {
+            if (img.dataset.src) img.src = img.dataset.src;
+        });
+        
+        allPostElements.forEach(calculateReadingTime);
+
+        document.querySelectorAll('.read-more-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const cardBody = e.target.closest('.card-body');
+                cardBody.querySelector('.summary-content').style.display = 'none';
+                cardBody.querySelector('.full-content').style.display = 'block';
+                e.target.style.display = 'none';
+            });
+        });
+
+        const navLinks = document.querySelectorAll('.blog-nav .nav-link');
+        const postsSection = document.getElementById('posts-section');
+        const gallerySection = document.getElementById('gallery-section');
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                navLinks.forEach(nav => nav.classList.remove('active'));
+                e.target.classList.add('active');
+                const targetCategory = e.target.getAttribute('data-target');
+
+                if (targetCategory === 'galeria') {
+                    postsSection.style.display = 'none';
+                    gallerySection.style.display = 'flex';
+                } else {
+                    postsSection.style.display = 'flex';
+                    gallerySection.style.display = 'none';
+                    filterAndShowPosts();
+                }
+            });
+        });
+
+        // Eventos para la barra de búsqueda
+        const searchInput = document.getElementById('blog-search-input');
+        const clearButton = document.getElementById('blog-search-clear');
+        searchInput.addEventListener('keyup', filterAndShowPosts);
+        clearButton.addEventListener('click', () => {
+            searchInput.value = '';
+            filterAndShowPosts();
+        });
+    }
+
+    // --- INICIAR TODO ---
+    iniciarBlog();
 });
+
