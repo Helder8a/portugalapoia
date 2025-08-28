@@ -105,26 +105,24 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
     }
 
-    function renderRelatedPosts(currentPost) {
-        const related = allPostsData
-            .filter(post => post.category === currentPost.category && post.title !== currentPost.title)
-            .slice(0, 3);
-        if (related.length === 0) return '';
-        let relatedHTML = related.map(post => `
-            <div class="related-post-item">
-                <a href="javascript:void(0);" onclick="location.reload()">
-                    <img src="${post.image}" alt="${post.title}" class="related-post-img">
-                    <h4 class="related-post-title">${post.title}</h4>
-                </a>
+    postElement.innerHTML = `
+    <img src="${post.image}" alt="${post.title}" class="post-image">
+    <div class="post-content">
+        <h3 class="post-title">${post.title}</h3>
+        <div class="post-meta-container">
+            <div class="meta-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>${post.date}</span>
             </div>
-        `).join('');
-        return `
-            <div class="related-posts">
-                <h3>Artigos Relacionados</h3>
-                <div class="related-posts-grid">${relatedHTML}</div>
+            <div class="meta-item">
+                <i class="fas fa-clock"></i>
+                <span>${post.readingTime}</span>
             </div>
-        `;
-    }
+        </div>
+        <p class="post-excerpt">${post.summary}</p>
+        <a href="blog.html?post=${post.id}" class="read-more">Ler Mais</a>
+    </div>
+`;
 
     function renderGalleryItem(item) {
         return `
@@ -224,3 +222,29 @@ document.addEventListener("DOMContentLoaded", () => {
     iniciarBlog();
 });
 
+// --- Lógica para el botón "Volver Arriba" ---
+
+// Obtenemos el botón
+const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+// Mostramos el botón cuando el usuario baja 300px en la página
+window.onscroll = function() {
+    scrollFunction();
+};
+
+function scrollFunction() {
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        scrollTopBtn.classList.add('show');
+    } else {
+        scrollTopBtn.classList.remove('show');
+    }
+}
+
+// Cuando el usuario hace clic, la página sube suavemente
+scrollTopBtn.addEventListener('click', function(e) {
+    e.preventDefault(); // Previene el comportamiento por defecto del enlace
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
