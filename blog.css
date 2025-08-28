@@ -197,9 +197,7 @@ main { padding-top: 75px; }
 }
 .gallery-item:hover .caption { opacity: 1; }
 
-/* ============================================= */
-/* CÓDIGO A AÑADIR: Estilos para Botones de Navegación */
-/* ============================================= */
+/* Estilos para Botones de Navegación */
 .scroll-nav {
     position: fixed;
     bottom: 30px;
@@ -209,7 +207,6 @@ main { padding-top: 75px; }
     flex-direction: column;
     gap: 10px;
 }
-
 .scroll-btn {
     width: 50px;
     height: 50px;
@@ -220,16 +217,14 @@ main { padding-top: 75px; }
     font-size: 20px;
     cursor: pointer;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    transition: background-color 0.3s, transform 0.2s;
+    transition: all 0.2s ease;
 }
-
 .scroll-btn:hover {
     transform: scale(1.1);
     background-color: #003d82;
 }
-
 .scroll-btn:disabled {
-    background-color: #9E9E9E; /* Gris para estado desactivado */
+    background-color: #9E9E9E;
     cursor: not-allowed;
     transform: none;
 }

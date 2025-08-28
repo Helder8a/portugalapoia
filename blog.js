@@ -224,72 +224,71 @@ document.addEventListener("DOMContentLoaded", () => {
     iniciarBlog();
 });
 
-// ...dentro de iniciarBlog(), después de que se renderiza todo el HTML...
+// ... dentro de iniciarBlog(), después de la línea con gallerySection.innerHTML
 
-// --- CÓDIGO A AÑADIR: Lógica de Scroll Robusta ---
+// --- CÓDIGO CORRECTO Y SEGURO PARA EL SCROLL ---
 
-const postsNodeList = document.querySelectorAll('.blog-post');
-// Convertimos a Array para poder usar métodos como .findIndex()
-const posts = Array.from(postsNodeList); 
+// Esta función se ejecutará después de que las noticias ya estén visibles.
+const setupScrollButtons = () => {
+    try {
+        const postsNodeList = document.querySelectorAll('.blog-post');
+        const posts = Array.from(postsNodeList);
+        const scrollUpBtn = document.getElementById('scrollUpBtn');
+        const scrollDownBtn = document.getElementById('scrollDownBtn');
+        const scrollNavContainer = document.querySelector('.scroll-nav');
 
-const scrollUpBtn = document.getElementById('scrollUpBtn');
-const scrollDownBtn = document.getElementById('scrollDownBtn');
-const scrollNavContainer = document.querySelector('.scroll-nav');
-
-// Ocultamos los botones si no hay suficientes noticias para navegar
-if (posts.length <= 1) {
-    if (scrollNavContainer) scrollNavContainer.style.display = 'none';
-    return;
-}
-
-// Función para encontrar el índice del post que está más centrado en la pantalla
-const getActivePostIndex = () => {
-    const windowCenterY = window.scrollY + (window.innerHeight / 2);
-    let closestIndex = -1;
-    let minDistance = Infinity;
-
-    posts.forEach((post, index) => {
-        const postCenterY = post.offsetTop + (post.offsetHeight / 2);
-        const distance = Math.abs(windowCenterY - postCenterY);
-        if (distance < minDistance) {
-            minDistance = distance;
-            closestIndex = index;
+        if (!scrollNavContainer || posts.length <= 1) {
+            if (scrollNavContainer) scrollNavContainer.style.display = 'none';
+            return; // Salimos de ESTA función, no de iniciarBlog()
         }
-    });
-    return closestIndex;
+
+        const getActivePostIndex = () => {
+            let closestIndex = 0;
+            let minDistance = Infinity;
+            const viewportCenter = window.scrollY + window.innerHeight / 2;
+
+            posts.forEach((post, index) => {
+                const postCenter = post.offsetTop + post.offsetHeight / 2;
+                const distance = Math.abs(viewportCenter - postCenter);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestIndex = index;
+                }
+            });
+            return closestIndex;
+        };
+
+        const updateButtons = () => {
+            const currentIndex = getActivePostIndex();
+            scrollUpBtn.disabled = (currentIndex === 0);
+            scrollDownBtn.disabled = (currentIndex === posts.length - 1);
+        };
+
+        scrollUpBtn.addEventListener('click', () => {
+            const currentIndex = getActivePostIndex();
+            if (currentIndex > 0) {
+                posts[currentIndex - 1].scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+
+        scrollDownBtn.addEventListener('click', () => {
+            const currentIndex = getActivePostIndex();
+            if (currentIndex < posts.length - 1) {
+                posts[currentIndex + 1].scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+
+        window.addEventListener('scroll', updateButtons, { passive: true });
+        updateButtons(); // Estado inicial
+        
+    } catch (error) {
+        console.error("Error al configurar los botones de scroll:", error);
+        const scrollNavContainer = document.querySelector('.scroll-nav');
+        if (scrollNavContainer) scrollNavContainer.style.display = 'none';
+    }
 };
 
-// Actualiza qué botones están activos o desactivados
-const updateButtons = () => {
-    const currentIndex = getActivePostIndex();
-    if (currentIndex === -1) return;
+// Llamamos a la nueva función para configurar los botones.
+setupScrollButtons();
 
-    scrollUpBtn.disabled = (currentIndex === 0);
-    scrollDownBtn.disabled = (currentIndex === posts.length - 1);
-};
-
-// Mueve la vista al post anterior
-scrollUpBtn.addEventListener('click', () => {
-    const currentIndex = getActivePostIndex();
-    const targetIndex = currentIndex - 1;
-    if (targetIndex >= 0) {
-        posts[targetIndex].scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-});
-
-// Mueve la vista al post siguiente
-scrollDownBtn.addEventListener('click', () => {
-    const currentIndex = getActivePostIndex();
-    const targetIndex = currentIndex + 1;
-    if (targetIndex < posts.length) {
-        posts[targetIndex].scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-});
-
-// Escuchamos el evento de scroll para actualizar los botones en tiempo real
-window.addEventListener('scroll', updateButtons);
-
-// Hacemos una llamada inicial para establecer el estado correcto al cargar la página
-updateButtons();
-
-// --- FIN DEL CÓDIGO A AÑADIR ---
+// --- FIN DEL CÓDIGO DE SCROLL ---
