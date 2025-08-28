@@ -1,47 +1,50 @@
-/* Adicionar ao final do ficheiro blog.css */
+/* ==================================================================
+   === AJUSTE DE IMÁGENES DEL BLOG (DISEÑO UX/UI) ===
+   ================================================================== */
 
-/* --- Melhorias na Funcionalidade "Ler Mais" --- */
-.read-more-btn {
-    transition: background-color 0.3s, color 0.3s;
+/* Contenedor principal de la imagen del post */
+.post-image-container {
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+    overflow: hidden; /* Asegura que la imagen respete las esquinas redondeadas */
+    border-radius: 12px; /* Esquinas más suaves y modernas */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07); /* Sombra sutil para dar profundidad */
+    position: relative; /* Necesario para posicionar la leyenda */
 }
 
-/* --- Estilos para Artigos Relacionados --- */
-.related-posts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1.5rem;
+/* La imagen en sí */
+.post-image-container img {
+    width: 100%; /* Ocupa todo el ancho de su contenedor */
+    height: auto; /* Mantiene la proporción original */
+    max-height: 480px; /* ALTURA MÁXIMA para evitar que sea demasiado grande */
+    object-fit: cover; /* Rellena el espacio sin deformar la imagen (puede recortar un poco) */
+    display: block; /* Elimina un pequeño espacio en blanco que a veces aparece debajo de las imágenes */
+    transition: transform 0.4s ease; /* Añade una transición suave para el efecto de zoom */
 }
 
-.related-post-item a {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-radius: 10px;
-    overflow: hidden;
+/* Efecto de zoom sutil al pasar el ratón por la tarjeta del post */
+.blog-post-card:hover .post-image-container img {
+    transform: scale(1.03);
 }
 
-.related-post-item a:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
-}
-
-.related-post-img {
+/* Leyenda/caption de la imagen */
+.post-image-container figcaption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
     width: 100%;
-    height: 120px;
-    object-fit: cover;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent); /* Gradiente para mejorar la legibilidad del texto */
+    color: #ffffff;
+    padding: 25px 15px 15px; /* Espaciado interno */
+    font-size: 0.85rem;
+    text-align: center;
+    font-style: italic;
+    opacity: 0; /* Oculta por defecto */
+    transition: opacity 0.4s ease; /* Transición suave para mostrarla */
+    pointer-events: none; /* Evita que la leyenda interfiera con el ratón */
 }
 
-.related-post-title {
-    font-size: 1rem;
-    font-weight: 600;
-    padding: 1rem;
-    background-color: var(--color-fondo-suave);
-    margin: 0;
-    color: var(--color-primario);
-}
-
-/* --- Feedback Visual na Pesquisa --- */
-#no-results-message {
-    transition: opacity 0.3s;
+/* Muestra la leyenda cuando el usuario pasa el ratón sobre el contenedor de la imagen */
+.post-image-container:hover figcaption {
+    opacity: 1;
 }
