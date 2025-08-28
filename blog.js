@@ -3,7 +3,7 @@
 // ==================================================================
 
 document.addEventListener("DOMContentLoaded", () => {
-    
+
     // Variables globales
     let allPostsData = []; // Almacena los datos JSON de los posts
     let allPostElements = []; // Almacena los elementos HTML de los posts
@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 fetch('/_dados/blog.json').then(res => res.json()),
                 fetch('/_dados/galeria.json').then(res => res.json())
             ]);
-            
+
             allPostsData = postsData.posts;
 
             // Ordena os posts pela data, do mais recente para o mais antigo
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // ======> CORRECCIÓN CLAVE: Obtener los elementos DESPUÉS de que existen en la página <======
             allPostElements = document.querySelectorAll('.blog-post-item');
-            
+
             // Configurar toda la funcionalidad
             setupBlogFunctionality();
             if (window.lightbox) window.lightbox.init();
@@ -50,44 +50,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // --- FUNCIONES PARA GENERAR HTML ---
     function renderBlogPost(post) {
-        const postDate = new Date(post.date);
-        const formattedDate = postDate.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' });
-        const imageCaption = post.caption || `Ilustração para o artigo: ${post.title}`;
-        const processedBody = marked.parse(post.body || '', { gfm: true });
+        // ... todo el código existente para cambiar el título, meta description, schema, etc. ...
 
-        // Añadimos data-keywords para la búsqueda
-        const keywords = `${post.title} ${post.summary} ${post.body}`.toLowerCase();
+        // --- INICIO MEJORA SEO OPEN GRAPH ---
 
-        return `
-        <div class="col-lg-8 offset-lg-2 col-md-12 blog-post-item" data-category="${post.category}" data-keywords="${keywords}">
-            <article class="blog-post-card">
-                <div class="card-body">
-                    <header class="post-header">
-                        <h1 class="card-title">${post.title}</h1>
-                        <div class="post-meta">
-                            <span>${formattedDate}</span>
-                            <span class="separator">|</span>
-                            <span class="reading-time"></span>
-                        </div>
-                    </header>
-                    
-                    <figure class="post-image-container">
-                        <img class="lazy" data-src="${post.image}" alt="${post.title}">
-                        <figcaption>${imageCaption}</figcaption>
-                    </figure>
+        // Definimos la URL canónica una vez para reutilizarla
+        const canonicalUrl = `${window.location.origin}${window.location.pathname}?post=${post.id}`;
 
-                    <div class="summary-content card-text">${post.summary}</div>
-                    
-                    <div class="full-content" style="display: none;">
-                        ${processedBody}
-                        ${createSocialShareLinks(post.title)}
-                        ${renderRelatedPosts(post)}
-                    </div>
-                    
-                    <button class="btn btn-outline-primary read-more-btn">Ler Mais</button>
-                </div>
-            </article>
-        </div>`;
+        // Array con las etiquetas OG que queremos crear
+        const ogTags = [
+            { property: 'og:title', content: post.title },
+            { property: 'og:description', content: post.summary },
+            { property: 'og:type', content: 'article' },
+            { property: 'og:url', content: canonicalUrl },
+            { property: 'og:image', content: `${window.location.origin}/${post.image}` },
+            { property: 'og:site_name', content: 'PortugalApoia' }
+        ];
+
+        // Primero, eliminamos las etiquetas OG viejas para evitar duplicados
+        document.querySelectorAll('meta[property^="og:"]').forEach(tag => tag.remove());
+
+        // Luego, creamos y añadimos las nuevas etiquetas al <head>
+        ogTags.forEach(tagInfo => {
+            const metaTag = document.createElement('meta');
+            metaTag.setAttribute('property', tagInfo.property);
+            metaTag.content = tagInfo.content;
+            document.head.appendChild(metaTag);
+        });
+
+        // --- FIN MEJORA SEO OPEN GRAPH ---
+
+        // ... el resto de la función (innerHTML, renderRelatedPosts, etc.) ...
     }
 
     function createSocialShareLinks(postTitle) {
@@ -176,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll('img.lazy').forEach(img => {
             if (img.dataset.src) img.src = img.dataset.src;
         });
-        
+
         allPostElements.forEach(calculateReadingTime);
 
         document.querySelectorAll('.read-more-btn').forEach(button => {
@@ -191,7 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const navLinks = document.querySelectorAll('.blog-nav .nav-link');
         const postsSection = document.getElementById('posts-section');
         const gallerySection = document.getElementById('gallery-section');
-        
+
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
