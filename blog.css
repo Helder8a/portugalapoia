@@ -1,17 +1,23 @@
 /* ==================================================================
-   === DISEÑO AVANZADO DE GALERÍA DE IMÁGENES (UX/UI) ===
+   === VERSIÓN CORREGIDA Y MEJORADA - DISEÑO DE GALERÍA ===
    ================================================================== */
 
 /* Contenedor principal de la sección de la galería */
 #gallery-section {
-    display: grid;
-    /* Crea una cuadrícula adaptable: 2 columnas en móvil, 3 en tablet, 4 en escritorio */
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem; /* Espacio entre las imágenes */
     padding: 2rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px; /* Compensa el padding de las columnas */
 }
 
-/* Contenedor de cada item de la galería */
+/* Contenedor para cada item de la galería (Wrapper) */
+.gallery-item-wrapper {
+    padding: 0 15px; /* Espaciado estilo columna de Bootstrap */
+    margin-bottom: 30px;
+    box-sizing: border-box;
+}
+
+/* El item interactivo de la galería */
 .gallery-item {
     position: relative;
     overflow: hidden;
@@ -19,11 +25,13 @@
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
-    background-color: #f0f0f0; /* Color de fondo mientras carga la imagen */
+    background-color: #f0f0f0;
+    display: block; /* Asegura que el enlace se comporte como un bloque */
+    height: 300px; /* Altura fija para consistencia en la cuadrícula */
 }
 
 .gallery-item:hover {
-    transform: scale(1.03); /* Efecto de elevación al pasar el ratón */
+    transform: translateY(-5px); /* Efecto de elevación más sutil */
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
 }
 
@@ -31,16 +39,16 @@
 .gallery-item img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Asegura que la imagen cubra todo el espacio sin deformarse */
+    object-fit: cover;
     display: block;
-    transition: transform 0.4s ease-out; /* Transición para el efecto de zoom */
+    transition: transform 0.4s ease-out;
 }
 
 .gallery-item:hover img {
-    transform: scale(1.1); /* Efecto de zoom sutil sobre la imagen */
+    transform: scale(1.1);
 }
 
-/* La superposición (overlay) que contiene el texto */
+/* La superposición (overlay) con el texto */
 .gallery-item .caption-overlay {
     position: absolute;
     bottom: 0;
@@ -51,36 +59,34 @@
     color: white;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end; /* Alinea el texto en la parte inferior */
+    justify-content: flex-end;
     padding: 1.5rem;
-    opacity: 0; /* Oculta por defecto */
+    opacity: 0;
     transition: opacity 0.4s ease-out;
-    box-sizing: border-box; /* Asegura que el padding no afecte el tamaño */
+    box-sizing: border-box;
 }
 
 .gallery-item:hover .caption-overlay {
-    opacity: 1; /* Muestra la superposición al pasar el ratón */
+    opacity: 1;
 }
 
-/* Título de la imagen en la galería */
-.gallery-item .caption-overlay .gallery-title {
+/* Título y descripción */
+.gallery-item .gallery-title {
     font-size: 1.25rem;
     font-weight: 700;
     margin: 0 0 0.5rem 0;
-    transform: translateY(20px); /* Posición inicial para la animación */
-    transition: transform 0.4s ease-out 0.1s; /* Transición con un pequeño retraso */
+    transform: translateY(20px);
+    transition: transform 0.4s ease-out 0.1s;
 }
 
-/* Descripción de la imagen en la galería */
-.gallery-item .caption-overlay .gallery-caption {
+.gallery-item .gallery-caption {
     font-size: 0.9rem;
     margin: 0;
     line-height: 1.4;
     transform: translateY(20px);
-    transition: transform 0.4s ease-out 0.15s; /* Transición con un retraso mayor */
+    transition: transform 0.4s ease-out 0.15s;
 }
 
-/* Animación del texto al mostrar la superposición */
 .gallery-item:hover .gallery-title,
 .gallery-item:hover .gallery-caption {
     transform: translateY(0);
