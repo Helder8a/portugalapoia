@@ -222,29 +222,3 @@ document.addEventListener("DOMContentLoaded", () => {
     iniciarBlog();
 });
 
-// --- Lógica para el botón "Volver Arriba" ---
-
-// Obtenemos el botón
-const scrollTopBtn = document.getElementById('scrollTopBtn');
-
-// Mostramos el botón cuando el usuario baja 300px en la página
-window.onscroll = function() {
-    scrollFunction();
-};
-
-function scrollFunction() {
-    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-        scrollTopBtn.classList.add('show');
-    } else {
-        scrollTopBtn.classList.remove('show');
-    }
-}
-
-// Cuando el usuario hace clic, la página sube suavemente
-scrollTopBtn.addEventListener('click', function(e) {
-    e.preventDefault(); // Previene el comportamiento por defecto del enlace
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-});
