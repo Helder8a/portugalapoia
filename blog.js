@@ -105,24 +105,26 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
     }
 
-    postElement.innerHTML = `
-    <img src="${post.image}" alt="${post.title}" class="post-image">
-    <div class="post-content">
-        <h3 class="post-title">${post.title}</h3>
-        <div class="post-meta-container">
-            <div class="meta-item">
-                <i class="fas fa-calendar-alt"></i>
-                <span>${post.date}</span>
+    function renderRelatedPosts(currentPost) {
+        const related = allPostsData
+            .filter(post => post.category === currentPost.category && post.title !== currentPost.title)
+            .slice(0, 3);
+        if (related.length === 0) return '';
+        let relatedHTML = related.map(post => `
+            <div class="related-post-item">
+                <a href="javascript:void(0);" onclick="location.reload()">
+                    <img src="${post.image}" alt="${post.title}" class="related-post-img">
+                    <h4 class="related-post-title">${post.title}</h4>
+                </a>
             </div>
-            <div class="meta-item">
-                <i class="fas fa-clock"></i>
-                <span>${post.readingTime}</span>
+        `).join('');
+        return `
+            <div class="related-posts">
+                <h3>Artigos Relacionados</h3>
+                <div class="related-posts-grid">${relatedHTML}</div>
             </div>
-        </div>
-        <p class="post-excerpt">${post.summary}</p>
-        <a href="blog.html?post=${post.id}" class="read-more">Ler Mais</a>
-    </div>
-`;
+        `;
+    }
 
     function renderGalleryItem(item) {
         return `
