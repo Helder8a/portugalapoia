@@ -197,3 +197,39 @@ main { padding-top: 75px; }
 }
 .gallery-item:hover .caption { opacity: 1; }
 
+/* ============================================= */
+/* CÓDIGO A AÑADIR: Estilos para Botones de Navegación */
+/* ============================================= */
+
+.scroll-nav {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.scroll-btn {
+    width: 50px;
+    height: 50px;
+    background-color: #0056b3; /* Un color base que encaja con la web */
+    color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease;
+}
+
+.scroll-btn:hover {
+    transform: scale(1.1);
+}
+
+.scroll-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+    transform: none;
+}

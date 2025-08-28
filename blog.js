@@ -224,3 +224,44 @@ document.addEventListener("DOMContentLoaded", () => {
     iniciarBlog();
 });
 
+// ... código existente dentro de iniciarBlog() ...
+
+// --- CÓDIGO A AÑADIR: Lógica de Navegación Rápida ---
+const posts = document.querySelectorAll('.blog-post');
+if (posts.length > 1) {
+    const scrollUpBtn = document.getElementById('scrollUpBtn');
+    const scrollDownBtn = document.getElementById('scrollDownBtn');
+    let currentPostIndex = 0;
+
+    const updateButtonState = () => {
+        const scrollThreshold = window.innerHeight * 0.4; // Umbral para detectar el post actual
+        
+        posts.forEach((post, index) => {
+            const postTop = post.getBoundingClientRect().top;
+            if (postTop < scrollThreshold && postTop > -post.offsetHeight + scrollThreshold) {
+                currentPostIndex = index;
+            }
+        });
+
+        scrollUpBtn.disabled = (currentPostIndex === 0);
+        scrollDownBtn.disabled = (currentPostIndex === posts.length - 1);
+    };
+
+    const scrollToPost = (index) => {
+        if (index >= 0 && index < posts.length) {
+            posts[index].scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    };
+
+    scrollUpBtn.addEventListener('click', () => scrollToPost(currentPostIndex - 1));
+    scrollDownBtn.addEventListener('click', () => scrollToPost(currentPostIndex + 1));
+    window.addEventListener('scroll', updateButtonState);
+
+    updateButtonState(); // Estado inicial al cargar
+} else {
+    const scrollNavContainer = document.querySelector('.scroll-nav');
+    if (scrollNavContainer) {
+        scrollNavContainer.style.display = 'none';
+    }
+}
+// --- FIN DEL CÓDIGO A AÑADIR ---
