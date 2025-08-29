@@ -224,3 +224,25 @@ document.addEventListener("DOMContentLoaded", () => {
     iniciarBlog();
 });
 
+document.addEventListener("DOMContentLoaded", function() {
+    const galleryItems = document.querySelectorAll('.gallery-item');
+
+    galleryItems.forEach(item => {
+        const img = item.querySelector('img');
+        if (img) {
+            // Cuando la imagen se cargue, comprobamos sus dimensiones.
+            img.onload = () => {
+                // Si la imagen es más alta que ancha (retrato), le damos más espacio.
+                if (img.naturalHeight > img.naturalWidth * 1.2) {
+                    item.classList.add('tall');
+                }
+            };
+            // Si la imagen ya está en caché, el 'onload' puede no dispararse.
+            if (img.complete) {
+                if (img.naturalHeight > img.naturalWidth * 1.2) {
+                    item.classList.add('tall');
+                }
+            }
+        }
+    });
+});

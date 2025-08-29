@@ -197,50 +197,57 @@ main { padding-top: 75px; }
 }
 .gallery-item:hover .caption { opacity: 1; }
 
-/* --- ESTILOS MEJORADOS PARA LA GALERÍA (ESTILO MASONRY) --- */
+/* --- ESTILOS DE GALERÍA PROFESIONAL CON CSS GRID --- */
 #gallery-section {
-    /* Usamos columnas CSS para crear el efecto masonry. 
-       'column-count' define cuántas columnas quieres. 
-       'column-gap' define el espacio entre ellas. */
-    column-count: 3; /* Para 3 columnas en pantallas grandes */
-    column-gap: 1.5rem; /* Espacio entre las imágenes */
+    display: grid;
+    /* Crea columnas flexibles que se ajustan automáticamente.
+       Cada columna tendrá un mínimo de 320px y se expandirá para ocupar el espacio disponible. */
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-auto-rows: auto; /* La altura de las filas se ajustará al contenido. */
+    gap: 20px; /* Espacio uniforme entre todas las imágenes. */
     width: 100%;
+    padding: 20px 0;
 }
 
 .gallery-item-wrapper {
-    /* Este contenedor ayuda a que cada imagen se mantenga en su columna sin cortarse. */
-    break-inside: avoid;
-    margin-bottom: 1.5rem; /* Espacio vertical entre imágenes */
-    display: inline-block; /* Necesario para que el sistema de columnas funcione */
+    /* Este contenedor ya no es tan necesario con Grid, pero lo mantenemos por si acaso. */
     width: 100%;
 }
 
 .gallery-item {
     position: relative;
     overflow: hidden;
-    border-radius: 12px; /* Bordes más suaves para un look moderno */
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-    width: 100%;
-    height: auto; /* IMPORTANTE: Quitamos la altura fija para que las fotos mantengan su proporción */
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex; /* Para alinear la imagen correctamente dentro del item. */
+    align-items: center;
+    justify-content: center;
+    grid-row: span 1; /* Por defecto, cada item ocupa una celda de la fila. */
+    grid-column: span 1; /* Y una celda de la columna. */
+}
+
+/* --- Ajuste inteligente de tamaño basado en la altura de la imagen --- */
+/* Las imágenes más altas ocuparán más espacio vertical en la cuadrícula para crear el efecto "mosaico". */
+.gallery-item.tall {
+    grid-row: span 2;
 }
 
 .gallery-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
 }
 
 .gallery-item img {
     width: 100%;
-    height: auto; /* La imagen se ajusta automáticamente a su contenedor */
-    display: block; /* Elimina espacios extra debajo de la imagen */
-    object-fit: cover; /* Mantenemos por si acaso, pero ya no es tan crucial */
-    transition: transform 0.3s, filter 0.3s;
+    height: 100%;
+    object-fit: cover; /* Clave para que la imagen llene el contenedor sin deformarse. */
+    display: block;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .gallery-item:hover img {
-    transform: scale(1.03);
-    filter: brightness(1.05);
+    transform: scale(1.05);
 }
 
 .gallery-item .caption {
@@ -248,29 +255,22 @@ main { padding-top: 75px; }
     bottom: 0;
     left: 0;
     width: 100%;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent); /* Un degradado más suave */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, transparent 100%);
     color: white;
-    padding: 20px 15px 15px; /* Más espacio para el texto */
-    text-align: center;
-    font-size: 1rem;
+    padding: 30px 20px 20px;
+    text-align: left; /* Alineado a la izquierda es más elegante. */
+    font-size: 1.1rem;
     font-weight: 600;
-    transition: opacity 0.3s;
-    opacity: 0; /* La leyenda aparece al pasar el ratón */
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .gallery-item:hover .caption {
     opacity: 1;
+    transform: translateY(0);
 }
 
-/* --- Ajustes para dispositivos móviles (Responsive Design) --- */
-@media (max-width: 992px) {
-    #gallery-section {
-        column-count: 2; /* 2 columnas en tablets */
-    }
-}
-
-@media (max-width: 576px) {
-    #gallery-section {
-        column-count: 1; /* 1 columna en móviles */
-    }
-}
+/* --- No se necesitan Media Queries adicionales --- */
+/* La belleza de 'auto-fill' y 'minmax' es que el diseño es
+   intrínsecamente responsivo. Se ajustará solo. */
