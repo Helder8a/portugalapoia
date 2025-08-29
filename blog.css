@@ -197,3 +197,80 @@ main { padding-top: 75px; }
 }
 .gallery-item:hover .caption { opacity: 1; }
 
+/* --- ESTILOS MEJORADOS PARA LA GALERÍA (ESTILO MASONRY) --- */
+#gallery-section {
+    /* Usamos columnas CSS para crear el efecto masonry. 
+       'column-count' define cuántas columnas quieres. 
+       'column-gap' define el espacio entre ellas. */
+    column-count: 3; /* Para 3 columnas en pantallas grandes */
+    column-gap: 1.5rem; /* Espacio entre las imágenes */
+    width: 100%;
+}
+
+.gallery-item-wrapper {
+    /* Este contenedor ayuda a que cada imagen se mantenga en su columna sin cortarse. */
+    break-inside: avoid;
+    margin-bottom: 1.5rem; /* Espacio vertical entre imágenes */
+    display: inline-block; /* Necesario para que el sistema de columnas funcione */
+    width: 100%;
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px; /* Bordes más suaves para un look moderno */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    width: 100%;
+    height: auto; /* IMPORTANTE: Quitamos la altura fija para que las fotos mantengan su proporción */
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: auto; /* La imagen se ajusta automáticamente a su contenedor */
+    display: block; /* Elimina espacios extra debajo de la imagen */
+    object-fit: cover; /* Mantenemos por si acaso, pero ya no es tan crucial */
+    transition: transform 0.3s, filter 0.3s;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.03);
+    filter: brightness(1.05);
+}
+
+.gallery-item .caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent); /* Un degradado más suave */
+    color: white;
+    padding: 20px 15px 15px; /* Más espacio para el texto */
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: opacity 0.3s;
+    opacity: 0; /* La leyenda aparece al pasar el ratón */
+}
+
+.gallery-item:hover .caption {
+    opacity: 1;
+}
+
+/* --- Ajustes para dispositivos móviles (Responsive Design) --- */
+@media (max-width: 992px) {
+    #gallery-section {
+        column-count: 2; /* 2 columnas en tablets */
+    }
+}
+
+@media (max-width: 576px) {
+    #gallery-section {
+        column-count: 1; /* 1 columna en móviles */
+    }
+}
