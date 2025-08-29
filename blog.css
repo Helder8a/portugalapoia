@@ -1,17 +1,41 @@
 /* ================================================================== */
-/* === CÓDIGO DEFINITIVO PARA UNA GALERÍA ESPECTACULAR (blog.css) === */
+/* === CÓDIGO CSS DEL BLOG (SIN GALERÍA) === */
 /* ================================================================== */
 
-/* --- Estilos Generales del Blog (Se mantienen tus estilos de posts) --- */
 main { padding-top: 75px; }
 
 .page-header-blog {
-    background: linear-gradient(rgba(10, 61, 98, .9), rgba(10, 61, 98, .9)) 0 0/cover, url('images/imgindex.avif') center center/cover no-repeat;
+    background: linear-gradient(rgba(10, 61, 98, .9), rgba(10, 61, 98, .9)) 0 0/cover, url(images/imgindex.avif) center center/cover no-repeat;
     padding: 80px 0;
     color: #fff;
     margin-top: -75px;
 }
-/* ... (Se mantienen el resto de tus estilos para posts, nav, etc. Pega esto al inicio y borra lo anterior relacionado a la galería) ... */
+.page-header-blog .page-title { font-size: 2.8rem; }
+.page-header-blog .lead { font-size: 1.2rem; }
+
+.blog-nav {
+    background-color: #f8f9fa;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #dee2e6;
+    position: sticky;
+    top: 75px; 
+    z-index: 1020;
+}
+.blog-nav .nav-link {
+    color: #0A3D62;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+}
+.blog-nav .nav-link.active, .blog-nav .nav-link:hover { color: #F57C00; }
+
+#blog-search-input {
+    border-right: 0;
+}
+#blog-search-clear {
+    border-left: 0;
+}
+
 .blog-post-card {
     background-color: #fff;
     border: none;
@@ -24,107 +48,71 @@ main { padding-top: 75px; }
     transform: translateY(-8px);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
 }
-/* ... (El resto de tus estilos de blog-post-card, etc., van aquí) ... */
+.blog-post-card .card-body { padding: 2.5rem; }
 
-
-/* --- NUEVO Y ÚNICO CÓDIGO PARA LA GALERÍA --- */
-
-/* 1. Contenedor principal que centra todo en la página */
-.gallery-container {
-    max-width: 1600px; /* Ancho máximo para una galería impactante */
-    width: 95%;        /* Ocupa el 95% del ancho en pantallas más pequeñas */
-    margin: 40px auto; /* Centrado automático */
-    padding: 0 15px;
-    box-sizing: border-box;
-}
-
-/* 2. Título espectacular para la galería */
-.gallery-title {
-    text-align: center;
-    font-size: clamp(2.2rem, 6vw, 3.5rem); /* Tamaño que se adapta al dispositivo */
+.blog-post-card .card-title {
+    font-family: 'Source Sans Pro', sans-serif;
     font-weight: 700;
-    color: #1a2a3a;
-    margin-bottom: 50px;
-    position: relative;
-    padding-bottom: 15px;
+    font-size: 2.2rem;
+    color: #1e374a;
+    text-align: center;
+    line-height: 1.3;
 }
-/* Línea decorativa debajo del título */
-.gallery-title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 4px;
-    background-color: #F57C00; /* Naranja corporativo */
-    border-radius: 2px;
+.card-text, .full-content {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #4a4a4a;
 }
 
-/* 3. La cuadrícula (Grid) de la galería - ¡La magia sucede aquí! */
-#gallery-section {
-    display: grid;
-    /* Columnas automáticas: mínimo 350px, se expanden para rellenar */
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    /* Filas automáticas de 10px de alto, para un control preciso */
-    grid-auto-rows: minmax(10px, auto);
-    gap: 25px; /* Espacio entre las imágenes */
-}
-
-/* 4. Estilo de cada imagen de la galería */
-.gallery-item {
-    position: relative;
+.post-image-container {
+    margin: 2rem 0;
+    border-radius: 12px;
     overflow: hidden;
-    border-radius: 16px;
-    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1);
-    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s ease;
-    cursor: pointer;
-    /* Hacemos que cada ítem ocupe el espacio necesario en la cuadrícula */
-    grid-row-end: span 25; /* Valor por defecto para imágenes de altura media */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    aspect-ratio: 16 / 9; 
 }
-
-/* --- CLASES DE TAMAÑO AUTOMÁTICO (Controlado por JavaScript) --- */
-.gallery-item.tall {
-    grid-row-end: span 35; /* Las imágenes altas ocuparán más espacio vertical */
-}
-.gallery-item.short {
-    grid-row-end: span 18; /* Las imágenes cortas ocuparán menos */
-}
-
-.gallery-item:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
-}
-
-.gallery-item img {
+.post-image-container img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Rellena el contenedor sin deformarse */
+    object-fit: cover; 
     display: block;
-    transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: transform 0.4s ease-out;
 }
-.gallery-item:hover img {
-    transform: scale(1.1);
-}
-
-/* 5. Leyenda (Caption) con efecto profesional */
-.gallery-item .caption {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 40px 20px 20px;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 100%);
-    color: white;
-    font-size: 1.2rem;
-    font-weight: 600;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-}
-.gallery-item:hover .caption {
-    opacity: 1;
-    transform: translateY(0);
+.blog-post-card:hover .post-image-container img { transform: scale(1.03); }
+.post-image-container figcaption {
+    padding: 12px 15px;
+    font-size: 0.9em;
+    font-style: italic;
+    color: #6c757d;
+    text-align: center;
+    background-color: #f8f9fa;
+    border-top: 1px solid #e9ecef;
 }
 
-/* No se necesitan media queries. El diseño es 100% fluido por naturaleza. */
+.post-meta {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    font-size: 0.9em;
+    color: #6c757d;
+    margin: 1rem 0 2rem 0;
+}
+.full-content strong { font-weight: 700; color: #1e374a; }
+.read-more-btn { display: block; margin: 1.5rem auto 0; }
+
+.social-share { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #e9ecef; text-align: center; }
+.social-share strong { margin-right: 15px; font-weight: 600; color: #4a4a4a; }
+.social-share a { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; margin: 0 5px; color: #fff; background-color: #ccc; text-decoration: none; transition: background-color 0.3s ease; }
+.social-share a[aria-label*="Facebook"] { background-color: #3b5998; }
+.social-share a[aria-label*="Twitter"] { background-color: #1da1f2; }
+.social-share a[aria-label*="LinkedIn"] { background-color: #0077b5; }
+.social-share a[aria-label*="WhatsApp"] { background-color: #25d366; }
+.social-share a:hover { opacity: 0.9; }
+
+.related-posts { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #e9ecef; }
+.related-posts h3 { text-align: center; margin-bottom: 2rem; font-weight: 700; color: #1e374a; }
+.related-posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+.related-post-item a { text-decoration: none; color: inherit; display: block; }
+.related-post-img { width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; }
+.related-post-title { font-size: 1rem; font-weight: 600; line-height: 1.4; color: #343a40; }

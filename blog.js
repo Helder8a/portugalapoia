@@ -1,5 +1,5 @@
 // ==================================================================
-// === CÓDIGO DEFINITIVO Y MEJORADO para blog.js (Galería Inteligente) ===
+// === CÓDIGO JS DEL BLOG (SIN GALERÍA) ===
 // ==================================================================
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -9,26 +9,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function iniciarBlog() {
         const postsSection = document.getElementById('posts-section');
-        const galleryWrapper = document.getElementById('gallery-section-wrapper'); // Usamos el nuevo wrapper
-        if (!postsSection || !galleryWrapper) return;
+        if (!postsSection) return;
 
         try {
-            const [postsData, galeria] = await Promise.all([
-                fetch('/_dados/blog.json').then(res => res.json()),
-                fetch('/_dados/galeria.json').then(res => res.json())
-            ]);
+            // Se eliminó la carga de 'galeria.json'
+            const postsData = await fetch('/_dados/blog.json').then(res => res.json());
             
-            allPostsData = postsData.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+            allPostsData = postsData.posts;
+            allPostsData.sort((a, b) => new Date(b.date) - new Date(a.date));
+
             postsSection.innerHTML = allPostsData.map(renderBlogPost).join('');
             
-            // Inyectamos el HTML de la galería en su sección
-            const gallerySection = galleryWrapper.querySelector('#gallery-section');
-            gallerySection.innerHTML = galeria.imagens.map(renderGalleryItem).join('');
-
+            // Se eliminó la renderización de la galería
             allPostElements = document.querySelectorAll('.blog-post-item');
             
             setupBlogFunctionality();
-            setupIntelligentGallery(); // Nueva función para la galería
             if (window.lightbox) window.lightbox.init();
 
         } catch (error) {
@@ -37,83 +32,146 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // --- RENDERIZADO DE LA GALERÍA (MODIFICACIÓN CLAVE) ---
-    function renderGalleryItem(item) {
-        // ¡IMPORTANTE! Hemos eliminado el wrapper de Bootstrap "col-md-6".
-        // Ahora solo generamos el elemento puro que nuestro CSS Grid necesita.
+    function renderBlogPost(post) {
+        const postDate = new Date(post.date);
+        const formattedDate = postDate.toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' });
+        const imageCaption = post.caption || `Ilustração para o artigo: ${post.title}`;
+        const processedBody = marked.parse(post.body || '', { gfm: true });
+        const keywords = `${post.title} ${post.summary} ${post.body}`.toLowerCase();
+
         return `
-            <div class="gallery-item">
-                <a href="${item.image}" data-lightbox="gallery" data-title="${item.title} - ${item.caption}">
-                    <img src="${item.image}" alt="${item.title}">
-                    <div class="caption">${item.title}</div>
-                </a>
-            </div>`;
+        <div class="col-lg-8 offset-lg-2 col-md-12 blog-post-item" data-category="${post.category}" data-keywords="${keywords}">
+            <article class="blog-post-card">
+                <div class="card-body">
+                    <header class="post-header">
+                        <h1 class="card-title">${post.title}</h1>
+                        <div class="post-meta">
+                            <span>${formattedDate}</span>
+                            <span class="separator">|</span>
+                            <span class="reading-time"></span>
+                        </div>
+                    </header>
+                    <figure class="post-image-container">
+                        <img class="lazy" data-src="${post.image}" alt="${post.title}">
+                        <figcaption>${imageCaption}</figcaption>
+                    </figure>
+                    <div class="summary-content card-text">${post.summary}</div>
+                    <div class="full-content" style="display: none;">
+                        ${processedBody}
+                        ${createSocialShareLinks(post.title)}
+                        ${renderRelatedPosts(post)}
+                    </div>
+                    <button class="btn btn-outline-primary read-more-btn">Ler Mais</button>
+                </div>
+            </article>
+        </div>`;
     }
 
-    // --- NUEVA FUNCIÓN: GALERÍA INTELIGENTE ---
-    function setupIntelligentGallery() {
-        const galleryItems = document.querySelectorAll('.gallery-item');
-        galleryItems.forEach(item => {
-            const img = item.querySelector('img');
-            if (img) {
-                // Función que se ejecuta cuando la imagen se carga
-                const applySizeClass = () => {
-                    const ratio = img.naturalHeight / img.naturalWidth;
-                    if (ratio > 1.3) { // Si es significativamente alta (retrato)
-                        item.classList.add('tall');
-                    } else if (ratio < 0.7) { // Si es significativamente ancha (paisaje)
-                        item.classList.add('short');
-                    }
-                };
+    function createSocialShareLinks(postTitle) {
+        const postUrl = window.location.href;
+        const encodedUrl = encodeURIComponent(postUrl);
+        const encodedTitle = encodeURIComponent(postTitle);
+        return `
+            <div class="social-share">
+                <strong>Compartilhar:</strong>
+                <a href="https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}" target="_blank" rel="noopener noreferrer" aria-label="Compartir en Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}" target="_blank" rel="noopener noreferrer" aria-label="Compartir en Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}&title=${encodedTitle}" target="_blank" rel="noopener noreferrer" aria-label="Compartir en LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://wa.me/?text=${encodedTitle}%20${encodedUrl}" target="_blank" rel="noopener noreferrer" aria-label="Compartir en WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        `;
+    }
 
-                if (img.complete) {
-                    applySizeClass();
-                } else {
-                    img.addEventListener('load', applySizeClass);
-                }
+    function renderRelatedPosts(currentPost) {
+        const related = allPostsData
+            .filter(post => post.category === currentPost.category && post.title !== currentPost.title)
+            .slice(0, 3);
+        if (related.length === 0) return '';
+        let relatedHTML = related.map(post => `
+            <div class="related-post-item">
+                <a href="javascript:void(0);" onclick="location.reload()">
+                    <img src="${post.image}" alt="${post.title}" class="related-post-img">
+                    <h4 class="related-post-title">${post.title}</h4>
+                </a>
+            </div>
+        `).join('');
+        return `
+            <div class="related-posts">
+                <h3>Artigos Relacionados</h3>
+                <div class="related-posts-grid">${relatedHTML}</div>
+            </div>
+        `;
+    }
+    
+    // Se eliminó la función renderGalleryItem()
+
+    function calculateReadingTime(postElement) {
+        const content = postElement.querySelector('.full-content');
+        const timePlaceholder = postElement.querySelector('.reading-time');
+        if (content && timePlaceholder) {
+            const text = content.textContent || content.innerText;
+            const wordCount = text.trim().split(/\s+/).filter(Boolean).length;
+            const readingTime = Math.ceil(wordCount / 225) || 1;
+            timePlaceholder.innerHTML = `<i class="fa-regular fa-clock"></i> ${readingTime} min de leitura`;
+        }
+    }
+
+    function filterAndShowPosts() {
+        const searchTerm = document.getElementById('blog-search-input').value.toLowerCase();
+        const activeCategory = document.querySelector('.blog-nav .nav-link.active').getAttribute('data-target');
+        const noResultsMessage = document.getElementById('no-results-message');
+        let visiblePosts = 0;
+
+        allPostElements.forEach(post => {
+            const categoryMatch = (activeCategory === 'all' || post.dataset.category === activeCategory);
+            const searchMatch = (post.dataset.keywords.includes(searchTerm));
+
+            if (categoryMatch && searchMatch) {
+                post.style.display = 'block';
+                visiblePosts++;
+            } else {
+                post.style.display = 'none';
             }
         });
+        noResultsMessage.style.display = visiblePosts === 0 ? 'block' : 'none';
     }
 
-    // --- FUNCIONALIDAD DEL BLOG (SIN CAMBIOS GRANDES) ---
-    // (Pega aquí el resto de tus funciones de blog.js: renderBlogPost, createSocialShareLinks, etc.)
-    // La única modificación es cómo mostramos/ocultamos la galería
     function setupBlogFunctionality() {
-        // ... (código existente para lazy loading, read-more, etc.)
-        document.querySelectorAll('img.lazy').forEach(img => { if (img.dataset.src) img.src = img.dataset.src; });
+        document.querySelectorAll('img.lazy').forEach(img => {
+            if (img.dataset.src) img.src = img.dataset.src;
+        });
+        
         allPostElements.forEach(calculateReadingTime);
-        document.querySelectorAll('.read-more-btn').forEach(button => { /* ... (tu código) ... */ });
+
+        document.querySelectorAll('.read-more-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const cardBody = e.target.closest('.card-body');
+                cardBody.querySelector('.summary-content').style.display = 'none';
+                cardBody.querySelector('.full-content').style.display = 'block';
+                e.target.style.display = 'none';
+            });
+        });
 
         const navLinks = document.querySelectorAll('.blog-nav .nav-link');
-        const postsSection = document.getElementById('posts-section');
-        const galleryWrapper = document.getElementById('gallery-section-wrapper');
-        
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 navLinks.forEach(nav => nav.classList.remove('active'));
                 e.target.classList.add('active');
-                const targetCategory = e.target.getAttribute('data-target');
-
-                if (targetCategory === 'galeria') {
-                    postsSection.style.display = 'none';
-                    galleryWrapper.style.display = 'block'; // Mostramos el wrapper
-                } else {
-                    postsSection.style.display = 'flex'; // Bootstrap usa flex para 'row'
-                    galleryWrapper.style.display = 'none';
-                    filterAndShowPosts();
-                }
+                
+                // Lógica simplificada: solo filtra los posts
+                filterAndShowPosts();
             });
         });
-        
-        // ... (resto de tus funciones: filterAndShowPosts, calculateReadingTime, etc.)
+
+        const searchInput = document.getElementById('blog-search-input');
+        const clearButton = document.getElementById('blog-search-clear');
+        searchInput.addEventListener('keyup', filterAndShowPosts);
+        clearButton.addEventListener('click', () => {
+            searchInput.value = '';
+            filterAndShowPosts();
+        });
     }
-    
-    // (Asegúrate de tener el resto de tus funciones aquí: renderBlogPost, createSocialShareLinks, renderRelatedPosts, calculateReadingTime, filterAndShowPosts, etc.)
-    
+
     iniciarBlog();
 });
-
-// Pega aquí el resto de tus funciones de blog.js que no he incluido para no hacer el código tan largo.
-// Las funciones importantes que debes tener son: renderBlogPost, createSocialShareLinks, renderRelatedPosts,
-// calculateReadingTime, filterAndShowPosts.
