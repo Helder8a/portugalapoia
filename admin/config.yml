@@ -17,12 +17,9 @@ collections:
         widget: "object"
         fields:
           - {name: "posts", label: "Artigos do Blog", widget: "list", fields: [{label: "Título", name: "title", widget: "string"}, {label: "Data de Publicação", name: "date", widget: "datetime"}, {label: "Imagem de Destaque", name: "image", widget: "image"}, {label: "Categoria", name: "category", widget: "select", options: ["saude", "turismo", "educacao", "habitacao", "emprego"]}, {label: "Resumo", name: "summary", widget: "text"}, {label: "Corpo do Artigo (aceita vídeos)", name: "body", widget: "markdown"}]}
-      - file: "_dados/galeria.json"
-        label: "Galeria de Imagens do Blog"
-        name: "galeria"
-        widget: "object"
-        fields:
-          - {name: "imagens", label: "Imagens da Galeria", widget: "list", fields: [{label: "Título da Imagem", name: "title", widget: "string"}, {label: "Data", name: "date", widget: "datetime"}, {label: "Ficheiro da Imagem", name: "image", widget: "image"}, {label: "Legenda", name: "caption", widget: "string", hint: "Uma descrição curta para a imagem."}]}
+      
+      # SE HA ELIMINADO LA SECCIÓN DE LA GALERÍA DE AQUÍ
+
       - file: "_dados/empregos.json"
         label: "Vagas de Emprego"
         name: "empregos"
