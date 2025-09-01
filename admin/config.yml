@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: Helder8a/portugalapoia 
+  repo: Helder8a/portugalapoia
   branch: main
   publish_mode: editorial_workflow
 
@@ -17,9 +17,6 @@ collections:
         widget: "object"
         fields:
           - {name: "posts", label: "Artigos do Blog", widget: "list", fields: [{label: "Título", name: "title", widget: "string"}, {label: "Data de Publicação", name: "date", widget: "datetime"}, {label: "Imagem de Destaque", name: "image", widget: "image"}, {label: "Categoria", name: "category", widget: "select", options: ["saude", "turismo", "educacao", "habitacao", "emprego"]}, {label: "Resumo", name: "summary", widget: "text"}, {label: "Corpo do Artigo (aceita vídeos)", name: "body", widget: "markdown"}]}
-      
-      # SE HA ELIMINADO LA SECCIÓN DE LA GALERÍA DE AQUÍ
-
       - file: "_dados/empregos.json"
         label: "Vagas de Emprego"
         name: "empregos"
@@ -37,7 +34,25 @@ collections:
         name: "servicos"
         widget: "object"
         fields:
-          - {label: "Lista de Anúncios", name: "anuncios", widget: "list", fields: [{label: "ID (Ex: HAB-007)", name: "id", widget: "string"}, {label: "Título do Anúncio", name: "titulo", widget: "string"}, {label: "Valor do Anúncio", name: "valor_anuncio", widget: "string", required: false, hint: "Ex: 450€/mês"}, {label: "Localização", name: "localizacao", widget: "string"}, {label: "Descrição", name: "descricao", widget: "text"}, {label: "Imagens do Imóvel", name: "imagens", widget: "list", required: false, fields: [{label: "Imagem", name: "imagem_url", widget: "image"}]}, {label: "Tel", name: "contato", widget: "string", required: false}, {label: "Email", name: "link_contato", widget: "string", required: false}, {label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false}, {label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false}]}
+          - {label: "Lista de Serviços", name: "servicos", widget: "list", fields: [{label: "ID (Ex: SER-004)", name: "id", widget: "string"}, {label: "Logo da Empresa (Opcional)", name: "logo_empresa", widget: "image", required: false}, {label: "Título do Serviço", name: "titulo", widget: "string"}, {label: "Valor do Serviço (Opcional)", name: "valor_servico", widget: "string", required: false, hint: "Ex: 50€, A combinar, Gratuito"}, {label: "Localização", name: "localizacao", widget: "string"}, {label: "Descrição", name: "descricao", widget: "text"}, {label: "Tel", name: "contato", widget: "string"}, {label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com"}, {label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false}, {label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false}]}
+      
+      # --- NOVAS PÁGINAS ADICIONADAS AQUI ---
+      - file: "_dados/sobre-nos.json"
+        label: "Página Sobre Nós"
+        name: "sobre_nos"
+        fields:
+          - {label: "Título Principal da Página", name: "title", widget: "string"}
+          - {label: "Imagem de Destaque", name: "image", widget: "image"}
+          - {label: "Conteúdo Principal", name: "body", widget: "markdown"}
+
+      - file: "_dados/politica-privacidade.json"
+        label: "Página Política de Privacidade"
+        name: "politica_privacidade"
+        fields:
+          - {label: "Título da Página", name: "title", widget: "string"}
+          - {label: "Conteúdo da Página", name: "body", widget: "markdown"}
+      # --- FIM DAS NOVAS PÁGINAS ---
+
       - file: "_dados/homepage.json"
         label: "Conteúdo da Página Principal"
         name: "homepage"
