@@ -8,7 +8,7 @@
     <link rel="canonical" href="https://portugalapoia.com/sobre-nos.html">
     <link rel="icon" href="images_pta/logofavicon.ico" type="image/png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css?v=11">
+    <link rel="stylesheet" href="style.css?v=12">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
@@ -57,8 +57,8 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="about-content">
-                        <h1 id="page-title"></h1>
-                        <div id="page-content"></div>
+                        <h1 id="page-title">Cargando...</h1>
+                        <div id="page-content"><p>Cargando contenido...</p></div>
                     </div>
                 </div>
             </div>
@@ -112,7 +112,6 @@
             document.getElementById('page-title').textContent = data.title;
             document.getElementById('page-content').innerHTML = marked.parse(data.body);
             
-            // Cargar la imagen dinámicamente en el contenedor
             const imageContainer = document.getElementById('image-container');
             if (data.image) {
                 imageContainer.style.backgroundImage = `url('${data.image}')`;

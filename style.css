@@ -1355,3 +1355,50 @@ body.dark-theme .share-label {
         margin-right: 0 !important;
     }
 }
+
+/* =============================================
+   ESTILOS PARA A PÁGINA SOBRE NÓS
+   ============================================= */
+
+.about-image-container {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.about-content {
+    padding: 60px 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.about-content h1 {
+    font-size: 2.8rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    color: #333;
+}
+
+.about-content p, .about-content h3 {
+    line-height: 1.8;
+    color: #555;
+}
+
+/* Responsive para pantallas más pequeñas */
+@media (max-width: 991.98px) {
+    .about-image-container {
+        position: relative;
+        height: 50vh; /* Altura más pequeña en móviles */
+        min-height: 300px;
+    }
+
+    .about-content {
+        min-height: auto;
+        padding: 40px 25px;
+    }
+}
