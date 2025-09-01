@@ -1357,8 +1357,29 @@ body.dark-theme .share-label {
 }
 
 /* =============================================
-   ESTILOS PARA A PÁGINA SOBRE NÓS
+   ESTILOS PARA A PÁGINA SOBRE NÓS (CON EFECTOS)
    ============================================= */
+
+/* --- Keyframes para las animaciones --- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes zoomInEffect {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1.05);
+    }
+}
 
 .about-image-container {
     position: sticky;
@@ -1367,6 +1388,8 @@ body.dark-theme .share-label {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    /* Aplicamos la animación de zoom */
+    animation: zoomInEffect 15s ease-in-out infinite alternate;
 }
 
 .about-content {
@@ -1375,30 +1398,57 @@ body.dark-theme .share-label {
     flex-direction: column;
     justify-content: center;
     min-height: 100vh;
+    /* Aplicamos la animación de fade-in */
+    animation: fadeIn 1.5s ease-out forwards;
 }
 
 .about-content h1 {
     font-size: 2.8rem;
     font-weight: bold;
     margin-bottom: 2rem;
-    color: #333;
+    color: #343a40; /* Texto un poco más oscuro */
 }
 
-.about-content p, .about-content h3 {
+.about-content p, .about-content h3, .about-content ul {
     line-height: 1.8;
     color: #555;
+    font-size: 1.1rem; /* Aumentamos un poco el tamaño para mejorar la lectura */
 }
 
 /* Responsive para pantallas más pequeñas */
 @media (max-width: 991.98px) {
     .about-image-container {
         position: relative;
-        height: 50vh; /* Altura más pequeña en móviles */
+        height: 50vh;
         min-height: 300px;
+        animation: none; /* Desactivamos el zoom en móviles para ahorrar recursos */
     }
 
     .about-content {
         min-height: auto;
         padding: 40px 25px;
     }
+}
+
+
+/* =============================================
+   ESTILOS CORREGIDOS PARA EL FOOTER
+   ============================================= */
+
+.main-footer {
+    background-color: #343a40; /* Color de fondo oscuro estándar */
+    color: rgba(255, 255, 255, 0.8); /* Texto blanco con un poco de transparencia */
+}
+
+.main-footer .text-warning {
+    color: #ffc107 !important; /* Aseguramos que el color de los títulos sea el correcto */
+}
+
+.main-footer a.text-white {
+    transition: color 0.3s ease;
+}
+
+.main-footer a.text-white:hover {
+    color: #ffc107 !important; /* El enlace cambia a color amarillo al pasar el ratón */
+    text-decoration: none;
 }
