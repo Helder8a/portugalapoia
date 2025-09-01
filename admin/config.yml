@@ -36,7 +36,7 @@ collections:
         fields:
           - {label: "Lista de Serviços", name: "servicos", widget: "list", fields: [{label: "ID (Ex: SER-004)", name: "id", widget: "string"}, {label: "Logo da Empresa (Opcional)", name: "logo_empresa", widget: "image", required: false}, {label: "Título do Serviço", name: "titulo", widget: "string"}, {label: "Valor do Serviço (Opcional)", name: "valor_servico", widget: "string", required: false, hint: "Ex: 50€, A combinar, Gratuito"}, {label: "Localização", name: "localizacao", widget: "string"}, {label: "Descrição", name: "descricao", widget: "text"}, {label: "Tel", name: "contato", widget: "string"}, {label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com"}, {label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false}, {label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false}]}
       
-      # --- NOVAS PÁGINAS ADICIONADAS AQUI ---
+      # --- PÁGINAS ESTÁTICAS GERENCIÁVEIS ---
       - file: "_dados/sobre-nos.json"
         label: "Página Sobre Nós"
         name: "sobre_nos"
@@ -51,7 +51,14 @@ collections:
         fields:
           - {label: "Título da Página", name: "title", widget: "string"}
           - {label: "Conteúdo da Página", name: "body", widget: "markdown"}
-      # --- FIM DAS NOVAS PÁGINAS ---
+
+      - file: "_dados/termos-de-servico.json"
+        label: "Página Termos de Serviço"
+        name: "termos_de_servico"
+        fields:
+          - {label: "Título da Página", name: "title", widget: "string"}
+          - {label: "Conteúdo da Página", name: "body", widget: "markdown"}
+      # --- FIM DAS PÁGINAS ESTÁTICAS ---
 
       - file: "_dados/homepage.json"
         label: "Conteúdo da Página Principal"
