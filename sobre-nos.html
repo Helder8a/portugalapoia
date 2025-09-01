@@ -8,7 +8,7 @@
     <link rel="canonical" href="https://portugalapoia.com/sobre-nos.html">
     <link rel="icon" href="images_pta/logofavicon.ico" type="image/png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css?v=10">
+    <link rel="stylesheet" href="style.css?v=11">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
@@ -39,24 +39,20 @@
     </header>
 
     <main>
-        <section id="page-hero" class="hero-sobre text-center d-flex align-items-center">
-            <div class="container">
-                <h1 id="page-title" class="page-title">Cargando...</h1>
-            </div>
-        </section>
-
-        <section class="mission-block py-5">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-7">
-                        <div id="page-content"><p>Cargando contenido...</p></div>
-                    </div>
-                    <div class="col-lg-5 text-center">
-                        <img id="page-image" src="" alt="Imagem Sobre Nós" class="img-fluid rounded shadow-lg" style="display: none;">
+        <div class="container-fluid px-0">
+            <div class="row no-gutters">
+                <div class="col-lg-6">
+                    <div id="image-container" class="about-image-container">
+                        </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about-content">
+                        <h1 id="page-title"></h1>
+                        <div id="page-content"></div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
     </main>
 
     <footer class="main-footer bg-dark text-white pt-5 pb-4">
@@ -104,18 +100,16 @@
             const data = await response.json();
 
             document.getElementById('page-title').textContent = data.title;
+            document.getElementById('page-content').innerHTML = marked.parse(data.body);
             
-            const pageImage = document.getElementById('page-image');
+            // Cargar la imagen dinámicamente en el contenedor
+            const imageContainer = document.getElementById('image-container');
             if (data.image) {
-                pageImage.src = data.image;
-                pageImage.alt = data.title;
-                pageImage.style.display = 'block';
+                imageContainer.style.backgroundImage = `url('${data.image}')`;
             }
 
-            document.getElementById('page-content').innerHTML = marked.parse(data.body);
-
         } catch (error) {
-            console.error("Erro ao carregar o conteúdo da página:", error);
+            console.error("Erro ao carregar o conteúdo da página Sobre Nós:", error);
             document.getElementById('page-content').innerHTML = "<p>Não foi possível carregar o conteúdo. Tente novamente mais tarde.</p>";
         }
     });
