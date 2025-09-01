@@ -6,7 +6,6 @@ const urlsToCache = [
   '/empregos.html',
   '/doações.html',
   '/serviços.html',
-  '/habitação.html',
   '/blog.html',
   '/offline.html',
   '/style.css',
