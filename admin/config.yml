@@ -37,12 +37,6 @@ collections:
         name: "servicos"
         widget: "object"
         fields:
-          - {label: "Lista de Serviços", name: "servicos", widget: "list", fields: [{label: "ID (Ex: SER-004)", name: "id", widget: "string"}, {label: "Logo da Empresa (Opcional)", name: "logo_empresa", widget: "image", required: false}, {label: "Título do Serviço", name: "titulo", widget: "string"}, {label: "Valor do Serviço (Opcional)", name: "valor_servico", widget: "string", required: false, hint: "Ex: 50€, A combinar, Gratuito"}, {label: "Localização", name: "localizacao", widget: "string"}, {label: "Descrição", name: "descricao", widget: "text"}, {label: "Tel", name: "contato", widget: "string"}, {label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com"}, {label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false}, {label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false}]}
-      - file: "_dados/habitacao.json"
-        label: "Anúncios de Habitação"
-        name: "habitacao"
-        widget: "object"
-        fields:
           - {label: "Lista de Anúncios", name: "anuncios", widget: "list", fields: [{label: "ID (Ex: HAB-007)", name: "id", widget: "string"}, {label: "Título do Anúncio", name: "titulo", widget: "string"}, {label: "Valor do Anúncio", name: "valor_anuncio", widget: "string", required: false, hint: "Ex: 450€/mês"}, {label: "Localização", name: "localizacao", widget: "string"}, {label: "Descrição", name: "descricao", widget: "text"}, {label: "Imagens do Imóvel", name: "imagens", widget: "list", required: false, fields: [{label: "Imagem", name: "imagem_url", widget: "image"}]}, {label: "Tel", name: "contato", widget: "string", required: false}, {label: "Email", name: "link_contato", widget: "string", required: false}, {label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false}, {label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false}]}
       - file: "_dados/homepage.json"
         label: "Conteúdo da Página Principal"
