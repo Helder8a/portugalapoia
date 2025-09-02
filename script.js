@@ -51,20 +51,12 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // --- FUNCIÓN MEJORADA PARA CREAR TARJETAS DE ANUNCIOS ---
     function renderCard(item, category) {
+        const defaultImagePlaceholder = '<div class="image-placeholder"></div>';
         let imageUrl = item.imagem || item.logo_empresa || (item.imagens && item.imagens.length > 0 ? item.imagens[0].imagem_url : null);
         
-        // Placeholder con información de contacto si no hay imagen
-        const contactPlaceholder = `
-            <div class="image-placeholder contact-placeholder">
-                <div class="contact-info">
-                    ${item.contato ? `<div><i class="fas fa-phone"></i> ${item.contato}</div>` : ''}
-                    ${item.link_contato ? `<div><i class="fas fa-envelope"></i> ${item.link_contato.replace('mailto:', '')}</div>` : ''}
-                </div>
-            </div>`;
-            
         const imageHtml = imageUrl 
             ? `<img src="${imageUrl}" class="card-img-top lazy" data-src="${imageUrl}" alt="${item.titulo}">`
-            : contactPlaceholder;
+            : defaultImagePlaceholder;
 
         return `
         <div class="col-lg-4 col-md-6 mb-4 announcement-card" data-title="${item.titulo}" data-location="${item.localizacao}">
@@ -76,8 +68,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i> ${item.localizacao}</h6>
                     <p class="card-text flex-grow-1">${item.descricao}</p>
                     <div class="card-contact-icons mt-auto">
-                        ${item.contato ? `<a href="tel:${item.contato}" class="contact-icon" title="Contactar por Telefone"><i class="fas fa-phone"></i></a>` : ''}
-                        ${item.link_contato ? `<a href="${item.link_contato}" class="contact-icon" title="Contactar por Email"><i class="fas fa-envelope"></i></a>` : ''}
+                        ${item.contato ? `<a href="tel:${item.contato}" class="contact-icon" title="Contactar por Telefone"><i class="fas fa-phone"></i> <span>${item.contato}</span></a>` : ''}
+                        ${item.link_contato ? `<a href="${item.link_contato}" class="contact-icon" title="Contactar por Email"><i class="fas fa-envelope"></i> <span>Email</span></a>` : ''}
                     </div>
                 </div>
             </div>
