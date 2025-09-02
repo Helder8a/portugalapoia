@@ -1452,3 +1452,51 @@ body.dark-theme .share-label {
     color: #ffc107 !important; /* El enlace cambia a color amarillo al pasar el ratón */
     text-decoration: none;
 }
+
+/* --- Estilos para o Colage de Imagens --- */
+.collage-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px; /* Ancho máximo del contenedor */
+    height: 400px;     /* Altura fija para el efecto */
+    margin: 4rem auto; /* Margen para separar de otras secciones */
+}
+
+.collage-container img {
+    position: absolute;
+    width: 70%; /* Ancho de las imágenes */
+    height: auto;
+    object-fit: cover;
+    border: 5px solid #fff; /* Borde blanco para resaltar */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+}
+
+.collage-container img:hover {
+    transform: scale(1.05) rotate(0deg) !important; /* Efecto al pasar el ratón */
+    z-index: 10;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+.collage-image-1 {
+    top: 0;
+    left: 0;
+    transform: rotate(-8deg); /* Rotación de la primera imagen */
+    z-index: 1;
+}
+
+.collage-image-2 {
+    bottom: 0;
+    right: 0;
+    transform: rotate(5deg); /* Rotación de la segunda imagen */
+    z-index: 2;
+}
+
+/* --- Responsividade para o colage --- */
+@media (max-width: 768px) {
+    .collage-container {
+        height: 300px;
+    }
+    .collage-container img {
+        width: 80%;
+    }
+}
