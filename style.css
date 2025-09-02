@@ -1708,3 +1708,30 @@ body.dark-theme .share-label {
     opacity: 1;
     transform: translateY(0);
 }
+
+/* --- ESTILOS PARA O HERO DA PÁGINA SOBRE NÓS --- */
+#hero-sobre {
+    background-size: cover;
+    background-position: center center;
+    color: #fff;
+    position: relative;
+    height: 60vh; /* Altura del hero, igual a otras páginas */
+    min-height: 400px;
+    padding: 100px 0;
+}
+
+.page-title {
+    font-size: 3rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+@media (max-width: 768px) {
+    #hero-sobre {
+        height: 50vh;
+        min-height: 300px;
+    }
+    .page-title {
+        font-size: 2.2rem;
+    }
+}
