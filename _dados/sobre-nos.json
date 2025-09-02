@@ -1,43 +1,35 @@
-{
-  "hero": {
-    "title": "Conectando Corações, Construindo Comunidade.",
-    "image": "/images/uploads/01.webp"
-  },
-  "intro": {
-    "subtitle": "A NOSSA HISTÓRIA: UMA IDEIA IMPULSIONADA PELA AÇÃO",
-    "text": "PortugalApoia não é apenas uma página web; é um projeto nascido da convicção..."
-  },
-  "collage_images": [
-    {
-      "image": "/images/uploads/02.webp"
-    },
-    {
-      "image": "/images/uploads/03.webp"
-    }
-  ],
-  "mission": {
-    "icon": "fas fa-bullseye",
-    "title": "Nossa Missão: Simplificar a Solidariedade",
-    "text": "Num mundo cheio de intermediários, queríamos criar um espaço mais humano e direto..."
-  },
-  "principles": [
-    {
-      "icon": "fas fa-hands-helping",
-      "title": "Apoio Direto",
-      "text": "Facilitamos a conexão direta entre quem oferece e quem precisa, sem intermediários."
-    },
-    {
-      "icon": "fas fa-lock",
-      "title": "Segurança e Confiança",
-      "text": "Verificamos os anúncios para garantir um ambiente seguro e confiável para todos os utilizadores."
-    },
-    {
-      "icon": "fas fa-heart",
-      "title": "Comunidade Forte",
-      "text": "Acreditamos no poder da comunidade para construir uma sociedade mais justa e solidária."
-    }
-  ],
-  "title": "Sobre - Nos",
-  "image": "/images/uploads/017.webp",
-  "body": "El veloz murciélago hindú comía feliz cardillo y kiwi. La cigüeña tocaba el saxofón detrás del palenque de paja. El veloz murciélago hindú comía feliz cardillo y kiwi. La cigüeña tocaba el saxofón detrás del palenque de paja. El veloz murciélago hindú comía feliz cardillo y kiwi. La cigüeña tocaba el saxofón detrás del palenque de paja. El veloz murciélago hindú comía feliz cardillo y kiwi. La cigüeña tocaba el saxofón detrás del palenque de paja."
-}
+- file: "_dados/sobre-nos.json"
+        label: "Página Sobre Nós"
+        name: "sobre_nos"
+        fields:
+          - label: "Secção Principal (Hero)"
+            name: "hero"
+            widget: "object"
+            fields:
+              - {label: "Título Principal", name: "title", widget: "string"}
+              - {label: "Imagem de Fundo", name: "image", widget: "image"}
+          - label: "Introdução"
+            name: "intro"
+            widget: "object"
+            fields:
+              - {label: "Subtítulo", name: "subtitle", widget: "string"}
+              - {label: "Texto Introdutório", name: "text", widget: "markdown"}
+          - label: "Galeria de Imagens (Collage)"
+            name: "gallery_images"
+            widget: "list"
+            summary: "Adicionar Imagens à Galeria"
+            field: {label: "Imagem", name: "image", widget: "image"}
+          - label: "Missão"
+            name: "mission"
+            widget: "object"
+            fields:
+              - {label: "Ícone (Font Awesome)", name: "icon", widget: "string", hint: "Ex: fas fa-bullseye"}
+              - {label: "Título da Missão", name: "title", widget: "string"}
+              - {label: "Texto da Missão", name: "text", widget: "text"}
+          - label: "Princípios"
+            name: "principles"
+            widget: "list"
+            fields:
+              - {label: "Ícone (Font Awesome)", name: "icon", widget: "string", hint: "Ex: fas fa-hands-helping"}
+              - {label: "Título do Princípio", name: "title", widget: "string"}
+              - {label: "Texto do Princípio", name: "text", widget: "text"}
