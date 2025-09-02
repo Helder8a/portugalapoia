@@ -50,11 +50,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     
-    // --- FUNCIONES PARA CREAR LAS TARJETAS DE ANUNCIOS ---
+    // --- NUEVA FUNCIÓN MEJORADA PARA CREAR LAS TARJETAS DE ANUNCIOS ---
     function renderCard(item, category) {
         const defaultImagePlaceholder = '<div class="image-placeholder">PortugalApoia</div>';
-        const imageHtml = item.imagem || (item.imagens && item.imagens.length > 0)
-            ? `<img src="${item.imagem || item.imagens[0].imagem_url}" class="card-img-top lazy" data-src="${item.imagem || item.imagens[0].imagem_url}" alt="${item.titulo}">`
+        let imageUrl = null;
+
+        // Lógica mejorada para encontrar la imagen sin importar la estructura
+        if (item.imagem) {
+            imageUrl = item.imagem;
+        } else if (item.imagens && item.imagens.length > 0 && item.imagens[0].imagem_url) {
+            imageUrl = item.imagens[0].imagem_url;
+        } else if (item.logo_empresa) {
+            imageUrl = item.logo_empresa;
+        }
+        
+        const imageHtml = imageUrl 
+            ? `<img src="${imageUrl}" class="card-img-top lazy" data-src="${imageUrl}" alt="${item.titulo}">`
             : defaultImagePlaceholder;
 
         return `
@@ -94,7 +105,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     // --- INICIALIZACIÓN DE LAS CARGAS ---
-    // Detectar la página actual para cargar el contenido correspondiente
     if (document.getElementById('announcements-grid')) {
         carregarConteudo('/_dados/doacoes.json', 'announcements-grid', 'pedidos');
     }
