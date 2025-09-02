@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Montserrat:wght@400;600;700&display=swap">
     <link rel="stylesheet" href="style.css?v=24">
-    <link rel="stylesheet" href="blog.css?v=4">
+    <link rel="stylesheet" href="blog.css?v=5">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body class="blog-page">
@@ -54,19 +54,42 @@
                 <p class="blog-subtitle">Informação, inspiração e notícias de PortugalApoia.</p>
             </div>
 
-            <nav id="category-filter-nav" class="category-nav mb-5"></nav>
+            <div class="row">
+                <div class="col-lg-8">
+                    <nav id="category-filter-nav" class="category-nav mb-4"></nav>
 
-            <section id="latest-post" class="mb-5">
-                </section>
+                    <section id="latest-post" class="mb-5">
+                        </section>
 
-            <section id="all-posts">
-                <h2 class="section-title text-center mb-4">Todas as Publicações</h2>
-                <div class="row" id="posts-grid">
-                    </div>
-                <div class="text-center mt-4" id="no-posts-message" style="display:none;">
-                    <p class="lead text-muted">Não foram encontrados artigos nesta categoria.</p>
+                    <section id="all-posts">
+                        <h2 class="section-title text-center mb-4">Todas as Publicações</h2>
+                        <div class="row" id="posts-grid">
+                            </div>
+                        <div class="text-center mt-4" id="no-posts-message" style="display:none;">
+                            <p class="lead text-muted">Não foram encontrados artigos nesta categoria.</p>
+                        </div>
+                    </section>
                 </div>
-            </section>
+
+                <aside class="col-lg-4">
+                    <div class="sidebar-sticky">
+                        <div class="promo-card">
+                            <h5 class="promo-title">As Nossas Ferramentas</h5>
+                            <p class="promo-text">Descubra as nossas aplicações de avaliação imobiliária, desenhadas para profissionais e entusiastas.</p>
+                            <div class="app-promo">
+                                <h6>Avaliador Sustentável PRO</h6>
+                                <p>Uma ferramenta essencial para avaliações com foco na sustentabilidade.</p>
+                                <a href="app_evaluadorsustentable.html" class="btn btn-outline-primary btn-sm">Saber Mais</a>
+                            </div>
+                            <div class="app-promo">
+                                <h6>Avaliador de Imóveis Urbanos</h6>
+                                <p>Avalie propriedades urbanas com precisão e confiança.</p>
+                                <a href="app_avaliadorurbano.html" class="btn btn-outline-primary btn-sm">Saber Mais</a>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
         </div>
     </main>
 

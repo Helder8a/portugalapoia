@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const postsGridContainer = document.getElementById('posts-grid');
     const categoryNav = document.getElementById('category-filter-nav');
     const noPostsMessage = document.getElementById('no-posts-message');
+    const allPostsTitle = document.querySelector('#all-posts h2');
 
     // --- RENDERIZAR ARTÍCULOS EN LA CUADRÍCULA ---
     function renderPosts(posts) {
@@ -47,11 +48,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
         
         if (noPostsMessage) noPostsMessage.style.display = 'none';
-        postsGridContainer.innerHTML = posts.map((post, index) => {
+        postsGridContainer.innerHTML = posts.map((post) => {
             const readingTime = calculateReadingTime(marked.parse(post.body || ''));
             const globalIndex = allPosts.findIndex(p => p.title === post.title);
             return `
-            <div class="col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
+            <div class="col-md-6 mb-4 d-flex align-items-stretch">
                 <div class="card post-card w-100" data-toggle="modal" data-target="#postModal" data-post-index="${globalIndex}">
                     <img src="${post.image}" class="card-img-top post-card-img" alt="${post.title}">
                     <div class="card-body post-card-body d-flex flex-column">
@@ -76,7 +77,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         categoryNav.innerHTML = categories.map(cat => `<button class="category-btn" data-category="${cat}">${cat}</button>`).join('');
         
         const buttons = categoryNav.querySelectorAll('.category-btn');
-        buttons[0].classList.add('active'); // Activa el botón "Todas" por defecto
+        buttons[0].classList.add('active');
 
         buttons.forEach(button => {
             button.addEventListener('click', () => {
@@ -84,9 +85,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                 button.classList.add('active');
                 const selectedCategory = button.getAttribute('data-category');
                 
-                // Muestra el titular solo si se selecciona "Todas"
                 latestPostContainer.style.display = (selectedCategory === 'Todas') ? 'block' : 'none';
-                
+                allPostsTitle.style.display = (selectedCategory === 'Todas') ? 'block' : 'none';
+
                 const postsToRender = (selectedCategory === 'Todas') ? allPosts.slice(1) : allPosts.filter(p => p.category === selectedCategory);
                 renderPosts(postsToRender);
             });
