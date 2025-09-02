@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const featuredContainer = document.getElementById('featured-post');
     const gridContainer = document.querySelector('#posts-grid .row');
     const olderPostsTitle = document.querySelector('#posts-grid h2');
+    const blogDivider = document.querySelector('.blog-divider');
 
     if (allPosts.length > 0) {
         // Ordena los posts por fecha, del más reciente al más antiguo
@@ -69,7 +70,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             } else {
                 // Si solo hay un post, se oculta la sección de "anteriores"
                 if(olderPostsTitle) olderPostsTitle.style.display = 'none';
-                gridContainer.innerHTML = '<p class="col-12 text-center text-muted mt-4">Não há edições anteriores.</p>';
+                if(blogDivider) blogDivider.style.display = 'none';
+                gridContainer.innerHTML = ''; // No muestra nada si no hay más posts
             }
         }
     } else {
@@ -81,5 +83,11 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <p class="lead text-muted mt-4">De momento, não foi possível carregar as publicações. Por favor, tente novamente mais tarde.</p>
                 </div>`;
         }
+    }
+
+    // Ocultar el preloader después de que todo se haya procesado
+    const preloader = document.getElementById("preloader");
+    if (preloader) {
+        preloader.classList.add("hidden");
     }
 });
