@@ -1722,29 +1722,11 @@ body.dark-theme .share-label {
     justify-content: center;
 }.
 
-/* --- ESTILOS UNIFICADOS PARA CABEÇALHOS DE PÁGINAS INTERNAS --- */
-.page-hero-content .page-title {
-    color: #fff;
-    font-size: 3rem;
-    font-weight: 700;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
-    margin-bottom: 0.5rem;
-}
-
-.page-hero-content .page-subtitle {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1.25rem;
-    font-weight: 300;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-@media (max-width: 768px) {
-    .page-hero-content .page-title {
-        font-size: 2.2rem;
-    }
-    .page-hero-content .page-subtitle {
-        font-size: 1.1rem;
-    }
+/* --- CORREÇÃO DE COR PARA O TÍTULO EM "SOBRE NÓS" --- */
+#hero-sobre .page-title {
+    color: #ffc107; /* Cor laranja principal do site */
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); /* Sombra para dar profundidade */
+    background: none; /* Remove qualquer degradado anterior */
+    -webkit-background-clip: unset;
+    background-clip: unset;
 }
