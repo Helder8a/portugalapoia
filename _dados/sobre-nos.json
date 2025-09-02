@@ -1,5 +1,33 @@
 {
-  "title": "sobre-nos",
-  "image": "/images/uploads/alfama20250801.avif",
-  "body": "**Num mundo cheio de intermediários, queríamos criar um espaço mais humano e direto. Vimos a necessidade de uma plataforma onde a generosidade fluísse sem barreiras, conectando de forma simples e transparente as pessoas.d**\n\nPortugalApoia nasceu com um propósito claro: ser o ponto de encontro onde cada oferta de ajuda encontra o seu destino e cada necessidade recebe uma resposta. Eliminamos a burocracia para nos focarmos no que realmente importa: as pessoas.\n\n**Os Princípios que Nos Guiam**\n\n**A Nossa História: Uma Ideia Impulsionada pela Ação**\n\nPortugalApoia não é apenas uma página web; é um projeto nascido da convicção. Impulsionado e desenvolvido pela HBO Consulting, uma equipa comprometida com o impacto social positivo, este projeto foi forjado a partir de uma simples pergunta:\n\n\"Como podemos usar a tecnologia para fortalecer os laços comunitários em Portugal?\"\n\nA resposta foi criar esta plataforma aberta, gratuita e acessível a todos. Um lugar onde a tecnologia serve como ferramenta para a empatia e a ação coletiva, demonstrando que juntos somos mais fortes."
+  "title": "Sobre Nós",
+  "hero": {
+    "title": "Conectando Corações, Construindo Comunidade.",
+    "image": "/images/uploads/01.webp"
+  },
+  "intro": {
+    "subtitle": "A NOSSA HISTÓRIA: UMA IDEIA IMPULSIONADA PELA AÇÃO",
+    "text": "PortugalApoia não é apenas uma página web; é um projeto nascido da convicção. Impulsionado e desenvolvido pela HBO Consulting, uma equipa comprometida com o impacto social positivo, este projeto foi forjado a partir de uma simples pergunta:\n\n'Como podemos usar a tecnologia para fortalecer os laços comunitários em Portugal?'\n\nA resposta foi criar esta plataforma aberta, gratuita e acessível a todos. Um lugar onde a tecnologia serve como ferramenta para a empatia e a ação coletiva, demonstrando que juntos somos mais fortes."
+  },
+  "mission": {
+    "icon": "fas fa-bullseye",
+    "title": "Nossa Missão: Simplificar a Solidariedade",
+    "text": "Num mundo cheio de intermediários, queríamos criar um espaço mais humano e direto. Vimos a necessidade de uma plataforma onde a generosidade fluísse sem barreiras, conectando de forma simples e transparente as pessoas. O nosso propósito é ser o ponto de encontro onde cada oferta de ajuda encontra o seu destino e cada necessidade recebe uma resposta."
+  },
+  "principles": [
+    {
+      "icon": "fas fa-hands-helping",
+      "title": "Apoio Direto",
+      "text": "Facilitamos a conexão direta entre quem oferece e quem precisa, sem intermediários."
+    },
+    {
+      "icon": "fas fa-lock",
+      "title": "Segurança e Confiança",
+      "text": "Verificamos os anúncios para garantir um ambiente seguro e confiável para todos os utilizadores."
+    },
+    {
+      "icon": "fas fa-heart",
+      "title": "Comunidade Forte",
+      "text": "Acreditamos no poder da comunidade para construir uma sociedade mais justa e solidária."
+    }
+  ]
 }
