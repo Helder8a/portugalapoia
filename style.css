@@ -1720,4 +1720,14 @@ body.dark-theme .share-label {
     display: flex;
     align-items: center;
     justify-content: center;
+}.
+
+/* --- ESTILO PARA O TÍTULO DAS PÁGINAS INTERNAS (DEGRADADO) --- */
+.page-title {
+    background: linear-gradient(to right, #ffffff, #ffc107); /* Degradado de blanco a naranja/amarillo */
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 700;
+    text-shadow: none; /* Elimina la sombra para que el degradado sea visible */
 }
