@@ -9,11 +9,11 @@
   },
   "featured_images": [
     {
-      "image": "/images/uploads/horizontal-1.webp",
+      "image": "/images/uploads/02.webp",
       "caption": "A nossa equipa a trabalhar na comunidade."
     },
     {
-      "image": "/images/uploads/horizontal-2.webp",
+      "image": "/images/uploads/03.webp",
       "caption": "Voluntários em ação, apoiando Portugal."
     }
   ],
@@ -38,8 +38,5 @@
       "title": "Comunidade Forte",
       "text": "Acreditamos no poder da comunidade para construir uma sociedade mais justa e solidária."
     }
-  ],
-  "image": "/images/uploads/017.webp",
-  "title": "Alfama",
-  "body": "A﻿lfama"
+  ]
 }

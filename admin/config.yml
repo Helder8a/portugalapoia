@@ -29,9 +29,41 @@ collections:
         label: "Página Sobre Nós"
         name: "sobre_nos"
         fields:
-          - {label: "Título Principal", name: "title", widget: "string"}
-          - {label: "Imagem de Destaque", name: "image", widget: "image"}
-          - {label: "Conteúdo Principal", name: "body", widget: "markdown"}
+          - label: "Secção Principal (Hero)"
+            name: "hero"
+            widget: "object"
+            fields:
+              - {label: "Título Principal", name: "title", widget: "string"}
+              - {label: "Imagem de Fundo", name: "image", widget: "image"}
+          - label: "Introdução"
+            name: "intro"
+            widget: "object"
+            fields:
+              - {label: "Subtítulo", name: "subtitle", widget: "string"}
+              - {label: "Texto Introdutório", name: "text", widget: "markdown"}
+          - label: "Imagens Destacadas (Máx. 2)"
+            name: "featured_images"
+            widget: "list"
+            min: 1
+            max: 2
+            summary: "{{fields.caption}}"
+            fields:
+              - {label: "Imagem (formato horizontal)", name: "image", widget: "image"}
+              - {label: "Legenda da Imagem", name: "caption", widget: "string", required: false}
+          - label: "Missão"
+            name: "mission"
+            widget: "object"
+            fields:
+              - {label: "Ícone (Font Awesome)", name: "icon", widget: "string", hint: "Ex: fas fa-bullseye"}
+              - {label: "Título da Missão", name: "title", widget: "string"}
+              - {label: "Texto da Missão", name: "text", widget: "text"}
+          - label: "Princípios"
+            name: "principles"
+            widget: "list"
+            fields:
+              - {label: "Ícone (Font Awesome)", name: "icon", widget: "string", hint: "Ex: fas fa-hands-helping"}
+              - {label: "Título do Princípio", name: "title", widget: "string"}
+              - {label: "Texto do Princípio", name: "text", widget: "text"}
 
       - file: "_dados/blog.json"
         label: "Publicações do Blog"
