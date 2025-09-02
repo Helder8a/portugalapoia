@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- FUNCIÓN PARA LEER DATOS JSON ---
     async function fetchJson(url) {
         try {
+            // Se añade un timestamp para evitar problemas de caché
             const response = await fetch(`${url}?t=${new Date().getTime()}`);
             if (!response.ok) return null;
             return await response.json();
@@ -109,4 +110,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     ativarLazyLoading();
+});
+
+// --- LÓGICA PARA FECHAR O BANNER DE PROMOÇÃO ---
+document.addEventListener("DOMContentLoaded", () => {
+    const promoBanner = document.querySelector(".app-promo-banner");
+    const closePromoBtn = document.querySelector(".close-promo-btn");
+
+    if (promoBanner && closePromoBtn) {
+        closePromoBtn.addEventListener("click", () => {
+            promoBanner.style.display = "none";
+        });
+    }
 });

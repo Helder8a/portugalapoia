@@ -1770,3 +1770,110 @@ body.dark-theme .share-label {
         font-size: 1.1rem;
     }
 }
+
+/* --- ESTILOS PARA O BANNER PROMOCIONAL DE APPS --- */
+.app-promo-banner {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    z-index: 1050; /* Z-index alto para estar por encima de otros elementos */
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    border: 1px solid #eee;
+    transform: translateY(200%); /* Oculto por defecto para la animación */
+    animation: slide-in 0.8s cubic-bezier(0.25, 1, 0.5, 1) 1s forwards; /* Animación de entrada con retardo */
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateY(200%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+.app-promo-content .promo-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0 0 0.75rem;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.app-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.app-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #f8f9fa;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #34495e;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.app-link:hover {
+    background-color: #ffc107;
+    color: #fff;
+}
+
+.app-link i {
+    color: #e67e22;
+    transition: color 0.3s ease;
+}
+
+.app-link:hover i {
+    color: #fff;
+}
+
+.close-promo-btn {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: #34495e;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.close-promo-btn:hover {
+    background-color: #e74c3c;
+    transform: scale(1.1);
+}
+
+/* Responsividad para el banner */
+@media (max-width: 768px) {
+    .app-promo-banner {
+        bottom: 15px;
+        right: 15px;
+        left: 15px;
+        padding: 1rem;
+    }
+    .app-links {
+        flex-direction: column;
+        width: 100%;
+    }
+    .app-link {
+        justify-content: center;
+    }
+}
