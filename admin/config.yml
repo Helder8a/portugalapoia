@@ -1,43 +1,120 @@
-- file: "_dados/sobre-nos.json"
-  label: "Página Sobre Nós"
-  name: "sobre_nos"
-  fields:
-    - {label: "Título da Página (separador)", name: "title", widget: "string"}
-    - label: "Secção Principal (Hero)"
-      name: "hero"
-      widget: "object"
-      fields:
-        - {label: "Título Principal", name: "title", widget: "string"}
-        - {label: "Imagem de Fundo", name: "image", widget: "image"}
-    - label: "Introdução"
-      name: "intro"
-      widget: "object"
-      fields:
-        - {label: "Subtítulo", name: "subtitle", widget: "string"}
-        - {label: "Texto Introdutório", name: "text", widget: "markdown"}
-    
-    # ===== CÓDIGO A AÑADIR =====
-    - label: "Imagens em Colagem"
-      name: "collage_images"
-      widget: "list"
-      summary: "{{fields.image}}"
-      min: 1
-      max: 2
-      fields:
-        - {label: "Imagem", name: "image", widget: "image"}
-    # ===== FIN DEL CÓDIGO A AÑADIR =====
-        
-    - label: "Missão"
-      name: "mission"
-      widget: "object"
-      fields:
-        - {label: "Ícone (Font Awesome)", name: "icon", widget: "string", hint: "Ex: fas fa-bullseye"}
-        - {label: "Título da Missão", name: "title", widget: "string"}
-        - {label: "Texto da Missão", name: "text", widget: "text"}
-    - label: "Princípios"
-      name: "principles"
-      widget: "list"
-      fields:
-        - {label: "Ícone (Font Awesome)", name: "icon", widget: "string", hint: "Ex: fas fa-hands-helping"}
-        - {label: "Título do Princípio", name: "title", widget: "string"}
-        - {label: "Texto do Princípio", name: "text", widget: "text"}
+backend:
+  name: github
+  repo: Helder8a/portugalapoia # Reemplaza con tu repo si es diferente
+  branch: main
+  publish_mode: editorial_workflow
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "conteudos"
+    label: "Conteúdos das Páginas"
+    files:
+      - file: "_dados/blog.json"
+        label: "Publicações do Blog"
+        name: "blog"
+        fields:
+          - name: "posts"
+            label: "Artigos do Blog"
+            widget: "list"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Data de Publicação", name: "date", widget: "datetime"}
+              - {label: "Imagem de Destaque", name: "image", widget: "image"}
+              - {label: "Categoria", name: "category", widget: "select", options: ["saude", "turismo", "educacao", "habitacao", "emprego"]}
+              - {label: "Resumo", name: "summary", widget: "text"}
+              - {label: "Corpo do Artigo (aceita vídeos)", name: "body", widget: "markdown"}
+
+      - file: "_dados/empregos.json"
+        label: "Vagas de Emprego"
+        name: "empregos"
+        fields:
+          - label: "Lista de Vagas"
+            name: "vagas"
+            widget: "list"
+            fields:
+              - {label: "ID (Ex: EMP-033)", name: "id", widget: "string"}
+              - {label: "Título da Vaga", name: "titulo", widget: "string"}
+              - {label: "Localização", name: "localizacao", widget: "string"}
+              - {label: "Descrição", name: "descricao", widget: "text"}
+              - {label: "Tel", name: "contato", widget: "string", required: false}
+              - {label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com", required: false}
+              - {label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false}
+              - {label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false}
+
+      - file: "_dados/doacoes.json"
+        label: "Pedidos de Doação"
+        name: "doacoes"
+        fields:
+          - label: "Lista de Pedidos"
+            name: "pedidos"
+            widget: "list"
+            fields:
+              - {label: "ID (Ex: DOA-004)", name: "id", widget: "string"}
+              - {label: "Título do Pedido", name: "titulo", widget: "string"}
+              - {label: "Localização", name: "localizacao", widget: "string"}
+              - {label: "Descrição", name: "descricao", widget: "text"}
+              - {label: "É Urgente?", name: "urgente", widget: "boolean", default: false}
+              - {label: "Imagem (Opcional)", name: "imagem", widget: "image", required: false}
+              - {label: "Tel", name: "contato", widget: "string"}
+              - {label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com"}
+              - {label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false}
+              - {label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false}
+
+      - file: "_dados/servicos.json"
+        label: "Ofertas de Serviço"
+        name: "servicos"
+        fields:
+          - label: "Lista de Serviços"
+            name: "servicos"
+            widget: "list"
+            fields:
+              - {label: "ID (Ex: SER-004)", name: "id", widget: "string"}
+              - {label: "Logo da Empresa (Opcional)", name: "logo_empresa", widget: "image", required: false}
+              - {label: "Título do Serviço", name: "titulo", widget: "string"}
+              - {label: "Valor do Serviço (Opcional)", name: "valor_servico", widget: "string", required: false, hint: "Ex: 50€, A combinar, Gratuito"}
+              - {label: "Localização", name: "localizacao", widget: "string"}
+              - {label: "Descrição", name: "descricao", widget: "text"}
+              - {label: "Tel", name: "contato", widget: "string"}
+              - {label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com"}
+              - {label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false}
+              - {label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false}
+      
+      # --- PÁGINAS ESTÁTICAS GERENCIÁVEIS ---
+      - file: "_dados/sobre-nos.json"
+        label: "Página Sobre Nós"
+        name: "sobre_nos"
+        fields:
+          - {label: "Título Principal da Página", name: "title", widget: "string"}
+          - {label: "Imagem de Destaque", name: "image", widget: "image"}
+          - {label: "Conteúdo Principal", name: "body", widget: "markdown"}
+
+      - file: "_dados/politica-privacidade.json"
+        label: "Página Política de Privacidade"
+        name: "politica_privacidade"
+        fields:
+          - {label: "Título da Página", name: "title", widget: "string"}
+          - {label: "Conteúdo da Página", name: "body", widget: "markdown"}
+
+      - file: "_dados/termos-de-servico.json"
+        label: "Página Termos de Serviço"
+        name: "termos_de_servico"
+        fields:
+          - {label: "Título da Página", name: "title", widget: "string"}
+          - {label: "Conteúdo da Página", name: "body", widget: "markdown"}
+      # --- FIM DAS PÁGINAS ESTÁTICAS ---
+
+      - file: "_dados/homepage.json"
+        label: "Conteúdo da Página Principal"
+        name: "homepage"
+        fields:
+          - {label: "Título Principal", name: "hero_title", widget: "string"}
+          - {label: "Subtítulo", name: "hero_subtitle", widget: "string"}
+          - label: "Textos dos Contadores de Impacto"
+            name: "impact_counters"
+            widget: "object"
+            fields:
+              - {label: "Texto para Doações", name: "doacoes_text", widget: "string"}
+              - {label: "Texto para Emprego", name: "emprego_text", widget: "string"}
+              - {label: "Texto para Total de Anúncios", name: "total_text", widget: "string"}
