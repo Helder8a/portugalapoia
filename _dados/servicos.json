@@ -1,45 +1,36 @@
 {
-  "servicos": [
+  "hero": {
+    "title": "Conectando Corações, Construindo Comunidade",
+    "image": "/images/uploads/01.webp"
+  },
+  "intro": {
+    "subtitle": "A NOSSA HISTÓRIA",
+    "text": "PortugalApoia nasceu de uma simples pergunta: 'Como podemos usar a tecnologia para fortalecer os laços comunitários em Portugal?' A resposta foi criar esta plataforma aberta, gratuita e acessível a todos. Um lugar onde a tecnologia serve como ferramenta para a empatia e a ação coletiva."
+  },
+  "featured_image": {
+    "image": "/images/uploads/02.webp",
+    "caption": "A nossa equipa a trabalhar na comunidade."
+  },
+  "mission": {
+    "icon": "fas fa-bullseye",
+    "title": "Nossa Missão",
+    "text": "O nosso propósito é ser o ponto de encontro onde cada oferta de ajuda encontra o seu destino e cada necessidade recebe uma resposta, simplificando a solidariedade e conectando pessoas de forma direta e transparente."
+  },
+  "principles": [
     {
-      "data_vencimento": "2025-12-31",
-      "valor_servico": "500€",
-      "link_contato": "helderb8a@gmail.com",
-      "descricao": "HTML, CCS, JavaScript.",
-      "contato": "+351 911972787",
-      "localizacao": "Lisboa",
-      "data_publicacao": "2025-08-17",
-      "titulo": "Desenvolvimento Web.",
-      "id": "1"
+      "icon": "fas fa-hands-helping",
+      "title": "Apoio Direto",
+      "text": "Facilitamos a conexão direta entre quem oferece e quem precisa, sem intermediários."
     },
     {
-      "id": "2",
-      "titulo": "Designer gráfico",
-      "localizacao": "Lisboa",
-      "descricao": "Designer gráfico",
-      "contato": "+1 5873417019",
-      "link_contato": "helderb8a@gmail.com",
-      "data_publicacao": "2025-08-17",
-      "data_vencimento": "2025-12-31"
+      "icon": "fas fa-lock",
+      "title": "Segurança e Confiança",
+      "text": "Verificamos os anúncios para garantir um ambiente seguro e confiável para todos."
     },
     {
-      "id": "3",
-      "titulo": "Técnico de Eletricidade",
-      "localizacao": "Lisboa",
-      "descricao": "Técnico de Eletricidade",
-      "contato": "+357 3166169422",
-      "link_contato": "Técnico de Eletricidade",
-      "data_publicacao": "2025-08-17",
-      "data_vencimento": "2025-12-31"
-    },
-    {
-      "data_publicacao": "2025-08-19",
-      "data_vencimento": "2025-12-31",
-      "id": "4",
-      "titulo": "Mudancas, Ecomendas",
-      "localizacao": "Lisboa",
-      "contato": "+351 937517848",
-      "descricao": "Mudanças, Encomendas, Mercadorias",
-      "link_contato": "+351 937517848"
+      "icon": "fas fa-heart",
+      "title": "Comunidade Forte",
+      "text": "Acreditamos no poder da comunidade para construir uma sociedade mais justa e solidária."
     }
   ]
 }
