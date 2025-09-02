@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 ${imageHtml}
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">${item.titulo}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt"></i> ${item.localizacao}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i> ${item.localizacao}</h6>
                     <p class="card-text flex-grow-1">${item.descricao}</p>
                     <div class="card-contact-icons mt-auto">
                         ${item.link_contato ? `<a href="mailto:${item.link_contato}" class="contact-icon" title="Contactar por Email"><i class="fas fa-envelope"></i></a>` : ''}
