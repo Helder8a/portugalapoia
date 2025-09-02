@@ -3,15 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog | PortugalApoia</title>
-    <meta name="description" content="Notícias e artigos sobre a comunidade, solidariedade e oportunidades em Portugal.">
+    <title>Blog | PortugalApoia - Notícias e Artigos</title>
+    <meta name="description" content="Mantenha-se atualizado com as últimas notícias, histórias e artigos da comunidade PortugalApoia.">
     <link rel="canonical" href="https://portugalapoia.com/blog.html">
     <link rel="icon" href="images_pta/logofavicon.ico" type="image/png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400;500&display=swap">
-    <link rel="stylesheet" href="style.css?v=22">
-    <link rel="stylesheet" href="blog.css?v=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Playfair+Display:wght@700&display=swap">
+    <link rel="stylesheet" href="style.css?v=23"> <link rel="stylesheet" href="blog.css?v=2"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body class="blog-page">
     <div id="preloader"><img src="images_pta/logocuadrado.jpg" alt="A carregar..." class="spinner"></div>
@@ -50,19 +48,20 @@
     <main class="blog-main-content">
         <div class="container py-5">
             <div class="blog-header text-center mb-5">
-                <h1 class="blog-title">O Nosso Jornal</h1>
-                <p class="blog-subtitle">Notícias e Histórias da Comunidade PortugalApoia</p>
+                <h1 class="blog-title">O Nosso Blog</h1>
+                <p class="blog-subtitle">Informação, inspiração e notícias da comunidade.</p>
             </div>
 
-            <section id="featured-post" class="mb-5">
+            <section id="latest-post" class="mb-5">
                 </section>
 
-            <hr class="blog-divider">
-
-            <section id="posts-grid">
-                <h2 class="section-title text-center mb-4">Edições Anteriores</h2>
-                <div class="row">
+            <section id="all-posts">
+                <h2 class="section-title text-center mb-4">Mais Artigos</h2>
+                <div class="row" id="posts-grid">
                     </div>
+                <div class="text-center mt-5" id="no-more-posts-message" style="display:none;">
+                    <p class="lead text-muted">Não há mais artigos para mostrar.</p>
+                </div>
             </section>
         </div>
     </main>
