@@ -153,9 +153,11 @@ body.dark-theme .navbar .navbar-nav .nav-link:hover {
 }
 
 .hero-title {
+    font-size: 3.5rem;
     font-weight: 700;
-    margin-bottom: 1rem;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, .5)
+    margin-bottom: 20px;
+    color: #ffc107; /* Cor Laranja, igual aos outros títulos */
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
 }
 
 .hero-subtitle {
