@@ -1,17 +1,11 @@
 /* --- ESTILOS PARA A PÁGINA DO BLOG (ASPECTO DE JORNAL) --- */
 
 /* Tipografia de Jornal */
-.blog-title,
-.featured-post-title,
-.post-card-title {
+.blog-title, .featured-post-title, .post-card-title {
     font-family: 'Playfair Display', serif;
     font-weight: 700;
 }
-
-.blog-subtitle,
-.post-card-summary,
-.post-card-date,
-.featured-post-summary {
+.blog-subtitle, .post-card-summary, .post-card-date, .featured-post-summary {
     font-family: 'Roboto', sans-serif;
 }
 
@@ -20,12 +14,10 @@
     border-bottom: 3px double #ddd;
     padding-bottom: 1.5rem;
 }
-
 .blog-title {
     font-size: 4rem;
     color: #2c3e50;
 }
-
 .blog-subtitle {
     font-size: 1.25rem;
     color: #7f8c8d;
@@ -37,17 +29,14 @@
     flex-direction: row;
     align-items: center;
 }
-
 .featured-post-image {
     max-width: 50%;
     border-radius: 5px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
-
 .featured-post-body {
     padding-left: 2rem;
 }
-
 .featured-post-category {
     font-weight: 500;
     color: #e67e22;
@@ -55,13 +44,11 @@
     letter-spacing: 1px;
     font-size: 0.9rem;
 }
-
 .featured-post-title {
     font-size: 2.5rem;
     color: #34495e;
     margin: 0.5rem 0 1rem;
 }
-
 .featured-post-summary {
     font-size: 1.1rem;
     color: #555;
@@ -74,36 +61,30 @@
     background-color: #fdfdfd;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-
 .post-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
 }
-
 .post-card-img {
     height: 200px;
     object-fit: cover;
     border-radius: 5px 5px 0 0;
 }
-
 .post-card-body {
     padding: 1.5rem;
     border: 1px solid #eee;
     border-top: none;
     border-radius: 0 0 5px 5px;
 }
-
 .post-card-title {
     font-size: 1.5rem;
     color: #34495e;
     margin-bottom: 0.75rem;
 }
-
 .post-card-summary {
     color: #666;
     font-size: 0.95rem;
 }
-
 .post-card-footer {
     border-top: 1px solid #eee;
     padding-top: 1rem;
@@ -122,23 +103,53 @@
     #featured-post .card {
         flex-direction: column;
     }
-
     .featured-post-image {
         max-width: 100%;
         margin-bottom: 1.5rem;
     }
-
     .featured-post-body {
         padding-left: 0;
     }
 }
-
 @media (max-width: 768px) {
     .blog-title {
         font-size: 3rem;
     }
-
     .featured-post-title {
         font-size: 2rem;
     }
+}
+
+/* --- ESTILOS PARA PLACEHOLDER E CONTACTOS NAS TARJETAS --- */
+.image-placeholder {
+    height: 200px;
+    background-color: #f0f4f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #a0b4c8;
+    font-weight: 500;
+}
+
+.contact-placeholder .contact-info {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.card-contact-icons .contact-icon {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 15px;
+    color: #3498db;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.card-contact-icons .contact-icon i {
+    margin-right: 5px;
+}
+
+.card-contact-icons .contact-icon:hover {
+    color: #2980b9;
 }
