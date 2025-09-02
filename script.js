@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- FUNCIÓN PARA LEER DATOS JSON ---
     async function fetchJson(url) {
         try {
-            // Se añade un timestamp para evitar problemas de caché
             const response = await fetch(`${url}?t=${new Date().getTime()}`);
             if (!response.ok) return null;
             return await response.json();
@@ -50,23 +49,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     
-    // --- NUEVA FUNCIÓN MEJORADA PARA CREAR LAS TARJETAS DE ANUNCIOS ---
+    // --- FUNCIÓN MEJORADA PARA CREAR TARJETAS DE ANUNCIOS ---
     function renderCard(item, category) {
-        const defaultImagePlaceholder = '<div class="image-placeholder">PortugalApoia</div>';
-        let imageUrl = null;
-
-        // Lógica mejorada para encontrar la imagen sin importar la estructura
-        if (item.imagem) {
-            imageUrl = item.imagem;
-        } else if (item.imagens && item.imagens.length > 0 && item.imagens[0].imagem_url) {
-            imageUrl = item.imagens[0].imagem_url;
-        } else if (item.logo_empresa) {
-            imageUrl = item.logo_empresa;
-        }
+        let imageUrl = item.imagem || item.logo_empresa || (item.imagens && item.imagens.length > 0 ? item.imagens[0].imagem_url : null);
         
+        // Placeholder con información de contacto si no hay imagen
+        const contactPlaceholder = `
+            <div class="image-placeholder contact-placeholder">
+                <div class="contact-info">
+                    ${item.contato ? `<div><i class="fas fa-phone"></i> ${item.contato}</div>` : ''}
+                    ${item.link_contato ? `<div><i class="fas fa-envelope"></i> ${item.link_contato.replace('mailto:', '')}</div>` : ''}
+                </div>
+            </div>`;
+            
         const imageHtml = imageUrl 
             ? `<img src="${imageUrl}" class="card-img-top lazy" data-src="${imageUrl}" alt="${item.titulo}">`
-            : defaultImagePlaceholder;
+            : contactPlaceholder;
 
         return `
         <div class="col-lg-4 col-md-6 mb-4 announcement-card" data-title="${item.titulo}" data-location="${item.localizacao}">
@@ -78,8 +76,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i> ${item.localizacao}</h6>
                     <p class="card-text flex-grow-1">${item.descricao}</p>
                     <div class="card-contact-icons mt-auto">
-                        ${item.link_contato ? `<a href="mailto:${item.link_contato}" class="contact-icon" title="Contactar por Email"><i class="fas fa-envelope"></i></a>` : ''}
                         ${item.contato ? `<a href="tel:${item.contato}" class="contact-icon" title="Contactar por Telefone"><i class="fas fa-phone"></i></a>` : ''}
+                        ${item.link_contato ? `<a href="${item.link_contato}" class="contact-icon" title="Contactar por Email"><i class="fas fa-envelope"></i></a>` : ''}
                     </div>
                 </div>
             </div>

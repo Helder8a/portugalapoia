@@ -1,118 +1,144 @@
-/* ================================================================== */
-/* === CÓDIGO CSS DEL BLOG (SIN GALERÍA) === */
-/* ================================================================== */
+/* --- ESTILOS PARA A PÁGINA DO BLOG (ASPECTO DE JORNAL) --- */
 
-main { padding-top: 75px; }
-
-.page-header-blog {
-    background: linear-gradient(rgba(10, 61, 98, .9), rgba(10, 61, 98, .9)) 0 0/cover, url(images/imgindex.avif) center center/cover no-repeat;
-    padding: 80px 0;
-    color: #fff;
-    margin-top: -75px;
-}
-.page-header-blog .page-title { font-size: 2.8rem; }
-.page-header-blog .lead { font-size: 1.2rem; }
-
-.blog-nav {
-    background-color: #f8f9fa;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #dee2e6;
-    position: sticky;
-    top: 75px; 
-    z-index: 1020;
-}
-.blog-nav .nav-link {
-    color: #0A3D62;
-    font-weight: 600;
-    cursor: pointer;
-    padding: 0.5rem 1rem;
-}
-.blog-nav .nav-link.active, .blog-nav .nav-link:hover { color: #F57C00; }
-
-#blog-search-input {
-    border-right: 0;
-}
-#blog-search-clear {
-    border-left: 0;
+/* Tipografia de Jornal */
+.blog-title,
+.featured-post-title,
+.post-card-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
 }
 
-.blog-post-card {
-    background-color: #fff;
+.blog-subtitle,
+.post-card-summary,
+.post-card-date,
+.featured-post-summary {
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Cabeçalho do Blog */
+.blog-header {
+    border-bottom: 3px double #ddd;
+    padding-bottom: 1.5rem;
+}
+
+.blog-title {
+    font-size: 4rem;
+    color: #2c3e50;
+}
+
+.blog-subtitle {
+    font-size: 1.25rem;
+    color: #7f8c8d;
+}
+
+/* Artículo Destacado */
+#featured-post .card {
     border: none;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
-    overflow: hidden;
+    flex-direction: row;
+    align-items: center;
+}
+
+.featured-post-image {
+    max-width: 50%;
+    border-radius: 5px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.featured-post-body {
+    padding-left: 2rem;
+}
+
+.featured-post-category {
+    font-weight: 500;
+    color: #e67e22;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+}
+
+.featured-post-title {
+    font-size: 2.5rem;
+    color: #34495e;
+    margin: 0.5rem 0 1rem;
+}
+
+.featured-post-summary {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.7;
+}
+
+/* Cuadrícula de Artículos */
+.post-card {
+    border: none;
+    background-color: #fdfdfd;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.blog-post-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-}
-.blog-post-card .card-body { padding: 2.5rem; }
 
-.blog-post-card .card-title {
-    font-family: 'Source Sans Pro', sans-serif;
-    font-weight: 700;
-    font-size: 2.2rem;
-    color: #1e374a;
-    text-align: center;
-    line-height: 1.3;
-}
-.card-text, .full-content {
-    font-family: 'Source Sans Pro', sans-serif;
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: #4a4a4a;
+.post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
-.post-image-container {
-    margin: 2rem 0;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    aspect-ratio: 16 / 9; 
-}
-.post-image-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; 
-    display: block;
-    transition: transform 0.4s ease-out;
-}
-.blog-post-card:hover .post-image-container img { transform: scale(1.03); }
-.post-image-container figcaption {
-    padding: 12px 15px;
-    font-size: 0.9em;
-    font-style: italic;
-    color: #6c757d;
-    text-align: center;
-    background-color: #f8f9fa;
-    border-top: 1px solid #e9ecef;
+.post-card-img {
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px 5px 0 0;
 }
 
-.post-meta {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    font-size: 0.9em;
-    color: #6c757d;
-    margin: 1rem 0 2rem 0;
+.post-card-body {
+    padding: 1.5rem;
+    border: 1px solid #eee;
+    border-top: none;
+    border-radius: 0 0 5px 5px;
 }
-.full-content strong { font-weight: 700; color: #1e374a; }
-.read-more-btn { display: block; margin: 1.5rem auto 0; }
 
-.social-share { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #e9ecef; text-align: center; }
-.social-share strong { margin-right: 15px; font-weight: 600; color: #4a4a4a; }
-.social-share a { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; margin: 0 5px; color: #fff; background-color: #ccc; text-decoration: none; transition: background-color 0.3s ease; }
-.social-share a[aria-label*="Facebook"] { background-color: #3b5998; }
-.social-share a[aria-label*="Twitter"] { background-color: #1da1f2; }
-.social-share a[aria-label*="LinkedIn"] { background-color: #0077b5; }
-.social-share a[aria-label*="WhatsApp"] { background-color: #25d366; }
-.social-share a:hover { opacity: 0.9; }
+.post-card-title {
+    font-size: 1.5rem;
+    color: #34495e;
+    margin-bottom: 0.75rem;
+}
 
-.related-posts { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #e9ecef; }
-.related-posts h3 { text-align: center; margin-bottom: 2rem; font-weight: 700; color: #1e374a; }
-.related-posts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-.related-post-item a { text-decoration: none; color: inherit; display: block; }
-.related-post-img { width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; }
-.related-post-title { font-size: 1rem; font-weight: 600; line-height: 1.4; color: #343a40; }
+.post-card-summary {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.post-card-footer {
+    border-top: 1px solid #eee;
+    padding-top: 1rem;
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: #95a5a6;
+    font-weight: 300;
+}
+
+.blog-divider {
+    border-top: 1px solid #eee;
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+    #featured-post .card {
+        flex-direction: column;
+    }
+
+    .featured-post-image {
+        max-width: 100%;
+        margin-bottom: 1.5rem;
+    }
+
+    .featured-post-body {
+        padding-left: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .blog-title {
+        font-size: 3rem;
+    }
+
+    .featured-post-title {
+        font-size: 2rem;
+    }
+}
