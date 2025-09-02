@@ -7,15 +7,14 @@
     "subtitle": "A NOSSA HISTÓRIA",
     "text": "PortugalApoia nasceu de uma simples pergunta: 'Como podemos usar a tecnologia para fortalecer os laços comunitários em Portugal?' A resposta foi criar esta plataforma aberta, gratuita e acessível a todos. Um lugar onde a tecnologia serve como ferramenta para a empatia e a ação coletiva."
   },
-  "gallery_images": [
+  "featured_images": [
     {
-      "image": "/images/uploads/02.webp"
+      "image": "/images/uploads/horizontal-1.webp",
+      "caption": "A nossa equipa a trabalhar na comunidade."
     },
     {
-      "image": "/images/uploads/03.webp"
-    },
-    {
-      "image": "/images/uploads/04.webp"
+      "image": "/images/uploads/horizontal-2.webp",
+      "caption": "Voluntários em ação, apoiando Portugal."
     }
   ],
   "mission": {
