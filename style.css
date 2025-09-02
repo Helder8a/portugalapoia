@@ -1573,3 +1573,81 @@ body.dark-theme .share-label {
         grid-column: span 2;
     }
 }
+
+/* --- ESTILOS PARA IMAGENS DESTACADAS (SOBRE NÓS) --- */
+.featured-images-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem 0;
+    flex-wrap: wrap; /* Para una mejor responsividad */
+}
+
+.featured-image {
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.featured-image:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.featured-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/9; /* Asegura un formato horizontal */
+    object-fit: cover;
+    border-radius: 12px;
+    transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.featured-image:hover img {
+    transform: scale(1.1);
+}
+
+.featured-image figcaption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    color: #fff;
+    padding: 2rem 1.5rem 1rem;
+    font-size: 0.9rem;
+    font-style: italic;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.featured-image:hover figcaption {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Estilos para cuando hay UNA sola imagen */
+.featured-images-container.count-1 .featured-image {
+    width: 100%;
+    max-width: 700px; /* Ancho máximo para una sola imagen */
+}
+
+/* Estilos para cuando hay DOS imágenes */
+.featured-images-container.count-2 .featured-image {
+    width: calc(50% - 1rem); /* Dos imágenes con un espacio entre ellas */
+    max-width: 500px;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .featured-images-container.count-2 .featured-image {
+        width: 100%; /* Las imágenes se apilan en pantallas pequeñas */
+        max-width: 500px; /* Mantiene un tamaño razonable */
+    }
+}

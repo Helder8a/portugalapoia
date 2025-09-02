@@ -8,7 +8,7 @@
     <link rel="canonical" href="https://portugalapoia.com/sobre-nos.html">
     <link rel="icon" href="images_pta/logofavicon.ico" type="image/png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css?v=16">
+    <link rel="stylesheet" href="style.css?v=17">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
@@ -49,15 +49,9 @@
         <section id="hero-sobre" class="text-center text-white d-flex align-items-center justify-content-center"></section>
 
         <div class="container py-5">
-            <div class="row">
-                <div class="col-lg-8 mx-auto">
-                    <section id="intro-sobre" class="text-center mb-5"></section>
-                </div>
-            </div>
+            <section id="intro-sobre" class="text-center mb-5"></section>
 
-            <section id="gallery-section" class="mb-5">
-                <div class="photo-gallery"></div>
-            </section>
+            <section id="featured-images-section" class="mb-5"></section>
 
             <section id="mission-sobre" class="text-center bg-light p-5 rounded mb-5"></section>
 
@@ -111,31 +105,41 @@
             if (!response.ok) throw new Error('Falha ao carregar dados');
             const data = await response.json();
 
-            const heroSection = document.getElementById('hero-sobre');
+            // Cargar Hero
             if (data.hero) {
+                const heroSection = document.getElementById('hero-sobre');
                 heroSection.style.backgroundImage = `linear-gradient(rgba(10, 61, 98, .8), rgba(10, 61, 98, .6)), url('${data.hero.image}')`;
                 heroSection.innerHTML = `<div class="container"><h1 class="page-title">${data.hero.title}</h1></div>`;
             }
 
-            const introSection = document.getElementById('intro-sobre');
+            // Cargar Intro
             if (data.intro) {
-                introSection.innerHTML = `<h3>${data.intro.subtitle}</h3><p class="lead">${data.intro.text.replace(/\n/g, '<br>')}</p>`;
-            }
-            
-            const galleryContainer = document.querySelector('.photo-gallery');
-            if (data.gallery_images && data.gallery_images.length > 0) {
-                galleryContainer.innerHTML = data.gallery_images.map(item =>
-                    `<div class="gallery-item"><img src="${item.image}" alt="Imagem da galeria PortugalApoia" class="gallery-image"></div>`
-                ).join('');
+                const introSection = document.getElementById('intro-sobre');
+                introSection.innerHTML = `<div class="col-lg-10 mx-auto"><h3>${data.intro.subtitle}</h3><p class="lead">${data.intro.text.replace(/\n/g, '<br>')}</p></div>`;
             }
 
-            const missionSection = document.getElementById('mission-sobre');
+            // Cargar Imágenes Destacadas
+            if (data.featured_images && data.featured_images.length > 0) {
+                const imagesSection = document.getElementById('featured-images-section');
+                const imageCount = data.featured_images.length;
+                imagesSection.className = `featured-images-container count-${imageCount}`;
+                imagesSection.innerHTML = data.featured_images.map(item => `
+                    <figure class="featured-image">
+                        <img src="${item.image}" alt="${item.caption || 'Imagem de destaque'}">
+                        ${item.caption ? `<figcaption>${item.caption}</figcaption>` : ''}
+                    </figure>
+                `).join('');
+            }
+
+            // Cargar Misión
             if (data.mission) {
+                const missionSection = document.getElementById('mission-sobre');
                 missionSection.innerHTML = `<i class="${data.mission.icon} pillar-icon mb-3"></i><h3>${data.mission.title}</h3><p class="lead">${data.mission.text}</p>`;
             }
 
-            const principlesRow = document.querySelector('#principles-sobre .row');
+            // Cargar Principios
             if (data.principles && data.principles.length > 0) {
+                const principlesRow = document.querySelector('#principles-sobre .row');
                 principlesRow.innerHTML = data.principles.map(p =>
                     `<div class="col-md-4 mb-4"><div class="card h-100 text-center pillar-card"><div class="card-body"><i class="${p.icon} pillar-icon mb-3"></i><h4>${p.title}</h4><p>${p.text}</p></div></div></div>`
                 ).join('');
@@ -143,7 +147,6 @@
 
         } catch (error) {
             console.error("Erro ao carregar o conteúdo da página Sobre Nós:", error);
-            document.querySelector('main').innerHTML = "<div class='container text-center py-5'><h1>Erro ao carregar a página.</h1><p>Por favor, verifique o conteúdo do ficheiro de dados e a configuração do CMS.</p></div>";
         }
     });
     </script>
