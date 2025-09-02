@@ -21,6 +21,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
         return new Date(dateString).toLocaleDateString('pt-PT', options);
     }
+    
+    // --- FUNCIÓN PARA CALCULAR TIEMPO DE LECTURA ---
+    function calculateReadingTime(text) {
+        const wordsPerMinute = 225; // Velocidad de lectura promedio
+        const textContent = text.replace(/<[^>]*>/g, " "); // Elimina etiquetas HTML
+        const wordCount = textContent.split(/\s+/).length;
+        const readingTime = Math.ceil(wordCount / wordsPerMinute);
+        return `${readingTime} min de leitura`;
+    }
 
     // --- LÓGICA PRINCIPAL PARA RENDERIZAR EL BLOG ---
     const allPosts = await fetchPosts();
@@ -38,14 +47,19 @@ document.addEventListener("DOMContentLoaded", async () => {
         // --- Renderiza el Artículo Más Reciente ---
         const latestPost = allPosts[0];
         if (latestPostContainer && latestPost) {
+            const readingTime = calculateReadingTime(marked.parse(latestPost.body || ''));
             latestPostContainer.innerHTML = `
-                <div class="card">
-                    <img src="${latestPost.image}" alt="${latestPost.title}" class="latest-post-img">
-                    <div class="card-body latest-post-body">
-                        <span class="latest-post-category">${latestPost.category}</span>
+                <div class="latest-post-card">
+                    <div class="latest-post-image-wrapper">
+                        <img src="${latestPost.image}" alt="${latestPost.title}" class="latest-post-img">
+                    </div>
+                    <div class="latest-post-content">
+                        <div class="post-meta-info">
+                            <span class="category">${latestPost.category}</span> &bull; <span>${readingTime}</span>
+                        </div>
                         <h2 class="latest-post-title">${latestPost.title}</h2>
                         <p class="latest-post-summary">${latestPost.summary}</p>
-                        <p class="latest-post-meta">Publicado em ${formatDate(latestPost.date)}</p>
+                        <p class="text-muted small">Por ${latestPost.author || 'PortugalApoia'} em ${formatDate(latestPost.date)}</p>
                     </div>
                 </div>`;
         }
@@ -54,40 +68,41 @@ document.addEventListener("DOMContentLoaded", async () => {
         const otherPosts = allPosts.slice(1);
         if (postsGridContainer) {
             if (otherPosts.length > 0) {
-                postsGridContainer.innerHTML = otherPosts.map(post => `
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div class="card post-card h-100">
+                postsGridContainer.innerHTML = otherPosts.map(post => {
+                    const readingTime = calculateReadingTime(marked.parse(post.body || ''));
+                    return `
+                    <div class="col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
+                        <div class="card post-card w-100">
                             <img src="${post.image}" class="card-img-top post-card-img" alt="${post.title}">
-                            <div class="card-body post-card-body">
-                                <span class="post-card-category">${post.category}</span>
+                            <div class="card-body post-card-body d-flex flex-column">
                                 <h5 class="post-card-title">${post.title}</h5>
+                                <div class="post-meta-info mb-2">
+                                    <span class="category">${post.category}</span> &bull; <span>${readingTime}</span>
+                                </div>
                                 <p class="post-card-summary">${post.summary}</p>
                                 <div class="post-card-footer mt-auto">
-                                    <span class="post-meta-info">${formatDate(post.date)}</span>
-                                    </div>
+                                    <span class="text-muted small">Por ${post.author || 'PortugalApoia'}</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                `).join('');
+                    </div>`;
+                }).join('');
             } else {
-                // Si no hay más posts aparte del destacado
                 if(moreArticlesTitle) moreArticlesTitle.style.display = 'none';
                 if(noMorePostsMessage) noMorePostsMessage.style.display = 'block';
                 postsGridContainer.innerHTML = ''; 
             }
         }
     } else {
-        // Si no se carga ningún post, muestra un mensaje de error claro
         if(mainContent) {
             mainContent.innerHTML = `
                 <div class="container text-center py-5">
                     <h1 class="blog-title">O Nosso Blog</h1>
-                    <p class="lead text-muted mt-4">De momento, não foi possível carregar as publicações. Por favor, tente novamente mais tarde.</p>
+                    <p class="lead text-muted mt-4">De momento, não foi possível carregar as publicações.</p>
                 </div>`;
         }
     }
 
-    // Ocultar el preloader después de que todo se haya procesado
     const preloader = document.getElementById("preloader");
     if (preloader) {
         preloader.classList.add("hidden");
