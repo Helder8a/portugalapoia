@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: Helder8a/portugalapoia
+  repo: Helder8a/portugalapoia # Reemplaza con tu repo si es diferente
   branch: main
   publish_mode: editorial_workflow
 
@@ -11,55 +11,6 @@ collections:
   - name: "conteudos"
     label: "Conteúdos das Páginas"
     files:
-      # --- PÁGINAS PRINCIPALES ---
-      - file: "_dados/homepage.json"
-        label: "Página Principal (Homepage)"
-        name: "homepage"
-        fields:
-          - {label: "Título Principal", name: "hero_title", widget: "string"}
-          - {label: "Subtítulo", name: "hero_subtitle", widget: "string"}
-
-      - file: "_dados/sobre-nos.json"
-        label: "Página Sobre Nós"
-        name: "sobre_nos"
-        fields:
-          - label: "Secção Principal (Hero)"
-            name: "hero"
-            widget: "object"
-            fields:
-              - {label: "Título Principal", name: "title", widget: "string"}
-              - {label: "Imagem de Fundo", name: "image", widget: "image"}
-          - label: "Introdução"
-            name: "intro"
-            widget: "object"
-            fields:
-              - {label: "Subtítulo", name: "subtitle", widget: "string"}
-              - {label: "Texto Introdutório", name: "text", widget: "markdown"}
-          - label: "Imagens Destacadas (Máx. 2)"
-            name: "featured_images"
-            widget: "list"
-            min: 1
-            max: 2
-            summary: "{{fields.caption}}"
-            fields:
-              - {label: "Imagem (formato horizontal)", name: "image", widget: "image"}
-              - {label: "Legenda da Imagem", name: "caption", widget: "string", required: false}
-          - label: "Missão"
-            name: "mission"
-            widget: "object"
-            fields:
-              - {label: "Ícone (Font Awesome)", name: "icon", widget: "string", hint: "Ex: fas fa-bullseye"}
-              - {label: "Título da Missão", name: "title", widget: "string"}
-              - {label: "Texto da Missão", name: "text", widget: "text"}
-          - label: "Princípios"
-            name: "principles"
-            widget: "list"
-            fields:
-              - {label: "Ícone (Font Awesome)", name: "icon", widget: "string", hint: "Ex: fas fa-hands-helping"}
-              - {label: "Título do Princípio", name: "title", widget: "string"}
-              - {label: "Texto do Princípio", name: "text", widget: "text"}
-
-      # --- COLECCIONES DE PUBLICACIONES (RECUPERADAS) ---
       - file: "_dados/blog.json"
         label: "Publicações do Blog"
         name: "blog"
@@ -73,7 +24,7 @@ collections:
               - {label: "Imagem de Destaque", name: "image", widget: "image"}
               - {label: "Categoria", name: "category", widget: "select", options: ["saude", "turismo", "educacao", "habitacao", "emprego"]}
               - {label: "Resumo", name: "summary", widget: "text"}
-              - {label: "Corpo do Artigo", name: "body", widget: "markdown"}
+              - {label: "Corpo do Artigo (aceita vídeos)", name: "body", widget: "markdown"}
 
       - file: "_dados/empregos.json"
         label: "Vagas de Emprego"
@@ -83,11 +34,14 @@ collections:
             name: "vagas"
             widget: "list"
             fields:
+              - {label: "ID (Ex: EMP-033)", name: "id", widget: "string"}
               - {label: "Título da Vaga", name: "titulo", widget: "string"}
               - {label: "Localização", name: "localizacao", widget: "string"}
               - {label: "Descrição", name: "descricao", widget: "text"}
-              - {label: "Contacto (Tel)", name: "contato", widget: "string", required: false}
-              - {label: "Contacto (Email)", name: "link_contato", widget: "string", required: false}
+              - {label: "Tel", name: "contato", widget: "string", required: false}
+              - {label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com", required: false}
+              - {label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false}
+              - {label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false}
 
       - file: "_dados/doacoes.json"
         label: "Pedidos de Doação"
@@ -97,4 +51,30 @@ collections:
             name: "pedidos"
             widget: "list"
             fields:
-              - {label: "Título do Pedido
+              - {label: "ID (Ex: DOA-004)", name: "id", widget: "string"}
+              - {label: "Título do Pedido", name: "titulo", widget: "string"}
+              - {label: "Localização", name: "localizacao", widget: "string"}
+              - {label: "Descrição", name: "descricao", widget: "text"}
+              - {label: "É Urgente?", name: "urgente", widget: "boolean", default: false}
+              - {label: "Imagem (Opcional)", name: "imagem", widget: "image", required: false}
+              - {label: "Tel", name: "contato", widget: "string"}
+              - {label: "Email", name: "link_contato", widget: "string", hint: "Coloque o email no formato mailto:exemplo@email.com"}
+              - {label: "Data de Publicação", name: "data_publicacao", widget: "date", format: "YYYY-MM-DD", required: false}
+              - {label: "Data de Vencimento", name: "data_vencimento", widget: "date", format: "YYYY-MM-DD", required: false}
+
+      - file: "_dados/servicos.json"
+        label: "Ofertas de Serviço"
+        name: "servicos"
+        fields:
+          - label: "Lista de Serviços"
+            name: "servicos"
+            widget: "list"
+            fields:
+              - {label: "ID (Ex: SER-004)", name: "id", widget: "string"}
+              - {label: "Logo da Empresa (Opcional)", name: "logo_empresa", widget: "image", required: false}
+              - {label: "Título do Serviço", name: "titulo", widget: "string"}
+              - {label: "Valor do Serviço (Opcional)", name: "valor_servico", widget: "string", required: false, hint: "Ex: 50€, A combinar, Gratuito"}
+              - {label: "Localização", name: "localizacao", widget: "string"}
+              - {label: "Descrição", name: "descricao", widget: "text"}
+              - {label: "Tel", name: "contato", widget: "string"}
+              -
