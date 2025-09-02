@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         try {
             const response = await fetch('/_dados/blog.json?v=' + new Date().getTime());
             if (!response.ok) {
-                console.error("Resposta de rede não foi ok.");
+                console.error("A resposta da rede não foi bem-sucedida.");
                 return []; // Devuelve un array vacío en caso de error de red
             }
             const data = await response.json();
@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const mainContent = document.querySelector('.blog-main-content');
     const featuredContainer = document.getElementById('featured-post');
     const gridContainer = document.querySelector('#posts-grid .row');
+    const olderPostsTitle = document.querySelector('#posts-grid h2');
 
     if (allPosts.length > 0) {
         // Ordena los posts por fecha, del más reciente al más antiguo
@@ -66,8 +67,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                     </div>
                 `).join('');
             } else {
-                // Si solo hay un post, se muestra un mensaje en la sección de "anteriores"
-                document.getElementById('posts-grid').innerHTML = '<p class="col-12 text-center text-muted mt-4">Não há edições anteriores.</p>';
+                // Si solo hay un post, se oculta la sección de "anteriores"
+                if(olderPostsTitle) olderPostsTitle.style.display = 'none';
+                gridContainer.innerHTML = '<p class="col-12 text-center text-muted mt-4">Não há edições anteriores.</p>';
             }
         }
     } else {
