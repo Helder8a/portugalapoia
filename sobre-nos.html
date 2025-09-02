@@ -8,53 +8,31 @@
     <link rel="canonical" href="https://portugalapoia.com/sobre-nos.html">
     <link rel="icon" href="images_pta/logofavicon.ico" type="image/png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="style.css?v=14">
+    <link rel="stylesheet" href="style.css?v=15">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     <div id="preloader"><img src="images_pta/logocuadrado.jpg" alt="A carregar..." class="spinner"></div>
 
     <header class="main-header">
-        <nav class="navbar navbar-expand-lg">
-            <div class="container">
-                <a class="navbar-brand logo" href="index.html" style="display: inline-flex; align-items: center;">
-                    <img src="images_pta/logocuadrado.jpg" alt="Logo PortugalApoia" style="height: 35px; margin-right: 10px;">
-                    <span class="brand-text-responsive">PortugalApoia</span>
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="main-nav">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a class="nav-link" href="sobre-nos.html">Sobre Nós</a></li>
-                        <li class="nav-item"><a class="nav-link" href="doações.html">Doações</a></li>
-                        <li class="nav-item"><a class="nav-link" href="empregos.html">Emprego</a></li>
-                        <li class="nav-item"><a class="nav-link" href="serviços.html">Serviços</a></li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownWebApp" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Apps</a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownWebApp">
-                                <a class="dropdown-item" href="app_evaluadorsustentable.html">Avaliador Sustentável PRO</a>
-                                <a class="dropdown-item" href="app_avaliadorurbano.html">Avaliador de Imóveis Urbanos</a>
-                            </div>
-                        </li>
-                        <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
-                        <li class="nav-item"><a class="nav-link btn btn-primary publish-btn" href="publicar.html">Publicar</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+        </header>
 
     <main>
         <section id="hero-sobre" class="text-center text-white d-flex align-items-center justify-content-center"></section>
 
         <div class="container py-5">
-            <section id="intro-sobre" class="text-center mb-5"></section>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <section id="intro-sobre" class="text-center mb-5"></section>
+                </div>
+            </div>
 
-            <section id="collage-section" class="mb-5"></section>
-
+            <section id="gallery-section" class="mb-5">
+                <div class="photo-gallery">
+                    </div>
+            </section>
             <section id="mission-sobre" class="text-center bg-light p-5 rounded mb-5"></section>
-            
+
             <section id="principles-sobre">
                 <h2 class="section-title text-center mb-4">Os Princípios que Nos Guiam</h2>
                 <div class="row"></div>
@@ -74,22 +52,24 @@
             const response = await fetch('/_dados/sobre-nos.json');
             const data = await response.json();
 
-            // Cargar Hero, Introducción, Misión y Principios (sin cambios)
-            // ...
+            // Cargar Hero, Intro, Misión y Principios (sin cambios)
+            const heroSection = document.getElementById('hero-sobre');
+            heroSection.style.backgroundImage = `linear-gradient(rgba(10, 61, 98, .8), rgba(10, 61, 98, .6)), url('${data.hero.image}')`;
+            heroSection.innerHTML = `<div class="container"><h1 class="page-title">${data.hero.title}</h1></div>`;
+            document.getElementById('intro-sobre').innerHTML = `<h3>${data.intro.subtitle}</h3><p class="lead">${data.intro.text.replace(/\n/g, '<br>')}</p>`;
+            document.getElementById('mission-sobre').innerHTML = `<i class="${data.mission.icon} pillar-icon mb-3"></i><h3>${data.mission.title}</h3><p class="lead">${data.mission.text}</p>`;
+            const principlesRow = document.querySelector('#principles-sobre .row');
+            principlesRow.innerHTML = data.principles.map(p => `<div class="col-md-4 mb-4"><div class="card h-100 text-center pillar-card"><div class="card-body"><i class="${p.icon} pillar-icon mb-3"></i><h4>${p.title}</h4><p>${p.text}</p></div></div></div>`).join('');
 
-            // ===== SCRIPT ACTUALIZADO =====
-            // Cargar Colage de Imágenes
-            const collageSection = document.getElementById('collage-section');
-            if (data.collage_images && data.collage_images.length > 0) {
-                const collageHtml = `
-                    <div class="collage-container">
-                        <img src="${data.collage_images[0].image}" alt="Collage Image 1" class="collage-image-1 shadow-lg rounded">
-                        ${data.collage_images.length > 1 ? `<img src="${data.collage_images[1].image}" alt="Collage Image 2" class="collage-image-2 shadow-lg rounded">` : ''}
+            // Cargar la nueva galería de imágenes
+            const galleryContainer = document.querySelector('.photo-gallery');
+            if (data.gallery_images && data.gallery_images.length > 0) {
+                galleryContainer.innerHTML = data.gallery_images.map(item => `
+                    <div class="gallery-item">
+                        <img src="${item.image}" alt="Imagem da galeria PortugalApoia" class="gallery-image">
                     </div>
-                `;
-                collageSection.innerHTML = collageHtml;
+                `).join('');
             }
-            // ===== FIN DEL SCRIPT ACTUALIZADO =====
 
         } catch (error) {
             console.error("Erro ao carregar o conteúdo da página Sobre Nós:", error);
