@@ -105,7 +105,7 @@
             if (!response.ok) throw new Error('Falha ao carregar dados');
             const data = await response.json();
 
-            // Cargar Hero, Intro, Misión y Principios
+            // Cargar contenido dinámico
             if (data.hero) {
                 document.getElementById('hero-sobre').style.backgroundImage = `linear-gradient(rgba(10, 61, 98, .8), rgba(10, 61, 98, .6)), url('${data.hero.image}')`;
                 document.getElementById('hero-sobre').innerHTML = `<div class="container"><h1 class="page-title">${data.hero.title}</h1></div>`;
