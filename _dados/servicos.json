@@ -1,40 +1,40 @@
 {
   "servicos": [
     {
-      "id": "SER-001",
-      "logo_empresa": "/images/uploads/021.webp",
-      "titulo": "Eletricista Certificado",
+      "data_vencimento": "2025-12-31",
       "valor_servico": "A combinar",
-      "localizacao": "Lisboa",
+      "link_contato": "eletricista.lisboa@email.com",
       "descricao": "Reparações elétricas, instalação de quadros e certificados energéticos. Serviço rápido e profissional.",
       "contato": "912345678",
-      "link_contato": "eletricista.lisboa@email.com",
+      "localizacao": "Lisboa",
       "data_publicacao": "2025-08-20",
-      "data_vencimento": "2025-12-31"
+      "logo_empresa": "",
+      "titulo": "Eletricista Certificado",
+      "id": "SER-001"
     },
     {
-      "id": "SER-002",
-      "logo_empresa": "/images/uploads/022.webp",
-      "titulo": "Canalizador 24h",
+      "data_vencimento": "2025-12-31",
       "valor_servico": "Desde 30€",
-      "localizacao": "Porto",
+      "link_contato": "canalizador.porto@email.com",
       "descricao": "Serviços de urgência para fugas de água, desentupimentos e reparação de canalizações.",
       "contato": "912345679",
-      "link_contato": "canalizador.porto@email.com",
+      "localizacao": "Porto",
       "data_publicacao": "2025-08-19",
-      "data_vencimento": "2025-12-31"
+      "logo_empresa": "",
+      "titulo": "Canalizador 24h",
+      "id": "SER-002"
     },
     {
-      "id": "SER-003",
-      "logo_empresa": "/images/uploads/023.webp",
-      "titulo": "Design Gráfico Freelancer",
+      "data_vencimento": "2025-12-31",
       "valor_servico": "Orçamento grátis",
-      "localizacao": "Online / Todo o País",
+      "link_contato": "design.freela@email.com",
       "descricao": "Criação de logótipos, identidade visual para marcas, websites e materiais de marketing. ",
       "contato": "",
-      "link_contato": "design.freela@email.com",
+      "localizacao": "Online / Todo o País",
       "data_publicacao": "2025-08-18",
-      "data_vencimento": "2025-12-31"
+      "logo_empresa": "",
+      "titulo": "Design Gráfico Freelancer",
+      "id": "SER-003"
     }
   ]
 }
