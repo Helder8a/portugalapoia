@@ -1,36 +1,40 @@
 {
-  "hero": {
-    "title": "Conectando Corações, Construindo Comunidade",
-    "image": "/images/uploads/01.webp"
-  },
-  "intro": {
-    "subtitle": "A NOSSA HISTÓRIA",
-    "text": "PortugalApoia nasceu de uma simples pergunta: 'Como podemos usar a tecnologia para fortalecer os laços comunitários em Portugal?' A resposta foi criar esta plataforma aberta, gratuita e acessível a todos. Um lugar onde a tecnologia serve como ferramenta para a empatia e a ação coletiva."
-  },
-  "featured_image": {
-    "image": "/images/uploads/02.webp",
-    "caption": "A nossa equipa a trabalhar na comunidade."
-  },
-  "mission": {
-    "icon": "fas fa-bullseye",
-    "title": "Nossa Missão",
-    "text": "O nosso propósito é ser o ponto de encontro onde cada oferta de ajuda encontra o seu destino e cada necessidade recebe uma resposta, simplificando a solidariedade e conectando pessoas de forma direta e transparente."
-  },
-  "principles": [
+  "servicos": [
     {
-      "icon": "fas fa-hands-helping",
-      "title": "Apoio Direto",
-      "text": "Facilitamos a conexão direta entre quem oferece e quem precisa, sem intermediários."
+      "id": "SER-001",
+      "logo_empresa": "/images/uploads/021.webp",
+      "titulo": "Eletricista Certificado",
+      "valor_servico": "A combinar",
+      "localizacao": "Lisboa",
+      "descricao": "Reparações elétricas, instalação de quadros e certificados energéticos. Serviço rápido e profissional.",
+      "contato": "912345678",
+      "link_contato": "eletricista.lisboa@email.com",
+      "data_publicacao": "2025-08-20",
+      "data_vencimento": "2025-12-31"
     },
     {
-      "icon": "fas fa-lock",
-      "title": "Segurança e Confiança",
-      "text": "Verificamos os anúncios para garantir um ambiente seguro e confiável para todos."
+      "id": "SER-002",
+      "logo_empresa": "/images/uploads/022.webp",
+      "titulo": "Canalizador 24h",
+      "valor_servico": "Desde 30€",
+      "localizacao": "Porto",
+      "descricao": "Serviços de urgência para fugas de água, desentupimentos e reparação de canalizações.",
+      "contato": "912345679",
+      "link_contato": "canalizador.porto@email.com",
+      "data_publicacao": "2025-08-19",
+      "data_vencimento": "2025-12-31"
     },
     {
-      "icon": "fas fa-heart",
-      "title": "Comunidade Forte",
-      "text": "Acreditamos no poder da comunidade para construir uma sociedade mais justa e solidária."
+      "id": "SER-003",
+      "logo_empresa": "/images/uploads/023.webp",
+      "titulo": "Design Gráfico Freelancer",
+      "valor_servico": "Orçamento grátis",
+      "localizacao": "Online / Todo o País",
+      "descricao": "Criação de logótipos, identidade visual para marcas, websites e materiais de marketing. ",
+      "contato": "",
+      "link_contato": "design.freela@email.com",
+      "data_publicacao": "2025-08-18",
+      "data_vencimento": "2025-12-31"
     }
   ]
 }
