@@ -1,112 +1,98 @@
 // --- CÓDIGO FINAL, ESTABLE Y CON ANUNCIOS FUNCIONANDO ---
 
-document.addEventListener("DOMContentLoaded", () => {
-    // --- GESTORES BÁSICOS (Preloader, Scroll, etc.) ---
-    const preloader = document.getElementById("preloader");
-    if (preloader) {
-        window.addEventListener("load", () => preloader.classList.add("hidden"));
-    }
-    const scrollTopBtn = document.getElementById("scrollTopBtn");
-    if (scrollTopBtn) {
-        window.onscroll = () => {
-            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-                scrollTopBtn.classList.add("visible");
-            } else {
-                scrollTopBtn.classList.remove("visible");
-            }
-        };
-        scrollTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
-    }
+document.addEventListener('DOMContentLoaded', () => {
+    const API_URL = '/_dados/';
 
-    // --- FUNCIÓN PARA LEER DATOS JSON ---
-    async function fetchJson(url) {
-        try {
-            const response = await fetch(`${url}?t=${new Date().getTime()}`);
-            if (!response.ok) return null;
-            return await response.json();
-        } catch (error) {
-            console.error(`Error al cargar ${url}:`, error);
-            return null;
-        }
-    }
-
-    // --- FUNCIÓN DE LAZY LOADING PARA IMÁGENES ---
-    function ativarLazyLoading() {
-        const lazyImages = document.querySelectorAll("img.lazy:not(.loaded)");
-        if ("IntersectionObserver" in window) {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target;
-                        img.src = img.dataset.src;
-                        img.classList.add("loaded");
-                        img.classList.remove("lazy");
-                        observer.unobserve(img);
-                    }
-                });
-            });
-            lazyImages.forEach(img => observer.observe(img));
-        }
-    }
-    
-    // --- FUNCIÓN MEJORADA PARA CREAR TARJETAS DE ANUNCIOS ---
-    function renderCard(item, category) {
-        const defaultImagePlaceholder = '<div class="image-placeholder"></div>';
-        let imageUrl = item.imagem || item.logo_empresa || (item.imagens && item.imagens.length > 0 ? item.imagens[0].imagem_url : null);
-        
-        const imageHtml = imageUrl 
-            ? `<img src="${imageUrl}" class="card-img-top lazy" data-src="${imageUrl}" alt="${item.titulo}">`
-            : defaultImagePlaceholder;
-
-        return `
-        <div class="col-lg-4 col-md-6 mb-4 announcement-card" data-title="${item.titulo}" data-location="${item.localizacao}">
-            <div class="card h-100">
-                <div class="card-number">${item.id || ''}</div>
-                ${imageHtml}
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">${item.titulo}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i> ${item.localizacao}</h6>
-                    <p class="card-text flex-grow-1">${item.descricao}</p>
-                    <div class="card-contact-icons mt-auto">
-                        ${item.contato ? `<a href="tel:${item.contato}" class="contact-icon" title="Contactar por Telefone"><i class="fas fa-phone"></i> <span>${item.contato}</span></a>` : ''}
-                        ${item.link_contato ? `<a href="${item.link_contato}" class="contact-icon" title="Contactar por Email"><i class="fas fa-envelope"></i> <span>Email</span></a>` : ''}
-                    </div>
-                </div>
-            </div>
-        </div>`;
-    }
-
-    // --- FUNCIÓN GLOBAL PARA CARGAR TODO EL CONTENIDO ---
-    async function carregarConteudo(jsonPath, containerId, dataKey) {
+    // Função genérica para carregar e renderizar os cards
+    async function loadAndRenderCards(dataType, containerId) {
         const container = document.getElementById(containerId);
         if (!container) return;
 
-        const data = await fetchJson(jsonPath);
-        const items = data ? data[dataKey] : [];
+        try {
+            const response = await fetch(`${API_URL}${dataType}.json?v=${new Date().getTime()}`);
+            if (!response.ok) {
+                container.innerHTML = `<p class="text-center col-12">Não foi possível carregar o conteúdo.</p>`;
+                return;
+            }
+            const items = await response.json();
 
-        if (!items || items.length === 0) {
-            container.innerHTML = '<p class="col-12 text-center lead text-muted mt-5">De momento, não há publicações nesta secção.</p>';
-            return;
+            if (!items || items.length === 0) {
+                container.innerHTML = `<p class="text-center col-12">De momento, não há itens para mostrar.</p>`;
+                return;
+            }
+
+            let cardsHtml = items.map(item => {
+                // Lógica para determinar o ícone com base no tipo de dado
+                let iconClass = 'fas fa-info-circle'; // Ícone padrão
+                if (dataType === 'servicos') {
+                    iconClass = item.icon || 'fas fa-hands-helping';
+                } else if (dataType === 'empregos') {
+                    iconClass = 'fas fa-briefcase';
+                } else if (dataType === 'doacoes') {
+                    iconClass = 'fas fa-heart';
+                }
+
+                return `
+                <div class="col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
+                    <div class="modern-card w-100">
+                        <div class="icon-circle">
+                            <i class="${iconClass}"></i>
+                        </div>
+                        <h5 class="card-title">${item.title}</h5>
+                        <p class="card-text">${item.description}</p>
+                        ${item.link ? `<a href="${item.link}" class="btn btn-primary mt-auto" target="_blank" rel="noopener noreferrer">${item.link_text || 'Saber Mais'}</a>` : ''}
+                    </div>
+                </div>`;
+            }).join('');
+
+            container.innerHTML = cardsHtml;
+
+        } catch (error) {
+            console.error(`Erro ao carregar ${dataType}:`, error);
+            container.innerHTML = `<p class="text-center col-12">Ocorreu um erro ao carregar o conteúdo.</p>`;
         }
+    }
 
-        items.sort((a, b) => new Date(b.data_publicacao || 0) - new Date(a.data_publicacao || 0));
-        container.innerHTML = items.map(item => renderCard(item, dataKey)).join('');
-        ativarLazyLoading();
-    }
+    // Carregar os diferentes tipos de conteúdo nas respetivas páginas
+    loadAndRenderCards('servicos', 'services-container');
+    loadAndRenderCards('empregos', 'jobs-container');
+    loadAndRenderCards('doacoes', 'donations-container');
     
-    // --- INICIALIZACIÓN DE LAS CARGAS ---
-    if (document.getElementById('announcements-grid')) {
-        carregarConteudo('/_dados/doacoes.json', 'announcements-grid', 'pedidos');
+    // (O código para carregar os posts do blog na página principal permanece o mesmo)
+    async function loadLatestBlogPosts() {
+        const container = document.getElementById('latest-posts-container');
+        if (!container) return; 
+
+        try {
+            const response = await fetch('/_dados/blog.json?v=' + new Date().getTime());
+            if (!response.ok) return;
+
+            const data = await response.json();
+            const posts = (data.posts || []).sort((a, b) => new Date(b.date) - new Date(a.date));
+            const latestThree = posts.slice(0, 3);
+
+            if (latestThree.length === 0) {
+                container.innerHTML = '<p class="text-center col-12">De momento, não há notícias para mostrar.</p>';
+                return;
+            }
+
+            let postsHtml = latestThree.map(post => `
+                <div class="col-md-4 mb-4 d-flex align-items-stretch">
+                    <div class="card w-100">
+                        <img src="${post.image}" class="card-img-top" alt="${post.title}" style="height: 200px; object-fit: cover;" loading="lazy">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">${post.title}</h5>
+                            <p class="card-text flex-grow-1">${post.summary}</p>
+                            <a href="blog.html" class="btn btn-outline-primary mt-auto">Ler Mais</a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            container.innerHTML = postsHtml;
+        } catch (error) {
+            console.error("Erro ao carregar os posts do blog para a página principal:", error);
+        }
     }
-    if (document.getElementById('jobs-grid')) {
-        carregarConteudo('/_dados/empregos.json', 'jobs-grid', 'vagas');
-    }
-    if (document.getElementById('services-grid')) {
-        carregarConteudo('/_dados/servicos.json', 'services-grid', 'servicos');
-    }
-    if (document.getElementById('housing-grid')) {
-        carregarConteudo('/_dados/habitacao.json', 'housing-grid', 'anuncios');
-    }
-    
-    ativarLazyLoading();
+    loadLatestBlogPosts();
 });

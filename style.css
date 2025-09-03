@@ -1770,3 +1770,64 @@ body.dark-theme .share-label {
         font-size: 1.1rem;
     }
 }
+
+/* ==========================================================================
+   NOVO DESIGN MODERNO PARA CARDS DE SERVIÇOS, EMPREGOS E DOAÇÕES
+   ========================================================================== */
+
+/* Base do novo card */
+.modern-card {
+    background-color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    height: 100%; /* Garante que todos os cards na mesma linha tenham a mesma altura */
+    display: flex;
+    flex-direction: column;
+}
+
+.modern-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* Círculo do Ícone */
+.modern-card .icon-circle {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem auto;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f4ff; /* Um fundo subtil para o ícone */
+}
+
+.modern-card .icon-circle i {
+    font-size: 2.5rem; /* Tamanho do ícone */
+    color: #007bff; /* Cor principal da marca */
+}
+
+/* Título e Descrição */
+.modern-card .card-title {
+    font-family: 'Lora', serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 0.75rem;
+}
+
+.modern-card .card-text {
+    font-family: 'Roboto', sans-serif;
+    color: #666;
+    line-height: 1.6;
+    flex-grow: 1; /* Faz a descrição preencher o espaço, alinhando os botões */
+}
+
+/* Botão (se existir) */
+.modern-card .btn {
+    margin-top: 1.5rem; /* Espaçamento acima do botão */
+}
