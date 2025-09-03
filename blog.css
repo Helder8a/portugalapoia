@@ -337,25 +337,25 @@
 }
 
 /* ==========================================================================
-   SOLUCIÓN FINAL Y CORRECTA PARA EL ARTÍCULO TITULAR EN MÓVILES
+   SOLUCIÓN FINAL, SIMPLIFICADA Y CORRECTA PARA EL TITULAR EN MÓVILES
    ========================================================================== */
 
 @media (max-width: 768px) {
 
-    /* 1. Hacemos que la tarjeta principal ocupe una sola columna. */
+    /* 1. Apilamos el contenido de la tarjeta titular en una sola columna. */
     .latest-post-card {
         grid-template-columns: 1fr;
-        gap: 1.5rem; /* Reducimos el espacio entre imagen y texto */
+        gap: 1.5rem;
     }
 
-    /* 2. (LA CLAVE) Anulamos la altura fija del contenedor de la imagen
-       y le damos una proporción de aspecto moderna y responsive. */
+    /* 2. (LA CLAVE) Le damos al contenedor de la imagen una altura fija,
+       idéntica a la de las otras tarjetas del blog (200px), para que se vea
+       consistente y mantenga su forma horizontal. */
     .latest-post-image-wrapper {
-        height: auto;
-        aspect-ratio: 16 / 9; /* Proporción panorámica, como un vídeo */
+        height: 200px;
     }
 
-    /* 3. Nos aseguramos de que la imagen llene ese nuevo espacio sin deformarse. */
+    /* 3. Nos aseguramos de que la imagen llene el contenedor sin deformarse. */
     .latest-post-img {
         width: 100%;
         height: 100%;
