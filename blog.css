@@ -269,3 +269,59 @@
         font-size: 2rem;
     }
 }
+
+/* --- AJUSTES PROFESIONALES PARA RESPONSIVIDAD MÓVIL --- */
+
+@media (max-width: 768px) {
+
+    /* 1. Tipografía y espaciado del encabezado del blog */
+    .blog-title {
+        font-size: 2.5rem; /* Reduce el tamaño del título principal para mejor encaje */
+    }
+
+    .blog-subtitle {
+        font-size: 1.1rem; /* Ajusta el subtítulo para mayor claridad */
+    }
+
+    .blog-main-content .py-5 {
+        padding-top: 2.5rem !important;
+        padding-bottom: 2.5rem !important; /* Reduce el espaciado vertical en móviles */
+    }
+
+    /* 2. Botones de categorías más adaptables */
+    .category-nav {
+        margin-bottom: 2rem; /* Reduce el margen inferior de los filtros */
+    }
+
+    .category-btn {
+        padding: 0.4rem 1rem; /* Reduce el tamaño de los botones de categoría */
+        font-size: 0.9rem;
+    }
+
+    /* 3. Optimización de las tarjetas de los artículos */
+    .post-card {
+        /* Desactiva el efecto de elevación en dispositivos táctiles para una mejor experiencia */
+        transition: box-shadow 0.3s ease;
+    }
+
+    .post-card:hover {
+        transform: none; /* Elimina el movimiento de la tarjeta en el hover */
+    }
+
+    .post-card-title {
+        font-size: 1.3rem; /* Títulos de tarjeta más legibles en móvil */
+    }
+
+    .post-card-summary {
+        font-size: 0.9rem; /* Texto de resumen ligeramente más pequeño */
+    }
+    
+    /* 4. Ajustes en la ventana modal del artículo */
+    .modal-post-content {
+        padding: 1.5rem; /* Reduce el padding dentro del modal para aprovechar mejor el espacio */
+    }
+
+    .modal-title {
+        font-size: 1.8rem; /* Ajusta el tamaño del título en el modal */
+    }
+}
