@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const postsGridContainer = document.getElementById('posts-grid');
     const categoryNav = document.getElementById('category-filter-nav');
     const noPostsMessage = document.getElementById('no-posts-message');
+    const searchInput = document.getElementById('blog-search-input');
 
     function renderPosts(posts) {
         if (!postsGridContainer) return;
@@ -50,11 +51,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         postsGridContainer.innerHTML = posts.map((post) => {
             const readingTime = calculateReadingTime(marked.parse(post.body || ''));
             const globalIndex = allPosts.findIndex(p => p.title === post.title);
-            // Alterado para usar a nova classe 'journal-article'
             return `
             <div class="journal-article">
                 <div class="card post-card w-100" data-toggle="modal" data-target="#postModal" data-post-index="${globalIndex}">
-                    <img src="${post.image}" class="card-img-top post-card-img" alt="${post.title}">
+                    <img src="${post.image}" class="card-img-top post-card-img" alt="${post.title}" loading="lazy">
                     <div class="card-body post-card-body d-flex flex-column">
                         <div class="post-meta-info mb-2">
                             <span class="category">${post.category}</span> &bull; <span>${readingTime}</span>
@@ -83,22 +83,40 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const selectedCategory = button.getAttribute('data-category');
                 
                 if(latestPostContainer) latestPostContainer.style.display = (selectedCategory === 'Todas') ? 'block' : 'none';
-                
+                if(searchInput) searchInput.value = '';
+
                 const postsToRender = (selectedCategory === 'Todas') ? allPosts.slice(1) : allPosts.filter(p => p.category === selectedCategory);
                 renderPosts(postsToRender);
             });
         });
     }
 
+    // --- LÓGICA DE PESQUISA ---
+    if (searchInput) {
+        searchInput.addEventListener('keyup', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            const filteredPosts = allPosts.filter(post => 
+                post.title.toLowerCase().includes(searchTerm) || 
+                post.summary.toLowerCase().includes(searchTerm) ||
+                (post.body && post.body.toLowerCase().includes(searchTerm)) ||
+                post.category.toLowerCase().includes(searchTerm)
+            );
+            
+            if (latestPostContainer) latestPostContainer.style.display = (searchTerm === '') ? 'block' : 'none';
+            document.querySelector('.category-btn.active')?.classList.remove('active');
+            
+            renderPosts(searchTerm === '' ? allPosts.slice(1) : filteredPosts);
+        });
+    }
+
     if (allPosts.length > 0) {
-        // --- Renderiza o Artigo Mais Recente ---
         const latestPost = allPosts[0];
         if (latestPostContainer && latestPost) {
             const readingTime = calculateReadingTime(marked.parse(latestPost.body || ''));
             latestPostContainer.innerHTML = `
                 <div class="latest-post-card" data-toggle="modal" data-target="#postModal" data-post-index="0">
                     <div class="latest-post-image-wrapper">
-                        <img src="${latestPost.image}" alt="${latestPost.title}" class="latest-post-img">
+                        <img src="${latestPost.image}" alt="${latestPost.title}" class="latest-post-img" loading="lazy">
                     </div>
                     <div class="latest-post-content">
                         <div class="post-meta-info">
@@ -120,7 +138,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
-    // --- LÓGICA PARA POBLAR Y MOSTRAR EL MODAL ---
+    // --- LÓGICA PARA POBLAR O MODAL (INCLUINDO PARTILHA) ---
     $('#postModal').on('show.bs.modal', function (event) {
         const card = $(event.relatedTarget);
         const postIndex = card.data('post-index');
@@ -134,8 +152,41 @@ document.addEventListener("DOMContentLoaded", async () => {
             modal.find('.modal-title').text(postData.title);
             modal.find('#modal-meta').html(`<span class="category">${postData.category}</span> &bull; <span>${readingTime}</span> &bull; <span class="text-muted">${formatDate(postData.date)}</span>`);
             modal.find('#modal-body').html(marked.parse(postData.body || ''));
+
+            // Lógica de Partilha
+            const postUrl = window.location.href; 
+            modal.find('.share-link').off('click').on('click', function(e) {
+                e.preventDefault();
+                const platform = $(this).data('platform');
+                const shareUrl = getShareUrl(platform, postUrl, postData.title);
+                window.open(shareUrl, '_blank', 'width=600,height=400');
+            });
+
+            // Lógica para Disqus (opcional)
+            const disqus_config = function () {
+                this.page.url = postUrl;
+                this.page.identifier = postData.title.replace(/\s/g, '-');
+            };
+            (function() {
+                if (window.DISQUS) {
+                    window.DISQUS.reset({ reload: true, config: disqus_config });
+                } else {
+                    // Adicione aqui o seu script do Disqus se não estiver carregado
+                }
+            })();
         }
     });
+
+    function getShareUrl(platform, url, text) {
+        const encodedUrl = encodeURIComponent(url);
+        const encodedText = encodeURIComponent(text);
+        switch(platform) {
+            case 'facebook': return `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
+            case 'twitter': return `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedText}`;
+            case 'linkedin': return `https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}&title=${encodedText}`;
+            case 'whatsapp': return `https://api.whatsapp.com/send?text=${encodedText}%20${encodedUrl}`;
+        }
+    }
 
     const preloader = document.getElementById("preloader");
     if (preloader) {

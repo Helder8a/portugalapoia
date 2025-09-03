@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="blog.css"> 
+    <link rel="stylesheet" href="blog.css">
 </head>
 <body class="blog-page">
     <div id="preloader"><img src="images_pta/logocuadrado.jpg" alt="A carregar..." class="spinner"></div>
@@ -53,37 +53,49 @@
                 <p class="blog-subtitle">Informação, inspiração e notícias de PortugalApoia.</p>
             </div>
 
+            <div class="search-bar-container my-4">
+                <input type="text" id="blog-search-input" class="form-control" placeholder="Pesquisar artigos por título ou palavra-chave...">
+            </div>
+
             <nav id="category-filter-nav" class="category-nav mb-5"></nav>
 
             <section id="latest-post" class="mb-5"></section>
 
             <section id="all-posts">
-                <div id="posts-grid">
-                    </div>
+                <div id="posts-grid"></div>
                 <div class="text-center mt-4" id="no-posts-message" style="display:none;">
-                    <p class="lead text-muted">Não foram encontrados artigos nesta categoria.</p>
+                    <p class="lead text-muted">Não foram encontrados artigos com os seus critérios.</p>
                 </div>
             </section>
         </div>
     </main>
 
-    <footer class="main-footer">
-        </footer>
+    <footer class="main-footer"></footer>
 
     <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="postModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <img src="" id="modal-image" class="modal-image" alt="Imagem do Artigo">
+                    <img src="" id="modal-image" class="modal-image" alt="Imagem do Artigo" loading="lazy">
                     <div class="modal-post-content">
                         <h2 class="modal-title" id="postModalLabel"></h2>
                         <div class="post-meta-info" id="modal-meta"></div>
+                        
+                        <div class="social-share my-3">
+                            <strong>Compartilhar:</strong>
+                            <a href="#" class="share-link" data-platform="facebook" title="Compartilhar no Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="share-link" data-platform="twitter" title="Compartilhar no Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="share-link" data-platform="linkedin" title="Compartilhar no LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" class="share-link" data-platform="whatsapp" title="Compartilhar no WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                        <hr>
+                        
                         <div class="post-body" id="modal-body"></div>
+                        
+                        <div id="disqus_thread" class="mt-5"></div>
                     </div>
                 </div>
             </div>

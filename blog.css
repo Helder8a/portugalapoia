@@ -1,5 +1,5 @@
 /* ==========================================================================
-   ESTILO DE PERIÓDICO / JOURNAL PARA O BLOG
+   ESTILO DE PERIÓDICO / JOURNAL PARA O BLOG (V3.0 com melhorias)
    ========================================================================== */
 
 /* 1. IMPORTAÇÃO DE FONTES CLÁSICAS */
@@ -12,221 +12,99 @@
     --journal-text-color: #333;
     --journal-border-color: #ccc;
     --journal-bg-color: #fdfdfd;
+    --brand-color: #007bff;
 }
 
-.blog-page {
-    background-color: var(--journal-bg-color);
-}
+.blog-page { background-color: var(--journal-bg-color); }
 
-/* 3. CABEÇALHO DO PERIÓDICO (MASTHEAD) */
-.blog-header {
-    text-align: center;
-    padding: 2rem 0;
-    border-bottom: 4px double var(--journal-text-color);
-    margin-bottom: 2rem;
-}
+/* 3. CABEÇALHO DO PERIÓDICO */
+.blog-header { text-align: center; padding: 2rem 0; border-bottom: 4px double var(--journal-text-color); margin-bottom: 2rem; }
+.blog-title { font-family: var(--journal-headline-font); font-size: 4.5rem; color: var(--journal-text-color); text-transform: uppercase; letter-spacing: 2px; }
+.blog-subtitle { font-family: var(--journal-body-font); font-size: 1rem; color: #666; margin-top: 0.5rem; }
 
-.blog-title {
-    font-family: var(--journal-headline-font);
-    font-size: 4.5rem;
-    color: var(--journal-text-color);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-.blog-subtitle {
-    font-family: var(--journal-body-font);
-    font-size: 1rem;
-    color: #666;
-    margin-top: 0.5rem;
-}
-
-/* 4. NOTÍCIA DE CAPA (LATEST POST) */
-#latest-post {
-    padding-bottom: 2rem;
-    margin-bottom: 2rem;
-    border-bottom: 1px solid var(--journal-border-color);
-}
-
-.latest-post-card {
-    display: grid;
-    grid-template-columns: 1fr;
-    background: none;
-    padding: 0;
-    gap: 1rem;
-    cursor: pointer;
-}
-
-.latest-post-image-wrapper {
-    max-height: 450px;
-    overflow: hidden;
-}
-
-.latest-post-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.4s ease;
-}
-
-.latest-post-card:hover .latest-post-img {
-    transform: scale(1.05);
-}
-
-.latest-post-title {
-    font-family: var(--journal-headline-font);
-    font-size: 3rem;
-    line-height: 1.1;
-    color: var(--journal-text-color);
-}
-
-.latest-post-summary, .post-meta-info, .text-muted {
-    font-family: var(--journal-body-font);
-}
+/* 4. NOTÍCIA DE CAPA */
+#latest-post { padding-bottom: 2rem; margin-bottom: 2rem; border-bottom: 1px solid var(--journal-border-color); }
+.latest-post-card { display: grid; grid-template-columns: 1fr; background: none; padding: 0; gap: 1rem; cursor: pointer; }
+.latest-post-image-wrapper { max-height: 450px; overflow: hidden; }
+.latest-post-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+.latest-post-card:hover .latest-post-img { transform: scale(1.05); }
+.latest-post-title { font-family: var(--journal-headline-font); font-size: 3rem; line-height: 1.1; color: var(--journal-text-color); }
+.latest-post-summary, .post-meta-info, .text-muted { font-family: var(--journal-body-font); }
 
 /* 5. GRELHA DE ARTIGOS */
-#posts-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-}
+#posts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+.journal-article { display: flex; flex-direction: column; padding-top: 1rem; border-top: 1px solid var(--journal-border-color); }
+.post-card { background: none; border: none; border-radius: 0; box-shadow: none; transition: none; padding: 0; cursor: pointer; }
+.post-card:hover { transform: none; box-shadow: none; }
+.post-card-img { height: 180px; object-fit: cover; margin-bottom: 1rem; }
+.post-card-title { font-family: var(--journal-headline-font); font-size: 1.8rem; color: var(--journal-text-color); line-height: 1.2; }
+.post-card-summary { font-family: var(--journal-body-font); color: #555; font-size: 1rem; }
+.post-card-footer { display: none; }
 
-.journal-article {
-    display: flex;
-    flex-direction: column;
-    padding-top: 1rem;
-    border-top: 1px solid var(--journal-border-color);
-}
-
-.post-card {
-    background: none;
-    border: none;
+/* 6. BARRA DE PESQUISA */
+.search-bar-container .form-control {
     border-radius: 0;
-    box-shadow: none;
-    transition: none;
-    padding: 0;
-    cursor: pointer;
-}
-
-.post-card:hover {
-    transform: none;
-    box-shadow: none;
-}
-
-.post-card-img {
-    height: 180px;
-    object-fit: cover;
-    margin-bottom: 1rem;
-}
-
-.post-card-title {
-    font-family: var(--journal-headline-font);
-    font-size: 1.8rem;
-    color: var(--journal-text-color);
-    line-height: 1.2;
-}
-
-.post-card-summary {
+    border: 1px solid var(--journal-border-color);
     font-family: var(--journal-body-font);
+    padding: 1.5rem 1rem;
+}
+.search-bar-container .form-control:focus {
+    border-color: var(--journal-text-color);
+    box-shadow: none;
+}
+
+/* 7. FILTROS DE CATEGORIA */
+.category-nav { text-align: center; }
+.category-btn { background: none; border: none; border-radius: 0; padding: 0.25rem 0; margin: 0 1rem; font-family: var(--journal-body-font); font-weight: 600; color: #666; border-bottom: 2px solid transparent; transition: all 0.3s ease; }
+.category-btn:hover { color: var(--journal-text-color); }
+.category-btn.active { color: var(--journal-text-color); border-bottom: 2px solid var(--journal-text-color); background: none; }
+
+/* 8. MODAL E MELHORIAS DE CONTEÚDO */
+.modal-content { border-radius: 0; }
+.modal-image { width: 100%; height: 350px; object-fit: cover; }
+.modal-post-content { padding: 2rem; }
+.modal-title { font-family: var(--journal-headline-font); font-size: 2.5rem; }
+.post-body { font-family: var(--journal-body-font); }
+/* Melhora a legibilidade do corpo do artigo */
+.post-body p { line-height: 1.8; margin-bottom: 1.5rem; }
+.post-body a { color: var(--brand-color); text-decoration: underline; }
+
+/* 9. BOTÕES DE PARTILHA */
+.social-share > strong { margin-right: 1rem; font-family: var(--journal-body-font); }
+.social-share .share-link {
     color: #555;
-    font-size: 1rem;
+    font-size: 1.2rem;
+    margin: 0 0.5rem;
+    transition: color 0.3s ease;
+}
+.social-share .share-link:hover { color: var(--brand-color); }
+
+/* 10. MELHORIAS DE UI/UX E ACESSIBILIDADE */
+/* Cor de acento para categorias e títulos */
+.post-meta-info .category,
+.journal-article .post-card:hover .post-card-title {
+    color: var(--brand-color);
+    transition: color 0.3s ease;
+}
+/* Feedback visual ao clicar */
+.journal-article .post-card:active { background-color: #f5f5f5; }
+/* Estilos de focus para navegação com teclado */
+.category-btn:focus,
+.post-card:focus,
+.search-bar-container .form-control:focus {
+    outline: 2px solid var(--brand-color);
+    outline-offset: 2px;
 }
 
-.post-card-footer {
-    display: none;
-}
-
-/* 6. RESPONSIVIDADE */
+/* 11. RESPONSIVIDADE */
 @media (max-width: 992px) {
-    #posts-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+    #posts-grid { grid-template-columns: repeat(2, 1fr); }
     .blog-title { font-size: 3.5rem; }
     .latest-post-title { font-size: 2.5rem; }
 }
-
 @media (max-width: 768px) {
-    #posts-grid {
-        grid-template-columns: 1fr;
-    }
+    #posts-grid { grid-template-columns: 1fr; }
     .blog-title { font-size: 2.5rem; }
     .latest-post-title { font-size: 2rem; }
     .post-card-title { font-size: 1.5rem; }
-}
-
-/* 7. FILTROS DE CATEGORIA SUTIS */
-.category-nav {
-    text-align: center;
-}
-
-.category-btn {
-    background: none;
-    border: none;
-    border-radius: 0;
-    padding: 0.25rem 0;
-    margin: 0 1rem;
-    font-family: var(--journal-body-font);
-    font-weight: 600;
-    color: #666;
-    border-bottom: 2px solid transparent;
-    transition: all 0.3s ease;
-}
-.category-btn:hover {
-    color: var(--journal-text-color);
-}
-.category-btn.active {
-    color: var(--journal-text-color);
-    border-bottom: 2px solid var(--journal-text-color);
-    background: none;
-}
-
-/* 8. MODAL */
-.modal-content {
-    border-radius: 0;
-}
-.modal-image {
-    width: 100%;
-    height: 350px;
-    object-fit: cover;
-}
-.modal-post-content {
-    padding: 2rem;
-}
-.modal-title {
-    font-family: var(--journal-headline-font);
-    font-size: 2.5rem;
-}
-.post-body {
-    font-family: var(--journal-body-font);
-}
-
-/* Melhora a legibilidade do corpo do artigo no modal */
-.post-body p {
-    line-height: 1.8; /* Aumenta o espaço entre as linhas */
-    margin-bottom: 1.5rem; /* Aumenta o espaço entre os parágrafos */
-}
-
-/* Usa a cor da marca para destacar elementos */
-.post-meta-info .category,
-.journal-article .post-card:hover .post-card-title {
-    color: #007bff; /* Cor primária da sua marca */
-    transition: color 0.3s ease;
-}
-
-.post-body a {
-    color: #007bff;
-    text-decoration: underline;
-}
-
-/* Adiciona feedback visual ao clicar num artigo */
-.journal-article .post-card:active {
-    background-color: #f5f5f5; /* Um flash subtil ao clicar */
-}
-
-/* Melhora a acessibilidade para navegação com teclado */
-.category-btn:focus,
-.post-card:focus {
-    outline: 2px solid #007bff;
-    outline-offset: 2px;
-    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.25);
 }
