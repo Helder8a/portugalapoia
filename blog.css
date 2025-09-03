@@ -341,3 +341,29 @@
   }
 
 }
+
+/* --- AJUSTE PROFESIONAL PARA LA PUBLICACIÓN DESTACADA EN MÓVILES --- */
+
+@media (max-width: 992px) {
+
+  /*
+   * Seleccionamos específicamente la primera tarjeta dentro del contenedor del blog.
+   * La pseudo-clase ':first-child' nos asegura que solo afectamos a esa publicación.
+  */
+  .cards-container .card:first-child {
+    /*
+     * Forzamos a que la tarjeta ocupe un ancho más adecuado para móviles, 
+     * similar al de las otras tarjetas. El `!important` es para asegurar 
+     * que esta regla anule cualquier otra que la esté afectando.
+    */
+    flex-basis: 80% !important; 
+    max-width: 500px !important;
+
+    /*
+     * Reseteamos los márgenes para asegurar un espaciado consistente
+     * con las demás tarjetas en la vista de columna.
+    */
+    margin: 1rem auto !important;
+  }
+
+}
