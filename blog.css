@@ -205,3 +205,20 @@
     line-height: 1.8; /* Aumenta o espaço entre as linhas */
     margin-bottom: 1.5rem; /* Aumenta o espaço entre os parágrafos */
 }
+
+/* Usa a cor da marca para destacar elementos */
+.post-meta-info .category,
+.journal-article .post-card:hover .post-card-title {
+    color: #007bff; /* Cor primária da sua marca */
+    transition: color 0.3s ease;
+}
+
+.post-body a {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+/* Adiciona feedback visual ao clicar num artigo */
+.journal-article .post-card:active {
+    background-color: #f5f5f5; /* Um flash subtil ao clicar */
+}
