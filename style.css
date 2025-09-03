@@ -1841,7 +1841,7 @@ body.dark-theme .share-label {
 }
 
 /* ==========================================================================
-   ESTILOS CORREGIDOS PARA TARJETAS DE ANUNCIO
+   ESTILOS FINALES PARA LAS TARJETAS DE ANUNCIO
    ========================================================================== */
 
 .card-anuncio-personalizado {
@@ -1902,9 +1902,9 @@ body.dark-theme .share-label {
     padding-top: 1rem;
     border-top: 1px solid #e9ecef;
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 1.5rem;
+    flex-direction: column; /* Contactos en vertical */
+    align-items: flex-start; /* Alineados a la izquierda */
+    gap: 0.8rem; /* Espacio entre ellos */
 }
 
 .card-anuncio-personalizado .contact-link {
