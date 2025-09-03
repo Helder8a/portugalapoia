@@ -4,8 +4,8 @@ $(document).ready(function() {
         $('#preloader').fadeOut('slow');
     });
 
-    // Caminho corrigido para o arquivo JSON. 
-    // Se esta não for a URL correta no seu servidor, ajuste-a conforme necessário.
+    // O caminho para o arquivo JSON agora aponta para a raiz do site.
+    // Isto funciona porque movemos o blog.json para lá.
     const blogDataUrl = 'blog.json'; 
 
     // Função para buscar e exibir os posts do blog
@@ -13,14 +13,14 @@ $(document).ready(function() {
         .then(response => {
             if (!response.ok) {
                 // Se a resposta da rede não for bem-sucedida, lança um erro
-                throw new Error(`Erro de rede: ${response.statusText} (status: ${response.status})`);
+                throw new Error(`O servidor não conseguiu encontrar o arquivo de dados do blog (status: ${response.status})`);
             }
             return response.json();
         })
         .then(data => {
             if (!data || data.length === 0) {
                  // Se não houver dados ou o array estiver vazio
-                 showError("Não foram encontrados artigos para exibir.");
+                 showError("O arquivo de dados do blog foi encontrado, mas está vazio. Nenhum artigo para exibir.");
                  return;
             }
             // Ordena os posts por data, do mais recente para o mais antigo
@@ -30,18 +30,21 @@ $(document).ready(function() {
         })
         .catch(error => {
             // Captura erros no fetch ou no processamento dos dados
-            console.error('Erro ao carregar os artigos do blog:', error);
-            showError(`Ocorreu um erro ao carregar o conteúdo do blog. Por favor, tente novamente mais tarde. Detalhe: ${error.message}`);
+            console.error('Erro detalhado ao carregar os artigos do blog:', error);
+            const errorMessage = `Não foi possível carregar o conteúdo do blog. Verifique se o arquivo <strong>${blogDataUrl}</strong> existe na raiz do seu site e não contém erros. <br><br><strong>Detalhe técnico:</strong> ${error.message}`;
+            showError(errorMessage);
         });
 
     // Função para exibir uma mensagem de erro na página
     function showError(message) {
-        const errorHtml = `<div class="col-12 text-center">
-                               <p class="lead text-danger font-weight-bold">${message}</p>
+        const errorHtml = `<div class="col-12 text-center alert alert-danger">
+                               <p class="lead">${message}</p>
                            </div>`;
         $('#latest-post').hide();
         $('#all-posts .section-title').hide();
-        $('#posts-grid').html(errorHtml);
+        // Garante que a mensagem de erro seja exibida dentro da área da grelha de posts
+        $('#posts-grid').html(errorHtml).show();
+        $('#no-posts-message').hide();
     }
 
 
@@ -52,7 +55,9 @@ $(document).ready(function() {
         postsGrid.empty();
         latestPostSection.empty();
 
-        let filteredPosts = (category === 'Todos') ? posts : posts.filter(post => post.category === category);
+        // Faz uma cópia dos posts para não alterar o array original ao filtrar
+        let allPosts = [...posts];
+        let filteredPosts = (category === 'Todos') ? allPosts : allPosts.filter(post => post.category === category);
         
         if (filteredPosts.length === 0) {
             $('#no-posts-message').show();
@@ -104,6 +109,7 @@ $(document).ready(function() {
         $('.post-card, .read-more-btn').on('click', function(e) {
             e.preventDefault();
             const postId = $(this).data('id');
+            // Usamos o array original 'posts' para encontrar o post, garantindo que o ID seja encontrado
             const post = posts.find(p => p.id === postId);
             if (post) {
                 showPostModal(post);
@@ -115,6 +121,7 @@ $(document).ready(function() {
     function populateCategoryFilter(posts) {
         const categories = ['Todos', ...new Set(posts.map(post => post.category))];
         const categoryFilterNav = $('#category-filter-nav');
+        categoryFilterNav.empty(); // Limpa botões antigos antes de adicionar novos
         categories.forEach(category => {
             const button = `<button class="category-btn ${category === 'Todos' ? 'active' : ''}" data-category="${category}">${category}</button>`;
             categoryFilterNav.append(button);
@@ -124,6 +131,7 @@ $(document).ready(function() {
             $('.category-btn').removeClass('active');
             $(this).addClass('active');
             const selectedCategory = $(this).data('category');
+            // Passa a lista original de posts para a função de exibição
             displayPosts(posts, selectedCategory);
         });
     }
