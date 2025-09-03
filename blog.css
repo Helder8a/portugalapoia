@@ -276,25 +276,30 @@
 
     /* 1. Tipografía y espaciado del encabezado del blog */
     .blog-title {
-        font-size: 2.5rem; /* Reduce el tamaño del título principal para mejor encaje */
+        font-size: 2.5rem;
+        /* Reduce el tamaño del título principal para mejor encaje */
     }
 
     .blog-subtitle {
-        font-size: 1.1rem; /* Ajusta el subtítulo para mayor claridad */
+        font-size: 1.1rem;
+        /* Ajusta el subtítulo para mayor claridad */
     }
 
     .blog-main-content .py-5 {
         padding-top: 2.5rem !important;
-        padding-bottom: 2.5rem !important; /* Reduce el espaciado vertical en móviles */
+        padding-bottom: 2.5rem !important;
+        /* Reduce el espaciado vertical en móviles */
     }
 
     /* 2. Botones de categorías más adaptables */
     .category-nav {
-        margin-bottom: 2rem; /* Reduce el margen inferior de los filtros */
+        margin-bottom: 2rem;
+        /* Reduce el margen inferior de los filtros */
     }
 
     .category-btn {
-        padding: 0.4rem 1rem; /* Reduce el tamaño de los botones de categoría */
+        padding: 0.4rem 1rem;
+        /* Reduce el tamaño de los botones de categoría */
         font-size: 0.9rem;
     }
 
@@ -305,40 +310,46 @@
     }
 
     .post-card:hover {
-        transform: none; /* Elimina el movimiento de la tarjeta en el hover */
+        transform: none;
+        /* Elimina el movimiento de la tarjeta en el hover */
     }
 
     .post-card-title {
-        font-size: 1.3rem; /* Títulos de tarjeta más legibles en móvil */
+        font-size: 1.3rem;
+        /* Títulos de tarjeta más legibles en móvil */
     }
 
     .post-card-summary {
-        font-size: 0.9rem; /* Texto de resumen ligeramente más pequeño */
+        font-size: 0.9rem;
+        /* Texto de resumen ligeramente más pequeño */
     }
-    
+
     /* 4. Ajustes en la ventana modal del artículo */
     .modal-post-content {
-        padding: 1.5rem; /* Reduce el padding dentro del modal para aprovechar mejor el espacio */
+        padding: 1.5rem;
+        /* Reduce el padding dentro del modal para aprovechar mejor el espacio */
     }
 
     .modal-title {
-        font-size: 1.8rem; /* Ajusta el tamaño del título en el modal */
+        font-size: 1.8rem;
+        /* Ajusta el tamaño del título en el modal */
     }
 }
 
 /* --- AJUSTE PROFESIONAL PARA RESPONSIVIDAD DEL BLOG EN LA PÁGINA PRINCIPAL --- */
 
 @media (max-width: 992px) {
-  
-  /* * Seleccionamos el contenedor de las tarjetas del blog en la página de inicio.
+
+    /* * Seleccionamos el contenedor de las tarjetas del blog en la página de inicio.
    * La clase '.cards-container' es la que actualmente fuerza la disposición en una sola línea.
    * Con 'flex-wrap: wrap', permitimos que los elementos se envuelvan y pasen a la siguiente línea 
    * cuando no haya suficiente espacio.
   */
-  .cards-container {
-    flex-wrap: wrap;
-    justify-content: center; /* Opcional: Centra las tarjetas para un mejor aspecto */
-  }
+    .cards-container {
+        flex-wrap: wrap;
+        justify-content: center;
+        /* Opcional: Centra las tarjetas para un mejor aspecto */
+    }
 
 }
 
@@ -346,23 +357,27 @@
 
 @media (max-width: 768px) {
 
-  /*
+    /*
    * 1. Hacemos que el CONTENEDOR de la imagen sea flexible.
    * Eliminamos su altura fija y le damos una altura basada en la proporción de la pantalla.
   */
-  .post-card-large .post-card-image-container {
-    height: 50vw !important; /* Altura relativa al ancho de la pantalla */
-    max-height: 250px;       /* Un límite para que no sea demasiado grande */
-  }
+    @media (min-width: 768px) {
 
-  /*
+        /* <-- LA MAGIA ESTÁ AQUÍ */
+        .post-card-large .post-card-image-container {
+            height: 400px;
+        }
+    }
+
+    /*
    * 2. Forzamos a la IMAGEN dentro del contenedor a ocupar todo el espacio
    * disponible de manera correcta, sin importar sus dimensiones originales.
   */
-  .post-card-large .post-card-image-container .post-card-image {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important; /* La propiedad clave para que no se deforme */
-  }
+    .post-card-large .post-card-image-container .post-card-image {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        /* La propiedad clave para que no se deforme */
+    }
 
 }
