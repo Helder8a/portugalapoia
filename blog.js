@@ -1,156 +1,147 @@
-$(document).ready(function() {
-    // Esconde o preloader quando a página estiver totalmente carregada
-    $(window).on('load', function() {
-        $('#preloader').fadeOut('slow');
-    });
-
-    // O caminho para o arquivo JSON agora aponta para a raiz do site.
-    // Isto funciona porque movemos o blog.json para lá.
-    const blogDataUrl = 'blog.json'; 
-
-    // Função para buscar e exibir os posts do blog
-    fetch(blogDataUrl)
-        .then(response => {
-            if (!response.ok) {
-                // Se a resposta da rede não for bem-sucedida, lança um erro
-                throw new Error(`O servidor não conseguiu encontrar o arquivo de dados do blog (status: ${response.status})`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (!data || data.length === 0) {
-                 // Se não houver dados ou o array estiver vazio
-                 showError("O arquivo de dados do blog foi encontrado, mas está vazio. Nenhum artigo para exibir.");
-                 return;
-            }
-            // Ordena os posts por data, do mais recente para o mais antigo
-            data.sort((a, b) => new Date(b.date) - new Date(a.date));
-            displayPosts(data);
-            populateCategoryFilter(data);
-        })
-        .catch(error => {
-            // Captura erros no fetch ou no processamento dos dados
-            console.error('Erro detalhado ao carregar os artigos do blog:', error);
-            const errorMessage = `Não foi possível carregar o conteúdo do blog. Verifique se o arquivo <strong>${blogDataUrl}</strong> existe na raiz do seu site e não contém erros. <br><br><strong>Detalhe técnico:</strong> ${error.message}`;
-            showError(errorMessage);
-        });
-
-    // Função para exibir uma mensagem de erro na página
-    function showError(message) {
-        const errorHtml = `<div class="col-12 text-center alert alert-danger">
-                               <p class="lead">${message}</p>
-                           </div>`;
-        $('#latest-post').hide();
-        $('#all-posts .section-title').hide();
-        // Garante que a mensagem de erro seja exibida dentro da área da grelha de posts
-        $('#posts-grid').html(errorHtml).show();
-        $('#no-posts-message').hide();
+document.addEventListener("DOMContentLoaded", async () => {
+    // --- FUNCIÓN PARA CARGAR PUBLICACIONES DEL BLOG ---
+    async function fetchPosts() {
+        try {
+            const response = await fetch('/_dados/blog.json?v=' + new Date().getTime());
+            if (!response.ok) throw new Error("A resposta da rede não foi bem-sucedida.");
+            const data = await response.json();
+            return data.posts || [];
+        } catch (error) {
+            console.error("Erro ao carregar as publicações do blog:", error);
+            return [];
+        }
     }
 
+    // --- FUNCIONES AUXILIARES ---
+    function formatDate(dateString) {
+        if (!dateString) return '';
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString('pt-PT', options);
+    }
+    
+    function calculateReadingTime(text) {
+        if (!text) return '1 min de leitura';
+        const wordsPerMinute = 225;
+        const textContent = text.replace(/<[^>]*>/g, " ");
+        const wordCount = textContent.split(/\s+/).length;
+        const readingTime = Math.ceil(wordCount / wordsPerMinute);
+        return `${readingTime} min de leitura`;
+    }
 
-    // Função para exibir os posts na página
-    function displayPosts(posts, category = 'Todos') {
-        const postsGrid = $('#posts-grid');
-        const latestPostSection = $('#latest-post');
-        postsGrid.empty();
-        latestPostSection.empty();
+    // --- LÓGICA PRINCIPAL ---
+    const allPosts = await fetchPosts();
+    allPosts.sort((a, b) => new Date(b.date) - new Date(a.date)); // Ordena una sola vez
 
-        // Faz uma cópia dos posts para não alterar o array original ao filtrar
-        let allPosts = [...posts];
-        let filteredPosts = (category === 'Todos') ? allPosts : allPosts.filter(post => post.category === category);
-        
-        if (filteredPosts.length === 0) {
-            $('#no-posts-message').show();
-            $('#latest-post').hide();
+    const mainContent = document.querySelector('.blog-main-content');
+    const latestPostContainer = document.getElementById('latest-post');
+    const postsGridContainer = document.getElementById('posts-grid');
+    const categoryNav = document.getElementById('category-filter-nav');
+    const noPostsMessage = document.getElementById('no-posts-message');
+
+    // --- RENDERIZAR ARTÍCULOS EN LA CUADRÍCULA ---
+    function renderPosts(posts) {
+        if (posts.length === 0) {
+            postsGridContainer.innerHTML = '';
+            if (noPostsMessage) noPostsMessage.style.display = 'block';
             return;
         }
         
-        $('#no-posts-message').hide();
-        
-        // Exibir o post mais recente (primeiro do array ordenado)
-        const latestPost = filteredPosts.shift(); // Remove e retorna o primeiro item
-        
-        if (category === 'Todos' && latestPost) {
-             const latestPostCard = `
-                <div class="latest-post-card">
-                    <img src="${latestPost.image}" alt="${latestPost.title}" class="latest-post-image">
-                    <div class="latest-post-content">
-                        <p class="latest-post-category">${latestPost.category}</p>
-                        <h2 class="latest-post-title">${latestPost.title}</h2>
-                        <p class="latest-post-summary">${latestPost.summary}</p>
-                        <a href="#" class="read-more-btn" data-id="${latestPost.id}">Ler Mais <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>`;
-            latestPostSection.html(latestPostCard).show();
-        } else if (latestPost) {
-            // Se estivermos numa categoria, adicionamos o post mais recente de volta à lista para ser exibido na grelha
-            filteredPosts.unshift(latestPost);
-            $('#latest-post').hide();
-        }
-
-        // Exibir os posts restantes na grelha
-        filteredPosts.forEach(post => {
-            const postCard = `
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="post-card" data-id="${post.id}">
-                        <img src="${post.image}" class="post-card-img-top" alt="${post.title}">
-                        <div class="post-card-body">
-                            <p class="post-card-category">${post.category}</p>
-                            <h5 class="post-card-title">${post.title}</h5>
-                            <p class="post-card-date">${new Date(post.date).toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+        if (noPostsMessage) noPostsMessage.style.display = 'none';
+        postsGridContainer.innerHTML = posts.map((post, index) => {
+            const readingTime = calculateReadingTime(marked.parse(post.body || ''));
+            const globalIndex = allPosts.findIndex(p => p.title === post.title);
+            return `
+            <div class="col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
+                <div class="card post-card w-100" data-toggle="modal" data-target="#postModal" data-post-index="${globalIndex}">
+                    <img src="${post.image}" class="card-img-top post-card-img" alt="${post.title}">
+                    <div class="card-body post-card-body d-flex flex-column">
+                        <h5 class="post-card-title">${post.title}</h5>
+                        <div class="post-meta-info mb-2">
+                            <span class="category">${post.category}</span> &bull; <span>${readingTime}</span>
+                        </div>
+                        <p class="post-card-summary">${post.summary}</p>
+                        <div class="post-card-footer mt-auto">
+                            <span class="text-muted small">Por ${post.author || 'PortugalApoia'}</span>
                         </div>
                     </div>
                 </div>
-            `;
-            postsGrid.append(postCard);
-        });
+            </div>`;
+        }).join('');
+    }
+    
+    // --- LÓGICA DE CATEGORÍAS ---
+    function setupCategories() {
+        if (!categoryNav) return;
+        const categories = ['Todas', ...new Set(allPosts.map(p => p.category))];
+        categoryNav.innerHTML = categories.map(cat => `<button class="category-btn" data-category="${cat}">${cat}</button>`).join('');
+        
+        const buttons = categoryNav.querySelectorAll('.category-btn');
+        buttons[0].classList.add('active'); // Activa el botón "Todas" por defecto
 
-        // Adiciona o listener de clique para abrir o modal
-        $('.post-card, .read-more-btn').on('click', function(e) {
-            e.preventDefault();
-            const postId = $(this).data('id');
-            // Usamos o array original 'posts' para encontrar o post, garantindo que o ID seja encontrado
-            const post = posts.find(p => p.id === postId);
-            if (post) {
-                showPostModal(post);
-            }
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                buttons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                const selectedCategory = button.getAttribute('data-category');
+                
+                // Muestra el titular solo si se selecciona "Todas"
+                latestPostContainer.style.display = (selectedCategory === 'Todas') ? 'block' : 'none';
+                
+                const postsToRender = (selectedCategory === 'Todas') ? allPosts.slice(1) : allPosts.filter(p => p.category === selectedCategory);
+                renderPosts(postsToRender);
+            });
         });
     }
 
-    // Função para popular o filtro de categorias
-    function populateCategoryFilter(posts) {
-        const categories = ['Todos', ...new Set(posts.map(post => post.category))];
-        const categoryFilterNav = $('#category-filter-nav');
-        categoryFilterNav.empty(); // Limpa botões antigos antes de adicionar novos
-        categories.forEach(category => {
-            const button = `<button class="category-btn ${category === 'Todos' ? 'active' : ''}" data-category="${category}">${category}</button>`;
-            categoryFilterNav.append(button);
-        });
+    if (allPosts.length > 0) {
+        // --- Renderiza el Artículo Más Reciente ---
+        const latestPost = allPosts[0];
+        if (latestPostContainer && latestPost) {
+            const readingTime = calculateReadingTime(marked.parse(latestPost.body || ''));
+            latestPostContainer.innerHTML = `
+                <div class="latest-post-card" data-toggle="modal" data-target="#postModal" data-post-index="0">
+                    <div class="latest-post-image-wrapper">
+                        <img src="${latestPost.image}" alt="${latestPost.title}" class="latest-post-img">
+                    </div>
+                    <div class="latest-post-content">
+                        <div class="post-meta-info">
+                            <span class="category">${latestPost.category}</span> &bull; <span>${readingTime}</span>
+                        </div>
+                        <h2 class="latest-post-title">${latestPost.title}</h2>
+                        <p class="latest-post-summary">${latestPost.summary}</p>
+                        <p class="text-muted small">Por ${latestPost.author || 'PortugalApoia'} em ${formatDate(latestPost.date)}</p>
+                    </div>
+                </div>`;
+        }
 
-        $('.category-btn').on('click', function() {
-            $('.category-btn').removeClass('active');
-            $(this).addClass('active');
-            const selectedCategory = $(this).data('category');
-            // Passa a lista original de posts para a função de exibição
-            displayPosts(posts, selectedCategory);
-        });
+        renderPosts(allPosts.slice(1));
+        setupCategories();
+
+    } else {
+        if(mainContent) {
+            mainContent.innerHTML = `<div class="container text-center py-5"><h1 class="blog-title">O Nosso Blog</h1><p class="lead text-muted mt-4">De momento, não foi possível carregar as publicações.</p></div>`;
+        }
     }
 
-    // Função para exibir o conteúdo do post num modal
-    function showPostModal(post) {
-        $('#modal-image').attr('src', post.image);
-        $('#postModalLabel').text(post.title);
-        
-        const metaInfo = `
-            <span><i class="fas fa-user"></i> ${post.author}</span>
-            <span><i class="fas fa-calendar-alt"></i> ${new Date(post.date).toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
-            <span><i class="fas fa-tag"></i> ${post.category}</span>
-        `;
-        $('#modal-meta').html(metaInfo);
-        
-        // Usa a biblioteca 'marked' para converter Markdown em HTML
-        $('#modal-body').html(marked.parse(post.content));
-        
-        $('#postModal').modal('show');
+    // --- LÓGICA PARA POBLAR Y MOSTRAR EL MODAL ---
+    $('#postModal').on('show.bs.modal', function (event) {
+        const card = $(event.relatedTarget);
+        const postIndex = card.data('post-index');
+        const postData = allPosts[postIndex];
+
+        if (postData) {
+            const modal = $(this);
+            const readingTime = calculateReadingTime(marked.parse(postData.body || ''));
+            
+            modal.find('#modal-image').attr('src', postData.image);
+            modal.find('.modal-title').text(postData.title);
+            modal.find('#modal-meta').html(`<span class="category">${postData.category}</span> &bull; <span>${readingTime}</span> &bull; <span class="text-muted">${formatDate(postData.date)}</span>`);
+            modal.find('#modal-body').html(marked.parse(postData.body || ''));
+        }
+    });
+
+    const preloader = document.getElementById("preloader");
+    if (preloader) {
+        preloader.classList.add("hidden");
     }
 });
