@@ -3,11 +3,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     async function fetchData(url) {
         try {
             const response = await fetch(`${url}?v=${new Date().getTime()}`);
-            if (!response.ok) throw new Error(`A resposta da rede para ${url} não foi bem-sucedida.`);
+            if (!response.ok) {
+                console.error(`A resposta da rede para ${url} não foi bem-sucedida.`);
+                return null; // Retorna nulo se houver erro de rede
+            }
             return await response.json();
         } catch (error) {
-            console.error("Erro ao carregar dados:", error);
-            return null;
+            console.error(`Erro ao carregar dados de ${url}:`, error);
+            return null; // Retorna nulo se houver erro na leitura
         }
     }
 
@@ -33,15 +36,18 @@ document.addEventListener("DOMContentLoaded", async () => {
         fetchData('/_dados/autores.json')
     ]);
 
-    const allPosts = postsData ? postsData.posts || [] : [];
+    // Verificação de segurança para garantir que os dados existem
+    const allPosts = (postsData && postsData.posts) ? postsData.posts : [];
     const authors = authorsData || [];
     allPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
 
-    // Mapeia os autores por ID para acesso rápido
     const authorsById = authors.reduce((acc, author) => {
         acc[author.id] = author;
         return acc;
     }, {});
+    
+    // Autor padrão para evitar erros
+    const defaultAuthor = { nome: "Equipa PortugalApoia" };
 
     const mainContent = document.querySelector('.blog-main-content');
     const latestPostContainer = document.getElementById('latest-post');
@@ -52,7 +58,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     function renderPosts(posts) {
         if (!postsGridContainer) return;
-        postsGridContainer.innerHTML = ''; // Limpa antes de renderizar
+        postsGridContainer.innerHTML = '';
 
         if (posts.length === 0) {
             if (noPostsMessage) noPostsMessage.style.display = 'block';
@@ -64,7 +70,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         postsGridContainer.innerHTML = posts.map((post) => {
             const readingTime = calculateReadingTime(marked.parse(post.body || ''));
             const globalIndex = allPosts.findIndex(p => p.title === post.title);
-            const author = authorsById[post.author_id] || authorsById['autor_principal'];
+            const author = authorsById[post.author_id] || defaultAuthor;
             
             return `
             <div class="journal-article">
@@ -85,9 +91,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         }).join('');
     }
     
-    // --- LÓGICA DE CATEGORIAS ---
     function setupCategories() {
-        if (!categoryNav) return;
+        if (!categoryNav || allPosts.length === 0) return;
         const categories = ['Todas', ...new Set(allPosts.map(p => p.category))];
         categoryNav.innerHTML = categories.map(cat => `<button class="category-btn" data-category="${cat}">${cat}</button>`).join('');
         
@@ -109,30 +114,29 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // --- LÓGICA DE PESQUISA ---
     if (searchInput) {
         searchInput.addEventListener('keyup', () => {
             const searchTerm = searchInput.value.toLowerCase();
             const filteredPosts = allPosts.filter(post => 
-                post.title.toLowerCase().includes(searchTerm) || 
-                post.summary.toLowerCase().includes(searchTerm) ||
+                (post.title && post.title.toLowerCase().includes(searchTerm)) || 
+                (post.summary && post.summary.toLowerCase().includes(searchTerm)) ||
                 (post.body && post.body.toLowerCase().includes(searchTerm)) ||
-                post.category.toLowerCase().includes(searchTerm)
+                (post.category && post.category.toLowerCase().includes(searchTerm))
             );
             
             if (latestPostContainer) latestPostContainer.style.display = (searchTerm === '') ? 'block' : 'none';
-            document.querySelector('.category-btn.active')?.classList.remove('active');
+            const activeButton = document.querySelector('.category-btn.active');
+            if (activeButton) activeButton.classList.remove('active');
             
             renderPosts(searchTerm === '' ? allPosts.slice(1) : filteredPosts);
         });
     }
 
-    // --- RENDERIZAÇÃO INICIAL ---
     if (allPosts.length > 0) {
         const latestPost = allPosts[0];
         if (latestPostContainer && latestPost) {
             const readingTime = calculateReadingTime(marked.parse(latestPost.body || ''));
-            const author = authorsById[latestPost.author_id] || authorsById['autor_principal'];
+            const author = authorsById[latestPost.author_id] || defaultAuthor;
 
             latestPostContainer.innerHTML = `
                 <div class="latest-post-card" data-toggle="modal" data-target="#postModal" data-post-index="0">
@@ -159,7 +163,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
-    // --- LÓGICA DO MODAL ---
     $('#postModal').on('show.bs.modal', function (event) {
         const card = $(event.relatedTarget);
         const postIndex = card.data('post-index');
@@ -168,16 +171,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (postData) {
             const modal = $(this);
             const readingTime = calculateReadingTime(marked.parse(postData.body || ''));
-            const author = authorsById[postData.author_id] || authorsById['autor_principal'];
+            const author = authorsById[postData.author_id] || defaultAuthor;
             
             modal.find('#modal-image').attr('src', postData.image);
             modal.find('.modal-title').text(postData.title);
             modal.find('#modal-meta').html(`<span class="category">${postData.category}</span> &bull; <span>${readingTime}</span> &bull; <span class="text-muted">Por <strong>${author.nome}</strong> em ${formatDate(postData.date)}</span>`);
             modal.find('#modal-body').html(marked.parse(postData.body || ''));
-
-            // Lógica de Partilha e Disqus (existente)
         }
     });
 
-    // Código restante (getShareUrl, preloader, etc.) permanece igual...
+    const preloader = document.getElementById("preloader");
+    if (preloader) {
+        preloader.classList.add("hidden");
+    }
 });
