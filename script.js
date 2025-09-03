@@ -50,31 +50,47 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     // --- FUNCIÓN MEJORADA PARA CREAR TARJETAS DE ANUNCIOS ---
-    function renderCard(item, category) {
-        const defaultImagePlaceholder = '<div class="image-placeholder"></div>';
-        let imageUrl = item.imagem || item.logo_empresa || (item.imagens && item.imagens.length > 0 ? item.imagens[0].imagem_url : null);
-        
-        const imageHtml = imageUrl 
-            ? `<img src="${imageUrl}" class="card-img-top lazy" data-src="${imageUrl}" alt="${item.titulo}">`
-            : defaultImagePlaceholder;
+    // --- FUNÇÃO MELHORADA PARA CRIAR CARTÕES DE ANÚNCIOS ---
+function renderCard(item, category) {
+    // Define uma imagem de substituição padrão caso não haja uma imagem específica.
+    const defaultImagePlaceholder = '<div class="image-placeholder"></div>';
+    let imageUrl = item.imagem || item.logo_empresa || (item.imagens && item.imagens.length > 0 ? item.imagens[0].imagem_url : null);
 
-        return `
-        <div class="col-lg-4 col-md-6 mb-4 announcement-card" data-title="${item.titulo}" data-location="${item.localizacao}">
-            <div class="card h-100">
-                <div class="card-number">${item.id || ''}</div>
-                ${imageHtml}
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">${item.titulo}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i> ${item.localizacao}</h6>
-                    <p class="card-text flex-grow-1">${item.descricao}</p>
-                    <div class="card-contact-icons mt-auto">
-                        ${item.contato ? `<a href="tel:${item.contato}" class="contact-icon" title="Contactar por Telefone"><i class="fas fa-phone"></i> <span>${item.contato}</span></a>` : ''}
-                        ${item.link_contato ? `<a href="${item.link_contato}" class="contact-icon" title="Contactar por Email"><i class="fas fa-envelope"></i> <span>Email</span></a>` : ''}
-                    </div>
-                </div>
+    // Constrói o HTML da imagem, usando a imagem de substituição se não houver URL.
+    const imageHtml = imageUrl
+        ? `<img src="${imageUrl}" class="card-img-top lazy" data-src="${imageUrl}" alt="${item.titulo}">`
+        : defaultImagePlaceholder;
+
+    // Constrói o HTML dos ícones de contato (telefone e email), apenas se existirem.
+    const contatoHtml = `
+        <div class="card-contact-details">
+            ${item.contato ? `
+            <a href="tel:${item.contato}" class="contact-link" title="Contactar por Telefone">
+                <i class="fas fa-phone-alt"></i>
+                <span>${item.contato}</span>
+            </a>` : ''}
+            ${item.link_contato ? `
+            <a href="mailto:${item.link_contato}" class="contact-link" title="Contactar por Email">
+                <i class="fas fa-envelope"></i>
+                <span>Email</span>
+            </a>` : ''}
+        </div>
+    `;
+
+    // Retorna a estrutura HTML completa do cartão.
+    return `
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100 shadow-sm announcement-card-simple">
+            ${imageHtml}
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">${item.titulo}</h5>
+                <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i>${item.localizacao}</h6>
+                <p class="card-text flex-grow-1">${item.descricao}</p>
+                ${contatoHtml}
             </div>
-        </div>`;
-    }
+        </div>
+    </div>`;
+}
 
     // --- FUNCIÓN GLOBAL PARA CARGAR TODO EL CONTENIDO ---
     async function carregarConteudo(jsonPath, containerId, dataKey) {

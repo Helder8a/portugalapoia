@@ -1770,3 +1770,79 @@ body.dark-theme .share-label {
         font-size: 1.1rem;
     }
 }
+
+/* ==========================================================================
+   ESTILOS PROFISSIONAIS PARA CARTÕES DE ANÚNCIOS (V2)
+   ========================================================================== */
+
+.announcement-card-simple {
+    border: 1px solid #e9ecef;
+    border-radius: 12px; /* Bordas mais arredondadas */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden; /* Garante que a imagem se ajuste às bordas arredondadas */
+}
+
+/* EFEITO DE HOVER PROFISSIONAL */
+.announcement-card-simple:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1) !important;
+}
+
+.announcement-card-simple .card-img-top {
+    height: 180px;
+    object-fit: cover;
+}
+
+.announcement-card-simple .card-body {
+    padding: 1.25rem;
+}
+
+.announcement-card-simple .card-title {
+    font-family: 'Inter', sans-serif; /* Fonte mais moderna para títulos */
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #0A3D62; /* Cor primária */
+    margin-bottom: 0.5rem;
+}
+
+.announcement-card-simple .card-subtitle {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.announcement-card-simple .card-text {
+    color: #495057;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* NOVA SECÇÃO DE CONTATO COM ÍCONES */
+.card-contact-details {
+    margin-top: auto; /* Empurra para o fundo do cartão */
+    padding-top: 1rem;
+    border-top: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: flex-end; /* Alinha os ícones à direita */
+    align-items: center;
+    gap: 1rem; /* Espaçamento entre os ícones */
+}
+
+.contact-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Espaço entre o ícone e o texto */
+    text-decoration: none;
+    color: #007BFF; /* Cor secundária */
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+.contact-link:hover {
+    color: #0056b3; /* Cor mais escura no hover */
+    text-decoration: none;
+}
+
+.contact-link i {
+    font-size: 1.1rem; /* Tamanho dos ícones */
+}
