@@ -342,47 +342,27 @@
 
 }
 
-/* --- AJUSTE PROFESIONAL PARA LA PUBLICACIÓN DESTACADA EN MÓVILES --- */
-
-@media (max-width: 992px) {
-
-  /*
-   * Seleccionamos específicamente la primera tarjeta dentro del contenedor del blog.
-   * La pseudo-clase ':first-child' nos asegura que solo afectamos a esa publicación.
-  */
-  .cards-container .card:first-child {
-    /*
-     * Forzamos a que la tarjeta ocupe un ancho más adecuado para móviles, 
-     * similar al de las otras tarjetas. El `!important` es para asegurar 
-     * que esta regla anule cualquier otra que la esté afectando.
-    */
-    flex-basis: 80% !important; 
-    max-width: 500px !important;
-
-    /*
-     * Reseteamos los márgenes para asegurar un espaciado consistente
-     * con las demás tarjetas en la vista de columna.
-    */
-    margin: 1rem auto !important;
-  }
-
-}
-
-/* --- SOLUCIÓN DEFINITIVA PARA IMAGEN DESTACADA RESPONSIVE --- 
-*/
+/* --- SOLUCIÓN FINAL Y DEFINITIVA PARA IMAGEN TITULAR --- */
 
 @media (max-width: 768px) {
 
   /*
-   * Seleccionamos la imagen destacada que tiene la clase '.post-card-image-large'.
-   * Le decimos que su altura debe ser automática para que se ajuste a la proporción
-   * del ancho, que ahora es fluido.
-   * También, 'object-fit: cover' asegura que la imagen cubra el espacio 
-   * sin deformarse, por si acaso.
+   * 1. Hacemos que el CONTENEDOR de la imagen sea flexible.
+   * Eliminamos su altura fija y le damos una altura basada en la proporción de la pantalla.
   */
-  .post-card-image-large {
-    height: auto !important; /* La clave está en esta línea */
-    object-fit: cover;
+  .post-card-large .post-card-image-container {
+    height: 50vw !important; /* Altura relativa al ancho de la pantalla */
+    max-height: 250px;       /* Un límite para que no sea demasiado grande */
+  }
+
+  /*
+   * 2. Forzamos a la IMAGEN dentro del contenedor a ocupar todo el espacio
+   * disponible de manera correcta, sin importar sus dimensiones originales.
+  */
+  .post-card-large .post-card-image-container .post-card-image {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important; /* La propiedad clave para que no se deforme */
   }
 
 }
