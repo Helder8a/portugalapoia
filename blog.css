@@ -325,3 +325,19 @@
         font-size: 1.8rem; /* Ajusta el tamaño del título en el modal */
     }
 }
+
+/* --- AJUSTE PROFESIONAL PARA RESPONSIVIDAD DEL BLOG EN LA PÁGINA PRINCIPAL --- */
+
+@media (max-width: 992px) {
+  
+  /* * Seleccionamos el contenedor de las tarjetas del blog en la página de inicio.
+   * La clase '.cards-container' es la que actualmente fuerza la disposición en una sola línea.
+   * Con 'flex-wrap: wrap', permitimos que los elementos se envuelvan y pasen a la siguiente línea 
+   * cuando no haya suficiente espacio.
+  */
+  .cards-container {
+    flex-wrap: wrap;
+    justify-content: center; /* Opcional: Centra las tarjetas para un mejor aspecto */
+  }
+
+}
