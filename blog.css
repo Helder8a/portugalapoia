@@ -108,3 +108,27 @@
     .latest-post-title { font-size: 2rem; }
     .post-card-title { font-size: 1.5rem; }
 }
+
+/* Dentro de @media (max-width: 768px) en blog.css */
+
+/* Melhora o espaçamento geral em telemóveis */
+.blog-main-content .py-5 {
+    padding-top: 2.5rem !important;
+    padding-bottom: 2.5rem !important;
+}
+
+/* Títulos ligeiramente maiores para melhor hierarquia */
+.latest-post-title {
+    font-size: 2.2rem;
+}
+
+.post-card-title {
+    font-size: 1.6rem;
+}
+
+/* Estilo para a assinatura do autor */
+.author-byline {
+    font-size: 0.9rem;
+    color: #666;
+    font-family: var(--journal-body-font);
+}
