@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const categoryNav = document.getElementById('category-filter-nav');
     const noPostsMessage = document.getElementById('no-posts-message');
 
-    // --- RENDERIZAR ARTÍCULOS EN LA CUADRÍCULA ---
+    // Bloque de código MODIFICADO en blog.js
     function renderPosts(posts) {
         if (posts.length === 0) {
             postsGridContainer.innerHTML = '';
