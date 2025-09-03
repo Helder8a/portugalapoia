@@ -1772,20 +1772,20 @@ body.dark-theme .share-label {
 }
 
 /* ==========================================================================
-   ESTILOS PROFISSIONAIS PARA CARTÕES DE ANÚNCIOS (V2)
+   ESTILOS PROFESIONALES PARA TARJETAS DE CONTACTO (V3)
    ========================================================================== */
 
 .announcement-card-simple {
-    border: 1px solid #e9ecef;
-    border-radius: 12px; /* Bordas mais arredondadas */
+    border: 1px solid #e0e0e0; /* Borde gris neutro */
+    border-radius: 12px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    overflow: hidden; /* Garante que a imagem se ajuste às bordas arredondadas */
+    overflow: hidden;
 }
 
-/* EFEITO DE HOVER PROFISSIONAL */
+/* Efecto hover sutil */
 .announcement-card-simple:hover {
     transform: translateY(-8px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08) !important;
 }
 
 .announcement-card-simple .card-img-top {
@@ -1795,54 +1795,47 @@ body.dark-theme .share-label {
 
 .announcement-card-simple .card-body {
     padding: 1.25rem;
+    text-align: center; /* Centramos el contenido */
 }
 
 .announcement-card-simple .card-title {
-    font-family: 'Inter', sans-serif; /* Fonte mais moderna para títulos */
-    font-weight: 700;
-    font-size: 1.2rem;
-    color: #0A3D62; /* Cor primária */
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 1.3rem; /* Título más grande */
+    color: #333; /* Color de texto oscuro y neutro */
     margin-bottom: 0.5rem;
 }
 
 .announcement-card-simple .card-subtitle {
     font-size: 0.9rem;
-    color: #6c757d;
+    color: #757575; /* Gris suave para la localización */
+    margin-bottom: 1.5rem; /* Más espacio antes de los contactos */
 }
 
-.announcement-card-simple .card-text {
-    color: #495057;
-    font-size: 0.95rem;
-    line-height: 1.6;
-}
-
-/* NOVA SECÇÃO DE CONTATO COM ÍCONES */
+/* SECCIÓN DE CONTACTO CON ÍCONOS */
 .card-contact-details {
-    margin-top: auto; /* Empurra para o fundo do cartão */
-    padding-top: 1rem;
-    border-top: 1px solid #f0f0f0;
     display: flex;
-    justify-content: flex-end; /* Alinha os ícones à direita */
-    align-items: center;
-    gap: 1rem; /* Espaçamento entre os ícones */
+    flex-direction: column; /* Contactos en vertical */
+    align-items: center; /* Alineados al centro */
+    gap: 0.8rem; /* Espacio entre teléfono y email */
 }
 
 .contact-link {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 0.5rem; /* Espaço entre o ícone e o texto */
+    gap: 0.6rem;
     text-decoration: none;
-    color: #007BFF; /* Cor secundária */
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: color 0.3s ease;
+    color: #007BFF; /* Mantenemos el azul para enlaces */
+    font-weight: 500;
+    font-size: 1rem; /* Texto de contacto más legible */
+    transition: color 0.2s ease;
 }
 
 .contact-link:hover {
-    color: #0056b3; /* Cor mais escura no hover */
+    color: #0056b3;
     text-decoration: none;
 }
 
 .contact-link i {
-    font-size: 1.1rem; /* Tamanho dos ícones */
+    font-size: 1.1rem;
 }
