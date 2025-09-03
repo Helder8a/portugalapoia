@@ -49,18 +49,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     
-// --- FUNCIÓN MEJORADA PARA CREAR TARJETAS DE ANUNCIOS (V3 - ENFOQUE EN CONTACTO) ---
+// --- FUNCIÓN DEFINITIVA PARA CREAR TARJETAS DE ANUNCIOS ---
 function renderCard(item, category) {
-    // Define un placeholder si no hay imagen.
+    // Si no hay imagen, muestra un espacio reservado gris.
     const defaultImagePlaceholder = '<div class="image-placeholder"></div>';
     let imageUrl = item.imagem || item.logo_empresa || (item.imagens && item.imagens.length > 0 ? item.imagens[0].imagem_url : null);
 
-    // Construye el HTML de la imagen.
     const imageHtml = imageUrl
-        ? `<img src="${imageUrl}" class="card-img-top lazy" data-src="${imageUrl}" alt="${item.titulo}">`
+        ? `<img src="${imageUrl}" class="card-img-top" alt="${item.titulo || 'Anuncio'}">`
         : defaultImagePlaceholder;
 
-    // Construye el HTML de los íconos de contacto (teléfono y email).
+    // Crea los enlaces de contacto con íconos.
     const contatoHtml = `
         <div class="card-contact-details">
             ${item.contato ? `
@@ -69,12 +68,28 @@ function renderCard(item, category) {
                 <span>${item.contato}</span>
             </a>` : ''}
             ${item.link_contato ? `
-            <a href="mailto:${item.link_contato}" class="contact-link" title="Contactar por Email">
+            <a href="mailto:${item.link_contato.replace(/^mailto:/, '')}" class="contact-link" title="Contactar por Email">
                 <i class="fas fa-envelope"></i>
                 <span>Email</span>
             </a>` : ''}
         </div>
     `;
+
+    // Retorna la nueva estructura HTML para la tarjeta.
+    return `
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100 card-anuncio-personalizado">
+            ${imageHtml}
+            <div class="card-body">
+                <h5 class="card-title">${item.titulo}</h5>
+                <h6 class="card-subtitle mb-3 text-muted">
+                    <i class="fas fa-map-marker-alt"></i> ${item.localizacao || 'Localização não disponível'}
+                </h6>
+                ${contatoHtml}
+            </div>
+        </div>
+    </div>`;
+}
 
     // Retorna la estructura HTML completa y simplificada de la tarjeta.
     return `
