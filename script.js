@@ -1,80 +1,112 @@
-// --- CÓDIGO ORIGINAL Y FUNCIONAL DE SCRIPT.JS ---
-document.addEventListener('DOMContentLoaded', () => {
-    const categories = ['empregos', 'doacoes', 'habitacao', 'servicos'];
-    const allData = {};
+// --- CÓDIGO FINAL, ESTABLE Y CON ANUNCIOS FUNCIONANDO ---
 
-    function fetchData(category) {
-        return fetch(`/_dados/${category}.json`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                allData[category] = data.items;
-            })
-            .catch(error => {
-                console.error(`Could not fetch ${category}:`, error);
-            });
+document.addEventListener("DOMContentLoaded", () => {
+    // --- GESTORES BÁSICOS (Preloader, Scroll, etc.) ---
+    const preloader = document.getElementById("preloader");
+    if (preloader) {
+        window.addEventListener("load", () => preloader.classList.add("hidden"));
     }
-
-    function renderCard(item, category) {
-        const imageUrl = item.imagem || item.logo_empresa || (item.imagens && item.imagens.length > 0 ? item.imagens[0].imagem_url : 'path/to/default/image.jpg');
-        return `
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card h-100 shadow-sm announcement-card">
-                    <img src="${imageUrl}" class="card-img-top lazy" data-src="${imageUrl}" alt="${item.titulo}">
-                    <div class="card-img-overlay d-flex flex-column justify-content-end">
-                        <h5 class="card-title text-white">${item.titulo}</h5>
-                        <p class="card-text text-white">${item.descricao}</p>
-                        <p class="card-text text-white"><small><i class="fas fa-map-marker-alt mr-2"></i>${item.localizacao}</small></p>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-
-    function displayData(filter = 'all') {
-        const container = document.getElementById('announcements-container');
-        if (container) {
-            container.innerHTML = '';
-            let itemsToShow = [];
-
-            if (filter === 'all') {
-                categories.forEach(category => {
-                    if (allData[category]) {
-                        itemsToShow = itemsToShow.concat(allData[category]);
-                    }
-                });
+    const scrollTopBtn = document.getElementById("scrollTopBtn");
+    if (scrollTopBtn) {
+        window.onscroll = () => {
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                scrollTopBtn.classList.add("visible");
             } else {
-                if (allData[filter]) {
-                    itemsToShow = allData[filter];
-                }
+                scrollTopBtn.classList.remove("visible");
             }
+        };
+        scrollTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+    }
 
-            // Shuffle the items to display them in a random order
-            itemsToShow.sort(() => 0.5 - Math.random());
-
-            itemsToShow.forEach(item => {
-                const category = 'servicos'; // Default category for now
-                container.innerHTML += renderCard(item, category);
-            });
+    // --- FUNCIÓN PARA LEER DATOS JSON ---
+    async function fetchJson(url) {
+        try {
+            const response = await fetch(`${url}?t=${new Date().getTime()}`);
+            if (!response.ok) return null;
+            return await response.json();
+        } catch (error) {
+            console.error(`Error al cargar ${url}:`, error);
+            return null;
         }
     }
 
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    filterButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            // Remove active class from all buttons and add to the clicked one
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-            
-            const filter = button.getAttribute('data-filter');
-            displayData(filter);
-        });
-    });
+    // --- FUNCIÓN DE LAZY LOADING PARA IMÁGENES ---
+    function ativarLazyLoading() {
+        const lazyImages = document.querySelectorAll("img.lazy:not(.loaded)");
+        if ("IntersectionObserver" in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.add("loaded");
+                        img.classList.remove("lazy");
+                        observer.unobserve(img);
+                    }
+                });
+            });
+            lazyImages.forEach(img => observer.observe(img));
+        }
+    }
+    
+    // --- FUNCIÓN MEJORADA PARA CREAR TARJETAS DE ANUNCIOS ---
+    function renderCard(item, category) {
+        const defaultImagePlaceholder = '<div class="image-placeholder"></div>';
+        let imageUrl = item.imagem || item.logo_empresa || (item.imagens && item.imagens.length > 0 ? item.imagens[0].imagem_url : null);
+        
+        const imageHtml = imageUrl 
+            ? `<img src="${imageUrl}" class="card-img-top lazy" data-src="${imageUrl}" alt="${item.titulo}">`
+            : defaultImagePlaceholder;
 
-    // Initial data load
-    Promise.all(categories.map(fetchData)).then(() => displayData('all'));
+        return `
+        <div class="col-lg-4 col-md-6 mb-4 announcement-card" data-title="${item.titulo}" data-location="${item.localizacao}">
+            <div class="card h-100">
+                <div class="card-number">${item.id || ''}</div>
+                ${imageHtml}
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">${item.titulo}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i> ${item.localizacao}</h6>
+                    <p class="card-text flex-grow-1">${item.descricao}</p>
+                    <div class="card-contact-icons mt-auto">
+                        ${item.contato ? `<a href="tel:${item.contato}" class="contact-icon" title="Contactar por Telefone"><i class="fas fa-phone"></i> <span>${item.contato}</span></a>` : ''}
+                        ${item.link_contato ? `<a href="${item.link_contato}" class="contact-icon" title="Contactar por Email"><i class="fas fa-envelope"></i> <span>Email</span></a>` : ''}
+                    </div>
+                </div>
+            </div>
+        </div>`;
+    }
+
+    // --- FUNCIÓN GLOBAL PARA CARGAR TODO EL CONTENIDO ---
+    async function carregarConteudo(jsonPath, containerId, dataKey) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        const data = await fetchJson(jsonPath);
+        const items = data ? data[dataKey] : [];
+
+        if (!items || items.length === 0) {
+            container.innerHTML = '<p class="col-12 text-center lead text-muted mt-5">De momento, não há publicações nesta secção.</p>';
+            return;
+        }
+
+        items.sort((a, b) => new Date(b.data_publicacao || 0) - new Date(a.data_publicacao || 0));
+        container.innerHTML = items.map(item => renderCard(item, dataKey)).join('');
+        ativarLazyLoading();
+    }
+    
+    // --- INICIALIZACIÓN DE LAS CARGAS ---
+    if (document.getElementById('announcements-grid')) {
+        carregarConteudo('/_dados/doacoes.json', 'announcements-grid', 'pedidos');
+    }
+    if (document.getElementById('jobs-grid')) {
+        carregarConteudo('/_dados/empregos.json', 'jobs-grid', 'vagas');
+    }
+    if (document.getElementById('services-grid')) {
+        carregarConteudo('/_dados/servicos.json', 'services-grid', 'servicos');
+    }
+    if (document.getElementById('housing-grid')) {
+        carregarConteudo('/_dados/habitacao.json', 'housing-grid', 'anuncios');
+    }
+    
+    ativarLazyLoading();
 });
