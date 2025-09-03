@@ -1,128 +1,80 @@
-// ==========================================================================
-// SCRIPT DEFINITIVO Y SEGURO PARA PORTUGALAPOIA
-// Versión a prueba de errores que no bloquea la carga de la página.
-// ==========================================================================
+// --- CÓDIGO ORIGINAL Y FUNCIONAL DE SCRIPT.JS ---
 document.addEventListener('DOMContentLoaded', () => {
-
-    /**
-     * Función segura para crear la tarjeta HTML de un anuncio.
-     * Comprueba si los datos existen antes de intentar mostrarlos.
-     */
-    function renderCard(item) {
-        // Si el 'item' no es válido, no se crea la tarjeta.
-        if (!item) {
-            return '';
-        }
-
-        // --- IMAGEN (con respaldo) ---
-        const imageUrl = item.imagem || item.logo_empresa || null;
-        const imageHtml = imageUrl
-            ? `<img src="${imageUrl}" class="card-img-top" alt="${item.titulo || 'Anuncio'}">`
-            : '<div class="image-placeholder"></div>'; // Espacio reservado si no hay imagen
-
-        // --- TÍTULO (con respaldo) ---
-        const titulo = item.titulo || 'Título no disponible';
-
-        // --- LOCALIZACIÓN (con respaldo) ---
-        const localizacao = item.localizacao || 'Ubicación no disponible';
-
-        // --- CONTACTOS (con comprobaciones de seguridad) ---
-        let contatoHtml = '';
-        const hasTelefone = item.contato;
-        // Comprueba que 'link_contato' sea una cadena de texto antes de usarlo
-        const hasEmail = item.link_contato && typeof item.link_contato === 'string';
-
-        if (hasTelefone || hasEmail) {
-            contatoHtml = '<div class="card-contact-details">';
-            if (hasTelefone) {
-                contatoHtml += `
-                    <a href="tel:${item.contato}" class="contact-link" title="Contactar por Teléfono">
-                        <i class="fas fa-phone-alt"></i>
-                        <span>${item.contato}</span>
-                    </a>`;
-            }
-            if (hasEmail) {
-                const emailAddress = item.link_contato.replace(/^mailto:/, '');
-                contatoHtml += `
-                    <a href="mailto:${emailAddress}" class="contact-link" title="Contactar por Email">
-                        <i class="fas fa-envelope"></i>
-                        <span>Email</span>
-                    </a>`;
-            }
-            contatoHtml += '</div>';
-        }
-
-        // --- ESTRUCTURA FINAL DE LA TARJETA ---
-        return `
-        <div class="col-lg-4 col-md-6 mb-4">
-            <div class="card h-100 card-anuncio-personalizado">
-                ${imageHtml}
-                <div class="card-body">
-                    <h5 class="card-title">${titulo}</h5>
-                    <h6 class="card-subtitle mb-3 text-muted">
-                        <i class="fas fa-map-marker-alt"></i> ${localizacao}
-                    </h6>
-                    ${contatoHtml}
-                </div>
-            </div>
-        </div>`;
-    }
-
-    // --- LÓGICA PARA CARGAR Y MOSTRAR LOS DATOS (sin cambios) ---
     const categories = ['empregos', 'doacoes', 'habitacao', 'servicos'];
     const allData = {};
 
     function fetchData(category) {
         return fetch(`/_dados/${category}.json`)
             .then(response => {
-                if (!response.ok) throw new Error(`Error al cargar ${category}.json`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
                 return response.json();
             })
             .then(data => {
-                allData[category] = data.items || []; // Asegura que sea un array
+                allData[category] = data.items;
             })
             .catch(error => {
-                console.error(`No se pudo obtener la categoría ${category}:`, error);
-                allData[category] = []; // En caso de error, define un array vacío
+                console.error(`Could not fetch ${category}:`, error);
             });
+    }
+
+    function renderCard(item, category) {
+        const imageUrl = item.imagem || item.logo_empresa || (item.imagens && item.imagens.length > 0 ? item.imagens[0].imagem_url : 'path/to/default/image.jpg');
+        return `
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100 shadow-sm announcement-card">
+                    <img src="${imageUrl}" class="card-img-top lazy" data-src="${imageUrl}" alt="${item.titulo}">
+                    <div class="card-img-overlay d-flex flex-column justify-content-end">
+                        <h5 class="card-title text-white">${item.titulo}</h5>
+                        <p class="card-text text-white">${item.descricao}</p>
+                        <p class="card-text text-white"><small><i class="fas fa-map-marker-alt mr-2"></i>${item.localizacao}</small></p>
+                    </div>
+                </div>
+            </div>
+        `;
     }
 
     function displayData(filter = 'all') {
         const container = document.getElementById('announcements-container');
-        if (!container) return;
+        if (container) {
+            container.innerHTML = '';
+            let itemsToShow = [];
 
-        container.innerHTML = '';
-        let itemsToShow = [];
-
-        if (filter === 'all') {
-            categories.forEach(category => {
-                itemsToShow = itemsToShow.concat(allData[category] || []);
-            });
-        } else {
-            itemsToShow = allData[filter] || [];
-        }
-        
-        // Bucle seguro: si una tarjeta da error, no detiene las demás
-        itemsToShow.forEach(item => {
-            try {
-                container.innerHTML += renderCard(item);
-            } catch (e) {
-                console.error("Error al renderizar una tarjeta:", item, e);
+            if (filter === 'all') {
+                categories.forEach(category => {
+                    if (allData[category]) {
+                        itemsToShow = itemsToShow.concat(allData[category]);
+                    }
+                });
+            } else {
+                if (allData[filter]) {
+                    itemsToShow = allData[filter];
+                }
             }
-        });
+
+            // Shuffle the items to display them in a random order
+            itemsToShow.sort(() => 0.5 - Math.random());
+
+            itemsToShow.forEach(item => {
+                const category = 'servicos'; // Default category for now
+                container.innerHTML += renderCard(item, category);
+            });
+        }
     }
 
-    // --- FILTROS (sin cambios) ---
     const filterButtons = document.querySelectorAll('.filter-btn');
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
+            // Remove active class from all buttons and add to the clicked one
             filterButtons.forEach(btn => btn.classList.remove('active'));
             button.classList.add('active');
+            
             const filter = button.getAttribute('data-filter');
             displayData(filter);
         });
     });
 
-    // Carga inicial de todos los datos
+    // Initial data load
     Promise.all(categories.map(fetchData)).then(() => displayData('all'));
 });
