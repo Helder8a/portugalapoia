@@ -367,3 +367,22 @@
   }
 
 }
+
+/* --- SOLUCIÓN DEFINITIVA PARA IMAGEN DESTACADA RESPONSIVE --- 
+*/
+
+@media (max-width: 768px) {
+
+  /*
+   * Seleccionamos la imagen destacada que tiene la clase '.post-card-image-large'.
+   * Le decimos que su altura debe ser automática para que se ajuste a la proporción
+   * del ancho, que ahora es fluido.
+   * También, 'object-fit: cover' asegura que la imagen cubra el espacio 
+   * sin deformarse, por si acaso.
+  */
+  .post-card-image-large {
+    height: auto !important; /* La clave está en esta línea */
+    object-fit: cover;
+  }
+
+}
