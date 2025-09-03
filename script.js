@@ -1,107 +1,112 @@
-document.addEventListener('DOMContentLoaded', () => {
+// --- CÓDIGO FINAL, ESTABLE Y CON ANUNCIOS FUNCIONANDO ---
 
-    const API_URL = '/_dados/';
-
-    // --- FUNÇÃO SEGURA PARA CARREGAR DADOS ---
-    const fetchData = async (fileName) => {
-        try {
-            const response = await fetch(`${API_URL}${fileName}?v=${new Date().getTime()}`);
-            if (!response.ok) {
-                console.error(`Não foi possível carregar o ficheiro: ${fileName}`);
-                return null;
+document.addEventListener("DOMContentLoaded", () => {
+    // --- GESTORES BÁSICOS (Preloader, Scroll, etc.) ---
+    const preloader = document.getElementById("preloader");
+    if (preloader) {
+        window.addEventListener("load", () => preloader.classList.add("hidden"));
+    }
+    const scrollTopBtn = document.getElementById("scrollTopBtn");
+    if (scrollTopBtn) {
+        window.onscroll = () => {
+            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+                scrollTopBtn.classList.add("visible");
+            } else {
+                scrollTopBtn.classList.remove("visible");
             }
+        };
+        scrollTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+    }
+
+    // --- FUNCIÓN PARA LEER DATOS JSON ---
+    async function fetchJson(url) {
+        try {
+            const response = await fetch(`${url}?t=${new Date().getTime()}`);
+            if (!response.ok) return null;
             return await response.json();
         } catch (error) {
-            console.error(`Erro ao processar o ficheiro ${fileName}:`, error);
+            console.error(`Error al cargar ${url}:`, error);
             return null;
         }
-    };
+    }
 
-    // --- FUNÇÃO PARA RENDERIZAR OS NOVOS CARDS MODERNOS ---
-    const renderModernCards = (items, container, dataType) => {
-        if (!items || items.length === 0) {
-            container.innerHTML = `<p class="text-center col-12">De momento, não há itens para mostrar.</p>`;
-            return;
+    // --- FUNCIÓN DE LAZY LOADING PARA IMÁGENES ---
+    function ativarLazyLoading() {
+        const lazyImages = document.querySelectorAll("img.lazy:not(.loaded)");
+        if ("IntersectionObserver" in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.add("loaded");
+                        img.classList.remove("lazy");
+                        observer.unobserve(img);
+                    }
+                });
+            });
+            lazyImages.forEach(img => observer.observe(img));
         }
-
-        let cardsHtml = items.map(item => {
-            let iconClass = 'fas fa-info-circle'; // Ícone padrão
-            if (dataType === 'servicos') iconClass = item.icon || 'fas fa-hands-helping';
-            else if (dataType === 'empregos') iconClass = 'fas fa-briefcase';
-            else if (dataType === 'doacoes') iconClass = 'fas fa-heart';
-
-            return `
-            <div class="col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
-                <div class="modern-card w-100">
-                    <div class="icon-circle">
-                        <i class="${iconClass}"></i>
-                    </div>
-                    <h5 class="card-title">${item.title}</h5>
-                    <p class="card-text">${item.description}</p>
-                    ${item.link ? `<a href="${item.link}" class="btn btn-primary mt-auto" target="_blank" rel="noopener noreferrer">${item.link_text || 'Saber Mais'}</a>` : ''}
-                </div>
-            </div>`;
-        }).join('');
-        container.innerHTML = cardsHtml;
-    };
+    }
     
-    // --- FUNÇÃO PARA RENDERIZAR OS POSTS DO BLOG NA PÁGINA PRINCIPAL ---
-    const renderLatestBlogPosts = (posts, container) => {
-        if (!posts || posts.length === 0) {
-            container.innerHTML = '<p class="text-center col-12">De momento, não há notícias para mostrar.</p>';
-            return;
-        }
+    // --- FUNCIÓN MEJORADA PARA CREAR TARJETAS DE ANUNCIOS ---
+    function renderCard(item, category) {
+        const defaultImagePlaceholder = '<div class="image-placeholder"></div>';
+        let imageUrl = item.imagem || item.logo_empresa || (item.imagens && item.imagens.length > 0 ? item.imagens[0].imagem_url : null);
         
-        const latestThree = posts.sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 3);
+        const imageHtml = imageUrl 
+            ? `<img src="${imageUrl}" class="card-img-top lazy" data-src="${imageUrl}" alt="${item.titulo}">`
+            : defaultImagePlaceholder;
 
-        let postsHtml = latestThree.map(post => `
-            <div class="col-md-4 mb-4 d-flex align-items-stretch">
-                <div class="card w-100">
-                    <img src="${post.image}" class="card-img-top" alt="${post.title}" style="height: 200px; object-fit: cover;" loading="lazy">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">${post.title}</h5>
-                        <p class="card-text flex-grow-1">${post.summary}</p>
-                        <a href="blog.html" class="btn btn-outline-primary mt-auto">Ler Mais</a>
+        return `
+        <div class="col-lg-4 col-md-6 mb-4 announcement-card" data-title="${item.titulo}" data-location="${item.localizacao}">
+            <div class="card h-100">
+                <div class="card-number">${item.id || ''}</div>
+                ${imageHtml}
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">${item.titulo}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-map-marker-alt mr-2"></i> ${item.localizacao}</h6>
+                    <p class="card-text flex-grow-1">${item.descricao}</p>
+                    <div class="card-contact-icons mt-auto">
+                        ${item.contato ? `<a href="tel:${item.contato}" class="contact-icon" title="Contactar por Telefone"><i class="fas fa-phone"></i> <span>${item.contato}</span></a>` : ''}
+                        ${item.link_contato ? `<a href="${item.link_contato}" class="contact-icon" title="Contactar por Email"><i class="fas fa-envelope"></i> <span>Email</span></a>` : ''}
                     </div>
                 </div>
             </div>
-        `).join('');
-        container.innerHTML = postsHtml;
-    };
+        </div>`;
+    }
 
-    // --- LÓGICA PRINCIPAL DE EXECUÇÃO ---
-    // O script verifica qual contentor existe na página atual e só depois carrega os dados
+    // --- FUNCIÓN GLOBAL PARA CARGAR TODO EL CONTENIDO ---
+    async function carregarConteudo(jsonPath, containerId, dataKey) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        const data = await fetchJson(jsonPath);
+        const items = data ? data[dataKey] : [];
+
+        if (!items || items.length === 0) {
+            container.innerHTML = '<p class="col-12 text-center lead text-muted mt-5">De momento, não há publicações nesta secção.</p>';
+            return;
+        }
+
+        items.sort((a, b) => new Date(b.data_publicacao || 0) - new Date(a.data_publicacao || 0));
+        container.innerHTML = items.map(item => renderCard(item, dataKey)).join('');
+        ativarLazyLoading();
+    }
     
-    const servicesContainer = document.getElementById('services-container');
-    if (servicesContainer) {
-        fetchData('servicos.json').then(data => renderModernCards(data, servicesContainer, 'servicos'));
+    // --- INICIALIZACIÓN DE LAS CARGAS ---
+    if (document.getElementById('announcements-grid')) {
+        carregarConteudo('/_dados/doacoes.json', 'announcements-grid', 'pedidos');
     }
-
-    const jobsContainer = document.getElementById('jobs-container');
-    if (jobsContainer) {
-        fetchData('empregos.json').then(data => renderModernCards(data, jobsContainer, 'empregos'));
+    if (document.getElementById('jobs-grid')) {
+        carregarConteudo('/_dados/empregos.json', 'jobs-grid', 'vagas');
     }
-
-    const donationsContainer = document.getElementById('donations-container');
-    if (donationsContainer) {
-        fetchData('doacoes.json').then(data => renderModernCards(data, donationsContainer, 'doacoes'));
+    if (document.getElementById('services-grid')) {
+        carregarConteudo('/_dados/servicos.json', 'services-grid', 'servicos');
     }
-
-    const latestPostsContainer = document.getElementById('latest-posts-container');
-    if (latestPostsContainer) {
-        fetchData('blog.json').then(data => {
-            if (data && data.posts) {
-                renderLatestBlogPosts(data.posts, latestPostsContainer);
-            }
-        });
+    if (document.getElementById('housing-grid')) {
+        carregarConteudo('/_dados/habitacao.json', 'housing-grid', 'anuncios');
     }
-
-    // --- LÓGICA DO PRELOADER (PARA GARANTIR QUE FUNCIONA SEMPRE) ---
-    const preloader = document.getElementById("preloader");
-    if (preloader) {
-        // Adiciona um pequeno atraso para garantir que o conteúdo tenha tempo de renderizar
-        setTimeout(() => {
-            preloader.classList.add("hidden");
-        }, 200);
-    }
+    
+    ativarLazyLoading();
 });
