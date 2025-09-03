@@ -199,3 +199,9 @@
 .post-body {
     font-family: var(--journal-body-font);
 }
+
+/* Melhora a legibilidade do corpo do artigo no modal */
+.post-body p {
+    line-height: 1.8; /* Aumenta o espaço entre as linhas */
+    margin-bottom: 1.5rem; /* Aumenta o espaço entre os parágrafos */
+}
