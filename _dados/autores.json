@@ -1,0 +1,14 @@
+[
+  {
+    "id": "autor_principal",
+    "nome": "Equipa PortugalApoia",
+    "avatar": "/images/uploads/autor_default.png",
+    "bio": "Notícias e atualizações da equipa oficial do PortugalApoia."
+  },
+  {
+    "id": "ana_silva",
+    "nome": "Ana Silva",
+    "avatar": "/images/uploads/ana_silva.jpg",
+    "bio": "Ana é uma especialista em integração social e voluntária na comunidade."
+  }
+]

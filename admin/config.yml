@@ -76,6 +76,9 @@ collections:
               - {label: "Categoria", name: "category", widget: "select", options: ["saude", "turismo", "educacao", "habitacao", "emprego"]}
               - {label: "Resumo", name: "summary", widget: "text"}
               - {label: "Corpo do Artigo", name: "body", widget: "markdown"}
+              - { label: "Autor", name: "author_id", widget: "select", options: [{ label: "Equipa PortugalApoia", value: "autor_principal" }, { label: "Ana Silva", value: "ana_silva" }] }
+              - { label: "Etiquetas (separadas por vírgula)", name: "tags", widget: "string" }
+              - { label: "Marcar como Destacado", name: "featured", widget: "boolean", default: false }
 
       - file: "_dados/empregos.json"
         label: "Vagas de Emprego"

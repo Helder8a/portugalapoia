@@ -59,7 +59,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                         <div class="post-meta-info mb-2">
                             <span class="category">${post.category}</span> &bull; <span>${readingTime}</span>
                         </div>
-                        <h5 class="post-card-title">${post.title}</h5>
+                        h5 class="post-card-title">${post.title} ${post.featured ? '<span class="featured-badge">Destacado</span>' : ''}</h5>
+
                         <p class="post-card-summary flex-grow-1">${post.summary}</p>
                     </div>
                 </div>
