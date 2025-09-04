@@ -108,3 +108,33 @@
     .latest-post-title { font-size: 2rem; }
     .post-card-title { font-size: 1.5rem; }
 }
+
+/* ==========================================================================
+   ESTILOS PARA ETIQUETAS (TAGS)
+   ========================================================================== */
+
+/* Contenedor para las etiquetas */
+.tags-container {
+  margin-bottom: 15px; /* Espacio debajo de las etiquetas */
+}
+
+/* Estilo individual de cada etiqueta */
+.tag {
+  display: inline-block;
+  background-color: #e0e0e0; /* Color de fondo gris claro */
+  color: #333; /* Color de texto oscuro */
+  padding: 5px 12px; /* Relleno interior */
+  border-radius: 15px; /* Bordes redondeados */
+  font-size: 12px; /* Tamaño de letra pequeño */
+  font-family: var(--journal-body-font);
+  font-weight: 600;
+  margin-right: 6px; /* Espacio a la derecha de cada etiqueta */
+  margin-bottom: 6px; /* Espacio por si se van a una segunda línea */
+  text-transform: capitalize; /* Pone la primera letra en mayúscula */
+  transition: all 0.2s ease;
+}
+
+.tag:hover {
+  background-color: var(--brand-color);
+  color: #fff;
+}

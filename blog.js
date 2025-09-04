@@ -51,6 +51,19 @@ document.addEventListener("DOMContentLoaded", async () => {
         postsGridContainer.innerHTML = posts.map((post) => {
             const readingTime = calculateReadingTime(marked.parse(post.body || ''));
             const globalIndex = allPosts.findIndex(p => p.title === post.title);
+            
+            // --- INICIO: LÓGICA PARA RENDERIZAR ETIQUETAS ---
+            let tagsHTML = '';
+            if (post.tags && post.tags.length > 0) {
+              const tagsArray = post.tags.split(',').map(tag => tag.trim());
+              tagsHTML = `
+                <div class="tags-container mb-2">
+                  ${tagsArray.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                </div>
+              `;
+            }
+            // --- FIM: LÓGICA PARA RENDERIZAR ETIQUETAS ---
+
             return `
             <div class="journal-article">
                 <div class="card post-card w-100" data-toggle="modal" data-target="#postModal" data-post-index="${globalIndex}">
@@ -60,6 +73,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                             <span class="category">${post.category}</span> &bull; <span>${readingTime}</span>
                         </div>
                         <h5 class="post-card-title">${post.title}</h5>
+                        ${tagsHTML} {/* ETIQUETAS INSERTADAS AQUÍ */}
                         <p class="post-card-summary flex-grow-1">${post.summary}</p>
                     </div>
                 </div>
