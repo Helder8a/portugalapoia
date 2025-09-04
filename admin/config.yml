@@ -75,6 +75,7 @@ collections:
               - {label: "Imagem de Destaque", name: "image", widget: "image"}
               - {label: "Categoria", name: "category", widget: "select", options: ["saude", "turismo", "educacao", "habitacao", "emprego"]}
               - {label: "Resumo", name: "summary", widget: "text"}
+              - {label: "Etiquetas (separadas por vírgula)", name: "tags", widget: "string", hint: "Exemplo: saúde, educação, notícias"}
               - {label: "Corpo do Artigo", name: "body", widget: "markdown"}
 
       - file: "_dados/empregos.json"
