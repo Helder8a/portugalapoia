@@ -1,35 +1,49 @@
 document.addEventListener("DOMContentLoaded", async () => {
     // --- ELEMENTOS DO DOM ---
-    const postsGridContainer = document.getElementById('posts-grid');
-    const loadMoreButton = document.getElementById('load-more-posts');
-    const categoryFilters = document.querySelectorAll('.category-filter');
-    const searchInput = document.getElementById('blog-search');
-    const noResultsMessage = document.getElementById('no-results-message');
+    const postsGrid = document.getElementById('posts-grid');
+    const categoryNav = document.getElementById('category-filter-nav');
+    const searchInput = document.getElementById('blog-search-input');
+    const noPostsMessage = document.getElementById('no-posts-message');
+    const loadMoreBtn = document.getElementById('load-more-posts');
+    const headerPlaceholder = document.getElementById('header-placeholder');
+    const footerPlaceholder = document.getElementById('footer-placeholder');
 
     // --- ESTADO DA APLICAÇÃO ---
     let allPosts = [];
     let authorsMap = new Map();
-    let currentFilteredPosts = [];
-    let displayedPostsCount = 0;
+    let currentFilter = 'todos';
+    let currentSearchTerm = '';
+    let visiblePostsCount = 0;
     const POSTS_PER_PAGE = 6;
 
-    // --- FUNÇÕES DE CARREGAMENTO DE DADOS ---
-    async function fetchData(url) {
+    // --- FUNÇÕES DE CARREGAMENTO ---
+    const fetchData = async (url) => {
         try {
-            const response = await fetch(`${url}?v=${new Date().getTime()}`); // Cache-busting
-            if (!response.ok) {
-                throw new Error(`A resposta da rede para ${url} não foi bem-sucedida.`);
-            }
+            const response = await fetch(`${url}?v=${new Date().getTime()}`);
+            if (!response.ok) throw new Error(`Erro ao carregar ${url}`);
             return await response.json();
         } catch (error) {
-            console.error(`Erro crítico ao carregar dados de ${url}:`, error);
-            postsGridContainer.innerHTML = `<p class='text-center text-danger col-12'>Ocorreu um erro ao carregar o conteúdo do blog. Por favor, tente novamente mais tarde.</p>`;
+            console.error(error);
             return null;
         }
-    }
-
-    // --- FUNÇÕES AUXILIARES (HELPERS) ---
-    const formatDate = (dateString) => dateString ? new Date(dateString).toLocaleDateString('pt-PT', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
+    };
+    
+    // Carregar Header e Footer
+    const loadTemplate = async (url, element) => {
+        const response = await fetch(url);
+        const text = await response.text();
+        const template = document.createElement('template');
+        template.innerHTML = text;
+        const nav = template.content.querySelector('.navbar');
+        if (nav) {
+            element.appendChild(nav);
+        } else {
+             element.innerHTML = text;
+        }
+    };
+    
+    // --- FUNÇÕES AUXILIARES ---
+    const formatDate = (dateString) => new Date(dateString).toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric' });
     const calculateReadingTime = (text) => {
         if (!text) return '1 min';
         const wordsPerMinute = 225;
@@ -38,133 +52,129 @@ document.addEventListener("DOMContentLoaded", async () => {
     };
 
     // --- FUNÇÕES DE RENDERIZAÇÃO ---
-    const createPostCard = (post) => {
-        const author = authorsMap.get(post.author_id) || { nome: "Equipa PortugalApoia", avatar: "/images_pta/logocuadrado.jpg" };
-        const postIndex = allPosts.findIndex(p => p.title === post.title && p.date === post.date); // Maneira mais segura de encontrar o índice
+    const renderPosts = () => {
+        const filteredPosts = allPosts.filter(post => 
+            (currentFilter === 'todos' || post.category === currentFilter) &&
+            (post.title.toLowerCase().includes(currentSearchTerm) || post.summary.toLowerCase().includes(currentSearchTerm))
+        );
 
-        const card = document.createElement('div');
-        card.className = 'col-md-6 col-lg-4 mb-4';
-        card.innerHTML = `
-            <div class="card blog-card h-100" data-post-index="${postIndex}" data-toggle="modal" data-target="#postModal" style="cursor: pointer;">
-                <img src="${post.image}" class="card-img-top" alt="${post.title}">
-                <div class="card-body d-flex flex-column">
-                    <div class="post-meta mb-2">
-                        <span class="category">${post.category}</span> &bull;
-                        <span class="reading-time">${calculateReadingTime(post.body)}</span>
-                    </div>
-                    <h5 class="card-title">${post.title}</h5>
-                    <p class="card-text flex-grow-1">${post.summary}</p>
-                    <div class="author-info d-flex align-items-center mt-auto">
-                        <img src="${author.avatar}" alt="${author.nome}" class="rounded-circle mr-2" style="width: 30px; height: 30px;">
-                        <small class="text-muted">${author.nome} &bull; ${formatDate(post.date)}</small>
-                    </div>
-                </div>
-            </div>`;
-        return card;
-    };
-    
-    const renderPosts = (clear = true) => {
-        if (clear) {
-            postsGridContainer.innerHTML = '';
-            displayedPostsCount = 0;
-        }
-
-        const postsToRender = currentFilteredPosts.slice(displayedPostsCount, displayedPostsCount + POSTS_PER_PAGE);
-
-        if (postsToRender.length === 0 && clear) {
-            noResultsMessage.classList.remove('d-none');
-        } else {
-            noResultsMessage.classList.add('d-none');
-        }
+        postsGrid.innerHTML = '';
+        visiblePostsCount = 0;
         
-        postsToRender.forEach(post => {
-            postsGridContainer.appendChild(createPostCard(post));
-        });
-
-        displayedPostsCount += postsToRender.length;
-        loadMoreButton.style.display = displayedPostsCount < currentFilteredPosts.length ? 'block' : 'none';
+        if (filteredPosts.length === 0) {
+            noPostsMessage.style.display = 'block';
+            loadMoreBtn.style.display = 'none';
+        } else {
+            noPostsMessage.style.display = 'none';
+            appendPosts(filteredPosts);
+        }
     };
 
-    // --- LÓGICA DE FILTRAGEM E PESQUISA ---
-    const filterAndSearchPosts = () => {
-        const searchTerm = searchInput.value.toLowerCase().trim();
-        const activeCategory = document.querySelector('.category-filter.active')?.dataset.category || 'todos';
-
-        currentFilteredPosts = allPosts.filter(post => {
-            const inCategory = activeCategory === 'todos' || post.category === activeCategory;
-            const matchesSearch = !searchTerm || post.title.toLowerCase().includes(searchTerm) || post.summary.toLowerCase().includes(searchTerm) || (post.tags && post.tags.join(' ').toLowerCase().includes(searchTerm));
-            return inCategory && matchesSearch;
+    const appendPosts = (posts) => {
+        const postsToAppend = posts.slice(visiblePostsCount, visiblePostsCount + POSTS_PER_PAGE);
+        postsToAppend.forEach(post => {
+            const author = authorsMap.get(post.author_id) || { nome: "Equipa PortugalApoia", avatar: "/images_pta/logocuadrado.jpg" };
+            const postCard = `
+                <div class="col-lg-4 col-md-6 mb-5 journal-article">
+                    <div class="post-card" data-post='${JSON.stringify(post)}' data-toggle="modal" data-target="#postModal">
+                        <img src="${post.image}" class="card-img-top post-card-img" alt="${post.title}" loading="lazy">
+                        <div class="card-body p-0">
+                            <p class="text-muted mb-2">${formatDate(post.date)} &bull; ${post.category.toUpperCase()}</p>
+                            <h5 class="post-card-title">${post.title}</h5>
+                            <p class="post-card-summary">${post.summary}</p>
+                        </div>
+                    </div>
+                </div>`;
+            postsGrid.innerHTML += postCard;
         });
-
-        renderPosts(true); // Renderizar com limpeza do grid
+        visiblePostsCount += postsToAppend.length;
+        loadMoreBtn.style.display = visiblePostsCount < posts.length ? 'block' : 'none';
     };
 
-    // --- CONFIGURAÇÃO DOS EVENTOS (EVENT LISTENERS) ---
+    const createCategoryFilters = () => {
+        const categories = ['todos', ...new Set(allPosts.map(p => p.category))];
+        categoryNav.innerHTML = categories.map(cat => 
+            `<button class="btn category-btn ${cat === 'todos' ? 'active' : ''}" data-category="${cat}">${cat.charAt(0).toUpperCase() + cat.slice(1)}</button>`
+        ).join('');
+    };
+
+    // --- EVENT LISTENERS ---
     const setupEventListeners = () => {
-        loadMoreButton.addEventListener('click', () => renderPosts(false)); // Renderizar sem limpar
-
-        searchInput.addEventListener('input', filterAndSearchPosts);
-
-        categoryFilters.forEach(button => {
-            button.addEventListener('click', () => {
-                categoryFilters.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-                filterAndSearchPosts();
-            });
+        searchInput.addEventListener('input', (e) => {
+            currentSearchTerm = e.target.value.toLowerCase();
+            renderPosts();
         });
 
-        $('#postModal').on('show.bs.modal', (event) => {
-            const card = event.relatedTarget;
-            const postIndex = card.dataset.postIndex;
-            const post = allPosts[postIndex];
-
-            if (post) {
-                const author = authorsMap.get(post.author_id) || { nome: "Equipa PortugalApoia", avatar: "/images_pta/logocuadrado.jpg", bio: "" };
-                
-                // Atualiza meta tags para SEO
-                document.title = `${post.title} | Blog PortugalApoia`;
-                document.getElementById('meta-description').setAttribute('content', post.meta_description || post.summary || '');
-                document.getElementById('meta-keywords').setAttribute('content', post.tags ? post.tags.join(', ') : '');
-                document.getElementById('meta-author').setAttribute('content', author.nome);
-
-                // Preenche o modal
-                const modal = $('#postModal');
-                modal.find('#modal-image').attr('src', post.image);
-                modal.find('.modal-title').text(post.title);
-                modal.find('#modal-author-info').html(`<img src="${author.avatar}" alt="${author.nome}" class="rounded-circle mr-3" style="width:50px; height:50px;"><div><strong class="d-block">${author.nome}</strong><small class="text-muted">${author.bio || ''}</small></div>`);
-                modal.find('#modal-meta').html(`<span class="category">${post.category}</span> &bull; <span>${calculateReadingTime(post.body)}</span> &bull; <span class="text-muted">${formatDate(post.date)}</span>`);
-                modal.find('#modal-body').html(marked.parse(post.body || ''));
+        categoryNav.addEventListener('click', (e) => {
+            if (e.target.classList.contains('category-btn')) {
+                document.querySelector('.category-btn.active').classList.remove('active');
+                e.target.classList.add('active');
+                currentFilter = e.target.dataset.category;
+                renderPosts();
             }
         });
+        
+        loadMoreBtn.addEventListener('click', () => {
+            const filteredPosts = allPosts.filter(post => 
+                (currentFilter === 'todos' || post.category === currentFilter) &&
+                (post.title.toLowerCase().includes(currentSearchTerm) || post.summary.toLowerCase().includes(currentSearchTerm))
+            );
+            appendPosts(filteredPosts);
+        });
 
-        $('#postModal').on('hidden.bs.modal', () => {
-            // Restaura meta tags padrão
+        $('#postModal').on('show.bs.modal', function(event) {
+            const card = $(event.relatedTarget);
+            const post = card.data('post');
+            const author = authorsMap.get(post.author_id) || { nome: "Equipa PortugalApoia", avatar: "/images_pta/logocuadrado.jpg", bio: "" };
+            
+            document.title = `${post.title} | Blog PortugalApoia`;
+            $('#meta-description').attr('content', post.meta_description || post.summary);
+            $('#meta-keywords').attr('content', post.tags ? post.tags.join(', ') : '');
+            $('#meta-author').attr('content', author.nome);
+
+            const modal = $(this);
+            modal.find('#modal-image').attr('src', post.image);
+            modal.find('.modal-title').text(post.title);
+            modal.find('#modal-author-info').html(`<img src="${author.avatar}" alt="${author.nome}" class="rounded-circle mr-3" style="width:50px; height:50px;"><div><strong class="d-block">${author.nome}</strong><small class="text-muted">${author.bio || ''}</small></div>`);
+            modal.find('#modal-meta').html(`<span class="category text-primary">${post.category}</span> &bull; <span>${calculateReadingTime(post.body)}</span> &bull; <span class="text-muted">${formatDate(post.date)}</span>`);
+            modal.find('#modal-body').html(marked.parse(post.body || ''));
+        });
+
+        $('#postModal').on('hidden.bs.modal', function() {
             document.title = 'Blog PortugalApoia | Notícias, Guias e Histórias da Comunidade';
-            document.getElementById('meta-description').setAttribute('content', 'Explore o nosso blog...');
-            document.getElementById('meta-keywords').setAttribute('content', 'blog, portugal, comunidade...');
-            document.getElementById('meta-author').setAttribute('content', 'PortugalApoia');
+            $('#meta-description').attr('content', 'Explore o nosso blog para encontrar as últimas notícias...');
+            $('#meta-keywords').attr('content', 'blog, portugal, comunidade...');
+            $('#meta-author').attr('content', 'PortugalApoia');
         });
     };
-
-    // --- FUNÇÃO DE INICIALIZAÇÃO ---
+    
+    // --- INICIALIZAÇÃO ---
     const init = async () => {
+        await Promise.all([
+            loadTemplate('index.html #main-nav', headerPlaceholder),
+            loadTemplate('index.html .main-footer', footerPlaceholder)
+        ]);
+
         const [postsData, authorsData] = await Promise.all([
             fetchData('/_dados/blog.json'),
             fetchData('/_dados/autores.json')
         ]);
 
-        if (!postsData || !postsData.posts) return; // Interrompe se os posts não carregarem
-
-        allPosts = postsData.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+        if (postsData && postsData.posts) {
+            allPosts = postsData.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+        }
         if (authorsData) {
             authorsMap = new Map(authorsData.map(author => [author.id, author]));
         }
-        
-        currentFilteredPosts = [...allPosts];
-        setupEventListeners();
-        renderPosts(true);
+
+        if (allPosts.length > 0) {
+            createCategoryFilters();
+            renderPosts();
+            setupEventListeners();
+        } else {
+             postsGrid.innerHTML = "<p class='col-12 text-center lead'>Não foi possível carregar os artigos do blog.</p>";
+        }
     };
 
-    // --- INICIA A APLICAÇÃO ---
     init();
 });
