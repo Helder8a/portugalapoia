@@ -46,6 +46,17 @@
       "data_publicacao": "2025-09-10T15:50:50.108Z",
       "titulo": "Web Design e Desenvolvimento",
       "id": "SER-004"
+    },
+    {
+      "data_vencimento": "2025-09-04T18:16:19.300Z",
+      "valor_servico": "300",
+      "link_contato": "helderb8a@gmail.com",
+      "descricao": "Programação de rotinas Lisp, AutoCAD\nArquitectura\nTopografia Ing. Civil\nIng Mecanica",
+      "contato": "351-911972787",
+      "localizacao": "Lisboa",
+      "data_publicacao": "2025-09-04T18:16:19.285Z",
+      "titulo": "Programação de rotinas Lisp, AutoCAD",
+      "id": "005"
     }
   ]
 }
