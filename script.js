@@ -110,3 +110,63 @@ document.addEventListener("DOMContentLoaded", () => {
     
     ativarLazyLoading();
 });
+
+/**
+ * Gera e insere o script JSON-LD para um anúncio de emprego no <head> da página.
+ * @param {object} job - O objeto do anúncio de emprego com todos os dados.
+ */
+function injectJobPostingSchema(job) {
+    // Remove qualquer schema de emprego antigo para evitar duplicados
+    const oldSchema = document.getElementById('job-posting-schema');
+    if (oldSchema) {
+        oldSchema.remove();
+    }
+
+    const schema = {
+        "@context": "https://schema.org",
+        "@type": "JobPosting",
+        "title": job.title,
+        "description": job.description, // O ideal é que esta descrição seja HTML
+        "datePosted": new Date(job.date).toISOString().split('T')[0], // Formato YYYY-MM-DD
+        "hiringOrganization": {
+            "@type": "Organization",
+            "name": job.company_name || "Empresa Confidencial",
+            "url": window.location.origin
+        },
+        "jobLocation": {
+            "@type": "Place",
+            "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "PT",
+                "addressLocality": job.location
+            }
+        }
+    };
+
+    // Adiciona campos opcionais apenas se existirem
+    if (job.validThrough) {
+        schema.validThrough = new Date(job.validThrough).toISOString().split('T')[0];
+    }
+    if (job.employmentType) {
+        schema.employmentType = job.employmentType;
+    }
+    if (job.salary_min && job.salary_max) {
+        schema.baseSalary = {
+            "@type": "MonetaryAmount",
+            "currency": "EUR",
+            "value": {
+                "@type": "QuantitativeValue",
+                "minValue": job.salary_min,
+                "maxValue": job.salary_max,
+                "unitText": "YEAR"
+            }
+        };
+    }
+
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'job-posting-schema'; // ID para poder remover se necessário
+    script.text = JSON.stringify(schema);
+
+    document.head.appendChild(script);
+}
