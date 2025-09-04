@@ -1,12 +1,12 @@
 {
   "hero": {
-    "title": "Conectando Corações, Construindo Comunidade",
+    "title": "A Impulsionar a Solidariedade Através da Tecnologia",
     "subtitle": "Somos a ponte entre quem quer ajudar e quem precisa de apoio em Portugal. Somos a PortugalApoia, a rede de solidariedade que nos une a todos.",
     "image": "/images/uploads/016.webp"
   },
   "intro": {
     "subtitle": "A NOSSA HISTÓRIA",
-    "text": "PortugalApoia nasceu de uma simples pergunta: 'Como podemos usar a tecnologia para fortalecer os laços comunitários em Portugal?' A resposta foi criar esta plataforma aberta, gratuita e acessível a todos. Um lugar onde a tecnologia serve como ferramenta para a empatia e a ação coletiva."
+    "text": "Bem-vindo ao PortugalApoia.com, uma plataforma digital concebida para ser o ponto de encontro entre a generosidade e a necessidade em Portugal. Num mundo onde a vontade de ajudar é imensa, criámos um espaço profissional, seguro e eficiente para canalizar essa energia e transformá-la num impacto real e positivo"
   },
   "featured_image": {
     "image": "/images/uploads/017.webp",
@@ -14,19 +14,19 @@
   },
   "mission": {
     "icon": "fas fa-bullseye",
-    "title": "Nossa Missão",
-    "text": "O nosso propósito é ser o ponto de encontro onde cada oferta de ajuda encontra o seu destino e cada necessidade recebe uma resposta, simplificando a solidariedade e conectando pessoas de forma direta e transparente."
+    "title": "A Nossa Missão",
+    "text": "A nossa missão é construir pontes sólidas dentro da comunidade. Facilitamos conexões diretas e eficazes entre quem deseja oferecer ajuda — através de doações, oportunidades de emprego ou serviços — e quem dela necessita. Atuamos como um catalisador, fortalecendo o tecido social de Portugal e promovendo uma cultura de apoio mútuo."
   },
   "principles": [
     {
       "icon": "fas fa-hands-helping",
-      "title": "Apoio Direto",
-      "text": "Facilitamos a conexão direta entre quem oferece e quem precisa, sem intermediários."
+      "title": "A Equipa Por Trás da Plataforma: Uma Iniciativa da HBO Consulting",
+      "text": "O PortugalApoia.com é um projeto desenvolvido e respaldado pela HBO Consulting, uma firma com uma sólida trajetória no desenvolvimento de soluções tecnológicas inovadoras. A nossa equipa está comprometida com a aplicação da tecnologia para gerar valor social tangível. Não somos apenas programadores; somos arquitetos de soluções com um profundo sentido de responsabilidade social, dedicados a garantir que esta plataforma opera com os mais altos padrões de segurança e fiabilidade."
     },
     {
       "icon": "fas fa-lock",
-      "title": "Segurança e Confiança",
-      "text": "Verificamos os anúncios para garantir um ambiente seguro e confiável para todos."
+      "title": "Os Nossos Pilares Fundamentais: A Base da Nossa Operação",
+      "text": "Confiança Absoluta: A segurança é o alicerce da nossa plataforma. Cada anúncio é submetido a um rigoroso processo de moderação manual pela nossa equipa para verificar a sua legitimidade e proteger a nossa comunidade de fraudes e conteúdo inapropriado.\n\nAcessibilidade Universal: Acreditamos que a ajuda não deve ter barreiras. Por isso, o acesso e uso do PortugalApoia.com são totalmente gratuitos, assegurando que todos, sem exceção, possam participar nesta rede de apoio.\n\nEficiência e Clareza: Concebemos uma experiência de utilizador intuitiva, com categorias bem definidas, para que encontrar ou oferecer ajuda seja um processo rápido, simples e sem complicações.\n\nUm Compromisso a Longo Prazo\nO PortugalApoia.com é mais do que um projeto; é o nosso compromisso com o futuro da comunidade. Convidamo-lo a fazer parte desta missão, a ser uma parte ativa desta rede e a demonstrar o poder que temos quando trabalhamos juntos por um objetivo comum."
     },
     {
       "icon": "fas fa-heart",
