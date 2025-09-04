@@ -20,18 +20,18 @@
   "principles": [
     {
       "icon": "fas fa-hands-helping",
-      "title": "A Equipa Por Trás da Plataforma: Uma Iniciativa da HBO Consulting",
-      "text": "O PortugalApoia.com é um projeto desenvolvido e respaldado pela HBO Consulting, uma firma com uma sólida trajetória no desenvolvimento de soluções tecnológicas inovadoras. A nossa equipa está comprometida com a aplicação da tecnologia para gerar valor social tangível. Não somos apenas programadores; somos arquitetos de soluções com um profundo sentido de responsabilidade social, dedicados a garantir que esta plataforma opera com os mais altos padrões de segurança e fiabilidade."
+      "title": "Confiança Absoluta",
+      "text": "A segurança é o alicerce da nossa plataforma. Cada anúncio é submetido a um rigoroso processo de moderação manual pela nossa equipa para verificar a sua legitimidade e proteger a nossa comunidade de fraudes e conteúdo inapropriado."
     },
     {
       "icon": "fas fa-lock",
-      "title": "Os Nossos Pilares Fundamentais: A Base da Nossa Operação",
-      "text": "Confiança Absoluta: A segurança é o alicerce da nossa plataforma. Cada anúncio é submetido a um rigoroso processo de moderação manual pela nossa equipa para verificar a sua legitimidade e proteger a nossa comunidade de fraudes e conteúdo inapropriado.\n\nAcessibilidade Universal: Acreditamos que a ajuda não deve ter barreiras. Por isso, o acesso e uso do PortugalApoia.com são totalmente gratuitos, assegurando que todos, sem exceção, possam participar nesta rede de apoio.\n\nEficiência e Clareza: Concebemos uma experiência de utilizador intuitiva, com categorias bem definidas, para que encontrar ou oferecer ajuda seja um processo rápido, simples e sem complicações.\n\nUm Compromisso a Longo Prazo\nO PortugalApoia.com é mais do que um projeto; é o nosso compromisso com o futuro da comunidade. Convidamo-lo a fazer parte desta missão, a ser uma parte ativa desta rede e a demonstrar o poder que temos quando trabalhamos juntos por um objetivo comum."
+      "title": "Acessibilidade Universal",
+      "text": "Acreditamos que a ajuda não deve ter barreiras. Por isso, o acesso e uso do PortugalApoia.com são totalmente gratuitos, assegurando que todos, sem exceção, possam participar nesta rede de apoio."
     },
     {
       "icon": "fas fa-heart",
-      "title": "Comunidade Forte",
-      "text": "Acreditamos no poder da comunidade para construir uma sociedade mais justa e solidária."
+      "title": "Eficiência e Clareza",
+      "text": "Concebemos uma experiência de utilizador intuitiva, com categorias bem definidas, para que encontrar ou oferecer ajuda seja um processo rápido, simples e sem complicações."
     }
   ]
 }
