@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                             <span class="category">${post.category}</span> &bull; <span>${readingTime}</span>
                         </div>
                         <h5 class="post-card-title">${post.title}</h5>
-                        ${tagsHTML} {/* ETIQUETAS INSERTADAS AQUÍ */}
+                        ${tagsHTML} 
                         <p class="post-card-summary flex-grow-1">${post.summary}</p>
                     </div>
                 </div>
