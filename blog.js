@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                             <span class="category">${latestPost.category}</span> &bull; <span>${readingTime}</span>
                         </div>
                         <h2 class="latest-post-title">${latestPost.title}</h2>
-                        ${tagsHTML} {/* ETIQUETAS AHORA SE MUESTRAN AQUÍ */}
+                        ${tagsHTML} 
                         <p class="latest-post-summary">${latestPost.summary}</p>
                         <p class="text-muted small">Por ${latestPost.author || 'PortugalApoia'} em ${formatDate(latestPost.date)}</p>
                     </div>
