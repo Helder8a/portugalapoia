@@ -74,8 +74,35 @@ collections:
               - {label: "Data de Publicação", name: "date", widget: "datetime"}
               - {label: "Imagem de Destaque", name: "image", widget: "image"}
               - {label: "Categoria", name: "category", widget: "select", options: ["saude", "turismo", "educacao", "habitacao", "emprego"]}
+              # --- NUEVO CAMPO: META DESCRIPTION ---
+              - label: "Meta Description (para SEO)"
+                name: "meta_description"
+                widget: "text"
+                hint: "Breve resumo (máx. 160 caracteres) que aparecerá nos resultados de pesquisa do Google."
               - {label: "Resumo", name: "summary", widget: "text"}
+              # --- NUEVO CAMPO: AUTOR (CONECTADO A AUTORES.JSON) ---
+              - label: "Autor"
+                name: "author_id"
+                widget: "relation"
+                collection: "autores" # Nome da nova coleção que criaremos abaixo
+                search_fields: ["nome"]
+                value_field: "id"
+                display_fields: ["nome"]
               - {label: "Corpo do Artigo", name: "body", widget: "markdown"}
+              # --- CAMPO DE TAGS/PALAVRAS-CHAVE JÁ EXISTENTE ---
+              - {label: "Tags (Palavras-chave)", name: "tags", widget: "list", hint: "Adicione palavras-chave relevantes separadas por vírgulas."}
+
+  # --- NOVA COLEÇÃO PARA GERIR OS AUTORES ---
+  - name: "autores"
+    label: "Autores"
+    folder: "_dados/autores"
+    create: true
+    slug: "{{id}}"
+    fields:
+      - {label: "ID Único", name: "id", widget: "string", hint: "Um identificador único, ex: 'ana_silva'"}
+      - {label: "Nome do Autor", name: "nome", widget: "string"}
+      - {label: "Avatar (Imagem)", name: "avatar", widget: "image", required: false}
+      - {label: "Biografia", name: "bio", widget: "text"}
 
       - file: "_dados/empregos.json"
         label: "Vagas de Emprego"
