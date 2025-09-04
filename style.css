@@ -1808,3 +1808,13 @@ body.dark-theme .share-label {
 .app-card-link:hover h5 {
     color: #0056b3;
 }
+
+/* Estilo para o efeito de lazy loading */
+img.lazy-load {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+img.lazy-loaded {
+    opacity: 1;
+}
