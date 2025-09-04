@@ -52,7 +52,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             const readingTime = calculateReadingTime(marked.parse(post.body || ''));
             const globalIndex = allPosts.findIndex(p => p.title === post.title);
             
-            // --- INICIO: LÓGICA PARA RENDERIZAR ETIQUETAS ---
             let tagsHTML = '';
             if (post.tags && post.tags.length > 0) {
               const tagsArray = post.tags.split(',').map(tag => tag.trim());
@@ -62,7 +61,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                 </div>
               `;
             }
-            // --- FIM: LÓGICA PARA RENDERIZAR ETIQUETAS ---
 
             return `
             <div class="journal-article">
@@ -73,7 +71,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                             <span class="category">${post.category}</span> &bull; <span>${readingTime}</span>
                         </div>
                         <h5 class="post-card-title">${post.title}</h5>
-                        ${tagsHTML} 
+                        ${tagsHTML} {/* ETIQUETAS INSERTADAS AQUÍ */}
                         <p class="post-card-summary flex-grow-1">${post.summary}</p>
                     </div>
                 </div>
@@ -127,6 +125,19 @@ document.addEventListener("DOMContentLoaded", async () => {
         const latestPost = allPosts[0];
         if (latestPostContainer && latestPost) {
             const readingTime = calculateReadingTime(marked.parse(latestPost.body || ''));
+
+            // --- INICIO: CÓDIGO CORREGIDO PARA AÑADIR ETIQUETAS AL POST PRINCIPAL ---
+            let tagsHTML = '';
+            if (latestPost.tags && latestPost.tags.length > 0) {
+              const tagsArray = latestPost.tags.split(',').map(tag => tag.trim());
+              tagsHTML = `
+                <div class="tags-container mt-3">
+                  ${tagsArray.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                </div>
+              `;
+            }
+            // --- FIN: CÓDIGO CORREGIDO ---
+
             latestPostContainer.innerHTML = `
                 <div class="latest-post-card" data-toggle="modal" data-target="#postModal" data-post-index="0">
                     <div class="latest-post-image-wrapper">
@@ -137,6 +148,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                             <span class="category">${latestPost.category}</span> &bull; <span>${readingTime}</span>
                         </div>
                         <h2 class="latest-post-title">${latestPost.title}</h2>
+                        ${tagsHTML} {/* ETIQUETAS AHORA SE MUESTRAN AQUÍ */}
                         <p class="latest-post-summary">${latestPost.summary}</p>
                         <p class="text-muted small">Por ${latestPost.author || 'PortugalApoia'} em ${formatDate(latestPost.date)}</p>
                     </div>
