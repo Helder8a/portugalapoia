@@ -1818,3 +1818,11 @@ img.lazy-load {
 img.lazy-loaded {
     opacity: 1;
 }
+
+@media (max-width: 767.98px) {
+    /* Reduz o tamanho da fonte dos ícones e do texto nos cartões de anúncios */
+    .card-contact-icons a.contact-icon i,
+    .card-contact-icons a.contact-icon span {
+        font-size: 1.2rem;
+    }
+}
