@@ -1823,6 +1823,6 @@ img.lazy-loaded {
     /* Reduz o tamanho da fonte dos ícones e do texto nos cartões de anúncios */
     .card-contact-icons a.contact-icon i,
     .card-contact-icons a.contact-icon span {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 }
